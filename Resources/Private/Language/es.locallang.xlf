@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="de" datatype="plaintext" original="messages" date="2016-09-01T11:23:16Z" product-name="iqtp13db" target-language="en">
+    <header/>
+    <body>
+
+/********** Sonstige **********/
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungtext">
+		<source></source>
+        <target><![CDATA[
+				Por la presente acepto que mis datos personales almacenados electrónicamente sean utilizados y comunicados a terceros (de forma anónima). El proyecto IQ utilizará mis datos específicamente para la tramitación de mi solicitud con respecto al programa "Integración por Cualificación (IQ)“ (Integration durch Qualifizierung) y entregará parte de estos datos de modo anónimo (sin mi nombre ni dirección y sólo con fines estadísticos) a las siguientes entidades:<br>
+• “Oficina  de Asesoramiento y Cualificación“ (Fachstelle „Beratung und Qualifizierung) del „Instituto de Investigación de la Formación Empresarial (f-bb) GmbH) (Forschungsinstitut Betriebliche Bildung)<br>
+• Ministerio Federal de Formación e Investigación (BMBF) (Bundesministerium für Bildung und Forschung)<br>
+• Ministerio Federal de Trabajo y Asuntos Sociales (BMAS) (Bundesministerium für Arbeit und Soziales)<br>
+• Instituto Federal de Formación Profesional (BIBB) (Bundesinstitut für Berufsbildung)<br>
+<br>
+Este acuerdo puede ser revocado en cualquier momento. La revocación debe enviarse a Westdeutscher Handwerkskammertag e.V., Volmerswerther Straße 79, 40221 Düsseldorf o por correo electrónico a anerkennungsberatung@whkt.de<br>
+En caso de cancelación, mis datos personales se eliminarán de inmediato. Las consultas solo pueden ser respondidas después de una nueva declaración de consentimiento firmada. Sus datos serán eliminados tan pronto como ya no sean necesarios para su procesamiento. Tiene derecho a solicitar información sobre los datos almacenados y solicitar la corrección en caso de incorrección de los datos o eliminación de los datos en caso de almacenamiento de datos no admisible. Puede contactar a nuestro oficial de protección de datos en datenschutz@whkt.de o en Westdeutscher Handwerkskammertag e.V., Oficial de Protección de Datos, Volmerswerther Straße 79, 40221 Düsseldorf.
+También tiene el derecho de apelar a la autoridad supervisora.
+]]></target>
+	  </trans-unit>
+      
+      <trans-unit id="mailtext">
+		<source></source>
+		<target><![CDATA[ 
+			<p>Estimado solicitante,
+estimada solicitante<br></p>
+<p>
+Muchas gracias por la información que nos ha facilitado. 
+<br>
+La tramitación de su solicitud requiere unas 6 semanas de tiempo.<br>
+Por regla general, el asesoramiento de reconocimiento se realiza a través del correo electrónico. Si tiene usted preguntas, por favor contáctenos por teléfono.  
+</p><p>&nbsp;</p> <p>
+Saludos cordiales<br>
+<br>
+Su servicio de asesoramiento de reconocimiento y cualificaciones Mobile IQ
+</p>
+			 ]]></target>
+	  </trans-unit>
+	   <trans-unit id="confirmmailtext">
+		<source></source>
+		<target><![CDATA[ 
+			Estimado solicitante, estimada solicitante, <br> <br> Confirme su registro haciendo clic en el siguiente enlace.
+			 ]]></target>
+	  </trans-unit>
+	  	  <trans-unit id="subject">
+	  		<source></source>
+			<target>Su inscripción para reconocimiento profesional de consultoría NRW</target>
+	  </trans-unit>
+      <trans-unit id="confirmsubject">
+      		<source></source>
+			<target>Por favor confirme su registro para el reconocimiento profesional de consultoría NRW</target>
+	  </trans-unit>
+	  
+	    <trans-unit id="fragebogen">
+		<source>Fragebogen Seite</source>
+		<target>Cuestionario página</target>
+	  </trans-unit>
+	  
+	  <trans-unit id="weiter">
+		<source>Weiter</source>
+		<target>siguiente</target>
+	  </trans-unit>
+	  <trans-unit id="zurueck">
+		<source>Zurück</source>
+		<target>atrás</target>
+	  </trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.original_dokumente_abschluss">
+		<source>Liegen die Original-Dokumente des Abschlusses vor?</source>
+		<target>Tiene los documentos originales del título profesional disponibles?</target>
+	  </trans-unit>
+	  <trans-unit id="abschlussartoption1">
+		<source>Ausbildungsabschluss</source>
+		<target>formación profesional</target>
+	  </trans-unit>
+	  <trans-unit id="abschlussartoption2">
+		<source>Hochschulabschluss</source>
+		<target>título universitatio</target>
+	  </trans-unit>
+	  <trans-unit id="headabschlussrechts">
+		<source>weiterer Abschluss</source>
+		<target>formación académica o profesional adicional</target>
+      </trans-unit>
+      <trans-unit id="hochladen">
+		<source>Hochladen</source>
+		<target>cargar</target>
+	  </trans-unit>
+      <trans-unit id="absenden">
+		<source>Absenden</source>
+		<target>enviar</target>
+      </trans-unit>
+      
+	  
+	  
+/******* Persönliche Daten ********/
+	  
+<trans-unit id="persdaten">
+	<source>Persönliche Daten</source>
+	<target>Datos personales</target>
+</trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.nachname">
+        <source>Nachname</source>
+        <target>Apellido </target>
+      </trans-unit>
+	      	<trans-unit id="infoNachname">
+				<source>Der Nachname entspricht Ihrem Familiennamen. Bitte geben Sie diesen hier an.</source>
+				<target>El apellido debe corresponder con el de su familia. Por favor, indique aquí este apellido.</target>
+		  	</trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.vorname">
+        <source>Vorname</source>
+        <target>Nombre</target>
+      </trans-unit>
+	      	<trans-unit id="infoVorname">
+				<source>Der Vorname ist Ihr erster Name vor dem Nachnamen und entspricht meistens Ihrem Rufnamen. Bitte geben Sie diesen hier an.</source>
+				<target>Bajo nombre se entiende el nombre que antecede al apellido, que por regla general corresponde al que usted recibió cuando fue registrado al nacer. Por favor, indique aquí este nombre.</target>
+		  	</trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.strasse">
+        <source>Strasse</source>
+        <target>Tu calle</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.plz">
+        <source>Plz</source>
+        <target>su código postal</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ort">
+        <source>Ort</source>
+        <target>Tu ciudad</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.email">
+        <source>E-Mail</source>
+        <target>Su dirección de correo electrónico</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.telefon">
+        <source>Telefon</source>
+        <target>Su número de teléfono</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geburtsjahr">
+        <source>Geburtsjahr</source>
+        <target>Su año de nacimiento</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geburtsland">
+        <source>Geburtsland</source>
+        <target>Su país de origen</target>
+      </trans-unit>
+	      	<trans-unit id="infoGeburtsland">
+				<source>Das Geburtsland entspricht dem Land, in dem Sie geboren wurden. Bitte geben Sie dieses hier an.</source>
+				<target>Bajo país de origen se entiende el país en el cual usted nació. Por favor, indique aquí dicho país.</target>
+			</trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geschlecht">
+        <source>Geschlecht</source>
+        <target>Su sexo</target>
+      </trans-unit>
+      <trans-unit id="maennlich">
+        <source>männlich</source>
+        <target>hombre</target>
+      </trans-unit>
+      <trans-unit id="weiblich">
+        <source>weiblich</source>
+        <target>mujer</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erste_staatsangehoerigkeit">
+        <source>Erste Staatsangehoerigkeit</source>
+        <target>Primera nacionalidad</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zweite_staatsangehoerigkeit">
+        <source>Zweite Staatsangehoerigkeit</source>
+        <target>Segunda nacionalidad</target>
+      </trans-unit>
+	      	<trans-unit id="infoStaatsangehoerigkeit">
+				<source>Sofern Sie zwei verschiedene Staatsangehörigkeiten/Nationalitäten haben, geben Sie bitte beide an.</source>
+				<target>Si usted posee dos nacionalidades, por favor indique ambas.</target>
+			</trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einreisejahr">
+        <source>Einreisejahr</source>
+        <target>Año de llegada a Alemania</target>
+      </trans-unit>
+			<trans-unit id="infoJahrEinreise">
+				<source>Bitte geben Sie das Jahr an, in dem Sie nach Deutschland eingereist sind.</source>
+				<target>Por favor, indique el año en el que usted llegó a Alemania.</target>
+			</trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_deutschland">
+        <source>Wohnsitz Deutschland</source>
+        <target>Su domicilio en Alemania </target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_ja_bundesland">
+        <source>Wohnsitz Ja Bundesland</source>
+        <target>Domicilio –Sí- Estado Federal de Alemania (Land)</target>
+      </trans-unit>
+			<trans-unit id="infoBundesland">
+				<source>Bitte wählen Sie das Bundesland, in dem Sie aktuell leben.</source>
+				<target>Por favor, indique el estado federal en el que usted reside actualmente.</target>
+			</trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_nein_in">
+        <source>Wohnsitz Nein In</source>
+        <target>Domicilio –No- en...</target>
+      </trans-unit>
+			<trans-unit id="infoWohnsitzinDeutschlandNein">
+				<source>Bitte geben Sie an, in welchem Land Sie aktuell leben.</source>
+				<target>Por favor, indique el estado federal en el que usted reside actualmente.</target>
+			</trans-unit>
+
+
+/******* Deutschkenntnisse ********/
+
+<trans-unit id="deutschkenntnisse">
+	<source>Deutschkenntnisse</source>
+    <target>Conocimientos del idioma alemán</target>
+</trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse">
+        <source>Deutsch als Muttersprache?</source>
+        <target>¿Es el alemán su lengua materna?</target>
+      </trans-unit>
+      <trans-unit id="ja">
+        <source>Ja</source>
+        <target>Sí </target>
+      </trans-unit>
+      <trans-unit id="nein">
+        <source>Nein</source>
+        <target>No</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau">
+        <source>Zertifikat Sprachniveau</source>
+        <target>Si usted dispone de un certificado, ¿a qué nivel de conocimientos?</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.sprachen">
+        <source>Sprachen</source>
+        <target>¿Qué idiomas habla usted?</target>
+      </trans-unit>
+      
+
+/******* Ausländischer Abschluss ********/
+
+<trans-unit id="auslaendischerabschluss">
+	<source>Ausländischer Abschluss</source>
+	<target>Título extranjero</target>
+</trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussart">
+		<source>Abschlussart</source>
+		<target>Tipo de título</target>
+	  </trans-unit>
+	  		<trans-unit id="infoAbschluss">
+				<source>Ein Ausbildungsabschluss ist ein Abschluss einer beruflichen Ausbildung. Ein Hochschulabschluss ist ein akademischer Abschluss der nach einem Studium an einer Hochschule/Universität erworben wurde. Das Studium hat in der Regel mindestens 3 Jahre gedauert. Bitte geben Sie an welchen Abschluss Sie erworben haben.</source>
+				<target>Bajo “título” se entiende haber recibido una formación profesional. Bajo “título universitario” se entiende haber recibido una formación completa en una escuela superior / universidad. Por regla general, una formación universitaria dura como mínimo 3 años, Por favor, indique los títulos académicos en su posesión.</target>
+			</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsland">
+		<source>In welchem Land?</source>
+		<target>¿En qué país?</target>
+	  </trans-unit>
+			<trans-unit id="infoAusbildungsort">
+				<source>Bitte geben Sie das Land und die Stadt an, in der Sie Ihren Abschluss gemacht haben.</source>
+				<target>Por favor, indique el país y la ciudad en la que usted obtuvo sus títulos.</target>
+			</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.dauer_berufsausbildung">
+		<source>Dauer Berufsausbildung</source>
+		<target>Duración de su formación profesional</target>
+	  </trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussjahr">
+		<source>Abschlussjahr</source>
+		<target>Años de licenciatura</target>
+	  </trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsinstitution">
+		<source>Ausbildungsinstitution</source>
+		<target>Institución docente</target>
+	  </trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsort">
+		<source>Ausbildungsort</source>
+		<target>Lugar de la formación</target>
+	  </trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschluss">
+		<source>Abschluss</source>
+		<target>Título</target>
+	  </trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutsch_abschlusstitel">
+		<source>Deutsch Abschlusstitel</source>
+		<target>Título final en lengua alemana</target>
+	  </trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutscher_referenzberuf">
+		<source>Möglicher deutscher Beruf</source>
+		<target>Posible profesión alemana</target>
+	  </trans-unit>
+	  		<trans-unit id="infodeutscherBeruf">
+				<source>Falls bekannt, geben Sie zu Ihrem Abschluss die deutsche Bezeichnung des Berufes an.</source>
+				<target>Si procede, por favor indique la denominación alemana de su titulación profesional.</target>
+			</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.berufserfahrung">
+		<source>Berufserfahrung im Ausland (Dauer)</source>
+		<target>Experiencia profesional en el extranjero</target>
+	  </trans-unit>
+	   		<trans-unit id="infoBerufserfahrung">
+				<source>Bitte geben Sie an, in welchem Beruf Sie bisher gearbeitet haben. Beschreiben Sie welche Aufgaben Sie übernommen haben und geben die Dauer Ihrer Berufstätigkeit an (Monate/Jahre).</source>
+				<target>Por favor, indique durante cuanto tiempo usted ha trabajado profesionalmente en el extranjero a nivel de la formación / los estudios (meses / años).</target>
+			</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsfremdeberufserfahrung1">
+		<source>Ausbildungsfremde Berufserfahrung</source>
+		<target>Experiencia profesional ajena a su formación profesional</target>
+	  </trans-unit>
+	 		<trans-unit id="infoAusbildungsfremdeBerufserfahrung">
+				<source>“Ausbildungsfremd“ bedeutet, dass Sie in einem anderen Beruf als dem der Ausbildung/des Studiums gearbeitet haben. Bitte geben Sie an was das war und wie lange Sie gearbeitet haben (Monate/Jahre).</source>
+				<target>Bajo “experiencia ajena a su formación profesional“ se entienden trabajos ajenos a su formación profesional / sus estudios universitarios que usted haya desempeñado. Por favor, indique el tipo de trabajo desempeñado y la duración del mismo (meses / años).</target>
+			</trans-unit>
+			
+			
+/******* Berufliche Situation ********/
+
+<trans-unit id="beruflichesituation">
+	<source>Berufliche Situation</source>
+    <target>Situación laboral</target>
+</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsstatus">
+        <source>Erwerbsstatus</source>
+        <target>Su estatus de empleado</target>
+      </trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezug">
+		<source>Leistungsbezug</source>
+		<target>Usuario de prestaciones</target>
+	  </trans-unit>
+			<trans-unit id="infoBezugsart">
+				<source><![CDATA[Welche Art des Bezugs (Geld für den Lebensunterhalt) erhalten Sie aktuell? <br>
+				SGB II: Grundsicherung für Arbeitssuchende (Hartz IV) <br>
+				SGB III: Leistungen aus der Arbeitslosenversicherung und Arbeitsförderung<br> 
+				Asylbewerberleistungsbezug: Grundsicherung für Asylbewerber, Geduldete und Ausländer, die vollziehbar zur Ausreise verpflichtet sind.<br>
+				Bitte geben Sie eine der Bezugsarten an.]]></source>
+				<target><![CDATA[¿Qué tipo de prestación (prestación en efectivo para alimentos) recibe usted actualmente?<br>
+- SGB II: Renta básica para personas que buscan trabajo (Hartz IV)<br>
+- SGB III: Prestaciones procedentes del seguro de desempleo y fomento del trabajo (Arbeitslosenversicherung und Arbeitsförderung)<br>
+- Subsidio para solicitantes de asilo: Seguro básico para solicitantes de asilo, personas toleradas y extranjeros con ejecutabilidad de la orden de extradición.<br>
+Por favor, indique una de las posibilidades.]]></target>		
+			</trans-unit>
+
+
+/******* Frühere Anträge ********/
+
+<trans-unit id="fruehereantraege">
+	<source>Frühere Anträge</source>
+	<target>Solicitudes precedentes</target>
+</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag">
+		<source>Früherer Antrag</source>
+		<target>Solicitud precedente</target>
+      </trans-unit>
+      		<trans-unit id="infofruehererAntrag">
+				<source>Bitte geben Sie an, ob Sie in der Vergangenheit bereits schon einmal einen Antrag zur Anerkennung Ihres Abschlusses gestellt haben.</source>
+				<target>Por favor, indique si usted ya solicitó con anterioridad un reconocimiento oficial de su titularidad profesional.</target>
+			</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag_referenzberuf">
+		<source>Wenn ja, zu welchem Beruf?</source>
+		<target>En caso afirmativo, ¿para qué profesión?</target>
+	  </trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag_institution">
+		<source>Wenn ja, bei welcher Institution?</source>
+		<target>En caso afirmativo, ¿ante que institución?</target>
+	  </trans-unit>
+			<trans-unit id="infoInstitution">
+				<source>Sofern Sie bereits einen Antrag auf Anerkennung Ihres Abschlusses gestellt haben, geben Sie bitte an dieser Stelle an, bei welcher Institution/Behörde und ggf. in welchem Land Sie dies getan haben.</source>
+				<target>Si usted ya presentó una solicitud de reconocimiento oficial de su titularidad profesional, por favor indique la institución / autoridad y, a ser posible, el país en el que usted presentó dicha solicitud.</target>
+			</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.bescheidfrueherer_anerkennungsantrag">
+		<source><![CDATA[
+		Liegt schon ein Bescheid über einen Anerkennungsantrag vor?<br>
+		Falls ja, bitte bei Dokumenten-Upload hochladen
+		]]></source>
+		<target><![CDATA[
+		¿Ya dispone usted de una decisión oficial sobre su solicitud de reconocimiento? <br>
+		En caso afirmativo, por favor adjunte los documentos que correspondan.
+		]]></target>
+	  </trans-unit>	
+
+
+/******* Angaben zur Beratungsstelle ********/
+
+<trans-unit id="angabenzurberatungsstelle">
+	<source>Angaben zur Beratungsstelle</source>
+	<target>Indicaciones sobre la oficina de asesoramiento</target>
+</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_beratung.weg_beratungsstelle">
+		<source>Wie/von wem haben Sie erfahren, dass wir Ihnen helfen können?</source>
+		<target>Cómo / a través de quién ha recibido usted información sobre nuestras posibilidades de ayudarle?</target>
+	  </trans-unit>
+		
+		
+/******* Berater ********/
+
+<trans-unit id="berater">
+	<source>Berater/in</source>
+	<target>Asesor / asesora</target>
+</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_beratung.berater">
+		<source>Name des/der Beraters/in (Wenn Sie bereits Kontakt hatten)</source>
+		<target>Nombre del asesor / de la asesora (en caso de que usted ya hubiera tenido contacto con nosotros)</target>
+	  </trans-unit>
+
+/******* Dokumente ********/
+	
+<trans-unit id="dokumente">
+	<source>Dokumente</source>
+	<target>Documentos</target>
+</trans-unit>	
+	  <trans-unit id="dokumenteintro">
+		<source><![CDATA[
+			Bitte laden Sie folgende Dokumente hoch: <br>
+			- Ihre Original-Abschlüsse und Übersetzungen<br>
+				- Ihren Aufenthaltstitel; Lebenslauf; Bescheid ]]>
+		</source>
+		<target><![CDATA[
+			Por favor, adjunte los siguientes documentos:<br>
+			Sus títulos originales y traducciones,<br>
+			su estatus de residencia; su currículum; el dictamen.]]>
+		</target>
+	  </trans-unit>			
+	  <trans-unit id="dokumentauswaehlen">
+		<source>Dokument auswählen</source>
+		<target>Seleccionar documento</target>
+	  </trans-unit>
+	
+    </body>
+  </file>
+</xliff>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="de" datatype="plaintext" original="messages" date="2018-09-21T10:35:12Z" product-name="iqtp13db">
+		<header/>
+		<body>
+			<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbadmin">
+				<source>IQ TP13 DB Adminbereich</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbadmin.description">
+				<source></source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbwebapp">
+				<source>IQ TP13 DB Webapp</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbwebapp.description">
+				<source></source>
+			</trans-unit>
+			<trans-unit id="chiffre.description">
+				<source>NIQ Chiffre</source>
+			</trans-unit>
+			<trans-unit id="prozess.description">
+				<source>Beratungsprozess</source>
+			</trans-unit>
+			<trans-unit id="datum.description">
+				<source>Datum Erstkontakt</source>
+			</trans-unit>
+			<trans-unit id="folgekontakt.description">
+				<source>Folgekontakt</source>
+			</trans-unit>
+			<trans-unit id="ort.description">
+				<source>Durchführungsort</source>
+			</trans-unit>
+			<trans-unit id="beratungsart.description">
+				<source>Beratungsart</source>
+			</trans-unit>
+			<trans-unit id="anfrage_durch.description">
+				<source>Anfrage durch</source>
+			</trans-unit>
+			<trans-unit id="anmerkung.description">
+				<source>Anmerkung</source>
+			</trans-unit>
+			<trans-unit id="ergebnis_weiterleitung.description">
+				<source>Weiterleitung an "prioritär" anerkennende Stellen</source>
+			</trans-unit>
+			<trans-unit id="anmerkung_verfahren.description">
+				<source>Anmerkungen zum aktuellen Verfahren</source>
+			</trans-unit>
+			<trans-unit id="angaben_vereinbarungen.description">
+				<source>Angaben zu Vereinbarungen, Empfehlungen, Kontakten</source>
+			</trans-unit>
+			<trans-unit id="umfang.description">
+				<source>Umfang der Beratung</source>
+			</trans-unit>
+			<trans-unit id="beratung_abgeschlossen.description">
+				<source>Beratung abgeschlossen</source>
+			</trans-unit>
+			<trans-unit id="uebertrag_n_i_q.description">
+				<source>Übertragung in NIQ-Datenbank erfolgt</source>
+			</trans-unit>
+			<trans-unit id="dokumente_ratsuchender.description">
+				<source>Dokumente Ratsuchender</source>
+			</trans-unit>
+			<trans-unit id="dokumente_anhaengen.description">
+				<source>Dokumente anhängen</source>
+			</trans-unit>
+			<trans-unit id="folgekontakte.description">
+				<source>Folgekontakte</source>
+			</trans-unit>
+			<trans-unit id="bescheid_gleichwertigkeitspruefung.description">
+				<source>Liegt ein Bescheid über eine Gleichwertigkeitsprüfung vor?</source>
+			</trans-unit>
+			<trans-unit id="ergebnis_gleichwertigkeitsfeststellung.description">
+				<source>Falls ja, welches Ergebnis hatte das Verfahren der Gleichwertigkeitsfeststellung</source>
+			</trans-unit>
+			<trans-unit id="zab_bewertung.description">
+				<source>Falls nicht-reglementierter akademischer Beruf: Liegt eine ZAB-Bewertung vor?</source>
+			</trans-unit>
+			<trans-unit id="verweis_an_bildungsdienstleister.description">
+				<source>Wurde an einen IQ-internen Bildungsdienstleister weiterverwiesen?</source>
+			</trans-unit>
+			<trans-unit id="empfohlene_qualimassnahme.description">
+				<source>Falls ja, welche Qualifizierungsmaßnahme haben Sie empfohlen?</source>
+			</trans-unit>
+			<trans-unit id="welcher_bildungsdienstleister.description">
+				<source>An welchen Bildungsdienstleister haben Sie verwiesen?</source>
+			</trans-unit>
+			<trans-unit id="modul_zuordnung_qualimassnahme.description">
+				<source>Zu welchem Modul wird die Qualifizierungsmaßnahme zugeordnet?</source>
+			</trans-unit>
+			<trans-unit id="bundesland_qualimassnahme.description">
+				<source>In welchem Bundesland findet die Qualifizierungsmaßnahme statt?</source>
+			</trans-unit>
+			<trans-unit id="anz_dokumente.description">
+				<source>Anzahl Dokumente</source>
+			</trans-unit>
+			<trans-unit id="weg_beratungsstelle.description">
+				<source>Weg zur Beratungsstelle über</source>
+			</trans-unit>
+			<trans-unit id="name_beratungsstelle.description">
+				<source>Name Beratungsstelle</source>
+			</trans-unit>
+			<trans-unit id="teilnehmer.description">
+				<source>Teilnehmer</source>
+			</trans-unit>
+			<trans-unit id="berater.description">
+				<source>Berater</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbadmin">
+				<source>IQ TP13 DB Adminbereich</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbadmin.description">
+				<source></source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbwebapp">
+				<source>IQ TP13 DB Webapp</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbwebapp.description">
+				<source></source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

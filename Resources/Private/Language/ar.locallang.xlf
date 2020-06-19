@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="de" datatype="plaintext" original="messages" date="2016-09-01T11:23:16Z" product-name="iqtp13db" target-language="ar">
+    <header/>
+    <body>
+
+/********** Sonstige **********/
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungtext">
+		<source></source>
+        <target><![CDATA[        
+بموجب هذا أوافق على تخزين واستعمال وإرسال (على نحو مجهول) بياناتي الشخصية إلكترونيًا. ويحق لمشروعIQ  استخدام بياناتي في عملية المعالجة المرتبطة بطلبي الخاص ببرنامج الإندماج عبر التأهيل "Integration durch Qualifizierung (IQ)"، فضلاً عن إرسال جزء من بياناتي على نحو مجهول (دون ذكر اسمي وعنواني) - لغرض إعداد الإحصاءات إلى هذه العناوين: <br>
+• المكتب المتخصص الاستشارة والتأهيل "Beratung und Qualifizierung" لدى معهد أبحاث التعليم المهني Forschungsinstitut Betriebliche Bildung (f-bb) gGmbH<br>
+• الوزارة الاتحادية للتعليم والبحث Bundesministerium für Bildung und Forschung (BMBF)<br>
+• الوزارة الاتحادية للعمل والخدمة الاجتماعية Bundesministerium für Arbeit und Soziales (BMAS)<br>
+• المعهد الاتحادي للتعليم المهني Bundesinstitut für Berufsbildung (BIBB)<br>
+<br>
+يمكن إبطال هذه الاتفاقية في أي وقت. يجب إرسال الإلغاء على البريد التالي
+Westdeutscher Handwerkskammertag e.V., Volmerswerther Straße 79, 40221 Düsseldorf
+ أو عن طريق البريد الإلكتروني
+ <br>anerkennungsberatung@whkt.de
+في حالة الإلغاء، سيتم حذف بياناتي الشخصية على الفور. يمكن الرد على الاستفسارات بعد الحصول على تصريح الموافقة المجددة. سيتم حذف بياناتك الشخصية بمجرد أنتهاء الغرض منها. يحق لك تصحيح البينات وطلب تصحيحها في حالة الغلط أو حذف بعض المعلومات الغير المسموح بها.
+
+يمكنك الاتصال بمسؤول حماية البيانات لدينا على البريد الكتروني datenschutz@whkt.de أو على البريد التالي
+<br>Westdeutscher Handwerkskammertag e.V., Datenschutzbeauftragter, Volmerswerther Straße 79, 40221 Düsseldorf<br>
+لديك أيضا حق الاستئناف إلى السلطة الإشرافية.
+
+
+        ]]></target>
+	  </trans-unit>
+      
+      <trans-unit id="mailtext">
+		<source></source>
+		<target><![CDATA[ 
+				عزيزي طالب الاستشارة،
+عزيزتي طالبة الاستشارة،
+<p>
+شكرًا جزيلاً على بياناتكم. 
+</p> <p>
+نحتاج إلى حوالي 6 أسابيع لمعالجة طلبك.</p> <p>
+وفي العادة تتم استشارة الاعتراف بالشهادات الأجنبية عبر البريد الإلكتروني. في حالة وجود المزيد من الاستفسارات، سنتصل بك.
+</p> <p>
+مع أطيب الأمنيات</p> <p>
+مركز استشارة الاعتراف بالشهادات الأجنبية والتأهيل المتنقل IQ Mobile Anerkennungs- und Qualifizierungsberatung
+			 ]]></target>
+	  </trans-unit>
+	   <trans-unit id="confirmmailtext">
+		<source></source>
+		<target><![CDATA[ 
+		عزيزي طالب الاستشارة، عزيزتي طالبة الاستشارة، <br> <br> الرجاء تأكيد تسجيلك بالنقر فوق الرابط التالي.
+			 ]]></target>
+	  </trans-unit>
+	  <trans-unit id="subject">
+	  		<source></source>
+			<target>تسجيلك للحصول على الاستشارات المهنية</target>
+	  </trans-unit>
+      <trans-unit id="confirmsubject">
+      		<source></source>
+			<target>يرجى تأكيد تسجيلك للحصول على تقدير الاستشارات المهنية </target>
+	  </trans-unit>
+			
+	  <trans-unit id="fragebogen">
+		<source>Fragebogen Seite</source>
+		<target>صفحة الأسئلة</target>
+	  </trans-unit>
+	  
+	   <trans-unit id="weiter">
+		<source>Weiter</source>
+		<target>استمرار</target>
+	  </trans-unit>
+	  <trans-unit id="zurueck">
+		<source>Zurück</source>
+		<target>رجوع</target>
+	  </trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.original_dokumente_abschluss">
+		<source>Liegen die Original-Dokumente des Abschlusses vor?</source>
+		<target>هل توجد وثائق اصلية للشهادة</target>
+	  </trans-unit>
+	  <trans-unit id="abschlussartoption1">
+		<source>Ausbildungsabschluss</source>
+		<target>لشهادة المهنية</target>
+	  </trans-unit>
+	  <trans-unit id="abschlussartoption2">
+		<source>Hochschulabschluss</source>
+		<target>الشهادة الجامعية</target>
+	  </trans-unit>
+	  <trans-unit id="headabschlussrechts">
+		<source>weiterer Abschluss</source>
+		<target>شهادات اخرى</target>
+      </trans-unit>
+      <trans-unit id="hochladen">
+		<source>Hochladen</source>
+		<target>رفع</target>
+	  </trans-unit>
+      <trans-unit id="absenden">
+		<source>Absenden</source>
+		<target>ارسال</target>
+      </trans-unit>
+	  
+/******* Persönliche Daten ********/
+	  
+<trans-unit id="persdaten">
+	<source>Persönliche Daten</source>
+	<target>البيانات الشخصية </target>
+</trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.nachname">
+        <source>Nachname</source>
+        <target> الاسم الأخير</target>
+      </trans-unit>
+	      	<trans-unit id="infoNachname">
+				<source>Der Nachname entspricht Ihrem Familiennamen. Bitte geben Sie diesen hier an.</source>
+				<target>يتطابق الاسم الأخير مع اسم العائلة. برجاء أدخله هنا.</target>
+		  	</trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.vorname">
+        <source>Vorname</source>
+        <target>الاسم الأول</target>
+      </trans-unit>
+	      	<trans-unit id="infoVorname">
+				<source>Der Vorname ist Ihr erster Name vor dem Nachnamen und entspricht meistens Ihrem Rufnamen. Bitte geben Sie diesen hier an.</source>
+				<target>الاسم الأول هو اسمك الأول قبل الاسم الأخير ويطابق في الغالب اسم الشهرة. برجاء أدخله هنا.</target>
+		  	</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.strasse">
+        <source>Strasse</source>
+        <target>الشارع</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.plz">
+        <source>Plz</source>
+        <target>الرمز البريدي</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ort">
+        <source>Ort</source>
+        <target>المكان</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.email">
+        <source>E-Mail</source>
+        <target>البريد الإلكتروني</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.telefon">
+        <source>Telefon</source>
+        <target>الهاتف</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geburtsjahr">
+        <source>Geburtsjahr</source>
+        <target>سنة الميلاد</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geburtsland">
+        <source>Geburtsland</source>
+        <target>بلد الميلاد</target>
+      </trans-unit>
+	      	<trans-unit id="infoGeburtsland">
+				<source>Das Geburtsland entspricht dem Land, in dem Sie geboren wurden. Bitte geben Sie dieses hier an.</source>
+				<target>تطابق بلد الميلاد البلد الذي وُلدت فيه. برجاء أدخله هنا.</target>
+			</trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geschlecht">
+        <source>Geschlecht</source>
+        <target>الجنس</target>
+      </trans-unit>
+      <trans-unit id="maennlich">
+        <source>männlich</source>
+        <target>ذكر</target>
+      </trans-unit>
+      <trans-unit id="weiblich">
+        <source>weiblich</source>
+        <target>أنثى</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erste_staatsangehoerigkeit">
+        <source>Erste Staatsangehoerigkeit</source>
+        <target>الجنسية الأولى</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zweite_staatsangehoerigkeit">
+        <source>Zweite Staatsangehoerigkeit</source>
+        <target>الجنسية الثانية</target>
+      </trans-unit>
+	      	<trans-unit id="infoStaatsangehoerigkeit">
+				<source>Sofern Sie zwei verschiedene Staatsangehörigkeiten/Nationalitäten haben, geben Sie bitte beide an.</source>
+				<target>في حالة حملك لجنسيتين مختلفتين، برجاء إدخال الاثنين.</target>
+			</trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einreisejahr">
+        <source>Einreisejahr</source>
+        <target>سنة الدخول</target>
+      </trans-unit>
+			<trans-unit id="infoJahrEinreise">
+				<source>Bitte geben Sie das Jahr an, in dem Sie nach Deutschland eingereist sind.</source>
+				<target>برجاء إدخال السنة التي دخلت فيها إلى ألمانيا.</target>
+			</trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_deutschland">
+        <source>Wohnsitz Deutschland</source>
+        <target>محل السكن داخل ألمانيا</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_ja_bundesland">
+        <source>Wohnsitz Ja Bundesland</source>
+        <target>نعم أعيش في ولاية اتحادية</target>
+      </trans-unit>
+			<trans-unit id="infoBundesland">
+				<source>Bitte wählen Sie das Bundesland, in dem Sie aktuell leben.</source>
+				<target>برجاء اختيار الولاية الاتحادية التي تعيش فيها حاليًا.</target>
+			</trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_nein_in">
+        <source>Wohnsitz Nein In</source>
+        <target>لا أعيش في ولاية اتحادية</target>
+      </trans-unit>
+			<trans-unit id="infoWohnsitzinDeutschlandNein">
+				<source>Bitte geben Sie an, in welchem Land Sie aktuell leben.</source>
+				<target>برجاء ذكر البلد الذي تعيش فيه حاليًا.</target>
+			</trans-unit>
+
+
+/******* Deutschkenntnisse ********/
+
+<trans-unit id="deutschkenntnisse">
+	<source>Deutschkenntnisse</source>
+    <target>المعرفة باللغة الألمانية</target>
+</trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse">
+        <source>Deutsch als Muttersprache?</source>
+        <target>هل اللغة الألمانية هي لغتك الأم؟</target>
+      </trans-unit>
+      <trans-unit id="ja">
+        <source>Ja</source>
+        <target>نعم</target>
+      </trans-unit>
+      <trans-unit id="nein">
+        <source>Nein</source>
+        <target>لا</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau">
+        <source>Zertifikat Sprachniveau</source>
+        <target>في حالة حصولك على شهادة، ما هو مستوى اللغة بهذه الشهادة؟</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.sprachen">
+        <source>Sprachen</source>
+        <target>ما هي اللغات التي تجيدها؟</target>
+      </trans-unit>
+      
+
+/******* Ausländischer Abschluss ********/
+
+<trans-unit id="auslaendischerabschluss">
+	<source>Ausländischer Abschluss</source>
+	<target>الشهادة الأجنبية</target>
+</trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussart">
+		<source>Abschlussart</source>
+		<target>نوع الشهادة</target>
+	  </trans-unit>
+	  		<trans-unit id="infoAbschluss">
+				<source>Ein Ausbildungsabschluss ist ein Abschluss einer beruflichen Ausbildung. Ein Hochschulabschluss ist ein akademischer Abschluss der nach einem Studium an einer Hochschule/Universität erworben wurde. Das Studium hat in der Regel mindestens 3 Jahre gedauert. Bitte geben Sie an welchen Abschluss Sie erworben haben.</source>
+				<target>شهادة التعليم هي شهادة خاصة بتعليم مهني.
+الشهادة العليا هي شهادة أكاديمية يتم الحصول عليها بعد إنهاء الدراسة في جامعة/معهد. في العادة تستغرق الدراسة 3 سنوات كحد أدنى. برجاء ذكر الشهادة التي حصلت عليها.</target>
+			</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsland">
+		<source>In welchem Land?</source>
+		<target>في أي بلد؟</target>
+	  </trans-unit>
+			<trans-unit id="infoAusbildungsort">
+				<source>Bitte geben Sie das Land und die Stadt an, in der Sie Ihren Abschluss gemacht haben.</source>
+				<target>برجاء ذكر البلد والمدينة التي حصلت على شهادتك فيهما.</target>
+			</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.dauer_berufsausbildung">
+		<source>Dauer Berufsausbildung</source>
+		<target>مدة التعليم المهني</target>
+	  </trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussjahr">
+		<source>Abschlussjahr</source>
+		<target>سنة التخرج</target>
+	  </trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsinstitution">
+		<source>Ausbildungsinstitution</source>
+		<target>مؤسسة التعليم</target>
+	  </trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsort">
+		<source>Ausbildungsort</source>
+		<target>مكان التعليم</target>
+	  </trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschluss">
+		<source>Abschluss</source>
+		<target>الشهادة</target>
+	  </trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutsch_abschlusstitel">
+		<source>Deutsch Abschlusstitel</source>
+		<target>المسمى الألماني للشهادة</target>
+	  </trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutscher_referenzberuf">
+		<source>Möglicher deutscher Beruf</source>
+		<target>المهنة الممكنة داخل ألمانيا</target>
+	  </trans-unit>
+	  		<trans-unit id="infodeutscherBeruf">
+				<source>Falls bekannt, geben Sie zu Ihrem Abschluss die deutsche Bezeichnung des Berufes an.</source>
+				<target>في حالة المعرفة، اذكر مع شهادتك مسمى المهنة داخل ألمانيا.</target>
+			</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.berufserfahrung">
+		<source>Berufserfahrung im Ausland (Dauer)</source>
+		<target>الخبرة المهنية في الخارج</target>
+	  </trans-unit>
+	   		<trans-unit id="infoBerufserfahrung">
+				<source>Bitte geben Sie an, in welchem Beruf Sie bisher gearbeitet haben. Beschreiben Sie welche Aufgaben Sie übernommen haben und geben die Dauer Ihrer Berufstätigkeit an (Monate/Jahre).</source>
+				<target>برجاء ذكر مدة مزاولتك للمهنة الخاصة بالتعليم/الدراسة في الخارج (الشهور/السنوات).</target>
+			</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsfremdeberufserfahrung1">
+		<source>Ausbildungsfremde Berufserfahrung</source>
+		<target>الخبرة المهنية في غير مجال التعليم</target>
+	  </trans-unit>
+	 		<trans-unit id="infoAusbildungsfremdeBerufserfahrung">
+				<source>“Ausbildungsfremd“ bedeutet, dass Sie in einem anderen Beruf als dem der Ausbildung/des Studiums gearbeitet haben. Bitte geben Sie an was das war und wie lange Sie gearbeitet haben (Monate/Jahre).</source>
+				<target>“غير مجال التعليم“ يعني أنك زاولت مهنة مخالفة لتعليمك/دراستك. برجاء ذكر المهنة المعنية ومدة مزاولتك لها (الشهور/السنوات).</target>
+			</trans-unit>
+			
+			
+/******* Berufliche Situation ********/
+
+<trans-unit id="beruflichesituation">
+	<source>Berufliche Situation</source>
+    <target>الموقف الوظيفي</target>
+</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsstatus">
+        <source>Erwerbsstatus</source>
+        <target>الحالة الوظيفية</target>
+      </trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezug">
+		<source>Leistungsbezug</source>
+		<target>الإعانات</target>
+	  </trans-unit>
+			<trans-unit id="infoBezugsart">
+				<source><![CDATA[Welche Art des Bezugs (Geld für den Lebensunterhalt) erhalten Sie aktuell? <br>
+				SGB II: Grundsicherung für Arbeitssuchende (Hartz IV) <br>
+				SGB III: Leistungen aus der Arbeitslosenversicherung und Arbeitsförderung<br> 
+				Asylbewerberleistungsbezug: Grundsicherung für Asylbewerber, Geduldete und Ausländer, die vollziehbar zur Ausreise verpflichtet sind.<br>
+				Bitte geben Sie eine der Bezugsarten an.]]></source>
+				<target><![CDATA[ما هو نوع الإعانة (أموال لنفقة المعيشة) التي تحصل عليها حاليًا؟
+حسب القانونSGB II : إعانة تأمين أساسي للباحثين عن العمل (Hartz IV)
+حسب القانون SGB III: إعانات من تأمين البطالة وإعانة العمل
+إعانة طالبي اللجوء: إعانة تأمين أساسي لطالبي اللجوء، الحاصلين على قرار إيقاف مؤقت للترحيل والأجانب، الملزمين بتنفيذ أمر الترحيل.
+برجاء ذكر نوع الإعانة. ]]></target>		
+			</trans-unit>
+
+
+/******* Frühere Anträge ********/
+
+<trans-unit id="fruehereantraege">
+	<source>Frühere Anträge</source>
+	<target>الطلبات السابقة</target>
+</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag">
+		<source>Früherer Antrag</source>
+		<target>الطلب السابق</target>
+      </trans-unit>
+      		<trans-unit id="infofruehererAntrag">
+				<source>Bitte geben Sie an, ob Sie in der Vergangenheit bereits schon einmal einen Antrag zur Anerkennung Ihres Abschlusses gestellt haben.</source>
+				<target>برجاء ذكر عما إذا كنت قد قمت من قبل بتقديم طلب للاعتراف بشهادتك.</target>
+			</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag_referenzberuf">
+		<source>Wenn ja, zu welchem Beruf?</source>
+		<target>برجاء ذكر عما إذا كنت قد قمت من قبل بتقديم طلب للاعتراف بشهادتك.</target>
+	  </trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag_institution">
+		<source>Wenn ja, bei welcher Institution?</source>
+		<target>في حالة نعم، لدى أية مؤسسة تقدمت بالطلب؟</target>
+	  </trans-unit>
+			<trans-unit id="infoInstitution">
+				<source>Sofern Sie bereits einen Antrag auf Anerkennung Ihres Abschlusses gestellt haben, geben Sie bitte an dieser Stelle an, bei welcher Institution/Behörde und ggf. in welchem Land Sie dies getan haben.</source>
+				<target>في حالة قيامك بتقديم طلب للاعتراف بشهادتك، برجاء ذكر في هذا الموضع المؤسسة/السلطة التي تقدمت لديها بالطلب، وإن أمكن الولاية التي قمت فيها بذلك.</target>
+			</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.bescheidfrueherer_anerkennungsantrag">
+		<source><![CDATA[
+		Liegt schon ein Bescheid über einen Anerkennungsantrag vor?<br>
+		Falls ja, bitte bei Dokumenten-Upload hochladen
+		]]></source>
+		<target><![CDATA[
+		هل يوجد قرار بشأن قيامك بتقديم طلب للاعتراف بشهادتك؟ في حالة نعم، برجاء تحميل المستندات.
+		]]></target>
+	  </trans-unit>	
+
+
+/******* Angaben zur Beratungsstelle ********/
+
+<trans-unit id="angabenzurberatungsstelle">
+	<source>Angaben zur Beratungsstelle</source>
+	<target>بيانات حول مركز الاستشارات</target>
+</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_beratung.weg_beratungsstelle">
+		<source>Wie/von wem haben Sie erfahren, dass wir Ihnen helfen können?</source>
+		<target>كيف عرفت أننا نستطيع مساعدتك؟</target>
+	  </trans-unit>
+		
+		
+/******* Berater ********/
+
+<trans-unit id="berater">
+	<source>Berater/in</source>
+	<target>مستشار/مستشارة</target>
+</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_beratung.berater">
+		<source>Name des/der Beraters/in (Wenn Sie bereits Kontakt hatten)</source>
+		<target>اسم المستشار/المستشارة (في حالة التواصل من قبل)</target>
+	  </trans-unit>
+
+/******* Dokumente ********/
+	
+<trans-unit id="dokumente">
+	<source>Dokumente</source>
+	<target>المستندات</target>
+</trans-unit>	
+	  <trans-unit id="dokumenteintro">
+		<source><![CDATA[
+			Bitte laden Sie folgende Dokumente hoch: <br>
+			- Ihre Original-Abschlüsse und Übersetzungen<br>
+				- Ihren Aufenthaltstitel; Lebenslauf; Bescheid ]]>
+		</source>
+		<target><![CDATA[
+			برجاء تحميل المستندات التالية: أصول شهاداتك وترجمتها، مسمى إقامتك، سيرتك الذاتية، إثبات]]>
+		</target>
+	  </trans-unit>			
+	  <trans-unit id="dokumentauswaehlen">
+		<source>Dokument auswählen</source>
+		<target>اختيار المستند:</target>
+	  </trans-unit>
+	
+    </body>
+  </file>
+</xliff>

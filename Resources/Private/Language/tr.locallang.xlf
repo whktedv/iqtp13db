@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="de" datatype="plaintext" original="messages" date="2016-09-01T11:23:16Z" product-name="iqtp13db" target-language="tr">
+    <header/>
+    <body>
+
+/********** Sonstige **********/
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungtext">
+		<source></source>
+        <target><![CDATA[
+            Ben, işbu sebep ile bana ait kişisel verilerin, elektronik ortamda saklanmasına, kullanılmasına ve anonim olarak iletilmesine izin veriyorum. IQ Projesi, „Yeterlilik aracılığıyla Entegrasyon IQ“ programına yaptığım başvurudaki bana ait verileri bu amaca yönelik kullanabilecek ve verilerin bir kısmı – anonim olarak (Benim adım ve adresim olmadan) – istatistik amaçlı aşağıdaki adreslere iletilecektir:<br>
+            • Mesleki Eğitim Danışmanlık ve eğitim Araştırma Enstitüsü merkezi (f-bb) Ltd. Şti.<br>
+            • Federal Almanya Eğitim ve Araştırma Bakanlığı (BMBF)<br>
+            • Federal Almanya Çalışma ve Sosyal İşler Bakanlığı (BMAS)<br>
+            • Mesleki Eğitim Federal Enstitüsü (BIBB)<br>
+           <br>
+           Bu anlaşma herhangi bir zamanda iptal edilebilir. İptal, Westdeutscher Handwerkskammertag e.V., Volmerswerther Straße 79, 40221 Düsseldorf'a veya anerkennungsberatung@whkt.de adresine e-posta ile gönderilmelidir.<br>
+İptal durumunda kişisel bilgilerim hemen silinecektir. Talepler, ancak yeniden imzalanmış bir onay beyanı sonrasında cevaplanabilir. Verileriniz, işlenmesi amacıyla artık gerekli olmadıkça silinecektir. Saklanan veriler hakkında bilgi talep etme hakkınız vardır ve verilerin yanlışlığı veya kabul edilmeyen veri depolama durumunda verilerin silinmesi durumunda düzeltme talebinde bulunabilirsiniz. Veri koruma görevlisi ile irtibata geçebilirsiniz: datenschutz@whkt.de veya Westdeutscher Handwerkskammertag e.V., Veri Koruma Görevlisi, Volmerswerther Straße 79, 40221 Düsseldorf.
+Ayrıca denetleme otoritesine itiraz etme hakkınız vardır.]]></target>
+	  </trans-unit>
+      
+      <trans-unit id="mailtext">
+		<source></source>
+		<target><![CDATA[ 
+            <p>Sevgili Tavsiye arayan,</p><p>&nbsp;</p> 
+            <p>
+            Bilgileriniz için teşekkürler. 
+            </p><p>
+            İsteğinizi işlemek için yaklaşık 6 hafta gerekir.
+            Diploma tanınması ile ilgili tavsiyeler genellikle. e-posta yoluyla gerçekleşir
+            </p><p>
+            Bunun dışındaki sorularınız için bizimle telefonla irtibata geçebilirsiniz.
+            </p><p>&nbsp;</p> <p>
+            Saygılarımızla
+            Mobil IQ Diploma tanınması ve yeterlilik danışmanlığı
+            </p>
+			 ]]></target>
+	  </trans-unit>
+	   <trans-unit id="confirmmailtext">
+		<source></source>
+		<target><![CDATA[ 
+			Sevgili Tavsiye arayan, <br><br>Lütfen aşağıdaki bağlantıyı tıklayarak kayıt onaylayın.
+			 ]]></target>
+	  </trans-unit>
+	  	  <trans-unit id="subject">
+	  		<source></source>
+			<target>Profesyonel tanıma danışmanlığı için kaydınız NRW</target>
+	  </trans-unit>
+      <trans-unit id="confirmsubject">
+      		<source></source>
+			<target>Lütfen profesyonel tanıma danışmanlığı için kaydınızı onaylayın</target>
+	  </trans-unit>
+	  
+	  <trans-unit id="fragebogen">
+		<source>Fragebogen Seite</source>
+		<target>Anket Sayfası</target>
+	  </trans-unit>
+	  
+	    <trans-unit id="weiter">
+		<source>Weiter</source>
+		<target>ileri</target>
+	  </trans-unit>
+	  <trans-unit id="zurueck">
+		<source>Zurück</source>
+		<target>geri</target>
+	  </trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.original_dokumente_abschluss">
+		<source>Liegen die Original-Dokumente des Abschlusses vor?</source>
+		<target>Orijinal diploma belgesi mevcut mu?</target>
+	  </trans-unit>
+	  <trans-unit id="abschlussartoption1">
+		<source>Ausbildungsabschluss</source>
+		<target>Mesleki eğitim diploması</target>
+	  </trans-unit>
+	  <trans-unit id="abschlussartoption2">
+		<source>Hochschulabschluss</source>
+		<target>Üniversite diploması</target>
+	  </trans-unit>
+	  <trans-unit id="headabschlussrechts">
+		<source>weiterer Abschluss</source>
+		<target>diger diplomalar</target>
+      </trans-unit>
+      <trans-unit id="hochladen">
+		<source>Hochladen</source>
+		<target>yükle</target>
+	  </trans-unit>
+      <trans-unit id="absenden">
+		<source>Absenden</source>
+		<target>gönder</target>
+      </trans-unit>
+	  
+/******* Persönliche Daten ********/
+	  
+<trans-unit id="persdaten">
+	<source>Persönliche Daten</source>
+    <target>Kişisel verileriniz</target>
+</trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.nachname">
+        <source>Nachname</source>
+        <target>Soyadı</target>
+      </trans-unit>
+	      	<trans-unit id="infoNachname">
+				<source>Der Nachname entspricht Ihrem Familiennamen. Bitte geben Sie diesen hier an.</source>
+                <target>Soyadı ailenizin adına karşılık gelir. Buraya yazın.</target>
+		  	</trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.vorname">
+        <source>Vorname</source>
+        <target>ilk isim</target>
+      </trans-unit>
+	      	<trans-unit id="infoVorname">
+				<source>Der Vorname ist Ihr erster Name vor dem Nachnamen und entspricht meistens Ihrem Rufnamen. Bitte geben Sie diesen hier an.</source>
+                <target>ilk isim soyadından önceki ilk isimdir ve genellikle çağrıldığınız isimdir. Buraya yazın.</target>
+		  	</trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.strasse">
+        <source>Strasse</source>
+        <target>Street</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.plz">
+        <source>Plz</source>
+        <target>ZIP</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ort">
+        <source>Ort</source>
+        <target>City</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.email">
+        <source>E-Mail</source>
+        <target>Email</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.telefon">
+        <source>Telefon</source>
+        <target>Telefon</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geburtsjahr">
+        <source>Geburtsjahr</source>
+        <target>Doğum Yılı</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geburtsland">
+        <source>Geburtsland</source>
+        <target>Doğduğunuz ülke</target>
+      </trans-unit>
+	      	<trans-unit id="infoGeburtsland">
+				<source>Das Geburtsland entspricht dem Land, in dem Sie geboren wurden. Bitte geben Sie dieses hier an.</source>
+                <target>Doğduğunuz ülke anlamına gelir. Lütfen buraya yazınız.</target>
+			</trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geschlecht">
+        <source>Geschlecht</source>
+        <target>Cinsiyet</target>
+      </trans-unit>
+      <trans-unit id="maennlich">
+        <source>männlich</source>
+        <target>Erkek </target>
+      </trans-unit>
+      <trans-unit id="weiblich">
+        <source>weiblich</source>
+        <target>Kadın</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erste_staatsangehoerigkeit">
+        <source>Erste Staatsangehoerigkeit</source>
+        <target>1.Uyruk</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zweite_staatsangehoerigkeit">
+        <source>Zweite Staatsangehoerigkeit</source>
+        <target>2. Uyruk</target>
+      </trans-unit>
+	      	<trans-unit id="infoStaatsangehoerigkeit">
+				<source>Sofern Sie zwei verschiedene Staatsangehörigkeiten/Nationalitäten haben, geben Sie bitte beide an.</source>
+                <target>iki farklı uyruk / vatandaşlığınız varsa, her ikisini de belirtiniz.</target>
+			</trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einreisejahr">
+        <source>Einreisejahr</source>
+        <target>Giriş yılı</target>
+      </trans-unit>
+			<trans-unit id="infoJahrEinreise">
+				<source>Bitte geben Sie das Jahr an, in dem Sie nach Deutschland eingereist sind.</source>
+                <target>Almanya'ya girmiş olduğunuz yılı belirtiniz.</target>
+            </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_deutschland">
+        <source>Wohnsitz Deutschland</source>
+        <target>Almanya’daki ikamet adresiniz.</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_ja_bundesland">
+        <source>Wohnsitz Ja Bundesland</source>
+        <target>İkamet Evet Eyalet</target>
+      </trans-unit>
+			<trans-unit id="infoBundesland">
+				<source>Bitte wählen Sie das Bundesland, in dem Sie aktuell leben.</source>
+                <target>Şu an yaşadığınız eyaleti belirtin.</target>
+			</trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_nein_in">
+        <source>Wohnsitz Nein In</source>
+        <target>İkamet Hayır ülke</target>
+      </trans-unit>
+			<trans-unit id="infoWohnsitzinDeutschlandNein">
+				<source>Bitte geben Sie an, in welchem Land Sie aktuell leben.</source>
+                <target>Şu an yaşadığınız ülkeyi belirtin.</target>
+			</trans-unit>
+
+
+/******* Deutschkenntnisse ********/
+
+<trans-unit id="deutschkenntnisse">
+	<source>Deutschkenntnisse</source>
+    <target>Almanca bilgisi</target>
+</trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse">
+        <source>Deutsch als Muttersprache?</source>
+        <target>Almanca ana diliniz mi?</target>
+      </trans-unit>
+      <trans-unit id="ja">
+        <source>Ja</source>
+        <target>Evet</target>
+      </trans-unit>
+      <trans-unit id="nein">
+        <source>Nein</source>
+        <target>hayır</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau">
+        <source>Zertifikat Sprachniveau</source>
+        <target>Eğer sertifika mevcut ise, hangi seviyedesiniz?</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.sprachen">
+        <source>Sprachen</source>
+        <target>Hangi dilleri konuşuyorsunuz?</target>
+      </trans-unit>
+      
+
+/******* Ausländischer Abschluss ********/
+
+<trans-unit id="auslaendischerabschluss">
+	<source>Ausländischer Abschluss</source>
+    <target>Yurtdışı mezuniyet durumu</target>
+</trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussart">
+		<source>Abschlussart</source>
+		<target>Mezuniyet biçimi</target>
+	  </trans-unit>
+	  		<trans-unit id="infoAbschluss">
+				<source>Ein Ausbildungsabschluss ist ein Abschluss einer beruflichen Ausbildung. Ein Hochschulabschluss ist ein akademischer Abschluss der nach einem Studium an einer Hochschule/Universität erworben wurde. Das Studium hat in der Regel mindestens 3 Jahre gedauert. Bitte geben Sie an welchen Abschluss Sie erworben haben.</source>
+                <target>Mesleki eğitim sertifikası mesleki bir eğitimin tamamlanmasıdır.
+                    Bir üniversite diploması akademik derecedir bir üniversite / yüksek okul eğitimi ile elde edilmiştir. Eğitim süresi genelde en az 3 yıldır. Lütfen hang i diplomaya sahip olduğunuzu belirtin.</target>
+			</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsland">
+		<source>In welchem Land?</source>
+        <target>Hangi ülkede?</target>
+	  </trans-unit>
+			<trans-unit id="infoAusbildungsort">
+				<source>Bitte geben Sie das Land und die Stadt an, in der Sie Ihren Abschluss gemacht haben.</source>
+                <target>Üniversite diplomasını aldığınız ülkeyi ve şehri belirtiniz.</target>
+			</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.dauer_berufsausbildung">
+		<source>Dauer Berufsausbildung</source>
+		<target>Mesleki eğitimin süresi</target>
+	  </trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussjahr">
+		<source>Abschlussjahr</source>
+        <target>Mezuniyet yılı</target>
+	  </trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsinstitution">
+		<source>Ausbildungsinstitution</source>
+		<target>Eğitim Kurumu</target>
+	  </trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsort">
+		<source>Ausbildungsort</source>
+		<target>Eğitim yeri</target>
+	  </trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschluss">
+		<source>Abschluss</source>
+		<target>Final</target>
+	  </trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutsch_abschlusstitel">
+		<source>Deutsch Abschlusstitel</source>
+        <target>mezuniyet derecenizin Almanya’daki karşılığı</target>
+	  </trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutscher_referenzberuf">
+		<source>Möglicher deutscher Beruf</source>
+        <target>Mesleğinizin Almanca karşılığı</target>
+	  </trans-unit>
+	  		<trans-unit id="infodeutscherBeruf">
+				<source>Falls bekannt, geben Sie zu Ihrem Abschluss die deutsche Bezeichnung des Berufes an.</source>
+                <target>Eğer biliniyorsa, mesleğinizin Almancadaki adını verin</target>
+			</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.berufserfahrung">
+		<source>Berufserfahrung im Ausland (Dauer)</source>
+		<target>Yurtdışında edinilen mesleki tecrübe</target>
+	  </trans-unit>
+	   		<trans-unit id="infoBerufserfahrung">
+				<source>Bitte geben Sie an, in welchem Beruf Sie bisher gearbeitet haben. Beschreiben Sie welche Aufgaben Sie übernommen haben und geben die Dauer Ihrer Berufstätigkeit an (Monate/Jahre).</source>
+                <target>Lütfen yurtdışında eğitimini aldığınız mesleğinizi, ne kadar süre yaptığınızı belirtin (Ay/Yıl).</target>
+            </trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsfremdeberufserfahrung1">
+		<source>Ausbildungsfremde Berufserfahrung</source>
+		<target>Eğitiminiz dışında kalan mesleki tecrübeniz</target>
+	  </trans-unit>
+	 		<trans-unit id="infoAusbildungsfremdeBerufserfahrung">
+				<source>“Ausbildungsfremd“ bedeutet, dass Sie in einem anderen Beruf als dem der Ausbildung/des Studiums gearbeitet haben. Bitte geben Sie an was das war und wie lange Sie gearbeitet haben (Monate/Jahre).</source>
+                <target>“Eğitim dışı “ demek eğitim aldığınız konu dışında başka bir meslek kolunda çalışmanız anlamına gelir. Lütfen ne olarak ne kadar süre çalıştığınızı belirtin (Ay/Yıl).</target>
+			</trans-unit>
+			
+			
+/******* Berufliche Situation ********/
+
+<trans-unit id="beruflichesituation">
+	<source>Berufliche Situation</source>
+    <target>İstihdam durumu</target>
+</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsstatus">
+        <source>Erwerbsstatus</source>
+        <target>İstihdam durumunuz</target>
+      </trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezug">
+		<source>Leistungsbezug</source>
+		<target>Yardım alma</target>
+	  </trans-unit>
+			<trans-unit id="infoBezugsart">
+				<source><![CDATA[Welche Art des Bezugs (Geld für den Lebensunterhalt) erhalten Sie aktuell? <br>
+				SGB II: Grundsicherung für Arbeitssuchende (Hartz IV) <br>
+				SGB III: Leistungen aus der Arbeitslosenversicherung und Arbeitsförderung<br> 
+				Asylbewerberleistungsbezug: Grundsicherung für Asylbewerber, Geduldete und Ausländer, die vollziehbar zur Ausreise verpflichtet sind.<br>
+				Bitte geben Sie eine der Bezugsarten an.]]></source>
+                <target><![CDATA[Şu anda ne tür yardım (geçinmek için para) alıyorsunuz?
+                    SGB II: İş arayanlar için temel yardım Hartz IV)
+                    SGB III: işsizlik sigortası yardımları ve istihdam teşviki
+                    İltica başvurusu sahibi yardımı: iltica başvurusunda bulunmuşlara, kalmasına izin verilen yabancılara, sınır dışı edilme kararı alınmış yabancılara temel yardım.
+                    Lütfen aldığınız yardım biçimini seçin. ]]></target>
+			</trans-unit>
+
+
+/******* Frühere Anträge ********/
+
+<trans-unit id="fruehereantraege">
+	<source>Frühere Anträge</source>
+	<target>Daha önce yapılan başvurular</target>
+</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag">
+		<source>Früherer Antrag</source>
+		<target>Eskiden yapılan başvuru</target>
+      </trans-unit>
+      		<trans-unit id="infofruehererAntrag">
+				<source>Bitte geben Sie an, ob Sie in der Vergangenheit bereits schon einmal einen Antrag zur Anerkennung Ihres Abschlusses gestellt haben.</source>
+                <target>Lütfen geçmişte diplomanızın tanınması için başvuruda bulunup bulunmadığınızı belirtin.</target>
+			</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag_referenzberuf">
+		<source>Wenn ja, zu welchem Beruf?</source>
+        <target>Eğer evet ise, hangi meslek için?</target>
+	  </trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag_institution">
+		<source>Wenn ja, bei welcher Institution?</source>
+		<target>Eğer evet ise, hangi kuruma başvurdunuz?</target>
+	  </trans-unit>
+			<trans-unit id="infoInstitution">
+				<source>Sofern Sie bereits einen Antrag auf Anerkennung Ihres Abschlusses gestellt haben, geben Sie bitte an dieser Stelle an, bei welcher Institution/Behörde und ggf. in welchem Land Sie dies getan haben.</source>
+                <target>Diplomanızın tanınması için başvuruda bulunmuş iseniz, bu noktada lütfen hangi kurum / makam veya hangi ülkede bunu yapmış olduğunuzu belirtin.</target>
+			</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.bescheidfrueherer_anerkennungsantrag">
+		<source><![CDATA[
+		Liegt schon ein Bescheid über einen Anerkennungsantrag vor?<br>
+		Falls ja, bitte bei Dokumenten-Upload hochladen
+		]]></source>
+		<target><![CDATA[
+            Diploma tanınması için yaptığınız başvuru ile ilgili alınmış bir karar var mı Eğer evet ise, lütfen belgeleri yükleyin.
+		]]></target>
+	  </trans-unit>	
+
+
+/******* Angaben zur Beratungsstelle ********/
+
+<trans-unit id="angabenzurberatungsstelle">
+	<source>Angaben zur Beratungsstelle</source>
+    <target>Danışma merkezi hakkında bilgi</target>
+</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_beratung.weg_beratungsstelle">
+		<source>Wie/von wem haben Sie erfahren, dass wir Ihnen helfen können?</source>
+		<target>Size yardımcı olabileceğimizi kimden/nasıl öğrendiniz?</target>
+	  </trans-unit>
+		
+		
+/******* Berater ********/
+
+<trans-unit id="berater">
+	<source>Berater/in</source>
+    <target>Danışman</target>
+</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_beratung.berater">
+		<source>Name des/der Beraters/in (Wenn Sie bereits Kontakt hatten)</source>
+		<target>Danışmanın adı (eğer temasa geçmiş iseniz)</target>
+	  </trans-unit>
+
+/******* Dokumente ********/
+	
+<trans-unit id="dokumente">
+	<source>Dokumente</source>
+	<target>Belgeler</target>
+</trans-unit>	
+	  <trans-unit id="dokumenteintro">
+		<source><![CDATA[
+			Bitte laden Sie folgende Dokumente hoch: <br>
+			- Ihre Original-Abschlüsse und Übersetzungen<br>
+				- Ihren Aufenthaltstitel; Lebenslauf; Bescheid ]]>
+		</source>
+		<target><![CDATA[
+			Lütfen aşağıdaki belgeleri yükleyin: <br>
+            Orijinal diplomalar ve çevirileri; <br>
+            Sizin oturma izniniz; CV; karar]]>
+		</target>
+	  </trans-unit>			
+	  <trans-unit id="dokumentauswaehlen">
+		<source>Dokument auswählen</source>
+		<target>Belgeyi seçin</target>
+	  </trans-unit>
+	
+    </body>
+  </file>
+</xliff>

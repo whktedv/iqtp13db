@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="de" datatype="plaintext" original="messages" date="2016-09-01T11:23:16Z" product-name="iqtp13db" target-language="fa">
+    <header/>
+    <body>
+
+/********** Sonstige **********/
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungtext">
+		<source></source>
+        <target><![CDATA[
+				بدین وسیله موافقت مینمایم، که اطلاعات شخصی من بصورت الکترونیکی دخیره شوند، مورد استفاده و بصورت ناشناس در اختیار دیگران قرار گیرند. بدین ترتیب پروژه ایکو (IQ) از اطلاعات من به منظور رسیدگی به درخواست اینجانب در راستای برنامه "یکپارچهسازی از طریق کسب مهارت (IQ)" استفاده کرده و قسمتی از این اطلاعات را بصورت ناشناس (بدون ذکر نام و آدرس من) به منظور بهرهگیریِ آماری در اختیار آدرسهای ذیل میگذارد:<br>
+•	واحد "مشاوره و کسب مهارت" در موسسه تحقیقات آموزش شغلی با مسئولیت محدود (f-bb)<br>
+•	وزارت آموزش و پژوهش فدرال  (BMBF)  <br>
+•	وزارت کار و امور اجتماعی فدرال (BMAS)<br>
+•	موسسه آموزش شغلی فدرال (BIBB) <br>
+
+این موافقتنامه را میتوانم در هر زمان با ارسال یک پیام به اطلاعات تماس که در بخش مشخصات ناشر آمده است، لغو کنم. در صورت لغو موافقت، اطلاعات شخصی من بلافاصله حذف میشوند. پس از آن به سئوالاتِ تنها زمانی پاسخ داده میشود که موافقتنامهی جدیدی به امضاء برسد.
+ <br>
+This agreement can be revoked at any time. The revocation must be sent to Westdeutscher Handwerkskammertag e.V., Volmerswerther Straße 79, 40221 Düsseldorf or by e-mail to anerkennungsberatung@whkt.de<br>
+In case of cancellation my personal data will be deleted immediately. Inquiries can then only be answered after a renewed signed declaration of consent. Your data will be deleted as soon as it is no longer necessary for the purpose of its processing. You are entitled to request information about the stored data and to request the correction in case of incorrectness of the data or the deletion of the data in the event of inadmissible data storage. You can contact our data protection officer at datenschutz@whkt.de or at Westdeutscher Handwerkskammertag e.V., Data Protection Officer, Volmerswerther Straße 79, 40223 Düsseldorf. You also have a right of appeal to the supervisory authority.
+]]></target>
+	  </trans-unit>
+      
+      <trans-unit id="mailtext">
+		<source></source>
+		<target><![CDATA[ 
+			دوست عزیزی که به دنبال مشاوره هستید،<p>
+از اطلاعاتی که در اختیار ما گذاشتید سپاسگزاریم. 
+</p><p>
+</p><p>
+حدوداً 6 هفته نیاز است تا به درخواست شما رسیدگی شود. مشاوره در حیطهی به رسمیت شناختن معمولاً از طریق ایمیل انجام میگیرد. در صورت داشتن سئوالات بیشتر با شما تماس تلفنی خواهیم گرفت.
+</p><p>
+مرکز سیّارِ مشاوره در امور به رسمیت شناختن وکسب مهارت ایکو (IQ Anerkennungs- und Qualifizierungsberatung)
+</p>
+			 ]]></target>
+	  </trans-unit>
+	   <trans-unit id="confirmmailtext">
+		<source></source>
+		<target><![CDATA[ 
+			دوست عزیزی که به دنبال مشاوره هستید،<br> <br> لطفا ثبت نام خود را با کلیک روی لینک زیر تأیید کنید.
+			 ]]></target>
+	  </trans-unit>
+	  	  <trans-unit id="subject">
+	  		<source></source>
+			<target>Your registration for professional recognition consulting NRW</target>
+	  </trans-unit>
+      <trans-unit id="confirmsubject">
+      		<source></source>
+			<target>لطفا ثبت نام خود را برای مشاوره شناخت حرفه ای NRW تایید کنید</target>
+	  </trans-unit>
+	  
+	  
+	  <trans-unit id="fragebogen">
+		<source>Fragebogen Seite</source>
+		<target>صفحه پرسشنامه</target>
+	  </trans-unit>
+	  
+ 	  <trans-unit id="weiter">
+		<source>Weiter</source>
+		<target>بیشتر</target>
+	  </trans-unit>
+	  <trans-unit id="zurueck">
+		<source>Zurück</source>
+		<target>پشت</target>
+	  </trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.original_dokumente_abschluss">
+		<source>Liegen die Original-Dokumente des Abschlusses vor?</source>
+		<target>آنها اسناد اصلی دارند</target>
+	  </trans-unit>
+	  <trans-unit id="abschlussartoption1">
+		<source>Ausbildungsabschluss</source>
+		<target>صلاحیت</target>
+	  </trans-unit>
+	  <trans-unit id="abschlussartoption2">
+		<source>Hochschulabschluss</source>
+		<target>درجه</target>
+	  </trans-unit>
+	  <trans-unit id="headabschlussrechts">
+		<source>weiterer Abschluss</source>
+		<target>اظهارات اضافی</target>
+      </trans-unit>
+            <trans-unit id="hochladen">
+		<source>Hochladen</source>
+		<target>بارگذاری</target>
+	  </trans-unit>
+      <trans-unit id="absenden">
+		<source>Absenden</source>
+		<target>ارسال</target>
+      </trans-unit>
+	  
+/******* Persönliche Daten ********/
+	  
+<trans-unit id="persdaten">
+	<source>Persönliche Daten</source>
+	<target>اطلاعات شخصی</target>
+</trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.nachname">
+        <source>Nachname</source>
+        <target> نام خانوادگی</target>
+      </trans-unit>
+	      	<trans-unit id="infoNachname">
+				<source>Der Nachname entspricht Ihrem Familiennamen. Bitte geben Sie diesen hier an.</source>
+				<target>نام خانوادگی معادل فامیل شما است. لطفاً آن را اینجا قید کنید.</target>
+		  	</trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.vorname">
+        <source>Vorname</source>
+        <target> نام</target>
+      </trans-unit>
+	      	<trans-unit id="infoVorname">
+				<source>Der Vorname ist Ihr erster Name vor dem Nachnamen und entspricht meistens Ihrem Rufnamen. Bitte geben Sie diesen hier an.</source>
+				<target>نام، اسم اول شما است که قبل از نام خانوادگی میآید و اغلب معادل نامی است که شما را با آن صدا میزنند. لطفاً آن را اینجا قید کنید.</target>
+		  	</trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.strasse">
+        <source>Strasse</source>
+        <target>خیابان</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.plz">
+        <source>Plz</source>
+        <target>کد پستی</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ort">
+        <source>Ort</source>
+        <target>شهرستان</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.email">
+        <source>E-Mail</source>
+        <target>ایمیل</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.telefon">
+        <source>Telefon</source>
+        <target>تلفن</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geburtsjahr">
+        <source>Geburtsjahr</source>
+        <target> سال تولد</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geburtsland">
+        <source>Geburtsland</source>
+        <target> کشور محل تولد</target>
+      </trans-unit>
+	      	<trans-unit id="infoGeburtsland">
+				<source>Das Geburtsland entspricht dem Land, in dem Sie geboren wurden. Bitte geben Sie dieses hier an.</source>
+				<target>کشور محل تولد کشوری که در آن متولد شدهاید.  لطفاً آن را اینجا قید کنید.</target>
+			</trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geschlecht">
+        <source>Geschlecht</source>
+        <target> جنسیت</target>
+      </trans-unit>
+      <trans-unit id="maennlich">
+        <source>männlich</source>
+        <target>مرد</target>
+      </trans-unit>
+      <trans-unit id="weiblich">
+        <source>weiblich</source>
+        <target>زن</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erste_staatsangehoerigkeit">
+        <source>Erste Staatsangehoerigkeit</source>
+        <target>1. تابعیت</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zweite_staatsangehoerigkeit">
+        <source>Zweite Staatsangehoerigkeit</source>
+        <target>2. تابعیت</target>
+      </trans-unit>
+	      	<trans-unit id="infoStaatsangehoerigkeit">
+				<source>Sofern Sie zwei verschiedene Staatsangehörigkeiten/Nationalitäten haben, geben Sie bitte beide an.</source>
+				<target>اگر شما دو تابعیت/ ملیّت دارید، لطفاً هر دو را قید کنید.</target>
+			</trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einreisejahr">
+        <source>Einreisejahr</source>
+        <target>سال ورود به آلمان</target>
+      </trans-unit>
+			<trans-unit id="infoJahrEinreise">
+				<source>Bitte geben Sie das Jahr an, in dem Sie nach Deutschland eingereist sind.</source>
+				<target>لطفاً سالی را که در آن به آلمان آمدهاید قید کنید.</target>
+			</trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_deutschland">
+        <source>Wohnsitz Deutschland</source>
+        <target>محل سکونت در آلمان </target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_ja_bundesland">
+        <source>Wohnsitz Ja Bundesland</source>
+        <target>محل سکونت در ایالت</target>
+      </trans-unit>
+			<trans-unit id="infoBundesland">
+				<source>Bitte wählen Sie das Bundesland, in dem Sie aktuell leben.</source>
+				<target>لطفاً قید کنید در حال حاضر در کدام ایالت زندگی میکنید.</target>
+			</trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_nein_in">
+        <source>Wohnsitz Nein In</source>
+        <target>محل سکونت خارج از آلمان</target>
+      </trans-unit>
+			<trans-unit id="infoWohnsitzinDeutschlandNein">
+				<source>Bitte geben Sie an, in welchem Land Sie aktuell leben.</source>
+				<target>لطفاً قید کنید در حال حاضر در کدام کشور زندگی میکنید.</target>
+			</trans-unit>
+
+
+/******* Deutschkenntnisse ********/
+
+<trans-unit id="deutschkenntnisse">
+	<source>Deutschkenntnisse</source>
+    <target>دانش زبان آلمانی</target>
+</trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse">
+        <source>Deutsch als Muttersprache?</source>
+        <target>آیا زبان آلمانی زبان مادری شما است؟</target>
+      </trans-unit>
+      <trans-unit id="ja">
+        <source>Ja</source>
+        <target>بله</target>
+      </trans-unit>
+      <trans-unit id="nein">
+        <source>Nein</source>
+        <target>خیر</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau">
+        <source>Zertifikat Sprachniveau</source>
+        <target>اگر مدرک زبان دارید، در چه سطحی است؟</target>
+      </trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.sprachen">
+        <source>Sprachen</source>
+        <target>به چه زبانهایی صحبت میکنید؟</target>
+      </trans-unit>
+      
+
+/******* Ausländischer Abschluss ********/
+
+<trans-unit id="auslaendischerabschluss">
+	<source>Ausländischer Abschluss</source>
+	<target>مدرک پایان دوره آموزشی از کشورهای دیگر</target>
+</trans-unit>
+      <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussart">
+		<source>Abschlussart</source>
+		<target>نوع مدرک پایان دوره</target>
+	  </trans-unit>
+	  		<trans-unit id="infoAbschluss">
+				<source>Ein Ausbildungsabschluss ist ein Abschluss einer beruflichen Ausbildung. Ein Hochschulabschluss ist ein akademischer Abschluss der nach einem Studium an einer Hochschule/Universität erworben wurde. Das Studium hat in der Regel mindestens 3 Jahre gedauert. Bitte geben Sie an welchen Abschluss Sie erworben haben.</source>
+				<target>مدرک پایان دوره آموزشی (Ausbildungsabschluss) یک مدرک پایان دوره در یک آموزش شغلی است.
+مدرک پایان تحصیلات مدرسه عالی (Hochschulabschluss) یک مدرک پایان دوره است که پس از تحصیل در یک مدرسه عالی/ دانشگاه بدست میآید. این تحصیل معمولاً حداقل 3 سال به طول میانجامد. لطفاً قید کنید که چه مدرک تحصیلی کسب کردهاید.
+</target>
+			</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsland">
+		<source>In welchem Land?</source>
+		<target>در کدام کشور؟</target>
+	  </trans-unit>
+			<trans-unit id="infoAusbildungsort">
+				<source>Bitte geben Sie das Land und die Stadt an, in der Sie Ihren Abschluss gemacht haben.</source>
+				<target>لطفاً نام کشور و شهری که در آنها مدرک پایان دوره آموزشی را کسب کردهاید قید کنید.</target>
+			</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.dauer_berufsausbildung">
+		<source>Dauer Berufsausbildung</source>
+		<target>مدت زمان آموزش شغلی</target>
+	  </trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussjahr">
+		<source>Abschlussjahr</source>
+		<target>سال اخذ مدرک پایان دوره آموزشی</target>
+	  </trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsinstitution">
+		<source>Ausbildungsinstitution</source>
+		<target>موسسه آموزشی</target>
+	  </trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsort">
+		<source>Ausbildungsort</source>
+		<target>محل آموزش</target>
+	  </trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschluss">
+		<source>Abschluss</source>
+		<target>مدرک پایان دوره آموزشی</target>
+	  </trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutsch_abschlusstitel">
+		<source>Deutsch Abschlusstitel</source>
+		<target>عنوان پایان دوره آموزشی به زبان آلمانی</target>
+	  </trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutscher_referenzberuf">
+		<source>Möglicher deutscher Beruf</source>
+		<target>عنوان احتمالی شغل در آلمانی</target>
+	  </trans-unit>
+	  		<trans-unit id="infodeutscherBeruf">
+				<source>Falls bekannt, geben Sie zu Ihrem Abschluss die deutsche Bezeichnung des Berufes an.</source>
+				<target>در صورت مشخص بودن، معادل آلمانی عنوان شغل ذکر شده در مدرک پایان دوره آموزشی خود را بنویسید.</target>
+			</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.berufserfahrung">
+		<source>Berufserfahrung im Ausland (Dauer)</source>
+		<target>تجربه کاریِ خارج از کشور</target>
+	  </trans-unit>
+	   		<trans-unit id="infoBerufserfahrung">
+				<source>Bitte geben Sie an, in welchem Beruf Sie bisher gearbeitet haben. Beschreiben Sie welche Aufgaben Sie übernommen haben und geben die Dauer Ihrer Berufstätigkeit an (Monate/Jahre).</source>
+				<target>لطفاً قید کنید چه مدت در شغلی که آموزش دیدهاید یا تحصیل کردهاید، خارج از کشور خود کار کردهاید (ماه/ سال).</target>
+			</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsfremdeberufserfahrung1">
+		<source>Ausbildungsfremde Berufserfahrung</source>
+		<target>تجربه کاری بیگانه با دوره آموزشی</target>
+	  </trans-unit>
+	 		<trans-unit id="infoAusbildungsfremdeBerufserfahrung">
+				<source>“Ausbildungsfremd“ bedeutet, dass Sie in einem anderen Beruf als dem der Ausbildung/des Studiums gearbeitet haben. Bitte geben Sie an was das war und wie lange Sie gearbeitet haben (Monate/Jahre).</source>
+				<target>“ بیگانه با دوره آموزشی“ بدین معنی است که شما در شغلی غیر از شغل آموزش دیده یا تحصیل کرده، کار کردهاید. لطفاً قید کنید که آن کار چه بوده و چه مدت آن کار را انجام دادهاید (ماه/ سال).</target>
+			</trans-unit>
+			
+			
+/******* Berufliche Situation ********/
+
+<trans-unit id="beruflichesituation">
+	<source>Berufliche Situation</source>
+    <target>موقعیت شغلی</target>
+</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsstatus">
+        <source>Erwerbsstatus</source>
+        <target>وضعیت اشتغال</target>
+      </trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezug">
+		<source>Leistungsbezug</source>
+		<target>دریافت مزایا</target>
+	  </trans-unit>
+			<trans-unit id="infoBezugsart">
+				<source><![CDATA[Welche Art des Bezugs (Geld für den Lebensunterhalt) erhalten Sie aktuell? <br>
+				SGB II: Grundsicherung für Arbeitssuchende (Hartz IV) <br>
+				SGB III: Leistungen aus der Arbeitslosenversicherung und Arbeitsförderung<br> 
+				Asylbewerberleistungsbezug: Grundsicherung für Asylbewerber, Geduldete und Ausländer, die vollziehbar zur Ausreise verpflichtet sind.<br>
+				Bitte geben Sie eine der Bezugsarten an.]]></source>
+				<target><![CDATA[
+در حال حاضر چه نوع مزایایی (پول برای امرار معاش) دریافت میکنید؟
+جلد دوم کتاب قوانین اجتماعی: تأمین اولیهی افراد جویای کار (HartzIV)
+جلد سوم کتاب قوانین اجتماعی: مزایا از بیمه بیکاری و پشتیبانی شغلی
+دریافت مزایا برای پناهجویان: تأمین اولیهی پناهجویان، افرادی که در حالت تعلیق قرار دارند (Geduldete) و اتباع خارجی که به اجبار باید کشور را ترک کنند.
+لطفاً یکی از موارد دریافت مزایا را ذکر کنید.
+				
+				]]></target>		
+			</trans-unit>
+
+
+/******* Frühere Anträge ********/
+
+<trans-unit id="fruehereantraege">
+	<source>Frühere Anträge</source>
+	<target>درخواستهای قبلی</target>
+</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag">
+		<source>Früherer Antrag</source>
+		<target>درخواست قبلی</target>
+      </trans-unit>
+      		<trans-unit id="infofruehererAntrag">
+				<source>Bitte geben Sie an, ob Sie in der Vergangenheit bereits schon einmal einen Antrag zur Anerkennung Ihres Abschlusses gestellt haben.</source>
+				<target>لطفاً بنویسید که آیا در گذشته درخواستی برای به رسمیت شناختن مدرک پایان دوره آموزشی خود دادهاید.</target>
+			</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag_referenzberuf">
+		<source>Wenn ja, zu welchem Beruf?</source>
+		<target>اگر بله، برای کدام شغل؟</target>
+	  </trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag_institution">
+		<source>Wenn ja, bei welcher Institution?</source>
+		<target>اگر بله، در کدام موسسه؟</target>
+	  </trans-unit>
+			<trans-unit id="infoInstitution">
+				<source>Sofern Sie bereits einen Antrag auf Anerkennung Ihres Abschlusses gestellt haben, geben Sie bitte an dieser Stelle an, bei welcher Institution/Behörde und ggf. in welchem Land Sie dies getan haben.</source>
+				<target>اگر تا به حال درخواستی برای به رسمیت شناختن مدرک پایان دوره آموزشی خود دادهاید، لطفاً به این مرکز اعلام کنید که در کدام موسسه/ اداره و در کدام کشور درخواست خود را ارائه نمودهاید.</target>
+			</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.bescheidfrueherer_anerkennungsantrag">
+		<source><![CDATA[
+		Liegt schon ein Bescheid über einen Anerkennungsantrag vor?<br>
+		Falls ja, bitte bei Dokumenten-Upload hochladen
+		]]></source>
+		<target><![CDATA[
+		آیا قرار اداری دربارهی به رسمیت شناختن مدرک شما تا کنون اعلام شده است؟ اگر بله، لطفاً اسناد مربوط به آن را آپلود کرده و بفرستید.
+		]]></target>
+	  </trans-unit>	
+
+
+/******* Angaben zur Beratungsstelle ********/
+
+<trans-unit id="angabenzurberatungsstelle">
+	<source>Angaben zur Beratungsstelle</source>
+	<target>اطلاعاتی در مورد مرکز مشاوره</target>
+</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_beratung.weg_beratungsstelle">
+		<source>Wie/von wem haben Sie erfahren, dass wir Ihnen helfen können?</source>
+		<target>چگونه/ از طریق چه کسی متوجه شدید که ما میتوانیم به شما کمک کنیم؟</target>
+	  </trans-unit>
+		
+		
+/******* Berater ********/
+
+<trans-unit id="berater">
+	<source>Berater/in</source>
+	<target>مشاور (آقا/خانم)</target>
+</trans-unit>
+	  <trans-unit id="tx_iqtp13db_domain_model_beratung.berater">
+		<source>Name des/der Beraters/in (Wenn Sie bereits Kontakt hatten)</source>
+		<target>نام مشاور (اگر تاکنون ارتباطی برقرار کردهاید)</target>
+	  </trans-unit>
+
+/******* Dokumente ********/
+	
+<trans-unit id="dokumente">
+	<source>Dokumente</source>
+	<target>مدارک</target>
+</trans-unit>	
+	  <trans-unit id="dokumenteintro">
+		<source><![CDATA[
+			Bitte laden Sie folgende Dokumente hoch: <br>
+			- Ihre Original-Abschlüsse und Übersetzungen<br>
+				- Ihren Aufenthaltstitel; Lebenslauf; Bescheid ]]>
+		</source>
+		<target><![CDATA[
+			لطفاً مدارک زیل را آپلود کنید:<br>
+            اصل مدارک پایان دوره آموزشی و ترجمههای آنها؛<br>
+            اجازه اقامتتان؛ رزومه؛ قرار اداری
+			]]>
+		</target>
+	  </trans-unit>			
+	  <trans-unit id="dokumentauswaehlen">
+		<source>Dokument auswählen</source>
+		<target>انتخاب مدرک:</target>
+	  </trans-unit>
+	
+    </body>
+  </file>
+</xliff>

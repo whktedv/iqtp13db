@@ -1,0 +1,16 @@
+
+<f:layout name="Default" />
+
+<f:section name="main">
+<h1>Beratene(n) bearbeiten</h1>
+
+<f:flashMessages />
+
+<f:render partial="FormErrors" arguments="{object:Teilnehmer}" />
+
+<f:form action="update" name="teilnehmer" object="{teilnehmer}" >
+<f:render partial="Teilnehmer/FormFields" arguments="{_all}" />
+	<f:form.submit value="Speichern" />
+	<f:link.action class="linkbuttons" action="list">Zurück zur Liste</f:link.action>
+</f:form>
+</f:section>
