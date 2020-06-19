@@ -1,0 +1,120 @@
+<?php
+return [
+    'ctrl' => [
+        'title' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang_db.xlf:tx_iqtp13db_domain_model_dokument',
+        'label' => 'name',
+        'tstamp' => 'tstamp',
+        'crdate' => 'crdate',
+        'cruser_id' => 'cruser_id',
+        'versioningWS' => true,
+        'delete' => 'deleted',
+        'enablecolumns' => [
+            'disabled' => 'hidden',
+            'starttime' => 'starttime',
+            'endtime' => 'endtime',
+        ],
+        'searchFields' => 'name,pfad,beratung,schulung',
+        'iconfile' => 'EXT:iqtp13db/Resources/Public/Icons/tx_iqtp13db_domain_model_dokument.gif'
+    ],
+    'interface' => [
+        'showRecordFieldList' => 'hidden, name, pfad, beratung, schulung',
+    ],
+    'types' => [
+        '1' => ['showitem' => 'hidden, name, pfad, beratung, schulung, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+    ],
+    'columns' => [
+        't3ver_label' => [
+            'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.versionLabel',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'max' => 255,
+            ],
+        ],
+        'hidden' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.hidden',
+            'config' => [
+                'type' => 'check',
+                'items' => [
+                    '1' => [
+                        '0' => 'LLL:EXT:lang/locallang_core.xlf:labels.enabled'
+                    ]
+                ],
+            ],
+        ],
+        'starttime' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.starttime',
+            'config' => [
+                'type' => 'input',
+                'size' => 13,
+                'eval' => 'datetime',
+                'default' => 0,
+            	'renderType' => 'inputDateTime',
+            	'behaviour' => [
+            			'allowLanguageSynchronization' => true,
+            	]
+            		
+            ]
+        ],
+        'endtime' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.endtime',
+            'config' => [
+                'type' => 'input',
+                'size' => 13,
+                'eval' => 'datetime',
+                'default' => 0,
+            	'renderType' => 'inputDateTime',
+                'range' => [
+                    'upper' => mktime(0, 0, 0, 1, 1, 2038)
+                ],
+            	'behaviour' => [
+            			'allowLanguageSynchronization' => true,
+           		]
+            		
+            ],
+        ],
+        'name' => [
+	        'exclude' => true,
+	        'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang_db.xlf:tx_iqtp13db_domain_model_dokument.name',
+	        'config' => [
+			    'type' => 'input',
+			    'size' => 30,
+			    'eval' => 'trim'
+			],
+	    ],
+	    'pfad' => [
+	        'exclude' => true,
+	        'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang_db.xlf:tx_iqtp13db_domain_model_dokument.pfad',
+	        'config' => [
+			    'type' => 'input',
+			    'size' => 30,
+			    'eval' => 'trim'
+			],
+	    ],
+	    'beratung' => [
+	        'exclude' => true,
+	        'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang_db.xlf:tx_iqtp13db_domain_model_dokument.beratung',
+	        'config' => [
+			    'type' => 'select',
+			    'renderType' => 'selectSingle',
+			    'foreign_table' => 'tx_iqtp13db_domain_model_beratung',
+			    'minitems' => 0,
+			    'maxitems' => 1,
+			],
+	    ],
+	    'schulung' => [
+	        'exclude' => true,
+	        'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang_db.xlf:tx_iqtp13db_domain_model_dokument.schulung',
+	        'config' => [
+			    'type' => 'select',
+			    'renderType' => 'selectSingle',
+			    'foreign_table' => 'tx_iqtp13db_domain_model_schulung',
+			    'minitems' => 0,
+			    'maxitems' => 1,
+			],
+	    ],
+    ],
+];
