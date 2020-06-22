@@ -1,0 +1,21 @@
+<div class="frame"><h2><f:translate key="angabenzurberatungsstelle" /></h2>
+		<div class="tp13_formdivwebapp1">
+			<label for="wegBeratungsstelle" class="tp13_options">
+				<f:translate key="tx_iqtp13db_domain_model_beratung.weg_beratungsstelle" />
+			</label>
+			<div class="tp13_formdivwebappmultiradio">
+				<f:for each="{settings.beratungsstelle}" as="text" key="wert">
+					<f:form.radio property="wegBeratungsstelle" value="{wert}" checked="{beratungseite4.wegBeratungsstelle} == {wert}" /><span class="abschlussradiotext">{text}</span><br />
+				</f:for>
+			</div>
+			<div style="clear: both;"></div>
+		</div>
+</div>
+<div class="frame"><h2><f:translate key="berater" /></h2>
+		<div class="tp13_formdivwebapp1">
+			<label for="berater">
+				<f:translate key="tx_iqtp13db_domain_model_beratung.berater" />
+			</label>
+				<f:form.select property="berater" options="{berater}" optionLabelField="name" optionValueField="uid" sortByOptionLabel="1" />			
+		</div>
+</div>

@@ -1,0 +1,213 @@
+<div class="frame"><h2><f:translate key="beratungsprozess" /></h2>
+		<div class="tp13_formdivwebapp1">
+			<label for="chiffre">
+				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:chiffre.description" />
+			</label>
+				<f:form.textfield property="chiffre" />
+		</div>
+		<div class="tp13_formdivwebapp2">
+			<label for="prozess" style="float: left;">
+				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:prozess.description" />
+			</label>
+				<div class="tp13_formdivwebappradio"><f:form.radio property="prozess" value="1" />Anerkennungsberatung</div>
+				<div class="tp13_formdivwebappradio"><f:form.radio property="prozess" value="2" />Qualifizierungsberatung</div>
+				<div style="clear: both;"></div>
+		</div>
+		<div class="tp13_formdivwebapp1">
+			<label for="datum">
+				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:datum.description" />
+			</label>
+				<f:form.textfield property="datum" value="{beratung.datum->f:format.date(format: 'd.m.Y')}" size="8" id="datepicker" />
+		</div>
+		<div class="tp13_formdivwebapp2">
+			<label for="berater">
+				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:berater.description" />
+			</label>
+				<f:form.select property="berater" options="{berater}" optionLabelField="name" optionValueField="uid" sortByOptionLabel="1" prependOptionLabel="-" prependOptionValue="0" />
+		</div>
+		<div class="tp13_formdivwebapp1">
+			<label for="folgekontakt">
+				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:folgekontakt.description" />
+			</label>
+				<f:form.textfield property="folgekontakt" />
+		</div>
+		<div class="tp13_formdivwebapp2">
+			<label for="ort">
+				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:ort.description" />
+			</label>
+				<f:form.textfield property="ort" />
+		</div>
+		<div class="tp13_formdivwebapp1">
+			<label for="beratungsart" style="float: left;">
+				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:beratungsart.description" />
+			</label>
+			<div class="tp13_formdivwebappmultiradio">
+				<f:for each="{settings.beratungsart}" as="brtgsart" key="wert">
+					<f:form.radio property="beratungsart" value="{wert}" checked="{beratung.beratungsart} == {wert}" />{brtgsart}<br>
+				</f:for>
+			</div><div style="clear: both;"></div>
+		</div>
+		<div class="tp13_formdivwebapp2">
+			<label for="anfrageDurch" style="float: left;">
+				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:anfrage_durch.description" />
+			</label>
+			<div class="tp13_formdivwebappmultiradio">
+				<f:for each="{settings.anfragedurch}" as="anfrage" key="wert">
+					<f:form.radio property="anfrageDurch" value="{wert}" checked="{beratung.anfrageDurch} == {wert}" />{anfrage}<br>
+				</f:for>
+			</div><div style="clear: both;"></div>
+		</div>
+		<div class="tp13_formdivwebapp1">
+			<label for="anmerkung">
+				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:anmerkung.description" />
+			</label>
+				<f:form.textarea property="anmerkung" cols="60" rows="8" />
+		</div>
+</div>
+<div style="clear: both;"></div>
+
+<div class="frame"><h2><f:translate key="ergebnisderberatung" /></h2>
+		<div class="tp13_formdivwebapp1">
+			<label for="ergebnisWeiterleitung">
+				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:ergebnis_weiterleitung.description" />
+			</label>
+				<f:form.textfield property="ergebnisWeiterleitung" />
+		</div>
+</div>
+<div style="clear: both;"></div>
+
+<div class="frame"><h2><f:translate key="falldokumentation" /></h2>
+		<div class="tp13_formdivwebapp1">
+			<label for="anmerkungVerfahren">
+				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:anmerkung_verfahren.description" />
+			</label>
+				<f:form.textarea property="anmerkungVerfahren" cols="70" rows="5" />
+		</div>
+		<div class="tp13_formdivwebapp2">		
+			<label for="angabenVereinbarungen">
+				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:angaben_vereinbarungen.description" />
+			</label>
+				<f:form.textarea property="angabenVereinbarungen" cols="70" rows="5" />
+		</div>
+		<div class="tp13_formdivwebapp1">		
+			<label for="umfang">
+				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:umfang.description" />
+			</label>
+				<f:form.textfield size="25" property="umfang" />
+		</div>
+		<div class="tp13_formdivwebapp2">		
+			<label for="beratungAbgeschlossen">
+				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:beratung_abgeschlossen.description" />
+			</label>
+				<f:form.textfield property="beratungAbgeschlossen" />
+		</div>
+		<div class="tp13_formdivwebapp1">		
+			<label for="uebertragNIQ">
+				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:uebertrag_n_i_q.description" />
+			</label>
+				<f:form.textfield property="uebertragNIQ" />
+		</div>
+</div>
+<div style="clear: both;"></div>
+
+
+<div class="frame"><h2><f:translate key="qualifizierungsberatung" /></h2>
+		<div class="tp13_formdivwebapp1">
+			<label for="folgekontakte">
+				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:folgekontakte.description" />
+			</label>
+				<f:form.textfield property="folgekontakte" />
+		</div>
+		<div class="tp13_formdivwebapp2">
+			<label for="bescheidGleichwertigkeitspruefung" style="float: left;">
+				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:bescheid_gleichwertigkeitspruefung.description" />
+			</label>
+			<div class="tp13_formdivwebappmultiradio">
+				<f:for each="{settings.bescheidGleichwertigkeitspruefung}" as="bgwp" key="wert">
+					<f:form.radio property="bescheidGleichwertigkeitspruefung" value="{wert}" checked="{beratung.bescheidGleichwertigkeitspruefung} == {wert}" />{bgwp}<br>
+				</f:for>
+			</div><div style="clear: both;"></div>
+		</div>
+		<div class="tp13_formdivwebapp1">
+			<label for="ergebnisGleichwertigkeitsfeststellung" style="float: left;">
+				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:ergebnis_gleichwertigkeitsfeststellung.description" />
+			</label>
+			<div class="tp13_formdivwebappmultiradio">
+				<f:for each="{settings.ergebnisGleichwertigkeitsfeststellung}" as="egwp" key="wert">
+					<f:form.radio property="ergebnisGleichwertigkeitsfeststellung" value="{wert}" checked="{beratung.ergebnisGleichwertigkeitsfeststellung} == {wert}" />{egwp}<br>
+				</f:for>
+			</div><div style="clear: both;"></div>
+		</div>
+		<div class="tp13_formdivwebapp2">
+			<label for="zabBewertung" style="float: left;">
+				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:zab_bewertung.description" />
+			</label>
+			<div class="tp13_formdivwebappmultiradio">
+				<f:for each="{settings.zabBewertung}" as="zab" key="wert">
+					<f:form.radio property="zabBewertung" value="{wert}" checked="{beratung.zabBewertung} == {wert}" />{zab}<br>
+				</f:for>
+			</div><div style="clear: both;"></div>
+		</div>
+		<div class="tp13_formdivwebapp1">
+			<label for="verweisAnBildungsdienstleister" style="float: left;">
+				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:verweis_an_bildungsdienstleister.description" />
+			</label>
+			<div class="tp13_formdivwebappmultiradio">
+				<f:for each="{settings.anBildungsdienstleisterweiterverwiesen}" as="vwab" key="wert">
+					<f:form.radio property="verweisAnBildungsdienstleister" value="{wert}" checked="{beratung.verweisAnBildungsdienstleister} == {wert}" />{vwab}<br>
+				</f:for>
+			</div><div style="clear: both;"></div>
+		</div>
+		<div class="tp13_formdivwebapp2">
+			<label for="empfohleneQualimassnahme">
+				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:empfohlene_qualimassnahme.description" />
+			</label>
+				<f:form.textfield property="empfohleneQualimassnahme" />
+		</div>
+		<div class="tp13_formdivwebapp1">
+			<label for="welcherBildungsdienstleister" style="float: left;">
+				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:welcher_bildungsdienstleister.description" />
+			</label>
+			<div class="tp13_formdivwebappmultiradio">
+				<f:for each="{settings.welcherBildungsdienstleister}" as="wbd" key="wert">
+					<f:form.radio property="welcherBildungsdienstleister" value="{wert}" checked="{beratung.welcherBildungsdienstleister} == {wert}" />{wbd}<br>
+				</f:for>
+			</div><div style="clear: both;"></div>
+		</div>
+		<div class="tp13_formdivwebapp2">
+			<label for="modulZuordnungQualimassnahme" style="float: left;">
+				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:modul_zuordnung_qualimassnahme.description" />
+			</label>
+			<div class="tp13_formdivwebappmultiradio">
+				<f:for each="{settings.modulQualifizierungsmassnahme}" as="mzqm" key="wert">
+					<f:form.radio property="modulZuordnungQualimassnahme" value="{wert}" checked="{beratung.modulZuordnungQualimassnahme} == {wert}" />{mzqm}<br>
+				</f:for>
+			</div><div style="clear: both;"></div>
+		</div>
+		<div class="tp13_formdivwebapp1">
+			<label for="bundeslandQualimassnahme">
+				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:bundesland_qualimassnahme.description" />
+			</label>
+				<f:form.textfield property="bundeslandQualimassnahme" />
+		</div>
+</div>
+<div style="clear: both;"></div>
+
+<div class="frame"><h2><f:translate key="angabenzurberatungsstelle" /></h2>
+		<div class="tp13_formdivwebapp1">
+			<label for="wegBeratungsstelle" style="float: left;">
+				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:weg_beratungsstelle.description" />
+			</label>
+			<div class="tp13_formdivwebappmultiradio">
+				<f:for each="{settings.beratungsstelle}" as="text" key="wert">
+					<f:form.radio property="wegBeratungsstelle" value="{wert}" checked="{beratung.wegBeratungsstelle} == {wert}" />{text}<br>
+				</f:for>
+			</div><div style="clear: both;"></div>
+		</div>
+		<div class="tp13_formdivwebapp2">
+			<label for="nameBeratungsstelle">
+				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:name_beratungsstelle.description" />
+			</label>
+				<f:form.textfield property="nameBeratungsstelle" />
+		</div>
+</div>
