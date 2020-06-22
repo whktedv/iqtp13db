@@ -1,0 +1,33 @@
+
+<f:layout name="Default" />
+
+<f:section name="main">
+<h1>Einzelansicht Schulung</h1>
+
+<f:flashMessages />
+<f:render partial="Schulung/Properties" arguments="{_all}" />
+<f:link.action class="linkbuttons" action="edit" arguments="{schulung:schulung}">Bearbeiten</f:link.action>
+<f:link.action class="linkbuttons" action="new">Neue Schulung</f:link.action>
+<f:link.action class="linkbuttons" action="list">Zurück zur Liste</f:link.action>
+
+<div class="frame"><h2>Dokumente</h2>
+<table>
+<f:for each="{dokumente}" as="dokument">
+	<tr>
+	<td>{dokument.name}</td>
+	<td>{dokument.pfad}</td>
+	<td><f:link.action class="linkbuttons" action="deleteFileSchulung" controller="Dokument" arguments="{dokument:dokument, schulung:schulung}">Löschen</f:link.action></td>
+	</tr>
+</f:for>
+</table>
+	<f:form method="post" controller="Dokument" arguments="{schulung:schulung}" action="saveFileSchulung" name="dokument" object="{dokument}" enctype="multipart/form-data" noCacheHash="true" ><br />
+		<div class="tp13_formdiv100">
+ 	       Dokument auswählen:
+			<f:form.upload name="formdoc[0]"  /><f:form.submit value="Dokument hochladen" />			
+		</div>
+	</f:form>
+</div>
+<div style="clear: both;"></div>
+
+
+</f:section>

@@ -1,0 +1,16 @@
+
+<f:layout name="Default" />
+
+<f:section name="main">
+<h1>Neue Schulung</h1>
+
+<f:flashMessages />
+
+<f:render partial="FormErrors" arguments="{object:Schulung}" />
+
+<f:form action="create"  name="schulung" object="{schulung}">
+<f:render partial="Schulung/FormFields" arguments="{_all}" />
+	<f:form.submit value="Speichern" />
+	<f:link.action class="linkbuttons" action="list">Zurück zur Liste</f:link.action>
+</f:form>
+</f:section>

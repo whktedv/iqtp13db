@@ -1,0 +1,12 @@
+
+<f:layout name="Default" />
+
+<f:section name="main">
+<f:flashMessages />
+<br />
+<h1>Daten Beratene exportieren</h1>
+Nach Klick auf den Button werden die Daten in eine CSV-Datei zum Download exportiert.
+<f:form method="post" controller="Teilnehmer" action="export" name="export" enctype="multipart/form-data" noCacheHash="true" ><br />
+		<f:form.submit name="export" value="Daten exportieren" />			
+</f:form>
+</f:section>
