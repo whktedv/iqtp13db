@@ -1,3 +1,17 @@
+plugin.tx_iqtp13db.settings {
+	storagePid = 
+	sender = 
+	bccmail = 
+	subject = 
+	mailattacheinwilligung = 
+	startseitelink = 
+	logolink = http://www.iq-netzwerk-nrw.de/fileadmin/user_upload/images/logo_small.png
+	
+	# für Wartungsmodus
+	wartungvon = 01.01.2020 08:00
+	wartungbis = 01.02.2020 12:00
+	wartungtext = <h1>Wartungsarbeiten. Dieser Dienst ist vorübergehend nicht verfügbar. Danke für Ihr Verständnis.</h1><h1>&nbsp;</h1><h1>Maintenance. This service is temporarily not available. Thanks for your patience.</h1>
+}
 
 plugin.tx_iqtp13db_iqtp13dbadmin {
   view {
@@ -9,11 +23,12 @@ plugin.tx_iqtp13db_iqtp13dbadmin {
     layoutRootPaths.1 = {$plugin.tx_iqtp13db_iqtp13dbadmin.view.layoutRootPath}
   }
   persistence {
-    storagePid = {$plugin.tx_iqtp13db_iqtp13dbadmin.persistence.storagePid}
+    storagePid = {$plugin.tx_iqtp13db.persistence.storagePid}
     #recursive = 1
   }
   features {
     #skipDefaultArguments = 1
+    requireCHashArgumentForActionArguments = 0
   }
   mvc {
     #callDefaultActionIfActionCantBeResolved = 1
@@ -39,11 +54,12 @@ plugin.tx_iqtp13db_iqtp13dbwebapp {
     layoutRootPaths.1 = {$plugin.tx_iqtp13db_iqtp13dbwebapp.view.layoutRootPath}
   }
   persistence {
-    storagePid = {$plugin.tx_iqtp13db_iqtp13dbwebapp.persistence.storagePid}
+    storagePid = {$plugin.tx_iqtp13db.persistence.storagePid}
     #recursive = 1
   }
   features {
     #skipDefaultArguments = 1
+    requireCHashArgumentForActionArguments = 0
   }
   mvc {
     #callDefaultActionIfActionCantBeResolved = 1

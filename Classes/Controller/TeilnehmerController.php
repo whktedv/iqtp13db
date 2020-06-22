@@ -4,31 +4,6 @@ use \Datetime;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 
-/***************************************************************
- *
- *  Copyright notice
- *
- *  (c) 2016 Uli Dohmen <edv@whkt.de>, WHKT
- *
- *  All rights reserved
- *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
-
 /***
  *
  * This file is part of the "IQ TP13 Datenbank Anerkennungserstberatung NRW" Extension for TYPO3 CMS.
@@ -36,7 +11,7 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2018 Uli Dohmen <edv@whkt.de>, WHKT
+ *  (c) 2020 Uli Dohmen <edv@whkt.de>, WHKT
  *
  ***/
 
@@ -88,8 +63,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function startAction()
     {
-        $wartungvon = new DateTime($this->settings['wartungvon']);
-        $wartungbis = new DateTime($this->settings['wartungbis']);
+        $wartungvon = new DateTime($this->settings['wartungvon'] == '' ? '01.01.2020 01:00' : $this->settings['wartungvon']);
+        $wartungbis = new DateTime($this->settings['wartungbis'] == '' ? '01.01.2020 02:00' : $this->settings['wartungbis']);
         
         $datum = strtotime("now");
         
@@ -139,6 +114,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     {
         $valArray = $this->request->getArguments();
         //\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($valArray);
+        
         if ($valArray['filteraus']) {
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', NULL);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', NULL);
@@ -186,8 +162,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function newAction()
     {
-       
-    	
+           	
     }
 
     /**
@@ -198,8 +173,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function createAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
-        $this->addFlashMessage('Teilnehmer wurde erstellt.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+        $this->addFlashMessage('Teilnehmer wurde erstellt.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
         $this->teilnehmerRepository->add($teilnehmer);
+        
         // Daten sofort in die Datenbank schreiben
         $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
@@ -336,8 +312,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function anmeldseite2redirectAction(\Ud\Iqtp13db\Domain\Model\TNSeite2 $tnseite2)
     {
         $valArray = $this->request->getArguments();
-        //		\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($valArray);
-        //		die;
+
         $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite2', serialize($tnseite2));
         if (isset($valArray['btnzurueck'])) {
             $this->redirect('anmeldseite1');
@@ -439,7 +414,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $referringRequest = $this->request->getReferringRequest();
         if ($referringRequest !== NULL) {
             $originalRequest = clone $this->request;
-            //\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($originalRequest);
+
             $this->request->setOriginalRequest($originalRequest);
             $this->request->setOriginalRequestMappingResults($this->arguments->validate());
             $this->forward($referringRequest->getControllerActionName(), $referringRequest->getControllerName(), $referringRequest->getControllerExtensionName(), $referringRequest->getArguments());
@@ -570,7 +545,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         
         // ******************** EXPORT ****************************
         if ($valArray['export'] == 'Daten exportieren') {
-            //$this->addFlashMessage('Export.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+
             $filename = 'export_' . date('Y-m-d_H-i', time()) . '.csv';
             header('Content-Type: text/csv');
             header('Content-Disposition: attachment;filename=' . $filename);
@@ -606,9 +581,6 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         }
         
     }
-    
-  
-    
     
     /**
      * action anmeldung

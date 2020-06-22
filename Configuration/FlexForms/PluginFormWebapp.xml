@@ -43,6 +43,60 @@
 				</config>
             </TCEforms>
           </settings.anmeldendeseite>
+		  <settings.sender>
+                     <TCEforms>
+                        <label>Absender E-Mail-Adresse Bestätigung</label>
+                        <config>
+                            <type>input</type>
+                            <size>60</size>
+                        </config>
+                      </TCEforms>
+          </settings.sender>
+          <settings.bccmail>
+                    <TCEforms>
+                         <label>Bcc E-Mail-Adresse Bestätigung</label>
+                         <config>
+                             <type>input</type>
+                             <size>60</size>
+                         </config>
+                    </TCEforms>
+          </settings.bccmail>
+          <settings.subject>
+                    <TCEforms>
+                         <label>Betreff Bestätigung an Beratenen</label>
+                         <config>
+                             <type>input</type>
+                             <size>60</size>
+                         </config>
+                    </TCEforms>
+          </settings.subject>
+          <settings.mailattacheinwilligung>
+                    <TCEforms>
+                         <label>Pfad zum Dateianhang (optional)</label>
+                         <config>
+                             <type>input</type>
+                             <size>60</size>
+                         </config>
+                    </TCEforms>
+          </settings.mailattacheinwilligung>
+          <settings.startseitelink>
+                    <TCEforms>
+                         <label>Link zur Startseite (optional)</label>
+                         <config>
+                             <type>input</type>
+                             <size>60</size>
+                         </config>
+                    </TCEforms>
+          </settings.startseitelink>
+          <settings.logolink>
+                    <TCEforms>
+                         <label>Link zum Logo (optional)</label>
+                         <config>
+                             <type>input</type>
+                             <size>60</size>
+                         </config>
+                    </TCEforms>
+          </settings.logolink>
           <settings.redirectValidationInitiated>
             <TCEforms>
               <label>Seite Bestätigungsmail angefordert</label>
@@ -71,6 +125,37 @@
 				</config>
             </TCEforms>
           </settings.redirectValidationFailed>
+          <settings.wartungvon>
+                    <TCEforms>
+                         <label>Wartung von (Format: 01.01.2020 08:00)</label>
+                         <config>
+                             <type>input</type>
+                             <size>60</size>
+                         </config>
+                    </TCEforms>
+          </settings.wartungvon>
+          <settings.wartungbis>
+                    <TCEforms>
+                         <label>Wartung bis (Format: 01.01.2020 08:00)</label>
+                         <config>
+                             <type>input</type>
+                             <size>60</size>
+                         </config>
+                    </TCEforms>
+          </settings.wartungbis>
+          <settings.wartungtext>
+                        <TCEforms>
+                		    <label>Wartung Text</label>
+							<config>
+  								<type>text</type>
+  								<cols>20</cols>
+  								<rows>3</rows>
+	    						<eval>trim</eval>
+   	 							<enableRichtext>1</enableRichtext>
+   		 						<richtextConfiguration>custom</richtextConfiguration>
+							</config>							
+                        </TCEforms>
+          </settings.wartungtext>
         </el>
       </ROOT>
     </sDEF>

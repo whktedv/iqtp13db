@@ -1,31 +1,6 @@
 <?php
 namespace Ud\Iqtp13db\Controller;
 
-/***************************************************************
- *
- *  Copyright notice
- *
- *  (c) 2016 Uli Dohmen <edv@whkt.de>, WHKT
- *
- *  All rights reserved
- *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
-
 /***
  *
  * This file is part of the "IQ TP13 Datenbank Anerkennungserstberatung NRW" Extension for TYPO3 CMS.
@@ -33,7 +8,7 @@ namespace Ud\Iqtp13db\Controller;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2018 Uli Dohmen <edv@whkt.de>, WHKT
+ *  (c) 2020 Uli Dohmen <edv@whkt.de>, WHKT
  *
  ***/
 
@@ -112,7 +87,6 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     public function showAction(\Ud\Iqtp13db\Domain\Model\Beratung $beratung, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
         $dokumente = $this->dokumentRepository->findByBeratung($beratung);
-        //\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($dokumente);
         $berater = $this->beraterRepository->findAll();
         $this->view->assign('berater', $berater);
         $this->view->assign('beratung', $beratung);
@@ -129,7 +103,6 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     public function newAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
         $berater = $this->beraterRepository->findAll();
-        //\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($berater);
         $this->view->assign('berater', $berater);
         $this->view->assign('teilnehmer', $teilnehmer);
     }
@@ -143,8 +116,9 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      */
     public function createAction(\Ud\Iqtp13db\Domain\Model\Beratung $beratung, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
-        $this->addFlashMessage('Beratung wurde erstellt.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+        $this->addFlashMessage('Beratung wurde erstellt.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
         $this->beratungRepository->add($beratung);
+        
         // Daten sofort in die Datenbank schreiben
         $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
@@ -179,8 +153,9 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      */
     public function updateAction(\Ud\Iqtp13db\Domain\Model\Beratung $beratung, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
-        $this->addFlashMessage('Beratung aktualisiert.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+        $this->addFlashMessage('Beratung aktualisiert.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
         $this->beratungRepository->update($beratung);
+        
         // Daten sofort in die Datenbank schreiben
         $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
@@ -199,8 +174,9 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      */
     public function deleteAction(\Ud\Iqtp13db\Domain\Model\Beratung $beratung, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
-        $this->addFlashMessage('Beratung gelöscht.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+        $this->addFlashMessage('Beratung gelöscht.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
         $this->beratungRepository->remove($beratung);
+        
         // Daten sofort in die Datenbank schreiben
         $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
@@ -248,6 +224,7 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
             if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid') == NULL) {
                 $teilnehmer = $this->getTeilnehmerFromSession();
                 $this->teilnehmerRepository->add($teilnehmer);
+                
                 // Daten sofort in die Datenbank schreiben
                 $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
                 $persistenceManager->persistAll();
@@ -256,6 +233,7 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
                 $beratung = $this->getBeratungFromSession();
                 $beratung->setTeilnehmer($teilnehmer);
                 $this->beratungRepository->add($beratung);
+                
                 // Daten sofort in die Datenbank schreiben
                 $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
                 $persistenceManager->persistAll();
@@ -283,9 +261,6 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     public function anmeldungcompleteAction(\Ud\Iqtp13db\Domain\Model\Beratung $beratung, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {        
         $valArray = $this->request->getArguments();
-        //\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($valArray);
-        //		$teilnehmer = $this->teilnehmerRepository->findByUid($valArray['teilnehmer']);
-        //		$beratung = $this->beratungRepository->findOneByTeilnehmer($teilnehmer);
         $berater = $beratung->getBerater();
         $teilnehmer = $beratung->getTeilnehmer();
         $dokumente = $this->dokumentRepository->findByBeratung($beratung);
@@ -305,7 +280,7 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     public function anmeldungcompleteredirectAction(\Ud\Iqtp13db\Domain\Model\Beratung $beratung)
     {
         $valArray = $this->request->getArguments();
-       // \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($valArray);
+
         if (isset($valArray['btnzurueck'])) {
             $this->redirect('anmeldseite4');
         }
@@ -319,12 +294,12 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
             $templateName = 'Mailtoconfirm';
             $confirmmailtext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmmailtext', 'Iqtp13db');
             $subject = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmsubject', 'Iqtp13db');
-
-            //\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($sender);
             
             $variables = array(
                 'teilnehmer' => $teilnehmer,
-                'confirmmailtext' => $confirmmailtext
+                'confirmmailtext' => $confirmmailtext,
+            	'startseitelink' => $this->settings['startseitelink'],
+            	'logolink' => $this->settings['logolink']
             );
             $this->sendTemplateEmail(array($recipient), array($bcc), array($sender), $subject, $templateName, $variables, false);
             
@@ -399,7 +374,9 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
             'editLink' => $uriedit . '&uid=' . $teilnehmer->getUid() . '&ts=' . $teilnehmer->getCrdate(),
             'deleteLink' => $uridelete . '&uid=' . $teilnehmer->getUid() . '&ts=' . $teilnehmer->getCrdate(),
             'anrede' => 'Sehr geehrte' . ($teilnehmer->getGeschlecht() == 2 ? 'r Herr ' : ' Frau ') . $teilnehmer->getNachname(),
-            'mailtext' => $mailtext
+            'mailtext' => $mailtext,
+        	'startseitelink' => $this->settings['startseitelink'],
+        	'logolink' => $this->settings['logolink']
         );
         $this->sendTemplateEmail(array($recipient), array($bcc), array($sender), $subject, $templateName, $variables, true);
     }

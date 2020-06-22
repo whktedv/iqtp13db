@@ -20,3 +20,11 @@ plugin.tx_iqtp13db_iqtp13dbwebapp {
     layoutRootPath = EXT:iqtp13db/Resources/Private/Layouts/
   }
 }
+
+plugin.tx_iqtp13db {
+	persistence {
+		# cat=plugin.tx_iqpraktikumsdb//a; type=string; label=Default storage PID
+		storagePid =
+	}
+}
+

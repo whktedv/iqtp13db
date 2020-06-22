@@ -1,31 +1,6 @@
 <?php
 namespace Ud\Iqtp13db\Controller;
 
-/***************************************************************
- *
- *  Copyright notice
- *
- *  (c) 2016 Uli Dohmen <edv@whkt.de>, WHKT
- *
- *  All rights reserved
- *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
-
 /***
  *
  * This file is part of the "IQ TP13 Datenbank Anerkennungserstberatung NRW" Extension for TYPO3 CMS.
@@ -33,7 +8,7 @@ namespace Ud\Iqtp13db\Controller;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2018 Uli Dohmen <edv@whkt.de>, WHKT
+ *  (c) 2020 Uli Dohmen <edv@whkt.de>, WHKT
  *
  ***/
 
@@ -136,6 +111,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
             $dokument = $this->savefile($newFilePath, $_FILES);
             $dokument->setSchulung($schulung);
             $this->dokumentRepository->update($dokument);
+            
             //Daten sofort in die Datenbank schreiben
             $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
             $persistenceManager->persistAll();
@@ -160,7 +136,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
             $anzdokumente = count($this->dokumentRepository->findBySchulung($schulung->getUid()));
             $schulung->setAnzDokumente($anzdokumente);
             $this->schulungRepository->update($schulung);
-            $this->addFlashMessage('Dokument wurde gelöscht.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->addFlashMessage('Dokument wurde gelöscht.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
         } else {
             $this->addFlashMessage('Dokument konnte nicht gelöscht werden!', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
         }
@@ -218,6 +194,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
             $dokument = $this->savefile($newFilePath, $files);
             $dokument->setBeratung($beratung);
             $this->dokumentRepository->update($dokument);
+            
             //Daten sofort in die Datenbank schreiben
             $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
             $persistenceManager->persistAll();
@@ -252,10 +229,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
                 $beratung->setAnzDokumente($anzdokumente);
                 $this->beratungRepository->update($beratung);
                 
-                //\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($beratung);
-                //die;
-                
-                $this->addFlashMessage('Dokument wurde gelöscht.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                $this->addFlashMessage('Dokument wurde gelöscht.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
             } else {
                 $this->addFlashMessage('Dokument konnte nicht gelöscht werden!', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             }
@@ -275,16 +249,13 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         
         $dokument = new \Ud\Iqtp13db\Domain\Model\Dokument();
         
-        //be careful - you should validate the file type! This is not included here
+        //TODO: should validate the file type! This is not included here
         $tmpName = $this->sanitizeFileName($arrfiles['name']['file']);
         $tmpFile = $arrfiles['tmp_name']['file'];
         
         
         $storage = $this->getTP13Storage($pfad);
-        
-       // \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($pfad);
-       // die;
-        
+      
         if (!$storage->hasFolder($pfad)) {
             $targetFolder = $storage->createFolder($pfad);
         } else {
@@ -316,6 +287,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     {            
         
         $this->dokumentRepository->remove($dokument);
+        
         // Daten sofort in die Datenbank schreiben
         $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
@@ -323,8 +295,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $storage = $this->getTP13Storage($delfilepath);
         
         $delfile = $storage->getFile($delfilepath);
-        
-        
+                
         $erg = $storage->deleteFile($delfile);
         
         return $erg;
@@ -332,8 +303,12 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     
     function getTP13Storage($pfad) {
         $storageRepository = $this->objectManager->get('TYPO3\\CMS\\Core\\Resource\\StorageRepository');
+        
         // Speicher 'tp13data' muss im Typo3-Backend auf der Root-Seite als "Dateispeicher" angelegt sein!
-        // wenn der Speicher mal nicht verfügbar war (temporär), muss er im Backend im Bereich "Dateispeicher" manuell wieder "online" geschaltet werden mit der Checkbox "ist online?" in den Eigenschaften des jeweiligen Dateispeichers
+        // wenn der Speicher mal nicht verfügbar war (temporär), muss er im Backend im Bereich "Dateispeicher" 
+        // manuell wieder "online" geschaltet werden mit der Checkbox "ist online?" 
+        // in den Eigenschaften des jeweiligen Dateispeichers
+        
         $storages = $storageRepository->findAll();
         foreach ($storages as $s) {
             $storageObject = $s;

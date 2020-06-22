@@ -1,4 +1,4 @@
-.einwilligungtext {
+.tx-iqtp13db .einwilligungtext {
 	float: right;
 	width: 90%;
     font-weight: 400;
@@ -21,7 +21,7 @@
 }
 
 
-input[type="radio"], input[type="checkbox"] {
+.tx-iqtp13db input[type="radio"], .tx-iqtp13db input[type="checkbox"] {
     display: block;
     float: right;
     line-height: normal;
@@ -29,7 +29,7 @@ input[type="radio"], input[type="checkbox"] {
     width: auto;
 }
 
-.infolabel {
+.tx-iqtp13db .infolabel {
     background-image: url(../img/infoicon.png);
     background-repeat: no-repeat;
     background-position: left;
@@ -38,6 +38,6 @@ input[type="radio"], input[type="checkbox"] {
     padding-left: 30px;
 }
 
-label {
+.tx-iqtp13db label {
 	float: right;
 }
