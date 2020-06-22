@@ -26,14 +26,12 @@ $extensionName = strtolower(\TYPO3\CMS\Core\Utility\GeneralUtility::underscoredT
 $pluginName = strtolower('Iqtp13dbadmin');
 $pluginSignature = $extensionName.'_'.$pluginName;
 
-$TCA['tt_content']['types']['list']['subtypes_excludelist'][$pluginSignature] = 'layout,select_key,pages';
 $TCA['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue($pluginSignature, 'FILE:EXT:iqtp13db/Configuration/FlexForms/PluginFormAdmin.xml');
 
 $pluginName2 = strtolower('Iqtp13dbwebapp');
 $pluginSignature2 = $extensionName.'_'.$pluginName2;
 
-$TCA['tt_content']['types']['list']['subtypes_excludelist'][$pluginSignature2] = 'layout,select_key,pages';
 $TCA['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature2] = 'pi_flexform';
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue($pluginSignature2, 'FILE:EXT:iqtp13db/Configuration/FlexForms/PluginFormWebapp.xml');
 
