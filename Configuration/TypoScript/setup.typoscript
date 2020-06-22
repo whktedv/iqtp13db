@@ -1,5 +1,4 @@
 plugin.tx_iqtp13db.settings {
-	storagePid = 
 	sender = 
 	bccmail = 
 	subject = 
@@ -22,26 +21,11 @@ plugin.tx_iqtp13db_iqtp13dbadmin {
     layoutRootPaths.0 = EXT:iqtp13db/Resources/Private/Layouts/
     layoutRootPaths.1 = {$plugin.tx_iqtp13db_iqtp13dbadmin.view.layoutRootPath}
   }
-  persistence {
-    storagePid = {$plugin.tx_iqtp13db.persistence.storagePid}
-    #recursive = 1
-  }
+
   features {
-    #skipDefaultArguments = 1
     requireCHashArgumentForActionArguments = 0
   }
-  mvc {
-    #callDefaultActionIfActionCantBeResolved = 1
-  }
-  
-  settings {
-        validationMailTemplateFile = 
-        ownerConfirmationMailTemplateFile = 
-        validationMailSubject =
-        sender =
-        ownerconfirmationreceiver =
-        ownerconfirmationSubject =
-    }
+
 }
 
 plugin.tx_iqtp13db_iqtp13dbwebapp {
@@ -53,16 +37,18 @@ plugin.tx_iqtp13db_iqtp13dbwebapp {
     layoutRootPaths.0 = EXT:iqtp13db/Resources/Private/Layouts/
     layoutRootPaths.1 = {$plugin.tx_iqtp13db_iqtp13dbwebapp.view.layoutRootPath}
   }
-  persistence {
-    storagePid = {$plugin.tx_iqtp13db.persistence.storagePid}
-    #recursive = 1
-  }
+
   features {
-    #skipDefaultArguments = 1
     requireCHashArgumentForActionArguments = 0
   }
-  mvc {
-    #callDefaultActionIfActionCantBeResolved = 1
+
+  settings {
+    validationMailTemplateFile = 
+    validationMailSubject =
+    
+    ownerConfirmationMailTemplateFile = 
+    ownerconfirmationreceiver =
+    ownerconfirmationSubject =
   }
 }
 
