@@ -74,12 +74,11 @@ Alle verfügbaren Variablen sind in den Language-Files der Extension zu finden.<
 
 Um eigene Templates zu verwenden bzw. die vorhandenen anzupassen, kann das Verzeichnis Resources/Private aus der Extension in ein eigenes Templates-Verzeichnis auf fileadmin kopiert werden. Der Pfad zu den angepassten Template-Dateien wird im Typoscript-Template dann mit den folgenden Zeilen geändert:<br>
 <b>
-plugin.tx_iqtp13db_iqtp13dbwebapp {<br>
-  view {<br>
-    templateRootPaths.10 = <eigener_template_pfad>/Resources/Private/Templates/<br>
-    partialRootPaths.10 = <eigener_template_pfad>/Resources/Private/Partials/<br>
-    layoutRootPaths.10 = <eigener_template_pfad>/Resources/Private/Layouts/ <br>
-  }<br>
+<br>
+plugin.tx_iqtp13db_iqtp13dbwebapp.view {<br>
+&nbsp;&nbsp;templateRootPaths.10 = <eigener_template_pfad>/Resources/Private/Templates/<br>
+&nbsp;&nbsp;partialRootPaths.10 = <eigener_template_pfad>/Resources/Private/Partials/<br>
+&nbsp;&nbsp;layoutRootPaths.10 = <eigener_template_pfad>/Resources/Private/Layouts/ <br>
 }</b>
 
 Insbesondere die Templates für die E-Mail an die/den Beratene(n) sollten angepasst werden. Diese liegen unter <b>Resources/Private/Templates/Beratung/</b>.
