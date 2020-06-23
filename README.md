@@ -4,7 +4,7 @@
 
 <h2>Systemvoraussetzung</h2>
 <ul>
- <li>TYPO3 8.7 oder höher</li>
+ <li>TYPO3 9.5</li>
  <li>ausreichend Speicherplatz für die Anhänge der Beratenen; im Schnitt je Beratene(r) etwa 5 MB</li>
  <li>der Webserver muss E-Mails versenden können</li>
 </ul>
