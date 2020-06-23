@@ -8,7 +8,7 @@
 
 <h2>Installation</h2>
 
-1.	Für Mehrsprachigkeit müssen in Typo3 auf der root-Seite die entsprechenden Website-Sprachen angelegt werden. Folgende Sprachen werden von der Extension unterstützt und sollten am besten in dieser Reihenfolge angelegt werden: Englisch, Arabisch, Persisch (Farsi), Französisch, Polnisch, Rumänisch, Russisch, Spanisch, Türkisch. 
+1.	Für Mehrsprachigkeit müssen in Typo3 auf der root-Seite die entsprechenden Website-Sprachen angelegt werden. Folgende Sprachen werden von der Extension unterstützt und sollten am besten in dieser Reihenfolge angelegt werden: Englisch, Arabisch, Persisch (Farsi), Französisch, Polnisch, Rumänisch, Russisch, Spanisch, Türkisch.<br>
 Sollten die Sprachen andere IDs haben, sollte das Typoscript ab der Zeile „SPRACHWAHL“ aus der Datei <b>typo3conf/ext/iqtp13db/Configuration/Typoscript/setup.typoscript</b> in das Typoscript-Template der Seite kopiert und entsprechend den eigenen IDs angepasst werden. Die Änderung in der o.g. Datei ist zwar möglich, allerdings muss dieser Schritt bei jedem Update der Extension wiederholt werden.
 Alle Schritte hinsichtlich Mehrsprachigkeit folgen sonst den Standard-Regeln zur Einrichtung von mehrsprachigen Webseiten.<br>
 
