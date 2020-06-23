@@ -12,7 +12,7 @@
 Sollten die Sprachen andere IDs haben, sollte das Typoscript ab der Zeile „SPRACHWAHL“ aus der Datei <b>typo3conf/ext/iqtp13db/Configuration/Typoscript/setup.typoscript</b> in das Typoscript-Template der Seite kopiert und entsprechend den eigenen IDs angepasst werden. Die Änderung in der o.g. Datei ist zwar möglich, allerdings muss dieser Schritt bei jedem Update der Extension wiederholt werden.
 Alle Schritte hinsichtlich Mehrsprachigkeit folgen sonst den Standard-Regeln zur Einrichtung von mehrsprachigen Webseiten.<br>
 
-2.	Zunächst auf der github-Seite oben rechts auf "Clone or Download" und dann auf "Download ZIP" klicken und die Extension als ZIP herunterladen, entpacken und das Verzeichnis umbenennen in "iqtp13db". Die Installation der Extension erfolgt per Upload der Extension per FTP auf den Server in das EXT-Verzeichnis der Typo3-Installation und anschließend Installation per Extension Manager. <br>
+2.	Zunächst auf der github-Seite oben rechts auf "Clone or Download" und dann auf "Download ZIP" klicken und die Extension als ZIP herunterladen, und in das Verzeichnis typo3conf/ext/ entpacken. Das Verzeichnis muss dann noch in "iqtp13db" umbenannt werden. Die Installation der Extension erfolgt danach per Extension Manager. <br>
 
 3.	Nach der Installation muss das statische Template der Extension <b>IQ TP13 Datenbank Annerkennungsberatung NRW (iqtp13db)</b> in das Root Template aufgenommen werden.<br>
 
