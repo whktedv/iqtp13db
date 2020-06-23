@@ -36,10 +36,10 @@ call_user_func(
             // non-cacheable actions
             [
                 'Teilnehmer' => 'create, update, delete, ',
-                'Beratung' => 'create, update, delete, ',
+                'Beratung' => 'create, update, delete, anmeldungcomplete, anmeldungcompleteredirect',
                 'Berater' => 'create, update, delete',
                 'Schulung' => 'create, update, delete',
-                'Dokument' => ''
+                'Dokument' => 'saveFileBeratungExtern, deleteFileBeratungExtern'
             ]
         );
 
