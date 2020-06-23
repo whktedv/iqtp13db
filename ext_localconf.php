@@ -17,11 +17,11 @@ call_user_func(
             ],
             // non-cacheable actions
             [
-                'Teilnehmer' => 'create, update, delete, ',
-                'Beratung' => 'create, update, delete, ',
-                'Berater' => 'create, update, delete',
-                'Schulung' => 'create, update, delete',
-                'Dokument' => ''
+                'Teilnehmer' => 'start, list, show, new, create, edit, update, delete, status, export',
+                'Beratung' => 'list, show, new, create, edit, update, delete',
+                'Dokument' => 'list, saveFileBeratung, saveFileSchulung, deleteFileBeratung, deleteFileSchulung',
+                'Berater' => 'list, show, new, create, edit, update, delete',
+                'Schulung' => 'list, show, new, create, edit, update, delete'
             ]
         );
 
@@ -35,10 +35,8 @@ call_user_func(
             ],
             // non-cacheable actions
             [
-                'Teilnehmer' => 'create, update, delete, ',
-                'Beratung' => 'create, update, delete, anmeldungcomplete, anmeldungcompleteredirect',
-                'Berater' => 'create, update, delete',
-                'Schulung' => 'create, update, delete',
+               'Teilnehmer' => 'start, anmeldung, anmeldseite1, anmeldseite1redirect, anmeldseite2, anmeldseite2redirect, anmeldseite3, anmeldseite3redirect, editextern, deleteextern, wartung',
+                'Beratung' => 'anmeldung, anmeldseite4, anmeldseite4redirect, anmeldungcomplete, anmeldungcompleteredirect, confirm, validationFailed',
                 'Dokument' => 'saveFileBeratungExtern, deleteFileBeratungExtern'
             ]
         );
