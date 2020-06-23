@@ -29,7 +29,6 @@ Alle Schritte hinsichtlich Mehrsprachigkeit folgen sonst den Standard-Regeln zur
 -- Übersicht<br>
 -- Beratene<br>
 -- Berater<br>
--- Export<br>
 * [DB] Daten Anerkennungsberatung<br>
 * [DB] Benutzer<br>
  </b>
