@@ -49,6 +49,7 @@ Unter Datensatzsammlung muss der Sysordner (im Beispiel oben „[DB] Daten Anerk
 Für das Backend (oder "Interner Bereich") muss eine Login-Seite für interne Nutzer angelegt werden. Diese enthält ein TYPO3-Inhaltselement vom Typ Anmeldung. Die zugehörigen Backend-User werden im System-Ordner <b>[DB] Benutzer</b> angelegt und sind ganz normale Website-Benutzer.
 Im Internen Bereich werden Seiten entsprechend der Seitenstruktur angelegt, die jeweils ein Plugin IQ TP13 DB Adminbereich enthalten. Der Typ wird entsprechend dem Seitennamen eingestellt.
 Auch hier wird jeweils unter Datensatzsammlung der Sysordner (im Beispiel oben „[DB] Daten Anerkennungsberatung“) ausgewählt.<br>
+</ol>
 
 <h2>Texte/Sprachen</h2>
 
