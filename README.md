@@ -17,7 +17,7 @@ Alle Schritte hinsichtlich Mehrsprachigkeit folgen sonst den Standard-Regeln zur
 
 <li>Zunächst auf der github-Seite oben rechts auf "Clone or Download" und dann auf "Download ZIP" klicken und die Extension als ZIP herunterladen, und in das Verzeichnis typo3conf/ext/ entpacken. Das Verzeichnis muss dann noch in "iqtp13db" umbenannt werden. Die Installation der Extension erfolgt danach per Extension Manager. <br></li>
 
-<li>Nach der Installation muss das statische Template der Extension <b>IQ TP13 Datenbank Annerkennungsberatung NRW (iqtp13db)</b> in das Root Template aufgenommen werden.<br></li>
+<li>Nach der Installation muss das statische Template der Extension <b>IQ TP13 Webapp Annerkennungsberatung NRW (iqtp13db)</b> in das Root Template aufgenommen werden.<br></li>
 
 <li>Nun sollte die folgende Seitenstruktur eingerichtet werden: <br>
 
