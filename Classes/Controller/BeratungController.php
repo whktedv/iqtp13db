@@ -536,13 +536,4 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         return $message->isSent();
     }
 
-    /**
-     * action anmeldung
-     *
-     * @return void
-     */
-    public function anmeldungAction()
-    {
-
-    }
 }
