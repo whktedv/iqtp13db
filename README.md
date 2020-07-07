@@ -55,16 +55,17 @@ Auch hier wird jeweils unter Datensatzsammlung der Sysordner (im Beispiel oben �
 
 <h2>Texte/Sprachen</h2>
 
-Um die Texte bzw. Beschriftungen im Formular anzupassen, können die entsprechend angepassten Texte im Typoscript  Template angepasst werden per:<br>
+Um die Texte bzw. Beschriftungen im Formular anzupassen, können die entsprechend angepassten Texte im Typoscript Template angepasst werden per:<br>
 <b>plugin.tx_iqtp13db._LOCAL_LANG.[sprachcode].[tabelle].[wert] = [text]</b><br>
 
 Ein Beispiel wäre die Anpassung des deutschen Einwilligungstextes per:<br>
 <b>plugin.tx_iqtp13db._LOCAL_LANG.de.tx_iqtp13db_domain_model_teilnehmer.einwilligungtext = Das ist der geänderte Text!</b> (hier können auch html-Tags genutzt werden, um z.B. Zeilenumbrüche per < br > einzufügen)<br>
 
-Die folgenden Texte werden i.d.R. angepasst:<br>
+Die folgenden Texte sollten i.d.R. angepasst werden:<br>
 <b>plugin.tx_iqtp13db._LOCAL_LANG.de.mailtext = </b><br>
 <b>plugin.tx_iqtp13db._LOCAL_LANG.de.subject = </b><br>
 <b>plugin.tx_iqtp13db._LOCAL_LANG.de.confirmsubject = </b><br>
+<b>plugin.tx_iqtp13db._LOCAL_LANG.de.tx_iqtp13db_domain_model_teilnehmer.einwilligungtext = </b><br>
 
 (+ ggf. bei den weitere Sprachen)
 
