@@ -14,7 +14,8 @@ call_user_func(
                 'Dokument' => 'list, saveFileBeratung, saveFileSchulung, deleteFileBeratung, deleteFileSchulung',
                 'Berater' => 'list, show, new, create, edit, update, delete',
                 'Schulung' => 'list, show, new, create, edit, update, delete'
-            ],
+            ], 
+
             // non-cacheable actions
             [
                 'Teilnehmer' => 'start, list, show, new, create, edit, update, delete, status, export',
