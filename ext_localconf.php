@@ -30,13 +30,13 @@ call_user_func(
             'Iqtp13dbwebapp',
             [
                 'Teilnehmer' => 'start, anmeldung, anmeldseite1, anmeldseite1redirect, anmeldseite2, anmeldseite2redirect, anmeldseite3, anmeldseite3redirect, editextern, deleteextern, wartung',
-                'Beratung' => 'anmeldung, anmeldseite4, anmeldseite4redirect, anmeldungcomplete, anmeldungcompleteredirect, confirm, validationFailed',
+                'Beratung' => 'anmeldseite4, anmeldseite4redirect, anmeldungcomplete, anmeldungcompleteredirect, confirm, validationFailed',
                 'Dokument' => 'saveFileBeratungExtern, deleteFileBeratungExtern'
             ],
             // non-cacheable actions
             [
                'Teilnehmer' => 'start, anmeldung, anmeldseite1, anmeldseite1redirect, anmeldseite2, anmeldseite2redirect, anmeldseite3, anmeldseite3redirect, editextern, deleteextern, wartung',
-                'Beratung' => 'anmeldung, anmeldseite4, anmeldseite4redirect, anmeldungcomplete, anmeldungcompleteredirect, confirm, validationFailed',
+                'Beratung' => 'anmeldseite4, anmeldseite4redirect, anmeldungcomplete, anmeldungcompleteredirect, confirm, validationFailed',
                 'Dokument' => 'saveFileBeratungExtern, deleteFileBeratungExtern'
             ]
         );
