@@ -190,20 +190,23 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     	$storage = $this->getTP13Storage($newFilePath);
     	$fullpath = $storage->getConfiguration()['basePath'].$newFilePath.$tmpName;
     	
-    	if ($tmpName && !file_exists($fullpath)) {
-            $dokument = $this->savefile($newFilePath, $files);
-            $dokument->setBeratung($beratung);
-            $this->dokumentRepository->update($dokument);
-            
-            //Daten sofort in die Datenbank schreiben
-            $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
-            $persistenceManager->persistAll();
-            
-            $anzdokumente = count($this->dokumentRepository->findByBeratung($beratung->getUid()));
-            $beratung->setAnzDokumente($anzdokumente);
-            
-            $this->beratungRepository->update($beratung);            
-        }
+    	if($this->getFolderSize($storage->getConfiguration()['basePath'].$newFilePath) > 30000) {
+    	    $this->addFlashMessage('Maximum total filesize of 30 MB exceeded, please reduce filesize. Maximale Dateigröße aller Dateien zusammen ist 30 MB. Bitte Dateigröße verringern.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+    	} else {
+    	    if ($files['name']['file'] && !file_exists($fullpath)) {
+    	        $dokument = $this->savefile($newFilePath, $files);
+    	        $dokument->setBeratung($beratung);
+    	        $this->dokumentRepository->update($dokument);
+    	        //Daten sofort in die Datenbank schreiben
+    	        $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+    	        $persistenceManager->persistAll();
+    	        
+    	        $anzdokumente = count($this->dokumentRepository->findByBeratung($beratung->getUid()));
+    	        $beratung->setAnzDokumente($anzdokumente);
+    	        
+    	        $this->beratungRepository->update($beratung);
+    	    }
+    	}    	
         
     }
 
@@ -320,6 +323,15 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         }
         
         return $storage;
+    }
+	    
+    function getFolderSize($folderpath) {        
+        $io = popen ( '/usr/bin/du -sk ' . $folderpath, 'r' );
+        $size = fgets ( $io, 4096);
+        $size = substr ( $size, 0, strpos ( $size, "\t" ) );
+        pclose ( $io );
+        
+        return $size;
     }
     
     function sanitizeFileName($fileName)
