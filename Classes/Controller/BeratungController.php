@@ -261,6 +261,11 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     public function anmeldungcompleteAction(\Ud\Iqtp13db\Domain\Model\Beratung $beratung, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {        
         $valArray = $this->request->getArguments();
+        
+        $newFilePath = 'Beratene/' . $teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid(). '/';
+        $storage = $this->getTP13Storage($newFilePath);
+        $foldersize = $this->getFolderSize($storage->getConfiguration()['basePath'].$newFilePath);
+        
         $berater = $beratung->getBerater();
         $teilnehmer = $beratung->getTeilnehmer();
         $dokumente = $this->dokumentRepository->findByBeratung($beratung);
@@ -269,6 +274,7 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $this->view->assign('dokumente', $dokumente);
         $this->view->assign('berater', $berater);
         $this->view->assign('beratung', $beratung);
+        $this->view->assign('foldersize', 100-(intval(($foldersize/30000)*100)));
     }
 
     /**
@@ -536,4 +542,29 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         return $message->isSent();
     }
 
+    function getTP13Storage($pfad) {
+        $storageRepository = $this->objectManager->get('TYPO3\\CMS\\Core\\Resource\\StorageRepository');
+        // Speicher 'tp13data' muss im Typo3-Backend auf der Root-Seite als "Dateispeicher" angelegt sein!
+        // wenn der Speicher mal nicht verfügbar war (temporär), muss er im Backend im Bereich "Dateispeicher" manuell wieder "online" geschaltet werden mit der Checkbox "ist online?" in den Eigenschaften des jeweiligen Dateispeichers
+        $storages = $storageRepository->findAll();
+        foreach ($storages as $s) {
+            $storageObject = $s;
+            $storageRecord = $storageObject->getStorageRecord();
+            if ($storageRecord['name'] == 'tp13data') {
+                $storage = $s;
+                break;
+            }
+        }
+        
+        return $storage;
+    }
+    
+    function getFolderSize($folderpath) {
+        $io = popen ( '/usr/bin/du -sk ' . $folderpath, 'r' );
+        $size = fgets ( $io, 4096);
+        $size = substr ( $size, 0, strpos ( $size, "\t" ) );
+        pclose ( $io );
+        
+        return $size;
+    }
 }
