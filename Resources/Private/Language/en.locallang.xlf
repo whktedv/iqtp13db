@@ -400,18 +400,20 @@ In case of cancellation my personal data will be deleted immediately. Inquiries 
 	<source>Dokumente</source>
 	<target>Documents</target>
 </trans-unit>	
-	  <trans-unit id="dokumenteintro">
+	 <trans-unit id="dokumenteintro">
 		<source><![CDATA[
-			Bitte laden Sie folgende Dokumente hoch: <br>
+			Bitte laden Sie folgende Dokumente hoch (insgesamt maximal 30 MB): <br>
 			- Ihre Original-Abschlüsse und Übersetzungen<br>
-				- Ihren Aufenthaltstitel; Lebenslauf; Bescheid ]]>
+				- Ihren Aufenthaltstitel; Lebenslauf; Bescheid
+				<br><br><b>Speicherplatz für Dokumente verfügbar: </b> ]]>
 		</source>
 		<target><![CDATA[
-			Please upload the following documents: <br>
+			Please upload the following documents (total filsize maximum 30 MB): <br>
 			- your original degrees and translations<br>
-			- your residence permit; curriculum vitae; decision]]>
+			- your residence permit; curriculum vitae; decision
+			<br><br><b>Diskspace available for documents: </b>]]>
 		</target>
-	  </trans-unit>			
+	  </trans-unit>				
 	  <trans-unit id="dokumentauswaehlen">
 		<source>Dokument auswählen</source>
 		<target>Choose a document</target>
