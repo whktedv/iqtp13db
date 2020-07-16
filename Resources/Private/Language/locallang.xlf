@@ -533,9 +533,10 @@ Im Falle des Widerrufs werden meine persönlichen Daten umgehend gelöscht. Rüc
 			</trans-unit>
 			<trans-unit id="dokumenteintro">
 				<source><![CDATA[
-				Bitte laden Sie folgende Dokumente hoch: <br>
+				Bitte laden Sie folgende Dokumente hoch (insgesamt maximal 30 MB): <br>
 				- Ihre Original-Abschlüsse und Übersetzungen<br>
 				- Ihren Aufenthaltstitel; Lebenslauf; Bescheid 
+				<br><br><b>Speicherplatz für Dokumente verfügbar: </b>
 				]]></source>
 			</trans-unit>
 			<trans-unit id="dokumentauswaehlen">
