@@ -58,7 +58,7 @@ class Beratung extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      *
      * @var int
      */
-    protected $beratungsart = '';
+    protected $beratungsart = 0;
 
     /**
      * Anfrage durch
