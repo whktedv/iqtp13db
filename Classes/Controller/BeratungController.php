@@ -265,6 +265,7 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $newFilePath = 'Beratene/' . $teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid(). '/';
         $storage = $this->getTP13Storage($newFilePath);
         $foldersize = $this->getFolderSize($storage->getConfiguration()['basePath'].$newFilePath);
+        if(!is_numeric($foldersize)) $foldersize = 0;
         
         $berater = $beratung->getBerater();
         $teilnehmer = $beratung->getTeilnehmer();
