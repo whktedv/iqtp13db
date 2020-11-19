@@ -9,7 +9,7 @@ namespace Ud\Iqtp13db\Controller;
  * LICENSE.txt file that was distributed with this source code.
  *
  *  (c) 2020 Uli Dohmen <edv@whkt.de>, WHKT
- *
+ * 
  ***/
 
 /**
