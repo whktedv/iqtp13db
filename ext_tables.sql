@@ -101,7 +101,6 @@ CREATE TABLE tx_iqtp13db_domain_model_beratung (
 	uid int(11) NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,
 
-	chiffre varchar(255) DEFAULT '' NOT NULL,
 	prozess int(11) DEFAULT '0' NOT NULL,
 	datum datetime DEFAULT '0000-00-00 00:00:00',
 	folgekontakt varchar(255) DEFAULT '' NOT NULL,

@@ -268,7 +268,6 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * Deutsche Übersetzung des Abschlusstitels
      *
      * @var string
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
      */
     protected $deutschAbschlusstitel1 = '';
 

@@ -139,13 +139,13 @@
 				<source>Aufenthaltsstatus</source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag">
-				<source>Früherer Antrag</source>
+				<source>Wurde schon ein Antrag auf Anerkennung des Berufsabschlusses gestellt?</source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag_referenzberuf">
-				<source>Wenn ja, zu welchem Beruf?</source>
+				<source>Für welchen Beruf?</source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag_institution">
-				<source>Wenn ja, bei welcher Institution?</source>
+				<source>Bei welcher Institution oder Behörde?</source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.anz_beratungen">
 				<source>Anz Beratungen</source>
@@ -197,8 +197,8 @@
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.bescheidfrueherer_anerkennungsantrag">
 				<source><![CDATA[
-				Liegt schon ein Bescheid über einen Anerkennungsantrag vor?<br>
-				Falls ja, bitte bei Dokumenten-Upload hochladen
+				Haben Sie schon die Entscheidung von der <br>
+				anerkennenden Stelle (Bescheid) erhalten?
 				]]></source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.verification_code">
@@ -294,7 +294,7 @@
 				<source>Anz Dokumente</source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_beratung.weg_beratungsstelle">
-				<source>Wie/von wem haben Sie erfahren, dass wir Ihnen helfen können?</source>
+				<source>Wie haben Sie uns gefunden?</source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_beratung.name_beratungsstelle">
 				<source>Name Beratungsstelle</source>
@@ -408,7 +408,7 @@
 				<source></source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsfremdeberufserfahrung1">
-				<source>Ausbildungsfremde Berufserfahrung</source>
+				<source>Ausbildungsfremde Berufserfahrung (Dauer)</source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsfremdeberufserfahrung2">
 				<source>ausbildungsfremdeberufserfahrung2</source>
@@ -420,7 +420,7 @@
 				<source>In welchem Land?</source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.dauer_berufsausbildung">
-				<source>Dauer Berufsausbildung</source>
+				<source>Dauer der Berufsausbildung oder des Studiums</source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussjahr">
 				<source>Abschlussjahr</source>
@@ -432,7 +432,7 @@
 				<source>Ausbildungsort</source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschluss">
-				<source>Abschluss</source>
+				<source>Name des Abschlusses</source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutsch_abschlusstitel">
 				<source>Deutsch Abschlusstitel</source>
@@ -441,7 +441,7 @@
 				<source>Möglicher deutscher Beruf</source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.berufserfahrung">
-				<source>Berufserfahrung im Ausland (Dauer)</source>
+				<source>Berufserfahrung im erlernten Beruf (Dauer)</source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.original_dokumente_abschluss">
 				<source>Liegen die Original-Dokumente des Abschlusses vor?</source>
@@ -536,7 +536,7 @@ Im Falle des Widerrufs werden meine persönlichen Daten umgehend gelöscht. Rüc
 			</trans-unit>
 			<trans-unit id="dokumenteintro">
 				<source><![CDATA[
-				Bitte laden Sie folgende Dokumente hoch (insgesamt maximal 30 MB): <br>
+				Bitte laden Sie folgende Dokumente als PDF-Datei hoch (insgesamt maximal 30 MB): <br>
 				- Ihre Original-Abschlüsse und Übersetzungen<br>
 				- Ihren Aufenthaltstitel; Lebenslauf; Bescheid 
 				<br><br><b>Speicherplatz für Dokumente verfügbar: </b>
@@ -591,7 +591,7 @@ Im Falle des Widerrufs werden meine persönlichen Daten umgehend gelöscht. Rüc
 				<source>Bitte geben Sie das Land und die Stadt an, in der Sie Ihren Abschluss gemacht haben.</source>
 			</trans-unit>
 			<trans-unit id="infoBerufserfahrung">
-				<source>Bitte geben Sie an, wie lange Sie schon im Beruf der Ausbildung/des Studiums im Ausland gearbeitet haben (Monate/Jahre).</source>
+				<source>Bitte geben Sie an, wie lange Sie schon im Beruf der Ausbildung/des Studiums gearbeitet haben (Monate/Jahre).</source>
 			</trans-unit>
 			<trans-unit id="infoAusbildungsfremdeBerufserfahrung">
 				<source>“Ausbildungsfremd“ bedeutet, dass Sie in einem anderen Beruf als dem der Ausbildung/des Studiums gearbeitet haben. Bitte geben Sie an was das war und wie lange Sie gearbeitet haben (Monate/Jahre).</source>

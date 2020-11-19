@@ -100,7 +100,7 @@
 				<source>Ausbildungsort</source>
 			</trans-unit>
 			<trans-unit id="abschluss1.description">
-				<source>Abschluss</source>
+				<source>Name des Abschlusses</source>
 			</trans-unit>
 			<trans-unit id="deutsch_abschlusstitel1.description">
 				<source>Deutsche Übersetzung des Abschlusstitels</source>
@@ -196,10 +196,10 @@
 				<source></source>
 			</trans-unit>
 			<trans-unit id="ausbildungsfremdeberufserfahrung1.description">
-				<source>Ausbildungsfremde Berufserfahrung</source>
+				<source>Ausbildungsfremde Berufserfahrung (Dauer)</source>
 			</trans-unit>
 			<trans-unit id="ausbildungsfremdeberufserfahrung2.description">
-				<source>Ausbildungsfremde Berufserfahrung</source>
+				<source>Ausbildungsfremde Berufserfahrung (Dauer)</source>
 			</trans-unit>
 			<trans-unit id="abschlussart.description">
 				<source>Abschlussart</source>
@@ -208,7 +208,7 @@
 				<source>Erwerbsland</source>
 			</trans-unit>
 			<trans-unit id="dauer_berufsausbildung.description">
-				<source>Dauer der Berufsausbildung</source>
+				<source>Dauer der Berufsausbildung oder des Studiums</source>
 			</trans-unit>
 			<trans-unit id="abschlussjahr.description">
 				<source>Abschlussjahr</source>
@@ -229,7 +229,7 @@
 				<source>Möglicher deutscher Referenzberuf</source>
 			</trans-unit>
 			<trans-unit id="berufserfahrung_ausland.description">
-				<source>Berufserfahrung für diesen Beruf im Ausland</source>
+				<source>Berufserfahrung für diesen Beruf</source>
 			</trans-unit>
 			<trans-unit id="berufserfahrung_ausland_zeitraum.description">
 				<source>Zeitraum in Monaten (Ausland)</source>

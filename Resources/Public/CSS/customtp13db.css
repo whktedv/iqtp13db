@@ -232,6 +232,10 @@
 	text-decoration: none;
 }
 
+button.abbruchbtn {
+	background-color: #e69b9b;
+}
+
 .tx-iqtp13db .mycustomlink a, .tx-iqtp13db input[type="submit"], button {
     padding: 4px 12px;
     margin-top: 0px;
