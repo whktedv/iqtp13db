@@ -486,6 +486,9 @@ Im Falle des Widerrufs werden meine persönlichen Daten umgehend gelöscht. Rüc
 			<trans-unit id="zurueck">
 				<source>Zurück</source>
 			</trans-unit>
+			<trans-unit id="abbruch">
+				<source>Abbruch</source>
+			</trans-unit>
 			<trans-unit id="fragebogen">
 				<source>Fragebogen Seite</source>
 			</trans-unit>
