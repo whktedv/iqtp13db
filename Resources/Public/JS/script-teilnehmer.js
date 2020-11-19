@@ -95,7 +95,8 @@
 		$('#labelfruehererAntragReferenzberuf').fadeOut();
 		$('#labelfruehererAntragInstitution').fadeOut();
 	}
-
+    
+   
 
     
 } ) ( jQuery );

@@ -220,6 +220,9 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         
         if (isset($valArray['btnzurueck'])) {
             $this->redirect('anmeldseite3', 'Teilnehmer', null, array('tnseite3' => NULL));
+        } elseif(isset($valArray['btncancel'])) {
+            $this->cleanUpSessionData();
+            $this->redirectToURI('https://www.iq-netzwerk-nrw.de/startseite-webapp-anerkennungserstberatung/');
         } else {
             if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid') == NULL) {
                 $teilnehmer = $this->getTeilnehmerFromSession();
@@ -289,8 +292,10 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
 
         if (isset($valArray['btnzurueck'])) {
             $this->redirect('anmeldseite4');
-        }
-        if (isset($valArray['btnAbsenden'])) {
+        } elseif(isset($valArray['btncancel'])) {
+            $this->cleanUpSessionData();
+            $this->redirectToURI('https://www.iq-netzwerk-nrw.de/startseite-webapp-anerkennungserstberatung/');
+        } elseif (isset($valArray['btnAbsenden'])) {
             
             $this->cleanUpSessionData();
             $teilnehmer = $beratung->getTeilnehmer();
@@ -310,6 +315,8 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
             $this->sendTemplateEmail(array($recipient), array($bcc), array($sender), $subject, $templateName, $variables, false);
             
             $this->redirect(null, null, null, null, $this->settings['redirectValidationInitiated']); // TODO: url aus id hier einfügen
+        } else {
+            //
         }
     }
 

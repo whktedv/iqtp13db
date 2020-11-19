@@ -54,6 +54,10 @@ In case of cancellation my personal data will be deleted immediately. Inquiries 
 		<source>Zurück</source>
 		<target>previous page</target>
 	  </trans-unit>
+	  <trans-unit id="abbruch">
+		<source>Abbruch</source>
+		<target>Cancel</target>
+	  </trans-unit>
 	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.original_dokumente_abschluss">
 		<source>Liegen die Original-Dokumente des Abschlusses vor?</source>
 		<target>Are alle original documents available?</target>

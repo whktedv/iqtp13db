@@ -282,7 +282,12 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function anmeldseite1redirectAction(\Ud\Iqtp13db\Domain\Model\TNSeite1 $tnseite1)
     {
+        
         $valArray = $this->request->getArguments();
+        
+        //\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($valArray);
+        //die;
+       
         $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite1', serialize($tnseite1));
         $this->redirect('anmeldseite2');
     }
@@ -312,10 +317,14 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function anmeldseite2redirectAction(\Ud\Iqtp13db\Domain\Model\TNSeite2 $tnseite2)
     {
         $valArray = $this->request->getArguments();
-
+        
+        
         $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite2', serialize($tnseite2));
         if (isset($valArray['btnzurueck'])) {
             $this->redirect('anmeldseite1');
+        } elseif(isset($valArray['btncancel'])) {
+            $this->cleanUpSessionData();
+            $this->redirectToURI('https://www.iq-netzwerk-nrw.de/startseite-webapp-anerkennungserstberatung/');
         } else {
             $this->redirect('anmeldseite3');
         }
@@ -349,6 +358,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite3', serialize($tnseite3));
         if (isset($valArray['btnzurueck'])) {
             $this->redirect('anmeldseite2');
+        } elseif(isset($valArray['btncancel'])) {
+            $this->cleanUpSessionData();
+            $this->redirectToURI('https://www.iq-netzwerk-nrw.de/startseite-webapp-anerkennungserstberatung/');
         } else {
             $this->redirect('anmeldseite4', 'Beratung', null, array('beratungseite4' => NULL));
         }
@@ -579,6 +591,21 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             fclose($fp);
             exit;
         }
+        
+    }
+    
+    /**
+     * Removes all session variables from the multiple steps form
+     *
+     * @return void
+     */
+    protected function cleanUpSessionData()
+    {
+        $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite1', '');
+        $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite2', '');
+        $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite3', '');
+        $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnuid', '');
+        $GLOBALS['TSFE']->fe_user->setKey('ses', 'beratungseite4', '');
         
     }
     

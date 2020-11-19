@@ -37,6 +37,7 @@
 	
 	<f:form.hidden property="datum" value="{heute->f:format.date(format: 'd.m.Y')}" />
 	<f:form.button name="btnzurueck"><f:translate key="zurueck" /></f:form.button>
+	<f:form.button name="btncancel" onclick="return btncancel_Click();"><f:translate key="abbruch" /></f:form.button>
 	<f:form.button name="btnAbsenden"><f:translate key="absenden" /></f:form.button>
 </f:form>
 
