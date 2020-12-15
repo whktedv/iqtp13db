@@ -9,20 +9,20 @@ call_user_func(
             'Ud.Iqtp13db',
             'Iqtp13dbadmin',
             [
-                'Teilnehmer' => 'start, list, show, new, create, edit, update, delete, status, export',
-                'Beratung' => 'list, show, new, create, edit, update, delete',
-                'Dokument' => 'list, saveFileBeratung, saveFileSchulung, deleteFileBeratung, deleteFileSchulung',
-                'Berater' => 'list, show, new, create, edit, update, delete',
-                'Schulung' => 'list, show, new, create, edit, update, delete'
+        		'Teilnehmer' => 'start, listangemeldet, show, new, create, edit, update, delete, status, export, askconsent, listdeleted, undelete',
+                'Beratung' => 'listerstberatung, listniqerfassung, listarchiv, show, new, create, edit, update, delete',
+        		'Folgekontakt' => 'list, show, new, create, edit, update, delete',
+                'Dokument' => 'list, saveFileTeilnehmer, deleteFileTeilnehmer',
+                'Berater' => 'list, show, new, create, edit, update, delete'
             ], 
 
             // non-cacheable actions
             [
-                'Teilnehmer' => 'start, list, show, new, create, edit, update, delete, status, export',
-                'Beratung' => 'list, show, new, create, edit, update, delete',
-                'Dokument' => 'list, saveFileBeratung, saveFileSchulung, deleteFileBeratung, deleteFileSchulung',
-                'Berater' => 'list, show, new, create, edit, update, delete',
-                'Schulung' => 'list, show, new, create, edit, update, delete'
+        		'Teilnehmer' => 'start, listangemeldet, show, new, create, edit, update, delete, status, export, askconsent, listdeleted, undelete',
+                'Beratung' => 'listerstberatung, listniqerfassung, listarchiv, show, new, create, edit, update, delete',
+        		'Folgekontakt' => 'list, show, new, create, edit, update, delete',
+                'Dokument' => 'list, saveFileTeilnehmer, deleteFileTeilnehmer',
+                'Berater' => 'list, show, new, create, edit, update, delete'
             ]
         );
 
@@ -30,17 +30,16 @@ call_user_func(
             'Ud.Iqtp13db',
             'Iqtp13dbwebapp',
             [
-                'Teilnehmer' => 'start, anmeldung, anmeldseite1, anmeldseite1redirect, anmeldseite2, anmeldseite2redirect, anmeldseite3, anmeldseite3redirect, editextern, deleteextern, wartung',
-                'Beratung' => 'anmeldseite4, anmeldseite4redirect, anmeldungcomplete, anmeldungcompleteredirect, confirm, validationFailed',
-                'Dokument' => 'saveFileBeratungExtern, deleteFileBeratungExtern'
+                'Teilnehmer' => 'start, anmeldseite1, anmeldseite1redirect, anmeldseite2, anmeldseite2redirect, anmeldseite3, anmeldseite3redirect, anmeldseite4, anmeldseite4redirect, anmeldungcomplete, anmeldungcompleteredirect, confirm, validationFailed, wartung',
+                'Dokument' => 'saveFileWebapp, deleteFileWebapp'
             ],
             // non-cacheable actions
             [
-               'Teilnehmer' => 'start, anmeldung, anmeldseite1, anmeldseite1redirect, anmeldseite2, anmeldseite2redirect, anmeldseite3, anmeldseite3redirect, editextern, deleteextern, wartung',
-                'Beratung' => 'anmeldseite4, anmeldseite4redirect, anmeldungcomplete, anmeldungcompleteredirect, confirm, validationFailed',
-                'Dokument' => 'saveFileBeratungExtern, deleteFileBeratungExtern'
+               'Teilnehmer' => 'start, anmeldseite1, anmeldseite1redirect, anmeldseite2, anmeldseite2redirect, anmeldseite3, anmeldseite3redirect, anmeldseite4, anmeldseite4redirect, anmeldungcomplete, anmeldungcompleteredirect, confirm, validationFailed, wartung',
+               'Dokument' => 'saveFileWebapp, deleteFileWebapp'
             ]
         );
+        
 
 	// wizards
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
@@ -49,8 +48,8 @@ call_user_func(
 				elements {
 					iqtp13dbadmin {
 						icon = ' . \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($extKey) . 'Resources/Public/Icons/user_plugin_iqtp13dbadmin.svg
-						title = LLL:EXT:iqtp13db/Resources/Private/Language/locallang_db.xlf:tx_iqtp13db_domain_model_iqtp13dbadmin
-						description = LLL:EXT:iqtp13db/Resources/Private/Language/locallang_db.xlf:tx_iqtp13db_domain_model_iqtp13dbadmin.description
+						title = LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_iqtp13dbadmin
+						description = LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_iqtp13dbadmin.description
 						tt_content_defValues {
 							CType = list
 							list_type = iqtp13db_iqtp13dbadmin
@@ -58,8 +57,8 @@ call_user_func(
 					}
 					iqtp13dbwebapp {
 						icon = ' . \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($extKey) . 'Resources/Public/Icons/user_plugin_iqtp13dbwebapp.svg
-						title = LLL:EXT:iqtp13db/Resources/Private/Language/locallang_db.xlf:tx_iqtp13db_domain_model_iqtp13dbwebapp
-						description = LLL:EXT:iqtp13db/Resources/Private/Language/locallang_db.xlf:tx_iqtp13db_domain_model_iqtp13dbwebapp.description
+						title = LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_iqtp13dbwebapp
+						description = LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_iqtp13dbwebapp.description
 						tt_content_defValues {
 							CType = list
 							list_type = iqtp13db_iqtp13dbwebapp

@@ -1,196 +1,90 @@
-<div class="frame"><h2><f:translate key="beratungsprozess" /></h2>
-		<div class="tp13_formdivwebapp1">
-			<label for="chiffre">
-				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:chiffre.description" />
-			</label>
-				<span class="propdat">{beratung.chiffre}</span>
-		</div>
-		<div class="tp13_formdivwebapp2">
-			<label for="prozess">
-				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:prozess.description" />
-			</label>
-				<f:for each="{settings.beratungsprozess}" as="text" key="wert">
-					{f:if(condition: '{beratung.prozess} == {wert}', then: '<span class="propdat">{text}</span>')}					 
-				</f:for>
-		</div>
-		<div class="tp13_formdivwebapp1">
+<div class="fframe"><h2>Erstberatung</h2>
+		<div class="tp13_formdivwebapp">
 			<label for="datum">
-				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:datum.description" />
+				<f:translate key="tx_iqtp13db_domain_model_beratung.datum" />
 			</label>
-				<span class="propdat">{beratung.datum -> f:format.date(format: 'd.m.Y')}</span>
+				<span class="propdat">{beratung.datum}</span>
 		</div>
-		<div class="tp13_formdivwebapp2">
+		<div class="tp13_formdivwebapp">
 			<label for="berater">
-				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:berater.description" />
+				<f:translate key="tx_iqtp13db_domain_model_beratung.berater" />
 			</label>
-				<f:for each="{berater}" as="berat" key="uid">
-					{f:if(condition: '{beratung.berater.uid} == {berat.uid}', then: '<span class="propdat">{berat.name}</span>')}					 
-				</f:for>
+				<span class="propdat">{beratung.berater.name}</span>
 		</div>
-		<div class="tp13_formdivwebapp1">
-			<label for="folgekontakt">
-				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:folgekontakt.description" />
-			</label>
-				<span class="propdat">{beratung.folgekontakt}</span>
-		</div>
-		<div class="tp13_formdivwebapp2">
-			<label for="ort">
-				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:ort.description" />
-			</label>
-				<span class="propdat">{beratung.ort}</span>
-		</div>
-		<div class="tp13_formdivwebapp1">
+		<div class="tp13_formdivwebapp">
 			<label for="beratungsart">
-				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:beratungsart.description" />
+				<f:translate key="tx_iqtp13db_domain_model_beratung.beratungsart" />
 			</label>
+			<f:for each="{beratung.beratungsart}" as="beratungart">
 				<f:for each="{settings.beratungsart}" as="text" key="wert">
-					{f:if(condition: '{beratung.beratungsart} == {wert}', then: '<span class="propdat">{text}</span>')}					 
+					{f:if(condition: '{beratungart} == {wert}', then: '<span class="propdat">{text}</span>')}
 				</f:for>
+			</f:for>		
 		</div>
-		<div class="tp13_formdivwebapp2">
-			<label for="anfrageDurch">
-				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:anfrage_durch.description" />
+		<div class="tp13_formdivwebapp">
+			<label for="beratungzu">
+				<f:translate key="tx_iqtp13db_domain_model_beratung.beratungzu" />
 			</label>
-				<f:for each="{settings.anfragedurch}" as="text" key="wert">
-					{f:if(condition: '{beratung.anfrageDurch} == {wert}', then: '<span class="propdat">{text}</span>')}					 
+			<f:for each="{beratung.beratungzu}" as="beratungzu">
+				<f:for each="{settings.beratungzu}" as="text" key="wert">
+					{f:if(condition: '{beratungzu} == {wert}', then: '<span class="propdat">{text}</span>')}
 				</f:for>
+			</f:for>		
 		</div>
-		<div class="tp13_formdivwebapp1">
-			<label for="anmerkung">
-				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:anmerkung.description" />
+		<div class="tp13_formdivwebapp">
+			<label for="referenzberufe">
+				<f:translate key="tx_iqtp13db_domain_model_beratung.referenzberufe" />
 			</label>
-				<span class="propdat">{beratung.anmerkung}</span>
+			<span class="propdat">{beratung.referenzberufe}</span>
 		</div>
-</div>
-<div style="clear: both;"></div>
-
-<div class="frame"><h2><f:translate key="ergebnisderberatung" /></h2>
-		<div class="tp13_formdivwebapp1">
-			<label for="ergebnisWeiterleitung">
-				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:ergebnis_weiterleitung.description" />
+		<div class="tp13_formdivwebapp">
+			<label for="anerkennendestellen">
+				<f:translate key="tx_iqtp13db_domain_model_beratung.anerkennendestellen" />
 			</label>
-				<span class="propdat">{beratung.ergebnisWeiterleitung}</span>
+			<span class="propdat">{beratung.anerkennendestellen}</span>
 		</div>
-</div>
-<div style="clear: both;"></div>
-
-<div class="frame"><h2><f:translate key="falldokumentation" /></h2>
-		<div class="tp13_formdivwebapp1">
-			<label for="anmerkungVerfahren">
-				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:anmerkung_verfahren.description" />
+		<div class="tp13_formdivwebapp">
+			<label for="anerkennungsberatung">
+				<f:translate key="tx_iqtp13db_domain_model_beratung.anerkennungsberatung" />
 			</label>
-				<span class="propdat">{beratung.anmerkungVerfahren}</span>
-		</div>
-		<div class="tp13_formdivwebapp2">		
-			<label for="angabenVereinbarungen">
-				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:angaben_vereinbarungen.description" />
-			</label>
-				<span class="propdat">{beratung.angabenVereinbarungen}</span>
-		</div>
-		<div class="tp13_formdivwebapp1">		
-			<label for="umfang">
-				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:umfang.description" />
-			</label>
-				<span class="propdat">{beratung.umfang}</span>
-		</div>
-		<div class="tp13_formdivwebapp2">		
-			<label for="beratungAbgeschlossen">
-				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:beratung_abgeschlossen.description" />
-			</label>
-				<span class="propdat">{beratung.beratungAbgeschlossen}</span>
-		</div>
-		<div class="tp13_formdivwebapp1">		
-			<label for="uebertragNIQ">
-				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:uebertrag_n_i_q.description" />
-			</label>
-				<span class="propdat">{beratung.uebertragNIQ}</span>
-		</div>
-</div>
-<div style="clear: both;"></div>
-
-<div class="frame"><h2><f:translate key="qualifizierungsberatung" /></h2>
-		<div class="tp13_formdivwebapp1">
-			<label for="folgekontakte">
-				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:folgekontakte.description" />
-			</label>
-				<span class="propdat">{beratung.folgekontakte}</span>
-		</div>
-		<div class="tp13_formdivwebapp2">
-			<label for="bescheidGleichwertigkeitspruefung">
-				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:bescheid_gleichwertigkeitspruefung.description" />
-			</label>
-				<f:for each="{settings.bescheidGleichwertigkeitspruefung}" as="text" key="wert">
-					{f:if(condition: '{beratung.bescheidGleichwertigkeitspruefung} == {wert}', then: '<span class="propdat">{text}</span>')}					 
+			<f:for each="{beratung.anerkennungsberatung}" as="anerkennungsberatung">
+				<f:for each="{settings.anerkennungsberatung}" as="text" key="wert">
+					{f:if(condition: '{anerkennungsberatung} == {wert}', then: '<span class="propdat">{text}</span>')}
 				</f:for>
+			</f:for>	
 		</div>
-		<div class="tp13_formdivwebapp1">
-			<label for="ergebnisGleichwertigkeitsfeststellung">
-				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:ergebnis_gleichwertigkeitsfeststellung.description" />
+		<div class="tp13_formdivwebapp">
+			<label for="anerkennungsberatungfreitext">
+				<f:translate key="tx_iqtp13db_domain_model_beratung.anerkennungsberatungfreitext" />
 			</label>
-				<f:for each="{settings.ergebnisGleichwertigkeitsfeststellung}" as="text" key="wert">
-					{f:if(condition: '{beratung.ergebnisGleichwertigkeitsfeststellung} == {wert}', then: '<span class="propdat">{text}</span>')}					 
+			<span class="propdat">{beratung.anerkennungsberatungfreitext}</span>
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="qualifizierungsberatung">
+				<f:translate key="tx_iqtp13db_domain_model_beratung.qualifizierungsberatung" />
+			</label>
+			<f:for each="{beratung.qualifizierungsberatung}" as="qualifizierungsberatung">
+				<f:for each="{settings.qualifizierungsberatung}" as="text" key="wert">
+					{f:if(condition: '{qualifizierungsberatung} == {wert}', then: '<span class="propdat">{text}</span>')}
 				</f:for>
+			</f:for>		
 		</div>
-		<div class="tp13_formdivwebapp2">
-			<label for="zabBewertung">
-				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:zab_bewertung.description" />
+		<div class="tp13_formdivwebapp">
+			<label for="qualifizierungsberatungfreitext">
+				<f:translate key="tx_iqtp13db_domain_model_beratung.qualifizierungsberatungfreitext" />
 			</label>
-				<f:for each="{settings.zabBewertung}" as="text" key="wert">
-					{f:if(condition: '{beratung.zabBewertung} == {wert}', then: '<span class="propdat">{text}</span>')}					 
-				</f:for>
+			<span class="propdat">{beratung.qualifizierungsberatungfreitext}</span>
 		</div>
-		<div class="tp13_formdivwebapp1">
-			<label for="verweisAnBildungsdienstleister">
-				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:verweis_an_bildungsdienstleister.description" />
+		<div class="tp13_formdivwebapp">
+			<label for="notizen">
+				<f:translate key="tx_iqtp13db_domain_model_beratung.notizen" />
 			</label>
-				<f:for each="{settings.anBildungsdienstleisterweiterverwiesen}" as="text" key="wert">
-					{f:if(condition: '{beratung.verweisAnBildungsdienstleister} == {wert}', then: '<span class="propdat">{text}</span>')}					 
-				</f:for>
+			<span class="propdat">{beratung.notizen}</span>
 		</div>
-		<div class="tp13_formdivwebapp2">
-			<label for="empfohleneQualimassnahme">
-				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:empfohlene_qualimassnahme.description" />
-			</label>				
-				<span class="propdat">{beratung.empfohleneQualimassnahme}</span>
-		</div>
-		<div class="tp13_formdivwebapp1">
-			<label for="welcherBildungsdienstleister">
-				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:welcher_bildungsdienstleister.description" />
+		<div class="tp13_formdivwebapp">
+			<label for="erstberatungabgeschlossen">
+				<f:translate key="tx_iqtp13db_domain_model_beratung.erstberatungabgeschlossen" />
 			</label>
-				<f:for each="{settings.welcherBildungsdienstleister}" as="text" key="wert">
-					{f:if(condition: '{beratung.welcherBildungsdienstleister} == {wert}', then: '<span class="propdat">{text}</span>')}					 
-				</f:for>
-		</div>
-		<div class="tp13_formdivwebapp2">
-			<label for="modulZuordnungQualimassnahme">
-				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:modul_zuordnung_qualimassnahme.description" />
-			</label>
-				<f:for each="{settings.modulQualifizierungsmassnahme}" as="text" key="wert">
-					{f:if(condition: '{beratung.modulZuordnungQualimassnahme} == {wert}', then: '<span class="propdat">{text}</span>')}					 
-				</f:for>
-		</div>
-		<div class="tp13_formdivwebapp1">
-			<label for="bundeslandQualimassnahme">
-				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:bundesland_qualimassnahme.description" />
-			</label>
-				<span class="propdat">{beratung.bundeslandQualimassnahme}</span>
-		</div>
-</div>
-<div style="clear: both;"></div>
-
-<div class="frame"><h2><f:translate key="angabenzurberatungsstelle" /></h2>
-		<div class="tp13_formdivwebapp1">
-			<label for="wegBeratungsstelle">
-				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:weg_beratungsstelle.description" />
-			</label>
-				<f:for each="{settings.beratungsstelle}" as="text" key="wert">
-					{f:if(condition: '{beratung.wegBeratungsstelle} == {wert}', then: '<span class="propdat">{text}</span>')}					 
-				</f:for>
-		</div>
-		<div class="tp13_formdivwebapp2">
-			<label for="nameBeratungsstelle">
-				<f:translate key="LLL:EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf:name_beratungsstelle.description" />
-			</label>
-				<span class="propdat">{beratung.nameBeratungsstelle}</span>
+			<span class="propdat">{beratung.erstberatungabgeschlossen}</span>			
 		</div>
 </div>

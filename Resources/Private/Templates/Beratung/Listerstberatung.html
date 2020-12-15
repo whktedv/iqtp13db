@@ -1,0 +1,61 @@
+<f:layout name="Default" />
+<f:section name="HeaderAssets">
+  		<link rel="stylesheet" href="{f:uri.resource(path: 'CSS/customtp13dbadmin.css')}"/>  		
+</f:section>
+
+<f:section name="main">
+<f:flashMessages />
+<h1>Liste Erstberatung: {beratungen -> f:count()} Einträge </h1>
+
+<f:widget.paginate objects="{beratungen}" as="beratungenpart" configuration="{itemsPerPage: 50, insertAbove: 1}"> 
+	<table  class="tx_iqtp13db" >
+		<tr>
+			<th><f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" /></th>
+			<th><f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" /></th>
+			<th>Bereits<br>beraten</th>
+			<th><f:translate key="anmeldedatum" /></th>
+			<th><f:translate key="tx_iqtp13db_domain_model_teilnehmer.plz" />/<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ort" /></th>
+			<th>Früherer<br>Bescheid</th>
+			<th>Leistung</th>
+			<th><f:translate key="tx_iqtp13db_domain_model_beratung.berater" /></th>
+			<th><f:translate key="tx_iqtp13db_domain_model_beratung.datum" /></th>
+			<th>Referenzberuf</th>
+			<th>Fertig</th>
+			<th> </th>
+			<th> </th>
+			<th> </th>
+		</tr>
+	
+		<f:for each="{beratungenpart}" as="beratung" iteration="it">
+			<tr>
+				<td><f:link.action action="show" arguments="{beratung : beratung, calleraction: calleraction, callercontroller : callercontroller}">{beratung.teilnehmer.nachname}</f:link.action></td>
+				<td>{beratung.teilnehmer.vorname}</td>
+				<td>{f:if(condition: '{beratung.teilnehmer.schonberaten} == 1', then: '✓', else: '')}</td>
+				<td><f:format.date format="d.m.Y">@{beratung.teilnehmer.verificationDate}</f:format.date></td>
+				<td>{beratung.teilnehmer.plz} {beratung.teilnehmer.ort}</td>
+				<td>{f:if(condition: '{beratung.teilnehmer.bescheidfruehererAnerkennungsantrag} == 1', then: '✓', else: '')}</td>
+				<td>{f:if(condition: '{beratung.teilnehmer.leistungsbezugjanein} == 1', then: '✓', else: '')}</td>
+				<td>{beratung.berater.kuerzel}</td>
+				<td><f:format.date format="d.m.Y">{beratung.datum}</f:format.date></td>
+				<td>{beratung.teilnehmer.deutscherReferenzberuf1} {f:if(condition: '{beratung.teilnehmer.deutscherReferenzberuf2} != ""', then: ', {beratung.teilnehmer.deutscherReferenzberuf2}', else: '')} </td>
+				<td>
+				<f:if condition="{beratung.erstberatungabgeschlossen} > 0">
+				<f:then>
+					<f:format.date format="d.m.Y">{beratung.erstberatungabgeschlossen}</f:format.date>			
+				</f:then>
+				</f:if>				
+				</td>
+				<td><f:link.action class="linkbuttons" action="edit" arguments="{beratung : beratung, calleraction: calleraction, callercontroller : callercontroller}">Bearbeiten</f:link.action></td>
+				<td><f:link.action class="linkbuttons" action="edit" arguments="{teilnehmer : beratung.teilnehmer, calleraction: calleraction, callercontroller : callercontroller}" controller="Teilnehmer">Anmeldedaten</f:link.action></td>
+				<td><f:link.action class="linkbuttons" action="new" arguments="{beratung : beratung, calleraction: calleraction, callercontroller : callercontroller}" controller="Folgekontakt">Folgekontakt</f:link.action></td>
+			</tr>
+			<f:if condition="{anzfolgekontakte.{it.index}} != 0"><f:then>
+				<f:render partial="Folgekontakte4List" arguments="{folgekontakte : folgekontakte, beratung : beratung, calleraction: calleraction, callercontroller : callercontroller}" />
+			</f:then></f:if>
+		</f:for>
+	</table>
+</f:widget.paginate> 
+</f:section>
+
+
+

@@ -1,39 +1,19 @@
 
 <f:layout name="Default" />
+<f:section name="HeaderAssets">
+  		<link rel="stylesheet" href="{f:uri.resource(path: 'CSS/customtp13dbadmin.css')}"/>  		
+</f:section>
+
 
 <f:section name="main">
-<h1>Einzelansicht Beratene(r)</h1>
+<h1>Einzelansicht Ratsuchende*r</h1>
 
 <f:flashMessages />
+<f:link.action class="linkbuttons" action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}">Anmeldedaten bearbeiten</f:link.action>
+<f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}">Zurück zur Liste</f:link.action>
+
 <f:render partial="Teilnehmer/Properties" arguments="{teilnehmer:teilnehmer}" />
-<f:link.action class="linkbuttons" action="edit" arguments="{teilnehmer : teilnehmer}">Bearbeite Beratenen</f:link.action><br>
-
-<h2>{anzBeratungen} Beratung(en)</h2>
-<f:if condition="{anzBeratungen} > 0">
-<f:then>
-<table>
-<tr>
-<th style="min-width: 150px;"><span style="color: #428BCA;">Chiffre</span></th>
-<th style="min-width: 150px;"><span style="color: #428BCA;">Datum Erstkontakt</span></th>
-<th style="min-width: 150px;"><span style="color: #428BCA;">Anzahl Dokumente</span></th>
-<th style="min-width: 150px;"></th>
-<th style="min-width: 150px;"></th>
-
-</tr>
-<f:for each="{beratungen}" as="beratung">
-	<tr>
-	<td><f:link.action action="show" controller="Beratung" arguments="{beratung:beratung, teilnehmer:teilnehmer}">{beratung.chiffre}</f:link.action></td>
-	<td><f:format.date format="d.m.Y">{beratung.datum}</f:format.date></td>
-	<td>{beratung.anzDokumente}</td>
-	<td><f:link.action class="linkbuttons" action="edit" controller="Beratung" arguments="{beratung:beratung, teilnehmer:teilnehmer}">Bearbeiten</f:link.action></td>
-	<td><f:link.action class="linkbuttons" action="delete" controller="Beratung" arguments="{beratung:beratung, teilnehmer:teilnehmer}" onclick="return confirm('Wirklich löschen?');" >Löschen</f:link.action></td>
-	</tr>
-</f:for>
-</table>
-</f:then>
-</f:if>
-<f:link.action class="linkbuttons" action="new" controller="Beratung" arguments="{teilnehmer:teilnehmer}">Neue Beratung</f:link.action>
-<f:link.action class="linkbuttons" action="new">Neuer Beratener</f:link.action>
-<f:link.action class="linkbuttons" action="list">Zurück zur Liste</f:link.action>
+<f:link.action class="linkbuttons" action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}">Anmeldedaten bearbeiten</f:link.action>
+<f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}">Zurück zur Liste</f:link.action>
 
 </f:section>

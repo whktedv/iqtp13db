@@ -43,33 +43,21 @@
 				</config>
             </TCEforms>
           </settings.anmeldendeseite>
-		  <settings.sender>
-                     <TCEforms>
-                        <label>Absender E-Mail-Adresse Bestätigung</label>
-                        <config>
-                            <type>input</type>
-                            <size>60</size>
-                        </config>
-                      </TCEforms>
-          </settings.sender>
-          <settings.bccmail>
-                    <TCEforms>
-                         <label>Bcc E-Mail-Adresse Bestätigung</label>
-                         <config>
-                             <type>input</type>
-                             <size>60</size>
-                         </config>
-                    </TCEforms>
-          </settings.bccmail>
-          <settings.subject>
-                    <TCEforms>
-                         <label>Betreff Bestätigung an Beratenen</label>
-                         <config>
-                             <type>input</type>
-                             <size>60</size>
-                         </config>
-                    </TCEforms>
-          </settings.subject>
+          <settings.startseite>
+            <TCEforms>
+              <label>Startseite Anmeldung</label>
+				<config>
+  				<type>group</type>
+  				<internal_type>db</internal_type>
+				<allowed>pages</allowed>
+				<size>1</size>
+				<maxitems>1</maxitems>
+				<minitems>0</minitems>
+				<show_thumbs>1</show_thumbs>
+				<eval>required</eval>
+				</config>
+            </TCEforms>
+          </settings.startseite>
           <settings.mailattacheinwilligung>
                     <TCEforms>
                          <label>Pfad zum Dateianhang (optional)</label>
@@ -79,24 +67,6 @@
                          </config>
                     </TCEforms>
           </settings.mailattacheinwilligung>
-          <settings.startseitelink>
-                    <TCEforms>
-                         <label>Link zur Startseite (optional)</label>
-                         <config>
-                             <type>input</type>
-                             <size>60</size>
-                         </config>
-                    </TCEforms>
-          </settings.startseitelink>
-          <settings.logolink>
-                    <TCEforms>
-                         <label>Link zum Logo (optional)</label>
-                         <config>
-                             <type>input</type>
-                             <size>60</size>
-                         </config>
-                    </TCEforms>
-          </settings.logolink>
           <settings.redirectValidationInitiated>
             <TCEforms>
               <label>Seite Bestätigungsmail angefordert</label>

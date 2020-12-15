@@ -111,7 +111,7 @@ In case of cancellation my personal data will be deleted immediately. Inquiries 
         <target>Street</target>
       </trans-unit>
       <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.plz">
-        <source>Plz</source>
+        <source>PLZ</source>
         <target>Postcode</target>
       </trans-unit>
       <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ort">

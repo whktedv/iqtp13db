@@ -1,0 +1,66 @@
+#mainnavbar {
+	display: none;
+}
+
+.navbar-toggle {
+	display: none;
+}
+
+.navbar {
+	font-size: 1.0em;
+}
+
+.navbar-default {
+  
+}
+
+.navbar > .container {
+    max-width: 1200px;
+}
+
+.footernavi {
+	display: none;
+}
+
+
+.navbar-mainnavigation .navbar-brand {
+    height: 50px;
+}
+
+.navbar-mainnavigation > .container > .navbar-collapse, .navbar-mainnavigation > .container-fluid > .navbar-collapse {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.iq-standardcontainer-weiss {
+    margin-top: 0rem;
+    padding-top: 0rem;
+}
+
+td.fktd {
+	background-color: #d7e1f9;
+}
+
+table.fktable {
+	width: 100%;	
+}
+
+.tx_iqtp13db td.fklistdatum, .tx_iqtp13db td.fklistberater {
+	width: 15%;
+}
+
+.tx_iqtp13db td.fklistinhalt {
+	width: 70%;
+}
+
+
+td.tdcenter input[type="checkbox"] {
+	height: 1.5em;
+	width: 1.5em;
+	float: none;
+    margin: 0px;
+    width: auto;
+     -ms-transform: scale(1.5); 
+    -webkit-transform: scale(1.5);
+    transform: scale(1.5);
+}

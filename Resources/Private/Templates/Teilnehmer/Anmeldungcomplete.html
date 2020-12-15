@@ -1,0 +1,49 @@
+
+<f:layout name="Default" />
+
+<f:section name="main">
+<h1><f:translate key="fragebogen" /> 4 / 4</h1>
+
+<f:flashMessages />
+ 
+ <f:form.validationResults>
+					<f:for each="{validationResults.flattenedErrors}" key="propertyName" as="errors">
+						<p class="errormessage">{propertyName}: {errors.0.message}</p>
+					</f:for>
+</f:form.validationResults>
+
+				
+<div class="frame"><h2><f:translate key="dokumente" /></h2>
+	<p>
+		<f:format.raw><f:translate key="dokumenteintro" /></f:format.raw>
+		<b>{foldersize} %</b>
+	</p>
+	<table>
+	<f:for each="{dokumente}" as="dokument">
+		<tr>
+		<td>{dokument.name}</td>
+		<td><f:link.action class="linkbuttons" action="deleteFileWebapp" controller="Dokument" arguments="{dokument:dokument, teilnehmer:teilnehmer}"><f:translate key="loeschen" /></f:link.action></td>
+		</tr>
+	</f:for>
+	</table>
+	<f:form method="post" controller="Dokument" arguments="{teilnehmer:teilnehmer}" action="saveFileWebapp" name="dokument" object="{dokument}" enctype="multipart/form-data" noCacheHash="true" ><br />
+		<div class="tp13_formdiv100 dokupload">
+ 	       <f:translate key="dokumentauswaehlen" />:
+				<f:form.upload name="file" />
+				<f:form.submit value="Upload file" ></f:form.submit>			
+		</div>
+	</f:form>
+</div>
+
+<f:form action="anmeldungcompleteredirect" name="teilnehmer" object="{teilnehmer}">
+	<div style="margin: 10px;">&nbsp;</div>
+	
+	<f:translate key="hinweisdatenueberpruefen" /> 
+	<f:render partial="Teilnehmer/PropertiesAnmeldung" arguments="{teilnehmer:teilnehmer}" />
+	
+	<f:form.button name="btnzurueck"><f:translate key="zurueck" /></f:form.button>
+	<f:form.button name="btncancel" class="abbruchbtn" onclick="return btncancel_Click();"><f:translate key="abbruch" /></f:form.button>
+	<f:form.button name="btnAbsenden"><f:translate key="absenden" /></f:form.button>
+</f:form>
+
+</f:section>

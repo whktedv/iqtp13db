@@ -1,0 +1,45 @@
+<div class="fframe">
+		<div class="tp13_formdivwebapp">
+			<label for="datum">
+				<f:translate key="tx_iqtp13db_domain_model_folgekontakt.datum" />
+			</label>
+				<f:form.textfield class="datumtextfield" property="datum" value="{datum}" id="datepicker1" />
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="berater">
+				<f:translate key="tx_iqtp13db_domain_model_folgekontakt.berater" />
+			</label>
+				<f:if condition="{berater.kuerzel} == 'admin'"><f:then>
+					<f:form.select property="berater" options="{alleberater}" optionLabelField="name" optionValueField="uid" sortByOptionLabel="1" prependOptionLabel="-" prependOptionValue="0" />
+				</f:then>
+				<f:else>
+					<f:form.hidden property="berater" value="{berater.uid}" />
+					<span class="propdat">{berater.name}</span>
+				</f:else>
+				</f:if>	
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="antraggestellt">
+				<f:translate key="tx_iqtp13db_domain_model_folgekontakt.antraggestellt" />
+			</label>
+			<div class="tp13_options">
+				<div class="tp13_formdivwebappradio"><f:form.radio id="optantraggestellt1" property="antraggestellt" value="1" /><span class="abschlussradiotext"><f:translate key="ja" /></span></div>
+				<div class="tp13_formdivwebappradio"><f:form.radio id="optantraggestellt2" property="antraggestellt" value="2" /><span class="abschlussradiotext"><f:translate key="nein" /></span></div>
+			</div>
+		</div>
+		<div class="tp13_formdivwebapp" id="divzabgleichwertigkeit">
+			<label for="zab_gleichwertigkeit">
+				<f:translate key="tx_iqtp13db_domain_model_folgekontakt.zab_gleichwertigkeit" />
+			</label>
+			<div class="tp13_options">
+				<div class="tp13_formdivwebappradio"><f:form.radio property="zabGleichwertigkeit" value="1" /><span class="abschlussradiotext">ZAB</span></div>
+				<div class="tp13_formdivwebappradio"><f:form.radio property="zabGleichwertigkeit" value="2" /><span class="abschlussradiotext">Gleichwertigkeit</span></div>
+			</div>
+		</div>		
+		<div class="tp13_formdivwebapp">
+			<label for="notizen" class="tp13_options">
+				<f:translate key="tx_iqtp13db_domain_model_folgekontakt.notizen" />
+			</label>
+				<f:form.textarea property="notizen" rows="10" cols="100" />
+		</div>
+</div>

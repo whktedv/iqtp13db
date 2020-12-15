@@ -1,0 +1,16 @@
+
+<f:layout name="Default" />
+<f:section name="HeaderAssets">
+  		<link rel="stylesheet" href="{f:uri.resource(path: 'CSS/customtp13dbadmin.css')}"/>  		
+</f:section>
+
+
+<f:section name="main">
+<h1>Folgekontakt anzeigen</h1>
+
+<f:flashMessages />
+<f:render partial="Folgekontakt/Properties" arguments="{_all}" />
+
+<f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}">Zurück zur Liste</f:link.action>
+
+</f:section>

@@ -26,22 +26,6 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     protected $dokumentRepository = NULL;
 
     /**
-     * beratungRepository
-     *
-     * @var \Ud\Iqtp13db\Domain\Repository\BeratungRepository
-     * @TYPO3\CMS\Extbase\Annotation\Inject
-     */
-    protected $beratungRepository = NULL;
-
-    /**
-     * schulungRepository
-     *
-     * @var \Ud\Iqtp13db\Domain\Repository\SchulungRepository
-     * @TYPO3\CMS\Extbase\Annotation\Inject
-     */
-    protected $schulungRepository = NULL;
-
-    /**
      * storageRepository
      *
      * @var TYPO3\CMS\Core\Resource\StorageRepository
@@ -49,6 +33,14 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      */
     protected $storageRepository = NULL;
 
+    /**
+     * teilnehmerRepository
+     *
+     * @var \Ud\Iqtp13db\Domain\Repository\TeilnehmerRepository
+     * @TYPO3\CMS\Extbase\Annotation\Inject
+     */
+    protected $teilnehmerRepository = NULL;
+    
     /**
      * action init
      *
@@ -71,118 +63,68 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     }
 
     /**
-     * action saveFileBeratung
+     * action saveFileTeilnehmer
      *
-     * @param \Ud\Iqtp13db\Domain\Model\Beratung $beratung
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return void
      */
-    public function saveFileBeratungAction(\Ud\Iqtp13db\Domain\Model\Beratung $beratung, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    public function saveFileTeilnehmerAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
         
-        $this->saveFileBeratung($beratung, $teilnehmer, $_FILES['tx_iqtp13db_iqtp13dbadmin']);
-        $this->redirect('show', 'Beratung', null, array('beratung' => $beratung, 'teilnehmer' => $teilnehmer));
+        $this->saveFileTeilnehmer($teilnehmer, $_FILES['tx_iqtp13db_iqtp13dbadmin']);
+        $this->redirect('show', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
     }
 
     /**
-     * action deleteFileBeratung
+     * action deleteFileTeilnehmer
      *
      * @param \Ud\Iqtp13db\Domain\Model\Dokument $dokument
-     * @param \Ud\Iqtp13db\Domain\Model\Beratung $beratung
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return void
      */
-    public function deleteFileBeratungAction(\Ud\Iqtp13db\Domain\Model\Dokument $dokument, \Ud\Iqtp13db\Domain\Model\Beratung $beratung, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    public function deleteFileAction(\Ud\Iqtp13db\Domain\Model\Dokument $dokument, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
-        $this->deleteFileBeratung($dokument, $beratung, $teilnehmer);
-        $this->redirect('show', 'Beratung', null, array('beratung' => $beratung, 'teilnehmer' => $teilnehmer));
+        $this->deleteFile($dokument, $teilnehmer);
+        $this->redirect('show', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
     }
 
     /**
-     * action saveFileSchulung
+     * action saveFileWebapp
      *
-     * @param \Ud\Iqtp13db\Domain\Model\Schulung $schulung
-     * @return void
-     */
-    public function saveFileSchulungAction(\Ud\Iqtp13db\Domain\Model\Schulung $schulung)
-    {
-        $newFilePath = '/Schulungen/' . $schulung->getDatum()->format('dmY') . '_' . $schulung->getInstitution();
-        if ($_FILES['tx_iqtp13db_iqtp13dbadmin']['name']['formdoc'][0]) {
-            $dokument = $this->savefile($newFilePath, $_FILES);
-            $dokument->setSchulung($schulung);
-            $this->dokumentRepository->update($dokument);
-            
-            //Daten sofort in die Datenbank schreiben
-            $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
-            $persistenceManager->persistAll();
-            $anzdokumente = count($this->dokumentRepository->findBySchulung($schulung->getUid()));
-            $schulung->setAnzDokumente($anzdokumente);
-            $this->schulungRepository->update($schulung);
-        }
-        $this->redirect('show', 'Schulung', null, array('schulung' => $schulung));
-    }
-
-    /**
-     * action deleteFileSchulung
-     *
-     * @param \Ud\Iqtp13db\Domain\Model\Dokument $dokument
-     * @param \Ud\Iqtp13db\Domain\Model\Schulung $schulung
-     * @return void
-     */
-    public function deleteFileSchulungAction(\Ud\Iqtp13db\Domain\Model\Dokument $dokument, \Ud\Iqtp13db\Domain\Model\Schulung $schulung)
-    {
-        $delfilepath = '/Schulungen/' . $schulung->getDatum()->format('dmY') . '_' . $schulung->getInstitution() . '/' . $dokument->getName();
-        if ($this->deletefile($dokument, $delfilepath)) {
-            $anzdokumente = count($this->dokumentRepository->findBySchulung($schulung->getUid()));
-            $schulung->setAnzDokumente($anzdokumente);
-            $this->schulungRepository->update($schulung);
-            $this->addFlashMessage('Dokument wurde gelöscht.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
-        } else {
-            $this->addFlashMessage('Dokument konnte nicht gelöscht werden!', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-        }
-        $this->redirect('show', 'Schulung', null, array('schulung' => $schulung));
-    }
-
-    /**
-     * action saveFileBeratungExtern
-     *
-     * @param \Ud\Iqtp13db\Domain\Model\Beratung $beratung
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return void
      */
-    public function saveFileBeratungExternAction(\Ud\Iqtp13db\Domain\Model\Beratung $beratung, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    public function saveFileWebappAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {        
 		if ($_FILES['tx_iqtp13db_iqtp13dbwebapp']['tmp_name']['file'] == '') {
-		    $this->addFlashMessage('Error in saveFileBeratungExtern: maximum filesize exceeded or permission error', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+		    $this->addFlashMessage('Error in saveFileWebapp: maximum filesize exceeded or permission error', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
 		} else {
-            $this->saveFileBeratung($beratung, $teilnehmer, $_FILES['tx_iqtp13db_iqtp13dbwebapp']);                     
+            $this->saveFileTeilnehmer($teilnehmer, $_FILES['tx_iqtp13db_iqtp13dbwebapp']);                     
 		}
-		$this->redirect('anmeldungcomplete', 'Beratung', null, array('beratung' => $beratung, 'teilnehmer' => $teilnehmer));
+		$this->redirect('anmeldungcomplete', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
     }
 
     /**
-     * action deleteFileBeratungExtern
+     * action deleteFileWebapp
      *
      * @param \Ud\Iqtp13db\Domain\Model\Dokument $dokument
-     * @param \Ud\Iqtp13db\Domain\Model\Beratung $beratung
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return void
      */
-    public function deleteFileBeratungExternAction(\Ud\Iqtp13db\Domain\Model\Dokument $dokument, \Ud\Iqtp13db\Domain\Model\Beratung $beratung, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    public function deleteFileWebappAction(\Ud\Iqtp13db\Domain\Model\Dokument $dokument, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
-        $this->deleteFileBeratung($dokument, $beratung, $teilnehmer);
-        $this->forward('anmeldungcomplete', 'Beratung', null, null);
+        $this->deleteFileTeilnehmer($dokument, $teilnehmer);
+        $this->forward('anmeldungcomplete', 'Teilnehmer', null, null);
     }
 
     /**
-     * saveFileBeratung
+     * saveFileTeilnehmer
      *
-     * @param \Ud\Iqtp13db\Domain\Model\Beratung $beratung
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @param array $files
      * @return void
      */
-    public function saveFileBeratung(\Ud\Iqtp13db\Domain\Model\Beratung $beratung, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer, $files)
+    public function saveFileTeilnehmer(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer, $files)
     {        
     	$newFilePath = 'Beratene/' . $teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid(). '/';    	
     	$tmpName = $this->sanitizeFileName($files['name']['file']);
@@ -195,30 +137,28 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     	} else {
     	    if ($files['name']['file'] && !file_exists($fullpath)) {
     	        $dokument = $this->savefile($newFilePath, $files);
-    	        $dokument->setBeratung($beratung);
+    	        $dokument->setTeilnehmer($teilnehmer);
     	        $this->dokumentRepository->update($dokument);
     	        //Daten sofort in die Datenbank schreiben
     	        $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
     	        $persistenceManager->persistAll();
     	        
-    	        $anzdokumente = count($this->dokumentRepository->findByBeratung($beratung->getUid()));
-    	        $beratung->setAnzDokumente($anzdokumente);
+    	        //$anzdokumente = count($this->dokumentRepository->findByTeilnehmer($teilnehmer->getUid()));
     	        
-    	        $this->beratungRepository->update($beratung);
+    	        $this->teilnehmerRepository->update($teilnehmer);
     	    }
     	}    	
         
     }
 
     /**
-     * deleteFileBeratung
+     * deleteFileTeilnehmer
      *
      * @param \Ud\Iqtp13db\Domain\Model\Dokument $dokument
-     * @param \Ud\Iqtp13db\Domain\Model\Beratung $beratung
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return void
      */
-    public function deleteFileBeratung(\Ud\Iqtp13db\Domain\Model\Dokument $dokument, \Ud\Iqtp13db\Domain\Model\Beratung $beratung, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    public function deleteFileTeilnehmer(\Ud\Iqtp13db\Domain\Model\Dokument $dokument, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     { 
         $delfilepath = 'Beratene/' . $teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid() . '/' . $dokument->getName();
         $storage = $this->getTP13Storage($newFilePath);
@@ -227,10 +167,8 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         if (file_exists($fullpath)) {
             if ($this->deletefile($dokument, $delfilepath)) {   
                 
-                $anzdokumente = count($this->dokumentRepository->findByBeratung($beratung->getUid()));
-                
-                $beratung->setAnzDokumente($anzdokumente);
-                $this->beratungRepository->update($beratung);
+                $anzdokumente = count($this->dokumentRepository->findByTeilnehmer($teilnehmer->getUid()));
+                $this->teilnehmerRepository->update($teilnehmer);
                 
                 $this->addFlashMessage('Dokument wurde gelöscht.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
             } else {
@@ -288,7 +226,6 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      */
     public function deletefile(\Ud\Iqtp13db\Domain\Model\Dokument $dokument, $delfilepath)
     {            
-        
         $this->dokumentRepository->remove($dokument);
         
         // Daten sofort in die Datenbank schreiben

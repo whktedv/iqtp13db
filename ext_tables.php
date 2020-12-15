@@ -4,19 +4,19 @@ defined('TYPO3_MODE') || die('Access denied.');
 function()
 {
 	
-        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_iqtp13db_domain_model_teilnehmer', 'EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_teilnehmer.xlf');
+        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_iqtp13db_domain_model_teilnehmer', 'EXT:iqtp13db/Resources/Private/Language/locallang.xlf');
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_iqtp13db_domain_model_teilnehmer');
 
-        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_iqtp13db_domain_model_beratung', 'EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_beratung.xlf');
+        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_iqtp13db_domain_model_beratung', 'EXT:iqtp13db/Resources/Private/Language/locallang.xlf');
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_iqtp13db_domain_model_beratung');
 
-        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_iqtp13db_domain_model_berater', 'EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_berater.xlf');
+        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_iqtp13db_domain_model_folgekontakt', 'EXT:iqtp13db/Resources/Private/Language/locallang.xlf');
+        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_iqtp13db_domain_model_folgekontakt');
+                
+        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_iqtp13db_domain_model_berater', 'EXT:iqtp13db/Resources/Private/Language/locallang.xlf');
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_iqtp13db_domain_model_berater');
 
-        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_iqtp13db_domain_model_schulung', 'EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_schulung.xlf');
-        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_iqtp13db_domain_model_schulung');
-
-        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_iqtp13db_domain_model_dokument', 'EXT:iqtp13db/Resources/Private/Language/locallang_csh_tx_iqtp13db_domain_model_dokument.xlf');
+        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_iqtp13db_domain_model_dokument', 'EXT:iqtp13db/Resources/Private/Language/locallang.xlf');
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_iqtp13db_domain_model_dokument');
 
 };

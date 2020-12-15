@@ -1,7 +1,7 @@
 <?php
 return [
     'ctrl' => [
-        'title' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang_db.xlf:tx_iqtp13db_domain_model_dokument',
+        'title' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_dokument',
         'label' => 'name',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
@@ -13,14 +13,14 @@ return [
             'starttime' => 'starttime',
             'endtime' => 'endtime',
         ],
-        'searchFields' => 'name,pfad,beratung,schulung',
+        'searchFields' => 'name,pfad,teilnehmer',
         'iconfile' => 'EXT:iqtp13db/Resources/Public/Icons/tx_iqtp13db_domain_model_dokument.gif'
     ],
     'interface' => [
-        'showRecordFieldList' => 'hidden, name, pfad, beratung, schulung',
+        'showRecordFieldList' => 'hidden, name, pfad, teilnehmer',
     ],
     'types' => [
-        '1' => ['showitem' => 'hidden, name, pfad, beratung, schulung, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+        '1' => ['showitem' => 'hidden, name, pfad, teilnehmer, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
     'columns' => [
         't3ver_label' => [
@@ -78,7 +78,7 @@ return [
         ],
         'name' => [
 	        'exclude' => true,
-	        'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang_db.xlf:tx_iqtp13db_domain_model_dokument.name',
+	        'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_dokument.name',
 	        'config' => [
 			    'type' => 'input',
 			    'size' => 30,
@@ -87,31 +87,20 @@ return [
 	    ],
 	    'pfad' => [
 	        'exclude' => true,
-	        'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang_db.xlf:tx_iqtp13db_domain_model_dokument.pfad',
+	        'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_dokument.pfad',
 	        'config' => [
 			    'type' => 'input',
 			    'size' => 30,
 			    'eval' => 'trim'
 			],
 	    ],
-	    'beratung' => [
+	    'teilnehmer' => [
 	        'exclude' => true,
-	        'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang_db.xlf:tx_iqtp13db_domain_model_dokument.beratung',
+	        'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_dokument.teilnehmer',
 	        'config' => [
 			    'type' => 'select',
 			    'renderType' => 'selectSingle',
-			    'foreign_table' => 'tx_iqtp13db_domain_model_beratung',
-			    'minitems' => 0,
-			    'maxitems' => 1,
-			],
-	    ],
-	    'schulung' => [
-	        'exclude' => true,
-	        'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang_db.xlf:tx_iqtp13db_domain_model_dokument.schulung',
-	        'config' => [
-			    'type' => 'select',
-			    'renderType' => 'selectSingle',
-			    'foreign_table' => 'tx_iqtp13db_domain_model_schulung',
+			    'foreign_table' => 'tx_iqtp13db_domain_model_teilnehmer',
 			    'minitems' => 0,
 			    'maxitems' => 1,
 			],

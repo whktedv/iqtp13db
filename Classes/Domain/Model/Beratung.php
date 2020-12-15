@@ -17,242 +17,117 @@ namespace Ud\Iqtp13db\Domain\Model;
  */
 class Beratung extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
-    /**
-     * NIQ Chiffre
-     *
+
+  /**
+     * datum
+     * 
      * @var string
-     */
-    protected $chiffre = '';
-
-    /**
-     * Beratungsprozess
-     *
-     * @var int
-     */
-    protected $prozess = 0;
-
-    /**
-     * Datum Erstkontakt
-     *
-     * @var \DateTime
-     * @TYPO3\CMS\Extbase\Annotation\Validate("DateTime")
      */
     protected $datum = '';
 
     /**
-     * Folgekontakt
+     * beratungsart
+     * 
+     * @var string
+     */
+    protected $beratungsart = 0;
+
+    /**
+     * beratungzu
+     * 
+     * @var string
+     */
+    protected $beratungzu = '';
+
+    /**
+     * referenzberufe
+     * 
+     * @var string
+     */
+    protected $referenzberufe = '';
+
+    /**
+     * anerkennendestellen
+     * 
+     * @var string
+     */
+    protected $anerkennendestellen = '';
+
+    /**
+     * anerkennungsberatung
+     * 
+     * @var string
+     */
+    protected $anerkennungsberatung = '';
+    
+    /**
+     * anerkennungsberatungfreitext
      *
      * @var string
      */
-    protected $folgekontakt = '';
+    protected $anerkennungsberatungfreitext = '';
 
     /**
-     * Durchführungsort
+     * qualifizierungsberatung
+     * 
+     * @var string
+     */
+    protected $qualifizierungsberatung = '';
+
+    /**
+     * qualifizierungsberatungfreitext
      *
      * @var string
      */
-    protected $ort = '';
-
+    protected $qualifizierungsberatungfreitext = '';
+        
     /**
-     * Beratungsart
-     *
-     * @var int
-     */
-    protected $beratungsart = '';
-
-    /**
-     * Anfrage durch
-     *
-     * @var int
-     */
-    protected $anfrageDurch = 0;
-
-    /**
-     * Anmerkung
-     *
+     * notizen
+     * 
      * @var string
      */
-    protected $anmerkung = '';
+    protected $notizen = '';
 
     /**
-     * Weiterleitung an "prioritär" anerkennende Stellen
-     *
+     * erstberatungabgeschlossen
+     * 
      * @var string
      */
-    protected $ergebnisWeiterleitung = '';
+    protected $erstberatungabgeschlossen = '';
 
     /**
-     * Anmerkungen zum aktuellen Verfahren
-     *
-     * @var string
-     */
-    protected $anmerkungVerfahren = '';
-
-    /**
-     * Angaben zu Vereinbarungen, Empfehlungen, Kontakten
-     *
-     * @var string
-     */
-    protected $angabenVereinbarungen = '';
-
-    /**
-     * Umfang der Beratung
-     *
-     * @var string
-     */
-    protected $umfang = '';
-
-    /**
-     * Beratung abgeschlossen
-     *
-     * @var string
-     */
-    protected $beratungAbgeschlossen = '';
-
-    /**
-     * Übertragung in NIQ-Datenbank erfolgt
-     *
-     * @var string
-     */
-    protected $uebertragNIQ = '';
-
-    /**
-     * Dokumente Ratsuchender
-     *
-     * @var string
-     */
-    protected $dokumenteRatsuchender = '';
-
-    /**
-     * Dokumente anhängen
-     *
-     * @var string
-     */
-    protected $dokumenteAnhaengen = '';
-
-    /**
-     * Folgekontakte
-     *
-     * @var int
-     */
-    protected $folgekontakte = 0;
-
-    /**
-     * Liegt ein Bescheid über eine Gleichwertigkeitsprüfung vor?
-     *
-     * @var int
-     */
-    protected $bescheidGleichwertigkeitspruefung = 0;
-
-    /**
-     * Falls ja, welches Ergebnis hatte das Verfahren der Gleichwertigkeitsfeststellung
-     *
-     * @var int
-     */
-    protected $ergebnisGleichwertigkeitsfeststellung = 0;
-
-    /**
-     * Falls nicht-reglementierter akademischer Beruf: Liegt eine ZAB-Bewertung vor?
-     *
-     * @var int
-     */
-    protected $zabBewertung = 0;
-
-    /**
-     * Wurde an einen IQ-internen Bildungsdienstleister weiterverwiesen?
-     *
-     * @var int
-     */
-    protected $verweisAnBildungsdienstleister = 0;
-
-    /**
-     * Falls ja, welche Qualifizierungsmaßnahme haben Sie empfohlen?
-     *
-     * @var string
-     */
-    protected $empfohleneQualimassnahme = '';
-
-    /**
-     * An welchen Bildungsdienstleister haben Sie verwiesen?
-     *
-     * @var int
-     */
-    protected $welcherBildungsdienstleister = 0;
-
-    /**
-     * Zu welchem Modul wird die Qualifizierungsmaßnahme zugeordnet?
-     *
-     * @var int
-     */
-    protected $modulZuordnungQualimassnahme = 0;
-
-    /**
-     * In welchem Bundesland findet die Qualifizierungsmaßnahme statt?
-     *
-     * @var string
-     */
-    protected $bundeslandQualimassnahme = '';
-
-    /**
-     * Anzahl Dokumente
-     *
-     * @var int
-     */
-    protected $anzDokumente = 0;
-
-    /**
-     * Weg zur Beratungsstelle über
-     *
-     * @var int
-     */
-    protected $wegBeratungsstelle = 0;
-
-    /**
-     * Name Beratungsstelle
-     *
-     * @var string
-     */
-    protected $nameBeratungsstelle = '';
-
-    /**
-     * Teilnehmer
-     *
+     * teilnehmer
+     * 
      * @var \Ud\Iqtp13db\Domain\Model\Teilnehmer
      */
-    protected $teilnehmer = NULL;
+    protected $teilnehmer = null;
 
     /**
-     * Berater
-     *
+     * berater
+     * 
      * @var \Ud\Iqtp13db\Domain\Model\Berater
      */
-    protected $berater = NULL;
+    protected $berater = null;
 
     /**
-     * Returns the chiffre
+     * initializes this object
      *
-     * @return string $chiffre
+     * @param array $beratungsart
+     * @param array $beratungzu
+     * @param array $anerkennungsberatung
+     * @param array $qualifizierungsberatung
      */
-    public function getChiffre()
-    {
-        return $this->chiffre;
+    public function __construct(array $beratungsart = array(), array $beratungzu = array(), array $anerkennungsberatung = array(), array $qualifizierungsberatung = array()) {
+        $this->setBeratungsart($beratungsart);
+        $this->setBeratungzu($beratungzu);
+        $this->setAnerkennungsberatung($anerkennungsberatung);
+        $this->setQualifizierungsberatung($qualifizierungsberatung);
     }
-
-    /**
-     * Sets the chiffre
-     *
-     * @param string $chiffre
-     * @return void
-     */
-    public function setChiffre($chiffre)
-    {
-        $this->chiffre = $chiffre;
-    }
-
+    
     /**
      * Returns the datum
-     *
-     * @return \DateTime $datum
+     * 
+     * @return string $datum
      */
     public function getDatum()
     {
@@ -261,501 +136,228 @@ class Beratung extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the datum
-     *
-     * @param \DateTime $datum
+     * 
+     * @param string $datum
      * @return void
      */
-    public function setDatum(\DateTime $datum)
+    public function setDatum($datum)
     {
         $this->datum = $datum;
     }
 
     /**
-     * Returns the ort
-     *
-     * @return string $ort
-     */
-    public function getOrt()
-    {
-        return $this->ort;
-    }
-
-    /**
-     * Sets the ort
-     *
-     * @param string $ort
-     * @return void
-     */
-    public function setOrt($ort)
-    {
-        $this->ort = $ort;
-    }
-
-    /**
      * Returns the beratungsart
-     *
-     * @return int beratungsart
+     * 
+     * @return array $beratungsart
      */
     public function getBeratungsart()
     {
-        return $this->beratungsart;
+        return explode(',', $this->beratungsart);
     }
 
     /**
      * Sets the beratungsart
-     *
-     * @param string $beratungsart
+     * 
+     * @param array $beratungsart
      * @return void
      */
-    public function setBeratungsart($beratungsart)
+    public function setBeratungsart(array $beratungsart)
     {
-        $this->beratungsart = $beratungsart;
+        $this->beratungsart = implode(',', $beratungsart);
     }
 
     /**
-     * Returns the prozess
-     *
-     * @return int $prozess
+     * Returns the beratungzu
+     * 
+     * @return array $beratungzu
      */
-    public function getProzess()
+    public function getBeratungzu()
     {
-        return $this->prozess;
+        return explode(',', $this->beratungzu);
     }
 
     /**
-     * Sets the prozess
-     *
-     * @param int $prozess
+     * Sets the beratungzu
+     * 
+     * @param array $beratungzu
      * @return void
      */
-    public function setProzess($prozess)
+    public function setBeratungzu(array $beratungzu)
     {
-        $this->prozess = $prozess;
+        $this->beratungzu = implode(',', $beratungzu);
     }
 
     /**
-     * Returns the folgekontakt
-     *
-     * @return string $folgekontakt
+     * Returns the referenzberufe
+     * 
+     * @return string $referenzberufe
      */
-    public function getFolgekontakt()
+    public function getReferenzberufe()
     {
-        return $this->folgekontakt;
+        return $this->referenzberufe;
     }
 
     /**
-     * Sets the folgekontakt
-     *
-     * @param string $folgekontakt
+     * Sets the referenzberufe
+     * 
+     * @param string $referenzberufe
      * @return void
      */
-    public function setFolgekontakt($folgekontakt)
+    public function setReferenzberufe($referenzberufe)
     {
-        $this->folgekontakt = $folgekontakt;
+        $this->referenzberufe = $referenzberufe;
     }
 
     /**
-     * Returns the anfrageDurch
-     *
-     * @return int $anfrageDurch
+     * Returns the anerkennendestellen
+     * 
+     * @return string $anerkennendestellen
      */
-    public function getAnfrageDurch()
+    public function getAnerkennendestellen()
     {
-        return $this->anfrageDurch;
+        return $this->anerkennendestellen;
     }
 
     /**
-     * Sets the anfrageDurch
-     *
-     * @param int $anfrageDurch
+     * Sets the anerkennendestellen
+     * 
+     * @param string $anerkennendestellen
      * @return void
      */
-    public function setAnfrageDurch($anfrageDurch)
+    public function setAnerkennendestellen($anerkennendestellen)
     {
-        $this->anfrageDurch = $anfrageDurch;
+        $this->anerkennendestellen = $anerkennendestellen;
     }
 
     /**
-     * Returns the anmerkung
-     *
-     * @return string $anmerkung
+     * Returns the anerkennungsberatung
+     * 
+     * @return array $anerkennungsberatung
      */
-    public function getAnmerkung()
+    public function getAnerkennungsberatung()
     {
-        return $this->anmerkung;
+        return explode(',', $this->anerkennungsberatung);
     }
 
     /**
-     * Sets the anmerkung
-     *
-     * @param string $anmerkung
+     * Sets the anerkennungsberatung
+     * 
+     * @param array $anerkennungsberatung
      * @return void
      */
-    public function setAnmerkung($anmerkung)
+    public function setAnerkennungsberatung(array $anerkennungsberatung)
     {
-        $this->anmerkung = $anmerkung;
+        $this->anerkennungsberatung = implode(',', $anerkennungsberatung);
     }
-
+    
     /**
-     * Returns the ergebnisWeiterleitung
+     * Returns the anerkennungsberatungfreitext
      *
-     * @return string $ergebnisWeiterleitung
+     * @return string $anerkennungsberatungfreitext
      */
-    public function getErgebnisWeiterleitung()
+    public function getAnerkennungsberatungfreitext()
     {
-        return $this->ergebnisWeiterleitung;
+    	return $this->anerkennungsberatungfreitext;
     }
-
+    
     /**
-     * Sets the ergebnisWeiterleitung
+     * Sets the anerkennungsberatungfreitext
      *
-     * @param string $ergebnisWeiterleitung
+     * @param string $anerkennungsberatungfreitext
      * @return void
      */
-    public function setErgebnisWeiterleitung($ergebnisWeiterleitung)
+    public function setAnerkennungsberatungfreitext($anerkennungsberatungfreitext)
     {
-        $this->ergebnisWeiterleitung = $ergebnisWeiterleitung;
+    	$this->anerkennungsberatungfreitext = $anerkennungsberatungfreitext;
     }
 
     /**
-     * Returns the anmerkungVerfahren
-     *
-     * @return string $anmerkungVerfahren
+     * Returns the qualifizierungsberatung
+     * 
+     * @return array $qualifizierungsberatung
      */
-    public function getAnmerkungVerfahren()
+    public function getQualifizierungsberatung()
     {
-        return $this->anmerkungVerfahren;
+        return explode(',', $this->qualifizierungsberatung);
     }
 
     /**
-     * Sets the anmerkungVerfahren
-     *
-     * @param string $anmerkungVerfahren
+     * Sets the qualifizierungsberatung
+     * 
+     * @param array $qualifizierungsberatung
      * @return void
      */
-    public function setAnmerkungVerfahren($anmerkungVerfahren)
+    public function setQualifizierungsberatung(array $qualifizierungsberatung)
     {
-        $this->anmerkungVerfahren = $anmerkungVerfahren;
+        $this->qualifizierungsberatung = implode(',', $qualifizierungsberatung);
     }
-
+    
     /**
-     * Returns the angabenVereinbarungen
+     * Returns the qualifizierungsberatungfreitext
      *
-     * @return string $angabenVereinbarungen
+     * @return string $qualifizierungsberatungfreitext
      */
-    public function getAngabenVereinbarungen()
+    public function getQualifizierungsberatungfreitext()
     {
-        return $this->angabenVereinbarungen;
+    	return $this->qualifizierungsberatungfreitext;
     }
-
+    
     /**
-     * Sets the angabenVereinbarungen
+     * Sets the qualifizierungsberatungfreitext
      *
-     * @param string $angabenVereinbarungen
+     * @param string $qualifizierungsberatungfreitext
      * @return void
      */
-    public function setAngabenVereinbarungen($angabenVereinbarungen)
+    public function setQualifizierungsberatungfreitext($qualifizierungsberatungfreitext)
     {
-        $this->angabenVereinbarungen = $angabenVereinbarungen;
+    	$this->qualifizierungsberatungfreitext = $qualifizierungsberatungfreitext;
     }
 
     /**
-     * Returns the umfang
-     *
-     * @return string $umfang
+     * Returns the notizen
+     * 
+     * @return string $notizen
      */
-    public function getUmfang()
+    public function getNotizen()
     {
-        return $this->umfang;
+        return $this->notizen;
     }
 
     /**
-     * Sets the umfang
-     *
-     * @param string $umfang
+     * Sets the notizen
+     * 
+     * @param string $notizen
      * @return void
      */
-    public function setUmfang($umfang)
+    public function setNotizen($notizen)
     {
-        $this->umfang = $umfang;
+        $this->notizen = $notizen;
     }
 
     /**
-     * Returns the beratungAbgeschlossen
-     *
-     * @return string $beratungAbgeschlossen
+     * Returns the erstberatungabgeschlossen
+     * 
+     * @return string $erstberatungabgeschlossen
      */
-    public function getBeratungAbgeschlossen()
+    public function getErstberatungabgeschlossen()
     {
-        return $this->beratungAbgeschlossen;
+        return $this->erstberatungabgeschlossen;
     }
 
     /**
-     * Sets the beratungAbgeschlossen
-     *
-     * @param string $beratungAbgeschlossen
+     * Sets the erstberatungabgeschlossen
+     * 
+     * @param int $erstberatungabgeschlossen
      * @return void
      */
-    public function setBeratungAbgeschlossen($beratungAbgeschlossen)
+    public function setErstberatungabgeschlossen($erstberatungabgeschlossen)
     {
-        $this->beratungAbgeschlossen = $beratungAbgeschlossen;
-    }
-
-    /**
-     * Returns the uebertragNIQ
-     *
-     * @return string $uebertragNIQ
-     */
-    public function getUebertragNIQ()
-    {
-        return $this->uebertragNIQ;
-    }
-
-    /**
-     * Sets the uebertragNIQ
-     *
-     * @param string $uebertragNIQ
-     * @return void
-     */
-    public function setUebertragNIQ($uebertragNIQ)
-    {
-        $this->uebertragNIQ = $uebertragNIQ;
-    }
-
-    /**
-     * Returns the dokumenteRatsuchender
-     *
-     * @return string $dokumenteRatsuchender
-     */
-    public function getDokumenteRatsuchender()
-    {
-        return $this->dokumenteRatsuchender;
-    }
-
-    /**
-     * Sets the dokumenteRatsuchender
-     *
-     * @param string $dokumenteRatsuchender
-     * @return void
-     */
-    public function setDokumenteRatsuchender($dokumenteRatsuchender)
-    {
-        $this->dokumenteRatsuchender = $dokumenteRatsuchender;
-    }
-
-    /**
-     * Returns the dokumenteAnhaengen
-     *
-     * @return string $dokumenteAnhaengen
-     */
-    public function getDokumenteAnhaengen()
-    {
-        return $this->dokumenteAnhaengen;
-    }
-
-    /**
-     * Sets the dokumenteAnhaengen
-     *
-     * @param string $dokumenteAnhaengen
-     * @return void
-     */
-    public function setDokumenteAnhaengen($dokumenteAnhaengen)
-    {
-        $this->dokumenteAnhaengen = $dokumenteAnhaengen;
-    }
-
-    /**
-     * Returns the folgekontakte
-     *
-     * @return int $folgekontakte
-     */
-    public function getFolgekontakte()
-    {
-        return $this->folgekontakte;
-    }
-
-    /**
-     * Sets the folgekontakte
-     *
-     * @param int $folgekontakte
-     * @return void
-     */
-    public function setFolgekontakte($folgekontakte)
-    {
-        $this->folgekontakte = $folgekontakte;
-    }
-
-    /**
-     * Returns the bescheidGleichwertigkeitspruefung
-     *
-     * @return int $bescheidGleichwertigkeitspruefung
-     */
-    public function getBescheidGleichwertigkeitspruefung()
-    {
-        return $this->bescheidGleichwertigkeitspruefung;
-    }
-
-    /**
-     * Sets the bescheidGleichwertigkeitspruefung
-     *
-     * @param int $bescheidGleichwertigkeitspruefung
-     * @return void
-     */
-    public function setBescheidGleichwertigkeitspruefung($bescheidGleichwertigkeitspruefung)
-    {
-        $this->bescheidGleichwertigkeitspruefung = $bescheidGleichwertigkeitspruefung;
-    }
-
-    /**
-     * Returns the ergebnisGleichwertigkeitsfeststellung
-     *
-     * @return int $ergebnisGleichwertigkeitsfeststellung
-     */
-    public function getErgebnisGleichwertigkeitsfeststellung()
-    {
-        return $this->ergebnisGleichwertigkeitsfeststellung;
-    }
-
-    /**
-     * Sets the ergebnisGleichwertigkeitsfeststellung
-     *
-     * @param int $ergebnisGleichwertigkeitsfeststellung
-     * @return void
-     */
-    public function setErgebnisGleichwertigkeitsfeststellung($ergebnisGleichwertigkeitsfeststellung)
-    {
-        $this->ergebnisGleichwertigkeitsfeststellung = $ergebnisGleichwertigkeitsfeststellung;
-    }
-
-    /**
-     * Returns the zabBewertung
-     *
-     * @return int $zabBewertung
-     */
-    public function getZabBewertung()
-    {
-        return $this->zabBewertung;
-    }
-
-    /**
-     * Sets the zabBewertung
-     *
-     * @param int $zabBewertung
-     * @return void
-     */
-    public function setZabBewertung($zabBewertung)
-    {
-        $this->zabBewertung = $zabBewertung;
-    }
-
-    /**
-     * Returns the verweisAnBildungsdienstleister
-     *
-     * @return int $verweisAnBildungsdienstleister
-     */
-    public function getVerweisAnBildungsdienstleister()
-    {
-        return $this->verweisAnBildungsdienstleister;
-    }
-
-    /**
-     * Sets the verweisAnBildungsdienstleister
-     *
-     * @param int $verweisAnBildungsdienstleister
-     * @return void
-     */
-    public function setVerweisAnBildungsdienstleister($verweisAnBildungsdienstleister)
-    {
-        $this->verweisAnBildungsdienstleister = $verweisAnBildungsdienstleister;
-    }
-
-    /**
-     * Returns the empfohleneQualimassnahme
-     *
-     * @return string $empfohleneQualimassnahme
-     */
-    public function getEmpfohleneQualimassnahme()
-    {
-        return $this->empfohleneQualimassnahme;
-    }
-
-    /**
-     * Sets the empfohleneQualimassnahme
-     *
-     * @param string $empfohleneQualimassnahme
-     * @return void
-     */
-    public function setEmpfohleneQualimassnahme($empfohleneQualimassnahme)
-    {
-        $this->empfohleneQualimassnahme = $empfohleneQualimassnahme;
-    }
-
-    /**
-     * Returns the welcherBildungsdienstleister
-     *
-     * @return int $welcherBildungsdienstleister
-     */
-    public function getWelcherBildungsdienstleister()
-    {
-        return $this->welcherBildungsdienstleister;
-    }
-
-    /**
-     * Sets the welcherBildungsdienstleister
-     *
-     * @param int $welcherBildungsdienstleister
-     * @return void
-     */
-    public function setWelcherBildungsdienstleister($welcherBildungsdienstleister)
-    {
-        $this->welcherBildungsdienstleister = $welcherBildungsdienstleister;
-    }
-
-    /**
-     * Returns the modulZuordnungQualimassnahme
-     *
-     * @return int $modulZuordnungQualimassnahme
-     */
-    public function getModulZuordnungQualimassnahme()
-    {
-        return $this->modulZuordnungQualimassnahme;
-    }
-
-    /**
-     * Sets the modulZuordnungQualimassnahme
-     *
-     * @param int $modulZuordnungQualimassnahme
-     * @return void
-     */
-    public function setModulZuordnungQualimassnahme($modulZuordnungQualimassnahme)
-    {
-        $this->modulZuordnungQualimassnahme = $modulZuordnungQualimassnahme;
-    }
-
-    /**
-     * Returns the bundeslandQualimassnahme
-     *
-     * @return string $bundeslandQualimassnahme
-     */
-    public function getBundeslandQualimassnahme()
-    {
-        return $this->bundeslandQualimassnahme;
-    }
-
-    /**
-     * Sets the bundeslandQualimassnahme
-     *
-     * @param string $bundeslandQualimassnahme
-     * @return void
-     */
-    public function setBundeslandQualimassnahme($bundeslandQualimassnahme)
-    {
-        $this->bundeslandQualimassnahme = $bundeslandQualimassnahme;
+        $this->erstberatungabgeschlossen = $erstberatungabgeschlossen;
     }
 
     /**
      * Returns the teilnehmer
-     *
+     * 
      * @return \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      */
     public function getTeilnehmer()
@@ -765,7 +367,7 @@ class Beratung extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the teilnehmer
-     *
+     * 
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return void
      */
@@ -775,71 +377,8 @@ class Beratung extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Returns the anzDokumente
-     *
-     * @return int $anzDokumente
-     */
-    public function getAnzDokumente()
-    {
-        return $this->anzDokumente;
-    }
-
-    /**
-     * Sets the anzDokumente
-     *
-     * @param int $anzDokumente
-     * @return void
-     */
-    public function setAnzDokumente($anzDokumente)
-    {
-        $this->anzDokumente = $anzDokumente;
-    }
-
-    /**
-     * Returns the wegBeratungsstelle
-     *
-     * @return int $wegBeratungsstelle
-     */
-    public function getWegBeratungsstelle()
-    {
-        return $this->wegBeratungsstelle;
-    }
-
-    /**
-     * Sets the wegBeratungsstelle
-     *
-     * @param int $wegBeratungsstelle
-     * @return void
-     */
-    public function setWegBeratungsstelle($wegBeratungsstelle)
-    {
-        $this->wegBeratungsstelle = $wegBeratungsstelle;
-    }
-
-    /**
-     * Returns the nameBeratungsstelle
-     *
-     * @return string $nameBeratungsstelle
-     */
-    public function getNameBeratungsstelle()
-    {
-        return $this->nameBeratungsstelle;
-    }
-
-    /**
-     * Sets the nameBeratungsstelle
-     *
-     * @param string $nameBeratungsstelle
-     * @return void
-     */
-    public function setNameBeratungsstelle($nameBeratungsstelle)
-    {
-        $this->nameBeratungsstelle = $nameBeratungsstelle;
-    }
-
-    /**
      * Returns the berater
-     *
+     * 
      * @return \Ud\Iqtp13db\Domain\Model\Berater $berater
      */
     public function getBerater()
@@ -849,7 +388,7 @@ class Beratung extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the berater
-     *
+     * 
      * @param \Ud\Iqtp13db\Domain\Model\Berater $berater
      * @return void
      */

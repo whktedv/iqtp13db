@@ -17,4 +17,56 @@ namespace Ud\Iqtp13db\Domain\Repository;
  */
 class BeratungRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
-    }
+	public function findAllOrder4List($beratungsstatus)
+	{
+		$query = $this->createQuery();		
+		$query->matching($query->logicalAnd($query->like('teilnehmer.beratungsstatus', $beratungsstatus), $query->logicalAnd($query->greaterThan('teilnehmer.verification_date', 0))));
+		$query->setOrderings(array('crdate' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING));
+		$query = $query->execute();
+		return $query;
+	}
+	
+	public function count4StatusErstberatung($datum1, $datum2)
+	{		 
+		$query = $this->createQuery();
+		$query->statement("SELECT * FROM tx_iqtp13db_domain_model_beratung WHERE
+				DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),STR_TO_DATE(datum, '%d.%m.%Y')) <= 0 AND
+				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),STR_TO_DATE(datum, '%d.%m.%Y')) >= 0"); 
+		$query = $query->execute();
+		return count($query);
+	}
+	
+	public function count4StatusBeratungfertig($datum1, $datum2)
+	{
+		$query = $this->createQuery();
+		$query->statement("SELECT * FROM tx_iqtp13db_domain_model_beratung WHERE
+				DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),STR_TO_DATE(erstberatungabgeschlossen, '%d.%m.%Y')) <= 0 AND
+				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),STR_TO_DATE(erstberatungabgeschlossen, '%d.%m.%Y')) >= 0");
+		$query = $query->execute();
+		return count($query);
+	}
+	
+	public function days4Beratungfertig($datum1, $datum2)
+	{
+		$query = $this->createQuery();
+		$query->statement("SELECT * FROM tx_iqtp13db_domain_model_beratung WHERE
+				DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),STR_TO_DATE(erstberatungabgeschlossen, '%d.%m.%Y')) <= 0 AND
+				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),STR_TO_DATE(erstberatungabgeschlossen, '%d.%m.%Y')) >= 0");
+		$query = $query->execute();
+		
+		return $query;
+	}
+
+	public function days4Wartezeit($datum1, $datum2)
+	{
+		$query = $this->createQuery();
+		$query->statement("SELECT * FROM tx_iqtp13db_domain_model_teilnehmer
+    			LEFT JOIN tx_iqtp13db_domain_model_beratung b ON b.teilnehmer = tx_iqtp13db_domain_model_teilnehmer.uid WHERE
+				DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),STR_TO_DATE(datum, '%d.%m.%Y')) <= 0 AND
+				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),STR_TO_DATE(datum, '%d.%m.%Y')) >= 0");
+		$query = $query->execute();
+	
+		return $query;
+	}
+	
+}

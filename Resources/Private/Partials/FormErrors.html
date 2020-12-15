@@ -2,7 +2,6 @@
 	<f:if condition="{validationResults.flattenedErrors}">
 		<f:for each="{validationResults.flattenedErrors}" key="propertyName" as="errors">
 			<f:if condition="{errors -> f:count()}==1">
-				<f:if condition="{errors.0.code} == '1221559976'"> 	
 					<div class="error">
 					<b><f:translate key="tx_iqtp13db_domain_model_{propertyName}">
 						{propertyName}</f:translate>:</b>
@@ -11,7 +10,6 @@
 						</f:for>				
 					
 					</div>
-				</f:if>
 			</f:if>
 		</f:for>
 

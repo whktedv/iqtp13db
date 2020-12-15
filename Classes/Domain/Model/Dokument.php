@@ -32,18 +32,11 @@ class Dokument extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $pfad = '';
 
     /**
-     * beratung
+     * teilnehmer
      *
-     * @var \Ud\Iqtp13db\Domain\Model\Beratung
+     * @var \Ud\Iqtp13db\Domain\Model\Teilnehmer
      */
-    protected $beratung = NULL;
-
-    /**
-     * schulung
-     *
-     * @var \Ud\Iqtp13db\Domain\Model\Schulung
-     */
-    protected $schulung = NULL;
+    protected $teilnehmer = NULL;
 
     /**
      * Returns the name
@@ -88,44 +81,24 @@ class Dokument extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Returns the beratung
+     * Returns the teilnehmer
      *
-     * @return \Ud\Iqtp13db\Domain\Model\Beratung $beratung
+     * @return \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      */
-    public function getBeratung()
+    public function getTeilnehmer()
     {
-        return $this->beratung;
+        return $this->teilnehmer;
     }
 
     /**
-     * Sets the beratung
+     * Sets the teilnehmer
      *
-     * @param \Ud\Iqtp13db\Domain\Model\Beratung $beratung
+     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return void
      */
-    public function setBeratung(\Ud\Iqtp13db\Domain\Model\Beratung $beratung)
+    public function setTeilnehmer(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
-        $this->beratung = $beratung;
+        $this->teilnehmer = $teilnehmer;
     }
 
-    /**
-     * Returns the schulung
-     *
-     * @return \Ud\Iqtp13db\Domain\Model\Schulung $schulung
-     */
-    public function getSchulung()
-    {
-        return $this->schulung;
-    }
-
-    /**
-     * Sets the schulung
-     *
-     * @param \Ud\Iqtp13db\Domain\Model\Schulung $schulung
-     * @return void
-     */
-    public function setSchulung(\Ud\Iqtp13db\Domain\Model\Schulung $schulung)
-    {
-        $this->schulung = $schulung;
-    }
 }

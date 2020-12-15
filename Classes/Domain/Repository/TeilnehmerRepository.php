@@ -1,5 +1,7 @@
 <?php
 namespace Ud\Iqtp13db\Domain\Repository;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /***
  *
@@ -46,21 +48,63 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         return $query->matching($query->equals('uid', $uid))->execute()->getFirst();
     }
 
+    /**
+     * @param $uid
+     */
+    public function findhidden4list()
+    {
+    	$query = $this->createQuery();
+    	$query->getQuerySettings()->setIgnoreEnableFields(TRUE);
+    	$query->getQuerySettings()->setEnableFieldsToBeIgnored(array('disabled', 'hidden'));
+    	$query->matching($query->like('hidden', '1'));
+    	$query->setOrderings(array('crdate' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING));
+    	$query = $query->execute();
+    	return $query;
+    }
+    
     public function findAllOrder4List()
     {
-        $query = $this->createQuery();
-        $query->matching($query->logicalAnd($query->logicalOr($query->greaterThan('verification_date', 0))));
-        $query->setOrderings(array('anzBeratungen' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING, 'crdate' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING));
+        $query = $this->createQuery();        
+        $query->matching($query->logicalOr($query->like('beratungsstatus', '0'), $query->like('beratungsstatus', '1')));        
+        $query->setOrderings(array('crdate' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING));
         $query = $query->execute();
         return $query;
     }
     
-    public function count4status()
+    /**
+     * @param $nachname
+     * @param $vorname
+     */
+    public function findDublette($nachname, $vorname)
     {
-        $query = $this->createQuery();
-        $query->matching($query->logicalAnd($query->logicalOr($query->greaterThan('verification_date', 0))));
+        $query = $this->createQuery();        
+        $query->matching($query->logicalAnd($query->like('nachname', $nachname), $query->like('vorname', $vorname)));        
         $query = $query->execute();
         return count($query);
+    }
+
+    
+    public function count4Status($datum1, $datum2)
+    {
+    	$query = $this->createQuery();
+		$query->statement("SELECT * FROM tx_iqtp13db_domain_model_teilnehmer WHERE 
+				DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),FROM_UNIXTIME(verification_date)) <= 0 AND
+				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),FROM_UNIXTIME(verification_date)) >= 0 AND
+				verification_date > 0"); 
+		$query = $query->execute();
+    	return count($query);
+    }
+    
+    public function count4Statusniqerfasst($datum1, $datum2)
+    {
+    	$query = $this->createQuery();
+		$query->statement("SELECT * FROM tx_iqtp13db_domain_model_teilnehmer 
+				LEFT JOIN tx_iqtp13db_domain_model_beratung b ON b.teilnehmer = tx_iqtp13db_domain_model_teilnehmer.uid WHERE 
+				DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),STR_TO_DATE(b.erstberatungabgeschlossen, '%d.%m.%Y')) <= 0 AND
+				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),STR_TO_DATE(b.erstberatungabgeschlossen, '%d.%m.%Y')) >= 0 AND
+        		niqchiffre != ''"); 
+		$query = $query->execute();
+    	return count($query);
     }
             
     /**

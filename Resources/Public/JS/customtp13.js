@@ -12,3 +12,20 @@ function btncancel_Click() {
     	return false;
     }
 }
+
+$(document).ready(function() {
+	$('#datepicker1').datepicker({
+        showButtonPanel : true,
+        firstDay: 1,
+        dateFormat : "dd.mm.yy"        
+    });
+    $('#datepicker2').datepicker({
+        showButtonPanel : true,
+        firstDay: 1,
+        dateFormat : "dd.mm.yy"
+    });
+});
+
+jQuery(function ($) {
+    $.datepicker.setDefaults($.datepicker.regional["de"]);
+});

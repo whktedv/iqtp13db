@@ -1,23 +1,50 @@
 <?php
 namespace Ud\Iqtp13db\Domain\Model;
 
-/***
+/***************************************************************
  *
- * This file is part of the "IQ TP13 Datenbank Anerkennungserstberatung NRW" Extension for TYPO3 CMS.
+ *  Copyright notice
  *
- * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
+ *  (c) 2016 Uli Dohmen <edv@whkt.de>, WHKT
  *
- *  (c) 2020 Uli Dohmen <edv@whkt.de>, WHKT
+ *  All rights reserved
  *
- ***/
+ *  This script is part of the TYPO3 project. The TYPO3 project is
+ *  free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  The GNU General Public License can be found at
+ *  http://www.gnu.org/copyleft/gpl.html.
+ *
+ *  This script is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  This copyright notice MUST APPEAR in all copies of the script!
+ ***************************************************************/
 
 /**
  * TNSeite1
  */
 class TNSeite1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 
-	
+    /**
+     * schonberaten
+     *
+     * @var int
+     */
+    protected $schonberaten = 0;
+    
+    /**
+     * schonberatenvon
+     *
+     * @var string
+     */
+    protected $schonberatenvon = '';
+    
 	/**
 	 * Nachname
 	 *
@@ -34,12 +61,6 @@ class TNSeite1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 */
 	protected $vorname = '';
 
-	/**
-	 * Straße
-	 *
-	 * @var string
-	 */
-	protected $strasse = '';
 	
 	/**
 	 * PLZ
@@ -62,6 +83,14 @@ class TNSeite1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty"), @TYPO3\CMS\Extbase\Annotation\Validate("EmailAddress")
 	 */
 	protected $email = '';
+	
+	/**
+	 * E-Mail bestätigung
+	 *
+	 * @var string
+     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty"), @TYPO3\CMS\Extbase\Annotation\Validate("EmailAddress")
+	 */
+	protected $confirmemail = '';
 
 	/**
 	 * Telefon
@@ -72,11 +101,11 @@ class TNSeite1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	protected $telefon = '';
 
 	/**
-	 * Geburtsjahr
-	 *
+	 * lebensalter
+	 * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
 	 * @var string
 	 */
-	protected $geburtsjahr = '';
+	protected $lebensalter = '';
 
 	/**
 	 * Geburtsland
@@ -93,7 +122,7 @@ class TNSeite1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * @TYPO3\CMS\Extbase\Annotation\Validate("NumberRange", options={"minimum":1, "maximum":3})
 	 */
 	protected $geschlecht = 0;
-	
+
 	/**
 	 * Erste Staatsangehörigkeit
 	 *
@@ -124,42 +153,13 @@ class TNSeite1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	protected $wohnsitzDeutschland = 0;
 
 	/**
-	 * In welchem Bundesland?
-	 *
-	 * @var string
-	 * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
-	 */
-	protected $wohnsitzJaBundesland = '';
-
-	/**
 	 * Wohnsitz in
 	 *
 	 * @var string
 	 */
 	protected $wohnsitzNeinIn = '';
 
-	/**
-	 * Geplante Einreise
-	 *
-	 * @var string
-	 */
-	protected $geplanteEinreise = '';
 	
-	/**
-	 * Kontakt Visastelle
-	 *
-	 * @var int
-	 */
-	protected $kontaktVisastelle = 0;
-	
-	/**
-	 * Welcher Visumsantrag
-	 *
-	 * @var string
-	 */
-	protected $visumsantrag = '';
-	
-
 	/**
 	 * Einwilligung Datenübermittlung
 	 *
@@ -167,6 +167,48 @@ class TNSeite1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * @TYPO3\CMS\Extbase\Annotation\Validate("\Ud\Iqtp13db\Validation\Validator\EinwilligungValidator")
 	 */
 	protected $einwilligung = NULL;
+
+	/**
+	 * Returns the schonberaten
+	 *
+	 * @return int $schonberaten
+	 */
+	public function getSchonberaten()
+	{
+	    return $this->schonberaten;
+	}
+	
+	/**
+	 * Sets the schonberaten
+	 *
+	 * @param int $schonberaten
+	 * @return void
+	 */
+	public function setSchonberaten($schonberaten)
+	{
+	    $this->schonberaten = $schonberaten;
+	}
+	
+	/**
+	 * Returns the schonberatenvon
+	 *
+	 * @return string $schonberatenvon
+	 */
+	public function getSchonberatenvon()
+	{
+	    return $this->schonberatenvon;
+	}
+	
+	/**
+	 * Sets the schonberatenvon
+	 *
+	 * @param string $schonberatenvon
+	 * @return void
+	 */
+	public function setSchonberatenvon($schonberatenvon)
+	{
+	    $this->schonberatenvon = $schonberatenvon;
+	}
 
 	/**
 	 * Returns the nachname
@@ -204,25 +246,6 @@ class TNSeite1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 */
 	public function setVorname($vorname) {
 		$this->vorname = $vorname;
-	}
-
-	/**
-	 * Returns the strasse
-	 *
-	 * @return string $strasse
-	 */
-	public function getStrasse() {
-		return $this->strasse;
-	}
-	
-	/**
-	 * Sets the strasse
-	 *
-	 * @param string $strasse
-	 * @return void
-	 */
-	public function setStrasse($strasse) {
-		$this->strasse = $strasse;
 	}
 	
 	/**
@@ -281,6 +304,25 @@ class TNSeite1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	public function setEmail($email) {
 		$this->email = $email;
 	}
+	
+	/**
+	 * Returns the confirmemail
+	 *
+	 * @return string $confirmemail
+	 */
+	public function getConfirmemail() {
+	    return $this->confirmemail;
+	}
+	
+	/**
+	 * Sets the confirmemail
+	 *
+	 * @param string $confirmemail
+	 * @return void
+	 */
+	public function setConfirmemail($confirmemail) {
+	    $this->confirmemail = $confirmemail;
+	}
 
 	/**
 	 * Returns the telefon
@@ -302,22 +344,22 @@ class TNSeite1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * Returns the geburtsjahr
+	 * Returns the lebensalter
 	 *
-	 * @return string $geburtsjahr
+	 * @return string $lebensalter
 	 */
-	public function getGeburtsjahr() {
-		return $this->geburtsjahr;
+	public function getLebensalter() {
+		return $this->lebensalter;
 	}
 
 	/**
-	 * Sets the geburtsjahr
+	 * Sets the lebensalter
 	 *
-	 * @param string $geburtsjahr
+	 * @param string $lebensalter
 	 * @return void
 	 */
-	public function setGeburtsjahr($geburtsjahr) {
-		$this->geburtsjahr = $geburtsjahr;
+	public function setLebensalter($lebensalter) {
+		$this->lebensalter = $lebensalter;
 	}
 
 	/**
@@ -435,25 +477,6 @@ class TNSeite1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * Returns the wohnsitzJaBundesland
-	 *
-	 * @return string $wohnsitzJaBundesland
-	 */
-	public function getWohnsitzJaBundesland() {
-		return $this->wohnsitzJaBundesland;
-	}
-
-	/**
-	 * Sets the wohnsitzJaBundesland
-	 *
-	 * @param string $wohnsitzJaBundesland
-	 * @return void
-	 */
-	public function setWohnsitzJaBundesland($wohnsitzJaBundesland) {
-		$this->wohnsitzJaBundesland = $wohnsitzJaBundesland;
-	}
-
-	/**
 	 * Returns the wohnsitzNeinIn
 	 *
 	 * @return string $wohnsitzNeinIn
@@ -472,63 +495,7 @@ class TNSeite1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 		$this->wohnsitzNeinIn = $wohnsitzNeinIn;
 	}
 	
-	/**
-	 * Returns the geplanteEinreise
-	 *
-	 * @return string $geplanteEinreise
-	 */
-	public function getGeplanteEinreise() {
-	    return $this->geplanteEinreise;
-	}
-	
-	/**
-	 * Sets the geplanteEinreise
-	 *
-	 * @param string $geplanteEinreise
-	 * @return void
-	 */
-	public function setGeplanteEinreise($geplanteEinreise) {
-	    $this->geplanteEinreise = $geplanteEinreise;
-	}
-	
-	/**
-	 * Returns the kontaktVisastelle
-	 *
-	 * @return string $kontaktVisastelle
-	 */
-	public function getKontaktVisastelle() {
-	    return $this->kontaktVisastelle;
-	}
-	
-	/**
-	 * Sets the kontaktVisastelle
-	 *
-	 * @param string $kontaktVisastelle
-	 * @return void
-	 */
-	public function setKontaktVisastelle($kontaktVisastelle) {
-	    $this->kontaktVisastelle = $kontaktVisastelle;
-	}
-	
-	/**
-	 * Returns the visumsantrag
-	 *
-	 * @return string $visumsantrag
-	 */
-	public function getVisumsantrag() {
-	    return $this->visumsantrag;
-	}
-	
-	/**
-	 * Sets the visumsantrag
-	 *
-	 * @param string $visumsantrag
-	 * @return void
-	 */
-	public function setVisumsantrag($visumsantrag) {
-	    $this->visumsantrag = $visumsantrag;
-	}
-	
+		
 	/**
 	 * Returns the einwilligung
 	 *

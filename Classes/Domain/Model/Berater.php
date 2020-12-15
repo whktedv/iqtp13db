@@ -30,6 +30,13 @@ class Berater extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var string
      */
     protected $organisation = '';
+    
+    /**
+     * Kürzel
+     *
+     * @var string
+     */
+    protected $kuerzel = '';
 
     /**
      * Returns the name
@@ -93,5 +100,26 @@ class Berater extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setOrganisation($organisation)
     {
         $this->organisation = $organisation;
+    }
+    
+    /**
+     * Returns the kuerzel
+     *
+     * @return string $kuerzel
+     */
+    public function getKuerzel()
+    {
+    	return $this->kuerzel;
+    }
+    
+    /**
+     * Sets the kuerzel
+     *
+     * @param string $kuerzel
+     * @return void
+     */
+    public function setKuerzel($kuerzel)
+    {
+    	$this->kuerzel = $kuerzel;
     }
 }

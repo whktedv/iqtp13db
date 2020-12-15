@@ -1,7 +1,7 @@
 <?php
 return [
     'ctrl' => [
-        'title' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang_db.xlf:tx_iqtp13db_domain_model_berater',
+        'title' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_berater',
         'label' => 'name',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
@@ -17,10 +17,10 @@ return [
         'iconfile' => 'EXT:iqtp13db/Resources/Public/Icons/tx_iqtp13db_domain_model_berater.gif'
     ],
     'interface' => [
-        'showRecordFieldList' => 'hidden, name, organisation',
+        'showRecordFieldList' => 'hidden, name, organisation, kuerzel',
     ],
     'types' => [
-        '1' => ['showitem' => 'hidden, name, organisation, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+        '1' => ['showitem' => 'hidden, name, organisation, kuerzel, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
     'columns' => [
         't3ver_label' => [
@@ -76,7 +76,7 @@ return [
         ],
         'name' => [
 	        'exclude' => true,
-	        'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang_db.xlf:tx_iqtp13db_domain_model_berater.name',
+	        'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_berater.name',
 	        'config' => [
 			    'type' => 'input',
 			    'size' => 30,
@@ -85,12 +85,21 @@ return [
 	    ],
 	    'organisation' => [
 	        'exclude' => true,
-	        'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang_db.xlf:tx_iqtp13db_domain_model_berater.organisation',
+	        'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_berater.organisation',
 	        'config' => [
 			    'type' => 'input',
 			    'size' => 30,
 			    'eval' => 'trim'
 			],
 	    ],
+	    'kuerzel' => [
+	    'exclude' => true,
+	    'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_berater.kuerzel',
+	    'config' => [
+	    'type' => 'input',
+	    'size' => 10,
+	    'eval' => 'trim'
+	    		],
+	    		],
     ],
 ];

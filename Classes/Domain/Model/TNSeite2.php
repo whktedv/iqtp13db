@@ -1,16 +1,30 @@
 <?php
 namespace Ud\Iqtp13db\Domain\Model;
 
-/***
+/***************************************************************
  *
- * This file is part of the "IQ TP13 Datenbank Anerkennungserstberatung NRW" Extension for TYPO3 CMS.
+ *  Copyright notice
  *
- * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
+ *  (c) 2016 Uli Dohmen <edv@whkt.de>, WHKT
  *
- *  (c) 2020 Uli Dohmen <edv@whkt.de>, WHKT
+ *  All rights reserved
  *
- ***/
+ *  This script is part of the TYPO3 project. The TYPO3 project is
+ *  free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  The GNU General Public License can be found at
+ *  http://www.gnu.org/copyleft/gpl.html.
+ *
+ *  This script is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  This copyright notice MUST APPEAR in all copies of the script!
+ ***************************************************************/
 
 /**
  * TNSeite2
@@ -112,13 +126,6 @@ class TNSeite2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	protected $abschluss1 = '';
 
 	/**
-	 * Deutsche Übersetzung des Abschlusstitels
-	 *
-	 * @var string
-	 */
-	protected $deutschAbschlusstitel1 = '';
-
-	/**
 	 * Möglicher deutscher Referenzberuf
 	 *
 	 * @var string
@@ -131,6 +138,13 @@ class TNSeite2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * @var string
 	 */
 	protected $berufserfahrung1 = '';
+	
+	/**
+	 * ausbildungsfremdeberufserfahrung1
+	 *
+	 * @var string
+	 */
+	protected $ausbildungsfremdeberufserfahrung1 = '';
 	
 	/**
 	 * Wunschberuf
@@ -182,18 +196,18 @@ class TNSeite2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	protected $abschluss2 = '';
 	
 	/**
-	 * Deutsche Übersetzung des Abschlusstitels
-	 *
-	 * @var string
-	 */
-	protected $deutschAbschlusstitel2 = '';
-	
-	/**
 	 * Berufserfahrung
 	 *
 	 * @var string
 	 */
 	protected $berufserfahrung2 = '';
+	
+	/**
+	 * ausbildungsfremdeberufserfahrung2
+	 *
+	 * @var string
+	 */
+	protected $ausbildungsfremdeberufserfahrung2 = '';
 	
 	/**
 	 * Möglicher deutscher Beruf
@@ -209,19 +223,6 @@ class TNSeite2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 */
 	protected $wunschberuf2 = '';
 	
-	/**
-	 * Liegen Original-Dokumente des Abschlusses vor?
-	 *
-	 * @var int
-	 */
-	protected $originalDokumenteAbschluss1 = 0;
-	
-	/**
-	 * Liegen Original-Dokumente des Abschlusses vor?
-	 *
-	 * @var int
-	 */
-	protected $originalDokumenteAbschluss2 = 0;
 	
 	/**
 	 * Wenn ja, welche Sprache(n)?
@@ -478,25 +479,6 @@ class TNSeite2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * Returns the deutschAbschlusstitel1
-	 *
-	 * @return string deutschAbschlusstitel1
-	 */
-	public function getDeutschAbschlusstitel1() {
-		return $this->deutschAbschlusstitel1;
-	}
-
-	/**
-	 * Sets the deutschAbschlusstitel1
-	 *
-	 * @param string $deutschAbschlusstitel1
-	 * @return void
-	 */
-	public function setDeutschAbschlusstitel1($deutschAbschlusstitel1) {
-		$this->deutschAbschlusstitel1 = $deutschAbschlusstitel1;
-	}
-
-	/**
 	 * Returns the deutscherReferenzberuf1
 	 *
 	 * @return string deutscherReferenzberuf1
@@ -534,6 +516,28 @@ class TNSeite2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 		$this->berufserfahrung1 = $berufserfahrung1;
 	}
 
+	
+	/**
+	 * Returns the ausbildungsfremdeberufserfahrung1
+	 *
+	 * @return string $ausbildungsfremdeberufserfahrung1
+	 */
+	public function getAusbildungsfremdeberufserfahrung1()
+	{
+	    return $this->ausbildungsfremdeberufserfahrung1;
+	}
+	
+	/**
+	 * Sets the ausbildungsfremdeberufserfahrung1
+	 *
+	 * @param string $ausbildungsfremdeberufserfahrung1
+	 * @return void
+	 */
+	public function setAusbildungsfremdeberufserfahrung1($ausbildungsfremdeberufserfahrung1)
+	{
+	    $this->ausbildungsfremdeberufserfahrung1 = $ausbildungsfremdeberufserfahrung1;
+	}
+	
 	/**
 	 * Returns the wunschberuf1
 	 *
@@ -696,25 +700,6 @@ class TNSeite2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * Returns the deutschAbschlusstitel2
-	 *
-	 * @return string $deutschAbschlusstitel2
-	 */
-	public function getDeutschAbschlusstitel2() {
-		return $this->deutschAbschlusstitel2;
-	}
-
-	/**
-	 * Sets the deutschAbschlusstitel2
-	 *
-	 * @param string $deutschAbschlusstitel2
-	 * @return void
-	 */
-	public function setDeutschAbschlusstitel2($deutschAbschlusstitel2) {
-		$this->deutschAbschlusstitel2 = $deutschAbschlusstitel2;
-	}
-
-	/**
 	 * Returns the berufserfahrung2
 	 *
 	 * @return string $berufserfahrung2
@@ -733,6 +718,27 @@ class TNSeite2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 		$this->berufserfahrung2 = $berufserfahrung2;
 	}
 
+	/**
+	 * Returns the ausbildungsfremdeberufserfahrung2
+	 *
+	 * @return string $ausbildungsfremdeberufserfahrung2
+	 */
+	public function getAusbildungsfremdeberufserfahrung2()
+	{
+	    return $this->ausbildungsfremdeberufserfahrung2;
+	}
+	
+	/**
+	 * Sets the ausbildungsfremdeberufserfahrung2
+	 *
+	 * @param string $ausbildungsfremdeberufserfahrung2
+	 * @return void
+	 */
+	public function setAusbildungsfremdeberufserfahrung2($ausbildungsfremdeberufserfahrung2)
+	{
+	    $this->ausbildungsfremdeberufserfahrung2 = $ausbildungsfremdeberufserfahrung2;
+	}
+	
 	/**
 	 * Returns the deutscherReferenzberuf2
 	 *
@@ -771,43 +777,6 @@ class TNSeite2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 		$this->wunschberuf2 = $wunschberuf2;
 	}
 
-	/**
-	 * Returns the originalDokumenteAbschluss1
-	 *
-	 * @return int $originalDokumenteAbschluss1
-	 */
-	public function getOriginalDokumenteAbschluss1() {
-		return $this->originalDokumenteAbschluss1;
-	}
-
-	/**
-	 * Sets the originalDokumenteAbschluss1
-	 *
-	 * @param int $originalDokumenteAbschluss1
-	 * @return void
-	 */
-	public function setOriginalDokumenteAbschluss1($originalDokumenteAbschluss1) {
-		$this->originalDokumenteAbschluss1 = $originalDokumenteAbschluss1;
-	}
-
-	/**
-	 * Returns the originalDokumenteAbschluss2
-	 *
-	 * @return int $originalDokumenteAbschluss2
-	 */
-	public function getOriginalDokumenteAbschluss2() {
-		return $this->originalDokumenteAbschluss2;
-	}
-
-	/**
-	 * Sets the originalDokumenteAbschluss2
-	 *
-	 * @param int $originalDokumenteAbschluss2
-	 * @return void
-	 */
-	public function setOriginalDokumenteAbschluss2($originalDokumenteAbschluss2) {
-		$this->originalDokumenteAbschluss2 = $originalDokumenteAbschluss2;
-	}
 
 	
 

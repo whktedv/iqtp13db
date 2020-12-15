@@ -1,10 +1,10 @@
 plugin.tx_iqtp13db.settings {
 	sender = 
 	bccmail = 
-	subject = 
 	mailattacheinwilligung = 
 	startseitelink = 
-	logolink = http://www.iq-netzwerk-nrw.de/fileadmin/user_upload/images/logo_small.png
+	logolink = 
+	registrationpageuid = 
 	
 	# für Wartungsmodus
 	wartungvon = 01.01.2020 08:00
@@ -88,10 +88,15 @@ plugin.tx_iqtp13db._CSS_DEFAULT_STYLE (
 page {
 	includeCSS {
 		tx_iqtp13db = EXT:iqtp13db/Resources/Public/CSS/customtp13db.css
+		tx_iqtp13dbjquery1 = EXT:iqtp13db/Resources/Public/CSS/jquery-ui.min.css
+		tx_iqtp13dbjquery2 = EXT:iqtp13db/Resources/Public/CSS/jquery-ui.structure.min.css
+		tx_iqtp13dbjquery3 = EXT:iqtp13db/Resources/Public/CSS/jquery-ui.theme.min.css
 	}
 	
-	includeJS {
+	includeJSFooter {
+		tx_iqtp13dbjquery = EXT:iqtp13db/Resources/Public/JS/jquery-ui.min.js
 		tx_iqtp13db = EXT:iqtp13db/Resources/Public/JS/customtp13.js
+		tx_iqtp13dbanmeldung = EXT:iqtp13db/Resources/Public/JS/script-teilnehmer.js
 	}
 }
 
@@ -106,14 +111,14 @@ config {
 }
 
 # English language, sys_language.uid = 1
-[globalVar = GP:L = 1]
+[siteLanguage("locale") == "en_EN"]
   config.sys_language_uid = 1
   config.language = en
   config.locale_all = en_EN.UTF-8
 [global]
 
 # Arabisch
-[globalVar = GP:L = 2]
+[siteLanguage("locale") == "ar_AR"]
   config.sys_language_uid = 2
   config.language = ar
   config.locale_all = ar_AR.UTF-8
@@ -123,7 +128,7 @@ config {
 [global]
 
 # Farsi/Persisch
-[globalVar = GP:L = 3]
+[siteLanguage("locale") == "fa_FA"]
   config.sys_language_uid = 3
   config.language = fa
   config.locale_all = fa_FA.UTF-8
@@ -133,42 +138,42 @@ config {
 [global]
 
 # Französisch
-[globalVar = GP:L = 4]
+[siteLanguage("locale") == "fr_FR"]
   config.sys_language_uid = 4
   config.language = fr
   config.locale_all = fr_FR.UTF-8
 [global]
 
 # Polnisch
-[globalVar = GP:L = 5]
+[siteLanguage("locale") == "po_PO"]
   config.sys_language_uid = 5
   config.language = po
   config.locale_all = po_PO.UTF-8
 [global]
 
 # Rumänisch
-[globalVar = GP:L = 6]
+[siteLanguage("locale") == "ro_RO"]
   config.sys_language_uid = 6
   config.language = ro
   config.locale_all = ro_RO.UTF-8
 [global]
 
 # Russisch
-[globalVar = GP:L = 7]
+[siteLanguage("locale") == "ru_RU"]
   config.sys_language_uid = 7
   config.language = ru
   config.locale_all = ru_RU.UTF-8
 [global]
 
 # Spanisch
-[globalVar = GP:L = 8]
+[siteLanguage("locale") == "es_ES"]
   config.sys_language_uid = 8
   config.language = es
   config.locale_all = es_ES.UTF-8
 [global]
 
 # Türkisch
-[globalVar = GP:L = 9]
+[siteLanguage("locale") == "tr_TR"]
   config.sys_language_uid = 9
   config.language = tr
   config.locale_all = tr_TR.UTF-8
@@ -184,27 +189,7 @@ plugin.tx_iqtp13db.settings {
      1 = Deutsch as Muttersprache
      2 = Deutsch as Fremdsprache
    }
-   
-   bundeslaender {
-     1 = -
-     2 = Baden-Württemberg
-     3 = Bayern
-	 4 = Berlin
-	 5 = Brandenburg
-	 6 = Bremen
-	 7 = Hamburg
-	 8 = Hessen
-	 9 = Mecklenburg-Vorpommern
-	10 = Niedersachsen
-	11 = Nordrhein-Westfalen
-	12 = Rheinland-Pfalz
-	13 = Saarland
-	14 = Sachsen
-	15 = Sachsen-Anhalt
-	16 = Schleswig-Holstein
-	17 = Thüringen
-   }
-   
+     
    zertifikatlevel {
    	1 = -
    	2 = A1
@@ -213,8 +198,7 @@ plugin.tx_iqtp13db.settings {
 	5 = B2
 	6 = C1
 	7 = C2
-	8 = DSH
-	9 = Test-DaF
+	0 = ohne Zertifikat
    }
    
    abschlussart {
@@ -234,7 +218,6 @@ plugin.tx_iqtp13db.settings {
    }
 
    leistungsbezug {
-     1 = ohne Leistungsbezug
      2 = mit (ergänzendem) SGB II-Leistungsbezug
      3 = mit SGB III-Leistungsbezug 
      4 = mit SGB III- und SGB II-Leistungsbezug
@@ -243,20 +226,22 @@ plugin.tx_iqtp13db.settings {
  
    aufenthaltsstatus {
      1 = keine Angabe
-     2 = Blaue Karte EU (§19a AufenthG)
-     3 = Visum (§6 AufenthG)
-     4 = Aufenthalt zum Zweck der Ausbildung (§16-17 AufenthG)
-     5 = Aufenthalt zum Zweck der Erwerbstätigkeit (§18, 18a, 20, 21 AufenthG)
      6 = Aufenthaltserlaubnis zur Arbeitsplatzsuche (§18c AufenthG)
-     7 = Aufenthalt aus völkerrechtlichen, humanitären oder politischen Gründen (§22-26, 104a, 104b AufenthG
-     8 = Aufenthalt aus familiären Gründen (§27-36 AufenthG)
-     9 = Aufenthalt zum Zwecke einer Anpassungsqualifizierung oder einer Kenntnisprüfung (§ 17a AufenthG)
-     10 = Niederlassungserlaubnis (§9 AufenthG)
-     11 = Aufenthaltserlaubnis für in anderen Mitgliedsstaaten der Euro-   päischen Union langfristig Aufenthaltsberechtigte (§38a AufenthG)
+     11 = Aufenthaltserlaubnis für in anderen Mitgliedsstaaten der EU langfristig Aufenthaltsberechtigte (§38a AufenthG)
      12 = Aufenthaltsgestattung (§55 Abs. 1 AsylVfG)
+     8 = Aufenthalt aus familiären Gründen (§27-36 AufenthG)
+     7 = Aufenthalt aus völkerrechtlichen, humanitären oder politischen Gründen (§22-26, 104a, 104b AufenthG
+     4 = Aufenthalt zum Zweck der Ausbildung (§16-17 AufenthG)
+	 5 = Aufenthalt zum Zweck der Erwerbstätigkeit (§18, 18a, 19b, 19d, 20, 21 AufenthG) 
+     9 = Aufenthalt zum Zwecke einer Anpassungsqualifizierung oder einer Kenntnisprüfung (§ 17a AufenthG)
+     2 = Blaue Karte EU (§19a AufenthG)
      13 = Duldung (§60a Abs. 4 AufenthG)
-     14 = Staatsbürger/in EU/EWR/Schweiz
-     15 = Sonstiges
+     10 = Niederlassungserlaubnis (§9 AufenthG)
+     14 = Staatsbürger-/in EU/EWR/Schweiz oder Freizügigkeit (§2-5, §§12-13, §15 FreizüG/EU, §28 AufenthG)
+     16 = Blaue Karte EU (§19a AufenthG)
+     17 = kein Aufenthaltstitel, da Wohnistz im Ausland 
+     15 = Fiktionsbescheinigung
+     18 = Anmerkung
    }
    
    dokumenteabschluss {
@@ -268,33 +253,65 @@ plugin.tx_iqtp13db.settings {
    	5 = keine Dokumente vorhanden
    }
 
-   ### Beratung ###
-
    beratungsstelle {
-     1 = Agentur für Arbeit
-     2 = Jobcenter
-     3 = Internet
-     4 = Anerkennungsportal BIBB
-     5 = Hotline Arbeit und Leben in Deutschland
-     6 = Migrationsberatung (MBE)
-     7 = Jugendmigrationsdienst (JMD)
-     8 = Migrantenselbstorganisation
-     9 = Presse
-     10 = persönliche Empfehlung
+     1 = Agentur für Arbeit oder Jobcenter
+     12 = Arbeitgeber, Betriebe
+     13 = Ausländerbehörde
+     14 = Bildungsdienstleister
+     15 = Ehrenamtler*innen
+     16 = Flyer
+     17 = IQ externe Beratung
+     3 = Medien (Internet, Presse, etc.)
+     10 = Persönliche Empfehlung
+     18 = Zentrale Servicestelle Berufsanerkennung (ZSBA)
+     19 = Anerkennende Stelle
      11 = Sonstiges
+     20 = keine Angaben
    }
 
-   beratungsprozess {
-     1 = Anerkennungsberatung
-     2 = Qualifizierungsberatung
-   }
+	einwilligungaamedium {
+    	1 = Telefon
+    	2 = E-Mail
+    	3 = Video-Chat
+   	}
+   	
+	### Beratung ###	
 
-   beratungsart {
-     1 = face-to-face
-     2 = Telefon
-     3 = Email
-   }
+	beratungsart {
+    	1 = face-to-face
+    	2 = Telefon
+    	3 = E-Mail
+    	4 = Postweg
+    	5 = Video
+   	}
+   
+   	beratungzu {
+   		1 = Anerkennung Schulabschluss
+   		2 = Gleichwertigkeit
+   		3 = ZAB
+   		4 = ohne Berufsabschluss
+   	}
 
+	anerkennungsberatung {
+		1 = Beratung zu Anerkennungsmöglichkeiten
+		2 = Beratung zu aufenthaltsrechtl. Möglichkeiten i.V.m. Anerkennung
+		3 = Unterstützung bei der Antragstellung
+		4 = Verweis auf Fördermöglichkeiten des SGB II und SGB III
+		5 = Beratung zu nachrangigen Fördermöglichkeiten (z.B. Anerkennungszuschuss)
+		6 = Alternativen zur beruflichen Anerkennung
+		7 = sonstige Themen bezogen auf das Anerkennungsverfahren:	
+	}
+	
+	qualifizierungsberatung {
+		1 = Beratung zu Qualifizierungsmöglichkeiten
+		2 = Beratung zu aufenthaltsrechtl. Möglichkeiten i.V.m. Qualifizierung
+		3 = Verweis auf Födermöglichkeiten des SGB II und SGB III
+		4 = Beratung zu nachrangigen Fördermöglichkeiten (z.B. Individualbudget)
+		5 = Verweis in Qualifizierung im Kontext des Anerkennungsgesetzes
+		6 = Alternativen zur beruflichen Anerkennung
+		7 = sonstige Themen bezogen auf Qualifizierung im Kontext des Anerkennungsgesetzes:
+	}
+	
    anfragedurch {
      1 = keine Angabe
      2 = Beratene/r selbst
@@ -357,88 +374,9 @@ plugin.tx_iqtp13db.settings {
      5 = Modul 4: Vorbereitung auf die Externenprüfung bei negativem Ausgang/Prognose des Anerkennungsverfahrens
    }
 
-
-   ###### Schulung ######
-
-   massnahmebereich {
-     1 = Arbeitsmarktdienstleister/kommunale Einrichtung
-     2 = Unternehmen
-   }
-   
-   art {
-   	 1 = Einzel-Schulung/Training/Workshop
-   	 2 = Schulung mit modularem Aufbau
-   	 3 = andere Maßnahme Art
-   }
-   
-   modularerAufbau {
-     1 = Basistraining
-     2 = Vertiefungstraining
-     3 = Praxisbegleitung
-   }
-   
-   kooperation {
-     1 = Arbeitsagentur
-     2 = Jobcenter
-     3 = wiss. Einrichtung/Hochschule
-     4 = Großbetrieb
-     5 = KMU
-     6 = Arbeitgeberverband
-   }
-   
-   zeitUmfang {
-     1 = 1/2-tägig
-     2 = 1-tägig
-     3 = 2-tägig
-     4 = 3-tägig
-   }
-   
-   organisation {
-   	 1 = Inhouse
-   	 2 = offenes Angebot
-   }
-   
-   teilnahmeart {
-     1 = verpflichtend
-     2 = freiwillig
-     3 = teils/teils
-   }
-   
-   themen {
-   	 1 = Anerkennungs-/Qualifizierungsberatung
-   	 2 = Anderes Thema
-   }
-   
-   institutionauswahl {
-   	1 = Arbeitsagentur
-   	2 = Jobcenter
-   	3 = Bildungsträger
-   	4 = KMU Handwerk
-   	5 = KMU Industrie
-   	6 = KMU Dienstleistung
-   	7 = andere Institution
-   }
-   
-   betriebsgroesse {
-   	1 = 1-9
-   	2 = 10-49
-   	3 = 50-99
-   	4 = 100-199
-   	5 = 200-400
-   	6 = größer als 400
-   	7 = nicht bekannt
-   }
-   
-   weitereplanung {
-   	1 = Vertiefung, gleicher Teilnehmerkreis
-   	2 = Schulung/Training, gleiche Instituion
-   	3 = Beratung/Strategieworkshops, gleiche Institution
-   	4 = keine weitere Planung
-   	5 = andere Planung
-   }  
 }
 
-[globalVar = GP:L = 1]
+[siteLanguage("locale") == "en_EN"]
 plugin.tx_iqtp13db.settings {
 
    dokumenteabschluss {
@@ -486,7 +424,7 @@ plugin.tx_iqtp13db.settings {
 [global]
 
 
-[globalVar = GP:L = 2]
+[siteLanguage("locale") == "ar_AR"]
 plugin.tx_iqtp13db.settings {
 
    dokumenteabschluss {
@@ -533,7 +471,7 @@ plugin.tx_iqtp13db.settings {
 }
 
 
-[globalVar = GP:L = 3]
+[siteLanguage("locale") == "fa_FA"]
 plugin.tx_iqtp13db.settings {
 
    dokumenteabschluss {
@@ -581,7 +519,7 @@ plugin.tx_iqtp13db.settings {
 [global]
 
 
-[globalVar = GP:L = 4]
+[siteLanguage("locale") == "fr_FR"]
 plugin.tx_iqtp13db.settings {
 
    dokumenteabschluss {
@@ -629,7 +567,7 @@ plugin.tx_iqtp13db.settings {
 [global]
 
 
-[globalVar = GP:L = 5]
+[siteLanguage("locale") == "po_PO"]
 plugin.tx_iqtp13db.settings {
 
    dokumenteabschluss {
@@ -677,7 +615,7 @@ plugin.tx_iqtp13db.settings {
 [global]
 
 
-[globalVar = GP:L = 6]
+[siteLanguage("locale") == "ro_RO"]
 plugin.tx_iqtp13db.settings {
 
    dokumenteabschluss {
@@ -725,7 +663,7 @@ plugin.tx_iqtp13db.settings {
 [global]
 
 
-[globalVar = GP:L = 7]
+[siteLanguage("locale") == "ru_RU"]
 plugin.tx_iqtp13db.settings {
 
    dokumenteabschluss {
@@ -773,7 +711,7 @@ plugin.tx_iqtp13db.settings {
 [global]
 
 
-[globalVar = GP:L = 8]
+[siteLanguage("locale") == "es_ES"]
 plugin.tx_iqtp13db.settings {
 
    dokumenteabschluss {
@@ -821,7 +759,7 @@ plugin.tx_iqtp13db.settings {
 [global]
 
 
-[globalVar = GP:L = 9]
+[siteLanguage("locale") == "tr_TR"]
 plugin.tx_iqtp13db.settings {
 
    dokumenteabschluss {

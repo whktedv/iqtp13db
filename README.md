@@ -1,6 +1,6 @@
 # Installationsanweisungen Webapp Anerkennungsberatung des IQ Netzwerks NRW
 
-<h3>Version 1.0.95</h3>
+<h3>Version 2.0.0</h3>
 
 <h2>Systemvoraussetzung</h2>
 <ul>
@@ -30,12 +30,15 @@ Alle Schritte hinsichtlich Mehrsprachigkeit folgen sonst den Standard-Regeln zur
 * Login interner Bereich<br>
 * Interner Bereich<br>
 -- Übersicht<br>
--- Beratene<br>
+-- Angemeldet<br>
+-- Erstberatung<br>
+-- NIQ Erfassung<br>
+-- Archiv<br>
 -- Berater<br>
 * [DB] Daten Anerkennungsberatung<br>
 * [DB] Benutzer<br>
  </b>
- 
+
 Der System-Ordner <b>[DB] Daten Anerkennungsberatung</b> enthält die Berater, Beratenen, Dokumente und Beratungsvorgänge. Mindestens ein Datensatz vom Typ <b>Berater</b> muss in diesem Ordner angelegt sein, damit eine Anmeldung erfolgen kann.<br></li>
 
 <li>Im Typo3-Backend auf der Root-Seite muss "tp13data" als <b>Dateispeicher</b> angelegt sein. Der Pfad muss auf ein Verzeichnis auf dem Server verweisen. Das kann z.B. fileadmin/tp13data/ als relativer Pfad sein, welcher aber geschützt werden muss, damit ein Zugriff von Extern außerhalb der Webapp nicht möglich ist. Dies muss vor Live-Schaltung unbedingt getestet werden.<br>

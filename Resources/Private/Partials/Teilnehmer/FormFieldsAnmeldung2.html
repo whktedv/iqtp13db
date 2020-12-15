@@ -1,5 +1,5 @@
-<div class="frame"><h2><f:translate key="deutschkenntnisse" /></h2>
-		<div class="tp13_formdivwebapp1">
+<div class="fframe"><h2><f:translate key="deutschkenntnisse" /></h2>
+		<div class="tp13_formdivwebapp">
 			<label for="deutschkenntnisse" class="tp13_options">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse" />
 			</label>
@@ -9,26 +9,16 @@
 				<div style="clear: both;"></div>
 			</div>
 		</div>
-		<div class="tp13_formdivwebapp2">
+		<div class="tp13_formdivwebapp">
 			<label id="labelzertsprachniveau" for="zertifikatSprachniveau">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau" />
 			</label>
 				<f:form.select property="zertifikatSprachniveau" options="{settings.zertifikatlevel}" optionValueField="key" optionLabelField="value" />
 		</div>
-		<!--  
-		 raus gem. Anleitung
-			<div class="tp13_formdivwebapp1">
-			<label id="labelsprachen" for="sprachen">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.sprachen" />
-			</label>
-				<f:form.textfield id="inputsprachen" size="35" property="sprachen" />
-			</div>
-		 -->
 </div>
-<div style="clear: both;"></div>
 
-<div class="frame"><h2><f:translate key="auslaendischerabschluss" /></h2>
-		<div class="tp13_formdivwebapp1">
+<div class="fframe"><h2><f:translate key="auslaendischerabschluss" /></h2>
+		<div class="tp13_formdivwebapp">
 			<label for="abschlussart" class="tp13_options">
 				<span id="infolab" title="<f:translate key='infoAbschluss' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.abschlussart" />
 			</label>
@@ -38,94 +28,73 @@
 				<div style="clear: both;"></div>
 			</div>
 		</div>
-		<div class="tp13_formdivwebapp2">
+		<div class="tp13_formdivwebapp">
 				<div class="headabschlusslinks"><f:format.raw><f:translate key="headabschlusslinks" /></f:format.raw></div>
 				<div class="headabschlussrechts"><a id="mlink" onclick="showDetail();" style="display: inline;"><f:translate key="headabschlussrechts" /></a></div>
 		</div>
-		<div class="tp13_formdivwebapp2">
+		<div class="tp13_formdivwebapp">
 				<label for="erwerbsland1">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.erwerbsland" />
 			</label>
 				<f:form.textfield class="smallertextfield" property="erwerbsland1" />
 				<f:form.textfield class="smallertextfield2" property="erwerbsland2" />
 		</div>
-		<div class="tp13_formdivwebapp1">
+		<div class="tp13_formdivwebapp">
 			<label for="dauerBerufsausbildung">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.dauer_berufsausbildung" />
 			</label>
 				<f:form.textfield class="smallertextfield" property="dauerBerufsausbildung1" />
 				<f:form.textfield class="smallertextfield2" property="dauerBerufsausbildung2" />
 		</div>
-		<div class="tp13_formdivwebapp2">
+		<div class="tp13_formdivwebapp">
 			<label for="abschlussjahr">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.abschlussjahr" />
 			</label>
 				<f:form.textfield class="smallertextfield" property="abschlussjahr1" />
 				<f:form.textfield class="smallertextfield2" property="abschlussjahr2" />
 		</div>
-		<div class="tp13_formdivwebapp1">
+		<div class="tp13_formdivwebapp">
 			<label for="ausbildungsinstitution">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ausbildungsinstitution" />
 			</label>
 				<f:form.textfield class="smallertextfield" property="ausbildungsinstitution1" />
 				<f:form.textfield class="smallertextfield2" property="ausbildungsinstitution2" />
 		</div>
-		<div class="tp13_formdivwebapp2">
+		<div class="tp13_formdivwebapp">
 			<label for="ausbildungsort">
 				<span id="infolab" title="<f:translate key='infoAusbildungsort' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.ausbildungsort" />
 			</label>
 				<f:form.textfield class="smallertextfield" property="ausbildungsort1" />
 				<f:form.textfield class="smallertextfield2" property="ausbildungsort2" />
 		</div>
-		<div class="tp13_formdivwebapp1">
+		<div class="tp13_formdivwebapp">
 			<label for="originaltitelAbschluss">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.abschluss" />
 			</label>
 				<f:form.textfield class="smallertextfield" property="abschluss1" />
 				<f:form.textfield class="smallertextfield2" property="abschluss2" />
 		</div>
-		<!-- 
-		 raus gem. Anleitung
-		<div class="tp13_formdivwebapp2">
-			<label for="deutschAbschlusstitel">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.deutsch_abschlusstitel" />
-			</label>
-				<f:form.textfield class="smallertextfield" property="deutschAbschlusstitel1" />
-				<f:form.textfield class="smallertextfield2" property="deutschAbschlusstitel2" />
-		</div>
-		 -->
-		<div class="tp13_formdivwebapp1">
+		<div class="tp13_formdivwebapp">
 			<label for="deutscherReferenzberuf">
 				<span id="infolab" title="<f:translate key='infodeutscherBeruf' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.deutscher_referenzberuf" />
 			</label>
 				<f:form.textfield class="smallertextfield" property="deutscherReferenzberuf1" />
 				<f:form.textfield class="smallertextfield2" property="deutscherReferenzberuf2" />
 		</div>
-		<div class="tp13_formdivwebapp2">
+		<div class="tp13_formdivwebapp">
 			<label id="labelberufserfahrung" for="berufserfahrung">
 				<span id="infolab" title="<f:translate key='infoBerufserfahrung' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.berufserfahrung" />
 			</label>
 				<f:form.textfield class="smallertextfield" id="inputberufserfahrung" property="berufserfahrung1" />
 				<f:form.textfield class="smallertextfield2" id="inputberufserfahrung" property="berufserfahrung2" />
 		</div>
-		<div class="tp13_formdivwebapp1">
+		<div class="tp13_formdivwebapp">
 			<label id="labelausbildungsfremdeberufserfahrung1" for="ausbildungsfremdeberufserfahrung1">
 				<span id="infolab" title="<f:translate key='infoAusbildungsfremdeBerufserfahrung' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.ausbildungsfremdeberufserfahrung1" />
 			</label>
-				<f:form.textfield class="smallertextfield" id="inputwunschberuf" property="wunschberuf1" />
-				<f:form.textfield class="smallertextfield2" id="inputwunschberuf" property="wunschberuf2" />
+				<f:form.textfield class="smallertextfield" id="inputausbildungsfremdeberufserfahrung1" property="ausbildungsfremdeberufserfahrung1" />
+				<f:form.textfield class="smallertextfield2" id="inputausbildungsfremdeberufserfahrung1" property="ausbildungsfremdeberufserfahrung2" />
 		</div>	
-		<!-- 
-		 raus gem. Anleitung	
-		<div class="tp13_formdivwebapp2">
-			<label for="originalDokumenteAbschluss" class="tp13_options">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.original_dokumente_abschluss" /></span>
-			</label>
-				<f:form.select class="smallertextfield" property="originalDokumenteAbschluss1" options="{settings.dokumenteabschluss}" optionValueField="key" optionLabelField="value" />
-				<f:form.select class="smallertextfield2" property="originalDokumenteAbschluss2" options="{settings.dokumenteabschluss}" optionValueField="key" optionLabelField="value" />
-		</div>
-		-->
-	</div>
 </div>
-<div style="clear: both;"></div>
+
 

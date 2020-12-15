@@ -17,344 +17,441 @@ namespace Ud\Iqtp13db\Domain\Model;
  */
 class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
-    /**
-     * @var boolean
-     */
-    protected $hidden = NULL;
 
     /**
-     * tstamp
+     * beratungsstatus
+     *
+     * @var int
+     */
+    protected $beratungsstatus = 0;
+    
+    /**
+     * niqchiffre
      *
      * @var string
      */
-    protected $crdate = NULL;
-
+    protected $niqchiffre = '';
+    
     /**
-     * Nachname
+     * schonberaten
+     *
+     * @var int
+     */
+    protected $schonberaten = 0;
+    
+    /**
+     * schonberatenvon
      *
      * @var string
+     */
+    protected $schonberatenvon = '';
+    
+    /**
+     * nachname
      * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
+     * @var string
      */
     protected $nachname = '';
-
+    
     /**
-     * Vorname
-     *
-     * @var string
+     * vorname
      * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
+     * @var string
      */
     protected $vorname = '';
-
+    
     /**
-     * Straße
-     *
-     * @var string
-     */
-    protected $strasse = '';
-
-    /**
-     * PLZ
+     * plz
      *
      * @var string
      */
     protected $plz = '';
-
+    
     /**
-     * Ort
+     * ort
      *
      * @var string
      */
     protected $ort = '';
-
+    
     /**
-     * E-Mail
+     * email
+     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty"), @TYPO3\CMS\Extbase\Annotation\Validate("EmailAddress")
+     * @var string
+     */
+    protected $email = '';
+    
+    /**
+     * E-Mail bestätigung
      *
      * @var string
      * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty"), @TYPO3\CMS\Extbase\Annotation\Validate("EmailAddress")
      */
-    protected $email = '';
-
+    protected $confirmemail = '';
+    
     /**
-     * Telefon
-     *
-     * @var string
+     * telefon
      * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
+     * @var string
      */
     protected $telefon = '';
-
+    
     /**
-     * Geburtsjahr
-     *
+     * lebensalter
+	 * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
      * @var string
      */
-    protected $geburtsjahr = '';
-
+    protected $lebensalter = '';
+    
     /**
-     * Geburtsland
-     *
-     * @var string
+     * geburtsland
      * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
+     * @var string
      */
     protected $geburtsland = '';
-
+    
     /**
-     * Geschlecht
-     *
+     * geschlecht
+	 * @TYPO3\CMS\Extbase\Annotation\Validate("NumberRange", options={"minimum":1, "maximum":3})
      * @var int
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
      */
     protected $geschlecht = 0;
-
+    
     /**
-     * Erste Staatsangehörigkeit
+     * ersteStaatsangehoerigkeit
      *
      * @var string
      */
     protected $ersteStaatsangehoerigkeit = '';
-
+    
     /**
-     * Zweite Staatsangehörigkeit
+     * zweiteStaatsangehoerigkeit
      *
      * @var string
      */
     protected $zweiteStaatsangehoerigkeit = '';
-
+    
     /**
-     * Einreisejahr
+     * einreisejahr
      *
      * @var string
      */
     protected $einreisejahr = '';
-
+    
     /**
-     * Wohnsitz in Deutschland
-     *
+     * wohnsitzDeutschland
+	 * @TYPO3\CMS\Extbase\Annotation\Validate("NumberRange", options={"minimum":1, "maximum":2})
      * @var int
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
      */
     protected $wohnsitzDeutschland = 0;
-
+        
     /**
-     * In welchem Bundesland?
-     *
-     * @var string
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
-     */
-    protected $wohnsitzJaBundesland = '';
-
-    /**
-     * Wohnsitz in
+     * wohnsitzNeinIn
      *
      * @var string
      */
     protected $wohnsitzNeinIn = '';
-
-    /**
-     * Geplante Einreise
-     *
-     * @var string
-     */
-    protected $geplanteEinreise = '';
+    
     
     /**
-     * Kontakt Visastelle
-     *
-     * @var int
-     */
-    protected $kontaktVisastelle = 0;
-    
-    /**
-     * Welcher Visumsantrag
-     *
-     * @var string
-     */
-    protected $visumsantrag = '';
-    
-    /**
-     * Deutschkenntnisse
+     * deutschkenntnisse
      *
      * @var int
      */
     protected $deutschkenntnisse = 0;
-
+    
     /**
-     * Zertifikat Deutschkenntnisse vorhanden?
+     * zertifikatdeutsch
      *
      * @var int
      */
     protected $zertifikatdeutsch = 0;
-
+    
     /**
-     * Welches Sprachniveau?
+     * zertifikatSprachniveau
      *
      * @var string
      */
     protected $zertifikatSprachniveau = '';
+    
+	/**
+	 * Ausbildungsabschluss
+	 *
+	 * @var bool
+	 */
+	protected $abschlussartA = FALSE;
 
+	/**
+	 * Hochschulabschluss
+	 *
+	 * @var bool
+	 */
+	protected $abschlussartH = FALSE;
+    
+	/**
+	 * Erwerbsland
+	 *
+	 * @var string
+	 * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
+	 */
+	protected $erwerbsland1 = '';
+    
     /**
-     * Beratungsgespräch auf Deutsch?
-     *
-     * @var int
-     */
-    protected $beratungsgespraechDeutsch = 0;
-
-    /**
-     * Sprache Beratungsgespräch
-     *
-     * @var string
-     */
-    protected $beratungsgespraechSprache = '';
-
-    /**
-     * Ausbildungsabschluss
-     *
-     * @var bool
-     */
-    protected $abschlussartA = FALSE;
-
-    /**
-     * Hochschulabschluss
-     *
-     * @var bool
-     */
-    protected $abschlussartH = FALSE;
-
-    /**
-     * Erwerbsland
-     *
-     * @var string
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
-     */
-    protected $erwerbsland1 = '';
-
-    /**
-     * Dauer der Berufsausbildung
+     * dauerBerufsausbildung1
      *
      * @var string
      */
     protected $dauerBerufsausbildung1 = '';
-
+    
+	/**
+	 * Abschlussjahr
+	 *
+	 * @var string
+	 * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
+	 */
+	protected $abschlussjahr1 = '';
+    
     /**
-     * Abschlussjahr
-     *
-     * @var string
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
-     */
-    protected $abschlussjahr1 = '';
-
-    /**
-     * Ausbildungsinstitution
+     * ausbildungsinstitution1
      *
      * @var string
      */
     protected $ausbildungsinstitution1 = '';
-
+    
     /**
-     * Ausbildungsort
+     * ausbildungsort1
      *
      * @var string
      */
     protected $ausbildungsort1 = '';
-
+    
+	/**
+	 * Abschluss
+	 *
+	 * @var string
+	 * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
+	 */
+	protected $abschluss1 = '';
+    
     /**
-     * Abschluss
-     *
-     * @var string
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
-     */
-    protected $abschluss1 = '';
-
-    /**
-     * Deutsche Übersetzung des Abschlusstitels
-     *
-     * @var string
-     */
-    protected $deutschAbschlusstitel1 = '';
-
-    /**
-     * Berufserfahrung
+     * berufserfahrung1
      *
      * @var string
      */
     protected $berufserfahrung1 = '';
-
+    
     /**
-     * Möglicher deutscher Referenzberuf
+     * ausbildungsfremdeberufserfahrung1
+     *
+     * @var string
+     */
+    protected $ausbildungsfremdeberufserfahrung1 = '';
+        
+    /**
+     * deutscherReferenzberuf1
      *
      * @var string
      */
     protected $deutscherReferenzberuf1 = '';
-
+    
     /**
-     * Wunschberuf
+     * wunschberuf1
      *
      * @var string
      */
     protected $wunschberuf1 = '';
-
+    
     /**
-     * Erwerbsstatus
+     * erwerbsland2
+     *
+     * @var string
+     */
+    protected $erwerbsland2 = '';
+    
+    /**
+     * dauerBerufsausbildung2
+     *
+     * @var string
+     */
+    protected $dauerBerufsausbildung2 = '';
+    
+    /**
+     * abschlussjahr2
+     *
+     * @var string
+     */
+    protected $abschlussjahr2 = '';
+    
+    /**
+     * ausbildungsinstitution2
+     *
+     * @var string
+     */
+    protected $ausbildungsinstitution2 = '';
+    
+    /**
+     * ausbildungsort2
+     *
+     * @var string
+     */
+    protected $ausbildungsort2 = '';
+    
+    /**
+     * abschluss2
+     *
+     * @var string
+     */
+    protected $abschluss2 = '';
+    
+    /**
+     * berufserfahrung2
+     *
+     * @var string
+     */
+    protected $berufserfahrung2 = '';
+    
+    /**
+     * ausbildungsfremdeberufserfahrung2
+     *
+     * @var string
+     */
+    protected $ausbildungsfremdeberufserfahrung2 = '';
+    
+    
+    /**
+     * deutscherReferenzberuf2
+     *
+     * @var string
+     */
+    protected $deutscherReferenzberuf2 = '';
+    
+    /**
+     * wunschberuf2
+     *
+     * @var string
+     */
+    protected $wunschberuf2 = '';
+    
+    /**
+     * erwerbsstatus
      *
      * @var int
      */
     protected $erwerbsstatus = 0;
-
+    
     /**
-     * Leistungsbezug
+     * leistungsbezugjanein
+     *
+     * @var int
+     */
+    protected $leistungsbezugjanein = 0;
+    
+    /**
+     * leistungsbezug
      *
      * @var string
      */
     protected $leistungsbezug = '';
-
+    
     /**
-     * Aufenthaltsstatus des/der Teilnehmers/in bei Beginn der Maßnahme
+     * einwilligungdatenanAA
+     *
+     * @var int
+     */
+    protected $einwilligungdatenanAA = 0;
+    
+    /**
+     * einwilligungdatenanAAdatum
+     *
+     * @var string
+     */
+    protected $einwilligungdatenanAAdatum = '';
+    
+    /**
+     * einwilligungdatenanAAmedium
+     *
+     * @var string
+     */
+    protected $einwilligungdatenanAAmedium = '';
+    
+    /**
+     * nameBeraterAA
+     *
+     * @var string
+     */
+    protected $nameBeraterAA = '';
+    
+    /**
+     * kontaktBeraterAA
+     *
+     * @var string
+     */
+    protected $kontaktBeraterAA = '';
+    
+    /**
+     * kundennummerAA
+     *
+     * @var string
+     */
+    protected $kundennummerAA = '';
+    
+    /**
+     * aufenthaltsstatus
      *
      * @var int
      */
     protected $aufenthaltsstatus = 0;
 
     /**
-     * Wurde früher ein Antrag auf Anerkennung gestellt?
+     * aufenthaltsstatusfreitext
+     *
+     * @var string
+     */
+    protected $aufenthaltsstatusfreitext = '';
+    
+    /**
+     * fruehererAntrag
      *
      * @var int
      */
     protected $fruehererAntrag = 0;
-
+    
     /**
-     * Zu welchem Referenzberuf?
+     * fruehererAntragReferenzberuf
      *
      * @var string
      */
     protected $fruehererAntragReferenzberuf = '';
-
+    
     /**
-     * Bei welcher Institution?
+     * fruehererAntragInstitution
      *
      * @var string
      */
     protected $fruehererAntragInstitution = '';
-
+    
     /**
-     * Anzahl Beratungen
+     * bescheidfruehererAnerkennungsantrag
      *
      * @var int
      */
-    protected $anzBeratungen = 0;
-
+    protected $bescheidfruehererAnerkennungsantrag = 0;
+    
     /**
-     * Weitere Sprachkenntnisse vorhanden?
-     *
-     * @var int
-     */
-    protected $weitereSprachkenntnisse = 0;
-
-    /**
-     * Wenn ja, welche Sprache(n)?
+     * nameBeratungsstelle
      *
      * @var string
      */
-    protected $sprachen = '';
-
+    protected $nameBeratungsstelle = '';
+    
+    /**
+     * notizen
+     *
+     * @var string
+     */
+    protected $notizen = '';
+    
+ 
     /**
      * Einwilligung Datenübermittlung
      *
@@ -362,98 +459,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @TYPO3\CMS\Extbase\Annotation\Validate("\Ud\Iqtp13db\Validation\Validator\EinwilligungValidator")
      */
     protected $einwilligung = NULL;
-
-    /**
-     * Erwerbsland
-     *
-     * @var string
-     */
-    protected $erwerbsland2 = '';
-
-    /**
-     * Dauer Berufsausbildung
-     *
-     * @var string
-     */
-    protected $dauerBerufsausbildung2 = '';
-
-    /**
-     * Abschlussjahr
-     *
-     * @var string
-     */
-    protected $abschlussjahr2 = '';
-
-    /**
-     * Ausbildungsinstitution
-     *
-     * @var string
-     */
-    protected $ausbildungsinstitution2 = '';
-
-    /**
-     * Ausbildungsort
-     *
-     * @var string
-     */
-    protected $ausbildungsort2 = '';
-
-    /**
-     * Abschluss
-     *
-     * @var string
-     */
-    protected $abschluss2 = '';
-
-    /**
-     * Deutsche Übersetzung des Abschlusstitels
-     *
-     * @var string
-     */
-    protected $deutschAbschlusstitel2 = '';
-
-    /**
-     * Berufserfahrung
-     *
-     * @var string
-     */
-    protected $berufserfahrung2 = '';
-
-    /**
-     * Möglicher deutscher Beruf
-     *
-     * @var string
-     */
-    protected $deutscherReferenzberuf2 = '';
-
-    /**
-     * Wunschberuf
-     *
-     * @var string
-     */
-    protected $wunschberuf2 = '';
-
-    /**
-     * Liegen Original-Dokumente des Abschlusses vor?
-     *
-     * @var int
-     */
-    protected $originalDokumenteAbschluss1 = 0;
-
-    /**
-     * Liegen Original-Dokumente des Abschlusses vor?
-     *
-     * @var int
-     */
-    protected $originalDokumenteAbschluss2 = 0;
-
-    /**
-     * bescheidfruehererAnerkennungsantrag
-     *
-     * @var bool
-     */
-    protected $bescheidfruehererAnerkennungsantrag = FALSE;
-
+    
     /**
      * verificationCode
      *
@@ -464,9 +470,9 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * verificationDate
      *
-     * @var \DateTime
+     * @var int
      */
-    protected $verificationDate = null;
+    protected $verificationDate = 0;
     
     /**
      * verificationIp
@@ -476,6 +482,18 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $verificationIp = '';
     
     /**
+     * dublette
+     *
+     * @var boolean
+     */
+    protected $dublette = FALSE;
+    
+    /**
+     * @var boolean
+     */
+    protected $hidden;
+  
+    /**
      * __construct
      */
     public function __construct()
@@ -483,9 +501,93 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->initVerificationCode();
     }
     
+     /**
+     * Returns the beratungsstatus
+     * 
+     * @return int $beratungsstatus
+     */
+    public function getBeratungsstatus()
+    {
+        return $this->beratungsstatus;
+    }
+
+    /**
+     * Sets the beratungsstatus
+     * 
+     * @param int $beratungsstatus
+     * @return void
+     */
+    public function setBeratungsstatus($beratungsstatus)
+    {
+        $this->beratungsstatus = $beratungsstatus;
+    }
+
+    /**
+     * Returns the niqchiffre
+     * 
+     * @return string $niqchiffre
+     */
+    public function getNiqchiffre()
+    {
+        return $this->niqchiffre;
+    }
+
+    /**
+     * Sets the niqchiffre
+     * 
+     * @param string $niqchiffre
+     * @return void
+     */
+    public function setNiqchiffre($niqchiffre)
+    {
+        $this->niqchiffre = $niqchiffre;
+    }
+
+    /**
+     * Returns the schonberaten
+     * 
+     * @return int $schonberaten
+     */
+    public function getSchonberaten()
+    {
+        return $this->schonberaten;
+    }
+
+    /**
+     * Sets the schonberaten
+     * 
+     * @param int $schonberaten
+     * @return void
+     */
+    public function setSchonberaten($schonberaten)
+    {
+        $this->schonberaten = $schonberaten;
+    }
+
+    /**
+     * Returns the schonberatenvon
+     * 
+     * @return string $schonberatenvon
+     */
+    public function getSchonberatenvon()
+    {
+        return $this->schonberatenvon;
+    }
+
+    /**
+     * Sets the schonberatenvon
+     * 
+     * @param string $schonberatenvon
+     * @return void
+     */
+    public function setSchonberatenvon($schonberatenvon)
+    {
+        $this->schonberatenvon = $schonberatenvon;
+    }
+
     /**
      * Returns the nachname
-     *
+     * 
      * @return string $nachname
      */
     public function getNachname()
@@ -495,7 +597,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the nachname
-     *
+     * 
      * @param string $nachname
      * @return void
      */
@@ -506,7 +608,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the vorname
-     *
+     * 
      * @return string $vorname
      */
     public function getVorname()
@@ -516,7 +618,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the vorname
-     *
+     * 
      * @param string $vorname
      * @return void
      */
@@ -526,29 +628,8 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Returns the strasse
-     *
-     * @return string $strasse
-     */
-    public function getStrasse()
-    {
-        return $this->strasse;
-    }
-
-    /**
-     * Sets the strasse
-     *
-     * @param string $strasse
-     * @return void
-     */
-    public function setStrasse($strasse)
-    {
-        $this->strasse = $strasse;
-    }
-
-    /**
      * Returns the plz
-     *
+     * 
      * @return string $plz
      */
     public function getPlz()
@@ -558,7 +639,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the plz
-     *
+     * 
      * @param string $plz
      * @return void
      */
@@ -569,7 +650,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the ort
-     *
+     * 
      * @return string $ort
      */
     public function getOrt()
@@ -579,7 +660,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the ort
-     *
+     * 
      * @param string $ort
      * @return void
      */
@@ -590,7 +671,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the email
-     *
+     * 
      * @return string $email
      */
     public function getEmail()
@@ -600,7 +681,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the email
-     *
+     * 
      * @param string $email
      * @return void
      */
@@ -608,10 +689,29 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->email = $email;
     }
+    
+    /**
+     * Returns the confirmemail
+     *
+     * @return string $confirmemail
+     */
+    public function getConfirmemail() {
+        return $this->confirmemail;
+    }
+    
+    /**
+     * Sets the confirmemail
+     *
+     * @param string $confirmemail
+     * @return void
+     */
+    public function setConfirmemail($confirmemail) {
+        $this->confirmemail = $confirmemail;
+    }
 
     /**
      * Returns the telefon
-     *
+     * 
      * @return string $telefon
      */
     public function getTelefon()
@@ -621,7 +721,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the telefon
-     *
+     * 
      * @param string $telefon
      * @return void
      */
@@ -631,29 +731,29 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Returns the geburtsjahr
-     *
-     * @return string $geburtsjahr
+     * Returns the lebensalter
+     * 
+     * @return string $lebensalter
      */
-    public function getGeburtsjahr()
+    public function getLebensalter()
     {
-        return $this->geburtsjahr;
+        return $this->lebensalter;
     }
 
     /**
-     * Sets the geburtsjahr
-     *
-     * @param string $geburtsjahr
+     * Sets the lebensalter
+     * 
+     * @param string $lebensalter
      * @return void
      */
-    public function setGeburtsjahr($geburtsjahr)
+    public function setLebensalter($lebensalter)
     {
-        $this->geburtsjahr = $geburtsjahr;
+        $this->lebensalter = $lebensalter;
     }
 
     /**
      * Returns the geburtsland
-     *
+     * 
      * @return string $geburtsland
      */
     public function getGeburtsland()
@@ -663,7 +763,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the geburtsland
-     *
+     * 
      * @param string $geburtsland
      * @return void
      */
@@ -674,7 +774,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the geschlecht
-     *
+     * 
      * @return int $geschlecht
      */
     public function getGeschlecht()
@@ -684,7 +784,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the geschlecht
-     *
+     * 
      * @param int $geschlecht
      * @return void
      */
@@ -695,7 +795,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the ersteStaatsangehoerigkeit
-     *
+     * 
      * @return string $ersteStaatsangehoerigkeit
      */
     public function getErsteStaatsangehoerigkeit()
@@ -705,7 +805,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the ersteStaatsangehoerigkeit
-     *
+     * 
      * @param string $ersteStaatsangehoerigkeit
      * @return void
      */
@@ -716,7 +816,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the zweiteStaatsangehoerigkeit
-     *
+     * 
      * @return string $zweiteStaatsangehoerigkeit
      */
     public function getZweiteStaatsangehoerigkeit()
@@ -726,7 +826,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the zweiteStaatsangehoerigkeit
-     *
+     * 
      * @param string $zweiteStaatsangehoerigkeit
      * @return void
      */
@@ -737,7 +837,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the einreisejahr
-     *
+     * 
      * @return string $einreisejahr
      */
     public function getEinreisejahr()
@@ -747,7 +847,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the einreisejahr
-     *
+     * 
      * @param string $einreisejahr
      * @return void
      */
@@ -758,7 +858,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the wohnsitzDeutschland
-     *
+     * 
      * @return int $wohnsitzDeutschland
      */
     public function getWohnsitzDeutschland()
@@ -768,7 +868,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the wohnsitzDeutschland
-     *
+     * 
      * @param int $wohnsitzDeutschland
      * @return void
      */
@@ -778,29 +878,8 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Returns the wohnsitzJaBundesland
-     *
-     * @return string $wohnsitzJaBundesland
-     */
-    public function getWohnsitzJaBundesland()
-    {
-        return $this->wohnsitzJaBundesland;
-    }
-
-    /**
-     * Sets the wohnsitzJaBundesland
-     *
-     * @param string $wohnsitzJaBundesland
-     * @return void
-     */
-    public function setWohnsitzJaBundesland($wohnsitzJaBundesland)
-    {
-        $this->wohnsitzJaBundesland = $wohnsitzJaBundesland;
-    }
-
-    /**
      * Returns the wohnsitzNeinIn
-     *
+     * 
      * @return string $wohnsitzNeinIn
      */
     public function getWohnsitzNeinIn()
@@ -810,7 +889,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the wohnsitzNeinIn
-     *
+     * 
      * @param string $wohnsitzNeinIn
      * @return void
      */
@@ -820,66 +899,8 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Returns the geplanteEinreise
-     *
-     * @return string $geplanteEinreise
-     */
-    public function getGeplanteEinreise() {
-        return $this->geplanteEinreise;
-    }
-    
-    /**
-     * Sets the geplanteEinreise
-     *
-     * @param string $geplanteEinreise
-     * @return void
-     */
-    public function setGeplanteEinreise($geplanteEinreise) {
-        $this->geplanteEinreise = $geplanteEinreise;
-    }
-    
-    /**
-     * Returns the kontaktVisastelle
-     *
-     * @return string $kontaktVisastelle
-     */
-    public function getKontaktVisastelle() {
-        return $this->kontaktVisastelle;
-    }
-    
-    /**
-     * Sets the kontaktVisastelle
-     *
-     * @param string $kontaktVisastelle
-     * @return void
-     */
-    public function setKontaktVisastelle($kontaktVisastelle) {
-        $this->kontaktVisastelle = $kontaktVisastelle;
-    }
-    
-    /**
-     * Returns the visumsantrag
-     *
-     * @return string $visumsantrag
-     */
-    public function getVisumsantrag() {
-        return $this->visumsantrag;
-    }
-    
-    /**
-     * Sets the visumsantrag
-     *
-     * @param string $visumsantrag
-     * @return void
-     */
-    public function setVisumsantrag($visumsantrag) {
-        $this->visumsantrag = $visumsantrag;
-    }
-    
-    
-    /**
      * Returns the deutschkenntnisse
-     *
+     * 
      * @return int $deutschkenntnisse
      */
     public function getDeutschkenntnisse()
@@ -889,7 +910,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the deutschkenntnisse
-     *
+     * 
      * @param int $deutschkenntnisse
      * @return void
      */
@@ -900,7 +921,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the zertifikatdeutsch
-     *
+     * 
      * @return int $zertifikatdeutsch
      */
     public function getZertifikatdeutsch()
@@ -910,7 +931,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the zertifikatdeutsch
-     *
+     * 
      * @param int $zertifikatdeutsch
      * @return void
      */
@@ -921,7 +942,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the zertifikatSprachniveau
-     *
+     * 
      * @return string $zertifikatSprachniveau
      */
     public function getZertifikatSprachniveau()
@@ -931,7 +952,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the zertifikatSprachniveau
-     *
+     * 
      * @param string $zertifikatSprachniveau
      * @return void
      */
@@ -941,315 +962,9 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Returns the beratungsgespraechDeutsch
-     *
-     * @return int $beratungsgespraechDeutsch
-     */
-    public function getBeratungsgespraechDeutsch()
-    {
-        return $this->beratungsgespraechDeutsch;
-    }
-
-    /**
-     * Sets the beratungsgespraechDeutsch
-     *
-     * @param int $beratungsgespraechDeutsch
-     * @return void
-     */
-    public function setBeratungsgespraechDeutsch($beratungsgespraechDeutsch)
-    {
-        $this->beratungsgespraechDeutsch = $beratungsgespraechDeutsch;
-    }
-
-    /**
-     * Returns the beratungsgespraechSprache
-     *
-     * @return string $beratungsgespraechSprache
-     */
-    public function getBeratungsgespraechSprache()
-    {
-        return $this->beratungsgespraechSprache;
-    }
-
-    /**
-     * Sets the beratungsgespraechSprache
-     *
-     * @param string $beratungsgespraechSprache
-     * @return void
-     */
-    public function setBeratungsgespraechSprache($beratungsgespraechSprache)
-    {
-        $this->beratungsgespraechSprache = $beratungsgespraechSprache;
-    }
-
-    /**
-     * Returns the erwerbsstatus
-     *
-     * @return int $erwerbsstatus
-     */
-    public function getErwerbsstatus()
-    {
-        return $this->erwerbsstatus;
-    }
-
-    /**
-     * Sets the erwerbsstatus
-     *
-     * @param int $erwerbsstatus
-     * @return void
-     */
-    public function setErwerbsstatus($erwerbsstatus)
-    {
-        $this->erwerbsstatus = $erwerbsstatus;
-    }
-
-    /**
-     * Returns the leistungsbezug
-     *
-     * @return string $leistungsbezug
-     */
-    public function getLeistungsbezug()
-    {
-        return $this->leistungsbezug;
-    }
-
-    /**
-     * Sets the leistungsbezug
-     *
-     * @param string $leistungsbezug
-     * @return void
-     */
-    public function setLeistungsbezug($leistungsbezug)
-    {
-        $this->leistungsbezug = $leistungsbezug;
-    }
-
-    /**
-     * Returns the aufenthaltsstatus
-     *
-     * @return int $aufenthaltsstatus
-     */
-    public function getAufenthaltsstatus()
-    {
-        return $this->aufenthaltsstatus;
-    }
-
-    /**
-     * Sets the aufenthaltsstatus
-     *
-     * @param int $aufenthaltsstatus
-     * @return void
-     */
-    public function setAufenthaltsstatus($aufenthaltsstatus)
-    {
-        $this->aufenthaltsstatus = $aufenthaltsstatus;
-    }
-
-    /**
-     * Returns the fruehererAntrag
-     *
-     * @return int $fruehererAntrag
-     */
-    public function getFruehererAntrag()
-    {
-        return $this->fruehererAntrag;
-    }
-
-    /**
-     * Sets the fruehererAntrag
-     *
-     * @param int $fruehererAntrag
-     * @return void
-     */
-    public function setFruehererAntrag($fruehererAntrag)
-    {
-        $this->fruehererAntrag = $fruehererAntrag;
-    }
-
-    /**
-     * Returns the fruehererAntragReferenzberuf
-     *
-     * @return string $fruehererAntragReferenzberuf
-     */
-    public function getFruehererAntragReferenzberuf()
-    {
-        return $this->fruehererAntragReferenzberuf;
-    }
-
-    /**
-     * Sets the fruehererAntragReferenzberuf
-     *
-     * @param string $fruehererAntragReferenzberuf
-     * @return void
-     */
-    public function setFruehererAntragReferenzberuf($fruehererAntragReferenzberuf)
-    {
-        $this->fruehererAntragReferenzberuf = $fruehererAntragReferenzberuf;
-    }
-
-    /**
-     * Returns the fruehererAntragInstitution
-     *
-     * @return string $fruehererAntragInstitution
-     */
-    public function getFruehererAntragInstitution()
-    {
-        return $this->fruehererAntragInstitution;
-    }
-
-    /**
-     * Sets the fruehererAntragInstitution
-     *
-     * @param string $fruehererAntragInstitution
-     * @return void
-     */
-    public function setFruehererAntragInstitution($fruehererAntragInstitution)
-    {
-        $this->fruehererAntragInstitution = $fruehererAntragInstitution;
-    }
-
-    /**
-     * Returns the anzBeratungen
-     *
-     * @return int $anzBeratungen
-     */
-    public function getAnzBeratungen()
-    {
-        return $this->anzBeratungen;
-    }
-
-    /**
-     * Sets the anzBeratungen
-     *
-     * @param int $anzBeratungen
-     * @return void
-     */
-    public function setAnzBeratungen($anzBeratungen)
-    {
-        $this->anzBeratungen = $anzBeratungen;
-    }
-
-    /**
-     * Returns the weitereSprachkenntnisse
-     *
-     * @return int $weitereSprachkenntnisse
-     */
-    public function getWeitereSprachkenntnisse()
-    {
-        return $this->weitereSprachkenntnisse;
-    }
-
-    /**
-     * Sets the weitereSprachkenntnisse
-     *
-     * @param int $weitereSprachkenntnisse
-     * @return void
-     */
-    public function setWeitereSprachkenntnisse($weitereSprachkenntnisse)
-    {
-        $this->weitereSprachkenntnisse = $weitereSprachkenntnisse;
-    }
-
-    /**
-     * Returns the sprachen
-     *
-     * @return string $sprachen
-     */
-    public function getSprachen()
-    {
-        return $this->sprachen;
-    }
-
-    /**
-     * Sets the sprachen
-     *
-     * @param string $sprachen
-     * @return void
-     */
-    public function setSprachen($sprachen)
-    {
-        $this->sprachen = $sprachen;
-    }
-
-    /**
-     * @return boolean $hidden
-     */
-    public function getHidden()
-    {
-        return $this->hidden;
-    }
-
-    /**
-     * @return boolean $hidden
-     */
-    public function isHidden()
-    {
-        return $this->getHidden();
-    }
-
-    /**
-     * @param boolean $hidden
-     * @return void
-     */
-    public function setHidden($hidden)
-    {
-        $this->hidden = $hidden;
-    }
-
-    /**
-     * Returns the crdate
-     *
-     * @return string $crdate
-     */
-    public function getCrdate()
-    {
-        return $this->crdate;
-    }
-
-    /**
-     * Sets the crdate
-     *
-     * @param string $crdate
-     * @return void
-     */
-    public function setCrdate($crdate)
-    {
-        $this->crdate = $crdate;
-    }
-
-    /**
-     * Returns the einwilligung
-     *
-     * @return boolean $einwilligung
-     */
-    public function getEinwilligung()
-    {
-        return $this->einwilligung;
-    }
-
-    /**
-     * @return boolean $einwilligung
-     */
-    public function isEinwilligung()
-    {
-        return $this->getEinwilligung();
-    }
-
-    /**
-     * Sets the einwilligung
-     *
-     * @param boolean $einwilligung
-     * @return void
-     */
-    public function setEinwilligung($einwilligung)
-    {
-        $this->einwilligung = $einwilligung;
-    }
-
-    /**
      * Returns the abschlussartA
-     *
-     * @return bool abschlussartA
+     * 
+     * @return int $abschlussartA
      */
     public function getAbschlussartA()
     {
@@ -1258,7 +973,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the abschlussartA
-     *
+     * 
      * @param int $abschlussartA
      * @return void
      */
@@ -1268,9 +983,30 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
+     * Returns the abschlussartH
+     * 
+     * @return int $abschlussartH
+     */
+    public function getAbschlussartH()
+    {
+        return $this->abschlussartH;
+    }
+
+    /**
+     * Sets the abschlussartH
+     * 
+     * @param int $abschlussartH
+     * @return void
+     */
+    public function setAbschlussartH($abschlussartH)
+    {
+        $this->abschlussartH = $abschlussartH;
+    }
+
+    /**
      * Returns the erwerbsland1
-     *
-     * @return string erwerbsland1
+     * 
+     * @return string $erwerbsland1
      */
     public function getErwerbsland1()
     {
@@ -1279,7 +1015,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the erwerbsland1
-     *
+     * 
      * @param string $erwerbsland1
      * @return void
      */
@@ -1290,8 +1026,8 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the dauerBerufsausbildung1
-     *
-     * @return string dauerBerufsausbildung1
+     * 
+     * @return string $dauerBerufsausbildung1
      */
     public function getDauerBerufsausbildung1()
     {
@@ -1300,7 +1036,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the dauerBerufsausbildung1
-     *
+     * 
      * @param string $dauerBerufsausbildung1
      * @return void
      */
@@ -1311,8 +1047,8 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the abschlussjahr1
-     *
-     * @return string abschlussjahr1
+     * 
+     * @return string $abschlussjahr1
      */
     public function getAbschlussjahr1()
     {
@@ -1321,7 +1057,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the abschlussjahr1
-     *
+     * 
      * @param string $abschlussjahr1
      * @return void
      */
@@ -1332,8 +1068,8 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the ausbildungsinstitution1
-     *
-     * @return string ausbildungsinstitution1
+     * 
+     * @return string $ausbildungsinstitution1
      */
     public function getAusbildungsinstitution1()
     {
@@ -1342,7 +1078,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the ausbildungsinstitution1
-     *
+     * 
      * @param string $ausbildungsinstitution1
      * @return void
      */
@@ -1353,8 +1089,8 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the ausbildungsort1
-     *
-     * @return string ausbildungsort1
+     * 
+     * @return string $ausbildungsort1
      */
     public function getAusbildungsort1()
     {
@@ -1363,7 +1099,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the ausbildungsort1
-     *
+     * 
      * @param string $ausbildungsort1
      * @return void
      */
@@ -1374,8 +1110,8 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the abschluss1
-     *
-     * @return string abschluss1
+     * 
+     * @return string $abschluss1
      */
     public function getAbschluss1()
     {
@@ -1384,7 +1120,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the abschluss1
-     *
+     * 
      * @param string $abschluss1
      * @return void
      */
@@ -1394,57 +1130,15 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Returns the deutschAbschlusstitel1
-     *
-     * @return string deutschAbschlusstitel1
-     */
-    public function getDeutschAbschlusstitel1()
-    {
-        return $this->deutschAbschlusstitel1;
-    }
-
-    /**
-     * Sets the deutschAbschlusstitel1
-     *
-     * @param string $deutschAbschlusstitel1
-     * @return void
-     */
-    public function setDeutschAbschlusstitel1($deutschAbschlusstitel1)
-    {
-        $this->deutschAbschlusstitel1 = $deutschAbschlusstitel1;
-    }
-
-    /**
-     * Returns the deutscherReferenzberuf1
-     *
-     * @return string deutscherReferenzberuf1
-     */
-    public function getDeutscherReferenzberuf1()
-    {
-        return $this->deutscherReferenzberuf1;
-    }
-
-    /**
-     * Sets the deutscherReferenzberuf1
-     *
-     * @param string $deutscherReferenzberuf1
-     * @return void
-     */
-    public function setDeutscherReferenzberuf1($deutscherReferenzberuf1)
-    {
-        $this->deutscherReferenzberuf1 = $deutscherReferenzberuf1;
-    }
-
-    /**
      * Returns the berufserfahrung1
      *
-     * @return string berufserfahrung1
+     * @return string $berufserfahrung1
      */
     public function getBerufserfahrung1()
     {
         return $this->berufserfahrung1;
     }
-
+    
     /**
      * Sets the berufserfahrung1
      *
@@ -1455,11 +1149,53 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->berufserfahrung1 = $berufserfahrung1;
     }
+    
+    /**
+     * Returns the ausbildungsfremdeberufserfahrung1
+     *
+     * @return string $ausbildungsfremdeberufserfahrung1
+     */
+    public function getAusbildungsfremdeberufserfahrung1()
+    {
+        return $this->ausbildungsfremdeberufserfahrung1;
+    }
+    
+    /**
+     * Sets the ausbildungsfremdeberufserfahrung1
+     *
+     * @param string $ausbildungsfremdeberufserfahrung1
+     * @return void
+     */
+    public function setAusbildungsfremdeberufserfahrung1($ausbildungsfremdeberufserfahrung1)
+    {
+        $this->ausbildungsfremdeberufserfahrung1 = $ausbildungsfremdeberufserfahrung1;
+    }
+    
+    /**
+     * Returns the deutscherReferenzberuf1
+     * 
+     * @return string $deutscherReferenzberuf1
+     */
+    public function getDeutscherReferenzberuf1()
+    {
+        return $this->deutscherReferenzberuf1;
+    }
+
+    /**
+     * Sets the deutscherReferenzberuf1
+     * 
+     * @param string $deutscherReferenzberuf1
+     * @return void
+     */
+    public function setDeutscherReferenzberuf1($deutscherReferenzberuf1)
+    {
+        $this->deutscherReferenzberuf1 = $deutscherReferenzberuf1;
+    }
 
     /**
      * Returns the wunschberuf1
-     *
-     * @return string wunschberuf1
+     * 
+     * @return string $wunschberuf1
      */
     public function getWunschberuf1()
     {
@@ -1468,7 +1204,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the wunschberuf1
-     *
+     * 
      * @param string $wunschberuf1
      * @return void
      */
@@ -1478,39 +1214,8 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Returns the abschlussartH
-     *
-     * @return bool $abschlussartH
-     */
-    public function getAbschlussartH()
-    {
-        return $this->abschlussartH;
-    }
-
-    /**
-     * Sets the abschlussartH
-     *
-     * @param bool $abschlussartH
-     * @return void
-     */
-    public function setAbschlussartH($abschlussartH)
-    {
-        $this->abschlussartH = $abschlussartH;
-    }
-
-    /**
-     * Returns the boolean state of abschlussartH
-     *
-     * @return bool
-     */
-    public function isAbschlussartH()
-    {
-        return $this->abschlussartH;
-    }
-
-    /**
      * Returns the erwerbsland2
-     *
+     * 
      * @return string $erwerbsland2
      */
     public function getErwerbsland2()
@@ -1520,7 +1225,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the erwerbsland2
-     *
+     * 
      * @param string $erwerbsland2
      * @return void
      */
@@ -1531,7 +1236,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the dauerBerufsausbildung2
-     *
+     * 
      * @return string $dauerBerufsausbildung2
      */
     public function getDauerBerufsausbildung2()
@@ -1541,7 +1246,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the dauerBerufsausbildung2
-     *
+     * 
      * @param string $dauerBerufsausbildung2
      * @return void
      */
@@ -1552,7 +1257,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the abschlussjahr2
-     *
+     * 
      * @return string $abschlussjahr2
      */
     public function getAbschlussjahr2()
@@ -1562,7 +1267,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the abschlussjahr2
-     *
+     * 
      * @param string $abschlussjahr2
      * @return void
      */
@@ -1573,7 +1278,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the ausbildungsinstitution2
-     *
+     * 
      * @return string $ausbildungsinstitution2
      */
     public function getAusbildungsinstitution2()
@@ -1583,7 +1288,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the ausbildungsinstitution2
-     *
+     * 
      * @param string $ausbildungsinstitution2
      * @return void
      */
@@ -1594,7 +1299,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the ausbildungsort2
-     *
+     * 
      * @return string $ausbildungsort2
      */
     public function getAusbildungsort2()
@@ -1604,7 +1309,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the ausbildungsort2
-     *
+     * 
      * @param string $ausbildungsort2
      * @return void
      */
@@ -1615,7 +1320,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the abschluss2
-     *
+     * 
      * @return string $abschluss2
      */
     public function getAbschluss2()
@@ -1625,7 +1330,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the abschluss2
-     *
+     * 
      * @param string $abschluss2
      * @return void
      */
@@ -1635,29 +1340,8 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Returns the deutschAbschlusstitel2
-     *
-     * @return string $deutschAbschlusstitel2
-     */
-    public function getDeutschAbschlusstitel2()
-    {
-        return $this->deutschAbschlusstitel2;
-    }
-
-    /**
-     * Sets the deutschAbschlusstitel2
-     *
-     * @param string $deutschAbschlusstitel2
-     * @return void
-     */
-    public function setDeutschAbschlusstitel2($deutschAbschlusstitel2)
-    {
-        $this->deutschAbschlusstitel2 = $deutschAbschlusstitel2;
-    }
-
-    /**
      * Returns the berufserfahrung2
-     *
+     * 
      * @return string $berufserfahrung2
      */
     public function getBerufserfahrung2()
@@ -1667,7 +1351,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the berufserfahrung2
-     *
+     * 
      * @param string $berufserfahrung2
      * @return void
      */
@@ -1677,8 +1361,29 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Returns the deutscherReferenzberuf2
+     * Returns the ausbildungsfremdeberufserfahrung2
      *
+     * @return string $ausbildungsfremdeberufserfahrung2
+     */
+    public function getAusbildungsfremdeberufserfahrung2()
+    {
+        return $this->ausbildungsfremdeberufserfahrung2;
+    }
+    
+    /**
+     * Sets the ausbildungsfremdeberufserfahrung2
+     *
+     * @param string $ausbildungsfremdeberufserfahrung2
+     * @return void
+     */
+    public function setAusbildungsfremdeberufserfahrung2($ausbildungsfremdeberufserfahrung2)
+    {
+        $this->ausbildungsfremdeberufserfahrung2 = $ausbildungsfremdeberufserfahrung2;
+    }
+    
+    /**
+     * Returns the deutscherReferenzberuf2
+     * 
      * @return string $deutscherReferenzberuf2
      */
     public function getDeutscherReferenzberuf2()
@@ -1688,7 +1393,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the deutscherReferenzberuf2
-     *
+     * 
      * @param string $deutscherReferenzberuf2
      * @return void
      */
@@ -1699,7 +1404,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the wunschberuf2
-     *
+     * 
      * @return string $wunschberuf2
      */
     public function getWunschberuf2()
@@ -1709,7 +1414,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the wunschberuf2
-     *
+     * 
      * @param string $wunschberuf2
      * @return void
      */
@@ -1719,51 +1424,303 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Returns the originalDokumenteAbschluss1
-     *
-     * @return int $originalDokumenteAbschluss1
+     * Returns the erwerbsstatus
+     * 
+     * @return int $erwerbsstatus
      */
-    public function getOriginalDokumenteAbschluss1()
+    public function getErwerbsstatus()
     {
-        return $this->originalDokumenteAbschluss1;
+        return $this->erwerbsstatus;
     }
 
     /**
-     * Sets the originalDokumenteAbschluss1
-     *
-     * @param int $originalDokumenteAbschluss1
+     * Sets the erwerbsstatus
+     * 
+     * @param int $erwerbsstatus
      * @return void
      */
-    public function setOriginalDokumenteAbschluss1($originalDokumenteAbschluss1)
+    public function setErwerbsstatus($erwerbsstatus)
     {
-        $this->originalDokumenteAbschluss1 = $originalDokumenteAbschluss1;
+        $this->erwerbsstatus = $erwerbsstatus;
     }
 
     /**
-     * Returns the originalDokumenteAbschluss2
-     *
-     * @return int $originalDokumenteAbschluss2
+     * Returns the leistungsbezugjanein
+     * 
+     * @return int $leistungsbezugjanein
      */
-    public function getOriginalDokumenteAbschluss2()
+    public function getLeistungsbezugjanein()
     {
-        return $this->originalDokumenteAbschluss2;
+        return $this->leistungsbezugjanein;
     }
 
     /**
-     * Sets the originalDokumenteAbschluss2
-     *
-     * @param int $originalDokumenteAbschluss2
+     * Sets the leistungsbezugjanein
+     * 
+     * @param int $leistungsbezugjanein
      * @return void
      */
-    public function setOriginalDokumenteAbschluss2($originalDokumenteAbschluss2)
+    public function setLeistungsbezugjanein($leistungsbezugjanein)
     {
-        $this->originalDokumenteAbschluss2 = $originalDokumenteAbschluss2;
+        $this->leistungsbezugjanein = $leistungsbezugjanein;
+    }
+
+    /**
+     * Returns the leistungsbezug
+     * 
+     * @return string $leistungsbezug
+     */
+    public function getLeistungsbezug()
+    {
+        return $this->leistungsbezug;
+    }
+
+    /**
+     * Sets the leistungsbezug
+     * 
+     * @param string $leistungsbezug
+     * @return void
+     */
+    public function setLeistungsbezug($leistungsbezug)
+    {
+        $this->leistungsbezug = $leistungsbezug;
+    }
+
+    /**
+     * Returns the einwilligungdatenanAA
+     * 
+     * @return int $einwilligungdatenanAA
+     */
+    public function getEinwilligungdatenanAA()
+    {
+        return $this->einwilligungdatenanAA;
+    }
+
+    /**
+     * Sets the einwilligungdatenanAA
+     * 
+     * @param int $einwilligungdatenanAA
+     * @return void
+     */
+    public function setEinwilligungdatenanAA($einwilligungdatenanAA)
+    {
+        $this->einwilligungdatenanAA = $einwilligungdatenanAA;
+    }
+
+    /**
+     * Returns the einwilligungdatenanAAdatum
+     * 
+     * @return string $einwilligungdatenanAAdatum
+     */
+    public function getEinwilligungdatenanAAdatum()
+    {
+        return $this->einwilligungdatenanAAdatum;
+    }
+
+    /**
+     * Sets the einwilligungdatenanAAdatum
+     * 
+     * @param string $einwilligungdatenanAAdatum
+     * @return void
+     */
+    public function setEinwilligungdatenanAAdatum($einwilligungdatenanAAdatum)
+    {
+        $this->einwilligungdatenanAAdatum = $einwilligungdatenanAAdatum;
+    }
+
+    /**
+     * Returns the einwilligungdatenanAAmedium
+     * 
+     * @return string $einwilligungdatenanAAmedium
+     */
+    public function getEinwilligungdatenanAAmedium()
+    {
+        return $this->einwilligungdatenanAAmedium;
+    }
+
+    /**
+     * Sets the einwilligungdatenanAAmedium
+     * 
+     * @param string $einwilligungdatenanAAmedium
+     * @return void
+     */
+    public function setEinwilligungdatenanAAmedium($einwilligungdatenanAAmedium)
+    {
+        $this->einwilligungdatenanAAmedium = $einwilligungdatenanAAmedium;
+    }
+
+    /**
+     * Returns the nameBeraterAA
+     * 
+     * @return string $nameBeraterAA
+     */
+    public function getNameBeraterAA()
+    {
+        return $this->nameBeraterAA;
+    }
+
+    /**
+     * Sets the nameBeraterAA
+     * 
+     * @param string $nameBeraterAA
+     * @return void
+     */
+    public function setNameBeraterAA($nameBeraterAA)
+    {
+        $this->nameBeraterAA = $nameBeraterAA;
+    }
+
+    /**
+     * Returns the kontaktBeraterAA
+     * 
+     * @return string $kontaktBeraterAA
+     */
+    public function getKontaktBeraterAA()
+    {
+        return $this->kontaktBeraterAA;
+    }
+
+    /**
+     * Sets the kontaktBeraterAA
+     * 
+     * @param string $kontaktBeraterAA
+     * @return void
+     */
+    public function setKontaktBeraterAA($kontaktBeraterAA)
+    {
+        $this->kontaktBeraterAA = $kontaktBeraterAA;
+    }
+
+    /**
+     * Returns the kundennummerAA
+     * 
+     * @return string $kundennummerAA
+     */
+    public function getKundennummerAA()
+    {
+        return $this->kundennummerAA;
+    }
+
+    /**
+     * Sets the kundennummerAA
+     * 
+     * @param string $kundennummerAA
+     * @return void
+     */
+    public function setKundennummerAA($kundennummerAA)
+    {
+        $this->kundennummerAA = $kundennummerAA;
+    }
+
+    /**
+     * Returns the aufenthaltsstatus
+     * 
+     * @return int $aufenthaltsstatus
+     */
+    public function getAufenthaltsstatus()
+    {
+        return $this->aufenthaltsstatus;
+    }
+
+    /**
+     * Sets the aufenthaltsstatus
+     * 
+     * @param int $aufenthaltsstatus
+     * @return void
+     */
+    public function setAufenthaltsstatus($aufenthaltsstatus)
+    {
+        $this->aufenthaltsstatus = $aufenthaltsstatus;
+    }
+    
+    /**
+     * Returns the aufenthaltsstatusfreitext
+     *
+     * @return string $aufenthaltsstatusfreitext
+     */
+    public function getAufenthaltsstatusfreitext()
+    {
+    	return $this->aufenthaltsstatusfreitext;
+    }
+    
+    /**
+     * Sets the aufenthaltsstatusfreitext
+     *
+     * @param string $aufenthaltsstatusfreitext
+     * @return void
+     */
+    public function setAufenthaltsstatusfreitext($aufenthaltsstatusfreitext)
+    {
+    	$this->aufenthaltsstatusfreitext = $aufenthaltsstatusfreitext;
+    }
+
+    /**
+     * Returns the fruehererAntrag
+     * 
+     * @return int $fruehererAntrag
+     */
+    public function getFruehererAntrag()
+    {
+        return $this->fruehererAntrag;
+    }
+
+    /**
+     * Sets the fruehererAntrag
+     * 
+     * @param int $fruehererAntrag
+     * @return void
+     */
+    public function setFruehererAntrag($fruehererAntrag)
+    {
+        $this->fruehererAntrag = $fruehererAntrag;
+    }
+
+    /**
+     * Returns the fruehererAntragReferenzberuf
+     * 
+     * @return string $fruehererAntragReferenzberuf
+     */
+    public function getFruehererAntragReferenzberuf()
+    {
+        return $this->fruehererAntragReferenzberuf;
+    }
+
+    /**
+     * Sets the fruehererAntragReferenzberuf
+     * 
+     * @param string $fruehererAntragReferenzberuf
+     * @return void
+     */
+    public function setFruehererAntragReferenzberuf($fruehererAntragReferenzberuf)
+    {
+        $this->fruehererAntragReferenzberuf = $fruehererAntragReferenzberuf;
+    }
+
+    /**
+     * Returns the fruehererAntragInstitution
+     * 
+     * @return string $fruehererAntragInstitution
+     */
+    public function getFruehererAntragInstitution()
+    {
+        return $this->fruehererAntragInstitution;
+    }
+
+    /**
+     * Sets the fruehererAntragInstitution
+     * 
+     * @param string $fruehererAntragInstitution
+     * @return void
+     */
+    public function setFruehererAntragInstitution($fruehererAntragInstitution)
+    {
+        $this->fruehererAntragInstitution = $fruehererAntragInstitution;
     }
 
     /**
      * Returns the bescheidfruehererAnerkennungsantrag
-     *
-     * @return bool $bescheidfruehererAnerkennungsantrag
+     * 
+     * @return int $bescheidfruehererAnerkennungsantrag
      */
     public function getBescheidfruehererAnerkennungsantrag()
     {
@@ -1772,8 +1729,8 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the bescheidfruehererAnerkennungsantrag
-     *
-     * @param bool $bescheidfruehererAnerkennungsantrag
+     * 
+     * @param int $bescheidfruehererAnerkennungsantrag
      * @return void
      */
     public function setBescheidfruehererAnerkennungsantrag($bescheidfruehererAnerkennungsantrag)
@@ -1782,13 +1739,73 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Returns the boolean state of bescheidfruehererAnerkennungsantrag
-     *
-     * @return bool
+     * Returns the nameBeratungsstelle
+     * 
+     * @return string $nameBeratungsstelle
      */
-    public function isBescheidfruehererAnerkennungsantrag()
+    public function getNameBeratungsstelle()
     {
-        return $this->bescheidfruehererAnerkennungsantrag;
+        return $this->nameBeratungsstelle;
+    }
+
+    /**
+     * Sets the nameBeratungsstelle
+     * 
+     * @param string $nameBeratungsstelle
+     * @return void
+     */
+    public function setNameBeratungsstelle($nameBeratungsstelle)
+    {
+        $this->nameBeratungsstelle = $nameBeratungsstelle;
+    }
+
+    /**
+     * Returns the notizen
+     *
+     * @return string $notizen
+     */
+    public function getNotizen()
+    {
+        return $this->notizen;
+    }
+    
+    /**
+     * Sets the notizen
+     *
+     * @param string $notizen
+     * @return void
+     */
+    public function setNotizen($notizen)
+    {
+        $this->notizen = $notizen;
+    }
+    
+    /**
+     * Returns the einwilligung
+     * 
+     * @return int $einwilligung
+     */
+    public function getEinwilligung()
+    {
+        return $this->einwilligung;
+    }
+
+    /**
+     * Sets the einwilligung
+     * 
+     * @param int $einwilligung
+     * @return void
+     */
+    public function setEinwilligung($einwilligung)
+    {
+        $this->einwilligung = $einwilligung;
+    }    
+
+    /**
+     * @return boolean $einwilligung
+     */
+    public function isEinwilligung() {
+    	return $this->getEinwilligung();
     }
     
     /**
@@ -1864,6 +1881,50 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
             $this->verificationCode = $this->getRandomString();
         }
     }
+    
+    /**
+     * Returns the dublette
+     *
+     * @return boolean $dublette
+     */
+    public function getDublette()
+    {
+        return $this->dublette;
+    }
+    
+    /**
+     * Sets the dublette
+     *
+     * @param boolean $dublette
+     * @return void
+     */
+    public function setDublette($dublette) 
+    {
+        $this->dublette = $dublette;
+    }
+     
+	
+	/**
+	 * @return boolean $hidden
+	 */
+	public function getHidden() {
+	    return $this->hidden;
+	}
+	
+	/**
+	 * @return boolean $hidden
+	 */
+	public function isHidden() {
+	    return $this->getHidden();
+	}
+	
+	/**
+	 * @param boolean $hidden
+	 * @return void
+	 */
+	public function setHidden($hidden) {
+	    $this->hidden = $hidden;
+	}
     
     /**
      * Returns random string

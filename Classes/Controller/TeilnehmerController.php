@@ -3,6 +3,8 @@ namespace Ud\Iqtp13db\Controller;
 use \Datetime;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /***
  *
@@ -20,9 +22,7 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
  */
 class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
-    // Variablen
-    public $teilnehmer = NULL;
-
+    
     /**
      * teilnehmerRepository
      *
@@ -45,17 +45,25 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      * @var \Ud\Iqtp13db\Domain\Repository\BeraterRepository
      * @TYPO3\CMS\Extbase\Annotation\Inject
      */
-    protected $beraterRepository = NULL;
+    protected $beraterRepository = NULL;   
 
     /**
-     * schulungRepository
+     * folgekontaktRepository
      *
-     * @var \Ud\Iqtp13db\Domain\Repository\SchulungRepository
+     * @var \Ud\Iqtp13db\Domain\Repository\FolgekontaktRepository
      * @TYPO3\CMS\Extbase\Annotation\Inject
      */
-    protected $schulungRepository = NULL;
+    protected $folgekontaktRepository = NULL;
     
-
+    /**
+     * dokumentRepository
+     *
+     * @var \Ud\Iqtp13db\Domain\Repository\DokumentRepository
+     * @TYPO3\CMS\Extbase\Annotation\Inject
+     */
+    protected $dokumentRepository = NULL;
+    
+    
     /**
      * action start
      *
@@ -68,79 +76,239 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         
         $datum = strtotime("now");
         
-        
-        if ($this->settings['modtyp'] == 'beratene') {
-            $this->forward('list', 'Teilnehmer', 'Iqtp13db');
+        if ($this->settings['modtyp'] == 'uebersicht') {
+            $this->forward('status', 'Teilnehmer', 'Iqtp13db');
         }
-        if ($this->settings['modtyp'] == 'schulungen') {
-            $this->forward('list', 'Schulung', 'Iqtp13db');
+        if ($this->settings['modtyp'] == 'angemeldet') {
+            $this->forward('listangemeldet', 'Teilnehmer', 'Iqtp13db');
+        }
+        if ($this->settings['modtyp'] == 'erstberatung') {
+            $this->forward('listerstberatung', 'Beratung', 'Iqtp13db');
+        }
+        if ($this->settings['modtyp'] == 'niqerfassung') {
+            $this->forward('listniqerfassung', 'Beratung', 'Iqtp13db');
+        }
+        if ($this->settings['modtyp'] == 'archiv') {
+        	$this->forward('listarchiv', 'Beratung', 'Iqtp13db');
+        }        
+        if ($this->settings['modtyp'] == 'export') {
+            $this->forward('export', 'Teilnehmer', 'Iqtp13db');
         }
         if ($this->settings['modtyp'] == 'berater') {
             $this->forward('list', 'Berater', 'Iqtp13db');
         }
-        if ($this->settings['modtyp'] == 'uebersicht') {
-            $this->forward('status', 'Teilnehmer', 'Iqtp13db');
-        }
-        if ($this->settings['modtyp'] == 'export') {
-            $this->forward('export', 'Teilnehmer', 'Iqtp13db');
+        if ($this->settings['modtyp'] == 'deleted') {
+        	$this->forward('listdeleted', 'Teilnehmer', 'Iqtp13db');
         }
         if ($this->settings['modtyp'] == 'anmeldung') {
             if($datum >= $wartungvon->getTimestamp() AND $datum <= $wartungbis->getTimestamp())
             {
                 $this->forward('wartung', 'Teilnehmer', 'Iqtp13db');
-                
             }
             else
             {
-                $this->forward('anmeldseite1', 'Teilnehmer', 'Iqtp13db');
-                
-            }
-            
-        }
-        if ($this->settings['modtyp'] == 'bearbeiten') {
-            $this->forward('editextern', 'Teilnehmer', 'Iqtp13db');
-        }
-        if ($this->settings['modtyp'] == 'loeschen') {
-            $this->forward('deleteextern', 'Teilnehmer', 'Iqtp13db');
-        }
+                $this->forward('anmeldseite1', 'Teilnehmer', 'Iqtp13db');            
+            }  
+        }        
     }
 
+    /*************************************************************************/
+    /******************************* Backend *******************************/
+    /*************************************************************************/
+        
     /**
-     * action list
+     * action status
      *
      * @return void
      */
-    public function listAction()
+    public function statusAction()
     {
-        $valArray = $this->request->getArguments();
-        //\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($valArray);
-        
-        if ($valArray['filteraus']) {
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', NULL);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', NULL);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', NULL);
-        }
-        if ($valArray['filteran']) {
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', $valArray['name']);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', $valArray['ort']);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', $valArray['land']);
-        }
-        $fname = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fname');
-        $fort = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fort');
-        $fland = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fland');
-        if ($fname == '' && $fort == '' && $fland == '') {
-            $teilnehmers = $this->teilnehmerRepository->findAllOrder4List();
-        } else {
-            $teilnehmers = $this->teilnehmerRepository->searchTeilnehmer($fname, $fort, $fland);
-            $this->view->assign('filtername', $fname);
-            $this->view->assign('filterort', $fort);
-            $this->view->assign('filterland', $fland);
-            $this->view->assign('filteron', 1);
-        }
-        $this->view->assign('teilnehmers', $teilnehmers);
-        $this->view->assign('anztn', count($teilnehmers));
-    }
+    	// DebuggerUtility::var_dump(date("t", mktime(0, 0, 0, $m, 1, $diesesjahr)));
+    	$valArray = $this->request->getArguments();
+    	
+    	$heute = date('Y-m-d');
+    	
+    	$diesesjahr = date('Y');
+    	$diesermonat = idate('m');
+    	$letztesjahr = idate('Y') - 1;
+    	
+    	for($i=1;$i<13;$i++) {
+    		$monatsnamen[$i] = date("M", mktime(0, 0, 0, $i, 1, $diesesjahr));
+    	}
+    	
+    	for($m = $diesermonat + 1; $m < 13; $m++) {
+    		$angemeldeteTN[$m] = $this->teilnehmerRepository->count4Status("01.".$m.".".$letztesjahr, date("t", mktime(0, 0, 0, $m, 1, $letztesjahr)).".".$m.".".$letztesjahr);
+    		$qfolgekontakte[$m] = $this->folgekontaktRepository->count4Status("01.".$m.".".$letztesjahr, date("t", mktime(0, 0, 0, $m, 1, $letztesjahr)).".".$m.".".$letztesjahr);
+    		$erstberatung[$m] = $this->beratungRepository->count4StatusErstberatung("01.".$m.".".$letztesjahr, date("t", mktime(0, 0, 0, $m, 1, $letztesjahr)).".".$m.".".$letztesjahr);
+    		$beratungfertig[$m] = $this->beratungRepository->count4StatusBeratungfertig("01.".$m.".".$letztesjahr, date("t", mktime(0, 0, 0, $m, 1, $letztesjahr)).".".$m.".".$letztesjahr);
+    		$niqerfasst[$m] =  $this->teilnehmerRepository->count4Statusniqerfasst("01.".$m.".".$letztesjahr, date("t", mktime(0, 0, 0, $m, 1, $letztesjahr)).".".$m.".".$letztesjahr);
+    		
+    		$days4beratung[$m] =  $this->beratungRepository->days4Beratungfertig("01.".$m.".".$letztesjahr, date("t", mktime(0, 0, 0, $m, 1, $letztesjahr)).".".$m.".".$letztesjahr);
+    		$days4wartezeit[$m] =  $this->beratungRepository->days4Wartezeit("01.".$m.".".$letztesjahr, date("t", mktime(0, 0, 0, $m, 1, $letztesjahr)).".".$m.".".$letztesjahr);
+    	}
+    	for($m = 1; $m <= $diesermonat; $m++) {
+    		$angemeldeteTN[$m] = $this->teilnehmerRepository->count4Status("01.".$m.".".$diesesjahr, date("t", mktime(0, 0, 0, $m, 1, $diesesjahr)).".".$m.".".$diesesjahr);
+    		$qfolgekontakte[$m] = $this->folgekontaktRepository->count4Status("01.".$m.".".$diesesjahr, date("t", mktime(0, 0, 0, $m, 1, $diesesjahr)).".".$m.".".$diesesjahr);
+    		$erstberatung[$m] = $this->beratungRepository->count4StatusErstberatung("01.".$m.".".$diesesjahr, date("t", mktime(0, 0, 0, $m, 1, $diesesjahr)).".".$m.".".$diesesjahr);
+    		$beratungfertig[$m] = $this->beratungRepository->count4StatusBeratungfertig("01.".$m.".".$diesesjahr, date("t", mktime(0, 0, 0, $m, 1, $diesesjahr)).".".$m.".".$diesesjahr);
+    		$niqerfasst[$m] = $this->teilnehmerRepository->count4Statusniqerfasst("01.".$m.".".$diesesjahr, date("t", mktime(0, 0, 0, $m, 1, $diesesjahr)).".".$m.".".$diesesjahr);
+    		
+    		$days4beratung[$m] =  $this->beratungRepository->days4Beratungfertig("01.".$m.".".$diesesjahr, date("t", mktime(0, 0, 0, $m, 1, $diesesjahr)).".".$m.".".$diesesjahr);
+    		$days4wartezeit[$m] = $this->beratungRepository->days4Wartezeit("01.".$m.".".$diesesjahr, date("t", mktime(0, 0, 0, $m, 1, $diesesjahr)).".".$m.".".$diesesjahr);    		
+    	}
+    	
+    	// durchschnittl. Tage Beratung abgeschl. und durchschnittl. Tage Wartezeit	
+    	for($n = 1; $n <= 12; $n++) {
+    		$diffdaysb = 0;
+    		for($k = 0; $k < count($days4beratung[$n]); $k++) {
+    			$dat1 = new Datetime($days4beratung[$n][$k]->getDatum());
+    			$dat2 = new Datetime($days4beratung[$n][$k]->getErstberatungabgeschlossen());
+    			$diffdaysb += date_diff($dat1, $dat2)->format('%a');    			 
+    		}
+    		$totalavgmonthb[$n] = floatval($diffdaysb)/floatval(count($days4beratung[$n]));
+    		$totalavgmonthb[$n] = is_nan($totalavgmonthb[$n]) ? '-' : $totalavgmonthb[$n];
+    		
+    		$diffdaysw = 0;
+    		for($k = 0; $k < count($days4wartezeit[$n]); $k++) {
+    			$dat1 = new DateTime();
+    			$dat1->setTimestamp($days4wartezeit[$n][$k]->getTeilnehmer()->getVerificationDate());
+    			$dat2 = new Datetime($days4wartezeit[$n][$k]->getDatum());
+    			$diffdaysw += date_diff($dat1, $dat2)->format('%a');
+    		}
+    		$totalavgmonthw[$n] = floatval($diffdaysw)/floatval(count($days4wartezeit[$n]));
+    		$totalavgmonthw[$n] = is_nan($totalavgmonthw[$n]) ? '-' : $totalavgmonthw[$n];
+    		
+    	}
 
+    	$aktuelleanmeldungen = count($this->teilnehmerRepository->findAllOrder4List());
+    	$aktuellerstberatungen = count($this->beratungRepository->findAllOrder4List(2));
+    	$aktuellberatungenfertig = count($beratungen = $this->beratungRepository->findAllOrder4List(3));
+    	$archivierttotal = count($this->beratungRepository->findAllOrder4List(4));
+    	
+    	$this->view->assign('monatsnamen', $monatsnamen);
+    	$this->view->assign('aktmonat', $diesermonat-1);
+    	
+		$this->view->assign('angemeldeteTN', $angemeldeteTN);
+		$this->view->assign('SUMangemeldeteTN', array_sum($angemeldeteTN));
+		
+		$this->view->assign('qfolgekontakte', $qfolgekontakte);
+		$this->view->assign('SUMqfolgekontakte',  array_sum($qfolgekontakte));
+    	
+		$this->view->assign('erstberatung', $erstberatung);
+		$this->view->assign('SUMerstberatung',  array_sum($erstberatung));
+		 
+		$this->view->assign('beratungfertig', $beratungfertig);
+		$this->view->assign('SUMberatungfertig',  array_sum($beratungfertig));
+		
+		$this->view->assign('niqerfasst', $niqerfasst);
+		$this->view->assign('SUMniqerfasst',  array_sum($niqerfasst));
+		
+		$this->view->assign('totalavgmonthb', $totalavgmonthb);
+		$this->view->assign('SUMtotalavgmonthb',  array_sum($totalavgmonthb));
+		
+		$this->view->assign('totalavgmonthw', $totalavgmonthw);
+		$this->view->assign('SUMtotalavgmonthw',  array_sum($totalavgmonthw));		
+		 
+		$this->view->assign('aktuelleanmeldungen', $aktuelleanmeldungen);
+		$this->view->assign('aktuellerstberatungen', $aktuellerstberatungen);
+		$this->view->assign('aktuellberatungenfertig', $aktuellberatungenfertig);
+		$this->view->assign('archivierttotal', $archivierttotal);
+		
+		$rows[0] = $monatsnamen;
+		array_unshift($rows[0], " ");
+		$rows[1] = $angemeldeteTN;
+		array_unshift($rows[1], "Anmeldungen");
+		$rows[2] = $erstberatung;
+		array_unshift($rows[2], "Erstberatungen");
+		$rows[3] = $qfolgekontakte;
+		array_unshift($rows[3], "Folgekontakte");
+		$rows[4] = $beratungfertig;
+		array_unshift($rows[4], "Beratungen fertig");
+		$rows[5] = $niqerfasst;
+		array_unshift($rows[5], "davon NIQ erfasst");
+		$rows[6] = $totalavgmonthw;
+		array_unshift($rows[6], "durchschn. Tage Wartezeit");
+		$rows[7] = $totalavgmonthb;
+		array_unshift($rows[7], "durchschn. Tage Beratungsdauer");
+		
+		// ******************** EXPORT ****************************
+		if ($valArray['statsexport'] == 'Statistik exportieren') {
+			 
+			$filename = 'stats_' . date('Y-m-d_H-i', time()) . '.csv';
+			header('Content-Type: text/csv');
+			header('Content-Disposition: attachment;filename=' . $filename);
+			$fp = fopen('php://output', 'w');
+			
+			for($i=0; $i < count($rows); $i++) {
+				fputcsv($fp, $rows[$i]);
+			}
+			fclose($fp);
+			exit;
+		}
+    }  
+    
+    /**
+     * action listangemeldet
+     *
+     * @return void
+     */
+    public function listangemeldetAction()
+    {
+    	$valArray = $this->request->getArguments();
+
+    	if ($valArray['filteraus']) {
+    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', NULL);
+    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', NULL);
+    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', NULL);
+    	}
+    	if ($valArray['filteran']) {
+    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', $valArray['name']);
+    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', $valArray['ort']);
+    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', $valArray['land']);
+    	}
+    	$fname = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fname');
+    	$fort = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fort');
+    	$fland = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fland');
+    	if ($fname == '' && $fort == '' && $fland == '') {
+    		$teilnehmers = $this->teilnehmerRepository->findAllOrder4List(); 
+    	} else {
+    		$teilnehmers = $this->teilnehmerRepository->searchTeilnehmer($fname, $fort, $fland);
+    		$this->view->assign('filtername', $fname);
+    		$this->view->assign('filterort', $fort);
+    		$this->view->assign('filterland', $fland);
+    		$this->view->assign('filteron', 1);
+    	}
+    	
+    	for($j=0; $j < count($teilnehmers); $j++) {
+    	    $anz = $this->teilnehmerRepository->findDublette($teilnehmers[$j]->getNachname(), $teilnehmers[$j]->getVorname());
+    	    if($anz > 1) $teilnehmers[$j]->setDublette(TRUE);
+    	}
+    	
+    	$this->view->assign('teilnehmers', $teilnehmers);
+    	$this->view->assign('calleraction', 'listangemeldet');
+    	$this->view->assign('callercontroller', 'Teilnehmer');
+    }
+    
+    /**
+     * action listdeleted
+     *
+     * @return void
+     */
+    public function listdeletedAction()
+    {
+    	$valArray = $this->request->getArguments();
+    
+    	$teilnehmers = $this->teilnehmerRepository->findhidden4list();
+    	 
+    	for($j=0; $j < count($teilnehmers); $j++) {
+    		$anz = $this->teilnehmerRepository->findDublette($teilnehmers[$j]->getNachname(), $teilnehmers[$j]->getVorname());
+    		if($anz > 1) $teilnehmers[$j]->setDublette(TRUE);
+    	}    	 
+    	$this->view->assign('teilnehmers', $teilnehmers);
+    	$this->view->assign('calleraction', 'listdeleted');
+    	$this->view->assign('callercontroller', 'Teilnehmer');
+    }
+      
     /**
      * action show
      *
@@ -149,12 +317,15 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function showAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
-        $beratungen = $this->beratungRepository->findByTeilnehmer($teilnehmer->getUid());
-        $this->view->assign('teilnehmer', $teilnehmer);
-        $this->view->assign('beratungen', $beratungen);
-        $this->view->assign('anzBeratungen', count($beratungen));
+    	$beratungen = $this->beratungRepository->findByTeilnehmer($teilnehmer->getUid());
+    	$this->view->assign('teilnehmer', $teilnehmer);
+    	$this->view->assign('beratungen', $beratungen);
+    	
+    	$valArray = $this->request->getArguments();
+    	$this->view->assign('calleraction', $valArray['calleraction']);
+    	$this->view->assign('callercontroller', $valArray['callercontroller']);    	
     }
-
+    
     /**
      * action new
      *
@@ -162,9 +333,12 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function newAction()
     {
-           	
+        $valArray = $this->request->getArguments();
+        $this->view->assign('calleraction', $valArray['calleraction']);
+        $this->view->assign('callercontroller', $valArray['callercontroller']);
+        
     }
-
+    
     /**
      * action create
      *
@@ -173,15 +347,17 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function createAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
-        $this->addFlashMessage('Teilnehmer wurde erstellt.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
-        $this->teilnehmerRepository->add($teilnehmer);
-        
-        // Daten sofort in die Datenbank schreiben
-        $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
-        $persistenceManager->persistAll();
-        $this->redirect('show', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
+    	$this->addFlashMessage('Teilnehmer wurde erstellt.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+    	$this->teilnehmerRepository->add($teilnehmer);
+    
+    	// Daten sofort in die Datenbank schreiben
+    	$persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+    	$persistenceManager->persistAll();
+    	
+    	$valArray = $this->request->getArguments();    	
+    	$this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('teilnehmer' => $teilnehmer));
     }
-
+    
     /**
      * action edit
      *
@@ -190,10 +366,14 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      * @return void
      */
     public function editAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
-    {
-        $this->view->assign('teilnehmer', $teilnehmer);
+    {        
+    	$this->view->assign('teilnehmer', $teilnehmer);
+    	
+    	$valArray = $this->request->getArguments();
+    	$this->view->assign('calleraction', $valArray['calleraction']);
+    	$this->view->assign('callercontroller', $valArray['callercontroller']);    	
     }
-
+    
     /**
      * action update
      *
@@ -202,10 +382,18 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function updateAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
-        $this->teilnehmerRepository->update($teilnehmer);
-        $this->redirect('list');
+    	$bstatus = $this->checkberatungsstatus($teilnehmer);
+    	$teilnehmer->setBeratungsstatus($bstatus);
+    	$this->teilnehmerRepository->update($teilnehmer);
+    	
+    	// Daten sofort in die Datenbank schreiben
+    	$persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+    	$persistenceManager->persistAll();
+    	
+    	$valArray = $this->request->getArguments();
+    	$this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, null);
     }
-
+    
     /**
      * action delete
      *
@@ -214,337 +402,121 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function deleteAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
-        $this->teilnehmerRepository->remove($teilnehmer);
-        $tnberatungen = $this->beratungRepository->findByTeilnehmer($teilnehmer->getUid());
-        foreach ($tnberatungen as $tnb) {
-            $this->beratungRepository->remove($tnb);
-        }
-        // Daten sofort in die Datenbank schreiben
-        $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
-        $persistenceManager->persistAll();
-        $this->redirect('list');
-    }
+    	$teilnehmer->setHidden(1);
 
-    /**
-     * action status
-     *
-     * @return void
-     */
-    public function statusAction()
-    {
-        $anzberatene = $this->teilnehmerRepository->count4status();
-        $anzberatungen = $this->beratungRepository->countAll();
-        $anzberater = $this->beraterRepository->countAll();
-        $anzschulungen = $this->schulungRepository->countAll();
-        $this->view->assign('anzberatene', $anzberatene);
-        $this->view->assign('anzberatungen', $anzberatungen);
-        $this->view->assign('anzberater', $anzberater);
-        $this->view->assign('anzschulungen', $anzschulungen);
-    }
-
-    /**************** WARTUNG ****************/
-    /**
-     * action wartung
-     *
-     * @return void
-     */
-    public function wartungAction()
-    {
-        $this->view->assign('settings', $this->settings);
+    	$this->teilnehmerRepository->update($teilnehmer);
+    	
+    	// Daten sofort in die Datenbank schreiben
+    	$persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+    	$persistenceManager->persistAll();
+    	
+    	$this->redirect('listangemeldet');
     }
     
+    /**
+     * action undelete
+     *  
+     *  @param int $tnuid
+     * @return void
+     */
+    public function undeleteAction($tnuid)
+    {
+    	$teilnehmer = $this->teilnehmerRepository->findHiddenByUid($tnuid);
+    	    	
+		$teilnehmer->setHidden(0);
+		
+		$this->teilnehmerRepository->update($teilnehmer);
+
+    	// Daten sofort in die Datenbank schreiben
+    	$persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+    	$persistenceManager->persistAll();
+    	 
+    	$this->redirect('listdeleted');
+    }
     
-    /**************** ANMELDUNG ****************/
     /**
-     * action anmeldseite1
-     *
-     * @param \Ud\Iqtp13db\Domain\Model\TNSeite1 $tnseite1
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("tnseite1")
-     * @return void
-     */
-    public function anmeldseite1Action(\Ud\Iqtp13db\Domain\Model\TNSeite1 $tnseite1 = NULL)
-    {
-        
-        if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnseite1') && $tnseite1 == NULL) {
-            $tnseite1 = unserialize($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnseite1'));
-        }
-        
-        $this->view->assign('tnseite1', $tnseite1);
-        $this->view->assign('settings', $this->settings);
-    }
-    
-
-    /**
-     * action anmeldseite1redirect
-     *
-     * @param \Ud\Iqtp13db\Domain\Model\TNSeite1 $tnseite1
-     * @return void
-     */
-    public function anmeldseite1redirectAction(\Ud\Iqtp13db\Domain\Model\TNSeite1 $tnseite1)
-    {
-        
-        $valArray = $this->request->getArguments();
-        
-        //\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($valArray);
-        //die;
-       
-        $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite1', serialize($tnseite1));
-        $this->redirect('anmeldseite2');
-    }
-
-    /**
-     * action anmeldseite2
-     *
-     * @param \Ud\Iqtp13db\Domain\Model\TNSeite2 $tnseite2
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("tnseite1")
-     * @return void
-     */
-    public function anmeldseite2Action(\Ud\Iqtp13db\Domain\Model\TNSeite2 $tnseite2 = NULL)
-    {
-        if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnseite2') && $tnseite2 == NULL) {
-            $tnseite2 = unserialize($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnseite2'));
-        }
-        $this->view->assign('tnseite2', $tnseite2);
-        $this->view->assign('settings', $this->settings);
-    }
-
-    /**
-     * action anmeldseite2redirect
-     *
-     * @param \Ud\Iqtp13db\Domain\Model\TNSeite2 $tnseite2
-     * @return void
-     */
-    public function anmeldseite2redirectAction(\Ud\Iqtp13db\Domain\Model\TNSeite2 $tnseite2)
-    {
-        $valArray = $this->request->getArguments();
-        
-        
-        $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite2', serialize($tnseite2));
-        if (isset($valArray['btnzurueck'])) {
-            $this->redirect('anmeldseite1');
-        } elseif(isset($valArray['btncancel'])) {
-            $this->cleanUpSessionData();
-            $this->redirectToURI('https://www.iq-netzwerk-nrw.de/startseite-webapp-anerkennungserstberatung/');
-        } else {
-            $this->redirect('anmeldseite3');
-        }
-    }
-
-    /**
-     * action anmeldseite3
-     *
-     * @param \Ud\Iqtp13db\Domain\Model\TNSeite3 $tnseite3
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("tnseite3")
-     * @return void
-     */
-    public function anmeldseite3Action(\Ud\Iqtp13db\Domain\Model\TNSeite3 $tnseite3 = NULL)
-    {
-        if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnseite3') && $tnseite3 == NULL) {
-            $tnseite3 = unserialize($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnseite3'));
-        }
-        $this->view->assign('settings', $this->settings);
-        $this->view->assign('tnseite3', $tnseite3);
-    }
-
-    /**
-     * action anmeldseite3redirect
-     *
-     * @param \Ud\Iqtp13db\Domain\Model\TNSeite3 $tnseite3
-     * @return void
-     */
-    public function anmeldseite3redirectAction(\Ud\Iqtp13db\Domain\Model\TNSeite3 $tnseite3)
-    {
-        $valArray = $this->request->getArguments();
-        $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite3', serialize($tnseite3));
-        if (isset($valArray['btnzurueck'])) {
-            $this->redirect('anmeldseite2');
-        } elseif(isset($valArray['btncancel'])) {
-            $this->cleanUpSessionData();
-            $this->redirectToURI('https://www.iq-netzwerk-nrw.de/startseite-webapp-anerkennungserstberatung/');
-        } else {
-            $this->redirect('anmeldseite4', 'Beratung', null, array('beratungseite4' => NULL));
-        }
-    }
-
-    /**
-     * action editextern
-     *
-     * @return void
-     */
-    public function editexternAction()
-    {
-        if (isset($_GET['uid']) && isset($_GET['ts'])) {
-            if ($this->teilnehmerRepository->countByUid($_GET['uid']) != 0) {
-                $teilnehmer = $this->teilnehmerRepository->findByUid($_GET['uid']);
-                if ($teilnehmer->getCrdate() == $_GET['ts']) {
-                    $this->setTeilnehmerToSession($teilnehmer);
-                    $this->redirect('anmeldseite1');
-                }
-            }
-        }
-    }
-
-    /**
-     * action deleteextern
-     *
-     * @return void
-     */
-    public function deleteexternAction()
-    {
-        $valArray = $this->request->getArguments();
-        if (isset($valArray['cancelbutton'])) {
-            $this->redirectToUri($this->settings['startseitelink']);
-        }
-        if (isset($valArray['deletebutton'])) {
-            $teilnehmer = $this->teilnehmerRepository->findByUid($valArray['uid']);
-            $this->teilnehmerRepository->remove($teilnehmer);
-            $beratungarr = $this->beratungRepository->findByTeilnehmer($valArray['uid']);
-            foreach ($beratungarr as $beratung) {
-                $this->beratungRepository->remove($beratung);
-            }
-            // Daten sofort in die Datenbank schreiben
-            $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
-            $persistenceManager->persistAll();
-            $this->redirectToUri($this->settings['bestaetigunggeloeschtlink']);
-        }
-        if (isset($_GET['uid']) && isset($_GET['ts'])) {
-            if ($this->teilnehmerRepository->countByUid($_GET['uid']) != 0) {
-                $teilnehmer = $this->teilnehmerRepository->findByUid($_GET['uid']);
-                if ($teilnehmer->getCrdate() == $_GET['ts']) {
-                    $this->view->assign('uid', $_GET['uid']);
-                }
-            } else {
-                // Teilnehmer nicht gefunden
-                $this->redirectToUri($this->settings['startseitelink']);
-            }
-        }
-    }
-
-    public function errorAction()
-    {
-        $this->clearCacheOnError();
-        $referringRequest = $this->request->getReferringRequest();
-        if ($referringRequest !== NULL) {
-            $originalRequest = clone $this->request;
-
-            $this->request->setOriginalRequest($originalRequest);
-            $this->request->setOriginalRequestMappingResults($this->arguments->validate());
-            $this->forward($referringRequest->getControllerActionName(), $referringRequest->getControllerName(), $referringRequest->getControllerExtensionName(), $referringRequest->getArguments());
-        }
-    }
-
-    /**
-     * Stores Values to session vars from Teilnehmer object
+     * action askconsent
      *
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
-     * @return null
+     * @return void
      */
-    protected function setTeilnehmerToSession(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    public function askconsentAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
-        if ($this->beratungRepository->countByTeilnehmer($teilnehmer->getUid()) > 0) {
-            $beratung = $this->beratungRepository->findOneByTeilnehmer($teilnehmer->getUid());
-            $beratungseite4 = $this->objectManager->get('Ud\\Iqtp13db\\Domain\\Model\\BeratungSeite4');
-            $beratungseite4->setDatum($beratung->getDatum());
-            $beratungseite4->setWegBeratungsstelle($beratung->getWegBeratungsstelle());
-            $berater = $this->beraterRepository->findByUid($beratung->getBerater());
-            if ($berater != NULL) {
-                $beratungseite4->setBerater($berater);
+        $bcc = $this->settings['bccmail'];
+        $sender = $this->settings['sender'];
+        if($bcc == '' || $sender == '') {
+            $this->addFlashMessage('Fehler 101 in askconsent.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->redirect('listangemeldet', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+        } else {
+            $recipient = $teilnehmer->getEmail();
+            if($recipient == '') {
+                $this->addFlashMessage('Keine E-Mail-Adresse eingetragen.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                $this->redirect('listangemeldet', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
             }
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'beratungseite4', serialize($beratungseite4));
+            $templateName = 'Mailtoconfirm';
+            $confirmmailtext1 = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmmailtext1', 'Iqtp13db');
+            $confirmlinktext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmlinktext', 'Iqtp13db');
+            $confirmmailtext2 = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmmailtext2', 'Iqtp13db');
+            $subject = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmsubject', 'Iqtp13db');
+            
+            $variables = array(
+                'teilnehmer' => $teilnehmer,
+                'confirmmailtext1' => $confirmmailtext1,
+                'confirmlinktext' => $confirmlinktext,
+                'confirmmailtext2' => $confirmmailtext2,
+                'startseitelink' => $this->settings['startseitelink'],
+                'logolink' => $this->settings['logolink'],
+                'registrationpageuid' => $this->settings['registrationpageuid']
+            );
+            $this->sendTemplateEmail(array($recipient), array($bcc), array($sender), $subject, $templateName, $variables, false);
+            
+            $this->addFlashMessage('Einwilligungsanforderung versendet.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+            $this->redirect('listangemeldet', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
         }
-        $tnseite1 = $this->objectManager->get('Ud\\Iqtp13db\\Domain\\Model\\TNSeite1');
-        $tnseite2 = $this->objectManager->get('Ud\\Iqtp13db\\Domain\\Model\\TNSeite2');
-        $tnseite3 = $this->objectManager->get('Ud\\Iqtp13db\\Domain\\Model\\TNSeite3');
-        $tnseite1->setEinwilligung($teilnehmer->getEinwilligung());
-        $tnseite1->setNachname($teilnehmer->getNachname());
-        $tnseite1->setVorname($teilnehmer->getVorname());
-        $tnseite1->setStrasse($teilnehmer->getStrasse());
-        $tnseite1->setPlz($teilnehmer->getPlz());
-        $tnseite1->setOrt($teilnehmer->getOrt());
-        $tnseite1->setEmail($teilnehmer->getEmail());
-        $tnseite1->setTelefon($teilnehmer->getTelefon());
-        $tnseite1->setGeburtsjahr($teilnehmer->getGeburtsjahr());
-        $tnseite1->setGeburtsland($teilnehmer->getGeburtsland());
-        $tnseite1->setGeschlecht($teilnehmer->getGeschlecht());
-        $tnseite1->setErsteStaatsangehoerigkeit($teilnehmer->getErsteStaatsangehoerigkeit());
-        $tnseite1->setZweiteStaatsangehoerigkeit($teilnehmer->getZweiteStaatsangehoerigkeit());
-        $tnseite1->setEinreisejahr($teilnehmer->getEinreisejahr());
-        $tnseite1->setWohnsitzDeutschland($teilnehmer->getWohnsitzDeutschland());
-        $tnseite1->setWohnsitzJaBundesland($teilnehmer->getWohnsitzJaBundesland());
-        $tnseite1->setWohnsitzNeinIn($teilnehmer->getWohnsitzNeinIn());
-        $tnseite1->setGeplanteEinreise($teilnehmer->getGeplanteEinreise());
-        $tnseite1->setKontaktVisastelle($teilnehmer->getKontaktVisastelle());
-        $tnseite1->setVisumsantrag($teilnehmer->getVisumsantrag());
-        $tnseite2->setDeutschkenntnisse($teilnehmer->getDeutschkenntnisse());
-        $tnseite2->setZertifikatSprachniveau($teilnehmer->getZertifikatSprachniveau());
-        $tnseite2->setZertifikatdeutsch($teilnehmer->getZertifikatdeutsch());
-        $tnseite2->setSprachen($teilnehmer->getSprachen());
-        $tnseite2->setAbschlussartA($teilnehmer->getAbschlussartA());
-        $tnseite2->setAbschlussartH($teilnehmer->getAbschlussartH());
-        $tnseite2->setErwerbsland1($teilnehmer->getErwerbsland1());
-        $tnseite2->setDauerBerufsausbildung1($teilnehmer->getDauerBerufsausbildung1());
-        $tnseite2->setAbschlussjahr1($teilnehmer->getAbschlussjahr1());
-        $tnseite2->setAusbildungsinstitution1($teilnehmer->getAusbildungsinstitution1());
-        $tnseite2->setAusbildungsort1($teilnehmer->getAusbildungsort1());
-        $tnseite2->setAbschluss1($teilnehmer->getAbschluss1());
-        $tnseite2->setDeutschAbschlusstitel1($teilnehmer->getDeutschAbschlusstitel1());
-        $tnseite2->setBerufserfahrung1($teilnehmer->getBerufserfahrung1());
-        $tnseite2->setDeutscherReferenzberuf1($teilnehmer->getDeutscherReferenzberuf1());
-        $tnseite2->setWunschberuf1($teilnehmer->getWunschberuf1());
-        $tnseite2->setOriginalDokumenteAbschluss1($teilnehmer->getOriginalDokumenteAbschluss1());
-        $tnseite2->setErwerbsland2($teilnehmer->getErwerbsland2());
-        $tnseite2->setDauerBerufsausbildung2($teilnehmer->getDauerBerufsausbildung2());
-        $tnseite2->setAbschlussjahr2($teilnehmer->getAbschlussjahr2());
-        $tnseite2->setAusbildungsinstitution2($teilnehmer->getAusbildungsinstitution2());
-        $tnseite2->setAusbildungsort2($teilnehmer->getAusbildungsort2());
-        $tnseite2->setAbschluss2($teilnehmer->getAbschluss2());
-        $tnseite2->setDeutschAbschlusstitel2($teilnehmer->getDeutschAbschlusstitel2());
-        $tnseite2->setBerufserfahrung2($teilnehmer->getBerufserfahrung2());
-        $tnseite2->setDeutscherReferenzberuf2($teilnehmer->getDeutscherReferenzberuf2());
-        $tnseite2->setWunschberuf2($teilnehmer->getWunschberuf2());
-        $tnseite2->setOriginalDokumenteAbschluss2($teilnehmer->getOriginalDokumenteAbschluss2());
-        $tnseite3->setErwerbsstatus($teilnehmer->getErwerbsstatus());
-        $tnseite3->setLeistungsbezug($teilnehmer->getLeistungsbezug());
-        $tnseite3->setFruehererAntrag($teilnehmer->getFruehererAntrag());
-        $tnseite3->setFruehererAntragReferenzberuf($teilnehmer->getFruehererAntragReferenzberuf());
-        $tnseite3->setFruehererAntragInstitution($teilnehmer->getFruehererAntragInstitution());
-        $tnseite3->setBescheidfruehererAnerkennungsantrag($teilnehmer->getBescheidfruehererAnerkennungsantrag());
-        $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnuid', $teilnehmer->getUid());
-        $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite1', serialize($tnseite1));
-        $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite2', serialize($tnseite2));
-        $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite3', serialize($tnseite3));
-        return;
-    }
-
-    /**
-     * A template method for displaying custom error flash messages, or to
-     * display no flash message at all on errors. Override this to customize
-     * the flash message in your action controller.
-     *
-     * @api
-     * @return string|boolean The flash message or FALSE if no flash message should be set
-     */
-    protected function getErrorFlashMessage()
-    {
-        return FALSE;
-    }
-
-    /**
-     * @param $settingsarr
-     * @param $ergarrwert
-     */
-    function getValu($settingsarr, $ergarrwert)
-    {
-        $ret = '';
-        foreach ($settingsarr as $key => $value) {
-            if ($ergarrwert == $value) {
-                $ret = $key;
-                break;
-            }
-        }
-        return $ret;
     }
     
+    /**
+     * Check Beratungsstatus
+     * 
+     * Beratungsstatus: 0 = angemeldet, 1 = Anmeldung bestätigt, 2 = Erstberatung Start, 3 = Erstberatung abgeschlossen, 4 = NIQ erfasst
+     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
+     * @return int
+     */
+    
+    public function checkberatungsstatus(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer) {
+    	$beratung = $this->beratungRepository->findByTeilnehmer($teilnehmer->getUid());    	
+    	$beratung = $beratung[0];
+    	if($beratung != NULL) {
+    		if($teilnehmer->getVerificationDate() == 0 && $beratung->getDatum() == '' && $beratung->getErstberatungabgeschlossen() == '' && $teilnehmer->getNiqchiffre() == '') {
+    			$beratungsstatus = 0;
+    		} elseif($teilnehmer->getVerificationDate() > 0 && $beratung->getDatum() == '' && $beratung->getErstberatungabgeschlossen() == '' && $teilnehmer->getNiqchiffre() == '') {
+    			$beratungsstatus = 1;
+    		} elseif($teilnehmer->getVerificationDate() > 0 && $beratung->getDatum() != '' && $beratung->getErstberatungabgeschlossen() == '' && $teilnehmer->getNiqchiffre() == '') {
+    			$beratungsstatus = 2;
+    		} elseif($teilnehmer->getVerificationDate() > 0 && $beratung->getDatum() != '' && $beratung->getErstberatungabgeschlossen() != '' && $teilnehmer->getNiqchiffre() == '') {
+    			$beratungsstatus = 3;
+    		} elseif($teilnehmer->getVerificationDate() > 0 && $beratung->getDatum() != '' && $beratung->getErstberatungabgeschlossen() != '' && $teilnehmer->getNiqchiffre() != '') {
+    			$beratungsstatus = 4;
+    		} else {
+    		 	if($teilnehmer->getVerificationDate() > 0) {
+    				$beratungsstatus = 1;
+    			} else {
+    				$beratungsstatus = 0;
+    			}
+    		}    		
+    	} else {
+    		if($teilnehmer->getVerificationDate() > 0) {
+    			$beratungsstatus = 1;
+    		} else {
+    			$beratungsstatus = 0;
+    		}
+    	}
+    	
+    	return $beratungsstatus;
+    }
+   
+    
+    /**************** Export ****************/
     
     /**
      * action export
@@ -554,31 +526,41 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function exportAction()
     {
         $valArray = $this->request->getArguments();
-        
+
         // ******************** EXPORT ****************************
         if ($valArray['export'] == 'Daten exportieren') {
-
+        	
+        	$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_iqtp13db_domain_model_teilnehmer');
+            
+        	$arraytoexport = $valArray['chktoexport'];
+        	 
+        	if(count($valArray['chktoexport']) != 0) {
+				$strlisttoexport = implode(",", $arraytoexport);
+				
+				$rows = $queryBuilder
+						->select('niqchiffre', 'nachname', 'vorname', 'plz', 'ort', 'email', 'telefon', 'lebensalter', 'geschlecht', 'erste_staatsangehoerigkeit', 'zweite_staatsangehoerigkeit', 
+								'einreisejahr', 'wohnsitz_deutschland', 'wohnsitz_nein_in', 'zertifikatdeutsch', 'zertifikat_sprachniveau', 'erwerbsland1', 'erwerbsland2', 
+								'abschluss1', 'abschluss2', 'deutscher_referenzberuf1', 'deutscher_referenzberuf2', 'bescheidfrueherer_anerkennungsantrag', 'name_beratungsstelle')
+						->from('tx_iqtp13db_domain_model_teilnehmer')
+						->where($queryBuilder->expr()->in('tx_iqtp13db_domain_model_teilnehmer.uid', $queryBuilder->createNamedParameter(GeneralUtility::intExplode(',', $strlisttoexport, true), Connection::PARAM_INT_ARRAY)))
+						->execute()
+						->fetchAll();
+        	} else {
+        		$rows = $queryBuilder
+						->select('niqchiffre', 'b.datum', 'b.beratungsart', 'c.kuerzel', 'nachname', 'vorname', 'plz', 'ort', 'email', 'telefon', 'lebensalter', 'geschlecht',
+						'erste_staatsangehoerigkeit', 'zweite_staatsangehoerigkeit', 'einreisejahr', 'wohnsitz_deutschland', 'wohnsitz_nein_in', 'zertifikatdeutsch', 'zertifikat_sprachniveau',
+						'erwerbsland1', 'erwerbsland2', 'abschluss1', 'abschluss2', 'deutscher_referenzberuf1', 'deutscher_referenzberuf2', 'bescheidfrueherer_anerkennungsantrag', 'b.beratungzu', 'name_beratungsstelle')
+						->from('tx_iqtp13db_domain_model_teilnehmer')
+						->leftJoin('tx_iqtp13db_domain_model_teilnehmer', 'tx_iqtp13db_domain_model_beratung', 'b',	$queryBuilder->expr()->eq('b.teilnehmer', $queryBuilder->quoteIdentifier('tx_iqtp13db_domain_model_teilnehmer.uid')))
+						->leftJoin('b', 'tx_iqtp13db_domain_model_berater', 'c', $queryBuilder->expr()->eq('c.uid', $queryBuilder->quoteIdentifier('b.berater')))
+						->execute()
+						->fetchAll();        		
+        	}
+        	
             $filename = 'export_' . date('Y-m-d_H-i', time()) . '.csv';
             header('Content-Type: text/csv');
             header('Content-Disposition: attachment;filename=' . $filename);
             $fp = fopen('php://output', 'w');
-            
-            // Get a query builder for a query on table "tt_content"
-            $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_iqtp13db_domain_model_teilnehmer');
-            // Remove all default restrictions (delete, hidden, starttime, stoptime)
-            //$queryBuilder->getRestrictions()->removeAll();
-            
-            $rows = $queryBuilder
-                ->select('*')
-                ->from('tx_iqtp13db_domain_model_teilnehmer')
-                ->leftJoin(
-                    'tx_iqtp13db_domain_model_teilnehmer',
-                    'tx_iqtp13db_domain_model_beratung',
-                    'b',
-                    $queryBuilder->expr()->eq('b.teilnehmer', $queryBuilder->quoteIdentifier('tx_iqtp13db_domain_model_teilnehmer.uid'))
-                )
-                ->execute()
-                ->fetchAll();
             
             // output header row (if at least one row exists)
             if (count($rows) > 0) {
@@ -590,32 +572,517 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             }
             fclose($fp);
             exit;
-        }
+        } else {
+        	 
+        	$teilnehmers = $this->teilnehmerRepository->findAll();
         
-    }
-    
-    /**
-     * Removes all session variables from the multiple steps form
-     *
-     * @return void
-     */
-    protected function cleanUpSessionData()
-    {
-        $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite1', '');
-        $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite2', '');
-        $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite3', '');
-        $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnuid', '');
-        $GLOBALS['TSFE']->fe_user->setKey('ses', 'beratungseite4', '');
-        
-    }
-    
-    /**
-     * action anmeldung
-     *
-     * @return void
-     */
-    public function anmeldungAction()
-    {
+        	for($j=0; $j < count($teilnehmers); $j++) {
+        		$anz = $this->teilnehmerRepository->findDublette($teilnehmers[$j]->getNachname(), $teilnehmers[$j]->getVorname());
+        		if($anz > 1) $teilnehmers[$j]->setDublette(TRUE);
+        	}
 
+        	$this->view->assign('teilnehmers', $teilnehmers);
+        }
     }
+    
+    /**************** WARTUNG ****************/
+    /**
+     * action wartung
+     *
+     * @return void
+     */
+    public function wartungAction()
+    {
+    	$this->view->assign('settings', $this->settings);
+    }
+    /**************** WARTUNG ****************/
+    
+    
+    /*************************************************************************/
+    /******************************* ANMELDUNG *******************************/
+    /*************************************************************************/
+    /**
+     * action anmeldseite1
+     *
+     * @param \Ud\Iqtp13db\Domain\Model\TNSeite1 $tnseite1
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $tnseite1
+     * @return void
+     */
+    public function anmeldseite1Action(\Ud\Iqtp13db\Domain\Model\TNSeite1 $tnseite1 = NULL)
+    {
+    	if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnseite1') && $tnseite1 == NULL) {
+    		$tnseite1 = unserialize($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnseite1'));
+    	}
+    
+    	$this->view->assign('tnseite1', $tnseite1);
+    	$this->view->assign('settings', $this->settings);
+    }
+    
+    /**
+     * action anmeldseite1redirect
+     *
+     * @param \Ud\Iqtp13db\Domain\Model\TNSeite1 $tnseite1
+     * @TYPO3\CMS\Extbase\Annotation\Validate("Ud\Iqtp13db\Domain\Validator\TNSeite1Validator", param="tnseite1")
+     * @return void
+     */
+    public function anmeldseite1redirectAction(\Ud\Iqtp13db\Domain\Model\TNSeite1 $tnseite1)
+    {
+    	$GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite1', serialize($tnseite1));
+    	$GLOBALS['TSFE']->fe_user->storeSessionData();
+    	$this->redirect('anmeldseite2');
+    }
+    
+    /**
+     * action anmeldseite2
+     *
+     * @param \Ud\Iqtp13db\Domain\Model\TNSeite2 $tnseite2
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $tnseite2
+     * @return void
+     */
+    public function anmeldseite2Action(\Ud\Iqtp13db\Domain\Model\TNSeite2 $tnseite2 = NULL)
+    {
+    	if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnseite2') && $tnseite2 == NULL) {
+    		$tnseite2 = unserialize($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnseite2'));
+    	}
+    	$this->view->assign('tnseite2', $tnseite2);
+    	$this->view->assign('settings', $this->settings);
+    }
+    
+    /**
+     * action anmeldseite2redirect
+     *
+     * @param \Ud\Iqtp13db\Domain\Model\TNSeite2 $tnseite2
+     * @return void
+     */
+    public function anmeldseite2redirectAction(\Ud\Iqtp13db\Domain\Model\TNSeite2 $tnseite2)
+    {
+    	$GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite2', serialize($tnseite2));
+    	$GLOBALS['TSFE']->fe_user->storeSessionData();
+    
+    	$valArray = $this->request->getArguments();
+    	if (isset($valArray['btnzurueck'])) {
+    		$this->redirect('anmeldseite1');
+    	} elseif(isset($valArray['btncancel'])) {
+    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite1', '');
+    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite2', '');
+    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite3', '');
+    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'tnuid', null);
+    		$GLOBALS['TSFE']->fe_user->storeSessionData();
+    		
+    		$uriBuilder = $this->controllerContext->getUriBuilder();
+    		$uriBuilder->reset();
+    		$uriBuilder->setTargetPageUid($this->settings['startseite']);
+    		$this->redirectToUri($uriBuilder->build());    		
+    	} else {
+    		$this->redirect('anmeldseite3');
+    	}
+    }
+    
+    /**
+     * action anmeldseite3
+     *
+     * @param \Ud\Iqtp13db\Domain\Model\TNSeite3 $tnseite3
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $tnseite3
+     * @return void
+     */
+    public function anmeldseite3Action(\Ud\Iqtp13db\Domain\Model\TNSeite3 $tnseite3 = NULL)
+    {
+    	if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnseite3') && $tnseite3 == NULL) {
+    		$tnseite3 = unserialize($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnseite3'));
+    	}
+    	$this->view->assign('settings', $this->settings);
+    	$this->view->assign('tnseite3', $tnseite3);
+    }
+    
+    /**
+     * action anmeldseite3redirect
+     *
+     * @param \Ud\Iqtp13db\Domain\Model\TNSeite3 $tnseite3
+     * @return void
+     */
+    public function anmeldseite3redirectAction(\Ud\Iqtp13db\Domain\Model\TNSeite3 $tnseite3)
+    {
+    
+    	$GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite3', serialize($tnseite3));
+    	$GLOBALS['TSFE']->fe_user->storeSessionData();
+    
+    	$valArray = $this->request->getArguments();
+    	if (isset($valArray['btnzurueck'])) {
+    		$this->redirect('anmeldseite2');
+    	} elseif(isset($valArray['btncancel'])) {
+    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite1', '');
+    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite2', '');
+    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite3', '');
+    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'tnuid', null);
+    		$GLOBALS['TSFE']->fe_user->storeSessionData();
+    		
+    		$uriBuilder = $this->controllerContext->getUriBuilder();
+    		$uriBuilder->reset();
+    		$uriBuilder->setTargetPageUid($this->settings['startseite']);
+    		$this->redirectToUri($uriBuilder->build());    		
+    	} else {
+    		if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid') == NULL) {
+    			$teilnehmer = $this->getTeilnehmerFromSession();
+    			$this->teilnehmerRepository->add($teilnehmer);
+    
+    			// Daten sofort in die Datenbank schreiben
+    			$persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+    			$persistenceManager->persistAll();
+    			$GLOBALS['TSFE']->fe_user->setKey('ses', 'tnuid', $teilnehmer->getUid());
+    		} else {
+    			$teilnehmer = $this->teilnehmerRepository->findByUid($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid'));
+    			$teilnehmer = $this->getTeilnehmerFromSession($teilnehmer);
+    			$this->teilnehmerRepository->update($teilnehmer);
+    		}
+    		$this->redirect('anmeldungcomplete', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+    	}
+    }
+    
+    /**
+     * action anmeldungcomplete
+     *
+     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("teilnehmer")
+     * @return void
+     */
+    public function anmeldungcompleteAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    {
+    	$valArray = $this->request->getArguments();
+    
+    	$newFilePath = 'Beratene/' . $teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid(). '/';
+    	$storage = $this->getTP13Storage($newFilePath);
+    	$foldersize = $this->getFolderSize($storage->getConfiguration()['basePath'].$newFilePath);
+    	$dokumente = $this->dokumentRepository->findByTeilnehmer($teilnehmer);
+    	$this->view->assign('heute', time());
+    	$this->view->assign('teilnehmer', $teilnehmer);
+    	$this->view->assign('dokumente', $dokumente);
+    	$this->view->assign('foldersize', 100-(intval(($foldersize/30000)*100)));
+    }
+    
+    /**
+     * action anmeldungcompleteredirect
+     *
+     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
+     * @return void
+     */
+    public function anmeldungcompleteredirectAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    {
+    	$valArray = $this->request->getArguments();
+    	 
+    	if (isset($valArray['btnzurueck'])) {
+    		$this->redirect('anmeldseite3');
+    	} elseif(isset($valArray['btncancel'])) {
+    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite1', '');
+    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite2', '');
+    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite3', '');
+    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'tnuid', null);
+    		$GLOBALS['TSFE']->fe_user->storeSessionData();
+    		
+    		$uriBuilder = $this->controllerContext->getUriBuilder();
+    		$uriBuilder->reset();
+    		$uriBuilder->setTargetPageUid($this->settings['startseite']);
+    		$this->redirectToUri($uriBuilder->build());
+    		
+    	} elseif (isset($valArray['btnAbsenden'])) {
+    	    $bcc = $this->settings['bccmail'];
+    	    $sender = $this->settings['sender'];
+    	    if($bcc == '' || $sender == '') {
+    	        $this->addFlashMessage('Fehler 101.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+    	        $this->redirect('anmeldungcomplete', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+    	    } else {
+    	        $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite1', '');
+    	        $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite2', '');
+    	        $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite3', '');
+    	        $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnuid', null);
+    	        $GLOBALS['TSFE']->fe_user->storeSessionData();
+    	        $recipient = $teilnehmer->getEmail();
+    	        $templateName = 'Mailtoconfirm';
+    	        $confirmmailtext1 = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmmailtext1', 'Iqtp13db');
+    	        $confirmlinktext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmlinktext', 'Iqtp13db');
+    	        $confirmmailtext2 = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmmailtext2', 'Iqtp13db');
+    	        $subject = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmsubject', 'Iqtp13db');
+    	        
+    	        $variables = array(
+    	            'teilnehmer' => $teilnehmer,
+    	            'confirmmailtext1' => $confirmmailtext1,
+    	            'confirmlinktext' => $confirmlinktext,
+    	            'confirmmailtext2' => $confirmmailtext2,
+    	            'startseitelink' => $this->settings['startseitelink'],
+    	            'logolink' => $this->settings['logolink'],
+    	            'registrationpageuid' => $this->settings['registrationpageuid']
+    	        );
+    	        $this->sendTemplateEmail(array($recipient), array($bcc), array($sender), $subject, $templateName, $variables, false);
+    	        
+    	        $this->redirect(null, null, null, null, $this->settings['redirectValidationInitiated']); // TODO: url aus id hier einfügen    	        
+    	    }
+    	} else {
+    		//
+    	}
+    }
+    
+    /**
+     * action confirm
+     *
+     * @return void
+     */
+    public function confirmAction()
+    {
+        
+    	if($this->request->hasArgument('code')) {
+    		$teilnehmer = $this->teilnehmerRepository->findByVerificationCode($this->request->getArgument('code'));
+    	}
+    	
+    	if($teilnehmer) {
+    		// it's a valid verificationCode
+    		$teilnehmer->setVerificationDate(new \DateTime);
+    		$teilnehmer->setVerificationIp($_SERVER['REMOTE_ADDR']);
+    		$this->teilnehmerRepository->update($teilnehmer);
+    
+    		$this->sendconfirmedMail($teilnehmer);
+    
+    		$uriBuilder = $this->controllerContext->getUriBuilder();
+    		$uriBuilder->reset();
+    		$uriBuilder->setTargetPageUid($this->settings['anmeldendeseite']);
+    		$uri = $uriBuilder->build();
+    		$this->redirectToUri($uri);
+    	} else {
+    		$this->redirect('validationFailed');
+    	}
+    }
+     
+    /**
+     * action validationFailed
+     *
+     * @return void
+     */
+    public function validationFailedAction()
+    {
+    	$this->redirect(null, null, null, null, $this->settings['redirectValidationFailed']);
+    }
+     
+    
+    /**
+     * sendconfirmedMail
+     *
+     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
+     * @return void
+     */
+    public function sendconfirmedMail(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    {
+    	$GLOBALS['TSFE']->fe_user->setKey('ses', 'tn', '');
+    	$recipient = $teilnehmer->getEmail();
+    	$bcc = $this->settings['bccmail'];
+    	\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($this);
+    	$sender = $this->settings['sender'];
+    	$subject = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('subject', 'Iqtp13db');
+    	$templateName = 'Mail';
+    	$mailtext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtext', 'Iqtp13db');
+    	$uriBuilder = $this->controllerContext->getUriBuilder();
+    	$uriBuilder->reset();
+    	$uriBuilder->setTargetPageUid($this->settings['anmeldeditseite']);
+    	$uriedit = $uriBuilder->build();
+    	$uriBuilder = $this->controllerContext->getUriBuilder();
+    	$uriBuilder->reset();
+    	$uriBuilder->setTargetPageUid($this->settings['anmelddeleteseite']);
+    	$uridelete = $uriBuilder->build();
+    	$variables = array(
+    			'anrede' => 'Guten Tag ' . $teilnehmer->getVorname(). ' ' . $teilnehmer->getNachname() . ',',
+    			'mailtext' => $mailtext,
+    			'startseitelink' => $this->settings['startseitelink'],
+    			'logolink' => $this->settings['logolink']
+    	);
+    	$this->sendTemplateEmail(array($recipient), array($bcc), array($sender), $subject, $templateName, $variables, true);
+    }
+    
+    
+    /**
+     * @param array $recipient recipient of the email in the format array('recipient@domain.tld' => 'Recipient Name')
+     * @param array $bcc
+     * @param array $sender
+     * @param $subject
+     * @param $templateName
+     * @param array $variables
+     * @param $addattachment
+     * @return boolean TRUE on success, otherwise false
+     */
+    protected function sendTemplateEmail(array $recipient, array $bcc, array $sender, $subject, $templateName, array $variables = array(), $addattachment)
+    {    
+        
+    	$emailView = $this->objectManager->get('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
+    	$extbaseFrameworkConfiguration = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+    	$extPath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('iqtp13db');
+    	$templateRootPath = $extPath."Resources/Private/Templates/";
+    
+    	$templatePathAndFilename = $templateRootPath . 'Teilnehmer/' . $templateName . '.html';
+    	$emailView->setTemplatePathAndFilename($templatePathAndFilename);
+    	$emailView->assignMultiple($variables);
+    	$emailBody = $emailView->render();
+    	$message = $this->objectManager->get('TYPO3\\CMS\\Core\\Mail\\MailMessage');
+    	$message->setTo($recipient)->setFrom($sender)->setSubject($subject);
+    	if($templateName != 'Mailtoconfirm') $message->setBcc($bcc);
+    
+    	if($this->settings['mailattacheinwilligung'] != '') {
+    		$publicRootPath = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($this->settings['mailattacheinwilligung']);
+    		if($publicRootPath != '' && $addattachment) {
+    			$message->attach(\Swift_Attachment::fromPath($publicRootPath));
+    		}
+    	}
+    	// HTML Email
+    	$message->setBody($emailBody, 'text/html');
+    	$message->send();
+    	return $message->isSent();
+    }
+     
+   
+    /**
+     * Collects the Teilnehmer from the multiple steps form stored in session variables
+     * and returns an teilnehmer object.
+     *
+     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
+     * @return \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
+     */
+    protected function getTeilnehmerFromSession(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer = NULL)
+    {
+    	$tnseite1 = unserialize($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnseite1'));
+    	$tnseite2 = unserialize($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnseite2'));
+    	$tnseite3 = unserialize($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnseite3'));
+    	if ($teilnehmer == NULL) {
+    		$teilnehmer = $this->objectManager->get('Ud\\Iqtp13db\\Domain\\Model\\Teilnehmer');
+    	}
+    	$teilnehmer->setEinwilligung($tnseite1->getEinwilligung());
+    	$teilnehmer->setSchonberaten($tnseite1->getSchonberaten());
+    	$teilnehmer->setSchonberatenvon($tnseite1->getSchonberatenvon());
+    	$teilnehmer->setNachname($tnseite1->getNachname());
+    	$teilnehmer->setVorname($tnseite1->getVorname());
+    	$teilnehmer->setPlz($tnseite1->getPlz());
+    	$teilnehmer->setOrt($tnseite1->getOrt());
+    	$teilnehmer->setEmail($tnseite1->getEmail());
+    	$teilnehmer->setConfirmemail($tnseite1->getConfirmemail());
+    	$teilnehmer->setTelefon($tnseite1->getTelefon());
+    	$teilnehmer->setLebensalter($tnseite1->getLebensalter());
+    	$teilnehmer->setGeburtsland($tnseite1->getGeburtsland());
+    	$teilnehmer->setGeschlecht($tnseite1->getGeschlecht());
+    	$teilnehmer->setErsteStaatsangehoerigkeit($tnseite1->getErsteStaatsangehoerigkeit());
+    	$teilnehmer->setZweiteStaatsangehoerigkeit($tnseite1->getZweiteStaatsangehoerigkeit());
+    	$teilnehmer->setEinreisejahr($tnseite1->getEinreisejahr());
+    	$teilnehmer->setWohnsitzDeutschland($tnseite1->getWohnsitzDeutschland());
+    	$teilnehmer->setWohnsitzNeinIn($tnseite1->getWohnsitzNeinIn());
+    	$teilnehmer->setDeutschkenntnisse($tnseite2->getDeutschkenntnisse());
+    	$teilnehmer->setZertifikatSprachniveau($tnseite2->getZertifikatSprachniveau());
+    	$teilnehmer->setZertifikatdeutsch($tnseite2->getZertifikatdeutsch());
+    	$teilnehmer->setAbschlussartA($tnseite2->getAbschlussartA());
+    	$teilnehmer->setAbschlussartH($tnseite2->getAbschlussartH());
+    	$teilnehmer->setErwerbsland1($tnseite2->getErwerbsland1());
+    	$teilnehmer->setDauerBerufsausbildung1($tnseite2->getDauerBerufsausbildung1());
+    	$teilnehmer->setAbschlussjahr1($tnseite2->getAbschlussjahr1());
+    	$teilnehmer->setAusbildungsinstitution1($tnseite2->getAusbildungsinstitution1());
+    	$teilnehmer->setAusbildungsort1($tnseite2->getAusbildungsort1());
+    	$teilnehmer->setAbschluss1($tnseite2->getAbschluss1());
+    	$teilnehmer->setBerufserfahrung1($tnseite2->getBerufserfahrung1());
+    	$teilnehmer->setAusbildungsfremdeberufserfahrung1($tnseite2->getAusbildungsfremdeberufserfahrung1());
+    	$teilnehmer->setDeutscherReferenzberuf1($tnseite2->getDeutscherReferenzberuf1());
+    	$teilnehmer->setErwerbsland2($tnseite2->getErwerbsland2());
+    	$teilnehmer->setDauerBerufsausbildung2($tnseite2->getDauerBerufsausbildung2());
+    	$teilnehmer->setAbschlussjahr2($tnseite2->getAbschlussjahr2());
+    	$teilnehmer->setAusbildungsinstitution2($tnseite2->getAusbildungsinstitution2());
+    	$teilnehmer->setAusbildungsort2($tnseite2->getAusbildungsort2());
+    	$teilnehmer->setAbschluss2($tnseite2->getAbschluss2());
+    	$teilnehmer->setBerufserfahrung2($tnseite2->getBerufserfahrung2());
+    	$teilnehmer->setAusbildungsfremdeberufserfahrung2($tnseite2->getAusbildungsfremdeberufserfahrung2());
+    	$teilnehmer->setDeutscherReferenzberuf2($tnseite2->getDeutscherReferenzberuf2());
+    	$teilnehmer->setErwerbsstatus($tnseite3->getErwerbsstatus());
+    	$teilnehmer->setLeistungsbezugjanein($tnseite3->getLeistungsbezugjanein());
+    	$teilnehmer->setLeistungsbezug($tnseite3->getLeistungsbezug());
+    	$teilnehmer->setEinwilligungdatenanaa($tnseite3->getEinwilligungdatenanaa());
+    	if($tnseite3->getEinwilligungdatenanaa() == 1) {
+    		$thisdate = new DateTime();
+    		$teilnehmer->setEinwilligungdatenanaadatum($thisdate->format('d.m.Y'));
+    		$teilnehmer->setEinwilligungdatenanaamedium("Webapp");    		
+    	} else {
+    		$teilnehmer->setEinwilligungdatenanaadatum('');
+    		$teilnehmer->setEinwilligungdatenanaamedium('');
+    	}  	
+    	$teilnehmer->setNameBeraterAA($tnseite3->getNameBeraterAA());
+    	$teilnehmer->setKontaktBeraterAA($tnseite3->getKontaktBeraterAA());
+    	$teilnehmer->setKundennummerAA($tnseite3->getKundennummerAA());
+    	$teilnehmer->setFruehererAntrag($tnseite3->getFruehererAntrag());
+    	$teilnehmer->setFruehererAntragReferenzberuf($tnseite3->getFruehererAntragReferenzberuf());
+    	$teilnehmer->setFruehererAntragInstitution($tnseite3->getFruehererAntragInstitution());
+    	$teilnehmer->setBescheidfruehererAnerkennungsantrag($tnseite3->getBescheidfruehererAnerkennungsantrag());
+    	$teilnehmer->setNameBeratungsstelle($tnseite3->getNameBeratungsstelle());
+    	$teilnehmer->setNotizen ( $tnseite3->getNotizen () );
+		
+		return $teilnehmer;
+	}
+	
+	
+	function getTP13Storage($pfad) {
+		$storageRepository = $this->objectManager->get ( 'TYPO3\\CMS\\Core\\Resource\\StorageRepository' );
+		// Speicher 'tp13data' muss im Typo3-Backend auf der Root-Seite als "Dateispeicher" angelegt sein!
+		// wenn der Speicher mal nicht verfügbar war (temporär), muss er im Backend im Bereich "Dateispeicher" manuell wieder "online" geschaltet werden mit der Checkbox "ist online?" in den Eigenschaften des jeweiligen Dateispeichers
+		$storages = $storageRepository->findAll ();
+		foreach ( $storages as $s ) {
+			$storageObject = $s;
+			$storageRecord = $storageObject->getStorageRecord ();
+			if ($storageRecord ['name'] == 'tp13data') {
+				$storage = $s;
+				break;
+			}
+		}
+		
+		return $storage;
+	}
+	
+	function getFolderSize($folderpath) {
+		$io = popen ( '/usr/bin/du -sk ' . $folderpath, 'r' );
+		$size = fgets ( $io, 4096 );
+		$size = substr ( $size, 0, strpos ( $size, "\t" ) );
+		pclose ( $io );
+		return $size;
+	}
+	
+	public function errorAction() {
+		$this->clearCacheOnError ();
+		$referringRequest = $this->request->getReferringRequest ();
+		if ($referringRequest !== NULL) {
+			$originalRequest = clone $this->request;
+			
+			$this->request->setOriginalRequest ( $originalRequest );
+			$this->request->setOriginalRequestMappingResults ( $this->arguments->validate () );
+			$this->forward ( $referringRequest->getControllerActionName (), $referringRequest->getControllerName (), $referringRequest->getControllerExtensionName (), $referringRequest->getArguments () );
+		}
+	}
+	
+	/**
+	 * A template method for displaying custom error flash messages, or to
+	 * display no flash message at all on errors.
+	 * Override this to customize
+	 * the flash message in your action controller.
+	 *
+	 * @api
+	 * 
+	 * @return string boolean flash message or FALSE if no flash message should be set
+	 */
+	protected function getErrorFlashMessage() {
+		return FALSE;
+	}
+	
+	/**
+	 *
+	 * @param
+	 *        	$settingsarr
+	 * @param
+	 *        	$ergarrwert
+	 */
+	function getValu($settingsarr, $ergarrwert) {
+		$ret = '';
+		foreach ( $settingsarr as $key => $value ) {
+			if ($ergarrwert == $value) {
+				$ret = $key;
+				break;
+			}
+		}
+		return $ret;
+	}
+    
 }
