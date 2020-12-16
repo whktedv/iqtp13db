@@ -165,7 +165,7 @@
 }
 
 .tx-iqtp13db .einwilligungtext {
-	display: flex;
+	/* display: flex;*/
 	width: 90%;
     font-weight: 400;
     font-size: 1.1em;
@@ -209,12 +209,18 @@
 	display: flex;
 }
 
-.tp13_formdivwebappmultiradio {
+.tp13_formdivwebappmultiradio, .tp13_formdivwebappmultiradio2 {
 	display: flex;
 	flex-direction: column;
 	margin: 5px;
 	line-height: 2em;
 }
+
+.tp13_formdivwebappmultiradio2 {
+	display: none;
+}
+
+
 
 .tx-iqtp13db input[type="radio"], .tx-iqtp13db input[type="checkbox"] {
 	height: 1.5em;
@@ -372,6 +378,10 @@ button.abbruchbtn {
 
 .dokupload input[type="submit"] {
 	margin-left: 10px;
+}
+
+.speicherplatz {
+	font-size: 0.8rem;	
 }
 
 .iq-teaser-logo-ohne-rand h1 {

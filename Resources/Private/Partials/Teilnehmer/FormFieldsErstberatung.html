@@ -161,10 +161,13 @@
 			<label for="abschlussart" class="tp13_options">
 				<span id="infolab" title="<f:translate key='infoAbschluss' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.abschlussart" />
 			</label>
-			<div class="tp13_options">
-				<div class="tp13_formdivwebappradio"><f:form.checkbox property="abschlussartA" value="1" /><span class="abschlussradiotext"><f:translate key="abschlussartoption1" /></span></div>
-				<div class="tp13_formdivwebappradio"><f:form.checkbox property="abschlussartH" value="1" /><span class="abschlussradiotext"><f:translate key="abschlussartoption2" /></span></div>
-				<div style="clear: both;"></div>
+			<div class="tp13_formdivwebappmultiradio">			
+				<div class="tp13_formdivwebappradio"><f:form.checkbox property="abschlussart1" value="1"  multiple="1"/>{settings.abschlussart.1}</div>
+				<div class="tp13_formdivwebappradio"><f:form.checkbox property="abschlussart1" value="2"  multiple="1"/>{settings.abschlussart.2}</div>
+			</div>
+			<div class="tp13_formdivwebappmultiradio">			
+				<div class="tp13_formdivwebappradio"><f:form.checkbox property="abschlussart2" value="1"  multiple="1"/>{settings.abschlussart.1}</div>
+				<div class="tp13_formdivwebappradio"><f:form.checkbox property="abschlussart2" value="2"  multiple="1"/>{settings.abschlussart.2}</div>
 			</div>
 		</div>
 		<div class="tp13_formdivwebapp">

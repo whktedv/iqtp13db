@@ -67,18 +67,18 @@ class TNSeite2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	protected $beratungsgespraechSprache = '';
 
 	/**
-	 * Ausbildungsabschluss
+	 * Abschlussart1
 	 *
-	 * @var bool
+	 * @var string
 	 */
-	protected $abschlussartA = FALSE;
+	protected $abschlussart1 = '';
 
 	/**
-	 * Hochschulabschluss
+	 * Abschlussart2
 	 *
-	 * @var bool
+	 * @var string
 	 */
-	protected $abschlussartH = FALSE;
+	protected $abschlussart2 = '';
 	
 	/**
 	 * Erwerbsland
@@ -231,6 +231,19 @@ class TNSeite2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 */
 	protected $sprachen = '';
 	
+	
+	/**
+	 * initializes this object
+	 *
+	 * @param array $abschlussart1
+	 * @param array $abschlussart2
+	 */
+	public function __construct(array $abschlussart1 = array(), array $abschlussart2 = array()) {
+		$this->setAbschlussart1($abschlussart1);
+		$this->setAbschlussart2($abschlussart2);
+	}
+	
+	
 	/**
 	 * Returns the deutschkenntnisse
 	 *
@@ -344,25 +357,7 @@ class TNSeite2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	public function setSprachen($sprachen) {
 		$this->sprachen = $sprachen;
 	}
-	
-	/**
-	 * Returns the abschlussartA
-	 *
-	 * @return bool abschlussartA
-	 */
-	public function getAbschlussartA() {
-		return $this->abschlussartA;
-	}
 
-	/**
-	 * Sets the abschlussartA
-	 *
-	 * @param int $abschlussartA
-	 * @return void
-	 */
-	public function setAbschlussartA($abschlussartA) {
-		$this->abschlussartA = $abschlussartA;
-	}
 
 	/**
 	 * Returns the erwerbsland1
@@ -558,32 +553,46 @@ class TNSeite2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
-	 * Returns the abschlussartH
-	 *
-	 * @return bool $abschlussartH
-	 */
-	public function getAbschlussartH() {
-		return $this->abschlussartH;
-	}
+     * Returns the abschlussart1
+     * 
+     * @return array $abschlussart1
+     */
+    public function getAbschlussart1()
+    {
+        return explode(',', $this->abschlussart1);
+    }
 
-	/**
-	 * Sets the abschlussartH
-	 *
-	 * @param bool $abschlussartH
-	 * @return void
-	 */
-	public function setAbschlussartH($abschlussartH) {
-		$this->abschlussartH = $abschlussartH;
-	}
+    /**
+     * Sets the abschlussart1
+     * 
+     * @param array $abschlussart1
+     * @return void
+     */
+    public function setAbschlussart1(array $abschlussart1)
+    {
+        $this->abschlussart1 = implode(',', $abschlussart1);
+    }
 
-	/**
-	 * Returns the boolean state of abschlussartH
-	 *
-	 * @return bool
-	 */
-	public function isAbschlussartH() {
-		return $this->abschlussartH;
-	}
+    /**
+     * Returns the abschlussart2
+     * 
+     * @return array $abschlussart2
+     */
+    public function getAbschlussart2()
+    {
+        return explode(',', $this->abschlussart2);
+    }
+
+    /**
+     * Sets the abschlussart2
+     * 
+     * @param array $abschlussart2
+     * @return void
+     */
+    public function setAbschlussart2(array $abschlussart2)
+    {
+        $this->abschlussart2 = implode(',', $abschlussart2);
+    }
 
 	/**
 	 * Returns the erwerbsland2

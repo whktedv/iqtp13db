@@ -50,6 +50,14 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
 	 */
 	protected $beraterRepository = NULL;
 	
+	/**
+	 * historieRepository
+	 *
+	 * @var \Ud\Iqtp13db\Domain\Repository\HistorieRepository
+	 * @TYPO3\CMS\Extbase\Annotation\Inject
+	 */
+	protected $historieRepository = NULL;
+	
     /**
      * action init
      *
@@ -74,7 +82,6 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
             $this->arguments->getArgument('beratung')->getPropertyMappingConfiguration()->setTargetTypeForSubProperty('qualifizierungsberatung', 'array');
         }
         
-     
     }
     
 	
@@ -85,7 +92,20 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
 	 */
 	public function listerstberatungAction()
 	{
-		$beratungen = $this->beratungRepository->findAllOrder4List(2); 
+		$valArray = $this->request->getArguments();
+		
+		if(empty($valArray['orderby'])) {
+			$orderby = 'crdate';
+			$GLOBALS['TSFE']->fe_user->setKey('ses', 'listerstberatungorder', 'DESC');
+			$order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listerstberatungorder');
+		} else {
+			$orderby = $valArray['orderby'];
+			$order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listerstberatungorder');
+			$order = $order == 'DESC' ? 'ASC' : 'DESC';
+			$GLOBALS['TSFE']->fe_user->setKey('ses', 'listerstberatungorder', $order);
+		}
+		
+		$beratungen = $this->beratungRepository->findAllOrder4List(2, $orderby, $order); 
 	
 		foreach ($beratungen as $key => $bn) {
 			$tn = $bn->getTeilnehmer();
@@ -110,7 +130,20 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
 	 */
 	public function listniqerfassungAction()
 	{
-		$beratungen = $this->beratungRepository->findAllOrder4List(3); 
+		$valArray = $this->request->getArguments();
+		
+		if(empty($valArray['orderby'])) {
+			$orderby = 'crdate';
+			$GLOBALS['TSFE']->fe_user->setKey('ses', 'listniqerfassungorder', 'DESC');
+			$order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listniqerfassungorder');
+		} else {
+			$orderby = $valArray['orderby'];
+			$order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listniqerfassungorder');
+			$order = $order == 'DESC' ? 'ASC' : 'DESC';
+			$GLOBALS['TSFE']->fe_user->setKey('ses', 'listniqerfassungorder', $order);
+		}
+		
+		$beratungen = $this->beratungRepository->findAllOrder4List(3, $orderby, $order); 
 
 		foreach ($beratungen as $key => $bn) {
 			$tn = $bn->getTeilnehmer();
@@ -137,7 +170,20 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
 	 */
 	public function listarchivAction()
 	{
-		$beratungen = $this->beratungRepository->findAllOrder4List(4); 
+		$valArray = $this->request->getArguments();
+		
+		if(empty($valArray['orderby'])) {
+			$orderby = 'crdate';
+			$GLOBALS['TSFE']->fe_user->setKey('ses', 'listarchivorder', 'DESC');
+			$order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listarchivorder');
+		} else {
+			$orderby = $valArray['orderby'];
+			$order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listarchivorder');
+			$order = $order == 'DESC' ? 'ASC' : 'DESC';
+			$GLOBALS['TSFE']->fe_user->setKey('ses', 'listarchivorder', $order);
+		}
+		
+		$beratungen = $this->beratungRepository->findAllOrder4List(4, $orderby, $order); 
 		
 		foreach ($beratungen as $key => $bn) {
 			$tn = $bn->getTeilnehmer();
@@ -161,11 +207,16 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      * @return void
      */
     public function showAction(\Ud\Iqtp13db\Domain\Model\Beratung $beratung)
-    {
-        //\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($this->request->getArguments());
+    {        
         $berater = $this->beraterRepository->findAll();
         $this->view->assign('berater', $berater);
         $this->view->assign('beratung', $beratung);
+        
+        $teilnehmer = $beratung->getTeilnehmer();        
+        $historie = $this->historieRepository->findByTeilnehmerOrdered($teilnehmer->getUid());        
+        
+        $this->view->assign('teilnehmer', $teilnehmer);
+        $this->view->assign('historie', $historie);
         
         $valArray = $this->request->getArguments();
         $this->view->assign('calleraction', $valArray['calleraction']);

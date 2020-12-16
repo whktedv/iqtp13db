@@ -2,6 +2,7 @@
 function showDetail(num) {
      /* $("a#mlink").toggle();	 */
      $('.smallertextfield2').toggle();
+     $('.tp13_formdivwebappmultiradio2').toggle();
 }
 
 function btncancel_Click() {

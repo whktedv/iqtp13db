@@ -31,8 +31,8 @@ CREATE TABLE tx_iqtp13db_domain_model_teilnehmer (
 	zertifikatdeutsch int(11) DEFAULT '0' NOT NULL,
 	zertifikat_sprachniveau varchar(255) DEFAULT '' NOT NULL,
 	
-	abschlussart_a tinyint(1) unsigned DEFAULT '0' NOT NULL,
-	abschlussart_h tinyint(1) unsigned DEFAULT '0' NOT NULL,
+	abschlussart1 varchar(255) DEFAULT '' NOT NULL,
+	abschlussart2 varchar(255) DEFAULT '' NOT NULL,
 	erwerbsland1 varchar(255) DEFAULT '' NOT NULL,
 	dauer_berufsausbildung1 varchar(255) DEFAULT '' NOT NULL,
 	abschlussjahr1 varchar(255) DEFAULT '' NOT NULL,
@@ -205,6 +205,31 @@ CREATE TABLE tx_iqtp13db_domain_model_dokument (
 	hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	starttime int(11) unsigned DEFAULT '0' NOT NULL,
 	endtime int(11) unsigned DEFAULT '0' NOT NULL,
+
+	PRIMARY KEY (uid),
+	KEY parent (pid),
+
+);
+
+
+#
+# Table structure for table 'tx_iqtp13db_domain_model_historie'
+#
+CREATE TABLE tx_iqtp13db_domain_model_historie (
+
+	uid int(11) NOT NULL auto_increment,
+	pid int(11) DEFAULT '0' NOT NULL,
+	
+	teilnehmer int(11) unsigned DEFAULT '0',
+	property varchar(255) DEFAULT '' NOT NULL,
+	oldvalue varchar(255) DEFAULT '' NOT NULL,
+	newvalue varchar(255) DEFAULT '' NOT NULL,	
+	berater int(11) unsigned DEFAULT '0',
+	
+	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
+	crdate int(11) unsigned DEFAULT '0' NOT NULL,
+	cruser_id int(11) unsigned DEFAULT '0' NOT NULL,
+	deleted tinyint(4) unsigned DEFAULT '0' NOT NULL,
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),

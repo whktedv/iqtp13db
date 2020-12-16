@@ -5,7 +5,7 @@
 <f:layout name="Default" />
 
 <f:section name="main">
-<h1>Übersicht</h1>
+<h1>Status aktuell</h1>
 
 <f:flashMessages />
 
@@ -91,4 +91,32 @@
 <f:form method="post" controller="Teilnehmer" action="status" name="statsexp" enctype="multipart/form-data" noCacheHash="true" ><br />
 	<f:form.submit name="statsexport" value="Statistik exportieren" />			
 </f:form>
+
+<hr>
+
+<h2>Historie Änderung Anmeldedaten im Backend</h2>
+<f:widget.paginate objects="{historie}" as="histpag" configuration="{itemsPerPage: 50, insertAbove: 1}"> 
+	<table  class="tx_iqtp13db" >
+		<tr>
+			<th>Datum/Zeit</th>
+			<th>Kürzel</th>
+			<th>Teilnehmer</th>
+			<th>Feld</th>
+			<th>alter Wert</th>
+			<th>neuer Wert</th>
+		</tr>
+	
+		<f:for each="{histpag}" as="hist">
+			<tr>		
+				<td>{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}</td>
+				<td>{hist.berater.kuerzel}</td>
+				<td>{hist.teilnehmer.nachname}, {hist.teilnehmer.vorname} (UID: {hist.teilnehmer.uid})</td>
+				<td>{hist.property}</td>
+				<td>{hist.oldvalue}</td>
+				<td>{hist.newvalue}</td> 
+			</tr>
+		</f:for>
+	</table>
+</f:widget.paginate> 
+
 </f:section>

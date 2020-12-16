@@ -85,11 +85,11 @@
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau">
 				<source>Wenn Zertifikat vorhanden, auf welchem Sprachniveau?</source>
 			</trans-unit>
-			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussart_a">
-				<source>Abschlussart A</source>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussart1">
+				<source>Abschlussart1</source>
 			</trans-unit>
-			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussart_h">
-				<source>Abschlussart H</source>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussart2">
+				<source>Abschlussart2</source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsland1">
 				<source>Erwerbsland1</source>
@@ -203,7 +203,7 @@
 				<source>Name Berater*in</source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kontakt_berater_a_a">
-				<source>Kontakt (E-Mail oder Telefon)</source>
+				<source>Kontakt (E-Mail und Telefon)</source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kundennummer_a_a">
 				<source>Ihre Kundennummer</source>
@@ -212,7 +212,7 @@
 				<source>Aufenthaltsstatus</source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.notizen">
-				<source>Notizen</source>
+				<source>Was möchten Sie uns noch mitteilen oder haben Sie schon eine konkrete Frage?</source>
 			</trans-unit>			
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.verification_code">
                 <source>Bestätigungscode</source>
@@ -375,16 +375,8 @@
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungtext">
 				<source><![CDATA[
-				Hiermit willige ich ein, dass meine persönlichen Daten elektronisch gespeichert, genutzt und weitergegeben werden. Das IQ Projekt wird meine Daten dabei zweckgebunden zur Bearbeitung meiner Anfrage für das Programm „Integration durch Qualifizierung (IQ)“ nutzen.<br>Ein Teil der Daten wird – anonym (ohne meinen Namen und meine Adresse) – für die Statistik an diese Adressen weitergeben:<br>
-• Fachstelle „Beratung und Qualifizierung“ beim Forschungsinstitut Betriebliche Bildung (f-bb) gGmbH<br>
-• Bundesministerium für Bildung und Forschung (BMBF)<br>
-• Bundesministerium für Arbeit und Soziales (BMAS)<br>
-• Bundesinstitut für Berufsbildung (BIBB)<br>
-<br>
-Darüberhinaus werden meine Daten im Bedarfsfall an Partnerorganisationen innerhalb des IQ Netzwerks NRW zweckgebunden zur Bearbeitung meiner Anfrage verschlüsselt weiterleiten.<br> 
-Diese Einwilligung kann ich jederzeit widerrufen. Der Widerruf ist zu richten an Westdeutscher Handwerkskammertag e.V., Volmerswerther Straße 79, 40221 Düsseldorf oder per E-Mail an anerkennungsberatung@whkt.de.<br>
-Im Falle des Widerrufs werden meine persönlichen Daten umgehend gelöscht. Rückfragen können dann nur nach erneut unterschriebener Einwilligungserklärung beantwortet werden. Ihre Daten werden gelöscht, sobald sie für den Zweck ihrer Verarbeitung nicht mehr erforderlich sind. Sie sind berechtigt, Auskunft der bei uns über Sie gespeicherten Daten zu beantragen sowie bei Unrichtigkeit der Daten die Berichtigung oder bei unzulässiger Datenspeicherung die Löschung der Daten zu fordern. Sie können unseren Datenschutzbeauftragten unter datenschutz@whkt.de oder unter Westdeutscher Handwerkskammertag e.V., Datenschutzbeauftragter, Volmerswerther Straße 79, 40221 Düsseldorf, erreichen. Ihnen steht des Weiteren ein Beschwerderecht bei der Aufsichtsbehörde zu.
-				
+				Ich bin damit einverstanden, dass meine Daten zum Zweck der Bearbeitung meiner Anfrage genutzt werden. 
+				Die <a href="https://staging.iq-netzwerk-nrw.de/1/datenschutz-und-einwilligung/" target="_blank">Informationen zur Datenverarbeitung</a> habe ich zur Kenntnis genommen.
 				]]></source>
 			</trans-unit>
 			<trans-unit id="ja">
@@ -464,7 +456,7 @@ Im Falle des Widerrufs werden meine persönlichen Daten umgehend gelöscht. Rüc
 				Bitte laden Sie folgende Dokumente als PDF-Datei hoch (insgesamt maximal 30 MB): <br>
 				- Ihre Original-Abschlüsse und Übersetzungen<br>
 				- Ihren Aufenthaltstitel; Lebenslauf; Bescheid 
-				<br><br><b>Speicherplatz für Dokumente verfügbar: </b>
+				<br><h3>Hochgeladene Dokumente:</h3>				
 				]]></source>
 			</trans-unit>
 			<trans-unit id="dokumentauswaehlen">
@@ -473,14 +465,17 @@ Im Falle des Widerrufs werden meine persönlichen Daten umgehend gelöscht. Rüc
 			<trans-unit id="dokumenthochladen">
 				<source>Dokument hochladen</source>
 			</trans-unit>
+			<trans-unit id="speicherplatzhinweis">
+				<source>Speicherplatz für Dokumente verfügbar: </source>
+			</trans-unit>
 			<trans-unit id="loeschen">
 				<source>Löschen</source>
 			</trans-unit>
 			<trans-unit id="hochladen">
-				<source>Hochladen</source>
+				<source>Jetzt hochladen</source>
 			</trans-unit>
 			<trans-unit id="absenden">
-				<source>Absenden</source>
+				<source>Jetzt absenden</source>
 			</trans-unit>
 			<trans-unit id="hinweisdatenpruefen">
 				<source>Bitte überprüfen Sie Ihre Daten an dieser Stelle. Sofern alle Daten korrekt sind, klicken Sie abschließend auf den 'Absenden'-Button.</source>

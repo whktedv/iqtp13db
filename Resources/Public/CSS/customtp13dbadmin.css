@@ -64,3 +64,15 @@ td.tdcenter input[type="checkbox"] {
     -webkit-transform: scale(1.5);
     transform: scale(1.5);
 }
+
+.historie {
+	margin-left: 40px;
+	display: flex;
+	flex-direction: column;
+	padding: 5px;
+	color: #ff4343;
+}
+
+.historieval {
+	font-size: 0.9rem;	
+}

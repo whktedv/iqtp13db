@@ -63,6 +63,38 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     protected $dokumentRepository = NULL;
     
+    /**
+     * historieRepository
+     *
+     * @var \Ud\Iqtp13db\Domain\Repository\HistorieRepository
+     * @TYPO3\CMS\Extbase\Annotation\Inject
+     */
+    protected $historieRepository = NULL;
+        
+    /**
+     * action init
+     *
+     * @param void
+     */
+    public function initializeAction()
+    {
+    
+    	if ($this->arguments->hasArgument('teilnehmer')) {
+    		$this->arguments->getArgument('teilnehmer')->getPropertyMappingConfiguration()->allowProperties('abschlussart1');
+    		$this->arguments->getArgument('teilnehmer')->getPropertyMappingConfiguration()->setTargetTypeForSubProperty('abschlussart1', 'array');
+    
+    		$this->arguments->getArgument('teilnehmer')->getPropertyMappingConfiguration()->allowProperties('abschlussart2');
+    		$this->arguments->getArgument('teilnehmer')->getPropertyMappingConfiguration()->setTargetTypeForSubProperty('abschlussart2', 'array');
+    	}   
+    	
+    	if ($this->arguments->hasArgument('tnseite2')) {
+    		$this->arguments->getArgument('tnseite2')->getPropertyMappingConfiguration()->allowProperties('abschlussart1');
+    		$this->arguments->getArgument('tnseite2')->getPropertyMappingConfiguration()->setTargetTypeForSubProperty('abschlussart1', 'array');
+    	
+    		$this->arguments->getArgument('tnseite2')->getPropertyMappingConfiguration()->allowProperties('abschlussart2');
+    		$this->arguments->getArgument('tnseite2')->getPropertyMappingConfiguration()->setTargetTypeForSubProperty('abschlussart2', 'array');
+    	}
+    }
     
     /**
      * action start
@@ -180,10 +212,12 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     		
     	}
 
-    	$aktuelleanmeldungen = count($this->teilnehmerRepository->findAllOrder4List());
-    	$aktuellerstberatungen = count($this->beratungRepository->findAllOrder4List(2));
-    	$aktuellberatungenfertig = count($beratungen = $this->beratungRepository->findAllOrder4List(3));
-    	$archivierttotal = count($this->beratungRepository->findAllOrder4List(4));
+    	$aktuelleanmeldungen = count($this->teilnehmerRepository->findAllOrder4List("crdate", 'DESC'));
+    	$aktuellerstberatungen = count($this->beratungRepository->findAllOrder4List(2, "crdate", 'DESC'));
+    	$aktuellberatungenfertig = count($beratungen = $this->beratungRepository->findAllOrder4List(3, "crdate", 'DESC'));
+    	$archivierttotal = count($this->beratungRepository->findAllOrder4List(4, "crdate", 'DESC'));
+    	
+    	$historie = $this->historieRepository->findAllDesc();
     	
     	$this->view->assign('monatsnamen', $monatsnamen);
     	$this->view->assign('aktmonat', $diesermonat-1);
@@ -214,6 +248,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$this->view->assign('aktuellberatungenfertig', $aktuellberatungenfertig);
 		$this->view->assign('archivierttotal', $archivierttotal);
 		
+		$this->view->assign('historie', $historie);
+		 
+		// ******************** EXPORT Statistik ****************************
 		$rows[0] = $monatsnamen;
 		array_unshift($rows[0], " ");
 		$rows[1] = $angemeldeteTN;
@@ -231,7 +268,6 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$rows[7] = $totalavgmonthb;
 		array_unshift($rows[7], "durchschn. Tage Beratungsdauer");
 		
-		// ******************** EXPORT ****************************
 		if ($valArray['statsexport'] == 'Statistik exportieren') {
 			 
 			$filename = 'stats_' . date('Y-m-d_H-i', time()) . '.csv';
@@ -255,7 +291,18 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function listangemeldetAction()
     {
     	$valArray = $this->request->getArguments();
-
+    	//\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($valArray);
+    	if(empty($valArray['orderby'])) {
+    		$orderby = 'crdate';
+    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'listangemeldetorder', 'DESC');
+    		$order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listangemeldetorder');
+    	} else {
+    		$orderby = $valArray['orderby'];
+    		$order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listangemeldetorder');
+    		$order = $order == 'DESC' ? 'ASC' : 'DESC';
+    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'listangemeldetorder', $order);
+    	}
+		
     	if ($valArray['filteraus']) {
     		$GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', NULL);
     		$GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', NULL);
@@ -270,7 +317,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	$fort = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fort');
     	$fland = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fland');
     	if ($fname == '' && $fort == '' && $fland == '') {
-    		$teilnehmers = $this->teilnehmerRepository->findAllOrder4List(); 
+    		$teilnehmers = $this->teilnehmerRepository->findAllOrder4List($orderby, $order); 
     	} else {
     		$teilnehmers = $this->teilnehmerRepository->searchTeilnehmer($fname, $fort, $fland);
     		$this->view->assign('filtername', $fname);
@@ -298,7 +345,18 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     {
     	$valArray = $this->request->getArguments();
     
-    	$teilnehmers = $this->teilnehmerRepository->findhidden4list();
+    	if(empty($valArray['orderby'])) {
+    		$orderby = 'crdate';
+    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'listdeletedorder', 'DESC');
+    		$order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listdeletedorder');
+    	} else {
+    		$orderby = $valArray['orderby'];
+    		$order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listdeletedorder');
+    		$order = $order == 'DESC' ? 'ASC' : 'DESC';
+    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'listdeletedorder', $order);
+    	}
+    	
+    	$teilnehmers = $this->teilnehmerRepository->findhidden4list($orderby, $order);
     	 
     	for($j=0; $j < count($teilnehmers); $j++) {
     		$anz = $this->teilnehmerRepository->findDublette($teilnehmers[$j]->getNachname(), $teilnehmers[$j]->getVorname());
@@ -320,6 +378,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	$beratungen = $this->beratungRepository->findByTeilnehmer($teilnehmer->getUid());
     	$this->view->assign('teilnehmer', $teilnehmer);
     	$this->view->assign('beratungen', $beratungen);
+    	
+    	$historie = $this->historieRepository->findByTeilnehmerOrdered($teilnehmer->getUid());
+    	$this->view->assign('historie', $historie);
     	
     	$valArray = $this->request->getArguments();
     	$this->view->assign('calleraction', $valArray['calleraction']);
@@ -382,6 +443,76 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function updateAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
+    	$username = $GLOBALS['TSFE']->fe_user->user['username'];
+    	$berater = $this->beraterRepository->findOneByKuerzel($username);
+    	if($berater == NULL) {
+    		$berater = $this->beraterRepository->findOneByKuerzel('admin');
+    	}
+		    	
+		$this->createHistory($teilnehmer, $berater, "niqchiffre");
+		$this->createHistory($teilnehmer, $berater, "schonberaten");
+		$this->createHistory($teilnehmer, $berater, "schonberatenvon");
+		$this->createHistory($teilnehmer, $berater, "nachname");
+		$this->createHistory($teilnehmer, $berater, "vorname");
+		$this->createHistory($teilnehmer, $berater, "plz");
+		$this->createHistory($teilnehmer, $berater, "ort");
+		$this->createHistory($teilnehmer, $berater, "email");
+		$this->createHistory($teilnehmer, $berater, "telefon");
+		$this->createHistory($teilnehmer, $berater, "lebensalter");
+		$this->createHistory($teilnehmer, $berater, "geburtsland");
+		$this->createHistory($teilnehmer, $berater, "geschlecht");
+		$this->createHistory($teilnehmer, $berater, "ersteStaatsangehoerigkeit");
+		$this->createHistory($teilnehmer, $berater, "zweiteStaatsangehoerigkeit");
+		$this->createHistory($teilnehmer, $berater, "einreisejahr");
+		$this->createHistory($teilnehmer, $berater, "wohnsitzDeutschland");
+		$this->createHistory($teilnehmer, $berater, "wohnsitzNeinIn");
+		$this->createHistory($teilnehmer, $berater, "deutschkenntnisse");
+		$this->createHistory($teilnehmer, $berater, "zertifikatdeutsch");
+		$this->createHistory($teilnehmer, $berater, "zertifikatSprachniveau");
+		$this->createHistory($teilnehmer, $berater, "abschlussart1");
+		$this->createHistory($teilnehmer, $berater, "abschlussart2");
+		$this->createHistory($teilnehmer, $berater, "erwerbsland1");
+		$this->createHistory($teilnehmer, $berater, "dauerBerufsausbildung1");
+		$this->createHistory($teilnehmer, $berater, "abschlussjahr1");
+		$this->createHistory($teilnehmer, $berater, "ausbildungsinstitution1");
+		$this->createHistory($teilnehmer, $berater, "ausbildungsort1");
+		$this->createHistory($teilnehmer, $berater, "abschluss1");
+		$this->createHistory($teilnehmer, $berater, "berufserfahrung1");
+		$this->createHistory($teilnehmer, $berater, "ausbildungsfremdeberufserfahrung1");
+		$this->createHistory($teilnehmer, $berater, "deutscherReferenzberuf1");
+		$this->createHistory($teilnehmer, $berater, "wunschberuf1");
+		$this->createHistory($teilnehmer, $berater, "erwerbsland2");
+		$this->createHistory($teilnehmer, $berater, "dauerBerufsausbildung2");
+		$this->createHistory($teilnehmer, $berater, "abschlussjahr2");
+		$this->createHistory($teilnehmer, $berater, "ausbildungsinstitution2");
+		$this->createHistory($teilnehmer, $berater, "ausbildungsort2");
+		$this->createHistory($teilnehmer, $berater, "abschluss2");
+		$this->createHistory($teilnehmer, $berater, "berufserfahrung2");
+		$this->createHistory($teilnehmer, $berater, "ausbildungsfremdeberufserfahrung2");
+		$this->createHistory($teilnehmer, $berater, "deutscherReferenzberuf2");
+		$this->createHistory($teilnehmer, $berater, "wunschberuf2");
+		$this->createHistory($teilnehmer, $berater, "erwerbsstatus");
+		$this->createHistory($teilnehmer, $berater, "leistungsbezugjanein");
+		$this->createHistory($teilnehmer, $berater, "leistungsbezug");
+		$this->createHistory($teilnehmer, $berater, "einwilligungdatenanAA");
+		$this->createHistory($teilnehmer, $berater, "einwilligungdatenanAAdatum");
+		$this->createHistory($teilnehmer, $berater, "einwilligungdatenanAAmedium");
+		$this->createHistory($teilnehmer, $berater, "name_beraterAA");
+		$this->createHistory($teilnehmer, $berater, "kontakt_beraterAA");
+		$this->createHistory($teilnehmer, $berater, "kundennummerAA");
+		$this->createHistory($teilnehmer, $berater, "aufenthaltsstatus");
+		$this->createHistory($teilnehmer, $berater, "aufenthaltsstatusfreitext");
+		$this->createHistory($teilnehmer, $berater, "fruehererAntrag");
+		$this->createHistory($teilnehmer, $berater, "fruehererAntragReferenzberuf");
+		$this->createHistory($teilnehmer, $berater, "fruehererAntragInstitution");
+		$this->createHistory($teilnehmer, $berater, "bescheidfruehererAnerkennungsantrag");
+		$this->createHistory($teilnehmer, $berater, "nameBeratungsstelle");
+		$this->createHistory($teilnehmer, $berater, "notizen");
+
+		// Daten sofort in die Datenbank schreiben
+		$persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+		$persistenceManager->persistAll();
+		
     	$bstatus = $this->checkberatungsstatus($teilnehmer);
     	$teilnehmer->setBeratungsstatus($bstatus);
     	$this->teilnehmerRepository->update($teilnehmer);
@@ -392,6 +523,29 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	
     	$valArray = $this->request->getArguments();
     	$this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, null);
+    }
+    
+    /**
+     * createHistory
+     *
+     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
+     * @param \Ud\Iqtp13db\Domain\Model\Berater $berater
+     * @param string $property
+     * @return void
+     */
+    public function createHistory(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer, \Ud\Iqtp13db\Domain\Model\Berater $berater, $property)
+    {
+    	if($teilnehmer->_isDirty($property)) {
+    		$history = new \Ud\Iqtp13db\Domain\Model\Historie();
+    
+    		$history->setTeilnehmer($teilnehmer);
+    		$history->setProperty($property);
+    		$history->setOldvalue($teilnehmer->_getCleanProperty($property));
+    		$history->setNewvalue($teilnehmer->_getProperty($property));
+    		$history->setBerater($berater);
+
+    		$this->historieRepository->add($history);
+    	}    	
     }
     
     /**
@@ -970,8 +1124,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	$teilnehmer->setDeutschkenntnisse($tnseite2->getDeutschkenntnisse());
     	$teilnehmer->setZertifikatSprachniveau($tnseite2->getZertifikatSprachniveau());
     	$teilnehmer->setZertifikatdeutsch($tnseite2->getZertifikatdeutsch());
-    	$teilnehmer->setAbschlussartA($tnseite2->getAbschlussartA());
-    	$teilnehmer->setAbschlussartH($tnseite2->getAbschlussartH());
+    	$teilnehmer->setAbschlussart1($tnseite2->getAbschlussart1());
+    	$teilnehmer->setAbschlussart2($tnseite2->getAbschlussart2());
     	$teilnehmer->setErwerbsland1($tnseite2->getErwerbsland1());
     	$teilnehmer->setDauerBerufsausbildung1($tnseite2->getDauerBerufsausbildung1());
     	$teilnehmer->setAbschlussjahr1($tnseite2->getAbschlussjahr1());

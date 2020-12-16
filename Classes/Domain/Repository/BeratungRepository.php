@@ -17,11 +17,20 @@ namespace Ud\Iqtp13db\Domain\Repository;
  */
 class BeratungRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
-	public function findAllOrder4List($beratungsstatus)
+	/**
+	 * @param $beratungsstatus
+	 * @param $orderby
+	 * @param $order
+	 */
+	public function findAllOrder4List($beratungsstatus, $orderby, $order)
 	{
 		$query = $this->createQuery();		
 		$query->matching($query->logicalAnd($query->like('teilnehmer.beratungsstatus', $beratungsstatus), $query->logicalAnd($query->greaterThan('teilnehmer.verification_date', 0))));
-		$query->setOrderings(array('crdate' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING));
+	   		if($order == 'DESC') {
+        	$query->setOrderings(array($orderby => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING));
+        } else {
+        	$query->setOrderings(array($orderby => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING));
+        }
 		$query = $query->execute();
 		return $query;
 	}

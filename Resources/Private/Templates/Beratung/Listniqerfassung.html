@@ -11,17 +11,17 @@
 <f:widget.paginate objects="{beratungen}" as="beratungenpart" configuration="{itemsPerPage: 50, insertAbove: 1}"> 
 	<table  class="tx_iqtp13db" >
 		<tr>
-			<th><f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" /></th>
-			<th><f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" /></th>
-			<th>Bereits<br>beraten</th>
-			<th><f:translate key="anmeldedatum" /></th>
-			<th><f:translate key="tx_iqtp13db_domain_model_teilnehmer.plz" />/<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ort" /></th>
-			<th>Früherer<br>Bescheid</th>
-			<th>Leistung</th>
-			<th><f:translate key="tx_iqtp13db_domain_model_beratung.berater" /></th>
-			<th><f:translate key="tx_iqtp13db_domain_model_beratung.datum" /></th>
-			<th>Referenzberuf</th>
-			<th>Fertig</th>
+			<th><f:link.action action="listniqerfassung" arguments="{orderby : 'teilnehmer.nachname'}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" /></f:link.action></th>
+			<th><f:link.action action="listniqerfassung" arguments="{orderby : 'teilnehmer.vorname'}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" /></f:link.action></th>
+			<th><f:link.action action="listniqerfassung" arguments="{orderby : 'teilnehmer.schonberaten'}">Bereits<br>beraten</f:link.action></th>
+			<th><f:link.action action="listniqerfassung" arguments="{orderby : 'teilnehmer.crdate'}"><f:translate key="anmeldedatum" /></f:link.action></th>
+			<th><f:link.action action="listniqerfassung" arguments="{orderby : 'teilnehmer.ort'}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.plz" />/<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ort" /></f:link.action></th>
+			<th><f:link.action action="listniqerfassung" arguments="{orderby : 'teilnehmer.bescheidfruehererAnerkennungsantrag'}">Früherer<br>Bescheid</f:link.action></th>
+			<th><f:link.action action="listniqerfassung" arguments="{orderby : 'teilnehmer.leistungsbezugjanein'}">Leistung</f:link.action></th>
+			<th><f:link.action action="listniqerfassung" arguments="{orderby : 'berater.kuerzel'}"><f:translate key="tx_iqtp13db_domain_model_beratung.berater" /></f:link.action></th>
+			<th><f:link.action action="listniqerfassung" arguments="{orderby : 'datum'}"><f:translate key="tx_iqtp13db_domain_model_beratung.datum" /></f:link.action></th>
+			<th><f:link.action action="listniqerfassung" arguments="{orderby : 'teilnehmer.deutscherReferenzberuf1'}">Referenzberuf</f:link.action></th>
+			<th><f:link.action action="listniqerfassung" arguments="{orderby : 'erstberatungabgeschlossen'}">Fertig</f:link.action></th>
 			<th> </th>
 			<th> </th>
 			<th> </th>

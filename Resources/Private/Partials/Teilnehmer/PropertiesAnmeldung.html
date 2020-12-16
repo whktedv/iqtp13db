@@ -142,9 +142,18 @@
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.abschlussart" />
 			</label>
 				<span class="propdat">
-				<f:if condition='{teilnehmer.abschlussartA} == 1'><f:then><f:translate key="abschlussartoption1" /></f:then></f:if>	&nbsp;
-				<f:if condition='{teilnehmer.abschlussartH} == 1'><f:then><f:translate key="abschlussartoption2" /></f:then></f:if>	
-				</span>
+				<f:for each="{teilnehmer.abschlussart1}" as="abschlussart1">
+					<f:for each="{settings.abschlussart}" as="text" key="wert">
+						{f:if(condition: '{abschlussart1} == {wert}', then: '{text}&nbsp;')}
+					</f:for>
+				</f:for>
+				;
+				<f:for each="{teilnehmer.abschlussart2}" as="abschlussart2">
+					<f:for each="{settings.abschlussart}" as="text" key="wert">
+						{f:if(condition: '{abschlussart2} == {wert}', then: '{text}&nbsp;')}
+					</f:for>
+				</f:for>
+				</span>		
 		</div>
 		<div class="tp13_formdivwebapp">
 				<label for="erwerbsland">

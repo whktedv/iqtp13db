@@ -13,7 +13,8 @@ call_user_func(
                 'Beratung' => 'listerstberatung, listniqerfassung, listarchiv, show, new, create, edit, update, delete',
         		'Folgekontakt' => 'list, show, new, create, edit, update, delete',
                 'Dokument' => 'list, saveFileTeilnehmer, deleteFileTeilnehmer',
-                'Berater' => 'list, show, new, create, edit, update, delete'
+                'Berater' => 'list, show, new, create, edit, update, delete',
+        		'Historie' => 'list'
             ], 
 
             // non-cacheable actions
@@ -22,7 +23,8 @@ call_user_func(
                 'Beratung' => 'listerstberatung, listniqerfassung, listarchiv, show, new, create, edit, update, delete',
         		'Folgekontakt' => 'list, show, new, create, edit, update, delete',
                 'Dokument' => 'list, saveFileTeilnehmer, deleteFileTeilnehmer',
-                'Berater' => 'list, show, new, create, edit, update, delete'
+                'Berater' => 'list, show, new, create, edit, update, delete',
+        		'Historie' => 'list'
             ]
         );
 

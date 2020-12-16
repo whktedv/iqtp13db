@@ -16,5 +16,10 @@
 
 <f:link.action class="linkbuttons" action="edit" arguments="{beratung:beratung, calleraction: calleraction, callercontroller : callercontroller}">Bearbeiten</f:link.action>
 <f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}">Zurück zur Liste</f:link.action>
+<hr>
+
+<h1>Anmeldedaten</h1>
+<f:render partial="Teilnehmer/Properties" arguments="{teilnehmer:teilnehmer, historie : historie}" />
+<f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}">Zurück zur Liste</f:link.action>
 
 </f:section>

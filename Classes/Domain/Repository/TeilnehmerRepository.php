@@ -49,24 +49,37 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     }
 
     /**
-     * @param $uid
+     * @param $orderby
+     * @param $order
      */
-    public function findhidden4list()
+    public function findhidden4list($orderby, $order)
     {
     	$query = $this->createQuery();
     	$query->getQuerySettings()->setIgnoreEnableFields(TRUE);
     	$query->getQuerySettings()->setEnableFieldsToBeIgnored(array('disabled', 'hidden'));
     	$query->matching($query->like('hidden', '1'));
-    	$query->setOrderings(array('crdate' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING));
+   		if($order == 'DESC') {
+        	$query->setOrderings(array($orderby => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING));
+        } else {
+        	$query->setOrderings(array($orderby => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING));
+        }
     	$query = $query->execute();
     	return $query;
     }
-    
-    public function findAllOrder4List()
+
+    /**
+     * @param $orderby
+     * @param $order
+     */
+    public function findAllOrder4List($orderby, $order)
     {
         $query = $this->createQuery();        
         $query->matching($query->logicalOr($query->like('beratungsstatus', '0'), $query->like('beratungsstatus', '1')));        
-        $query->setOrderings(array('crdate' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING));
+        if($order == 'DESC') {
+        	$query->setOrderings(array($orderby => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING));
+        } else {
+        	$query->setOrderings(array($orderby => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING));
+        }
         $query = $query->execute();
         return $query;
     }

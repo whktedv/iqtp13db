@@ -175,18 +175,18 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $zertifikatSprachniveau = '';
     
 	/**
-	 * Ausbildungsabschluss
+	 * Abschlussart1
 	 *
-	 * @var bool
+	 * @var string
 	 */
-	protected $abschlussartA = FALSE;
+	protected $abschlussart1 = '';
 
 	/**
-	 * Hochschulabschluss
+	 * Abschlussart2
 	 *
-	 * @var bool
+	 * @var string
 	 */
-	protected $abschlussartH = FALSE;
+	protected $abschlussart2 = '';
     
 	/**
 	 * Erwerbsland
@@ -450,8 +450,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var string
      */
     protected $notizen = '';
-    
- 
+   
     /**
      * Einwilligung Datenübermittlung
      *
@@ -494,11 +493,15 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $hidden;
   
     /**
-     * __construct
+     * initializes this object
+     *
+     * @param array $abschlussart1
+     * @param array $abschlussart2
      */
-    public function __construct()
-    {
-        $this->initVerificationCode();
+    public function __construct(array $abschlussart1 = array(), array $abschlussart2 = array()) {
+    	$this->setAbschlussart1($abschlussart1);
+    	$this->setAbschlussart2($abschlussart2);
+    	$this->initVerificationCode();
     }
     
      /**
@@ -961,46 +964,46 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->zertifikatSprachniveau = $zertifikatSprachniveau;
     }
 
-    /**
-     * Returns the abschlussartA
+/**
+     * Returns the abschlussart1
      * 
-     * @return int $abschlussartA
+     * @return array $abschlussart1
      */
-    public function getAbschlussartA()
+    public function getAbschlussart1()
     {
-        return $this->abschlussartA;
+        return explode(',', $this->abschlussart1);
     }
 
     /**
-     * Sets the abschlussartA
+     * Sets the abschlussart1
      * 
-     * @param int $abschlussartA
+     * @param array $abschlussart1
      * @return void
      */
-    public function setAbschlussartA($abschlussartA)
+    public function setAbschlussart1(array $abschlussart1)
     {
-        $this->abschlussartA = $abschlussartA;
+        $this->abschlussart1 = implode(',', $abschlussart1);
     }
 
     /**
-     * Returns the abschlussartH
+     * Returns the abschlussart2
      * 
-     * @return int $abschlussartH
+     * @return array $abschlussart2
      */
-    public function getAbschlussartH()
+    public function getAbschlussart2()
     {
-        return $this->abschlussartH;
+        return explode(',', $this->abschlussart2);
     }
 
     /**
-     * Sets the abschlussartH
+     * Sets the abschlussart2
      * 
-     * @param int $abschlussartH
+     * @param array $abschlussart2
      * @return void
      */
-    public function setAbschlussartH($abschlussartH)
+    public function setAbschlussart2(array $abschlussart2)
     {
-        $this->abschlussartH = $abschlussartH;
+        $this->abschlussart2 = implode(',', $abschlussart2);
     }
 
     /**
