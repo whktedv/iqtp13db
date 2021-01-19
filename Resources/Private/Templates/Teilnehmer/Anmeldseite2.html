@@ -3,6 +3,14 @@
 <f:section name="main">
 <h1><f:translate key="fragebogen" /> 2 / 4</h1>
 
+<f:form.validationResults for="{object}">
+	<f:if condition="{validationResults.flattenedErrors}">
+		<div class="error">
+			&nbsp;<b>Bitte prüfen Sie die rot markierten Felder / Please check the red highlighted fields.</b>
+		</div>
+	</f:if>
+</f:form.validationResults>
+
 <f:flashMessages />
 <f:form action="anmeldseite2redirect" name="tnseite2" object="{tnseite2}">
 		<f:render partial="Teilnehmer/FormFieldsAnmeldung2" arguments="{_all}" />

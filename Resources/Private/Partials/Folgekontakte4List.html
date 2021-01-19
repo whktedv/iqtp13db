@@ -1,14 +1,14 @@
 <tr>
-	<td class="fktd" colspan="13"><b>Folgekontakte</b>
-		<table class="fktable">
+	<td class="fktd" colspan="13"><span class="togglebutton" id="fk{beratung.teilnehmer.uid}" onclick="showFolgekontakt({beratung.teilnehmer.uid});">Folgekontakte</span>
+		<table class="fktable" id="fkt{beratung.teilnehmer.uid}">
 			<tr>
 				<th>Datum</th>
-				<th>Berater</th>
+				<th>Berater*in</th>
 				<th>Inhalt der Beratung</th>
 				<th>Bearbeiten</th>
 				<th>Löschen</th>
 			</tr>
-
+ 
 			<f:for each="{folgekontakte}" as="folgekontakt" iteration="itera">
 				<f:if condition="{folgekontakt.teilnehmer.uid} == {beratung.teilnehmer.uid}">
 					<f:then>

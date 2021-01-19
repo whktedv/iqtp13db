@@ -1,10 +1,10 @@
 <div class="fframe">
 		<div class="tp13_formdivwebapp">
 			<label for="einwilligung">
-				Einwilligung
-			</label>
-				<f:form.checkbox id="ein1" property="einwilligung" value="1" />
-		</div>
+				Einwilligung&nbsp;<f:form.checkbox id="ein1" property="einwilligung" value="1" />
+			</label>				
+				<span class="einwilligungtext">Dem Ratsuchenden ggf. die <a href="https://staging.iq-netzwerk-nrw.de/1/datenschutz-und-einwilligung/" target="_blank">Informationen zur Datenverarbeitung</a> vorlesen.</span>			
+		</div>		
 		<div class="tp13_formdivwebapp">
 			<label for="schonberaten">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.schonberaten" />
@@ -121,7 +121,7 @@
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus" />
 			</label>
 			<div class="tp13_formdivwebappmultiradio">
-			<span id="toggleallaufenthaltsstatus" style="color: blue;">zeige alle</span>
+			<span class="togglebutton" id="toggleallaufenthaltsstatus">Alle ein-/ausblenden</span>
 				<f:for each="{settings.aufenthaltsstatus}" as="text" key="wert" iteration="iter">
 					<div class="tp13_formdivwebappradio" id="divaufenthaltsstatusradio{iter.index}">	
 						<f:form.radio property="aufenthaltsstatus" value="{wert}" checked="{teilnehmer.aufenthaltsstatus} == {wert}" id="aufenthaltsstatusradio{iter.index}"/><span class="abschlussradiotext">{text}</span>
@@ -240,8 +240,8 @@
 			<label for="erwerbsstatus" class="tp13_options">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.erwerbsstatus" /></span>
 			</label>			
-			<div class="tp13_formdivwebappmultiradio">
-				<span id="toggleallerwerbsstatus" style="color: blue;">zeige alle</span>
+			<div class="tp13_formdivwebappmultiradio">				
+				<span class="togglebutton" id="toggleallerwerbsstatus">Alle ein-/ausblenden</span>
 				<f:for each="{settings.erwerbsstatus}" as="text" key="wert" iteration="iter">
 					<div class="tp13_formdivwebappradio" id="diverwerbsstatusradio{iter.index}">
 						<f:form.radio property="erwerbsstatus" value="{wert}" checked="{teilnehmer.erwerbsstatus} == {wert}" id="erwerbsstatusradio{iter.index}"/><span class="abschlussradiotext">{text}</span>
@@ -312,6 +312,82 @@
 		</div>				
 </div>
 
+  <div class="fframe"><h2>Datenweitergabe anerkennende Stelle</h2>
+    <div class="tp13_formdivwebapp">
+      <label for="einwAnerkstelle" class="tp13_options">
+        <f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstelle" />
+        </label>
+        <div class="tp13_formdivwebappradio"><f:form.radio id="opteinwAnerkstelle1" property="einwAnerkstelle" value="1" /><span class="abschlussradiotext"><f:translate key="ja" /></span></div>
+        <div class="tp13_formdivwebappradio"><f:form.radio id="opteinwAnerkstelle2" property="einwAnerkstelle" value="2" /><span class="abschlussradiotext"><f:translate key="nein" /></span></div>
+        </div>
+  		<div class="tp13_formdivwebapp">
+  			<label for="einwAnerkstelledatum">
+  				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstelledatum" />
+  			</label>
+  				<f:form.textfield class="datumtextfield" property="einwAnerkstelledatum" value="{teilnehmer.einwAnerkstelledatum}" id="datepicker3" />				
+  		</div>
+  		<div class="tp13_formdivwebapp">
+  			<label for="einwAnerkstellemedium">
+  				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstellemedium" />
+  			</label>
+  			<div class="tp13_formdivwebappmultiradio">
+  				<div class="tp13_formdivwebappradio"><f:form.checkbox property="einwAnerkstellemedium" name="einwAnerkstellemedium1" value="{settings.einwilligungaamedium.1}" />{settings.einwilligungaamedium.1}</div>
+  				<div class="tp13_formdivwebappradio"><f:form.checkbox property="einwAnerkstellemedium" name="einwAnerkstellemedium2" value="{settings.einwilligungaamedium.2}" />{settings.einwilligungaamedium.2}</div>
+  				<div class="tp13_formdivwebappradio"><f:form.checkbox property="einwAnerkstellemedium" name="einwAnerkstellemedium3" value="{settings.einwilligungaamedium.3}" />{settings.einwilligungaamedium.3}</div>
+  			</div>				
+  		</div>
+  		<div class="tp13_formdivwebapp">
+  			<label for="einwAnerkstellename">
+  				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstellename" />
+  			</label>
+  				<f:form.textfield property="einwAnerkstellename" />
+  		</div>		
+  		<div class="tp13_formdivwebapp">
+  			<label for="einwAnerkstellekontakt">
+  				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstellekontakt" />
+  			</label>
+  				<f:form.textfield property="einwAnerkstellekontakt" />
+  		</div>		  					
+  </div> 
+      
+  <div class="fframe"><h2>Datenweitergabe weitere Person</h2>
+    <div class="tp13_formdivwebapp">
+      <label for="einwPerson" class="tp13_options">
+        <f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_person" />
+        </label>
+        <div class="tp13_formdivwebappradio"><f:form.radio id="opteinwPerson1" property="einwPerson" value="1" /><span class="abschlussradiotext"><f:translate key="ja" /></span></div>
+        <div class="tp13_formdivwebappradio"><f:form.radio id="opteinwPerson2" property="einwPerson" value="2" /><span class="abschlussradiotext"><f:translate key="nein" /></span></div>
+        </div>
+  		<div class="tp13_formdivwebapp">
+  			<label for="einwPersondatum">
+  				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_persondatum" />
+  			</label>
+  				<f:form.textfield class="datumtextfield" property="einwPersondatum" value="{teilnehmer.einwPersondatum}" id="datepicker4" />				
+  		</div>
+  		<div class="tp13_formdivwebapp">
+  			<label for="einwPersonmedium">
+  				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_personmedium" />
+  			</label>
+  			<div class="tp13_formdivwebappmultiradio">
+  				<div class="tp13_formdivwebappradio"><f:form.checkbox property="einwPersonmedium" name="einwPersonmedium1" value="{settings.einwilligungaamedium.1}" />{settings.einwilligungaamedium.1}</div>
+  				<div class="tp13_formdivwebappradio"><f:form.checkbox property="einwPersonmedium" name="einwPersonmedium2" value="{settings.einwilligungaamedium.2}" />{settings.einwilligungaamedium.2}</div>
+  				<div class="tp13_formdivwebappradio"><f:form.checkbox property="einwPersonmedium" name="einwPersonmedium3" value="{settings.einwilligungaamedium.3}" />{settings.einwilligungaamedium.3}</div>
+  			</div>				
+  		</div>
+  		<div class="tp13_formdivwebapp">
+  			<label for="einwPersonname">
+  				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_personname" />
+  			</label>
+  				<f:form.textfield property="einwPersonname" />
+  		</div>		
+  		<div class="tp13_formdivwebapp">
+  			<label for="einwPersonkontakt">
+  				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_personkontakt" />
+  			</label>
+  				<f:form.textfield property="einwPersonkontakt" />
+  		</div>		  					
+  </div>
+  
 <div class="fframe"><h2><f:translate key="fruehereantraege" /></h2>
 		<div class="tp13_formdivwebapp">
 			<label for="fruehererAntrag" class="tp13_options">
@@ -350,7 +426,7 @@
 			</label>
 			
 			<div class="tp13_formdivwebappmultiradio">
-				<span id="toggleallberatungsstelle" style="color: blue;">zeige alle</span>
+				<span class="togglebutton" id="toggleallberatungsstelle">Alle ein-/ausblenden</span>
 				<f:for each="{settings.beratungsstelle}" as="text" key="wert" iteration="iter">
 					<div class="tp13_formdivwebappradio" id="divberatungsstelleradio{iter.index}">
 						<f:form.radio property="nameBeratungsstelle" value="{wert}" checked="{teilnehmer.nameBeratungsstelle} == {wert}" id="beratungsstelleradio{iter.index}"/><span class="abschlussradiotext">{text}</span>

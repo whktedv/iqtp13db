@@ -4,6 +4,16 @@
 </f:section>
 
 <f:section name="main">
+<h1>Filter</h1>
+<f:form method="post" controller="Beratung" action="listerstberatung" name="listerstberatung"  noCacheHash="true" >
+		Name: <f:form.textfield size="20" value="{filtername}" name="name" />&nbsp;&nbsp;
+		Ort: <f:form.textfield size="20" value="{filterort}" name="ort" />&nbsp;&nbsp;
+		Beruf: <f:form.textfield size="20" value="{filterberuf}" name="beruf" />&nbsp;&nbsp;
+		Geburtsland: <f:form.textfield value="{filterland}" size="20" name="land" />&nbsp;&nbsp;&nbsp;&nbsp;
+		<f:if condition="{filteron}"><f:then><f:form.button name="filteraus" value="1" >Filter löschen</f:form.button></f:then></f:if>
+		<f:form.submit name="filteran" value="Filtern" />			
+</f:form>
+<br>
 <f:flashMessages />
 <h1>Liste Erstberatung: {beratungen -> f:count()} Einträge </h1>
 
@@ -21,7 +31,6 @@
 			<th><f:link.action action="listerstberatung" arguments="{orderby : 'datum'}"><f:translate key="tx_iqtp13db_domain_model_beratung.datum" /></f:link.action></th>
 			<th><f:link.action action="listerstberatung" arguments="{orderby : 'teilnehmer.deutscherReferenzberuf1'}">Referenzberuf</f:link.action></th>
 			<th><f:link.action action="listerstberatung" arguments="{orderby : 'erstberatungabgeschlossen'}">Fertig</f:link.action></th>
-			<th> </th>
 			<th> </th>
 			<th> </th>
 		</tr>
@@ -44,14 +53,10 @@
 					<f:format.date format="d.m.Y">{beratung.erstberatungabgeschlossen}</f:format.date>			
 				</f:then>
 				</f:if>				
-				</td>
-				<td><f:link.action class="linkbuttons" action="edit" arguments="{beratung : beratung, calleraction: calleraction, callercontroller : callercontroller}">Bearbeiten</f:link.action></td>
+				</td>				
 				<td><f:link.action class="linkbuttons" action="edit" arguments="{teilnehmer : beratung.teilnehmer, calleraction: calleraction, callercontroller : callercontroller}" controller="Teilnehmer">Anmeldedaten</f:link.action></td>
-				<td><f:link.action class="linkbuttons" action="new" arguments="{beratung : beratung, calleraction: calleraction, callercontroller : callercontroller}" controller="Folgekontakt">Folgekontakt</f:link.action></td>
+				<td><f:link.action class="linkbuttons" action="edit" arguments="{beratung : beratung, calleraction: calleraction, callercontroller : callercontroller}">Erstberatung</f:link.action></td>
 			</tr>
-			<f:if condition="{anzfolgekontakte.{it.index}} != 0"><f:then>
-				<f:render partial="Folgekontakte4List" arguments="{folgekontakte : folgekontakte, beratung : beratung, calleraction: calleraction, callercontroller : callercontroller}" />
-			</f:then></f:if>
 		</f:for>
 	</table>
 </f:widget.paginate> 

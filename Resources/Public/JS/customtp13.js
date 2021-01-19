@@ -14,6 +14,11 @@ function btncancel_Click() {
     }
 }
 
+function showFolgekontakt(uid) {
+    $('table#fkt' + uid).toggle();
+}
+
+
 $(document).ready(function() {
 	$('#datepicker1').datepicker({
         showButtonPanel : true,
@@ -25,6 +30,16 @@ $(document).ready(function() {
         firstDay: 1,
         dateFormat : "dd.mm.yy"
     });
+    $('#datepicker3').datepicker({
+        showButtonPanel : true,
+        firstDay: 1,
+        dateFormat : "dd.mm.yy"
+    }); 
+    $('#datepicker4').datepicker({
+        showButtonPanel : true,
+        firstDay: 1,
+        dateFormat : "dd.mm.yy"
+    }); 
 });
 
 jQuery(function ($) {

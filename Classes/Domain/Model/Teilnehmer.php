@@ -389,6 +389,76 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $kontaktBeraterAA = '';
     
     /**
+     * einwAnerkstelle
+     *
+     * @var int
+     */
+    protected $einwAnerkstelle = 0;
+    
+    /**
+     * einwAnerkstelledatum
+     *
+     * @var string
+     */
+    protected $einwAnerkstelledatum = '';
+    
+    /**
+     * einwAnerkstellemedium
+     *
+     * @var string
+     */
+    protected $einwAnerkstellemedium = '';
+    
+    /**
+     * einwAnerkstellename
+     *
+     * @var string
+     */
+    protected $einwAnerkstellename = '';
+    
+    /**
+     * einwAnerkstellekontakt
+     *
+     * @var string
+     */
+    protected $einwAnerkstellekontakt = '';
+    
+    /**
+     * einwPerson
+     *
+     * @var int
+     */
+    protected $einwPerson = 0;
+    
+    /**
+     * einwPersondatum
+     *
+     * @var string
+     */
+    protected $einwPersondatum = '';
+    
+    /**
+     * einwPersonmedium
+     *
+     * @var string
+     */
+    protected $einwPersonmedium = '';
+    
+    /**
+     * einwPersonname
+     *
+     * @var string
+     */
+    protected $einwPersonname = '';
+    
+    /**
+     * einwPersonkontakt
+     *
+     * @var string
+     */
+    protected $einwPersonkontakt = '';
+    
+    /**
      * kundennummerAA
      *
      * @var string
@@ -1594,6 +1664,216 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->kontaktBeraterAA = $kontaktBeraterAA;
     }
 
+    /**
+     * Returns the einwAnerkstelle
+     *
+     * @return int $einwAnerkstelle
+     */
+    public function getEinwAnerkstelle()
+    {
+        return $this->einwAnerkstelle;
+    }
+    
+    /**
+     * Sets the einwAnerkstelle
+     *
+     * @param int $einwAnerkstelle
+     * @return void
+     */
+    public function setEinwAnerkstelle($einwAnerkstelle)
+    {
+        $this->einwAnerkstelle = $einwAnerkstelle;
+    }
+    
+    /**
+     * Returns the einwAnerkstelledatum
+     *
+     * @return string $einwAnerkstelledatum
+     */
+    public function getEinwAnerkstelledatum()
+    {
+        return $this->einwAnerkstelledatum;
+    }
+    
+    /**
+     * Sets the einwAnerkstelledatum
+     *
+     * @param string $einwAnerkstelledatum
+     * @return void
+     */
+    public function setEinwAnerkstelledatum($einwAnerkstelledatum)
+    {
+        $this->einwAnerkstelledatum = $einwAnerkstelledatum;
+    }
+    
+    /**
+     * Returns the einwAnerkstellemedium
+     *
+     * @return string $einwAnerkstellemedium
+     */
+    public function getEinwAnerkstellemedium()
+    {
+        return $this->einwAnerkstellemedium;
+    }
+    
+    /**
+     * Sets the einwAnerkstellemedium
+     *
+     * @param string $einwAnerkstellemedium
+     * @return void
+     */
+    public function setEinwAnerkstellemedium($einwAnerkstellemedium)
+    {
+        $this->einwAnerkstellemedium = $einwAnerkstellemedium;
+    }
+    
+    /**
+     * Returns the einwAnerkstellename
+     *
+     * @return string $einwAnerkstellename
+     */
+    public function getEinwAnerkstellename()
+    {
+        return $this->einwAnerkstellename;
+    }
+    
+    /**
+     * Sets the einwAnerkstellename
+     *
+     * @param string $einwAnerkstellename
+     * @return void
+     */
+    public function setEinwAnerkstellename($einwAnerkstellename)
+    {
+        $this->einwAnerkstellename = $einwAnerkstellename;
+    }
+    
+    /**
+     * Returns the einwAnerkstellekontakt
+     *
+     * @return string $einwAnerkstellekontakt
+     */
+    public function getEinwAnerkstellekontakt()
+    {
+        return $this->einwAnerkstellekontakt;
+    }
+    
+    /**
+     * Sets the einwAnerkstellekontakt
+     *
+     * @param string $einwAnerkstellekontakt
+     * @return void
+     */
+    public function setEinwAnerkstellekontakt($einwAnerkstellekontakt)
+    {
+        $this->einwAnerkstellekontakt = $einwAnerkstellekontakt;
+    }
+    
+    /**
+     * Returns the einwPerson
+     *
+     * @return int $einwPerson
+     */
+    public function getEinwPerson()
+    {
+        return $this->einwPerson;
+    }
+    
+    /**
+     * Sets the einwPerson
+     *
+     * @param int $einwPerson
+     * @return void
+     */
+    public function setEinwPerson($einwPerson)
+    {
+        $this->einwPerson = $einwPerson;
+    }
+    
+    /**
+     * Returns the einwPersondatum
+     *
+     * @return string $einwPersondatum
+     */
+    public function getEinwPersondatum()
+    {
+        return $this->einwPersondatum;
+    }
+    
+    /**
+     * Sets the einwPersondatum
+     *
+     * @param string $einwPersondatum
+     * @return void
+     */
+    public function setEinwPersondatum($einwPersondatum)
+    {
+        $this->einwPersondatum = $einwPersondatum;
+    }
+    
+    /**
+     * Returns the einwPersonmedium
+     *
+     * @return string $einwPersonmedium
+     */
+    public function getEinwPersonmedium()
+    {
+        return $this->einwPersonmedium;
+    }
+    
+    /**
+     * Sets the einwPersonmedium
+     *
+     * @param string $einwPersonmedium
+     * @return void
+     */
+    public function setEinwPersonmedium($einwPersonmedium)
+    {
+        $this->einwPersonmedium = $einwPersonmedium;
+    }
+    
+    /**
+     * Returns the einwPersonname
+     *
+     * @return string $einwPersonname
+     */
+    public function getEinwPersonname()
+    {
+        return $this->einwPersonname;
+    }
+    
+    /**
+     * Sets the einwPersonname
+     *
+     * @param string $einwPersonname
+     * @return void
+     */
+    public function setEinwPersonname($einwPersonname)
+    {
+        $this->einwPersonname = $einwPersonname;
+    }
+    
+    /**
+     * Returns the einwPersonkontakt
+     *
+     * @return string $einwPersonkontakt
+     */
+    public function getEinwPersonkontakt()
+    {
+        return $this->einwPersonkontakt;
+    }
+    
+    /**
+     * Sets the einwPersonkontakt
+     *
+     * @param string $einwPersonkontakt
+     * @return void
+     */
+    public function setEinwPersonkontakt($einwPersonkontakt)
+    {
+        $this->einwPersonkontakt = $einwPersonkontakt;
+    }
+    
     /**
      * Returns the kundennummerAA
      * 

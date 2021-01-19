@@ -68,6 +68,10 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         //\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($this->arguments['beratung']);
         //die;
         
+    	/*
+    	 * PropertyMapping für die multiple ankreuzbaren Checkboxen. 
+    	 * Annehmen eines String-Arrays, das im Setter und Getter des Models je per implode/explode wieder in Strings bzw. Array (of Strings) konvertiert wird
+    	 */ 
         if ($this->arguments->hasArgument('beratung')) {
             $this->arguments->getArgument('beratung')->getPropertyMappingConfiguration()->allowProperties('beratungsart');
             $this->arguments->getArgument('beratung')->getPropertyMappingConfiguration()->setTargetTypeForSubProperty('beratungsart', 'array');
@@ -105,13 +109,13 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
 			$GLOBALS['TSFE']->fe_user->setKey('ses', 'listerstberatungorder', $order);
 		}
 		
-		$beratungen = $this->beratungRepository->findAllOrder4List(2, $orderby, $order); 
-	
+		$beratungen = $this->setfilter(2, $valArray, $orderby, $order);
+			
 		foreach ($beratungen as $key => $bn) {
 			$tn = $bn->getTeilnehmer();
 			$anzfolgekontakte[$key] = count($this->folgekontaktRepository->findByTeilnehmer($tn->getUid()));
 		}
-		
+				
 		$folgekontakte = $this->folgekontaktRepository->findAll();
 		
 		$this->view->assign('anzfolgekontakte', $anzfolgekontakte);
@@ -143,7 +147,7 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
 			$GLOBALS['TSFE']->fe_user->setKey('ses', 'listniqerfassungorder', $order);
 		}
 		
-		$beratungen = $this->beratungRepository->findAllOrder4List(3, $orderby, $order); 
+		$beratungen = $this->setfilter(3, $valArray, $orderby, $order);
 
 		foreach ($beratungen as $key => $bn) {
 			$tn = $bn->getTeilnehmer();
@@ -151,9 +155,6 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
 		}
 		
 		$folgekontakte = $this->folgekontaktRepository->findAll();
-
-		//\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($folgekontakte);
-		//die;
 		
 		$this->view->assign('anzfolgekontakte', $anzfolgekontakte);
 		$this->view->assign('folgekontakte', $folgekontakte);		
@@ -183,7 +184,7 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
 			$GLOBALS['TSFE']->fe_user->setKey('ses', 'listarchivorder', $order);
 		}
 		
-		$beratungen = $this->beratungRepository->findAllOrder4List(4, $orderby, $order); 
+		$beratungen = $this->setfilter(4, $valArray, $orderby, $order);
 		
 		foreach ($beratungen as $key => $bn) {
 			$tn = $bn->getTeilnehmer();
@@ -199,7 +200,7 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
 		$this->view->assign('callercontroller', 'Beratung');
 		
 	}
-	
+	 
     /**
      * action show
      *
@@ -215,8 +216,11 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $teilnehmer = $beratung->getTeilnehmer();        
         $historie = $this->historieRepository->findByTeilnehmerOrdered($teilnehmer->getUid());        
         
+        $folgekontakte = $this->folgekontaktRepository->findByTeilnehmer($teilnehmer->getUid());
+        
         $this->view->assign('teilnehmer', $teilnehmer);
         $this->view->assign('historie', $historie);
+        $this->view->assign('folgekontakte', $folgekontakte);
         
         $valArray = $this->request->getArguments();
         $this->view->assign('calleraction', $valArray['calleraction']);
@@ -259,20 +263,31 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     {  		    	
     	$teilnehmer = $beratung->getTeilnehmer();
     	
-        $this->addFlashMessage('Erstberatung von '.$teilnehmer->getNachname().', '.$teilnehmer->getVorname().' wurde erstellt.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
-        $this->beratungRepository->add($beratung);
-        
-        // Daten sofort in die Datenbank schreiben
-        $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
-        $persistenceManager->persistAll();
-        
-		$teilnehmer = $beratung->getTeilnehmer();
-        $bstatus = $this->checkberatungsstatus($teilnehmer);
-        $teilnehmer->setBeratungsstatus($bstatus);
-        $this->teilnehmerRepository->update($teilnehmer);
-        
-        $valArray = $this->request->getArguments();
-        $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, null);
+    	$tn = $this->beratungRepository->findByTeilnehmer($teilnehmer);
+    	//\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($this->arguments['beratung']);
+    	//die;
+    	if(count($tn) > 0) {
+    		// Erstberatung für TN schon vorhanden
+    		$this->addFlashMessage('Erstberatung von '.$teilnehmer->getNachname().', '.$teilnehmer->getVorname().' schon vorhanden.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+    		$this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, null);
+    		
+    	} else {
+    		//$this->addFlashMessage('Erstberatung von '.$teilnehmer->getNachname().', '.$teilnehmer->getVorname().' wurde erstellt.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+    		$this->beratungRepository->add($beratung);
+    		
+    		// Daten sofort in die Datenbank schreiben
+    		$persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+    		$persistenceManager->persistAll();
+    		
+    		$teilnehmer = $beratung->getTeilnehmer();
+    		$bstatus = $this->checkberatungsstatus($teilnehmer);
+    		$teilnehmer->setBeratungsstatus($bstatus);
+    		$this->teilnehmerRepository->update($teilnehmer);
+    		
+    		$valArray = $this->request->getArguments();
+    		$this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, null);
+    		
+    	}    	
     }
 	
 	 /**
@@ -315,12 +330,12 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     	$teilnehmer = $beratung->getTeilnehmer();
     	
     	if($beratung->getDatum() == '') {
-    		$this->addFlashMessage('Erstberatung von '.$teilnehmer->getNachname().', '.$teilnehmer->getVorname().' gelöscht.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+    		//$this->addFlashMessage('Erstberatung von '.$teilnehmer->getNachname().', '.$teilnehmer->getVorname().' gelöscht.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
     		$this->beratungRepository->remove($beratung);
 
     		$teilnehmer->setBeratungsstatus(1);
     	} else {
-    		$this->addFlashMessage('Erstberatung von '.$teilnehmer->getNachname().', '.$teilnehmer->getVorname().' aktualisiert.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+    		//$this->addFlashMessage('Erstberatung von '.$teilnehmer->getNachname().', '.$teilnehmer->getVorname().' aktualisiert.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
     		$this->beratungRepository->update($beratung);   
 
     		$bstatus = $this->checkberatungsstatus($teilnehmer);
@@ -332,9 +347,7 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         // Daten sofort in die Datenbank schreiben
         $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
-                
-        //\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($beratung);
-        //die;
+
         $valArray = $this->request->getArguments();
         $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, null);
     }
@@ -349,7 +362,7 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     {
     	$teilnehmer = $beratung->getTeilnehmer();
     	
-        $this->addFlashMessage('Erstberatung von '.$teilnehmer->getNachname().', '.$teilnehmer->getVorname().' gelöscht.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+        //$this->addFlashMessage('Erstberatung von '.$teilnehmer->getNachname().', '.$teilnehmer->getVorname().' gelöscht.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
         $this->beratungRepository->remove($beratung);
         
         // Daten sofort in die Datenbank schreiben
@@ -363,7 +376,11 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     /**
      * Check Beratungsstatus
      *
-     * Beratungsstatus: 0 = angemeldet, 1 = Anmeldung bestätigt, 2 = Erstberatung Start, 3 = Erstberatung abgeschlossen, 4 = NIQ erfasst
+     * Beratungsstatus: 0 = angemeldet, 
+     * 					1 = Anmeldung bestätigt, 
+     * 					2 = Erstberatung Start, 
+     * 					3 = Erstberatung abgeschlossen, 
+     * 					4 = NIQ erfasst
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return int
      */
@@ -388,6 +405,39 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     	}
     	 
     	return $beratungsstatus;
+    }
+    
+    
+    function setfilter(int $type, array $valArray, $orderby, $order) {
+        // FILTER
+        if ($valArray['filteraus']) {
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', NULL);
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', NULL);
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', NULL);
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', NULL);
+        }
+        if ($valArray['filteran']) {
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', $valArray['name']);
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', $valArray['ort']);
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', $valArray['beruf']);
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', $valArray['land']);
+        }
+        $fname = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fname');
+        $fort = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fort');
+        $fberuf = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fberuf');
+        $fland = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fland');
+        if ($fname == '' && $fort == '' && $fberuf == '' && $fland == '') {
+            $beratungen = $this->beratungRepository->findAllOrder4List($type, $orderby, $order);
+        } else {
+            $beratungen = $this->beratungRepository->searchBeratungen($type, $fname, $fort, $fberuf, $fland);
+            $this->view->assign('filtername', $fname);
+            $this->view->assign('filterort', $fort);
+            $this->view->assign('filterberuf', $fberuf);
+            $this->view->assign('filterland', $fland);
+            $this->view->assign('filteron', 1);
+        }
+        // FILTER bis hier
+        return $beratungen;
     }
 
 }

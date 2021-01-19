@@ -16,14 +16,14 @@ return [
             'starttime' => 'starttime',
             'endtime' => 'endtime',
         ],
-        'searchFields' => 'niqchiffre,nachname,vorname,plz,ort,email,telefon,lebensalter,geburtsland,erste_staatsangehoerigkeit,zweite_staatsangehoerigkeit,einreisejahr,wohnsitz_nein_in, zertifikat_sprachniveau,erwerbsland1,dauer_berufsausbildung1,abschlussjahr1,ausbildungsinstitution1,ausbildungsort1,abschluss1,berufserfahrung1,ausbildungsfremdeberufserfahrung1,deutscher_referenzberuf1,wunschberuf1,erwerbsland2,dauer_berufsausbildung2,abschlussjahr2,ausbildungsinstitution2,ausbildungsort2,abschluss2,berufserfahrung2,ausbildungsfremdeberufserfahrung2,deutscher_referenzberuf2,wunschberuf2,leistungsbezug,name_berater_a_a,kontakt_berater_a_a,kundennummer_a_a,frueherer_antrag_referenzberuf,frueherer_antrag_institution,name_beratungsstelle,verification_code,verification_ip',
+        'searchFields' => 'niqchiffre,nachname,vorname,plz,ort,email,telefon,lebensalter,geburtsland,erste_staatsangehoerigkeit,zweite_staatsangehoerigkeit,einreisejahr,wohnsitz_nein_in, zertifikat_sprachniveau,erwerbsland1,dauer_berufsausbildung1,abschlussjahr1,ausbildungsinstitution1,ausbildungsort1,abschluss1,berufserfahrung1,ausbildungsfremdeberufserfahrung1,deutscher_referenzberuf1,wunschberuf1,erwerbsland2,dauer_berufsausbildung2,abschlussjahr2,ausbildungsinstitution2,ausbildungsort2,abschluss2,berufserfahrung2,ausbildungsfremdeberufserfahrung2,deutscher_referenzberuf2,wunschberuf2,leistungsbezug,name_berater_a_a,kontakt_berater_a_a,kundennummer_a_a,einw_anerkstelle, einw_anerkstelledatum, einw_anerkstellemedium, einw_anerkstellename, einw_anerkstellekontakt, einw_person, einw_persondatum, einw_personmedium, einw_personname, einw_personkontakt, frueherer_antrag_referenzberuf,frueherer_antrag_institution,name_beratungsstelle,verification_code,verification_ip',
         'iconfile' => 'EXT:iqtp13db/Resources/Public/Icons/tx_iqtp13db_domain_model_teilnehmer.gif'
     ],
     'interface' => [
-        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, beratungsstatus, niqchiffre, schonberaten, schonberatenvon, nachname, vorname, plz, ort, email, confirmemail, telefon, lebensalter, geburtsland, geschlecht, erste_staatsangehoerigkeit, zweite_staatsangehoerigkeit, einreisejahr, wohnsitz_deutschland, wohnsitz_nein_in, deutschkenntnisse, zertifikatdeutsch, zertifikat_sprachniveau, abschlussart1, abschlussart2, erwerbsland1, dauer_berufsausbildung1, abschlussjahr1, ausbildungsinstitution1, ausbildungsort1, abschluss1, berufserfahrung1, ausbildungsfremdeberufserfahrung1, deutscher_referenzberuf1, wunschberuf1, erwerbsland2, dauer_berufsausbildung2, abschlussjahr2, ausbildungsinstitution2, ausbildungsort2, abschluss2, berufserfahrung2, ausbildungsfremdeberufserfahrung2, deutscher_referenzberuf2, wunschberuf2, erwerbsstatus, leistungsbezugjanein, leistungsbezug, einwilligungdatenan_a_a, einwilligungdatenan_a_adatum, einwilligungdatenan_a_amedium, name_berater_a_a, kontakt_berater_a_a, kundennummer_a_a, aufenthaltsstatus, aufenthaltsstatusfreitext, frueherer_antrag, frueherer_antrag_referenzberuf, frueherer_antrag_institution, bescheidfrueherer_anerkennungsantrag, name_beratungsstelle, notizen, einwilligung, verification_code, verification_date, verification_ip',
+        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, beratungsstatus, niqchiffre, schonberaten, schonberatenvon, nachname, vorname, plz, ort, email, confirmemail, telefon, lebensalter, geburtsland, geschlecht, erste_staatsangehoerigkeit, zweite_staatsangehoerigkeit, einreisejahr, wohnsitz_deutschland, wohnsitz_nein_in, deutschkenntnisse, zertifikatdeutsch, zertifikat_sprachniveau, abschlussart1, abschlussart2, erwerbsland1, dauer_berufsausbildung1, abschlussjahr1, ausbildungsinstitution1, ausbildungsort1, abschluss1, berufserfahrung1, ausbildungsfremdeberufserfahrung1, deutscher_referenzberuf1, wunschberuf1, erwerbsland2, dauer_berufsausbildung2, abschlussjahr2, ausbildungsinstitution2, ausbildungsort2, abschluss2, berufserfahrung2, ausbildungsfremdeberufserfahrung2, deutscher_referenzberuf2, wunschberuf2, erwerbsstatus, leistungsbezugjanein, leistungsbezug, einwilligungdatenan_a_a, einwilligungdatenan_a_adatum, einwilligungdatenan_a_amedium, name_berater_a_a, kontakt_berater_a_a, kundennummer_a_a, einw_anerkstelle, einw_anerkstelledatum, einw_anerkstellemedium, einw_anerkstellename, einw_anerkstellekontakt, einw_person, einw_persondatum, einw_personmedium, einw_personname, einw_personkontakt, aufenthaltsstatus, aufenthaltsstatusfreitext, frueherer_antrag, frueherer_antrag_referenzberuf, frueherer_antrag_institution, bescheidfrueherer_anerkennungsantrag, name_beratungsstelle, notizen, einwilligung, verification_code, verification_date, verification_ip',
     ],
     'types' => [
-        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, beratungsstatus, niqchiffre, schonberaten, schonberatenvon, nachname, vorname, plz, ort, email, confirmemail, telefon, lebensalter, geburtsland, geschlecht, erste_staatsangehoerigkeit, zweite_staatsangehoerigkeit, einreisejahr, wohnsitz_deutschland, wohnsitz_nein_in, deutschkenntnisse, zertifikatdeutsch, zertifikat_sprachniveau, abschlussart1, abschlussart2, erwerbsland1, dauer_berufsausbildung1, abschlussjahr1, ausbildungsinstitution1, ausbildungsort1, abschluss1, berufserfahrung1, ausbildungsfremdeberufserfahrung1, deutscher_referenzberuf1, wunschberuf1, erwerbsland2, dauer_berufsausbildung2, abschlussjahr2, ausbildungsinstitution2, ausbildungsort2, abschluss2, berufserfahrung2, ausbildungsfremdeberufserfahrung2, deutscher_referenzberuf2, wunschberuf2, erwerbsstatus, leistungsbezugjanein, leistungsbezug, einwilligungdatenan_a_a, einwilligungdatenan_a_adatum, einwilligungdatenan_a_amedium, name_berater_a_a, kontakt_berater_a_a, kundennummer_a_a, aufenthaltsstatus, aufenthaltsstatusfreitext, frueherer_antrag, frueherer_antrag_referenzberuf, frueherer_antrag_institution, bescheidfrueherer_anerkennungsantrag, name_beratungsstelle, notizen, einwilligung, verification_code, verification_date, verification_ip, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, beratungsstatus, niqchiffre, schonberaten, schonberatenvon, nachname, vorname, plz, ort, email, confirmemail, telefon, lebensalter, geburtsland, geschlecht, erste_staatsangehoerigkeit, zweite_staatsangehoerigkeit, einreisejahr, wohnsitz_deutschland, wohnsitz_nein_in, deutschkenntnisse, zertifikatdeutsch, zertifikat_sprachniveau, abschlussart1, abschlussart2, erwerbsland1, dauer_berufsausbildung1, abschlussjahr1, ausbildungsinstitution1, ausbildungsort1, abschluss1, berufserfahrung1, ausbildungsfremdeberufserfahrung1, deutscher_referenzberuf1, wunschberuf1, erwerbsland2, dauer_berufsausbildung2, abschlussjahr2, ausbildungsinstitution2, ausbildungsort2, abschluss2, berufserfahrung2, ausbildungsfremdeberufserfahrung2, deutscher_referenzberuf2, wunschberuf2, erwerbsstatus, leistungsbezugjanein, leistungsbezug, einwilligungdatenan_a_a, einwilligungdatenan_a_adatum, einwilligungdatenan_a_amedium, name_berater_a_a, kontakt_berater_a_a, kundennummer_a_a, einw_anerkstelle, einw_anerkstelledatum, einw_anerkstellemedium, einw_anerkstellename, einw_anerkstellekontakt, einw_person, einw_persondatum, einw_personmedium, einw_personname, einw_personkontakt, aufenthaltsstatus, aufenthaltsstatusfreitext, frueherer_antrag, frueherer_antrag_referenzberuf, frueherer_antrag_institution, bescheidfrueherer_anerkennungsantrag, name_beratungsstelle, notizen, einwilligung, verification_code, verification_date, verification_ip, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
     'columns' => [
         'sys_language_uid' => [
@@ -591,6 +591,96 @@ return [
         'kundennummer_a_a' => [
             'exclude' => true,
             'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.kundennummer_a_a',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim'
+            ],
+        ],
+        'einw_anerkstelle' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.einw_anerkstelle',
+            'config' => [
+                'type' => 'input',
+                'size' => 4,
+                'eval' => 'int'
+            ]
+        ],
+        'einw_anerkstelledatum' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.einw_anerkstelledatum',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim'
+            ],
+        ],
+        'einw_anerkstellemedium' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.einw_anerkstellemedium',
+            'config' => [
+                'type' => 'input',
+                'size' => 4,
+                'eval' => 'int'
+            ]
+        ],
+        'einw_anerkstellename' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.einw_anerkstellename',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim'
+            ],
+        ],
+        'einw_anerkstellekontakt' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.einw_anerkstellekontakt',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim'
+            ],
+        ],
+        'einw_person' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.einw_person',
+            'config' => [
+                'type' => 'input',
+                'size' => 4,
+                'eval' => 'int'
+            ]
+        ],
+        'einw_persondatum' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.einw_persondatum',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim'
+            ],
+        ],
+        'einw_personmedium' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.einw_personmedium',
+            'config' => [
+                'type' => 'input',
+                'size' => 4,
+                'eval' => 'int'
+            ]
+        ],
+        'einw_personname' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.einw_personname',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim'
+            ],
+        ],
+        'einw_personkontakt' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.einw_personkontakt',
             'config' => [
                 'type' => 'input',
                 'size' => 30,

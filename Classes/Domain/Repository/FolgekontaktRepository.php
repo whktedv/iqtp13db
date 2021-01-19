@@ -28,8 +28,5 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 		
 		return count($query);
 	}
-
-	
-	//$query->matching($query->greaterThan('teilnehmer.verification_date', 0));
 	
 }

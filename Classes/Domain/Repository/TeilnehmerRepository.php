@@ -20,20 +20,35 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
     /**
-     * Finds Teilnehmer by the specified name, ort and/or geburtsland
+     * Finds Teilnehmer by the specified name, ort, beruf and/or geburtsland
      *
      * @param string $name
      * @param string $ort
+     * @param string $beruf
      * @param string $land
+     * @param int $auchverstecktundgelöscht
      * @return Tx_Extbase_Persistence_QueryResultInterface Teilnehmer
      */
-    public function searchTeilnehmer($name, $ort, $land)
+    public function searchTeilnehmer($name, $ort, $beruf, $land, $auchverstecktundgelöscht)
     {
         $name = $name == '' ? '%' : $name;
         $ort = $ort == '' ? '%' : $ort;
+        $beruf = $beruf == '' ? '%' : $beruf;
         $land = $land == '' ? '%' : $land;
         $query = $this->createQuery();
-        $query->matching($query->logicalAnd($query->logicalOr($query->like('nachname', '%' . $name . '%'), $query->like('vorname', '%' . $name . '%')), $query->like('ort', $ort), $query->like('geburtsland', $land)));
+        if($auchverstecktundgelöscht == 1) {
+            $query->getQuerySettings()->setIgnoreEnableFields(TRUE);
+            $query->getQuerySettings()->setEnableFieldsToBeIgnored(array('disabled', 'hidden'));
+        }
+        
+        $query->matching($query->logicalAnd(
+            $query->logicalOr($query->like('nachname', '%' . $name . '%'), $query->like('vorname', '%' . $name . '%')), 
+            $query->like('ort', $ort), 
+            $query->logicalOr($query->like('deutscher_referenzberuf1', '%' .$beruf. '%'), $query->like('deutscher_referenzberuf2', '%' .$beruf. '%')), 
+            $query->like('geburtsland', $land),
+            $query->logicalOr($query->like('beratungsstatus', '0'), $query->like('beratungsstatus', '1')),
+            $query->like('hidden', $auchverstecktundgelöscht))
+            );
         return $query->execute();
     }
 

@@ -78,7 +78,11 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function initializeAction()
     {
-    
+    	/*
+    	 * PropertyMapping für die multiple ankreuzbaren Checkboxen.
+    	* Annehmen eines String-Arrays, das im Setter und Getter des Models je per implode/explode wieder in Strings bzw. Array (of Strings) konvertiert wird
+    	*/
+    	
     	if ($this->arguments->hasArgument('teilnehmer')) {
     		$this->arguments->getArgument('teilnehmer')->getPropertyMappingConfiguration()->allowProperties('abschlussart1');
     		$this->arguments->getArgument('teilnehmer')->getPropertyMappingConfiguration()->setTargetTypeForSubProperty('abschlussart1', 'array');
@@ -155,11 +159,10 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function statusAction()
     {
-    	// DebuggerUtility::var_dump(date("t", mktime(0, 0, 0, $m, 1, $diesesjahr)));
     	$valArray = $this->request->getArguments();
-    	
+    	// DebuggerUtility::var_dump($valArray);
+    	   
     	$heute = date('Y-m-d');
-    	
     	$diesesjahr = date('Y');
     	$diesermonat = idate('m');
     	$letztesjahr = idate('Y') - 1;
@@ -189,7 +192,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     		$days4wartezeit[$m] = $this->beratungRepository->days4Wartezeit("01.".$m.".".$diesesjahr, date("t", mktime(0, 0, 0, $m, 1, $diesesjahr)).".".$m.".".$diesesjahr);    		
     	}
     	
-    	// durchschnittl. Tage Beratung abgeschl. und durchschnittl. Tage Wartezeit	
+    	/*
+    	 * durchschnittl. Tage Beratung abgeschl. und durchschnittl. Tage Wartezeit	berechnen 
+    	 */    	
     	for($n = 1; $n <= 12; $n++) {
     		$diffdaysb = 0;
     		for($k = 0; $k < count($days4beratung[$n]); $k++) {
@@ -197,8 +202,12 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     			$dat2 = new Datetime($days4beratung[$n][$k]->getErstberatungabgeschlossen());
     			$diffdaysb += date_diff($dat1, $dat2)->format('%a');    			 
     		}
-    		$totalavgmonthb[$n] = floatval($diffdaysb)/floatval(count($days4beratung[$n]));
-    		$totalavgmonthb[$n] = is_nan($totalavgmonthb[$n]) ? '-' : $totalavgmonthb[$n];
+    		
+    		if(count($days4beratung[$n]) > 0) {
+    		    $totalavgmonthb[$n] = floatval($diffdaysb)/floatval(count($days4beratung[$n]));    		    
+    		} else {
+    		    $totalavgmonthb[$n] = '-';
+    		}
     		
     		$diffdaysw = 0;
     		for($k = 0; $k < count($days4wartezeit[$n]); $k++) {
@@ -207,11 +216,16 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     			$dat2 = new Datetime($days4wartezeit[$n][$k]->getDatum());
     			$diffdaysw += date_diff($dat1, $dat2)->format('%a');
     		}
-    		$totalavgmonthw[$n] = floatval($diffdaysw)/floatval(count($days4wartezeit[$n]));
-    		$totalavgmonthw[$n] = is_nan($totalavgmonthw[$n]) ? '-' : $totalavgmonthw[$n];
+    		
+    		if(count($days4wartezeit[$n]) > 0) {
+    		  $totalavgmonthw[$n] = floatval($diffdaysw)/floatval(count($days4wartezeit[$n]));
+    		} else {
+    		  $totalavgmonthw[$n] = '-';
+    		}
     		
     	}
 
+    	
     	$aktuelleanmeldungen = count($this->teilnehmerRepository->findAllOrder4List("crdate", 'DESC'));
     	$aktuellerstberatungen = count($this->beratungRepository->findAllOrder4List(2, "crdate", 'DESC'));
     	$aktuellberatungenfertig = count($beratungen = $this->beratungRepository->findAllOrder4List(3, "crdate", 'DESC'));
@@ -291,7 +305,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function listangemeldetAction()
     {
     	$valArray = $this->request->getArguments();
-    	//\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($valArray);
+
     	if(empty($valArray['orderby'])) {
     		$orderby = 'crdate';
     		$GLOBALS['TSFE']->fe_user->setKey('ses', 'listangemeldetorder', 'DESC');
@@ -303,28 +317,34 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     		$GLOBALS['TSFE']->fe_user->setKey('ses', 'listangemeldetorder', $order);
     	}
 		
+    	// FILTER
     	if ($valArray['filteraus']) {
     		$GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', NULL);
     		$GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', NULL);
+    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', NULL);
     		$GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', NULL);
     	}
     	if ($valArray['filteran']) {
     		$GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', $valArray['name']);
     		$GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', $valArray['ort']);
+    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', $valArray['beruf']);
     		$GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', $valArray['land']);
     	}
     	$fname = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fname');
     	$fort = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fort');
+    	$fberuf = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fberuf');
     	$fland = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fland');
-    	if ($fname == '' && $fort == '' && $fland == '') {
+    	if ($fname == '' && $fort == '' && $fberuf == '' && $fland == '') {
     		$teilnehmers = $this->teilnehmerRepository->findAllOrder4List($orderby, $order); 
     	} else {
-    		$teilnehmers = $this->teilnehmerRepository->searchTeilnehmer($fname, $fort, $fland);
+    		$teilnehmers = $this->teilnehmerRepository->searchTeilnehmer($fname, $fort, $fberuf, $fland, 0);
     		$this->view->assign('filtername', $fname);
     		$this->view->assign('filterort', $fort);
+    		$this->view->assign('filterberuf', $fberuf);
     		$this->view->assign('filterland', $fland);
     		$this->view->assign('filteron', 1);
     	}
+    	// FILTER bis hier
     	
     	for($j=0; $j < count($teilnehmers); $j++) {
     	    $anz = $this->teilnehmerRepository->findDublette($teilnehmers[$j]->getNachname(), $teilnehmers[$j]->getVorname());
@@ -356,7 +376,35 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     		$GLOBALS['TSFE']->fe_user->setKey('ses', 'listdeletedorder', $order);
     	}
     	
-    	$teilnehmers = $this->teilnehmerRepository->findhidden4list($orderby, $order);
+    	// FILTER
+    	if ($valArray['filteraus']) {
+    	    $GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', NULL);
+    	    $GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', NULL);
+    	    $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', NULL);
+    	    $GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', NULL);
+    	}
+    	if ($valArray['filteran']) {
+    	    $GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', $valArray['name']);
+    	    $GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', $valArray['ort']);
+    	    $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', $valArray['beruf']);
+    	    $GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', $valArray['land']);
+    	}
+    	$fname = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fname');
+    	$fort = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fort');
+    	$fberuf = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fberuf');
+    	$fland = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fland');
+    	if ($fname == '' && $fort == '' && $fberuf == '' && $fland == '') {
+    	    $teilnehmers = $this->teilnehmerRepository->findhidden4list($orderby, $order);
+    	} else {
+    	    $teilnehmers = $this->teilnehmerRepository->searchTeilnehmer($fname, $fort, $fberuf, $fland, 1);
+    	    $this->view->assign('filtername', $fname);
+    	    $this->view->assign('filterort', $fort);
+    	    $this->view->assign('filterberuf', $fberuf);
+    	    $this->view->assign('filterland', $fland);
+    	    $this->view->assign('filteron', 1);
+    	}
+    	// FILTER bis hier
+    	
     	 
     	for($j=0; $j < count($teilnehmers); $j++) {
     		$anz = $this->teilnehmerRepository->findDublette($teilnehmers[$j]->getNachname(), $teilnehmers[$j]->getVorname());
@@ -408,7 +456,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function createAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
-    	$this->addFlashMessage('Teilnehmer wurde erstellt.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+    	//$this->addFlashMessage('Teilnehmer wurde erstellt.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
     	$this->teilnehmerRepository->add($teilnehmer);
     
     	// Daten sofort in die Datenbank schreiben
@@ -590,6 +638,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     
     /**
      * action askconsent
+     * Einwilligungs-E-Mail aus dem Backend anfordern
      *
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return void
@@ -620,11 +669,12 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'confirmmailtext2' => $confirmmailtext2,
                 'startseitelink' => $this->settings['startseitelink'],
                 'logolink' => $this->settings['logolink'],
-                'registrationpageuid' => $this->settings['registrationpageuid']
+                'registrationpageuid' => $this->settings['registrationpageuid'],
+                'askconsent' => '1'
             );
             $this->sendTemplateEmail(array($recipient), array($bcc), array($sender), $subject, $templateName, $variables, false);
             
-            $this->addFlashMessage('Einwilligungsanforderung versendet.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+            //$this->addFlashMessage('Einwilligungsanforderung versendet.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
             $this->redirect('listangemeldet', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
         }
     }
@@ -669,8 +719,6 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	return $beratungsstatus;
     }
    
-    
-    /**************** Export ****************/
     
     /**
      * action export
@@ -739,7 +787,6 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         }
     }
     
-    /**************** WARTUNG ****************/
     /**
      * action wartung
      *
@@ -749,7 +796,6 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     {
     	$this->view->assign('settings', $this->settings);
     }
-    /**************** WARTUNG ****************/
     
     
     /*************************************************************************/
@@ -963,7 +1009,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	            'confirmmailtext2' => $confirmmailtext2,
     	            'startseitelink' => $this->settings['startseitelink'],
     	            'logolink' => $this->settings['logolink'],
-    	            'registrationpageuid' => $this->settings['registrationpageuid']
+    	            'registrationpageuid' => $this->settings['registrationpageuid'],
+    	            'askconsent' => '0'
     	        );
     	        $this->sendTemplateEmail(array($recipient), array($bcc), array($sender), $subject, $templateName, $variables, false);
     	        
@@ -980,10 +1027,13 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      * @return void
      */
     public function confirmAction()
-    {
-        
+    {        
     	if($this->request->hasArgument('code')) {
     		$teilnehmer = $this->teilnehmerRepository->findByVerificationCode($this->request->getArgument('code'));
+    	}
+    	
+    	if($this->request->hasArgument('askconsent')) {
+    	    $askconsent = $this->request->hasArgument('askconsent');
     	}
     	
     	if($teilnehmer) {
@@ -992,11 +1042,15 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     		$teilnehmer->setVerificationIp($_SERVER['REMOTE_ADDR']);
     		$this->teilnehmerRepository->update($teilnehmer);
     
-    		$this->sendconfirmedMail($teilnehmer);
+    		if($askconsent == 0) $this->sendconfirmedMail($teilnehmer);
     
     		$uriBuilder = $this->controllerContext->getUriBuilder();
     		$uriBuilder->reset();
-    		$uriBuilder->setTargetPageUid($this->settings['anmeldendeseite']);
+    		if($askconsent == 0) {
+    		    $uriBuilder->setTargetPageUid($this->settings['anmeldendeseite']);
+    		} else {
+    		    $uriBuilder->setTargetPageUid($this->settings['anmeldendeseiteaskconsent']);
+    		}
     		$uri = $uriBuilder->build();
     		$this->redirectToUri($uri);
     	} else {
@@ -1030,7 +1084,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	$sender = $this->settings['sender'];
     	$subject = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('subject', 'Iqtp13db');
     	$templateName = 'Mail';
-    	$mailtext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtext', 'Iqtp13db');
+    	$anrede = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('anredemail', 'Iqtp13db');
+    	$mailtext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtext', 'Iqtp13db');    	
     	$uriBuilder = $this->controllerContext->getUriBuilder();
     	$uriBuilder->reset();
     	$uriBuilder->setTargetPageUid($this->settings['anmeldeditseite']);
@@ -1040,7 +1095,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	$uriBuilder->setTargetPageUid($this->settings['anmelddeleteseite']);
     	$uridelete = $uriBuilder->build();
     	$variables = array(
-    			'anrede' => 'Guten Tag ' . $teilnehmer->getVorname(). ' ' . $teilnehmer->getNachname() . ',',
+    			'anrede' => $anrede . $teilnehmer->getVorname(). ' ' . $teilnehmer->getNachname() . ',',
     			'mailtext' => $mailtext,
     			'startseitelink' => $this->settings['startseitelink'],
     			'logolink' => $this->settings['logolink']
@@ -1060,8 +1115,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      * @return boolean TRUE on success, otherwise false
      */
     protected function sendTemplateEmail(array $recipient, array $bcc, array $sender, $subject, $templateName, array $variables = array(), $addattachment)
-    {    
-        
+    {       
     	$emailView = $this->objectManager->get('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
     	$extbaseFrameworkConfiguration = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
     	$extPath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('iqtp13db');
@@ -1223,10 +1277,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 	
 	/**
 	 *
-	 * @param
-	 *        	$settingsarr
-	 * @param
-	 *        	$ergarrwert
+	 * @param $settingsarr
+	 * @param $ergarrwert
 	 */
 	function getValu($settingsarr, $ergarrwert) {
 		$ret = '';

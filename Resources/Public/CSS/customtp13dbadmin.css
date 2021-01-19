@@ -35,6 +35,11 @@
 .iq-standardcontainer-weiss {
     margin-top: 0rem;
     padding-top: 0rem;
+    overflow-x: scroll;
+}
+
+.pretablediv {
+	
 }
 
 td.fktd {
@@ -42,7 +47,13 @@ td.fktd {
 }
 
 table.fktable {
-	width: 100%;	
+	width: 100%;
+	display: none;
+}
+
+.showhidefk {
+	font-weight: bold;
+	color: #428BCA;
 }
 
 .tx_iqtp13db td.fklistdatum, .tx_iqtp13db td.fklistberater {
@@ -75,4 +86,24 @@ td.tdcenter input[type="checkbox"] {
 
 .historieval {
 	font-size: 0.9rem;	
+}
+
+
+.togglebutton  {
+    background-color: #cfa6ce;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    margin-bottom: 0px;
+    font-weight: normal;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.42857;
+    padding: 2px 4px;
+    vertical-align: middle;
+    border-radius: 3px;
+    color: #FFF;
+    cursor: pointer;
+    display: inline-block;
+    -moz-user-select: none;
+	text-decoration: none;
 }

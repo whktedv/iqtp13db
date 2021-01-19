@@ -3,8 +3,17 @@
   		<link rel="stylesheet" href="{f:uri.resource(path: 'CSS/customtp13dbadmin.css')}"/>  		
 </f:section>
 
-
 <f:section name="main">
+<h1>Filter</h1>
+<f:form method="post" controller="Beratung" action="listarchiv" name="listarchiv"  noCacheHash="true" >
+		Name: <f:form.textfield size="20" value="{filtername}" name="name" />&nbsp;&nbsp;
+		Ort: <f:form.textfield size="20" value="{filterort}" name="ort" />&nbsp;&nbsp;
+		Beruf: <f:form.textfield size="20" value="{filterberuf}" name="beruf" />&nbsp;&nbsp;
+		Geburtsland: <f:form.textfield value="{filterland}" size="20" name="land" />&nbsp;&nbsp;&nbsp;&nbsp;
+		<f:if condition="{filteron}"><f:then><f:form.button name="filteraus" value="1" >Filter löschen</f:form.button></f:then></f:if>
+		<f:form.submit name="filteran" value="Filtern" />			
+</f:form>
+<br>
 <f:flashMessages />
 <h1>Liste Archiv: {beratungen -> f:count()} Einträge </h1>
 
@@ -48,8 +57,8 @@
 				</f:if>				
 				</td>
 				<td>{beratung.teilnehmer.niqchiffre}</td>
-				<td><f:link.action class="linkbuttons" action="edit" arguments="{beratung : beratung, calleraction: calleraction, callercontroller : callercontroller}" controller="Beratung" >Bearbeiten</f:link.action></td>
 				<td><f:link.action class="linkbuttons" action="edit" arguments="{teilnehmer : beratung.teilnehmer, calleraction: calleraction, callercontroller : callercontroller}" controller="Teilnehmer">Anmeldedaten</f:link.action></td>
+				<td><f:link.action class="linkbuttons" action="edit" arguments="{beratung : beratung, calleraction: calleraction, callercontroller : callercontroller}" controller="Beratung" >Erstberatung</f:link.action></td>
 				<td><f:link.action class="linkbuttons" action="new" arguments="{beratung : beratung, calleraction: calleraction, callercontroller : callercontroller}" controller="Folgekontakt">Folgekontakt</f:link.action></td>
 			</tr>
 			<f:if condition="{anzfolgekontakte.{it.index}} != 0"><f:then>

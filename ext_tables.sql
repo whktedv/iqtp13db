@@ -63,6 +63,19 @@ CREATE TABLE tx_iqtp13db_domain_model_teilnehmer (
 	name_berater_a_a varchar(255) DEFAULT '' NOT NULL,
 	kontakt_berater_a_a varchar(255) DEFAULT '' NOT NULL,
 	kundennummer_a_a varchar(255) DEFAULT '' NOT NULL,
+	
+	einw_anerkstelle int(11) DEFAULT '0' NOT NULL,
+	einw_anerkstelledatum varchar(255) DEFAULT '' NOT NULL,
+	einw_anerkstellemedium varchar(255) DEFAULT '' NOT NULL,
+	einw_anerkstellename varchar(255) DEFAULT '' NOT NULL,
+	einw_anerkstellekontakt varchar(255) DEFAULT '' NOT NULL,
+	
+	einw_person int(11) DEFAULT '0' NOT NULL,
+	einw_persondatum varchar(255) DEFAULT '' NOT NULL,
+	einw_personmedium varchar(255) DEFAULT '' NOT NULL,
+	einw_personname varchar(255) DEFAULT '' NOT NULL,
+	einw_personkontakt varchar(255) DEFAULT '' NOT NULL,
+	
 	aufenthaltsstatus int(11) DEFAULT '0' NOT NULL,
 	aufenthaltsstatusfreitext text NOT NULL,
 	

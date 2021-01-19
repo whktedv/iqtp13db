@@ -189,48 +189,60 @@
 	}
     
 // für BACKEND
+    // Aufenthaltsstatus
     function toggleaufenthaltsstatusradio() {
     	for (var i = 0; i < 17; i++) {
     		if($('#aufenthaltsstatusradio'+i).is(":checked")) {
-        		$('#divaufenthaltsstatusradio' + i).fadeIn();    			
+        		$('#divaufenthaltsstatusradio' + i).show();    			
     		} else {
-    			$('#divaufenthaltsstatusradio' + i).fadeOut();	
+    			$('#divaufenthaltsstatusradio' + i).toggle();	
     		}    		
     	} 
 	}
     function toggleaufenthaltsstatusradioall() {
     	for (i = 0; i < 17; i++) {
-       		$('#divaufenthaltsstatusradio' + i).fadeIn();    			
+       		$('#divaufenthaltsstatusradio' + i).toggle();
+       		if($('#aufenthaltsstatusradio'+i).is(":checked")) {
+        		$('#divaufenthaltsstatusradio' + i).show();    			
+    		}
     	} 
 	}
     
+    // Erwerbsstatus
     function toggleerwerbsstatusradio() {
     	for (var i = 0; i < 17; i++) {
     		if($('#erwerbsstatusradio'+i).is(":checked")) {
-        		$('#diverwerbsstatusradio' + i).fadeIn();    			
+        		$('#diverwerbsstatusradio' + i).show();    			
     		} else {
-    			$('#diverwerbsstatusradio' + i).fadeOut();	
+    			$('#diverwerbsstatusradio' + i).toggle();	
     		}    		
     	} 
 	}
     function toggleerwerbsstatusradioall() {
     	for (i = 0; i < 17; i++) {
-       		$('#diverwerbsstatusradio' + i).fadeIn();    			
+       		$('#diverwerbsstatusradio' + i).toggle();
+       		if($('#erwerbsstatusradio'+i).is(":checked")) {
+        		$('#diverwerbsstatusradio' + i).show();    			
+    		}
     	} 
 	}
     
+    // Beratungsstelle
     function toggleberatungsstelleradio() {
     	for (var i = 0; i < 17; i++) {
     		if($('#beratungsstelleradio'+i).is(":checked")) {
-        		$('#divberatungsstelleradio' + i).fadeIn();    			
+        		$('#divberatungsstelleradio' + i).show();    			
     		} else {
-    			$('#divberatungsstelleradio' + i).fadeOut();	
+    			$('#divberatungsstelleradio' + i).toggle();	
     		}    		
     	} 
 	}
     function toggleberatungsstelleradioall() {
     	for (i = 0; i < 17; i++) {
-       		$('#divberatungsstelleradio' + i).fadeIn();    			
+       		$('#divberatungsstelleradio' + i).toggle();
+       		if($('#beratungsstelleradio' + i).is(":checked")) {
+        		$('#divberatungsstelleradio' + i).show();    			
+    		}
     	} 
 	}
 // Folgekontakt
@@ -245,5 +257,9 @@
 			$('#divzabgleichwertigkeit').fadeOut();
 		}
 	}
+    
+    $("input[name='tx_iqtp13db_iqtp13dbwebapp[file]']").change(function() { 
+    	this.form.submit(); 
+    });
     
 } ) ( jQuery );

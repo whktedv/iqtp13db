@@ -14,8 +14,7 @@
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbwebapp.description">
 				<source></source>
-			</trans-unit>
-			
+			</trans-unit>			
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer">
 				<source>Teilnehmer</source>
 			</trans-unit>
@@ -190,14 +189,17 @@
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezug">
 				<source>Leistungsbezug</source>
 			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungstextaa">
+				<source>Mit der Angabe der folgenden Daten willige ich ein, dass der Agentur für Arbeit bzw. dem Jobcenter meine Daten zum Zwecke bzw. im Rahmen der Anerkennungsberatung weitergegeben werden dürfen.</source>
+			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_a">
 				<source>Möchten Sie, dass wir das Beratungsergebnis an Ihre Berater*in weiterleiten?</source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_adatum">
-				<source>Einwilligungdatenan A Adatum</source>
+				<source>Datum der Einwilligung zur Weitergabe</source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_amedium">
-				<source>Einwilligungdatenan A Amedium</source>
+				<source>Medium der Einwilligung</source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_berater_a_a">
 				<source>Name Berater*in</source>
@@ -207,6 +209,37 @@
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kundennummer_a_a">
 				<source>Ihre Kundennummer</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstelle">
+         <source>Einwilligung Weitergabe Daten an anerkennende Stelle</source>
+       </trans-unit>
+       <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstelledatum">
+         <source>Datum der Einwilligung zur Weitergabe</source>
+       </trans-unit>
+       <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstellemedium">
+         <source>Medium der Einwilligung</source>
+       </trans-unit>
+       <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstellename">
+         <source>Name Ansprechpartner und Organisation</source>
+       </trans-unit>
+       <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstellekontakt">
+         <source>Kontakt (E-Mail und Telefon)</source>
+       </trans-unit>
+       
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_person">
+				<source>Einwilligung Weitergabe Daten an weitere Person</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_persondatum">
+				<source>Datum der Einwilligung zur Weitergabe</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personmedium">
+				<source>Medium der Einwilligung</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personname">
+				<source>Name der Person und ggf. Organisation</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personkontakt">
+				<source>Kontakt (E-Mail und Telefon)</source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus">
 				<source>Aufenthaltsstatus</source>
@@ -223,8 +256,6 @@
             <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.verification_ip">
                 <source>Bestätigungs-IP</source>
             </trans-unit>
-			
-			
 			<trans-unit id="tx_iqtp13db_domain_model_beratung">
 				<source>Beratung</source>
 			</trans-unit>
@@ -235,13 +266,13 @@
 				<source>Beratungsart</source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_beratung.beratungzu">
-				<source>Beratungzu</source>
+				<source>Beratung zu</source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_beratung.referenzberufe">
 				<source>Referenzberufe</source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_beratung.anerkennendestellen">
-				<source>Anerkennendestellen</source>
+				<source>Anerkennende Stellen</source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_beratung.anerkennungsberatung">
 				<source>Anerkennungsberatung</source>
@@ -262,12 +293,11 @@
 				<source>Erstberatung abgeschlossen</source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_beratung.teilnehmer">
-				<source>Teilnehmer</source>
+				<source>Teilnehmer*in</source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_beratung.berater">
-				<source>Berater</source>
-			</trans-unit>
-			
+				<source>Berater*in</source>
+			</trans-unit>	
 			<trans-unit id="tx_iqtp13db_domain_model_folgekontakt">
 				<source>Folgekontakt</source>
 			</trans-unit>
@@ -284,14 +314,13 @@
 				<source>Notizen</source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.teilnehmer">
-				<source>Ratsuchender</source>
+				<source>Ratsuchende*r</source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.berater">
-				<source>Berater</source>
+				<source>Berater*in</source>
 			</trans-unit>
-			
 			<trans-unit id="tx_iqtp13db_domain_model_berater">
-				<source>Berater</source>
+				<source>Berater*in</source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_berater.name">
 				<source>Name</source>
@@ -302,7 +331,6 @@
 			<trans-unit id="tx_iqtp13db_domain_model_berater.kuerzel">
 				<source>Kürzel</source>
 			</trans-unit>
-			
 			<trans-unit id="tx_iqtp13db_domain_model_dokument">
 				<source>Dokument</source>
 			</trans-unit>
@@ -313,9 +341,8 @@
 				<source>Pfad</source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_dokument.teilnehmer">
-				<source>Teilnehmer</source>
+				<source>Teilnehmer*in</source>
 			</trans-unit>
-			
 			<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbadmin">
 				<source>IQ TP13 DB Adminbereich</source>
 			</trans-unit>
@@ -446,7 +473,7 @@
 				<source>Qualifizierungsberatung</source>
 			</trans-unit>
 			<trans-unit id="berater">
-				<source>Berater/in</source>
+				<source>Berater*in</source>
 			</trans-unit>
 			<trans-unit id="dokumente">
 				<source>Dokumente</source>
@@ -541,6 +568,9 @@
 			<trans-unit id="headabschlussrechts">
 				<source>weiterer Abschluss</source>
 			</trans-unit>
+			<trans-unit id="anredemail">
+				<source>Guten Tag </source>
+			</trans-unit>
 			<trans-unit id="mailtext">
 				<source> <![CDATA[
 					 <p>vielen Dank für Ihre Informationen.</p> <p>&nbsp;</p> <p>Sie sind jetzt zur Beratung angemeldet. Wir setzen uns mit Ihnen in Verbindung, sobald Sie an der Reihe sind. <br><br>Die Beratung erfolgt nach Wunsch über E-Mail, Telefon oder Videochat.</p> <p>&nbsp;</p> <p>Mit freundlichen Grüßen</p>Ihre Anerkennungsberatung beim IQ Netzwerk NRW 
@@ -577,7 +607,6 @@
 			<trans-unit id="anmeldedatum">
 				<source>Anmeldedatum</source>
 			</trans-unit>
-			
 		</body>
 	</file>
 </xliff>

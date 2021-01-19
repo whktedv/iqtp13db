@@ -49,17 +49,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $beraterRepository = NULL;      
-    
-    /**
-     * action init
-     *
-     * @param void
-     */
-    public function initializeAction()
-    {
-       
-    }
-    
+        
     /**
      * action show
      *
@@ -111,7 +101,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      */
     public function createAction(\Ud\Iqtp13db\Domain\Model\Folgekontakt $folgekontakt)
     {  		
-        $this->addFlashMessage('Folgekontakt wurde erstellt.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+        //$this->addFlashMessage('Folgekontakt wurde erstellt.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
         $this->folgekontaktRepository->add($folgekontakt);
         
         // Daten sofort in die Datenbank schreiben
@@ -154,7 +144,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     public function updateAction(\Ud\Iqtp13db\Domain\Model\Folgekontakt $folgekontakt)
     {
     	
-        $this->addFlashMessage('Folgekontakt aktualisiert.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+        //$this->addFlashMessage('Folgekontakt aktualisiert.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
         $this->folgekontaktRepository->update($folgekontakt);
          
         // Daten sofort in die Datenbank schreiben
@@ -173,7 +163,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      */
     public function deleteAction(\Ud\Iqtp13db\Domain\Model\Folgekontakt $folgekontakt)
     {
-        $this->addFlashMessage('Folgekontakt gelöscht.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+        //$this->addFlashMessage('Folgekontakt gelöscht.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
         $this->folgekontaktRepository->remove($folgekontakt);
         
         // Daten sofort in die Datenbank schreiben

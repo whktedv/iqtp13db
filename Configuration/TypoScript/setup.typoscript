@@ -102,92 +102,15 @@ page {
 
 # SPRACHWAHL
 # **********************
-config {
-  sys_language_mode = content_fallback ; 1,0
-  sys_language_uid = 0
-  linkVars = L
-  language = de
-  locale_all = de_DE.UTF-8
-}
 
-# English language, sys_language.uid = 1
-[siteLanguage("locale") == "en_EN"]
-  config.sys_language_uid = 1
-  config.language = en
-  config.locale_all = en_EN.UTF-8
-[global]
-
-# Arabisch
-[siteLanguage("locale") == "ar_AR"]
-  config.sys_language_uid = 2
-  config.language = ar
-  config.locale_all = ar_AR.UTF-8
-  config.htmlTag_dir = rtl
-  config.htmlTag_setParams = lang="" dir="rtl" class="no-js"
-  page.includeCSS.customtp13rtl = EXT:iqtp13db/Resources/Public/CSS/customtp13db_rtl.css
-[global]
-
-# Farsi/Persisch
-[siteLanguage("locale") == "fa_FA"]
-  config.sys_language_uid = 3
-  config.language = fa
-  config.locale_all = fa_FA.UTF-8
-  config.htmlTag_dir = rtl
-  config.htmlTag_setParams = lang="" dir="rtl" class="no-js"
-  page.includeCSS.customtp13rtl = EXT:iqtp13db/Resources/Public/CSS/customtp13db_rtl.css
-[global]
-
-# Französisch
-[siteLanguage("locale") == "fr_FR"]
-  config.sys_language_uid = 4
-  config.language = fr
-  config.locale_all = fr_FR.UTF-8
-[global]
-
-# Polnisch
-[siteLanguage("locale") == "po_PO"]
-  config.sys_language_uid = 5
-  config.language = po
-  config.locale_all = po_PO.UTF-8
-[global]
-
-# Rumänisch
-[siteLanguage("locale") == "ro_RO"]
-  config.sys_language_uid = 6
-  config.language = ro
-  config.locale_all = ro_RO.UTF-8
-[global]
-
-# Russisch
-[siteLanguage("locale") == "ru_RU"]
-  config.sys_language_uid = 7
-  config.language = ru
-  config.locale_all = ru_RU.UTF-8
-[global]
-
-# Spanisch
-[siteLanguage("locale") == "es_ES"]
-  config.sys_language_uid = 8
-  config.language = es
-  config.locale_all = es_ES.UTF-8
-[global]
-
-# Türkisch
-[siteLanguage("locale") == "tr_TR"]
-  config.sys_language_uid = 9
-  config.language = tr
-  config.locale_all = tr_TR.UTF-8
-[global]
-
-
-
+[siteLanguage("languageId") == 0]
 plugin.tx_iqtp13db.settings {
 
    ### Beratener ###
 	
    deutschkenntnisse {
-     1 = Deutsch as Muttersprache
-     2 = Deutsch as Fremdsprache
+     1 = Deutsch als Muttersprache
+     2 = Deutsch als Fremdsprache
    }
      
    zertifikatlevel {
@@ -230,7 +153,7 @@ plugin.tx_iqtp13db.settings {
      11 = Aufenthaltserlaubnis für in anderen Mitgliedsstaaten der EU langfristig Aufenthaltsberechtigte (§38a AufenthG)
      12 = Aufenthaltsgestattung (§55 Abs. 1 AsylVfG)
      8 = Aufenthalt aus familiären Gründen (§27-36 AufenthG)
-     7 = Aufenthalt aus völkerrechtlichen, humanitären oder politischen Gründen (§22-26, 104a, 104b AufenthG
+     7 = Aufenthalt aus völkerrechtlichen, humanitären oder politischen Gründen (§22-26, 104a, 104b AufenthG)
      4 = Aufenthalt zum Zweck der Ausbildung (§16-17 AufenthG)
 	 5 = Aufenthalt zum Zweck der Erwerbstätigkeit (§18, 18a, 19b, 19d, 20, 21 AufenthG) 
      9 = Aufenthalt zum Zwecke einer Anpassungsqualifizierung oder einer Kenntnisprüfung (§ 17a AufenthG)
@@ -238,21 +161,11 @@ plugin.tx_iqtp13db.settings {
      13 = Duldung (§60a Abs. 4 AufenthG)
      10 = Niederlassungserlaubnis (§9 AufenthG)
      14 = Staatsbürger-/in EU/EWR/Schweiz oder Freizügigkeit (§2-5, §§12-13, §15 FreizüG/EU, §28 AufenthG)
-     16 = Blaue Karte EU (§19a AufenthG)
      17 = kein Aufenthaltstitel, da Wohnistz im Ausland 
      15 = Fiktionsbescheinigung
      18 = Anmerkung
    }
    
-   dokumenteabschluss {
-    0 = -
-   	1 = ja
-   	2 = nein
-   	3 = teilweise
-   	4 = nur Kopien
-   	5 = keine Dokumente vorhanden
-   }
-
    beratungsstelle {
      1 = Agentur für Arbeit oder Jobcenter
      12 = Arbeitgeber, Betriebe
@@ -311,131 +224,106 @@ plugin.tx_iqtp13db.settings {
 		6 = Alternativen zur beruflichen Anerkennung
 		7 = sonstige Themen bezogen auf Qualifizierung im Kontext des Anerkennungsgesetzes:
 	}
-	
-   anfragedurch {
-     1 = keine Angabe
-     2 = Beratene/r selbst
-     3 = Jobcenter
-     4 = Agentur für Arbeit
-     5 = JMD/MBE
-     6 = Migrantenorganisation
-     7 = Unternehmen
-     8 = Bildungsberatungsstelle/-dienstleister
-     9 = Soziales Umfeld des/der Beratenen
-     10 = Sonstiges
-   }
-  
-   bescheidGleichwertigkeitspruefung {
-     1 = k. A.
-     2 = ja
-     3 = nein, noch kein Antrag gestellt
-     4 = nein, Verfahren läuft noch
-     5 = nein, da keine Aussicht auf Erfolg (negative Prognose)
-     6 = nein, da nicht-reglementierter akademischer Beruf
-   }
-
-   ergebnisGleichwertigkeitsfeststellung {
-     1 = k. A.
-     2 = volle Gleichwertigkeit
-     3 = Auflage einer Ausgleichsmaßnahme (reglementiert)
-     4 = teilweise Gleichwertigkeit (nicht-reglementiert)
-     5 = Ablehnung
-   }
-
-   zabBewertung {
-     1 = k. A.
-     2 = ja, liegt vor
-     3 = nein, liegt (noch) nicht vor
-   }
-
-   anBildungsdienstleisterweiterverwiesen {
-     1 = k. A.
-     2 = ja, an einen IQ-internen Bildungsdienstleister
-     3 = nein, an einen IQ-externen Bildungsdienstleister
-     4 = überhaupt keine passende Maßnahme gefunden
-   }
-
-   welcherBildungsdienstleister {
-     1 = k. A.
-     2 = sonstiger Träger
-     3 = staatliche Bildungseinrichtung
-     4 = private Bildungseinrichtung
-     5 = Kammern (IHK, HWK, sonstige)
-     6 = Wirtschafts- und Fachverbände
-     7 = Arbeitnehmerorganisationen/Gewerkschaften
-     8 = soziale Wohlfahrt/Kirchen
-   }
-
-   modulQualifizierungsmassnahme {
-     1 = k. A.
-     2 = Modul 1: Qualifizierungsmaßnahmen bei reglementierten Berufen
-     3 = Modul 2: Anpassungsqualifizierungen im Bereich des dualen Systems
-     4 = Modul 3: Brückenmaßnahmen für Akademiker/-innen
-     5 = Modul 4: Vorbereitung auf die Externenprüfung bei negativem Ausgang/Prognose des Anerkennungsverfahrens
-   }
-
 }
+[global]
 
-[siteLanguage("locale") == "en_EN"]
+[siteLanguage("languageId") == 1]
 plugin.tx_iqtp13db.settings {
 
-   dokumenteabschluss {
-    0 = -
-   	1 = yes
-   	2 = no
-   	3 = partly
-   	4 = copies only
-   	5 = no documents available
+   deutschkenntnisse {
+     1 = German as mother tongue
+     2 = German as a foreign language
+   }
+     
+   zertifikatlevel {
+   	1 = -
+   	2 = A1
+   	3 = A2
+	4 = B1
+	5 = B2
+	6 = C1
+	7 = C2
+	0 = no certificate
    }
    
+   abschlussart {
+     1 = vocational education
+     2 = university degree
+   }
+
    erwerbsstatus {
-     1 = liable to pay contributions
-     2 = under-employed
-     3 = self-employed
-     4 = in education / training / qualification
-     5 = unemployed
-     6 = employed abroad
-     7 = not employed abroad
-     8 = other
+     1 = employed subject to tax
+     2 = marginally employed
+     3 = selfemployment
+     4 = in education/further training/qualification
+     5 = not employed
+     6 = working abroad
+     7 = not working abroad
+     8 = others
+
    }
-   
+
    leistungsbezug {
-     1 = without allowances
- 	 2 = with (additional) SGB II-allowance
-	 3 = with SGB III-allowance
-	 4 = with SGB III and SGB II-allowance
-	 5 = with (additional) asylum seekers allowance
+     2 = with (complementary) SGB II-support
+     3 = with SGB III-support
+     4 = with SGB III- and SGB II-support
+     5 = with (complementary) asylum seekers support
+
+   }
+ 
+   aufenthaltsstatus {
+     1 = no specification
+     6 = Residence permit for job search (§18c AufenthG)
+     11 = Residence permit entitled to reside in other Member States (§28a AufenthG)
+     12 = Residence permission (§55 Abs. 1 AsylVfG)
+     8 = Residence permit for family reasons (§27-36 AufenthG)
+     7 = Residence permit for reasons of international law, humanitarian and political reasons (§22-26, 104a, 104b AufenthG)
+     4 = Residence permit for the purpose of professional training (§16-17 AufenthG)
+	 5 = Residence permit for the purpose of employment (§18, 18a, 19b, 19d, 20, 21 AufenthG)
+     9 = Residence permit for the purpose of adaptation qualification or knowledge test (§17a AufenthG)
+     2 = Blue Card EU (§19a AufenthG)
+     13 = Toleration (§60a Abs .4 AufenthG)
+     10 = Permanent residence permit (§9 AufenthG)
+     14 = Citizen of EU/EWR/Switzerland or freedom of movement (§2-5, §§12-13, §15 FreizüG/EU, §28 AufenthG)
+     17 = No residence permit because you reside abroad
+     15 = Fiction certificate
+     18 = annotation
    }
    
    beratungsstelle {
-  	 1 = Federal Employment Agency
-	 2 = Job Centre
-	 3 = Internet
-	 4 = Recognition portal BIBB
-	 5 = Hotline work and life in Germany
-	 6 = Migration counselling (MBE)
-	 7 = Youth Migration Service (JMD)
-	 8 = Autonomous migrant organisation
-	 9 = Press
-	10 = Personal recommendation
-	11 = Miscellaneous
+     1 = Agentur für Arbeit or Jobcenter
+     12 = employers, companies
+     13 = foreigners authority
+     14 = education service provider
+     15 = volunteer	
+     16 = flyer
+     17 = IQ external advice
+     3 = media (internet, press, etc.)
+     10 = personal recommendation
+     18 = ZSBA
+     19 = recognizing authority
+     11 = others
+     20 = no specified
+
    }
+
+	einwilligungaamedium {
+    	1 = Telephone
+    	2 = E-Mail
+    	3 = Video-Chat
+   	}
+   	
 }   
 [global]
 
 
-[siteLanguage("locale") == "ar_AR"]
+[siteLanguage("languageId") == 2]
+config.htmlTag_dir = rtl
+config.htmlTag_setParams = lang="" dir="rtl" class="no-js"
+page.includeCSS.customtp13rtl = EXT:iqtp13db/Resources/Public/CSS/customtp13db_rtl.css
+
 plugin.tx_iqtp13db.settings {
 
-   dokumenteabschluss {
-    0 = -
-   	1 = نعم
-   	2 = كلا
-   	3 = جزئيا 
-   	4 = النسخ فقط
-   	5 = لا توجد وثائق
-   }
-   
 	erwerbsstatus {
 		1 = عمل مستحق الضريبة
 		2 = عامل بدوام جزئي
@@ -448,40 +336,21 @@ plugin.tx_iqtp13db.settings {
 	}
 	
 	leistungsbezug {
-		1 = لا أحصل على إعانات
 	 	2 = أحصل على إعانة (تكميلية) حسب القانون SGB II
 		3 = أحصل على إعانة  حسب القانون SGB III
 		4 = أحصل على إعانة  حسب القانونSGB III  والقانون SGB II
 		5 = أحصل على إعانة طالبي اللجوء (تكميلية)
 	}
    
-    beratungsstelle {
-	  	 1 = وكالة العمل
-		 2 = مركز التوظيف
-		 3 = الإنترنت
-		 4 = بوابة الاعتراف بالشهادات BIBB	
-		 5 = الخط الساخن للعمل والعيش داخل ألمانيا
-		 6 = مركز استشارة الهجرة (MBE)
-		 7 = خدمة هجرة الشباب (JMD)
-		 8 = مؤسسة إعانة المهاجرين
-		 9 = الصحافة
-		10 = توصية شخصية
-		11 = أخرى
-    }
 }
 
 
-[siteLanguage("locale") == "fa_FA"]
-plugin.tx_iqtp13db.settings {
+[siteLanguage("languageId") == 3]
+config.htmlTag_dir = rtl
+config.htmlTag_setParams = lang="" dir="rtl" class="no-js"
+page.includeCSS.customtp13rtl = EXT:iqtp13db/Resources/Public/CSS/customtp13db_rtl.css
 
-   dokumenteabschluss {
-    0 = -
-   	1 = بله
-   	2 = خیر
-   	3 = تا حدی
-   	4 = تنها نسخه
-   	5 = هیچ اسناد و مدارک موجود
-   }
+plugin.tx_iqtp13db.settings {
    
    erwerbsstatus {
      1 = شاغل به صورت تمام وقت
@@ -495,42 +364,40 @@ plugin.tx_iqtp13db.settings {
    }
    
    leistungsbezug {
-     1 = عدم دریافت مزایا
  	 2 = دریافت مزایا (مکمل) طبق جلد دوم کتاب قوانین اجتماعی (SGB II)
 	 3 = دریافت مزایا طبق جلد سوم کتاب قوانین اجتماعی (SGB III)
 	 4 = دریافت مزایا طبق جلد سوم کتاب قوانین اجتماعی و جلد دوم کتاب قوانین اجتماعی
 	 5 = دریافت مزایا (مکمل) برای پناهجویان
    }
    
-	beratungsstelle {
-		1 = آژانس کار
-		2 = مرکز کاریابی
-		3 = اینترنت
-		4 = پورتال به رسمیت شناختن موسسه آموزش شغلی فدرال (BIBB)
-		5 = ارتباط تلفنی مستقیم با (Hotline Arbeit und Leben in Deutschland)
-		6 = مرکز مشاوره در امور مهاجرت (MBE)  
-		7 = مرکز خدمات امور مهاجرت جوانان (JMD)
-		8 = سازمان تأسیس شده توسط مهاجران (MSO)
-		9 = مطبوعات
-		10 = توصیه‌های شخصی
-		11 = سایر موارد
-   }
 }   
 [global]
 
 
-[siteLanguage("locale") == "fr_FR"]
+[siteLanguage("languageId") == 4]
 plugin.tx_iqtp13db.settings {
 
-   dokumenteabschluss {
-    0 = -
-   	1 = Oui
-   	2 = non
-   	3 = partiel
-   	4 = juste copies
-   	5 = Les documents ne sont pas disponible
+   deutschkenntnisse {
+     1 = allemand comme langue maternelle
+     2 = allemand comme langue étrangère
+   }
+     
+   zertifikatlevel {
+   	1 = -
+   	2 = A1
+   	3 = A2
+	4 = B1
+	5 = B2
+	6 = C1
+	7 = C2
+	0 = pas de certificat
    }
    
+   abschlussart {
+     1 = formation professionnelle
+     2 = diplôme universitaire
+   }
+
    erwerbsstatus {
      1 = Emploi à temps plein
 	 2 = Emploi à temps partiel
@@ -541,43 +408,61 @@ plugin.tx_iqtp13db.settings {
 	 7 = Sans emploi à l'étranger
 	 8 = Divers
    }
-   
+
    leistungsbezug {
-     1 = ne bénéficie pas de prestations
-	 2 = prestations SGB II (complémentaires)
-	 3 = prestations SGB III
-	 4 = prestations SGB III et SGB II
-	 5 = prestations (complémentaires) en tant que demandeur d'asile
+	 2 = bénéficiaire de prestations (complémentaires) du SGB II
+	 3 = bénéficiaire de prestations du SGB III
+	 4 = bénéficiaire de prestations SGB III et du SGB II
+	 5 = bénéficiaire d'une allocation (supplémentaire) pour demande d'asile   
+   }
+ 
+   aufenthaltsstatus {
+   	 1 = non spécifié
+     6 = Permis de séjour pour recherche d’emploi (§18c AufenthG)
+     11 = Permis de séjour pour résidence à long terme dans un autre pays membre de l’UE (§28a AufenthG)
+     12 = Titre de séjour provisoire d (§55 Abs. 1 AsylVfG)
+     8 = Résidence pour raisons familiales (§27-36 AufenthG)
+     7 = Résidence pour raisons du droit international, raisons humanitaires ou politiques  (§22-26, 104a, 104b AufenthG)
+     4 = Résidence aux fins d’une formation professionnelle (§16-17 AufenthG)
+     5 = Résidence aux fins d'une activité professionnelle  (§18, 18a, 19b, 19d, 20, 21 AufenthG)
+     9 = Résidence pour qualification d’adaptation professionnelle ou test de connaissances (§17a AufenthG)
+     2 = Carte bleue UE (§19a AufenthG)
+     13 = Séjour toléré (§60a Abs .4 AufenthG)
+     10 = Autorisation d’établissement (§9 AufenthG)
+     14 = Citoyenneté  UE /EEE/Suisse ou liberté de circulation (§2-5, §§12-13, §15 FreizüG/EU, §28 AufenthG)
+     17 = Pas de permis de séjour car résidence à l’étranger
+     15 = Attestation de fiction 
+     18 = Annotation
    }
    
    beratungsstelle {
-  	 1 = Agentur für Arbeit
-	 2 = Jobcenter
-	 3 = Internet
-	 4 = Portail de reconnaissance BIBB
-	 5 = Hotline Arbeit und Leben in Deutschland
-	 6 = Migrationsberatung (MBE)
-	 7 = Jugendmigrationsdienst (JMD)
-	 8 = Migrantenselbstorganisation
-	 9 = Presse
-	 10 = Recommandation personnelle
-	 11 = Divers
+     1 = Agentur für Arbeit ou Jobcenter
+     12 = employeurs, entreprises
+     13 = office des étrangers
+     14 = prestataire de services éducatifs  
+     15 = bénévoles	
+     16 = dépliant
+     17 = IQ conseil externe
+     3 = media (internet, presse, etc.)
+     10 = recommendation personnelle
+     18 = point de service central pour la reconnaissance professionnelle (ZSBA)
+     19 = organisme responsable pour la reconnaissance
+     11 = autres 
+     20 = non spécifié
    }
+
+	einwilligungaamedium {
+    	1 = téléphone
+    	2 = e-Mail
+    	3 = video-Chat
+   	}
+  
 }   
 [global]
 
 
-[siteLanguage("locale") == "po_PO"]
+[siteLanguage("languageId") == 5]
 plugin.tx_iqtp13db.settings {
-
-   dokumenteabschluss {
-    0 = -
-   	1 = Tak
-   	2 = Nie
-   	3 = Częściowo
-   	4 = Tylko kopie
-   	5 = Brak dokumentów
-   }
    
    erwerbsstatus {
      1 = podlega obowiązkowi składkowemu zatrudniony
@@ -591,41 +476,17 @@ plugin.tx_iqtp13db.settings {
    }
    
    leistungsbezug {
-     1 = bez pobierania świadczeń
 	 2 = z (uzupełniającym) pobieraniem świadczeń wg ustawy socjalnej II
 	 3 = z pobieraniem świadczeń wg ustawy socjalnej III
 	 4 = z pobieraniem świadczeń wg ustawy socjalnej III i II
 	 5 = z (uzupełniającym) pobieraniem świadczeń dla osób starających się o azyl
    }
-   
-   beratungsstelle {
-  	1 = Agencja pracy
-	2 = Centrum zatrudnienia
-	3 = Internet
-	4 = Portal poświęcony uznawaniu kwalifikacji BIBB
-	5 = Infolinia Praca i życie w Niemczech
-	6 = Doradztwo dla migrantów (MBE)
-	7 = Agencja migracji młodzieży (JMD)
-	8 = Organizacja migrantów
-	9 = Prasa
-	10 = Osobiste zalecenie
-	11 = Inne
-   }
 }   
 [global]
 
 
-[siteLanguage("locale") == "ro_RO"]
+[siteLanguage("languageId") == 6]
 plugin.tx_iqtp13db.settings {
-
-   dokumenteabschluss {
-    0 = -
-   	1 = da
-   	2 = nu
-   	3 = parțial
-   	4 = numai copii
-   	5 = nu documentelor disponibil
-   }
    
    erwerbsstatus {
      1 = Angajat cu obligaţia de a achita contribuţiile sociale
@@ -639,42 +500,19 @@ plugin.tx_iqtp13db.settings {
    }
    
    leistungsbezug {
-     1 = Fără plăţi / venituri sociale
 	 2 = Cu venituri sociale SGB II
 	 3 = Cu venituri sociale SGB III
 	 4 = Cu venituri sociale SGB III şi SGB II
 	 5 = Cu venituri sociale (în completare) pentru solicitanţii de azil 
    }
    
-   beratungsstelle {
-  	 1 = Agenţia pentru muncă
-	 2 = Jobcenter
-	 3 = Internet
-	 4 = Portalul de recunoaştere a calificărilor BIBB
-	 5 = Linia telefonică Munca şi viaţa în Germania (Arbeit und Leben in Deutschland)
-	 6 = Consiliere pentru migranți (MBE)
-	 7 = Serviciul migrare tineri (JMD)
-	 8 = Organizaţia proprie a migranţilor
-	 9 = Presa
-	 10 = Recomandare personală
-	 11 = Altele
-   }
 }   
 [global]
 
 
-[siteLanguage("locale") == "ru_RU"]
+[siteLanguage("languageId") == 7]
 plugin.tx_iqtp13db.settings {
 
-   dokumenteabschluss {
-    0 = -
-   	1 = да
-   	2 = нет
-   	3 = частично
-   	4 = только копии
-   	5 = документов нет
-   }
-   
    erwerbsstatus {
      1 = Работаете с обязательством уплачивать членские взносы 
 	 2 = Работаете на минимальной заработной плате
@@ -687,42 +525,19 @@ plugin.tx_iqtp13db.settings {
    }
    
    leistungsbezug {
-     1 = Не получаете пособия
 	 2 = Получаете (дополнительное) пособие в соответствии с ч. II Социального кодекса Германии 
 	 3 = Получаете пособие в соответствии с ч. III Социального кодекса Германии 
 	 4 = Получаете пособие в соответствии с ч. II и III Социального кодекса Германии 
 	 5 = Получаете (дополнительное) пособие как лицо, претендующее на политическое убежище
    }
    
-   beratungsstelle {
-	 1 = Агентство занятости
-	 2 = Центр занятости
-	 3 = Интернет
-	 4 = Портал по вопросам признания Федерального института профессионального образования (BIBB)
-	 5 = «Горячая» линия «работа и жизнь» в Германии 
-	 6 = Центр консультирования мигрантов (MBE)
-	 7 = Молодежная миграционная служба (JMD)
-	 8 = Независимая организация мигрантов 
-	 9 = Пресса 
-	 10 = Личная рекомендация
-	 11 = Другое
-   }
 }   
 [global]
 
 
-[siteLanguage("locale") == "es_ES"]
+[siteLanguage("languageId") == 8]
 plugin.tx_iqtp13db.settings {
 
-   dokumenteabschluss {
-    0 = -
-   	1 = yes
-   	2 = no
-   	3 = partly
-   	4 = copies only
-   	5 = no documents available
-   }
-   
    erwerbsstatus {
      1 = empleado contribuyente 
 	 2 = con empleo precario
@@ -735,42 +550,19 @@ plugin.tx_iqtp13db.settings {
    }
    
    leistungsbezug {
-     1 = sin prestaciones
 	 2 = con prestaciones (complementarias) SGB II
 	 3 = con prestaciones SGB III
 	 4 = con prestaciones SGB III y SGB II
 	 5 = con prestaciones (complementarias) como solicitante de asilo 
    }
    
-   beratungsstelle {
-  	 1 = Agencia de colocación 
-	 2 = Centro de trabajo (Jobcenter)
-	 3 = Internet
-	 4 = Portal de reconocimiento BIBB
-	 5 = Línea caliente „Trabajar y Vivir en Alemania“ (Hotline Arbeit und Leben in Deutschland)
-	 6 = Asesoría de Inmigrantes (Migrationsberatung) (MBE)
-	 7 = Servicio para Jóvenes Inmigrantes (Jugendmigrationsdienst) (JMD)
-	 8 = ONG de Inmigrantes
-	 9 = Prensa
-	10 = Recomendación personal
-	11 = Otras vías
-   }
 }   
 [global]
 
 
-[siteLanguage("locale") == "tr_TR"]
+[siteLanguage("languageId") == 9]
 plugin.tx_iqtp13db.settings {
 
-   dokumenteabschluss {
-    0 = -
-   	1 = evet
-   	2 = hayır 
-   	3 = kismen
-   	4 = sadece kopya
-   	5 = diploma belgesi mevcut deyil
-   }
-   
    erwerbsstatus {
      1 = Sigortalı çalışıyorum
 	 2 = Az çalışıyorum
@@ -783,25 +575,11 @@ plugin.tx_iqtp13db.settings {
    }
    
    leistungsbezug {
-     1 = Yardım almıyorum
 	 2 = Tamamlayıcı SGB II- yardımı alıyorum
 	 3 = SGB III- yardımı alıyorum
 	 4 = SGB III- ve SGB II yardımı alıyorum
 	 5 = Tamamlayıcı iltica dilekçesi sahibi yardımı alıyorum
    }
    
-   beratungsstelle {
-  	1 = İş Kurumu
-	2 = İş Merkezi 
-	3 = Internet
-	4 = Diploma tanınması portalı BIBB
-	5 = Almanya’da çalışma ve yaşama danışma hattı
-	6 = Göç Danışmanlığı (MBE)
-	7 = Genç göçmenler servisi (JMD)
-	8 = Göçmenler örgütü 
-	9 = Basın
-	10 = Kişisel tavsiye
-	11 = Diğer
-   }
 }   
 [global]

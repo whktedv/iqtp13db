@@ -153,9 +153,6 @@
     cursor: pointer;
     display: inline-block;
     -moz-user-select: none;
-}
-
-.headabschlussrechts a, .tx-iqtp13db input[type="submit"], .tx-iqtp13db .linkbuttons  {
 	text-decoration: none;
 }
 

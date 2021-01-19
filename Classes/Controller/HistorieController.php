@@ -36,7 +36,6 @@ class HistorieController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     	$historien = $this->historieRepository->findAll();
     	
     	$this->view->assign('historie', $historien);
-    	
     }
     
     

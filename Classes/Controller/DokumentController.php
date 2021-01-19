@@ -69,8 +69,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      * @return void
      */
     public function saveFileTeilnehmerAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
-    {
-        
+    {        
         $this->saveFileTeilnehmer($teilnehmer, $_FILES['tx_iqtp13db_iqtp13dbadmin']);
         $this->redirect('show', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
     }
@@ -142,13 +141,10 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     	        //Daten sofort in die Datenbank schreiben
     	        $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
     	        $persistenceManager->persistAll();
-    	        
-    	        //$anzdokumente = count($this->dokumentRepository->findByTeilnehmer($teilnehmer->getUid()));
-    	        
+    	           	        
     	        $this->teilnehmerRepository->update($teilnehmer);
     	    }
-    	}    	
-        
+    	}    	    
     }
 
     /**
@@ -163,7 +159,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $delfilepath = 'Beratene/' . $teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid() . '/' . $dokument->getName();
         $storage = $this->getTP13Storage($newFilePath);
         $fullpath = $storage->getConfiguration()['basePath'].$delfilepath;
-        //
+        
         if (file_exists($fullpath)) {
             if ($this->deletefile($dokument, $delfilepath)) {   
                 
@@ -174,8 +170,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
             } else {
                 $this->addFlashMessage('Dokument konnte nicht gelöscht werden!', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             }
-        }
-        
+        }      
     }
 
     /**
@@ -186,14 +181,12 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      * @return \Ud\Iqtp13db\Domain\Model\Dokument
      */
     public function savefile($pfad, $arrfiles)
-    {
-        
+    {      
         $dokument = new \Ud\Iqtp13db\Domain\Model\Dokument();
         
         //TODO: should validate the file type! This is not included here
         $tmpName = $this->sanitizeFileName($arrfiles['name']['file']);
         $tmpFile = $arrfiles['tmp_name']['file'];
-        
         
         $storage = $this->getTP13Storage($pfad);
       

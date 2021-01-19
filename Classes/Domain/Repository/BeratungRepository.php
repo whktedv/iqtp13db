@@ -17,6 +17,33 @@ namespace Ud\Iqtp13db\Domain\Repository;
  */
 class BeratungRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
+    /**
+     * Finds Beratungen by the specified name, ort, beruf and/or geburtsland
+     *
+     * @param string $name
+     * @param string $ort
+     * @param string $beruf
+     * @param string $land
+     * @return Tx_Extbase_Persistence_QueryResultInterface Beratung
+     */
+    public function searchBeratungen($beratungsstatus, $name, $ort, $beruf, $land)
+    {
+        $name = $name == '' ? '%' : $name;
+        $ort = $ort == '' ? '%' : $ort;
+        $beruf = $beruf == '' ? '%' : $beruf;
+        $land = $land == '' ? '%' : $land;
+        $query = $this->createQuery();
+        $query->matching($query->logicalAnd(
+            $query->like('teilnehmer.beratungsstatus', $beratungsstatus),
+            $query->greaterThan('teilnehmer.verification_date', 0),
+            $query->logicalOr($query->like('teilnehmer.nachname', '%' . $name . '%'), $query->like('teilnehmer.vorname', '%' . $name . '%')),
+            $query->like('teilnehmer.ort', $ort),
+            $query->logicalOr($query->like('teilnehmer.deutscher_referenzberuf1', '%' .$beruf. '%'), $query->like('teilnehmer.deutscher_referenzberuf2', '%' .$beruf. '%')),
+            $query->like('teilnehmer.geburtsland', $land)
+           ));
+        return $query->execute();
+    }
+    
 	/**
 	 * @param $beratungsstatus
 	 * @param $orderby

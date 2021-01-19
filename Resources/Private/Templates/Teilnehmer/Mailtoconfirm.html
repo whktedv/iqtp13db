@@ -19,9 +19,10 @@ a:focus,a:hover,a:active {
 } 
 
 a {
-  color: #003359;
+  color: #c43c5d;
   font-size: 100%;
-  text-decoration: none;
+  text-decoration: underline;
+  font-weight: bold; 
 }
 
 .farbbalken {
@@ -52,10 +53,10 @@ a {
         pluginName="Iqtp13dbwebapp"
         controller="Teilnehmer"
         action="confirm"
-        arguments="{code:teilnehmer.verificationCode}"
+        arguments="{code:teilnehmer.verificationCode, askconsent:askconsent}"
         absolute="1"
         pageUid="{registrationpageuid}"
-        >{confirmlinktext}</f:link.action>
+        >{confirmlinktext}</f:link.action>        
           <f:format.html>{confirmmailtext2}</f:format.html>
 		</td></tr>
     </table>

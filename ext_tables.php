@@ -19,6 +19,8 @@ function()
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_iqtp13db_domain_model_dokument', 'EXT:iqtp13db/Resources/Private/Language/locallang.xlf');
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_iqtp13db_domain_model_dokument');
 
+        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_iqtp13db_domain_model_historie', 'EXT:iqtp13db/Resources/Private/Language/locallang.xlf');
+        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_iqtp13db_domain_model_historie');
 };
     
 $extensionName = strtolower(\TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase('iqtp13db'));

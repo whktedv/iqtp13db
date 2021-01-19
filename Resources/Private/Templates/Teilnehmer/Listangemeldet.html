@@ -8,15 +8,17 @@
 <f:form method="post" controller="Teilnehmer" action="listangemeldet" name="listangemeldet"  noCacheHash="true" >
 		Name: <f:form.textfield size="20" value="{filtername}" name="name" />&nbsp;&nbsp;
 		Ort: <f:form.textfield size="20" value="{filterort}" name="ort" />&nbsp;&nbsp;
+		Beruf: <f:form.textfield size="20" value="{filterberuf}" name="beruf" />&nbsp;&nbsp;
 		Geburtsland: <f:form.textfield value="{filterland}" size="20" name="land" />&nbsp;&nbsp;&nbsp;&nbsp;
 		<f:if condition="{filteron}"><f:then><f:form.button name="filteraus" value="1" >Filter löschen</f:form.button></f:then></f:if>
 		<f:form.submit name="filteran" value="Filtern" />			
 </f:form>
-<br><br>
+<br>
 <h1>{teilnehmers -> f:count()} angemeldete Ratsuchende <f:if condition="{filteron}"><f:then><span style="color: red;">(gefiltert)</span></f:then></f:if></h1>
 <f:flashMessages />
 <f:link.action class="linkbuttons" action="new" arguments="{calleraction: calleraction, callercontroller : callercontroller}">Neue*r Ratsuchende*r</f:link.action>
 
+<div class="pretablediv">
 <f:widget.paginate objects="{teilnehmers}" as="teilnehmerspag" configuration="{itemsPerPage: 50, insertAbove: 1}"> 
 	<table  class="tx_iqtp13db" >
 		<tr>
@@ -56,14 +58,15 @@
 				{f:if(condition: '{teilnehmer.geschlecht} == 1', then: '<span style="color: #fe7a84;">W</span>')}
 				{f:if(condition: '{teilnehmer.geschlecht} == 3', then: '<span>D</span>')}</td>
 				<td>{teilnehmer.deutscherReferenzberuf1} {f:if(condition: '{teilnehmer.deutscherReferenzberuf2} != ""', then: ', {teilnehmer.deutscherReferenzberuf2}', else: '')} </td>
-				<td><f:link.action class="linkbuttons" action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}">Bearbeiten</f:link.action></td>
-				<td><f:link.action class="linkbuttons" action="delete" arguments="{teilnehmer : teilnehmer}" onclick="return confirm('Wirklich löschen?');" >Löschen</f:link.action></td>
-				<td><f:link.action class="linkbuttons" action="new" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}" controller="Beratung">Erstberatung</f:link.action></td>
+				<td><f:link.action class="linkbuttons" action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}">Anmeldedaten</f:link.action></td>
+				<td><f:if condition="{teilnehmer.dublette}"><f:then></f:then><f:else><f:link.action class="linkbuttons" action="new" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}" controller="Beratung">Erstberatung</f:link.action></f:else></f:if></td>
 				<td><f:link.action class="linkbuttons" action="askconsent" arguments="{teilnehmer : teilnehmer}" onclick="return confirm('E-Mail senden?');" >Einwilligung<br>anfordern</f:link.action></td>
+				<td><f:link.action class="iconbuttons" action="delete" arguments="{teilnehmer : teilnehmer}" onclick="return confirm('Wirklich löschen?');" ><img src="/typo3conf/ext/iqtp13db/Resources/Public/Icons/delete-640.png" width="32" height="32" alt="Löschen" /></f:link.action></td>
 			</tr>
 		</f:for>
 	</table>
 </f:widget.paginate> 
+</div>
 
 <br>
 <span style="font-weight: bold; font-size: 0.7rem; margin-left: 5px;">Legende:</span>

@@ -3,8 +3,17 @@
   		<link rel="stylesheet" href="{f:uri.resource(path: 'CSS/customtp13dbadmin.css')}"/>  		
 </f:section>
 
-
 <f:section name="main">
+<h1>Filter</h1>
+<f:form method="post" controller="Beratung" action="listniqerfassung" name="listniqerfassung"  noCacheHash="true" >
+		Name: <f:form.textfield size="20" value="{filtername}" name="name" />&nbsp;&nbsp;
+		Ort: <f:form.textfield size="20" value="{filterort}" name="ort" />&nbsp;&nbsp;
+		Beruf: <f:form.textfield size="20" value="{filterberuf}" name="beruf" />&nbsp;&nbsp;
+		Geburtsland: <f:form.textfield value="{filterland}" size="20" name="land" />&nbsp;&nbsp;&nbsp;&nbsp;
+		<f:if condition="{filteron}"><f:then><f:form.button name="filteraus" value="1" >Filter löschen</f:form.button></f:then></f:if>
+		<f:form.submit name="filteran" value="Filtern" />			
+</f:form>
+<br>
 <f:flashMessages />
 <h1>Liste NIQ Erfassung: {beratungen -> f:count()} Einträge </h1>
 
@@ -29,14 +38,14 @@
 	
 		<f:for each="{beratungenpart}" as="beratung" iteration="it">
 			<tr>
-				<td><f:link.action action="show" arguments="{beratung : beratung, calleraction: calleraction, callercontroller : callercontroller}">{beratung.teilnehmer.nachname}</f:link.action></td>
+				<td><f:link.action action="show" arguments="{beratung : beratung, folgekontakte : folgekontakte, calleraction: calleraction, callercontroller : callercontroller}">{beratung.teilnehmer.nachname}</f:link.action></td>
 				<td>{beratung.teilnehmer.vorname}</td>
 				<td>{f:if(condition: '{beratung.teilnehmer.schonberaten} == 1', then: '✓', else: '')}</td>
 				<td><f:format.date format="d.m.Y">@{beratung.teilnehmer.verificationDate}</f:format.date></td>
 				<td>{beratung.teilnehmer.plz} {beratung.teilnehmer.ort}</td>
 				<td>{f:if(condition: '{beratung.teilnehmer.bescheidfruehererAnerkennungsantrag} == 1', then: '✓', else: '')}</td>
 				<td>{f:if(condition: '{beratung.teilnehmer.leistungsbezugjanein} == 1', then: '✓', else: '')}</td>
-				<td>{beratung.berater.kuerzel}</td>
+				<td>{beratung.berater.kuerzel}</td> 
 				<td><f:format.date format="d.m.Y">{beratung.datum}</f:format.date></td>
 				<td>{beratung.teilnehmer.deutscherReferenzberuf1} {f:if(condition: '{beratung.teilnehmer.deutscherReferenzberuf2} != ""', then: ', {beratung.teilnehmer.deutscherReferenzberuf2}', else: '')} </td>
 				<td>
@@ -46,8 +55,8 @@
 				</f:then>
 				</f:if>				
 				</td>
-				<td><f:link.action class="linkbuttons" action="edit" arguments="{beratung : beratung, calleraction: calleraction, callercontroller : callercontroller}">Bearbeiten</f:link.action></td>
 				<td><f:link.action class="linkbuttons" action="edit" arguments="{teilnehmer : beratung.teilnehmer, calleraction: calleraction, callercontroller : callercontroller}" controller="Teilnehmer">Anmeldedaten</f:link.action></td>
+				<td><f:link.action class="linkbuttons" action="edit" arguments="{beratung : beratung, calleraction: calleraction, callercontroller : callercontroller}">Erstberatung</f:link.action></td>
 				<td><f:link.action class="linkbuttons" action="new" arguments="{beratung : beratung, calleraction: calleraction, callercontroller : callercontroller}" controller="Folgekontakt">Folgekontakt</f:link.action></td>
 			</tr>
 			<f:if condition="{anzfolgekontakte.{it.index}} != 0"><f:then>

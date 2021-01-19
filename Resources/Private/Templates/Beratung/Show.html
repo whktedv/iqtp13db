@@ -9,12 +9,14 @@
 
 <f:flashMessages />
 
-<f:link.action class="linkbuttons" action="edit" arguments="{beratung:beratung, calleraction: calleraction, callercontroller : callercontroller}">Bearbeiten</f:link.action>
+<f:link.action class="linkbuttons" action="edit" arguments="{beratung:beratung, calleraction: calleraction, callercontroller : callercontroller}">Erstberatung</f:link.action>
 <f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}">Zurück zur Liste</f:link.action>
 
 <f:render partial="Beratung/Properties" arguments="{_all}" />
 
-<f:link.action class="linkbuttons" action="edit" arguments="{beratung:beratung, calleraction: calleraction, callercontroller : callercontroller}">Bearbeiten</f:link.action>
+<f:render partial="Folgekontakte4List" arguments="{folgekontakte : folgekontakte, beratung : beratung, calleraction: calleraction, callercontroller : callercontroller}" />
+<br><br>
+<f:link.action class="linkbuttons" action="edit" arguments="{beratung:beratung, calleraction: calleraction, callercontroller : callercontroller}">Erstberatung</f:link.action>
 <f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}">Zurück zur Liste</f:link.action>
 <hr>
 
@@ -22,4 +24,4 @@
 <f:render partial="Teilnehmer/Properties" arguments="{teilnehmer:teilnehmer, historie : historie}" />
 <f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}">Zurück zur Liste</f:link.action>
 
-</f:section>
+</f:section> 

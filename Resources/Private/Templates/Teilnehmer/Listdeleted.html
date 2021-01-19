@@ -4,6 +4,16 @@
 </f:section>
 
 <f:section name="main">
+<h1>Filter</h1>
+<f:form method="post" controller="Teilnehmer" action="listdeleted" name="listdeleted"  noCacheHash="true" >
+		Name: <f:form.textfield size="20" value="{filtername}" name="name" />&nbsp;&nbsp;
+		Ort: <f:form.textfield size="20" value="{filterort}" name="ort" />&nbsp;&nbsp;
+		Beruf: <f:form.textfield size="20" value="{filterberuf}" name="beruf" />&nbsp;&nbsp;
+		Geburtsland: <f:form.textfield value="{filterland}" size="20" name="land" />&nbsp;&nbsp;&nbsp;&nbsp;
+		<f:if condition="{filteron}"><f:then><f:form.button name="filteraus" value="1" >Filter löschen</f:form.button></f:then></f:if>
+		<f:form.submit name="filteran" value="Filtern" />			
+</f:form>
+<br>
 <h1>{teilnehmers -> f:count()} gelöschte Ratsuchende</h1>
 <f:flashMessages />
 

@@ -11,7 +11,7 @@ class TNSeite1Validator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstract
 	    }
 	    if ($tnseite1->getEmail() !== $tnseite1->getConfirmemail()) {
 	       
-	        $this->addError('Die E-Mail-Bestätigung ist nicht korrekt. Bitte E-Mail-Adresse prüfen.', 1262341707);
+	        $this->addError('Die E-Mail-Bestätigung ist nicht korrekt. Bitte E-Mail-Adresse prüfen. / E-Mail addresses do not match. Please Check addresses.', 1262341707);
 	        return FALSE;
 	    }
 	}
