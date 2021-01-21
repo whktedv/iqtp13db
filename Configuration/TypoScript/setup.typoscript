@@ -186,6 +186,7 @@ plugin.tx_iqtp13db.settings {
     	1 = Telefon
     	2 = E-Mail
     	3 = Video-Chat
+    	4 = Webapp
    	}
    	
 	### Beratung ###	

@@ -1227,10 +1227,10 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	if($tnseite3->getEinwilligungdatenanaa() == 1) {
     		$thisdate = new DateTime();
     		$teilnehmer->setEinwilligungdatenanaadatum($thisdate->format('d.m.Y'));
-    		$teilnehmer->setEinwilligungdatenanaamedium("Webapp");    		
+    		$teilnehmer->setEinwilligungdatenanaamedium(explode(',', 4));    		
     	} else {
     		$teilnehmer->setEinwilligungdatenanaadatum('');
-    		$teilnehmer->setEinwilligungdatenanaamedium('');
+    		$teilnehmer->setEinwilligungdatenanaamedium(array());
     	}  	
     	$teilnehmer->setNameBeraterAA($tnseite3->getNameBeraterAA());
     	$teilnehmer->setKontaktBeraterAA($tnseite3->getKontaktBeraterAA());
