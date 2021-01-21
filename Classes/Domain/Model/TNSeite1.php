@@ -102,7 +102,7 @@ class TNSeite1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 
 	/**
 	 * lebensalter
-	 * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
+	 *
 	 * @var string
 	 */
 	protected $lebensalter = '';
@@ -110,8 +110,7 @@ class TNSeite1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/**
 	 * Geburtsland
 	 *
-	 * @var string
-	 * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
+	 * @var string	 
 	 */
 	protected $geburtsland = '';
 
@@ -119,7 +118,6 @@ class TNSeite1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * Geschlecht
 	 *
 	 * @var int
-	 * @TYPO3\CMS\Extbase\Annotation\Validate("NumberRange", options={"minimum":1, "maximum":3})
 	 */
 	protected $geschlecht = 0;
 
@@ -148,7 +146,6 @@ class TNSeite1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * Wohnsitz in Deutschland
 	 *
 	 * @var int
-	 * @TYPO3\CMS\Extbase\Annotation\Validate("NumberRange", options={"minimum":1, "maximum":2})
 	 */
 	protected $wohnsitzDeutschland = 0;
 

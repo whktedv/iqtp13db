@@ -89,6 +89,15 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     
     		$this->arguments->getArgument('teilnehmer')->getPropertyMappingConfiguration()->allowProperties('abschlussart2');
     		$this->arguments->getArgument('teilnehmer')->getPropertyMappingConfiguration()->setTargetTypeForSubProperty('abschlussart2', 'array');
+
+    		$this->arguments->getArgument('teilnehmer')->getPropertyMappingConfiguration()->allowProperties('einwilligungdatenanAAmedium');
+    	    $this->arguments->getArgument('teilnehmer')->getPropertyMappingConfiguration()->setTargetTypeForSubProperty('einwilligungdatenanAAmedium', 'array');
+    	    
+    	    $this->arguments->getArgument('teilnehmer')->getPropertyMappingConfiguration()->allowProperties('einwAnerkstellemedium');
+    	    $this->arguments->getArgument('teilnehmer')->getPropertyMappingConfiguration()->setTargetTypeForSubProperty('einwAnerkstellemedium', 'array');
+    	    
+    	    $this->arguments->getArgument('teilnehmer')->getPropertyMappingConfiguration()->allowProperties('einwPersonmedium');
+    	    $this->arguments->getArgument('teilnehmer')->getPropertyMappingConfiguration()->setTargetTypeForSubProperty('einwPersonmedium', 'array');
     	}   
     	
     	if ($this->arguments->hasArgument('tnseite2')) {
@@ -96,7 +105,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     		$this->arguments->getArgument('tnseite2')->getPropertyMappingConfiguration()->setTargetTypeForSubProperty('abschlussart1', 'array');
     	
     		$this->arguments->getArgument('tnseite2')->getPropertyMappingConfiguration()->allowProperties('abschlussart2');
-    		$this->arguments->getArgument('tnseite2')->getPropertyMappingConfiguration()->setTargetTypeForSubProperty('abschlussart2', 'array');
+    		$this->arguments->getArgument('tnseite2')->getPropertyMappingConfiguration()->setTargetTypeForSubProperty('abschlussart2', 'array');    		    		
     	}
     }
     
@@ -548,6 +557,16 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$this->createHistory($teilnehmer, $berater, "name_beraterAA");
 		$this->createHistory($teilnehmer, $berater, "kontakt_beraterAA");
 		$this->createHistory($teilnehmer, $berater, "kundennummerAA");
+		$this->createHistory($teilnehmer, $berater, "einwAnerkstelle");
+		$this->createHistory($teilnehmer, $berater, "einwAnerkstelledatum");
+		$this->createHistory($teilnehmer, $berater, "einwAnerkstellemedium");
+		$this->createHistory($teilnehmer, $berater, "einwAnerkstellename");
+		$this->createHistory($teilnehmer, $berater, "einwAnerkstellekontakt");
+		$this->createHistory($teilnehmer, $berater, "einwPerson");
+		$this->createHistory($teilnehmer, $berater, "einwPersondatum");
+		$this->createHistory($teilnehmer, $berater, "einwPersonmedium");
+		$this->createHistory($teilnehmer, $berater, "einwPersonname");
+		$this->createHistory($teilnehmer, $berater, "einwPersonkontakt");
 		$this->createHistory($teilnehmer, $berater, "aufenthaltsstatus");
 		$this->createHistory($teilnehmer, $berater, "aufenthaltsstatusfreitext");
 		$this->createHistory($teilnehmer, $berater, "fruehererAntrag");
@@ -612,7 +631,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	$persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
     	$persistenceManager->persistAll();
     	
-    	$this->redirect('listangemeldet');
+    	$this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, null);
+    	//$this->redirect('listangemeldet');
     }
     
     /**
@@ -735,13 +755,13 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         	$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_iqtp13db_domain_model_teilnehmer');
             
         	$arraytoexport = $valArray['chktoexport'];
-        	 
-        	if(count($valArray['chktoexport']) != 0) {
+        	
+        	if(is_array($arraytoexport)) {
 				$strlisttoexport = implode(",", $arraytoexport);
 				
 				$rows = $queryBuilder
 						->select('niqchiffre', 'nachname', 'vorname', 'plz', 'ort', 'email', 'telefon', 'lebensalter', 'geschlecht', 'erste_staatsangehoerigkeit', 'zweite_staatsangehoerigkeit', 
-								'einreisejahr', 'wohnsitz_deutschland', 'wohnsitz_nein_in', 'zertifikatdeutsch', 'zertifikat_sprachniveau', 'erwerbsland1', 'erwerbsland2', 
+								'einreisejahr', 'wohnsitz_deutschland', 'wohnsitz_nein_in', 'zertifikat_sprachniveau', 'erwerbsland1', 'erwerbsland2', 
 								'abschluss1', 'abschluss2', 'deutscher_referenzberuf1', 'deutscher_referenzberuf2', 'bescheidfrueherer_anerkennungsantrag', 'name_beratungsstelle')
 						->from('tx_iqtp13db_domain_model_teilnehmer')
 						->where($queryBuilder->expr()->in('tx_iqtp13db_domain_model_teilnehmer.uid', $queryBuilder->createNamedParameter(GeneralUtility::intExplode(',', $strlisttoexport, true), Connection::PARAM_INT_ARRAY)))
@@ -749,8 +769,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 						->fetchAll();
         	} else {
         		$rows = $queryBuilder
-						->select('niqchiffre', 'b.datum', 'b.beratungsart', 'c.kuerzel', 'nachname', 'vorname', 'plz', 'ort', 'email', 'telefon', 'lebensalter', 'geschlecht',
-						'erste_staatsangehoerigkeit', 'zweite_staatsangehoerigkeit', 'einreisejahr', 'wohnsitz_deutschland', 'wohnsitz_nein_in', 'zertifikatdeutsch', 'zertifikat_sprachniveau',
+        		->select('niqchiffre', 'b.erstberatungabgeschlossen', 'b.beratungsart', 'c.kuerzel', 'nachname', 'vorname', 'plz', 'ort', 'email', 'telefon', 'lebensalter', 'geschlecht',
+						'erste_staatsangehoerigkeit', 'zweite_staatsangehoerigkeit', 'einreisejahr', 'wohnsitz_deutschland', 'wohnsitz_nein_in', 'zertifikat_sprachniveau',
 						'erwerbsland1', 'erwerbsland2', 'abschluss1', 'abschluss2', 'deutscher_referenzberuf1', 'deutscher_referenzberuf2', 'bescheidfrueherer_anerkennungsantrag', 'b.beratungzu', 'name_beratungsstelle')
 						->from('tx_iqtp13db_domain_model_teilnehmer')
 						->leftJoin('tx_iqtp13db_domain_model_teilnehmer', 'tx_iqtp13db_domain_model_beratung', 'b',	$queryBuilder->expr()->eq('b.teilnehmer', $queryBuilder->quoteIdentifier('tx_iqtp13db_domain_model_teilnehmer.uid')))
@@ -1033,9 +1053,11 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	}
     	
     	if($this->request->hasArgument('askconsent')) {
-    	    $askconsent = $this->request->hasArgument('askconsent');
+    	    $askconsent = $this->request->getArgument('askconsent');
     	}
     	
+    	//\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($askconsent);
+    	//die;
     	if($teilnehmer) {
     		// it's a valid verificationCode
     		$teilnehmer->setVerificationDate(new \DateTime);
@@ -1043,7 +1065,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     		$this->teilnehmerRepository->update($teilnehmer);
     
     		if($askconsent == 0) $this->sendconfirmedMail($teilnehmer);
-    
+
+    		
     		$uriBuilder = $this->controllerContext->getUriBuilder();
     		$uriBuilder->reset();
     		if($askconsent == 0) {
@@ -1079,8 +1102,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     {
     	$GLOBALS['TSFE']->fe_user->setKey('ses', 'tn', '');
     	$recipient = $teilnehmer->getEmail();
-    	$bcc = $this->settings['bccmail'];
-    	\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($this);
+    	$bcc = $this->settings['bccmail'];    	
     	$sender = $this->settings['sender'];
     	$subject = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('subject', 'Iqtp13db');
     	$templateName = 'Mail';

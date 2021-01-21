@@ -98,21 +98,20 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     
     /**
      * lebensalter
-	 * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
+     * 
      * @var string
      */
     protected $lebensalter = '';
     
     /**
      * geburtsland
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
+     * 
      * @var string
      */
     protected $geburtsland = '';
     
     /**
      * geschlecht
-	 * @TYPO3\CMS\Extbase\Annotation\Validate("NumberRange", options={"minimum":1, "maximum":3})
      * @var int
      */
     protected $geschlecht = 0;
@@ -140,7 +139,6 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     
     /**
      * wohnsitzDeutschland
-	 * @TYPO3\CMS\Extbase\Annotation\Validate("NumberRange", options={"minimum":1, "maximum":2})
      * @var int
      */
     protected $wohnsitzDeutschland = 0;
@@ -192,7 +190,6 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 	 * Erwerbsland
 	 *
 	 * @var string
-	 * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
 	 */
 	protected $erwerbsland1 = '';
     
@@ -207,7 +204,6 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 	 * Abschlussjahr
 	 *
 	 * @var string
-	 * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
 	 */
 	protected $abschlussjahr1 = '';
     
@@ -229,7 +225,6 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 	 * Abschluss
 	 *
 	 * @var string
-	 * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
 	 */
 	protected $abschluss1 = '';
     
@@ -567,10 +562,16 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      *
      * @param array $abschlussart1
      * @param array $abschlussart2
+     * @param array $einwilligungdatenanAAmedium
+     * @param array $einwAnerkstellemedium
+     * @param array $einwPersonmedium
      */
-    public function __construct(array $abschlussart1 = array(), array $abschlussart2 = array()) {
+    public function __construct(array $abschlussart1 = array(), array $abschlussart2 = array(), array $einwilligungdatenanAAmedium = array(), array $einwAnerkstellemedium = array(), array $einwPersonmedium = array()) {
     	$this->setAbschlussart1($abschlussart1);
     	$this->setAbschlussart2($abschlussart2);
+    	$this->setEinwilligungdatenanAAmedium($einwilligungdatenanAAmedium);    	
+    	$this->setEinwAnerkstellemedium($einwAnerkstellemedium);
+    	$this->setEinwPersonmedium($einwPersonmedium);
     	$this->initVerificationCode();
     }
     
@@ -1604,22 +1605,22 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the einwilligungdatenanAAmedium
      * 
-     * @return string $einwilligungdatenanAAmedium
+     * @return array $einwilligungdatenanAAmedium
      */
     public function getEinwilligungdatenanAAmedium()
     {
-        return $this->einwilligungdatenanAAmedium;
+        return explode(',', $this->einwilligungdatenanAAmedium);
     }
 
     /**
      * Sets the einwilligungdatenanAAmedium
      * 
-     * @param string $einwilligungdatenanAAmedium
+     * @param array $einwilligungdatenanAAmedium
      * @return void
      */
-    public function setEinwilligungdatenanAAmedium($einwilligungdatenanAAmedium)
+    public function setEinwilligungdatenanAAmedium(array $einwilligungdatenanAAmedium)
     {
-        $this->einwilligungdatenanAAmedium = $einwilligungdatenanAAmedium;
+        $this->einwilligungdatenanAAmedium = implode(',', $einwilligungdatenanAAmedium);
     }
 
     /**
@@ -1709,22 +1710,22 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the einwAnerkstellemedium
      *
-     * @return string $einwAnerkstellemedium
+     * @return array $einwAnerkstellemedium
      */
     public function getEinwAnerkstellemedium()
     {
-        return $this->einwAnerkstellemedium;
+        return explode(',', $this->einwAnerkstellemedium);
     }
     
     /**
      * Sets the einwAnerkstellemedium
      *
-     * @param string $einwAnerkstellemedium
+     * @param array $einwAnerkstellemedium
      * @return void
      */
-    public function setEinwAnerkstellemedium($einwAnerkstellemedium)
+    public function setEinwAnerkstellemedium(array $einwAnerkstellemedium)
     {
-        $this->einwAnerkstellemedium = $einwAnerkstellemedium;
+        $this->einwAnerkstellemedium = implode(',', $einwAnerkstellemedium);
     }
     
     /**
@@ -1814,22 +1815,22 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the einwPersonmedium
      *
-     * @return string $einwPersonmedium
+     * @return array $einwPersonmedium
      */
     public function getEinwPersonmedium()
     {
-        return $this->einwPersonmedium;
+        return explode(',', $this->einwPersonmedium);
     }
     
     /**
      * Sets the einwPersonmedium
      *
-     * @param string $einwPersonmedium
+     * @param array $einwPersonmedium
      * @return void
      */
-    public function setEinwPersonmedium($einwPersonmedium)
+    public function setEinwPersonmedium(array $einwPersonmedium)
     {
-        $this->einwPersonmedium = $einwPersonmedium;
+        $this->einwPersonmedium = implode(',', $einwPersonmedium);
     }
     
     /**

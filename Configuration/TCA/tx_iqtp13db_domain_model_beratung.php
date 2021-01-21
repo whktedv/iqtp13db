@@ -20,10 +20,10 @@ return [
         'iconfile' => 'EXT:iqtp13db/Resources/Public/Icons/tx_iqtp13db_domain_model_beratung.gif'
     ],
     'interface' => [
-        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, datum, beratungsart, beratungzu, referenzberufe, anerkennendestellen, anerkennungsberatung, anerkennungsberatungfreitext, qualifizierungsberatung, qualifizierungsberatung, notizen, erstberatungabgeschlossen, teilnehmer, berater',
+        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, datum, beratungsart, beratungsartfreitext, beratungsort, beratungzu, referenzberufe, anerkennendestellen, anerkennungsberatung, anerkennungsberatungfreitext, qualifizierungsberatung, qualifizierungsberatung, notizen, erstberatungabgeschlossen, teilnehmer, berater',
     ],
     'types' => [
-        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, datum, beratungsart, beratungzu, referenzberufe, anerkennendestellen, anerkennungsberatung, anerkennungsberatungfreitext, qualifizierungsberatung, qualifizierungsberatung, notizen, erstberatungabgeschlossen, teilnehmer, berater, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, datum, beratungsart, beratungsartfreitext, beratungsort, beratungzu, referenzberufe, anerkennendestellen, anerkennungsberatung, anerkennungsberatungfreitext, qualifizierungsberatung, qualifizierungsberatung, notizen, erstberatungabgeschlossen, teilnehmer, berater, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
     'columns' => [
         'sys_language_uid' => [
@@ -128,6 +128,24 @@ return [
         'beratungsart' => [
             'exclude' => true,
             'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_beratung.beratungsart',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim'
+            ]
+        ],
+        'beratungsartfreitext' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_beratung.beratungsartfreitext',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim'
+            ]
+        ],
+        'beratungsort' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_beratung.beratungsort',
             'config' => [
                 'type' => 'input',
                 'size' => 30,

@@ -522,7 +522,10 @@
   			<label for="einwAnerkstellemedium">
   				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstellemedium" />
   			</label>
-  				<span class="propdat">{teilnehmer.einwAnerkstellemedium}</span>
+  				<f:for each="{settings.einwilligungaamedium}" as="text" key="wert">
+					{f:if(condition: '{teilnehmer.einwAnerkstellemedium.0} == {wert}', then: '<span class="propdat">{text}</span>')}					 
+				</f:for>
+
   				<div class="historie">
   				<f:for each="{historie}" as="hist" key="wert">
   					{f:if(condition: '{hist.property} == "einwAnerkstellemedium"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
@@ -591,7 +594,9 @@
   			<label for="einwPersonmedium">
   				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_personmedium" />
   			</label>
-  				<span class="propdat">{teilnehmer.einwPersonmedium}</span>
+  				<f:for each="{settings.einwilligungaamedium}" as="text" key="wert">
+					{f:if(condition: '{teilnehmer.einwPersonmedium.0} == {wert}', then: '<span class="propdat">{text}</span>')}					 
+				</f:for>
   				<div class="historie">
   				<f:for each="{historie}" as="hist" key="wert">
   					{f:if(condition: '{hist.property} == "einwPersonmedium"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 

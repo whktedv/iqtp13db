@@ -33,6 +33,20 @@ class Beratung extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $beratungsart = 0;
 
     /**
+     * beratungsartfreitext
+     *
+     * @var string
+     */
+    protected $beratungsartfreitext = '';
+    
+    /**
+     * beratungsort
+     *
+     * @var string
+     */
+    protected $beratungsort = '';
+            
+    /**
      * beratungzu
      * 
      * @var string
@@ -166,6 +180,48 @@ class Beratung extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->beratungsart = implode(',', $beratungsart);
     }
 
+    /**
+     * Returns the beratungsartfreitext
+     *
+     * @return string $beratungsartfreitext
+     */
+    public function getBeratungsartfreitext()
+    {
+        return $this->beratungsartfreitext;
+    }
+    
+    /**
+     * Sets the beratungsartfreitext
+     *
+     * @param string $beratungsartfreitext
+     * @return void
+     */
+    public function setBeratungsartfreitext($beratungsartfreitext)
+    {
+        $this->beratungsartfreitext = $beratungsartfreitext;
+    }
+    
+    /**
+     * Returns the beratungsort
+     *
+     * @return string $beratungsort
+     */
+    public function getBeratungsort()
+    {
+        return $this->beratungsort;
+    }
+    
+    /**
+     * Sets the beratungsort
+     *
+     * @param string $beratungsort
+     * @return void
+     */
+    public function setBeratungsort($beratungsort)
+    {
+        $this->beratungsort = $beratungsort;
+    }
+    
     /**
      * Returns the beratungzu
      * 

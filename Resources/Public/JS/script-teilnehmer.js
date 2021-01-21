@@ -86,6 +86,13 @@
 			toggleberatungsstelleradioall();
 		}); 
 		
+		// Erstberatung
+		toggleberatungface2face();
+		
+		$('#chkberatungsartface2face').click(function() {
+			toggleberatungface2face();
+		});
+		
 		// Folgekontakt
 		toggleantraggestellt();
 		
@@ -245,7 +252,19 @@
     		}
     	} 
 	}
-// Folgekontakt
+    
+    // Erstberatung
+    function toggleberatungface2face() {
+    	if($('#chkberatungsartface2face').is(":checked")) {
+    		$('#textareaberatungsartfreitext').show(); 
+			$('#textfieldberatungsort').show(); 
+		} else {
+			$('#textareaberatungsartfreitext').toggle();
+			$('#textfieldberatungsort').toggle();
+		}
+	} 
+    
+    // Folgekontakt
     function toggleantraggestellt() {
     	if($('#optantraggestellt1').is(":checked")) {
 			$('#divzabgleichwertigkeit').fadeIn(); 

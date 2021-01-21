@@ -265,6 +265,12 @@
 			<trans-unit id="tx_iqtp13db_domain_model_beratung.beratungsart">
 				<source>Beratungsart</source>
 			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_beratung.beratungsartfreitext">
+				<source>Beratungsart F2F Freitext</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_beratung.beratungsort">
+				<source>Beratungsort</source>
+			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_beratung.beratungzu">
 				<source>Beratung zu</source>
 			</trans-unit>
@@ -573,7 +579,7 @@
 			</trans-unit>
 			<trans-unit id="mailtext">
 				<source> <![CDATA[
-					 <p>vielen Dank für Ihre Informationen.</p> <p>&nbsp;</p> <p>Sie sind jetzt zur Beratung angemeldet. Wir setzen uns mit Ihnen in Verbindung, sobald Sie an der Reihe sind. <br><br>Die Beratung erfolgt nach Wunsch über E-Mail, Telefon oder Videochat.</p> <p>&nbsp;</p> <p>Mit freundlichen Grüßen</p>Ihre Anerkennungsberatung beim IQ Netzwerk NRW 
+					 <p>vielen Dank für Ihre Informationen.</p> <p>&nbsp;</p> <p>Sie sind jetzt zur Beratung angemeldet. Wir setzen uns mit Ihnen in Verbindung, sobald Sie an der Reihe sind. <br><br>Die Beratung erfolgt nach Wunsch über E-Mail, Telefon oder Videochat.</p> <p>&nbsp;</p> <p>Mit freundlichen Grüßen</p>Ihre Mobile IQ Anerkennungs- und Qualifizierungsberatung 
 					 ]]></source>
 			</trans-unit>
 			<trans-unit id="subject">
@@ -586,12 +592,12 @@
 			</trans-unit>
 			<trans-unit id="confirmmailtext1">
 				<source> <![CDATA[
-					 <p>Liebe*r Ratsuchende*r,</p> <p>&nbsp;</p> <p>bestätigen Sie Ihre Anmeldung zur Anerkennungsberatung bitte hier:</p>
+					 <p>Liebe*r Ratsuchende*r,</p> <p>&nbsp;</p> <p>bestätigen Sie Ihre Anmeldung zur Anerkennungserstberatung bitte hier:</p>
 					 ]]></source>
 			</trans-unit>			
 			<trans-unit id="confirmmailtext2">
 				<source> <![CDATA[
-					 <p>Mit freundlichem Gruß</p> <p>Ihre Anerkennungsberatung beim IQ Netzwerk NRW</p>
+					 <p>Mit freundlichem Gruß</p> <p>Ihre Mobile IQ Anerkennungs- und Qualifizierungsberatung</p>
 					 ]]></source>
 			</trans-unit>
 			<trans-unit id="confirmsubject">

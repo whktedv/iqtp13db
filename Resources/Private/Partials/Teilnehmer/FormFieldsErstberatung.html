@@ -32,7 +32,7 @@
 			<label for="vorname">
 				<span id="infolab" title="<f:translate key='infoVorname' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" />
 			</label>
-				<f:form.textfield  property="vorname" />
+				<f:form.textfield property="vorname" />
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="plz">
@@ -287,9 +287,9 @@
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_amedium" />
 			</label>
 			<div class="tp13_formdivwebappmultiradio">
-				<div class="tp13_formdivwebappradio"><f:form.checkbox property="einwilligungdatenanAAmedium" name="einwilligungdatenanAAmedium1" value="{settings.einwilligungaamedium.1}" />{settings.einwilligungaamedium.1}</div>
-				<div class="tp13_formdivwebappradio"><f:form.checkbox property="einwilligungdatenanAAmedium" name="einwilligungdatenanAAmedium2" value="{settings.einwilligungaamedium.2}" />{settings.einwilligungaamedium.2}</div>
-				<div class="tp13_formdivwebappradio"><f:form.checkbox property="einwilligungdatenanAAmedium" name="einwilligungdatenanAAmedium3" value="{settings.einwilligungaamedium.3}" />{settings.einwilligungaamedium.3}</div>
+				<div class="tp13_formdivwebappradio"><f:form.checkbox property="einwilligungdatenanAAmedium" value="1" multiple="1"/>{settings.einwilligungaamedium.1}</div>
+				<div class="tp13_formdivwebappradio"><f:form.checkbox property="einwilligungdatenanAAmedium" value="2" multiple="1"/>{settings.einwilligungaamedium.2}</div>
+				<div class="tp13_formdivwebappradio"><f:form.checkbox property="einwilligungdatenanAAmedium" value="3" multiple="1"/>{settings.einwilligungaamedium.3}</div>
 			</div>				
 		</div>
 		<div class="tp13_formdivwebapp">
@@ -331,9 +331,9 @@
   				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstellemedium" />
   			</label>
   			<div class="tp13_formdivwebappmultiradio">
-  				<div class="tp13_formdivwebappradio"><f:form.checkbox property="einwAnerkstellemedium" name="einwAnerkstellemedium1" value="{settings.einwilligungaamedium.1}" />{settings.einwilligungaamedium.1}</div>
-  				<div class="tp13_formdivwebappradio"><f:form.checkbox property="einwAnerkstellemedium" name="einwAnerkstellemedium2" value="{settings.einwilligungaamedium.2}" />{settings.einwilligungaamedium.2}</div>
-  				<div class="tp13_formdivwebappradio"><f:form.checkbox property="einwAnerkstellemedium" name="einwAnerkstellemedium3" value="{settings.einwilligungaamedium.3}" />{settings.einwilligungaamedium.3}</div>
+  				<div class="tp13_formdivwebappradio"><f:form.checkbox property="einwAnerkstellemedium" value="1" multiple="1"/>{settings.einwilligungaamedium.1}</div>
+  				<div class="tp13_formdivwebappradio"><f:form.checkbox property="einwAnerkstellemedium" value="2" multiple="1"/>{settings.einwilligungaamedium.2}</div>
+  				<div class="tp13_formdivwebappradio"><f:form.checkbox property="einwAnerkstellemedium" value="3" multiple="1"/>{settings.einwilligungaamedium.3}</div>
   			</div>				
   		</div>
   		<div class="tp13_formdivwebapp">
@@ -369,9 +369,9 @@
   				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_personmedium" />
   			</label>
   			<div class="tp13_formdivwebappmultiradio">
-  				<div class="tp13_formdivwebappradio"><f:form.checkbox property="einwPersonmedium" name="einwPersonmedium1" value="{settings.einwilligungaamedium.1}" />{settings.einwilligungaamedium.1}</div>
-  				<div class="tp13_formdivwebappradio"><f:form.checkbox property="einwPersonmedium" name="einwPersonmedium2" value="{settings.einwilligungaamedium.2}" />{settings.einwilligungaamedium.2}</div>
-  				<div class="tp13_formdivwebappradio"><f:form.checkbox property="einwPersonmedium" name="einwPersonmedium3" value="{settings.einwilligungaamedium.3}" />{settings.einwilligungaamedium.3}</div>
+  				<div class="tp13_formdivwebappradio"><f:form.checkbox property="einwPersonmedium" value="1" multiple="1"/>{settings.einwilligungaamedium.1}</div>
+  				<div class="tp13_formdivwebappradio"><f:form.checkbox property="einwPersonmedium" value="2" multiple="1"/>{settings.einwilligungaamedium.2}</div>
+  				<div class="tp13_formdivwebappradio"><f:form.checkbox property="einwPersonmedium" value="3" multiple="1"/>{settings.einwilligungaamedium.3}</div>
   			</div>				
   		</div>
   		<div class="tp13_formdivwebapp">

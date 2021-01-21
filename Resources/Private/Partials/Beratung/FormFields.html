@@ -23,12 +23,24 @@
 				<f:translate key="tx_iqtp13db_domain_model_beratung.beratungsart" />
 			</label>
 			<div class="tp13_formdivwebappmultiradio">
-				<div class="tp13_formdivwebappradio"><f:form.checkbox name="beratungsart1" property="beratungsart" multiple="1" value="1" />{settings.beratungsart.1}</div>
+				<div class="tp13_formdivwebappradio"><f:form.checkbox id="chkberatungsartface2face" name="beratungsart1" property="beratungsart" multiple="1" value="1" />{settings.beratungsart.1}</div>
 				<div class="tp13_formdivwebappradio"><f:form.checkbox name="beratungsart2" property="beratungsart" multiple="1" value="2" />{settings.beratungsart.2}</div>
 				<div class="tp13_formdivwebappradio"><f:form.checkbox name="beratungsart3" property="beratungsart" multiple="1" value="3" />{settings.beratungsart.3}</div>
 				<div class="tp13_formdivwebappradio"><f:form.checkbox name="beratungsart4" property="beratungsart" multiple="1" value="4" />{settings.beratungsart.4}</div>
 				<div class="tp13_formdivwebappradio"><f:form.checkbox name="beratungsart5" property="beratungsart" multiple="1" value="5" />{settings.beratungsart.5}</div>
 			</div>
+		</div>
+		<div class="tp13_formdivwebapp" id="textareaberatungsartfreitext">
+			<label for="beratungsartfreitext">
+				<f:translate key="tx_iqtp13db_domain_model_beratung.beratungsartfreitext" />
+			</label>
+			<f:form.textarea property="beratungsartfreitext" rows="3" cols="100" />
+		</div>
+		<div class="tp13_formdivwebapp" id="textfieldberatungsort">
+			<label for="beratungsort">
+				<f:translate key="tx_iqtp13db_domain_model_beratung.beratungsort" />
+			</label>
+				<f:form.textfield property="beratungsort" />				
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="beratungzu">

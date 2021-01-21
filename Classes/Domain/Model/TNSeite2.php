@@ -84,7 +84,6 @@ class TNSeite2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * Erwerbsland
 	 *
 	 * @var string
-	 * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
 	 */
 	protected $erwerbsland1 = '';
 
@@ -99,7 +98,6 @@ class TNSeite2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * Abschlussjahr
 	 *
 	 * @var string
-	 * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
 	 */
 	protected $abschlussjahr1 = '';
 
@@ -121,7 +119,6 @@ class TNSeite2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * Abschluss
 	 *
 	 * @var string
-	 * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
 	 */
 	protected $abschluss1 = '';
 

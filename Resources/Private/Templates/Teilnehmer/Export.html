@@ -20,7 +20,6 @@ Wenn einzelne Ratsuchende in der Spalte "Export" ausgewählt wurden, werden nur 
 				<th>Export</th>
 				<th><f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" /></th>
 				<th><f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" /></th>
-				<th>Bereits<br>beraten</th>
 				<th><f:translate key="anmeldedatum" /></th>
 				<th><f:translate key="tx_iqtp13db_domain_model_teilnehmer.plz" />/<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ort" /></th>
 				<th>Früherer<br>Bescheid</th>
@@ -41,7 +40,6 @@ Wenn einzelne Ratsuchende in der Spalte "Export" ausgewählt wurden, werden nur 
 					<td class="tdcenter"><f:form.checkbox name="chktoexport" multiple="1" value="{teilnehmer.uid}" /></td>			
 					<td><f:link.action action="show" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}">{teilnehmer.nachname}</f:link.action></td>
 					<td><f:link.action action="show" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}">{teilnehmer.vorname}</f:link.action></td>
-					<td class="tdcenter">{f:if(condition: '{teilnehmer.schonberaten} == 1', then: '✓', else: '')}</td>
 					<td class="tdcenter">{f:if(condition: '{teilnehmer.verificationDate} == 0', then: 'unbestätigt', else: '{f:format.date(date: teilnehmer.verificationDate, format:"d.m.Y")}')}</td>
 					<td>{teilnehmer.plz} {teilnehmer.ort}</td>
 					<td class="tdcenter">{f:if(condition: '{teilnehmer.bescheidfruehererAnerkennungsantrag} == 1', then: '✓', else: '')}</td>
@@ -58,4 +56,38 @@ Wenn einzelne Ratsuchende in der Spalte "Export" ausgewählt wurden, werden nur 
 <f:form.submit name="export" value="Daten exportieren" />			
 </f:form>
 
+<div style="margin-top:30px; padding: 10px; border: 1px solid #ccc;">
+<h2>Legende</h2>
+
+<h3>Ja/Nein-Fragen</h3>
+<span class="propdat">1 = Ja</span><br>
+<span class="propdat">2 = Nein</span><br>
+
+<br>
+<h3><f:translate key="tx_iqtp13db_domain_model_beratung.beratungsart" /></h3>
+<f:for each="{settings.beratungsart}" as="text" key="wert">
+ <span class="propdat">{wert} = {text}</span><br>
+</f:for>
+
+<br>
+<h3><f:translate key="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau" /></h3>
+<f:for each="{settings.zertifikatlevel}" as="text" key="wert">
+ <span class="propdat">{wert} = {text}</span><br>
+</f:for>
+
+<br>
+<h3><f:translate key="tx_iqtp13db_domain_model_beratung.beratungzu" /></h3>
+<f:for each="{settings.beratungzu}" as="text" key="wert">
+ <span class="propdat">{wert} = {text}</span><br>
+</f:for>
+
+<br>
+<h3><f:translate key="tx_iqtp13db_domain_model_teilnehmer.name_beratungsstelle" /></h3>
+<f:for each="{settings.beratungsstelle}" as="text" key="wert">
+ <span class="propdat">{wert} = {text}</span><br>
+</f:for>
+
+
+
+</div>
 </f:section>

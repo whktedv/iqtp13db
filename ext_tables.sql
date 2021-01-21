@@ -116,7 +116,9 @@ CREATE TABLE tx_iqtp13db_domain_model_beratung (
 	datum varchar(255) DEFAULT '' NOT NULL,
 	berater int(11) unsigned DEFAULT '0',	
 	beratungsart varchar(255) DEFAULT '' NOT NULL,
-	
+	beratungsartfreitext text NOT NULL,
+	beratungsort varchar(255) DEFAULT '' NOT NULL,
+		
 	beratungzu varchar(255) DEFAULT '' NOT NULL,
 	referenzberufe text NOT NULL,
 	anerkennendestellen text NOT NULL,

@@ -21,6 +21,23 @@
 				</f:for>
 			</f:for>		
 		</div>
+		<f:for each="{beratung.beratungsart}" as="beratungart">
+		<f:if condition="{beratungart} == 1"><f:then>
+			<div class="tp13_formdivwebapp">
+				<label for="beratungsartfreitext">
+					<f:translate key="tx_iqtp13db_domain_model_beratung.beratungsartfreitext" />
+				</label>
+					<span class="propdat">{beratung.beratungartfreitext}</span>
+			</div>
+			<div class="tp13_formdivwebapp">
+				<label for="beratungsort">
+					<f:translate key="tx_iqtp13db_domain_model_beratung.beratungsort" />
+				</label>
+					<span class="propdat">{beratung.beratungsort}</span>
+			</div>
+		</f:then>
+		</f:if>
+		</f:for>	
 		<div class="tp13_formdivwebapp">
 			<label for="beratungzu">
 				<f:translate key="tx_iqtp13db_domain_model_beratung.beratungzu" />
