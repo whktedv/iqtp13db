@@ -266,7 +266,7 @@
 				<source>Beratungsart</source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_beratung.beratungsartfreitext">
-				<source>Beratungsart F2F Freitext</source>
+				<source>Beratungsart face-to-face Freitext</source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_beratung.beratungsort">
 				<source>Beratungsort</source>
@@ -541,7 +541,7 @@
 				<source>Ein Ausbildungsabschluss ist ein Abschluss einer beruflichen Ausbildung. Ein Hochschulabschluss ist ein akademischer Abschluss der nach einem Studium an einer Hochschule/Universität erworben wurde. Das Studium hat in der Regel mindestens 3 Jahre gedauert. Bitte geben Sie an welchen Abschluss Sie erworben haben.</source>
 			</trans-unit>
 			<trans-unit id="infoAusbildungsort">
-				<source>Bitte geben Sie das Land und die Stadt an, in der Sie Ihren Abschluss gemacht haben.</source>
+				<source>Bitte geben Sie die Stadt an, in der Sie Ihren Abschluss gemacht haben.</source>
 			</trans-unit>
 			<trans-unit id="infoBerufserfahrung">
 				<source>Bitte geben Sie an, wie lange Sie schon im Beruf der Ausbildung/des Studiums gearbeitet haben (Monate/Jahre).</source>
@@ -579,7 +579,7 @@
 			</trans-unit>
 			<trans-unit id="mailtext">
 				<source> <![CDATA[
-					 <p>vielen Dank für Ihre Informationen.</p> <p>&nbsp;</p> <p>Sie sind jetzt zur Beratung angemeldet. Wir setzen uns mit Ihnen in Verbindung, sobald Sie an der Reihe sind. <br><br>Die Beratung erfolgt nach Wunsch über E-Mail, Telefon oder Videochat.</p> <p>&nbsp;</p> <p>Mit freundlichen Grüßen</p>Ihre Mobile IQ Anerkennungs- und Qualifizierungsberatung 
+					 <p>vielen Dank für Ihre Informationen.</p> <p>&nbsp;</p> <p>Sie sind jetzt zur Beratung angemeldet. Wir setzen uns mit Ihnen in Verbindung, sobald Sie an der Reihe sind. <br><br>Die Beratung erfolgt nach Wunsch über E-Mail, Telefon oder Videochat.</p> <p>Wir bemühen uns, Ihre Anfrage innerhalb von 6 Wochen zu bearbeiten. Wir bitten um Ihr Verständnis und Ihre Geduld.</p><p>&nbsp;</p> <p>Mit freundlichen Grüßen</p>Ihre Mobile IQ Anerkennungs- und Qualifizierungsberatung 
 					 ]]></source>
 			</trans-unit>
 			<trans-unit id="subject">

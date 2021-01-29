@@ -189,11 +189,11 @@ Vous disposez également d'un droit de recours auprès de l'autorité de surveil
 			</trans-unit>
       <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_nein_in">
         <source>Wohnsitz Nein In</source>
-        <target>Résidence Non A</target>
+        <target>Pays de résidence</target>
       </trans-unit>
 			<trans-unit id="infoWohnsitzinDeutschlandNein">
 				<source>Bitte geben Sie an, in welchem Land Sie aktuell leben.</source>
-                <target>Veuillez indiquer dans quel Land vous vivez actuellement.</target>
+                <target>Veuillez indiquer dans quel pays vous vivez actuellement.</target>
 			</trans-unit>
 
 
@@ -250,7 +250,7 @@ Vous disposez également d'un droit de recours auprès de l'autorité de surveil
 			</trans-unit>
 	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.dauer_berufsausbildung">
 		<source>Dauer Berufsausbildung</source>
-		<target>Durée de la formation professionnelle</target>
+		<target>Durée des études ou de la formation professionnelle</target>
 	  </trans-unit>
 	  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussjahr">
 		<source>Abschlussjahr</source>

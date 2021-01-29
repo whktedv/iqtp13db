@@ -10,7 +10,7 @@
 				<f:translate key="tx_iqtp13db_domain_model_beratung.berater" />
 			</label>
 				<f:if condition="{berater.kuerzel} == 'admin'"><f:then>
-					<f:form.select property="berater" options="{alleberater}" optionLabelField="name" optionValueField="uid" sortByOptionLabel="1" prependOptionLabel="-" prependOptionValue="0" />
+					<f:form.select property="berater" options="{alleberater}" optionLabelField="name" optionValueField="uid" sortByOptionLabel="1" />
 				</f:then>
 				<f:else>
 					<f:form.hidden property="berater" value="{berater.uid}" />

@@ -668,7 +668,7 @@
 			</trans-unit>
 			<trans-unit id="infoAusbildungsort">
 				<source></source>
-				<target>Please enter the country and the city where you have obtained your degree.</target>
+				<target>Please enter the city where you have obtained your degree.</target>
 			</trans-unit>
 			<trans-unit id="infoBerufserfahrung">
 				<source></source>
@@ -717,7 +717,7 @@
 			<trans-unit id="mailtext">
 				<source></source>
 				<target> <![CDATA[
-					 <p>thank you for your information.</p> <p>&nbsp;</p> <p>You are now registered for consultation. We will contact you as soon as it is your turn.<br><br>The consultation can be provided via email, telephone or video chat, if desired.</p> <p>&nbsp;</p> <p>Sincerely yours</p>Ihre Anerkennungsberatung beim IQ Netzwerk NRW 
+					 <p>thank you for your information.</p> <p>&nbsp;</p> <p>You are now registered for consultation. We will contact you as soon as it is your turn.<br><br>The consultation can be provided via email, telephone or video chat, if desired.</p><p>We endeavour to process your request within 6 weeks. We ask for your understanding and patience.</p> <p>&nbsp;</p> <p>Sincerely yours</p>Ihre Anerkennungsberatung beim IQ Netzwerk NRW 
 					 ]]></target>
 			</trans-unit>
 			<trans-unit id="subject">

@@ -20,7 +20,7 @@ class Beratung extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
   /**
      * datum
-     * 
+     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
      * @var string
      */
     protected $datum = '';
