@@ -6,7 +6,7 @@ class EinwilligungValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abst
 {
 	public function isValid($value)
 	{
-		if($value != 1)
+		if($value != true)
 		{
 			$this->addError('Um fortzufahren, müssen Sie in die Übermittlung Ihrer Daten einwilligen. / <i>To proceed, you have to agree to transfer your data.</i>', 40213131);
 			return false;

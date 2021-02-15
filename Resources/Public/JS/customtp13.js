@@ -1,4 +1,5 @@
 
+
 function showDetail(num) {
      /* $("a#mlink").toggle();	 */
      $('.smallertextfield2').toggle();
@@ -40,6 +41,9 @@ $(document).ready(function() {
         firstDay: 1,
         dateFormat : "dd.mm.yy"
     }); 
+    
+ 
+    
 });
 
 jQuery(function ($) {

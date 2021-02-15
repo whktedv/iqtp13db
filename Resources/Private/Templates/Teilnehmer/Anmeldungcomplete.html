@@ -27,16 +27,21 @@
 	</f:for>
 	</table>
 	<span class="speicherplatz"><f:translate key="speicherplatzhinweis" />{foldersize} %</span>
-	<f:form method="post" controller="Dokument" arguments="{teilnehmer:teilnehmer}" action="saveFileWebapp" name="dokument" object="{dokument}" enctype="multipart/form-data" noCacheHash="true" ><br />
+	<f:form method="post" id="formupload" controller="Dokument" arguments="{teilnehmer:teilnehmer}" action="saveFileWebapp" name="dokument" object="{dokument}" enctype="multipart/form-data" noCacheHash="true" ><br />
 		<div class="tp13_formdiv100 dokupload">
- 	       <f:translate key="dokumentauswaehlen" />:&nbsp;
-				<f:form.upload name="file" />
-				
-				<noscript>
-					<f:form.submit value="<f:translate key='hochladen' />" ></f:form.submit>
-				</noscript>			
-		</div>
+      		 <f:translate key="dokumentauswaehlen" />:&nbsp;
+      		<f:form.upload name="file" />
+      
+     	    <noscript>
+      		  <f:form.submit value="<f:translate key='hochladen' />" ></f:form.submit>
+      		</noscript>			
+  		</div>
 	</f:form>
+		
+
+	
+	
+	
 </div>
 <hr>
 <f:form action="anmeldungcompleteredirect" name="teilnehmer" object="{teilnehmer}">

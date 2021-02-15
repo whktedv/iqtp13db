@@ -163,7 +163,7 @@ class TNSeite1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * @var bool
 	 * @TYPO3\CMS\Extbase\Annotation\Validate("\Ud\Iqtp13db\Validation\Validator\EinwilligungValidator")
 	 */
-	protected $einwilligung = NULL;
+	protected $einwilligung = false;
 
 	/**
 	 * Returns the schonberaten

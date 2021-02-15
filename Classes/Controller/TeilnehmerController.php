@@ -233,7 +233,16 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     		}
     		
     	}
-
+    	
+    	ksort($angemeldeteTN);
+    	ksort($qfolgekontakte);
+    	ksort($erstberatung);
+    	ksort($beratungfertig);
+    	ksort($niqerfasst);
+    	ksort($days4beratung);
+    	ksort($days4wartezeit);
+    	//DebuggerUtility::var_dump($angemeldeteTN);
+    	//die;
     	
     	$aktuelleanmeldungen = count($this->teilnehmerRepository->findAllOrder4List("crdate", 'DESC'));
     	$aktuellerstberatungen = count($this->beratungRepository->findAllOrder4List(2, "crdate", 'DESC'));
@@ -294,8 +303,10 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		if ($valArray['statsexport'] == 'Statistik exportieren') {
 			 
 			$filename = 'stats_' . date('Y-m-d_H-i', time()) . '.csv';
-			header('Content-Type: text/csv');
+			header('Content-Encoding: UTF-8');
+			header('Content-type: text/csv; charset=UTF-8');
 			header('Content-Disposition: attachment;filename=' . $filename);
+			echo "\xEF\xBB\xBF"; 
 			$fp = fopen('php://output', 'w');
 			
 			for($i=0; $i < count($rows); $i++) {
@@ -825,7 +836,6 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      * action anmeldseite1
      *
      * @param \Ud\Iqtp13db\Domain\Model\TNSeite1 $tnseite1
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $tnseite1
      * @return void
      */
     public function anmeldseite1Action(\Ud\Iqtp13db\Domain\Model\TNSeite1 $tnseite1 = NULL)
@@ -856,7 +866,6 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      * action anmeldseite2
      *
      * @param \Ud\Iqtp13db\Domain\Model\TNSeite2 $tnseite2
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $tnseite2
      * @return void
      */
     public function anmeldseite2Action(\Ud\Iqtp13db\Domain\Model\TNSeite2 $tnseite2 = NULL)
@@ -902,7 +911,6 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      * action anmeldseite3
      *
      * @param \Ud\Iqtp13db\Domain\Model\TNSeite3 $tnseite3
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $tnseite3
      * @return void
      */
     public function anmeldseite3Action(\Ud\Iqtp13db\Domain\Model\TNSeite3 $tnseite3 = NULL)
@@ -962,7 +970,6 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      * action anmeldungcomplete
      *
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("teilnehmer")
      * @return void
      */
     public function anmeldungcompleteAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
@@ -972,6 +979,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	$newFilePath = 'Beratene/' . $teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid(). '/';
     	$storage = $this->getTP13Storage($newFilePath);
     	$foldersize = $this->getFolderSize($storage->getConfiguration()['basePath'].$newFilePath);
+    	if(!is_numeric($foldersize)) $foldersize = 0;
     	$dokumente = $this->dokumentRepository->findByTeilnehmer($teilnehmer);
     	$this->view->assign('heute', time());
     	$this->view->assign('teilnehmer', $teilnehmer);

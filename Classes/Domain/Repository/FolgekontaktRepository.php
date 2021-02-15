@@ -23,7 +23,8 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 		$query = $this->createQuery();	
 		$query->statement("SELECT * FROM tx_iqtp13db_domain_model_folgekontakt WHERE 
 				DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),STR_TO_DATE(datum, '%d.%m.%Y')) <= 0 AND
-				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),STR_TO_DATE(datum, '%d.%m.%Y')) >= 0"); 
+				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),STR_TO_DATE(datum, '%d.%m.%Y')) >= 0
+                AND deleted = 0"); 
 		$query = $query->execute();
 		
 		return count($query);

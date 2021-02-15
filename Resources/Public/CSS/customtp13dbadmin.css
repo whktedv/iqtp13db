@@ -15,7 +15,7 @@
 }
 
 .navbar > .container {
-    max-width: 1200px;
+    max-width: 1400px;
 }
 
 .footernavi {
@@ -36,6 +36,35 @@
     margin-top: 0rem;
     padding-top: 0rem;
     overflow-x: scroll;
+}
+
+.tx-iqtp13db table {
+    border-collapse: separate;
+    border-spacing: 2px;
+    font-size: 0.9rem;
+}
+
+.tx-iqtp13db table th {
+	background-color: #dfefef;
+	padding: 3px;
+	text-align: center;
+	font-size: 0.7rem; 
+}
+
+.tx-iqtp13db table td {
+    vertical-align: middle;
+}
+
+.tx-iqtp13db table td.tdcenter {
+     text-align: center; 
+}
+
+.tx-iqtp13db table .dublette {
+    background-color: #ffc1c1;
+}
+
+.tx-iqtp13db table .bestaetigt {
+    background-color: bisque;
 }
 
 .pretablediv {
@@ -88,6 +117,24 @@ td.tdcenter input[type="checkbox"] {
 	font-size: 0.9rem;	
 }
 
+.tx-iqtp13db .linkbuttons {
+    background-color: #99CACA;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    margin-bottom: 0px;
+    font-weight: normal;
+    text-align: center;
+    line-height: 1.42857;
+    padding: 2px 4px;
+    vertical-align: middle;
+    border-radius: 3px;
+    margin: 1px;
+    color: #FFF;
+    cursor: pointer;
+    display: inline-block;
+    -moz-user-select: none;
+    text-decoration: none;
+}
 
 .togglebutton  {
     background-color: #cfa6ce;
@@ -107,3 +154,8 @@ td.tdcenter input[type="checkbox"] {
     -moz-user-select: none;
 	text-decoration: none;
 }
+
+.buttontextsmall {
+	font-size: 0.7rem !important;
+}
+

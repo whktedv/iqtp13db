@@ -67,7 +67,8 @@ class BeratungRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 		$query = $this->createQuery();
 		$query->statement("SELECT * FROM tx_iqtp13db_domain_model_beratung WHERE
 				DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),STR_TO_DATE(datum, '%d.%m.%Y')) <= 0 AND
-				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),STR_TO_DATE(datum, '%d.%m.%Y')) >= 0"); 
+				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),STR_TO_DATE(datum, '%d.%m.%Y')) >= 0
+                AND deleted = 0"); 
 		$query = $query->execute();
 		return count($query);
 	}
@@ -77,7 +78,8 @@ class BeratungRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 		$query = $this->createQuery();
 		$query->statement("SELECT * FROM tx_iqtp13db_domain_model_beratung WHERE
 				DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),STR_TO_DATE(erstberatungabgeschlossen, '%d.%m.%Y')) <= 0 AND
-				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),STR_TO_DATE(erstberatungabgeschlossen, '%d.%m.%Y')) >= 0");
+				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),STR_TO_DATE(erstberatungabgeschlossen, '%d.%m.%Y')) >= 0
+                AND deleted = 0");
 		$query = $query->execute();
 		return count($query);
 	}
@@ -87,7 +89,8 @@ class BeratungRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 		$query = $this->createQuery();
 		$query->statement("SELECT * FROM tx_iqtp13db_domain_model_beratung WHERE
 				DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),STR_TO_DATE(erstberatungabgeschlossen, '%d.%m.%Y')) <= 0 AND
-				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),STR_TO_DATE(erstberatungabgeschlossen, '%d.%m.%Y')) >= 0");
+				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),STR_TO_DATE(erstberatungabgeschlossen, '%d.%m.%Y')) >= 0
+                AND deleted = 0");
 		$query = $query->execute();
 		
 		return $query;
@@ -99,7 +102,8 @@ class BeratungRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 		$query->statement("SELECT * FROM tx_iqtp13db_domain_model_teilnehmer
     			LEFT JOIN tx_iqtp13db_domain_model_beratung b ON b.teilnehmer = tx_iqtp13db_domain_model_teilnehmer.uid WHERE
 				DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),STR_TO_DATE(datum, '%d.%m.%Y')) <= 0 AND
-				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),STR_TO_DATE(datum, '%d.%m.%Y')) >= 0");
+				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),STR_TO_DATE(datum, '%d.%m.%Y')) >= 0
+                AND b.deleted = 0");
 		$query = $query->execute();
 	
 		return $query;

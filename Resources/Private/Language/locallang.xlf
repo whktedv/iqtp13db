@@ -409,7 +409,7 @@
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungtext">
 				<source><![CDATA[
 				Ich bin damit einverstanden, dass meine Daten zum Zweck der Bearbeitung meiner Anfrage genutzt werden. 
-				Die <a href="https://staging.iq-netzwerk-nrw.de/1/datenschutz-und-einwilligung/" target="_blank">Informationen zur Datenverarbeitung</a> habe ich zur Kenntnis genommen.
+				Die <a href="https://www.iq-netzwerk-nrw.de/1/datenschutz-und-einwilligung/" target="_blank">Informationen zur Datenverarbeitung</a> habe ich zur Kenntnis genommen.
 				]]></source>
 			</trans-unit>
 			<trans-unit id="ja">

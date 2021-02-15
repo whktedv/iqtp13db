@@ -118,7 +118,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 		$query->statement("SELECT * FROM tx_iqtp13db_domain_model_teilnehmer WHERE 
 				DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),FROM_UNIXTIME(verification_date)) <= 0 AND
 				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),FROM_UNIXTIME(verification_date)) >= 0 AND
-				verification_date > 0"); 
+				verification_date > 0 AND deleted = 0"); 
 		$query = $query->execute();
     	return count($query);
     }
@@ -130,7 +130,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 				LEFT JOIN tx_iqtp13db_domain_model_beratung b ON b.teilnehmer = tx_iqtp13db_domain_model_teilnehmer.uid WHERE 
 				DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),STR_TO_DATE(b.erstberatungabgeschlossen, '%d.%m.%Y')) <= 0 AND
 				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),STR_TO_DATE(b.erstberatungabgeschlossen, '%d.%m.%Y')) >= 0 AND
-        		niqchiffre != ''"); 
+        		niqchiffre != '' AND tx_iqtp13db_domain_model_teilnehmer.deleted = 0"); 
 		$query = $query->execute();
     	return count($query);
     }

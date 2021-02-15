@@ -34,7 +34,7 @@
 			<th><f:link.action action="listangemeldet" arguments="{orderby : 'deutscherReferenzberuf1'}">Referenzberuf</f:link.action></th>
 			<th> </th>
 			<th> </th>
-			<th> </th>
+			<th> </th> 
 			<th> </th>
 		</tr>
 	
@@ -58,9 +58,9 @@
 				{f:if(condition: '{teilnehmer.geschlecht} == 1', then: '<span style="color: #fe7a84;">W</span>')}
 				{f:if(condition: '{teilnehmer.geschlecht} == 3', then: '<span>D</span>')}</td>
 				<td>{teilnehmer.deutscherReferenzberuf1} {f:if(condition: '{teilnehmer.deutscherReferenzberuf2} != ""', then: ', {teilnehmer.deutscherReferenzberuf2}', else: '')} </td>
-				<td><f:link.action class="linkbuttons" action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}">Anmeldedaten</f:link.action></td>
-				<td><f:if condition="{teilnehmer.dublette}"><f:then></f:then><f:else><f:link.action class="linkbuttons" action="new" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}" controller="Beratung">Erstberatung</f:link.action></f:else></f:if></td>
-				<td><f:link.action class="linkbuttons" action="askconsent" arguments="{teilnehmer : teilnehmer}" onclick="return confirm('E-Mail senden?');" >Einwilligung<br>anfordern</f:link.action></td>
+				<td><f:link.action class="linkbuttons buttontextsmall" action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}">Anmeldedaten</f:link.action></td>
+				<td><f:if condition="{teilnehmer.dublette}"><f:then></f:then><f:else><f:link.action class="linkbuttons buttontextsmall" action="new" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}" controller="Beratung">Erstberatung</f:link.action></f:else></f:if></td>
+				<td><f:link.action class="linkbuttons buttontextsmall" action="askconsent" arguments="{teilnehmer : teilnehmer}" onclick="return confirm('E-Mail senden?');" >Einwilligung<br>anfordern</f:link.action></td>
 				<td><f:link.action class="iconbuttons" action="delete" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}" onclick="return confirm('Wirklich löschen?');" ><img src="/typo3conf/ext/iqtp13db/Resources/Public/Icons/delete-640.png" width="32" height="32" alt="Löschen" /></f:link.action></td>
 			</tr>
 		</f:for>

@@ -184,6 +184,11 @@
 	align-items: baseline;
 }
 
+.tp13_formdivwebappnotizen {
+	padding: 5px;
+	align-items: baseline;
+}
+
 .tp13_formdivwebapp:nth-child(even) {
 	background-color: #eff6f9;
 }
@@ -395,4 +400,3 @@ button.abbruchbtn {
     background-color: rgba(152, 156, 162, 0.25);
     padding: 15px;
 }
-
