@@ -12,8 +12,19 @@
 Nach Klick auf den Button werden die Daten in eine CSV-Datei zum Download exportiert.<br>
 <b>HINWEIS: Wenn kein Datensatz ausgewählt wurde, werden alle Ratsuchende exportiert, die bereits eine Erstberatung erhalten haben.<br>
 Wenn einzelne Ratsuchende in der Spalte "Export" ausgewählt wurden, werden nur die Daten aus der Anmeldung exportiert.</b>
-
-<f:form method="post" controller="Teilnehmer" action="export" name="export" enctype="multipart/form-data" noCacheHash="true" ><br />
+<h1>Filter</h1>
+<f:form method="post" controller="Teilnehmer" action="export" name="export" noCacheHash="true" >
+		Name: <f:form.textfield size="20" value="{filtername}" name="name" />&nbsp;&nbsp;
+		Ort: <f:form.textfield size="20" value="{filterort}" name="ort" />&nbsp;&nbsp;
+		Beruf: <f:form.textfield size="20" value="{filterberuf}" name="beruf" />&nbsp;&nbsp;
+		Geburtsland: <f:form.textfield value="{filterland}" size="20" name="land" />&nbsp;&nbsp;&nbsp;&nbsp;
+		<f:if condition="{filteron}"><f:then><f:form.button name="filteraus" value="1" >Filter löschen</f:form.button></f:then></f:if>
+		<f:form.submit name="filteran" value="Filtern" />			
+</f:form>
+<br>
+<h1>{teilnehmers -> f:count()} Ratsuchende <f:if condition="{filteron}"><f:then><span style="color: red;">(gefiltert)</span></f:then></f:if></h1>
+<br>
+<f:form method="post" controller="Teilnehmer" action="export" name="export" enctype="multipart/form-data" noCacheHash="true"><br />
 	<f:widget.paginate objects="{teilnehmers}" as="teilnehmerspag" configuration="{itemsPerPage: 50, insertAbove: 1}"> 
 		<table class="tx_iqtp13db" >
 			<tr>
@@ -53,6 +64,10 @@ Wenn einzelne Ratsuchende in der Spalte "Export" ausgewählt wurden, werden nur 
 			</f:for>
 		</table>
 	</f:widget.paginate> 
+	<f:form.hidden value="{filtername}" name="name" />
+	<f:form.hidden value="{filterort}" name="ort" />
+	<f:form.hidden value="{filterberuf}" name="beruf" />
+	<f:form.hidden value="{filterland}" name="land" />
 <f:form.submit name="export" value="Daten exportieren" />			
 </f:form>
 

@@ -126,7 +126,7 @@ plugin.tx_iqtp13db.settings {
    
    abschlussart {
      1 = Ausbildungsabschluss
-     2 = Hochschulabschluss
+     2 = Universitätsabschluss
    }
 
    erwerbsstatus {

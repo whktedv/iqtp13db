@@ -362,10 +362,10 @@
 				<source></source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsfremdeberufserfahrung1">
-				<source>Ausbildungsfremde Berufserfahrung (Dauer)</source>
+				<source>Ausbildungsfremde Berufserfahrung (Dauer, Jahre)</source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsfremdeberufserfahrung2">
-				<source>Ausbildungsfremde Berufserfahrung (Dauer)</source>
+				<source>Ausbildungsfremde Berufserfahrung (Dauer, Jahre)</source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussart">
 				<source>Abschlussart</source>
@@ -395,7 +395,7 @@
 				<source>Möglicher deutscher Beruf</source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.berufserfahrung">
-				<source>Berufserfahrung im erlernten Beruf (Dauer)</source>
+				<source>Berufserfahrung im erlernten Beruf (Dauer, Jahre)</source>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.original_dokumente_abschluss">
 				<source>Liegen die Original-Dokumente des Abschlusses vor?</source>
@@ -417,6 +417,9 @@
 			</trans-unit>
 			<trans-unit id="nein">
 				<source>Nein</source>
+			</trans-unit>
+			<trans-unit id="ka">
+				<source>k.A.</source>
 			</trans-unit>
 			<trans-unit id="maennlich">
 				<source>männlich</source>
@@ -449,7 +452,7 @@
 				<source>Ausbildungsabschluss</source>
 			</trans-unit>
 			<trans-unit id="abschlussartoption2">
-				<source>Hochschulabschluss</source>
+				<source>Universitätsabschluss</source>
 			</trans-unit>
 			<trans-unit id="auslaendischerabschluss">
 				<source>Ausländischer Abschluss</source>
@@ -538,7 +541,7 @@
 				<source>Bitte wählen Sie das Bundesland, in dem Sie aktuell leben.</source>
 			</trans-unit>
 			<trans-unit id="infoAbschluss">
-				<source>Ein Ausbildungsabschluss ist ein Abschluss einer beruflichen Ausbildung. Ein Hochschulabschluss ist ein akademischer Abschluss der nach einem Studium an einer Hochschule/Universität erworben wurde. Das Studium hat in der Regel mindestens 3 Jahre gedauert. Bitte geben Sie an welchen Abschluss Sie erworben haben.</source>
+				<source>Ein Ausbildungsabschluss ist ein Abschluss einer beruflichen Ausbildung. Ein Universitätsabschluss ist ein akademischer Abschluss der nach einem Studium an einer Hochschule/Universität erworben wurde. Das Studium hat in der Regel mindestens 3 Jahre gedauert. Bitte geben Sie an welchen Abschluss Sie erworben haben.</source>
 			</trans-unit>
 			<trans-unit id="infoAusbildungsort">
 				<source>Bitte geben Sie die Stadt an, in der Sie Ihren Abschluss gemacht haben.</source>
@@ -573,6 +576,9 @@
 			</trans-unit>
 			<trans-unit id="headabschlussrechts">
 				<source>weiterer Abschluss</source>
+			</trans-unit>
+			<trans-unit id="headabschlussrechtsausblenden">
+				<source>Abschluss ausblenden</source>
 			</trans-unit>
 			<trans-unit id="anredemail">
 				<source>Guten Tag </source>

@@ -1,5 +1,6 @@
 <?php
 namespace Ud\Iqtp13db\Controller;
+use \Datetime;
 
 /***
  *
@@ -105,8 +106,10 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
 		} else {
 			$orderby = $valArray['orderby'];
 			$order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listerstberatungorder');
-			$order = $order == 'DESC' ? 'ASC' : 'DESC';
-			$GLOBALS['TSFE']->fe_user->setKey('ses', 'listerstberatungorder', $order);
+			if(!isset($valArray['@widget_0'])) {
+    			$order = $order == 'DESC' ? 'ASC' : 'DESC';
+    			$GLOBALS['TSFE']->fe_user->setKey('ses', 'listerstberatungorder', $order);
+			}
 		}
 		
 		$beratungen = $this->setfilter(2, $valArray, $orderby, $order);
@@ -114,9 +117,8 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
 		foreach ($beratungen as $key => $bn) {
 			$tn = $bn->getTeilnehmer();
 			$anzfolgekontakte[$key] = count($this->folgekontaktRepository->findByTeilnehmer($tn->getUid()));
+			$folgekontakte[$key] = $this->folgekontaktRepository->findByTeilnehmer($tn->getUid());
 		}
-				
-		$folgekontakte = $this->folgekontaktRepository->findAll();
 		
 		$this->view->assign('anzfolgekontakte', $anzfolgekontakte);
 		$this->view->assign('folgekontakte', $folgekontakte);
@@ -143,8 +145,10 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
 		} else {
 			$orderby = $valArray['orderby'];
 			$order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listniqerfassungorder');
-			$order = $order == 'DESC' ? 'ASC' : 'DESC';
-			$GLOBALS['TSFE']->fe_user->setKey('ses', 'listniqerfassungorder', $order);
+			if(!isset($valArray['@widget_0'])) {
+    			$order = $order == 'DESC' ? 'ASC' : 'DESC';
+    			$GLOBALS['TSFE']->fe_user->setKey('ses', 'listniqerfassungorder', $order);
+			}
 		}
 		
 		$beratungen = $this->setfilter(3, $valArray, $orderby, $order);
@@ -180,8 +184,10 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
 		} else {
 			$orderby = $valArray['orderby'];
 			$order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listarchivorder');
-			$order = $order == 'DESC' ? 'ASC' : 'DESC';
-			$GLOBALS['TSFE']->fe_user->setKey('ses', 'listarchivorder', $order);
+			if(!isset($valArray['@widget_0'])) {
+    			$order = $order == 'DESC' ? 'ASC' : 'DESC';
+    			$GLOBALS['TSFE']->fe_user->setKey('ses', 'listarchivorder', $order);
+			}
 		}
 		
 		$beratungen = $this->setfilter(4, $valArray, $orderby, $order);
@@ -263,6 +269,12 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     {  		    	
     	$teilnehmer = $beratung->getTeilnehmer();
     	
+    	if($beratung->getErstberatungabgeschlossen() != '' && (!$this->validateDate($beratung->getErstberatungabgeschlossen()))){
+    	    $this->addFlashMessage('Syntaxfehler in Datumseintrag. Bitte alle Datum-Felder prüfen.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+    	    $valArray = $this->request->getArguments();
+    	    $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, null);
+    	}
+    	    
     	$tn = $this->beratungRepository->findByTeilnehmer($teilnehmer);
     	//\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($this->arguments['beratung']);
     	//die;
@@ -328,6 +340,12 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     {
         
     	$teilnehmer = $beratung->getTeilnehmer();
+    	
+    	if($beratung->getErstberatungabgeschlossen() != '' && (!$this->validateDate($beratung->getErstberatungabgeschlossen()))){
+    	    $this->addFlashMessage('Syntaxfehler in Datumseintrag. Bitte alle Datum-Felder prüfen.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+    	    $valArray = $this->request->getArguments();
+    	    $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, null);
+    	}
     	
     	if($beratung->getDatum() == '') {
     		//$this->addFlashMessage('Erstberatung von '.$teilnehmer->getNachname().', '.$teilnehmer->getVorname().' gelöscht.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
@@ -440,4 +458,10 @@ class BeratungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         return $beratungen;
     }
 
+    
+    function validateDate($date, $format = 'd.m.Y')
+    {
+        $d = DateTime::createFromFormat($format, $date);
+        return $d && $d->format($format) == $date;
+    }
 }

@@ -14,6 +14,18 @@
 
 <f:render partial="Teilnehmer/Properties" arguments="{teilnehmer:teilnehmer, historie : historie}" />
 
+	<f:if condition="{dokumente}"><f:then>
+		<div class="frame"><h2><f:translate key="dokumente" /></h2>
+		<table>
+		<f:for each="{dokumente}" as="dokument">
+			<tr>
+			<td>{dokument.name}</td>
+			</tr>
+		</f:for>
+		</table>
+		</div>
+	</f:then></f:if>
+
 <f:link.action class="linkbuttons" action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}">Anmeldedaten</f:link.action>
 <f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}">Zurück zur Liste</f:link.action>
 

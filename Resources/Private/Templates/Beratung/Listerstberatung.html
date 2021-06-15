@@ -23,7 +23,7 @@
 			<th><f:link.action action="listerstberatung" arguments="{orderby : 'teilnehmer.nachname'}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" /></f:link.action></th>
 			<th><f:link.action action="listerstberatung" arguments="{orderby : 'teilnehmer.vorname'}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" /></f:link.action></th>
 			<th><f:link.action action="listerstberatung" arguments="{orderby : 'teilnehmer.schonberaten'}">Bereits<br>beraten</f:link.action></th>
-			<th><f:link.action action="listerstberatung" arguments="{orderby : 'teilnehmer.crdate'}"><f:translate key="anmeldedatum" /></f:link.action></th>
+			<th><f:link.action action="listerstberatung" arguments="{orderby : 'teilnehmer.verificationDate'}"><f:translate key="anmeldedatum" /></f:link.action></th>
 			<th><f:link.action action="listerstberatung" arguments="{orderby : 'teilnehmer.ort'}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.plz" />/<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ort" /></f:link.action></th>
 			<th><f:link.action action="listerstberatung" arguments="{orderby : 'teilnehmer.bescheidfruehererAnerkennungsantrag'}">Früherer<br>Bescheid</f:link.action></th>
 			<th><f:link.action action="listerstberatung" arguments="{orderby : 'teilnehmer.leistungsbezugjanein'}">Leistung</f:link.action></th>
@@ -31,6 +31,7 @@
 			<th><f:link.action action="listerstberatung" arguments="{orderby : 'datum'}"><f:translate key="tx_iqtp13db_domain_model_beratung.datum" /></f:link.action></th>
 			<th><f:link.action action="listerstberatung" arguments="{orderby : 'teilnehmer.deutscherReferenzberuf1'}">Referenzberuf</f:link.action></th>
 			<th><f:link.action action="listerstberatung" arguments="{orderby : 'erstberatungabgeschlossen'}">Fertig</f:link.action></th>
+			<th> </th>
 			<th> </th>
 			<th> </th>
 		</tr>
@@ -56,6 +57,7 @@
 				</td>				
 				<td><f:link.action class="linkbuttons" action="edit" arguments="{teilnehmer : beratung.teilnehmer, calleraction: calleraction, callercontroller : callercontroller}" controller="Teilnehmer">Anmeldedaten</f:link.action></td>
 				<td><f:link.action class="linkbuttons" action="edit" arguments="{beratung : beratung, calleraction: calleraction, callercontroller : callercontroller}">Erstberatung</f:link.action></td>
+				<td><f:link.action class="iconbuttons" action="delete" arguments="{teilnehmer : beratung.teilnehmer, calleraction: calleraction, callercontroller : callercontroller}" controller="Teilnehmer" onclick="return confirm('Wirklich löschen?');" ><img src="/typo3conf/ext/iqtp13db/Resources/Public/Icons/delete-640.png" width="32" height="32" alt="Löschen" /></f:link.action></td>
 			</tr>
 		</f:for>
 	</table>

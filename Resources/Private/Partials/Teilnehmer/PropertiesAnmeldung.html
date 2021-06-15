@@ -224,12 +224,18 @@
 			<label for="leistungsbezugjanein">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.leistungsbezugjanein" />
 			</label>
-			<span class="propdat"><f:if condition="{teilnehmer.leistungsbezugjanein} == 1"><f:then>
+			<span class="propdat">
+			<f:if condition="{teilnehmer.leistungsbezugjanein} == 1"><f:then>
 				<f:translate key="ja" />
 			</f:then>
-			<f:else>
+			</f:if>
+			<f:if condition="{teilnehmer.leistungsbezugjanein} == 2"><f:then>
 				<f:translate key="nein" />
-			</f:else>
+			</f:then>
+			</f:if>
+			<f:if condition="{teilnehmer.leistungsbezugjanein} == 3"><f:then>
+				<f:translate key="ka" />
+			</f:then>
 			</f:if></span>
 		</div>
 		<f:if condition="{teilnehmer.leistungsbezugjanein} == 1"><f:then>

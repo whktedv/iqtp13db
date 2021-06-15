@@ -25,9 +25,9 @@
 			<th><f:link.action action="listangemeldet" arguments="{orderby : 'nachname'}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" /></f:link.action></th>
 			<th><f:link.action action="listangemeldet" arguments="{orderby : 'vorname'}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" /></f:link.action></th>
 			<th><f:link.action action="listangemeldet" arguments="{orderby : 'schonberaten'}">Bereits<br>beraten</f:link.action></th>
-			<th><f:link.action action="listangemeldet" arguments="{orderby : 'crdate'}"><f:translate key="anmeldedatum" /></f:link.action></th>
+			<th><f:link.action action="listangemeldet" arguments="{orderby : 'verificationDate'}"><f:translate key="anmeldedatum" /></f:link.action></th>
 			<th><f:link.action action="listangemeldet" arguments="{orderby : 'ort'}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.plz" />/<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ort" /></f:link.action></th>
-			<th><f:link.action action="listangemeldet" arguments="{orderby : 'bescheidfruehererAnerkennungsantrag'}">Früherer<br>Bescheid</f:link.action></th>
+			<th><f:link.action action="listangemeldet" arguments="{orderby : 'fruehererantrag'}">Antrag<br>gestellt</f:link.action></th>
 			<th><f:link.action action="listangemeldet" arguments="{orderby : 'leistungsbezugjanein'}">Leistung</f:link.action></th>
 			<th><f:link.action action="listangemeldet" arguments="{orderby : 'geburtsland'}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geburtsland" />/-ort</f:link.action></th>
 			<th><f:link.action action="listangemeldet" arguments="{orderby : 'geschlecht'}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geschlecht" /></f:link.action></th>
@@ -51,7 +51,7 @@
 				<td class="tdcenter">{f:if(condition: '{teilnehmer.schonberaten} == 1', then: '✓', else: '')}</td>
 				<td class="tdcenter">{f:if(condition: '{teilnehmer.verificationDate} == 0', then: 'unbestätigt', else: '{f:format.date(date: teilnehmer.verificationDate, format:"d.m.Y")}')}</td>
 				<td>{teilnehmer.plz} {teilnehmer.ort}</td>
-				<td class="tdcenter">{f:if(condition: '{teilnehmer.bescheidfruehererAnerkennungsantrag} == 1', then: '✓', else: '')}</td>
+				<td class="tdcenter">{f:if(condition: '{teilnehmer.fruehererantrag} == 1', then: '✓', else: '')}</td>
 				<td class="tdcenter">{f:if(condition: '{teilnehmer.leistungsbezugjanein} == 1', then: '✓', else: '')}</td>
 				<td>{teilnehmer.geburtsland}</td>
 				<td class="tdcenter">{f:if(condition: '{teilnehmer.geschlecht} == 2', then: '<span style="color: #84a0ff;">M</span>')}
@@ -59,8 +59,17 @@
 				{f:if(condition: '{teilnehmer.geschlecht} == 3', then: '<span>D</span>')}</td>
 				<td>{teilnehmer.deutscherReferenzberuf1} {f:if(condition: '{teilnehmer.deutscherReferenzberuf2} != ""', then: ', {teilnehmer.deutscherReferenzberuf2}', else: '')} </td>
 				<td><f:link.action class="linkbuttons buttontextsmall" action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}">Anmeldedaten</f:link.action></td>
-				<td><f:if condition="{teilnehmer.dublette}"><f:then></f:then><f:else><f:link.action class="linkbuttons buttontextsmall" action="new" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}" controller="Beratung">Erstberatung</f:link.action></f:else></f:if></td>
-				<td><f:link.action class="linkbuttons buttontextsmall" action="askconsent" arguments="{teilnehmer : teilnehmer}" onclick="return confirm('E-Mail senden?');" >Einwilligung<br>anfordern</f:link.action></td>
+				<td>
+					<f:if condition="{teilnehmer.dublette} || {teilnehmer.verificationDate} == 0">
+						<f:then></f:then>
+						<f:else>
+							<f:link.action class="linkbuttons buttontextsmall" action="new" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}" controller="Beratung" >Erstberatung</f:link.action>
+						</f:else>
+					</f:if>
+					<f:if condition="{teilnehmer.dublette}"><f:then><f:link.action class="linkbuttons buttontextsmall" action="new" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}" controller="Beratung" onclick="return confirm('Trotz möglicher Dublette erstberaten?');">Erstberatung</f:link.action></f:then></f:if>
+					</td>
+				</td>
+				<td><f:if condition="{teilnehmer.verificationDate} == 0"><f:then><f:link.action class="linkbuttons buttontextsmall" action="askconsent" arguments="{teilnehmer : teilnehmer}" onclick="return confirm('E-Mail senden?');" >Einwilligung<br>anfordern</f:link.action></f:then></f:if></td>
 				<td><f:link.action class="iconbuttons" action="delete" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}" onclick="return confirm('Wirklich löschen?');" ><img src="/typo3conf/ext/iqtp13db/Resources/Public/Icons/delete-640.png" width="32" height="32" alt="Löschen" /></f:link.action></td>
 			</tr>
 		</f:for>

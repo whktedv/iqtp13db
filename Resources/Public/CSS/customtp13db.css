@@ -307,6 +307,13 @@ button.abbruchbtn {
 	background-color: #e69b9b;
 }
 
+.abbruchlink {
+	background-color: #e69b9b !important;
+	width: 150px;
+    height: 40px;
+    padding: 8px !important;
+}
+
 .tx-iqtp13db .mycustomlink a, button {
     padding: 4px 12px;
     margin-top: 0px;
@@ -400,3 +407,12 @@ button.abbruchbtn {
     background-color: rgba(152, 156, 162, 0.25);
     padding: 15px;
 }
+
+.flex {
+  display: flex;
+}
+
+#dialog-confirm {
+	display: none;
+} 
+

@@ -10,18 +10,9 @@
 	font-size: 1.0em;
 }
 
-.navbar-default {
-  
-}
-
-.navbar > .container {
-    max-width: 1400px;
-}
-
 .footernavi {
 	display: none;
 }
-
 
 .navbar-mainnavigation .navbar-brand {
     height: 50px;
@@ -36,6 +27,11 @@
     margin-top: 0rem;
     padding-top: 0rem;
     overflow-x: scroll;
+}
+
+.defaultframe, .navbar-default, .navbar-default .container {
+	width: 100%;
+	max-width: 100%;
 }
 
 .tx-iqtp13db table {

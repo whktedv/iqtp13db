@@ -71,6 +71,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     protected $historieRepository = NULL;
         
+    
     /**
      * action init
      *
@@ -160,7 +161,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     /*************************************************************************/
     /******************************* Backend *******************************/
     /*************************************************************************/
-        
+     
     /**
      * action status
      *
@@ -168,6 +169,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function statusAction()
     {
+        // Seite "Übersicht"
+        
     	$valArray = $this->request->getArguments();
     	// DebuggerUtility::var_dump($valArray);
     	   
@@ -204,6 +207,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	/*
     	 * durchschnittl. Tage Beratung abgeschl. und durchschnittl. Tage Wartezeit	berechnen 
     	 */    	
+    	$anz4avgmonthb = 0;
+    	$anz4avgmonthw = 0;
     	for($n = 1; $n <= 12; $n++) {
     		$diffdaysb = 0;
     		for($k = 0; $k < count($days4beratung[$n]); $k++) {
@@ -213,21 +218,25 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     		}
     		
     		if(count($days4beratung[$n]) > 0) {
-    		    $totalavgmonthb[$n] = floatval($diffdaysb)/floatval(count($days4beratung[$n]));    		    
+    		    $totalavgmonthb[$n] = floatval($diffdaysb)/floatval(count($days4beratung[$n]));
+    		    $anz4avgmonthb++;
     		} else {
     		    $totalavgmonthb[$n] = '-';
     		}
     		
     		$diffdaysw = 0;
     		for($k = 0; $k < count($days4wartezeit[$n]); $k++) {
-    			$dat1 = new DateTime();
-    			$dat1->setTimestamp($days4wartezeit[$n][$k]->getTeilnehmer()->getVerificationDate());
-    			$dat2 = new Datetime($days4wartezeit[$n][$k]->getDatum());
-    			$diffdaysw += date_diff($dat1, $dat2)->format('%a');
+    		    if($days4wartezeit[$n][$k]->getTeilnehmer() != null) {
+        			$dat1 = new DateTime();
+        			$dat1->setTimestamp($days4wartezeit[$n][$k]->getTeilnehmer()->getVerificationDate());
+        			$dat2 = new Datetime($days4wartezeit[$n][$k]->getDatum());
+        			$diffdaysw += date_diff($dat1, $dat2)->format('%a');
+    		    }
     		}
     		
     		if(count($days4wartezeit[$n]) > 0) {
     		  $totalavgmonthw[$n] = floatval($diffdaysw)/floatval(count($days4wartezeit[$n]));
+    		  $anz4avgmonthw++;
     		} else {
     		  $totalavgmonthw[$n] = '-';
     		}
@@ -270,10 +279,10 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$this->view->assign('SUMniqerfasst',  array_sum($niqerfasst));
 		
 		$this->view->assign('totalavgmonthb', $totalavgmonthb);
-		$this->view->assign('SUMtotalavgmonthb',  array_sum($totalavgmonthb));
+		$this->view->assign('SUMtotalavgmonthb',  array_sum($totalavgmonthb)/$anz4avgmonthb);
 		
 		$this->view->assign('totalavgmonthw', $totalavgmonthw);
-		$this->view->assign('SUMtotalavgmonthw',  array_sum($totalavgmonthw));		
+		$this->view->assign('SUMtotalavgmonthw',  array_sum($totalavgmonthw)/$anz4avgmonthw);		
 		 
 		$this->view->assign('aktuelleanmeldungen', $aktuelleanmeldungen);
 		$this->view->assign('aktuellerstberatungen', $aktuellerstberatungen);
@@ -325,7 +334,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function listangemeldetAction()
     {
     	$valArray = $this->request->getArguments();
-
+    	//DebuggerUtility::var_dump($valArray);    	
+    	
     	if(empty($valArray['orderby'])) {
     		$orderby = 'crdate';
     		$GLOBALS['TSFE']->fe_user->setKey('ses', 'listangemeldetorder', 'DESC');
@@ -333,43 +343,19 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	} else {
     		$orderby = $valArray['orderby'];
     		$order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listangemeldetorder');
-    		$order = $order == 'DESC' ? 'ASC' : 'DESC';
-    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'listangemeldetorder', $order);
+    		if(!isset($valArray['@widget_0'])) {
+    		    $order = $order == 'DESC' ? 'ASC' : 'DESC';
+    		    $GLOBALS['TSFE']->fe_user->setKey('ses', 'listangemeldetorder', $order);    		    
+    		}
     	}
 		
-    	// FILTER
-    	if ($valArray['filteraus']) {
-    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', NULL);
-    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', NULL);
-    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', NULL);
-    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', NULL);
-    	}
-    	if ($valArray['filteran']) {
-    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', $valArray['name']);
-    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', $valArray['ort']);
-    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', $valArray['beruf']);
-    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', $valArray['land']);
-    	}
-    	$fname = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fname');
-    	$fort = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fort');
-    	$fberuf = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fberuf');
-    	$fland = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fland');
-    	if ($fname == '' && $fort == '' && $fberuf == '' && $fland == '') {
-    		$teilnehmers = $this->teilnehmerRepository->findAllOrder4List($orderby, $order); 
-    	} else {
-    		$teilnehmers = $this->teilnehmerRepository->searchTeilnehmer($fname, $fort, $fberuf, $fland, 0);
-    		$this->view->assign('filtername', $fname);
-    		$this->view->assign('filterort', $fort);
-    		$this->view->assign('filterberuf', $fberuf);
-    		$this->view->assign('filterland', $fland);
-    		$this->view->assign('filteron', 1);
-    	}
-    	// FILTER bis hier
+    	$teilnehmers = $this->setfilter(0, $valArray, $orderby, $order);
     	
     	for($j=0; $j < count($teilnehmers); $j++) {
-    	    $anz = $this->teilnehmerRepository->findDublette($teilnehmers[$j]->getNachname(), $teilnehmers[$j]->getVorname());
+    	    $anz = $this->teilnehmerRepository->findDublette4Angemeldet($teilnehmers[$j]->getNachname(), $teilnehmers[$j]->getVorname());
     	    if($anz > 1) $teilnehmers[$j]->setDublette(TRUE);
     	}
+    	//DebuggerUtility::var_dump($anz);
     	
     	$this->view->assign('teilnehmers', $teilnehmers);
     	$this->view->assign('calleraction', 'listangemeldet');
@@ -390,44 +376,18 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     		$GLOBALS['TSFE']->fe_user->setKey('ses', 'listdeletedorder', 'DESC');
     		$order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listdeletedorder');
     	} else {
-    		$orderby = $valArray['orderby'];
-    		$order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listdeletedorder');
-    		$order = $order == 'DESC' ? 'ASC' : 'DESC';
-    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'listdeletedorder', $order);
+    	    $orderby = $valArray['orderby'];
+    	    $order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listdeletedorder');
+    	    if(!isset($valArray['@widget_0'])) {
+    	        $order = $order == 'DESC' ? 'ASC' : 'DESC';
+    	        $GLOBALS['TSFE']->fe_user->setKey('ses', 'listdeletedorder', $order);
+    	    }    		
     	}
-    	
-    	// FILTER
-    	if ($valArray['filteraus']) {
-    	    $GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', NULL);
-    	    $GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', NULL);
-    	    $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', NULL);
-    	    $GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', NULL);
-    	}
-    	if ($valArray['filteran']) {
-    	    $GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', $valArray['name']);
-    	    $GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', $valArray['ort']);
-    	    $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', $valArray['beruf']);
-    	    $GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', $valArray['land']);
-    	}
-    	$fname = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fname');
-    	$fort = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fort');
-    	$fberuf = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fberuf');
-    	$fland = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fland');
-    	if ($fname == '' && $fort == '' && $fberuf == '' && $fland == '') {
-    	    $teilnehmers = $this->teilnehmerRepository->findhidden4list($orderby, $order);
-    	} else {
-    	    $teilnehmers = $this->teilnehmerRepository->searchTeilnehmer($fname, $fort, $fberuf, $fland, 1);
-    	    $this->view->assign('filtername', $fname);
-    	    $this->view->assign('filterort', $fort);
-    	    $this->view->assign('filterberuf', $fberuf);
-    	    $this->view->assign('filterland', $fland);
-    	    $this->view->assign('filteron', 1);
-    	}
-    	// FILTER bis hier
-    	
+
+    	$teilnehmers = $this->setfilter(1, $valArray, $orderby, $order);
     	 
     	for($j=0; $j < count($teilnehmers); $j++) {
-    		$anz = $this->teilnehmerRepository->findDublette($teilnehmers[$j]->getNachname(), $teilnehmers[$j]->getVorname());
+    	    $anz = $this->teilnehmerRepository->findDublette4Deleted($teilnehmers[$j]->getNachname(), $teilnehmers[$j]->getVorname());
     		if($anz > 1) $teilnehmers[$j]->setDublette(TRUE);
     	}    	 
     	$this->view->assign('teilnehmers', $teilnehmers);
@@ -450,6 +410,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	$historie = $this->historieRepository->findByTeilnehmerOrdered($teilnehmer->getUid());
     	$this->view->assign('historie', $historie);
     	
+    	$dokumente = $this->dokumentRepository->findByTeilnehmer($teilnehmer);
+    	
+    	$this->view->assign('dokumente', $dokumente);    	
     	$valArray = $this->request->getArguments();
     	$this->view->assign('calleraction', $valArray['calleraction']);
     	$this->view->assign('callercontroller', $valArray['callercontroller']);    	
@@ -497,6 +460,10 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function editAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {        
     	$this->view->assign('teilnehmer', $teilnehmer);
+    	
+    	$dokumente = $this->dokumentRepository->findByTeilnehmer($teilnehmer);
+    	
+    	$this->view->assign('dokumente', $dokumente);
     	
     	$valArray = $this->request->getArguments();
     	$this->view->assign('calleraction', $valArray['calleraction']);
@@ -717,7 +684,6 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return int
      */
-    
     public function checkberatungsstatus(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer) {
     	$beratung = $this->beratungRepository->findByTeilnehmer($teilnehmer->getUid());    	
     	$beratung = $beratung[0];
@@ -749,8 +715,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	
     	return $beratungsstatus;
     }
-   
-    
+       
     /**
      * action export
      *
@@ -759,10 +724,14 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function exportAction()
     {
         $valArray = $this->request->getArguments();
-
+        
         // ******************** EXPORT ****************************
         if ($valArray['export'] == 'Daten exportieren') {
-        	
+            $fname = $valArray['name'];
+            $fort = $valArray['ort'];
+            $fberuf = $valArray['beruf'];
+            $fland = $valArray['land'];
+            
         	$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_iqtp13db_domain_model_teilnehmer');
             
         	$arraytoexport = $valArray['chktoexport'];
@@ -775,7 +744,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 								'einreisejahr', 'wohnsitz_deutschland', 'wohnsitz_nein_in', 'zertifikat_sprachniveau', 'erwerbsland1', 'erwerbsland2', 
 								'abschluss1', 'abschluss2', 'deutscher_referenzberuf1', 'deutscher_referenzberuf2', 'bescheidfrueherer_anerkennungsantrag', 'name_beratungsstelle')
 						->from('tx_iqtp13db_domain_model_teilnehmer')
-						->where($queryBuilder->expr()->in('tx_iqtp13db_domain_model_teilnehmer.uid', $queryBuilder->createNamedParameter(GeneralUtility::intExplode(',', $strlisttoexport, true), Connection::PARAM_INT_ARRAY)))
+						->where(
+						    $queryBuilder->expr()->in('tx_iqtp13db_domain_model_teilnehmer.uid', $queryBuilder->createNamedParameter(GeneralUtility::intExplode(',', $strlisttoexport, true), Connection::PARAM_INT_ARRAY))
+						 )
 						->execute()
 						->fetchAll();
         	} else {
@@ -807,10 +778,13 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             exit;
         } else {
         	 
-        	$teilnehmers = $this->teilnehmerRepository->findAll();
-        
+        	//$teilnehmers = $this->teilnehmerRepository->findAll();
+        	$orderby = 'crdate';
+        	$order = 'ASC';
+        	$teilnehmers = $this->setfilter(0, $valArray, $orderby, $order);
+        	
         	for($j=0; $j < count($teilnehmers); $j++) {
-        		$anz = $this->teilnehmerRepository->findDublette($teilnehmers[$j]->getNachname(), $teilnehmers[$j]->getVorname());
+        	    $anz = $this->teilnehmerRepository->findDublette4Angemeldet($teilnehmers[$j]->getNachname(), $teilnehmers[$j]->getVorname());
         		if($anz > 1) $teilnehmers[$j]->setDublette(TRUE);
         	}
 
@@ -832,6 +806,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     /*************************************************************************/
     /******************************* ANMELDUNG *******************************/
     /*************************************************************************/
+    
     /**
      * action anmeldseite1
      *
@@ -884,26 +859,19 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      * @return void
      */
     public function anmeldseite2redirectAction(\Ud\Iqtp13db\Domain\Model\TNSeite2 $tnseite2)
-    {
+    {        
     	$GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite2', serialize($tnseite2));
     	$GLOBALS['TSFE']->fe_user->storeSessionData();
     
     	$valArray = $this->request->getArguments();
+    	//DebuggerUtility::var_dump($valArray);
+    	//die;
     	if (isset($valArray['btnzurueck'])) {
     		$this->redirect('anmeldseite1');
-    	} elseif(isset($valArray['btncancel'])) {
-    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite1', '');
-    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite2', '');
-    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite3', '');
-    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'tnuid', null);
-    		$GLOBALS['TSFE']->fe_user->storeSessionData();
-    		
-    		$uriBuilder = $this->controllerContext->getUriBuilder();
-    		$uriBuilder->reset();
-    		$uriBuilder->setTargetPageUid($this->settings['startseite']);
-    		$this->redirectToUri($uriBuilder->build());    		
+    	} elseif(isset($valArray['btnweiter'])) {
+    	    $this->redirect('anmeldseite3');
     	} else {
-    		$this->redirect('anmeldseite3');
+    	    $this->cancelregistration(null);
     	}
     }
     
@@ -937,32 +905,29 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	$valArray = $this->request->getArguments();
     	if (isset($valArray['btnzurueck'])) {
     		$this->redirect('anmeldseite2');
-    	} elseif(isset($valArray['btncancel'])) {
-    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite1', '');
-    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite2', '');
-    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite3', '');
-    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'tnuid', null);
-    		$GLOBALS['TSFE']->fe_user->storeSessionData();
-    		
-    		$uriBuilder = $this->controllerContext->getUriBuilder();
-    		$uriBuilder->reset();
-    		$uriBuilder->setTargetPageUid($this->settings['startseite']);
-    		$this->redirectToUri($uriBuilder->build());    		
+    	} elseif(isset($valArray['btnweiter'])) {    	    
+    	    if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid') == NULL) {
+    	        $teilnehmer = $this->getTeilnehmerFromSession();
+    	        $teilnehmer->setBeratungsstatus(99);
+    	        $this->teilnehmerRepository->add($teilnehmer);
+    	        
+    	        // Daten sofort in die Datenbank schreiben
+    	        $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+    	        $persistenceManager->persistAll();
+    	        $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnuid', $teilnehmer->getUid());
+    	    } else {
+    	        $teilnehmer = $this->teilnehmerRepository->findByUid($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid'));
+    	        $teilnehmer = $this->getTeilnehmerFromSession($teilnehmer);
+    	        $teilnehmer->setBeratungsstatus(99);
+    	        $this->teilnehmerRepository->update($teilnehmer);
+    	    }
+    	    $this->redirect('anmeldungcomplete', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
     	} else {
-    		if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid') == NULL) {
-    			$teilnehmer = $this->getTeilnehmerFromSession();
-    			$this->teilnehmerRepository->add($teilnehmer);
-    
-    			// Daten sofort in die Datenbank schreiben
-    			$persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
-    			$persistenceManager->persistAll();
-    			$GLOBALS['TSFE']->fe_user->setKey('ses', 'tnuid', $teilnehmer->getUid());
-    		} else {
-    			$teilnehmer = $this->teilnehmerRepository->findByUid($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid'));
-    			$teilnehmer = $this->getTeilnehmerFromSession($teilnehmer);
-    			$this->teilnehmerRepository->update($teilnehmer);
-    		}
-    		$this->redirect('anmeldungcomplete', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+    	    if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid') != NULL) {
+    	        $this->cancelregistration($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid'));
+    	    } else {
+    	        $this->cancelregistration(null);
+    	    }    	    
     	}
     }
     
@@ -975,7 +940,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function anmeldungcompleteAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
     	$valArray = $this->request->getArguments();
-    
+    	
     	$newFilePath = 'Beratene/' . $teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid(). '/';
     	$storage = $this->getTP13Storage($newFilePath);
     	$foldersize = $this->getFolderSize($storage->getConfiguration()['basePath'].$newFilePath);
@@ -999,19 +964,11 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	 
     	if (isset($valArray['btnzurueck'])) {
     		$this->redirect('anmeldseite3');
-    	} elseif(isset($valArray['btncancel'])) {
-    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite1', '');
-    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite2', '');
-    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite3', '');
-    		$GLOBALS['TSFE']->fe_user->setKey('ses', 'tnuid', null);
-    		$GLOBALS['TSFE']->fe_user->storeSessionData();
-    		
-    		$uriBuilder = $this->controllerContext->getUriBuilder();
-    		$uriBuilder->reset();
-    		$uriBuilder->setTargetPageUid($this->settings['startseite']);
-    		$this->redirectToUri($uriBuilder->build());
-    		
-    	} elseif (isset($valArray['btnAbsenden'])) {
+    	} elseif(isset($valArray['btnAbsenden'])) {
+    	    $tfolder = $this->createFolder($teilnehmer);
+    	    $teilnehmer->setBeratungsstatus(0);
+    	    $this->teilnehmerRepository->update($teilnehmer);
+    	    
     	    $bcc = $this->settings['bccmail'];
     	    $sender = $this->settings['sender'];
     	    if($bcc == '' || $sender == '') {
@@ -1042,10 +999,10 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	        );
     	        $this->sendTemplateEmail(array($recipient), array($bcc), array($sender), $subject, $templateName, $variables, false);
     	        
-    	        $this->redirect(null, null, null, null, $this->settings['redirectValidationInitiated']); // TODO: url aus id hier einfügen    	        
+    	        $this->redirect(null, null, null, null, $this->settings['redirectValidationInitiated']); // TODO: url aus id hier einfügen
     	    }
     	} else {
-    		//
+    	    $this->cancelregistration($teilnehmer->getUid());
     	}
     }
     
@@ -1099,6 +1056,52 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	$this->redirect(null, null, null, null, $this->settings['redirectValidationFailed']);
     }
      
+    /**
+     * cancelregistration
+     *
+     * @return void
+     */
+    public function cancelregistration($tnuid)
+    {
+        if($tnuid != null) {
+            
+            $teilnehmer = $this->teilnehmerRepository->findByUid($tnuid);
+            
+            $filePath = 'Beratene/' . $teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid(). '/';
+            $storage = $this->getTP13Storage($filePath);
+            $dokumente = $this->dokumentRepository->findByTeilnehmer($teilnehmer);
+            
+            if(count($dokumente) > 0) {
+                foreach($dokumente as $dokument) {
+                    $this->dokumentRepository->remove($dokument);
+
+                    $delfilepath = $filePath . $dokument->getName();
+                    $delfile = $storage->getFile($delfilepath);
+                    $erg = $storage->deleteFile($delfile);
+                }
+            }
+            
+            rmdir($storage->getConfiguration()['basePath'].$filePath);           
+            
+            $this->teilnehmerRepository->remove($teilnehmer);
+            $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+            $persistenceManager->persistAll();
+        }
+                
+        //DebuggerUtility::var_dump(count($dokumente));
+        //die;
+        
+        $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite1', '');
+        $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite2', '');
+        $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite3', '');
+        $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnuid', null);
+        $GLOBALS['TSFE']->fe_user->storeSessionData();
+        
+        $uriBuilder = $this->controllerContext->getUriBuilder();
+        $uriBuilder->reset();
+        $uriBuilder->setTargetPageUid($this->settings['startseite']);
+        $this->redirectToUri($uriBuilder->build());
+    }
     
     /**
      * sendconfirmedMail
@@ -1132,8 +1135,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	);
     	$this->sendTemplateEmail(array($recipient), array($bcc), array($sender), $subject, $templateName, $variables, true);
     }
-    
-    
+        
     /**
      * @param array $recipient recipient of the email in the format array('recipient@domain.tld' => 'Recipient Name')
      * @param array $bcc
@@ -1170,8 +1172,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	$message->send();
     	return $message->isSent();
     }
-     
-   
+    
     /**
      * Collects the Teilnehmer from the multiple steps form stored in session variables
      * and returns an teilnehmer object.
@@ -1190,13 +1191,13 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	$teilnehmer->setEinwilligung($tnseite1->getEinwilligung());
     	$teilnehmer->setSchonberaten($tnseite1->getSchonberaten());
     	$teilnehmer->setSchonberatenvon($tnseite1->getSchonberatenvon());
-    	$teilnehmer->setNachname($tnseite1->getNachname());
-    	$teilnehmer->setVorname($tnseite1->getVorname());
-    	$teilnehmer->setPlz($tnseite1->getPlz());
-    	$teilnehmer->setOrt($tnseite1->getOrt());
-    	$teilnehmer->setEmail($tnseite1->getEmail());
-    	$teilnehmer->setConfirmemail($tnseite1->getConfirmemail());
-    	$teilnehmer->setTelefon($tnseite1->getTelefon());
+    	$teilnehmer->setNachname(trim($tnseite1->getNachname()));
+    	$teilnehmer->setVorname(trim($tnseite1->getVorname()));
+    	$teilnehmer->setPlz(trim($tnseite1->getPlz()));
+    	$teilnehmer->setOrt(trim($tnseite1->getOrt()));
+    	$teilnehmer->setEmail(trim($tnseite1->getEmail()));
+    	$teilnehmer->setConfirmemail(trim($tnseite1->getConfirmemail()));
+    	$teilnehmer->setTelefon(trim($tnseite1->getTelefon()));
     	$teilnehmer->setLebensalter($tnseite1->getLebensalter());
     	$teilnehmer->setGeburtsland($tnseite1->getGeburtsland());
     	$teilnehmer->setGeschlecht($tnseite1->getGeschlecht());
@@ -1253,6 +1254,58 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		return $teilnehmer;
 	}
 	
+	function setfilter(int $type, array $valArray, $orderby, $order) {
+	    // FILTER
+	    if ($valArray['filteraus']) {
+	        $GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', NULL);
+	        $GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', NULL);
+	        $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', NULL);
+	        $GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', NULL);
+	    }
+	    if ($valArray['filteran']) {
+	        $GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', $valArray['name']);
+	        $GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', $valArray['ort']);
+	        $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', $valArray['beruf']);
+	        $GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', $valArray['land']);
+	    }
+	    $fname = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fname');
+	    $fort = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fort');
+	    $fberuf = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fberuf');
+	    $fland = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fland');
+	    if ($fname == '' && $fort == '' && $fberuf == '' && $fland == '') {
+	        if($type == 0) {
+	            $teilnehmers = $this->teilnehmerRepository->findAllOrder4List($orderby, $order);
+	        } elseif($type == 1) {
+	            $teilnehmers = $this->teilnehmerRepository->findhidden4list($orderby, $order);
+	        } else {
+	            
+	        }	        
+	    } else {
+	        $teilnehmers = $this->teilnehmerRepository->searchTeilnehmer($fname, $fort, $fberuf, $fland, $type);
+	        $this->view->assign('filtername', $fname);
+	        $this->view->assign('filterort', $fort);
+	        $this->view->assign('filterberuf', $fberuf);
+	        $this->view->assign('filterland', $fland);
+	        $this->view->assign('filteron', 1);
+	    }
+	    // FILTER bis hier
+	    return $teilnehmers;
+	}
+		
+	public function createFolder($teilnehmer)
+	{
+	    $targetFolder = '';
+	    
+	    $pfad = 'Beratene/' . $teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid(). '/';
+	    
+	    $storage = $this->getTP13Storage($pfad);
+	    
+	    if (!$storage->hasFolder($pfad)) {
+	        $targetFolder = $storage->createFolder($pfad);
+	    }
+	    
+	    return $targetFolder;
+	}
 	
 	function getTP13Storage($pfad) {
 		$storageRepository = $this->objectManager->get ( 'TYPO3\\CMS\\Core\\Resource\\StorageRepository' );

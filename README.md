@@ -1,7 +1,7 @@
 # Installationsanweisungen Webapp Anerkennungsberatung des IQ Netzwerks NRW
-URL: https://www.iq-netzwerk-nrw.de/startseite
-Author: Ulrich Dohmen
-Mail: udohmen@whkt.de
+URL: https://www.iq-netzwerk-nrw.de/startseite <br>
+Author: Ulrich Dohmen<br>
+Mail: udohmen@whkt.de<br>
 
 <h3>Version 2.1.0</h3>
 

@@ -39,16 +39,24 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         if($auchverstecktundgelöscht == 1) {
             $query->getQuerySettings()->setIgnoreEnableFields(TRUE);
             $query->getQuerySettings()->setEnableFieldsToBeIgnored(array('disabled', 'hidden'));
+            $query->matching($query->logicalAnd(
+                $query->logicalOr($query->like('nachname', '%' . $name . '%'), $query->like('vorname', '%' . $name . '%')),
+                $query->like('ort', $ort),
+                $query->logicalOr($query->like('deutscher_referenzberuf1', '%' .$beruf. '%'), $query->like('deutscher_referenzberuf2', '%' .$beruf. '%')),
+                $query->like('geburtsland', $land),
+                $query->like('hidden', $auchverstecktundgelöscht))
+                );
+            
+        } else {
+            $query->matching($query->logicalAnd(
+                $query->logicalOr($query->like('nachname', '%' . $name . '%'), $query->like('vorname', '%' . $name . '%')),
+                $query->like('ort', $ort),
+                $query->logicalOr($query->like('deutscher_referenzberuf1', '%' .$beruf. '%'), $query->like('deutscher_referenzberuf2', '%' .$beruf. '%')),
+                $query->like('geburtsland', $land),
+                $query->logicalOr($query->like('beratungsstatus', '0'), $query->like('beratungsstatus', '1'))
+             ));            
         }
         
-        $query->matching($query->logicalAnd(
-            $query->logicalOr($query->like('nachname', '%' . $name . '%'), $query->like('vorname', '%' . $name . '%')), 
-            $query->like('ort', $ort), 
-            $query->logicalOr($query->like('deutscher_referenzberuf1', '%' .$beruf. '%'), $query->like('deutscher_referenzberuf2', '%' .$beruf. '%')), 
-            $query->like('geburtsland', $land),
-            $query->logicalOr($query->like('beratungsstatus', '0'), $query->like('beratungsstatus', '1')),
-            $query->like('hidden', $auchverstecktundgelöscht))
-            );
         return $query->execute();
     }
 
@@ -103,10 +111,29 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      * @param $nachname
      * @param $vorname
      */
-    public function findDublette($nachname, $vorname)
+    public function findDublette4Angemeldet($nachname, $vorname)
     {
         $query = $this->createQuery();        
-        $query->matching($query->logicalAnd($query->like('nachname', $nachname), $query->like('vorname', $vorname)));        
+        $query->matching($query->logicalAnd(
+            $query->like('nachname', '%'.$nachname.'%'), 
+            $query->like('vorname', '%'.$vorname.'%'),
+            $query->logicalNot($query->like('beratungsstatus', '99'))
+        ));        
+        $query = $query->execute();
+        return count($query);
+    }
+    
+    /**
+     * @param $nachname
+     * @param $vorname
+     */
+    public function findDublette4Deleted($nachname, $vorname)
+    {
+        $query = $this->createQuery();
+        $query->matching($query->logicalAnd(
+            $query->like('nachname', '%'.$nachname.'%'),
+            $query->like('vorname', '%'.$vorname.'%')
+            ));
         $query = $query->execute();
         return count($query);
     }
