@@ -13,7 +13,7 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2020 Uli Dohmen <edv@whkt.de>, WHKT
+ *  (c) 2021 Uli Dohmen <edv@whkt.de>, WHKT
  *
  ***/
 
