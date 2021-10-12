@@ -56,15 +56,15 @@ In diesen Dateispeicher werden die Dateien der Ratsuchenden gespeichert, die wä
 <h2>Typoscript Template Setup</h2> 
 Im Typoscript Template müssen im Setup folgende Werte eingetragen werden:<br>
 <br>
-<b>plugin.tx_iqtp13db {<br>
+<small>plugin.tx_iqtp13db {<br>
 &nbsp;&nbsp;settings {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;sender = (E-Mail-Adresse des Absenders der automatisch erstellten E-Mails nach der Anmeldung)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bccmail = (BCC-E-Mail-Adresse der Anmeldungsbestätigung)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;startseitelink = (Link zur Startseite der Webapp)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;logolink = (Link zum Logo der Webapp für den Kopf der E-Mail-Bestätigung)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;registrationpageuid = (ID der Anmeldungsseite - wird für die aus dem Backend angestossene Einwilligung benötigt)><br>
+&nbsp;&nbsp;&nbsp;&nbsp;registrationpageuid = (ID der Anmeldungsseite - wird für die aus dem Backend angestossene Einwilligung benötigt)<br>
 &nbsp;&nbsp;}<br>
-&nbsp;&nbsp;_LOCAL_LANG.de {
+&nbsp;&nbsp;_LOCAL_LANG.de {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;confirmsubject = (Betreffzeile der E-Mail nach versendeter Anmeldung mit der Bitte um Bestätigung der Anmeldung)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;confirmmailtext2 = (Grußformel im Text der E-Mail nach versendeter Anmeldung mit der Bitte um Bestätigung der Anmeldung)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;subject = (Betreffzeile der E-Mail nach bestätigter Anmeldung)<br>
@@ -72,8 +72,7 @@ Im Typoscript Template müssen im Setup folgende Werte eingetragen werden:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;tx_iqtp13db_domain_model_teilnehmer.einwilligungtext = (Text inkl. Link zur Datenschutzseite des Einwilligungshäkchens auf der ersten Seite der Anmeldung)<br>
 &nbsp;&nbsp;}<br>
 }<br>
-</b><br>
-<br>
+</small><br>
 
 Um die Texte bzw. Beschriftungen im Formular anzupassen, können die entsprechend angepassten Texte im Typoscript Template angepasst werden per:<br>
 <b>plugin.tx_iqtp13db._LOCAL_LANG.[sprachcode].[tabelle].[wert] = [text]</b><br>
