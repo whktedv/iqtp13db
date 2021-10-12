@@ -53,30 +53,33 @@ Der System-Ordner <b>[DB] Daten Anerkennungsberatung</b> enthält die Berater, R
 In diesen Dateispeicher werden die Dateien der Ratsuchenden gespeichert, die während des Anmeldevorgangs hochgeladen werden können. Für jeden Ratsuchenden wird ein Verzeichnis erstellt, dass mit dem Format [Nachname]_[Vorname]_[UID] angelegt wird.<br></li>
 </ol>
 <br>
-Im Typoscript Setup müssen folgende Werte eingetragen werden:<br>
-<br><br>
-<b>plugin.tx_iqtp13db.settings {<br>
+<h2>Typoscript Template Setup</h2> 
+Im Typoscript Template müssen im Setup folgende Werte eingetragen werden:<br>
+<br>
+<b>plugin.tx_iqtp13db {<br>
+&nbsp;&nbsp;settings {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;sender = (E-Mail-Adresse des Absenders der automatisch erstellten E-Mails nach der Anmeldung)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bccmail = (BCC-E-Mail-Adresse der Anmeldungsbestätigung)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;startseitelink = (Link zur Startseite der Webapp)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;logolink = (Link zum Logo der Webapp für den Kopf der E-Mail-Bestätigung)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;registrationpageuid = (ID der Anmeldungsseite - wird für die aus dem Backend angestossene Einwilligung benötigt)><br>
-}</b><br>
+&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;_LOCAL_LANG.de {
+&nbsp;&nbsp;&nbsp;&nbsp;confirmsubject = (Betreffzeile der E-Mail nach versendeter Anmeldung mit der Bitte um Bestätigung der Anmeldung)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;confirmmailtext2 = (Grußformel im Text der E-Mail nach versendeter Anmeldung mit der Bitte um Bestätigung der Anmeldung)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;subject = (Betreffzeile der E-Mail nach bestätigter Anmeldung)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;mailtext = (Text der E-Mail nach bestätigter Anmeldung)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;tx_iqtp13db_domain_model_teilnehmer.einwilligungtext = (Text inkl. Link zur Datenschutzseite des Einwilligungshäkchens auf der ersten Seite der Anmeldung)<br>
+&nbsp;&nbsp;}<br>
+}<br>
+</b><br>
 <br>
 
 Um die Texte bzw. Beschriftungen im Formular anzupassen, können die entsprechend angepassten Texte im Typoscript Template angepasst werden per:<br>
 <b>plugin.tx_iqtp13db._LOCAL_LANG.[sprachcode].[tabelle].[wert] = [text]</b><br>
-
-Ein Beispiel wäre die Anpassung des deutschen Einwilligungstextes per:<br>
-<b>plugin.tx_iqtp13db._LOCAL_LANG.de.tx_iqtp13db_domain_model_teilnehmer.einwilligungtext = Das ist der geänderte Text!</b> (hier können auch html-Tags genutzt werden, um z.B. Zeilenumbrüche per < br > einzufügen)<br>
-
-Die folgenden Texte sollten i.d.R. angepasst werden:<br>
-<b>plugin.tx_iqtp13db._LOCAL_LANG.de.confirmsubject = (Betreffzeile der E-Mail nach versendeter Anmeldung mit der Bitte um Bestätigung der Anmeldung)</b><br>
-<b>plugin.tx_iqtp13db._LOCAL_LANG.de.confirmmailtext2 = (Grußformel im Text der E-Mail nach versendeter Anmeldung mit der Bitte um Bestätigung der Anmeldung)</b><br>
-<b>plugin.tx_iqtp13db._LOCAL_LANG.de.subject = (Betreffzeile der E-Mail nach bestätigter Anmeldung)</b><br>
-<b>plugin.tx_iqtp13db._LOCAL_LANG.de.mailtext = (Text der E-Mail nach bestätigter Anmeldung)</b><br>
-<b>plugin.tx_iqtp13db._LOCAL_LANG.de.tx_iqtp13db_domain_model_teilnehmer.einwilligungtext = (Text inkl. Link zur Datenschutzseite des Einwilligungshäkchens auf der ersten Seite der Anmeldung)</b><br><br>
-Einwilligungstexte bitte für jede Sprache anpassen, da ansonsten immer der Link zu den Datenschutzbestimmungen des IQ Netzwerks NRW angegeben ist.<br>
+Hier können auch html-Tags genutzt werden, um z.B. Zeilenumbrüche per < br > einzufügen.<br>
+<br>
+Bitte Einwilligungstexte für jede Sprache anpassen, da ansonsten immer der Link zu den Datenschutzbestimmungen des IQ Netzwerks NRW angegeben ist.<br>
 <br>
 Alle verfügbaren Variablen sind in den Language-Files der Extension zu finden. Insbesondere die Texte für die E-Mail an die/den Ratsuchende(n) sollten angepasst werden.<br>
 
