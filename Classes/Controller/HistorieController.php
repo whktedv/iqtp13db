@@ -3,7 +3,7 @@ namespace Ud\Iqtp13db\Controller;
 
 /***
  *
- * This file is part of the "IQ TP13 Datenbank AnerkennungserstHistorie NRW" Extension for TYPO3 CMS.
+ * This file is part of the "IQ Webapp Anerkennungsberatung" Extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.

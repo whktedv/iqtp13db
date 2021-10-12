@@ -1,5 +1,5 @@
 <?php
 defined('TYPO3_MODE') or die();
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile('iqtp13db', 'Configuration/TypoScript', 'IQ Webapp Anerkennungserstberatung NRW');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile('iqtp13db', 'Configuration/TypoScript', 'IQ Webapp Anerkennungsberatung');
 

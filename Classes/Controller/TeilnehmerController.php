@@ -8,7 +8,7 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /***
  *
- * This file is part of the "IQ TP13 Datenbank Anerkennungserstberatung NRW" Extension for TYPO3 CMS.
+ * This file is part of the "IQ Webapp Anerkennungsberatung" Extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.

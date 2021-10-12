@@ -1,5 +1,5 @@
-# Installationsanweisungen Webapp Anerkennungsberatung des IQ Netzwerks NRW
-URL: https://www.iq-netzwerk-nrw.de/startseite <br>
+# Installationsanweisungen Webapp Anerkennungsberatung des IQ Netzwerks
+URL: https://www.iq-netzwerk-nrw.de<br>
 Author: Ulrich Dohmen<br>
 Mail: udohmen@whkt.de<br>
 

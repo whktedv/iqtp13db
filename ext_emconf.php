@@ -1,7 +1,7 @@
 <?php
 
 $EM_CONF[$_EXTKEY] = [
-    'title' => 'IQ TP13 Webapp Anerkennungserstberatung NRW',
+    'title' => 'IQ Webapp Anerkennungsberatung',
     'description' => '',
     'category' => 'plugin',
     'author' => 'Uli Dohmen',
