@@ -133,11 +133,7 @@
                 		    <label>Wartung Text</label>
 							<config>
   								<type>text</type>
-  								<cols>20</cols>
-  								<rows>3</rows>
-	    						<eval>trim</eval>
    	 							<enableRichtext>1</enableRichtext>
-   		 						<richtextConfiguration>custom</richtextConfiguration>
 							</config>							
                         </TCEforms>
           </settings.wartungtext>
