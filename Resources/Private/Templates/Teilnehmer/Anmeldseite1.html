@@ -1,0 +1,25 @@
+
+<f:layout name="Default" />
+
+<f:section name="main">
+<h1><f:translate key="fragebogen" /> 1 / 4</h1>
+
+<div id="dialog-confirm" title="Webapp - IQ Anerkennungsberatung">
+  <p><span class="ui-icon ui-icon-alert"></span>Anmeldung abbrechen / Cancel registration?</p>
+</div>
+
+<f:form.validationResults for="{object}">
+	<f:if condition="{validationResults.flattenedErrors}">
+		<div class="error">
+			&nbsp;<b>Bitte prüfen Sie die rot markierten Felder / Please check the red highlighted fields.</b>
+		</div>
+	</f:if>
+</f:form.validationResults>
+
+<f:form id="tnseite1" action="anmeldseite1redirect" name="tnseite1" object="{tnseite1}">
+		<f:render partial="Teilnehmer/FormFieldsAnmeldung1" arguments="{_all}" />
+		<f:form.button name="btnweiter"><f:translate key="weiter" /></f:form.button>
+		<f:form.button type="button" name="btncancel" class="abbruchbtn" onclick="return btncancel_Click('{settings.startseitelink}');"><f:translate key="abbruch" /></f:form.button>
+</f:form>
+
+</f:section>

@@ -1,0 +1,108 @@
+
+<f:layout name="Default" />
+<f:section name="HeaderAssets">
+  		<link rel="stylesheet" href="{f:uri.resource(path: 'CSS/customtp13dbadmin.css')}"/>  		
+</f:section>
+
+<f:section name="main">
+
+<f:flashMessages />
+<br />
+<h1>Daten Ratsuchende exportieren</h1>
+Nach Klick auf den Button werden die Daten in eine CSV-Datei zum Download exportiert.<br>
+<b>HINWEIS: Wenn kein Datensatz ausgewählt wurde, werden alle Ratsuchende exportiert.<br>
+Wenn einzelne Ratsuchende in der Spalte "Export" ausgewählt wurden, werden nur die Daten aus der Anmeldung exportiert.</b>
+<h1>Filter</h1>
+<f:form method="post" controller="Teilnehmer" action="export" name="export" noCacheHash="true" >
+		Name: <f:form.textfield size="20" value="{filtername}" name="name" />&nbsp;&nbsp;
+		Ort: <f:form.textfield size="20" value="{filterort}" name="ort" />&nbsp;&nbsp;
+		Beruf: <f:form.textfield size="20" value="{filterberuf}" name="beruf" />&nbsp;&nbsp;
+		Geburtsland: <f:form.textfield value="{filterland}" size="20" name="land" />&nbsp;&nbsp;&nbsp;&nbsp;
+		<f:if condition="{filteron}"><f:then><f:form.button name="filteraus" value="1" >Filter löschen</f:form.button></f:then></f:if>
+		<f:form.submit name="filteran" value="Filtern" />			
+</f:form>
+<br>
+<h1>{teilnehmers -> f:count()} Ratsuchende <f:if condition="{filteron}"><f:then><span style="color: red;">(gefiltert)</span></f:then></f:if></h1>
+<br>
+<f:form method="post" controller="Teilnehmer" action="export" name="export" enctype="multipart/form-data" noCacheHash="true"><br />
+	<f:widget.paginate objects="{teilnehmers}" as="teilnehmerspag" configuration="{itemsPerPage: 50, insertAbove: 1}"> 
+		<table class="tx_iqtp13db" >
+			<tr>
+				<th>Export</th>
+				<th><f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" /></th>
+				<th><f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" /></th>
+				<th><f:translate key="anmeldedatum" /></th>
+				<th><f:translate key="tx_iqtp13db_domain_model_teilnehmer.plz" />/<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ort" /></th>
+				<th>Früherer<br>Bescheid</th>
+				<th>Leistung</th>
+				<th><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geburtsland" />/-ort</th>
+				<th><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geschlecht" /></th>
+				<th>Referenzberuf</th>
+			</tr> 
+		
+			<f:for each="{teilnehmerspag}" as="teilnehmer">		
+				<f:if condition="{teilnehmer.dublette}"><f:then>
+					<tr class="dublette">
+				</f:then>
+				<f:else>
+					{f:if(condition: "{teilnehmer.verificationDate} != 0", then: '<tr class="bestaetigt">', else: '<tr>')}
+				</f:else>
+				</f:if>
+					<td class="tdcenter"><f:form.checkbox name="chktoexport" multiple="1" value="{teilnehmer.uid}" /></td>			
+					<td><f:link.action action="show" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}">{teilnehmer.nachname}</f:link.action></td>
+					<td><f:link.action action="show" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}">{teilnehmer.vorname}</f:link.action></td>
+					<td class="tdcenter">{f:if(condition: '{teilnehmer.verificationDate} == 0', then: 'unbestätigt', else: '{f:format.date(date: teilnehmer.verificationDate, format:"d.m.Y")}')}</td>
+					<td>{teilnehmer.plz} {teilnehmer.ort}</td>
+					<td class="tdcenter">{f:if(condition: '{teilnehmer.bescheidfruehererAnerkennungsantrag} == 1', then: '✓', else: '')}</td>
+					<td class="tdcenter">{f:if(condition: '{teilnehmer.leistungsbezugjanein} == 1', then: '✓', else: '')}</td>
+					<td>{teilnehmer.geburtsland}</td>
+					<td class="tdcenter">{f:if(condition: '{teilnehmer.geschlecht} == 2', then: '<span style="color: #84a0ff;">M</span>')}
+					{f:if(condition: '{teilnehmer.geschlecht} == 1', then: '<span style="color: #fe7a84;">W</span>')}
+					{f:if(condition: '{teilnehmer.geschlecht} == 3', then: '<span>D</span>')}</td>
+					<td>{teilnehmer.deutscherReferenzberuf1} {f:if(condition: '{teilnehmer.deutscherReferenzberuf2} != ""', then: ', {teilnehmer.deutscherReferenzberuf2}', else: '')} </td>
+				</tr>
+			</f:for>
+		</table>
+	</f:widget.paginate> 
+	<f:form.hidden value="{filtername}" name="name" />
+	<f:form.hidden value="{filterort}" name="ort" />
+	<f:form.hidden value="{filterberuf}" name="beruf" />
+	<f:form.hidden value="{filterland}" name="land" />
+<f:form.submit name="export" value="Daten exportieren" />			
+</f:form>
+
+<div style="margin-top:30px; padding: 10px; border: 1px solid #ccc;">
+<h2>Legende</h2>
+
+<h3>Ja/Nein-Fragen</h3>
+<span class="propdat">1 = Ja</span><br>
+<span class="propdat">2 = Nein</span><br>
+
+<br>
+<h3><f:translate key="tx_iqtp13db_domain_model_beratung.beratungsart" /></h3>
+<f:for each="{settings.beratungsart}" as="text" key="wert">
+ <span class="propdat">{wert} = {text}</span><br>
+</f:for>
+
+<br>
+<h3><f:translate key="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau" /></h3>
+<f:for each="{settings.zertifikatlevel}" as="text" key="wert">
+ <span class="propdat">{wert} = {text}</span><br>
+</f:for>
+
+<br>
+<h3><f:translate key="tx_iqtp13db_domain_model_beratung.beratungzu" /></h3>
+<f:for each="{settings.beratungzu}" as="text" key="wert">
+ <span class="propdat">{wert} = {text}</span><br>
+</f:for>
+
+<br>
+<h3><f:translate key="tx_iqtp13db_domain_model_teilnehmer.name_beratungsstelle" /></h3>
+<f:for each="{settings.beratungsstelle}" as="text" key="wert">
+ <span class="propdat">{wert} = {text}</span><br>
+</f:for>
+
+
+
+</div>
+</f:section>

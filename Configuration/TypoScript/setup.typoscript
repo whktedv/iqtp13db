@@ -1,0 +1,697 @@
+plugin.tx_iqtp13db.settings {
+	sender = 
+	bccmail = 
+	mailattacheinwilligung = 
+	startseitelink = 
+	logolink = 
+	registrationpageuid = 
+	
+	# für Wartungsmodus
+	wartungvon = 01.01.2021 08:00
+	wartungbis = 01.02.2021 12:00
+	wartungtext = <h1>Wartungsarbeiten. Dieser Dienst ist vorübergehend nicht verfügbar. Danke für Ihr Verständnis.</h1><h1>&nbsp;</h1><h1>Maintenance. This service is temporarily not available. Thanks for your patience.</h1>
+}
+
+plugin.tx_iqtp13db_iqtp13dbadmin {
+  view {
+    templateRootPaths.0 = EXT:iqtp13db/Resources/Private/Templates/
+    templateRootPaths.1 = {$plugin.tx_iqtp13db_iqtp13dbadmin.view.templateRootPath}
+    partialRootPaths.0 = EXT:iqtp13db/Resources/Private/Partials/
+    partialRootPaths.1 = {$plugin.tx_iqtp13db_iqtp13dbadmin.view.partialRootPath}
+    layoutRootPaths.0 = EXT:iqtp13db/Resources/Private/Layouts/
+    layoutRootPaths.1 = {$plugin.tx_iqtp13db_iqtp13dbadmin.view.layoutRootPath}
+  }
+
+  features {
+    requireCHashArgumentForActionArguments = 0
+  }
+
+}
+
+plugin.tx_iqtp13db_iqtp13dbwebapp {
+  view {
+    templateRootPaths.0 = EXT:iqtp13db/Resources/Private/Templates/
+    templateRootPaths.1 = {$plugin.tx_iqtp13db_iqtp13dbwebapp.view.templateRootPath}
+    partialRootPaths.0 = EXT:iqtp13db/Resources/Private/Partials/
+    partialRootPaths.1 = {$plugin.tx_iqtp13db_iqtp13dbwebapp.view.partialRootPath}
+    layoutRootPaths.0 = EXT:iqtp13db/Resources/Private/Layouts/
+    layoutRootPaths.1 = {$plugin.tx_iqtp13db_iqtp13dbwebapp.view.layoutRootPath}
+  }
+
+  features {
+    requireCHashArgumentForActionArguments = 0
+  }
+
+  settings {
+    validationMailTemplateFile = 
+    validationMailSubject =
+    
+    ownerConfirmationMailTemplateFile = 
+    ownerconfirmationreceiver =
+    ownerconfirmationSubject =
+  }
+}
+
+plugin.tx_iqtp13db._CSS_DEFAULT_STYLE (
+    textarea.f3-form-error {
+        background-color:#FF9F9F;
+        border: 1px #FF0000 solid;
+    }
+
+    input.f3-form-error {
+        background-color:#FF9F9F;
+        border: 1px #FF0000 solid;
+    }
+
+    .tx-iqtp13db table {
+        border-collapse:separate;
+        border-spacing:10px;
+    }
+
+    .tx-iqtp13db table th {
+        font-weight:bold;
+    }
+
+    .tx-iqtp13db table td {
+        vertical-align:top;
+    }
+
+    .typo3-messages .message-error {
+        color:red;
+    }
+
+    .typo3-messages .message-ok {
+        color:green;
+    }
+)
+
+page {
+	includeCSS {
+		tx_iqtp13db = EXT:iqtp13db/Resources/Public/CSS/customtp13db.css
+		tx_iqtp13dbjquery1 = EXT:iqtp13db/Resources/Public/CSS/jquery-ui.min.css
+		tx_iqtp13dbjquery2 = EXT:iqtp13db/Resources/Public/CSS/jquery-ui.structure.min.css
+		tx_iqtp13dbjquery3 = EXT:iqtp13db/Resources/Public/CSS/jquery-ui.theme.min.css
+	}
+	
+	includeJSFooter {
+		tx_iqtp13dbjquery = EXT:iqtp13db/Resources/Public/JS/jquery-ui.min.js
+		tx_iqtp13db = EXT:iqtp13db/Resources/Public/JS/customtp13.js
+		tx_iqtp13dbanmeldung = EXT:iqtp13db/Resources/Public/JS/script-teilnehmer.js		
+	}
+}
+
+# SPRACHWAHL
+# **********************
+
+[siteLanguage("twoLetterIsoCode") == 'de']
+plugin.tx_iqtp13db.settings {
+
+   ### Ratsuchende ###
+	
+   deutschkenntnisse {
+     1 = Deutsch als Muttersprache
+     2 = Deutsch als Fremdsprache
+   }
+     
+   zertifikatlevel {
+   	1 = -
+   	2 = A1
+   	3 = A2
+	4 = B1
+	5 = B2
+	6 = C1
+	7 = C2
+	0 = ohne Zertifikat
+   }
+   
+   abschlussart {
+     1 = Ausbildungsabschluss
+     2 = Universitätsabschluss
+   }
+
+   erwerbsstatus {
+     1 = beitragspflichtig beschäftigt
+     2 = geringfügig beschäftigt
+     3 = selbständig
+     4 = in Aus-/Weiterbildung/Qualifizierung
+     5 = nicht erwerbstätig
+     6 = im Ausland erwerbstätig
+     7 = im Ausland nicht erwerbstätig
+     8 = sonstiges
+   }
+
+   leistungsbezug {
+     2 = mit (ergänzendem) SGB II-Leistungsbezug
+     3 = mit SGB III-Leistungsbezug 
+     4 = mit SGB III- und SGB II-Leistungsbezug
+     5 = mit (ergänzendem) Asylbewerberleistungsbezug   
+   }
+ 
+   aufenthaltsstatus {
+     1 = keine Angabe
+     6 = Aufenthaltserlaubnis zur Arbeitsplatzsuche (§18c AufenthG)
+     11 = Aufenthaltserlaubnis für in anderen Mitgliedsstaaten der EU langfristig Aufenthaltsberechtigte (§38a AufenthG)
+     12 = Aufenthaltsgestattung (§55 Abs. 1 AsylVfG)
+     8 = Aufenthalt aus familiären Gründen (§27-36 AufenthG)
+     7 = Aufenthalt aus völkerrechtlichen, humanitären oder politischen Gründen (§22-26, 104a, 104b AufenthG)
+     4 = Aufenthalt zum Zweck der Ausbildung (§16-17 AufenthG)
+	 5 = Aufenthalt zum Zweck der Erwerbstätigkeit (§18, 18a, 19b, 19d, 20, 21 AufenthG) 
+     9 = Aufenthalt zum Zwecke einer Anpassungsqualifizierung oder einer Kenntnisprüfung (§ 17a AufenthG)
+     2 = Blaue Karte EU (§19a AufenthG)
+     13 = Duldung (§60a Abs. 4 AufenthG)
+     10 = Niederlassungserlaubnis (§9 AufenthG)
+     14 = Staatsbürger-/in EU/EWR/Schweiz oder Freizügigkeit (§2-5, §§12-13, §15 FreizüG/EU, §28 AufenthG)
+     17 = kein Aufenthaltstitel, da Wohnistz im Ausland 
+     15 = Fiktionsbescheinigung
+     18 = Anmerkung
+   }
+   
+   beratungsstelle {
+     1 = Agentur für Arbeit oder Jobcenter
+     12 = Arbeitgeber, Betriebe
+     13 = Ausländerbehörde
+     14 = Bildungsdienstleister
+     15 = Ehrenamtler*innen
+     16 = Flyer
+     17 = IQ externe Beratung
+     3 = Medien (Internet, Presse, etc.)
+     10 = Persönliche Empfehlung
+     18 = Zentrale Servicestelle Berufsanerkennung (ZSBA)
+     19 = Anerkennende Stelle
+     11 = Sonstiges
+     20 = keine Angaben
+   }
+
+	einwilligungaamedium {
+    	1 = Telefon
+    	2 = E-Mail
+    	3 = Video-Chat
+    	4 = Webapp
+   	}
+   	
+	### Beratung ###	
+
+	beratungsart {
+    	1 = face-to-face
+    	2 = Telefon
+    	3 = E-Mail
+    	4 = Postweg
+    	5 = Video
+   	}
+   
+   	beratungzu {
+   		1 = Anerkennung Schulabschluss
+   		2 = Gleichwertigkeit
+   		3 = ZAB
+   		4 = ohne Berufsabschluss
+   	}
+
+	anerkennungsberatung {
+		1 = Beratung zu Anerkennungsmöglichkeiten
+		2 = Beratung zu aufenthaltsrechtl. Möglichkeiten i.V.m. Anerkennung
+		3 = Unterstützung bei der Antragstellung
+		4 = Verweis auf Fördermöglichkeiten des SGB II und SGB III
+		5 = Beratung zu nachrangigen Fördermöglichkeiten (z.B. Anerkennungszuschuss)
+		6 = Alternativen zur beruflichen Anerkennung
+		7 = sonstige Themen bezogen auf das Anerkennungsverfahren:	
+	}
+	
+	qualifizierungsberatung {
+		1 = Beratung zu Qualifizierungsmöglichkeiten
+		2 = Beratung zu aufenthaltsrechtl. Möglichkeiten i.V.m. Qualifizierung
+		3 = Verweis auf Födermöglichkeiten des SGB II und SGB III
+		4 = Beratung zu nachrangigen Fördermöglichkeiten (z.B. Individualbudget)
+		5 = Verweis in Qualifizierung im Kontext des Anerkennungsgesetzes
+		6 = Alternativen zur beruflichen Anerkennung
+		7 = sonstige Themen bezogen auf Qualifizierung im Kontext des Anerkennungsgesetzes:
+	}
+}
+[global]
+
+[siteLanguage("twoLetterIsoCode") == 'en']
+plugin.tx_iqtp13db.settings {
+
+   deutschkenntnisse {
+     1 = German as mother tongue
+     2 = German as a foreign language
+   }
+     
+   zertifikatlevel {
+   	1 = -
+   	2 = A1
+   	3 = A2
+	4 = B1
+	5 = B2
+	6 = C1
+	7 = C2
+	0 = no certificate
+   }
+   
+   abschlussart {
+     1 = vocational education
+     2 = university degree
+   }
+
+   erwerbsstatus {
+     1 = employed subject to tax
+     2 = marginally employed
+     3 = selfemployment
+     4 = in education/further training/qualification
+     5 = not employed
+     6 = working abroad
+     7 = not working abroad
+     8 = others
+
+   }
+
+   leistungsbezug {
+     2 = with (complementary) SGB II-support
+     3 = with SGB III-support
+     4 = with SGB III- and SGB II-support
+     5 = with (complementary) asylum seekers support
+
+   }
+ 
+   aufenthaltsstatus {
+     1 = no specification
+     6 = Residence permit for job search (§18c AufenthG)
+     11 = Residence permit entitled to reside in other Member States (§28a AufenthG)
+     12 = Residence permission (§55 Abs. 1 AsylVfG)
+     8 = Residence permit for family reasons (§27-36 AufenthG)
+     7 = Residence permit for reasons of international law, humanitarian and political reasons (§22-26, 104a, 104b AufenthG)
+     4 = Residence permit for the purpose of professional training (§16-17 AufenthG)
+	 5 = Residence permit for the purpose of employment (§18, 18a, 19b, 19d, 20, 21 AufenthG)
+     9 = Residence permit for the purpose of adaptation qualification or knowledge test (§17a AufenthG)
+     2 = Blue Card EU (§19a AufenthG)
+     13 = Toleration (§60a Abs .4 AufenthG)
+     10 = Permanent residence permit (§9 AufenthG)
+     14 = Citizen of EU/EWR/Switzerland or freedom of movement (§2-5, §§12-13, §15 FreizüG/EU, §28 AufenthG)
+     17 = No residence permit because you reside abroad
+     15 = Fiction certificate
+     18 = annotation
+   }
+   
+   beratungsstelle {
+     1 = Agentur für Arbeit or Jobcenter
+     12 = employers, companies
+     13 = foreigners authority
+     14 = education service provider
+     15 = volunteer	
+     16 = flyer
+     17 = IQ external advice
+     3 = media (internet, press, etc.)
+     10 = personal recommendation
+     18 = ZSBA
+     19 = recognizing authority
+     11 = others
+     20 = no specified
+
+   }
+
+	einwilligungaamedium {
+    	1 = Telephone
+    	2 = E-Mail
+    	3 = Video-Chat
+   	}
+   	
+}   
+[global]
+
+
+[siteLanguage("twoLetterIsoCode") == 'ar']
+config.htmlTag_dir = rtl
+config.htmlTag_setParams = lang="" dir="rtl" class="no-js"
+page.includeCSS.customtp13rtl = EXT:iqtp13db/Resources/Public/CSS/customtp13db_rtl.css
+
+plugin.tx_iqtp13db.settings {
+
+ zertifikatlevel {
+   	1 = -
+   	2 = A1
+   	3 = A2
+	4 = B1
+	5 = B2
+	6 = C1
+	7 = C2
+	0 = no certificate
+   }
+   
+      abschlussart {
+     1 = vocational education
+     2 = university degree
+   }
+	erwerbsstatus {
+		1 = عمل مستحق الضريبة
+		2 = عامل بدوام جزئي
+		3 = عمل حر
+		4 = في التعليم/التدريب/التأهيل
+		5 = عاطل
+		6 = عامل في الخارج
+		7 = غير عامل في الخارج
+		8 = أخرى
+	}
+	
+	leistungsbezug {
+	 	2 = أحصل على إعانة (تكميلية) حسب القانون SGB II
+		3 = أحصل على إعانة  حسب القانون SGB III
+		4 = أحصل على إعانة  حسب القانونSGB III  والقانون SGB II
+		5 = أحصل على إعانة طالبي اللجوء (تكميلية)
+	}
+   
+}
+
+
+[siteLanguage("twoLetterIsoCode") == 'fa']
+config.htmlTag_dir = rtl
+config.htmlTag_setParams = lang="" dir="rtl" class="no-js"
+page.includeCSS.customtp13rtl = EXT:iqtp13db/Resources/Public/CSS/customtp13db_rtl.css
+
+plugin.tx_iqtp13db.settings {
+   
+    zertifikatlevel {
+   	1 = -
+   	2 = A1
+   	3 = A2
+	4 = B1
+	5 = B2
+	6 = C1
+	7 = C2
+	0 = no certificate
+   }
+   
+      abschlussart {
+     1 = vocational education
+     2 = university degree
+   }
+   
+   erwerbsstatus {
+     1 = شاغل به صورت تمام وقت
+     2 = شاغل به صورت پاره وقت
+     3 = دارای شغل آزاد
+     4 = تحت آموزش/ در حال ادامه تحصیل/ در حال کسب مهارت
+     5 = بدون شغل (بیکار)
+     6 = شاغل در خارج از کشور
+     7 = بدون شغل در خارج از کشور
+     8 = سایر موارد
+   }
+   
+   leistungsbezug {
+ 	 2 = دریافت مزایا (مکمل) طبق جلد دوم کتاب قوانین اجتماعی (SGB II)
+	 3 = دریافت مزایا طبق جلد سوم کتاب قوانین اجتماعی (SGB III)
+	 4 = دریافت مزایا طبق جلد سوم کتاب قوانین اجتماعی و جلد دوم کتاب قوانین اجتماعی
+	 5 = دریافت مزایا (مکمل) برای پناهجویان
+   }
+   
+}   
+[global]
+
+
+[siteLanguage("twoLetterIsoCode") == 'fr']
+plugin.tx_iqtp13db.settings {
+
+   deutschkenntnisse {
+     1 = allemand comme langue maternelle
+     2 = allemand comme langue étrangère
+   }
+     
+   zertifikatlevel {
+   	1 = -
+   	2 = A1
+   	3 = A2
+	4 = B1
+	5 = B2
+	6 = C1
+	7 = C2
+	0 = pas de certificat
+   }
+   
+   abschlussart {
+     1 = formation professionnelle
+     2 = diplôme universitaire
+   }
+
+   erwerbsstatus {
+     1 = Emploi à temps plein
+	 2 = Emploi à temps partiel
+	 3 = Indépendant
+	 4 = En formation/perfectionnement/qualification
+	 5 = sans emploi
+	 6 = Emploi à l'étranger
+	 7 = Sans emploi à l'étranger
+	 8 = Divers
+   }
+
+   leistungsbezug {
+	 2 = bénéficiaire de prestations (complémentaires) du SGB II
+	 3 = bénéficiaire de prestations du SGB III
+	 4 = bénéficiaire de prestations SGB III et du SGB II
+	 5 = bénéficiaire d'une allocation (supplémentaire) pour demande d'asile   
+   }
+ 
+   aufenthaltsstatus {
+   	 1 = non spécifié
+     6 = Permis de séjour pour recherche d’emploi (§18c AufenthG)
+     11 = Permis de séjour pour résidence à long terme dans un autre pays membre de l’UE (§28a AufenthG)
+     12 = Titre de séjour provisoire d (§55 Abs. 1 AsylVfG)
+     8 = Résidence pour raisons familiales (§27-36 AufenthG)
+     7 = Résidence pour raisons du droit international, raisons humanitaires ou politiques  (§22-26, 104a, 104b AufenthG)
+     4 = Résidence aux fins d’une formation professionnelle (§16-17 AufenthG)
+     5 = Résidence aux fins d'une activité professionnelle  (§18, 18a, 19b, 19d, 20, 21 AufenthG)
+     9 = Résidence pour qualification d’adaptation professionnelle ou test de connaissances (§17a AufenthG)
+     2 = Carte bleue UE (§19a AufenthG)
+     13 = Séjour toléré (§60a Abs .4 AufenthG)
+     10 = Autorisation d’établissement (§9 AufenthG)
+     14 = Citoyenneté  UE /EEE/Suisse ou liberté de circulation (§2-5, §§12-13, §15 FreizüG/EU, §28 AufenthG)
+     17 = Pas de permis de séjour car résidence à l’étranger
+     15 = Attestation de fiction 
+     18 = Annotation
+   }
+   
+   beratungsstelle {
+     1 = Agentur für Arbeit ou Jobcenter
+     12 = employeurs, entreprises
+     13 = office des étrangers
+     14 = prestataire de services éducatifs  
+     15 = bénévoles	
+     16 = dépliant
+     17 = IQ conseil externe
+     3 = media (internet, presse, etc.)
+     10 = recommendation personnelle
+     18 = point de service central pour la reconnaissance professionnelle (ZSBA)
+     19 = organisme responsable pour la reconnaissance
+     11 = autres 
+     20 = non spécifié
+   }
+
+	einwilligungaamedium {
+    	1 = téléphone
+    	2 = e-Mail
+    	3 = video-Chat
+   	}
+  
+}   
+[global]
+
+
+[siteLanguage("twoLetterIsoCode") == 'pl']
+plugin.tx_iqtp13db.settings {
+   
+    zertifikatlevel {
+   	1 = -
+   	2 = A1
+   	3 = A2
+	4 = B1
+	5 = B2
+	6 = C1
+	7 = C2
+	0 = no certificate
+   }
+   
+      abschlussart {
+     1 = vocational education
+     2 = university degree
+   }
+   
+   erwerbsstatus {
+     1 = podlega obowiązkowi składkowemu zatrudniony
+	 2 = zatrudniony w niewielkim wymiarze
+	 3 = samodzielna działalność
+	 4 = kształcenie/dokształcanie/zdobywanie kwalifikacji
+	 5 = nieczynny zawodowo
+	 6 = czynny zawodowo za granicą
+	 7 = nieczynny zawodowo za granicą
+	 8 = inne
+   }
+   
+   leistungsbezug {
+	 2 = z (uzupełniającym) pobieraniem świadczeń wg ustawy socjalnej II
+	 3 = z pobieraniem świadczeń wg ustawy socjalnej III
+	 4 = z pobieraniem świadczeń wg ustawy socjalnej III i II
+	 5 = z (uzupełniającym) pobieraniem świadczeń dla osób starających się o azyl
+   }
+}   
+[global]
+
+
+[siteLanguage("twoLetterIsoCode") == 'ro']
+plugin.tx_iqtp13db.settings {
+   
+    zertifikatlevel {
+   	1 = -
+   	2 = A1
+   	3 = A2
+	4 = B1
+	5 = B2
+	6 = C1
+	7 = C2
+	0 = no certificate
+   }
+   
+      abschlussart {
+     1 = vocational education
+     2 = university degree
+   }
+   
+   erwerbsstatus {
+     1 = Angajat cu obligaţia de a achita contribuţiile sociale
+	 2 = Angajat cu contract cu timp de muncă parţial şi plată redusă (minijob)
+	 3 = Independent
+	 4 = În curs de formare profesională / calificare
+	 5 = Neangajat
+	 6 = Angajat în străinătate
+	 7 = Neangajat în străinătate
+	 8 = Altă situaţie
+   }
+   
+   leistungsbezug {
+	 2 = Cu venituri sociale SGB II
+	 3 = Cu venituri sociale SGB III
+	 4 = Cu venituri sociale SGB III şi SGB II
+	 5 = Cu venituri sociale (în completare) pentru solicitanţii de azil 
+   }
+   
+}   
+[global]
+
+
+[siteLanguage("twoLetterIsoCode") == 'ru']
+plugin.tx_iqtp13db.settings {
+
+ zertifikatlevel {
+   	1 = -
+   	2 = A1
+   	3 = A2
+	4 = B1
+	5 = B2
+	6 = C1
+	7 = C2
+	0 = no certificate
+   }
+   
+      abschlussart {
+     1 = vocational education
+     2 = university degree
+   }
+   
+   erwerbsstatus {
+     1 = Работаете с обязательством уплачивать членские взносы 
+	 2 = Работаете на минимальной заработной плате
+	 3 = Частный предприниматель
+	 4 = Получаете образование/ проходите повышение квалификации/ профессиональную подготовку 
+	 5 = Не работаете
+	 6 = Работаете за границей 
+	 7 = Не работаете за границей 
+	 8 = Другое
+   }
+   
+   leistungsbezug {
+	 2 = Получаете (дополнительное) пособие в соответствии с ч. II Социального кодекса Германии 
+	 3 = Получаете пособие в соответствии с ч. III Социального кодекса Германии 
+	 4 = Получаете пособие в соответствии с ч. II и III Социального кодекса Германии 
+	 5 = Получаете (дополнительное) пособие как лицо, претендующее на политическое убежище
+   }
+   
+}   
+[global]
+
+
+[siteLanguage("twoLetterIsoCode") == 'es']
+plugin.tx_iqtp13db.settings {
+
+ zertifikatlevel {
+   	1 = -
+   	2 = A1
+   	3 = A2
+	4 = B1
+	5 = B2
+	6 = C1
+	7 = C2
+	0 = no certificate
+   }
+   
+      abschlussart {
+     1 = vocational education
+     2 = university degree
+   }
+   
+   erwerbsstatus {
+     1 = empleado contribuyente 
+	 2 = con empleo precario
+	 3 = autónomo
+	 4 = dedicado a la formación primaria / continuada / cualificada
+	 5 = sin empleo 
+	 6 = con empleo en el extranjero
+	 7 = sin empleo en el extranjero
+	 8 = otro
+   }
+   
+   leistungsbezug {
+	 2 = con prestaciones (complementarias) SGB II
+	 3 = con prestaciones SGB III
+	 4 = con prestaciones SGB III y SGB II
+	 5 = con prestaciones (complementarias) como solicitante de asilo 
+   }
+   
+}   
+[global]
+
+
+[siteLanguage("twoLetterIsoCode") == 'tr']
+plugin.tx_iqtp13db.settings {
+
+ zertifikatlevel {
+   	1 = -
+   	2 = A1
+   	3 = A2
+	4 = B1
+	5 = B2
+	6 = C1
+	7 = C2
+	0 = no certificate
+   }
+   
+      abschlussart {
+     1 = vocational education
+     2 = university degree
+   }
+   
+   erwerbsstatus {
+     1 = Sigortalı çalışıyorum
+	 2 = Az çalışıyorum
+	 3 = Serbest meslek
+	 4 = Eğitim / öğretim / mesleki yeterlilik eğitimindeyim
+	 5 = Meslek sahibi değilim
+	 6 = Yurt dışında meslek sahibiyim
+	 7 = Yurt dışında meslek sahibi değilim
+	 8 = Diğer
+   }
+   
+   leistungsbezug {
+	 2 = Tamamlayıcı SGB II- yardımı alıyorum
+	 3 = SGB III- yardımı alıyorum
+	 4 = SGB III- ve SGB II yardımı alıyorum
+	 5 = Tamamlayıcı iltica dilekçesi sahibi yardımı alıyorum
+   }
+   
+}   
+[global]

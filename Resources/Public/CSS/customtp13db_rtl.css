@@ -1,0 +1,43 @@
+.tx-iqtp13db .einwilligungtext {
+	float: right;
+	width: 90%;
+    font-weight: 400;
+    font-size: 1.1em;
+}
+
+.tp13_formdivwebappradio {
+	float: right;
+	margin: 5px 30px;
+}
+
+.tp13_options {
+	float: right;
+}
+
+.tp13_formdivwebappmultiradio {
+	float: right; 
+	margin: 5px;
+	line-height: 2em;
+}
+
+
+.tx-iqtp13db input[type="radio"], .tx-iqtp13db input[type="checkbox"] {
+    display: block;
+    float: right;
+    line-height: normal;
+    margin: 3px 0 0 10px;
+    width: auto;
+}
+
+.tx-iqtp13db .infolabel {
+    background-image: url(../img/infoicon.png);
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: 1.1em;
+    padding-right: 0px;
+    padding-left: 30px;
+}
+
+.tx-iqtp13db label {
+	float: right;
+}

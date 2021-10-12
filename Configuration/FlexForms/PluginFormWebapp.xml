@@ -1,0 +1,148 @@
+<T3DataStructure>
+  <sheets>
+    <sDEF>
+      <ROOT>
+        <TCEforms>
+          <sheetTitle>Optionen</sheetTitle>
+        </TCEforms>
+        <type>array</type>
+        <el>
+          <settings.modtyp>
+            <TCEforms>
+              <label>Typ</label>
+				<config>
+  				<type>select</type>
+  				<renderType>selectSingle</renderType>
+  				<items type="array">
+    			<numIndex index="0" type="array">
+      				<numIndex index="0">Anmeldung</numIndex>
+     				<numIndex index="1">anmeldung</numIndex>
+   				</numIndex>
+   				<numIndex index="1" type="array">
+      				<numIndex index="0">Bearbeiten von Extern</numIndex>
+     				<numIndex index="1">bearbeiten</numIndex>
+   				</numIndex>
+   				<numIndex index="2" type="array">
+      				<numIndex index="0">Löschen von Extern</numIndex>
+     				<numIndex index="1">loeschen</numIndex>
+   				</numIndex>
+   				</items>
+				</config>
+            </TCEforms>
+          </settings.modtyp>
+          <settings.anmeldendeseite>
+            <TCEforms>
+              <label>Anmelden Ende-Seite</label>
+				<config>
+  				<type>group</type>
+  				<internal_type>db</internal_type>
+				<allowed>pages</allowed>
+				<size>1</size>
+				<maxitems>1</maxitems>
+				<minitems>0</minitems>
+				<show_thumbs>1</show_thumbs>
+				</config>
+            </TCEforms>
+          </settings.anmeldendeseite>
+          <settings.anmeldendeseiteaskconsent>
+            <TCEforms>
+              <label>Seite nach Bestätigung Anforderung Einwilligung im Backend</label>
+				<config>
+  				<type>group</type>
+  				<internal_type>db</internal_type>
+				<allowed>pages</allowed>
+				<size>1</size>
+				<maxitems>1</maxitems>
+				<minitems>0</minitems>
+				<show_thumbs>1</show_thumbs>
+				</config>
+            </TCEforms>
+          </settings.anmeldendeseiteaskconsent>
+          <settings.startseite>
+            <TCEforms>
+              <label>Startseite Anmeldung</label>
+				<config>
+  				<type>group</type>
+  				<internal_type>db</internal_type>
+				<allowed>pages</allowed>
+				<size>1</size>
+				<maxitems>1</maxitems>
+				<minitems>0</minitems>
+				<show_thumbs>1</show_thumbs>
+				<eval>required</eval>
+				</config>
+            </TCEforms>
+          </settings.startseite>
+          <settings.mailattacheinwilligung>
+                    <TCEforms>
+                         <label>Pfad zum Dateianhang (optional)</label>
+                         <config>
+                             <type>input</type>
+                             <size>60</size>
+                         </config>
+                    </TCEforms>
+          </settings.mailattacheinwilligung>
+          <settings.redirectValidationInitiated>
+            <TCEforms>
+              <label>Seite Bestätigungsmail angefordert</label>
+				<config>
+  				<type>group</type>
+  				<internal_type>db</internal_type>
+				<allowed>pages</allowed>
+				<size>1</size>
+				<maxitems>1</maxitems>
+				<minitems>0</minitems>
+				<show_thumbs>1</show_thumbs>
+				</config>
+            </TCEforms>
+          </settings.redirectValidationInitiated>
+           <settings.redirectValidationFailed>
+            <TCEforms>
+              <label>Seite Validierung fehlgeschlagen</label>
+				<config>
+  				<type>group</type>
+  				<internal_type>db</internal_type>
+				<allowed>pages</allowed>
+				<size>1</size>
+				<maxitems>1</maxitems>
+				<minitems>0</minitems>
+				<show_thumbs>1</show_thumbs>
+				</config>
+            </TCEforms>
+          </settings.redirectValidationFailed>
+          <settings.wartungvon>
+                    <TCEforms>
+                         <label>Wartung von (Format: 01.01.2020 08:00)</label>
+                         <config>
+                             <type>input</type>
+                             <size>60</size>
+                         </config>
+                    </TCEforms>
+          </settings.wartungvon>
+          <settings.wartungbis>
+                    <TCEforms>
+                         <label>Wartung bis (Format: 01.01.2020 08:00)</label>
+                         <config>
+                             <type>input</type>
+                             <size>60</size>
+                         </config>
+                    </TCEforms>
+          </settings.wartungbis>
+          <settings.wartungtext>
+                        <TCEforms>
+                		    <label>Wartung Text</label>
+							<config>
+  								<type>text</type>
+  								<cols>20</cols>
+  								<rows>3</rows>
+	    						<eval>trim</eval>
+   	 							<enableRichtext>1</enableRichtext>
+   		 						<richtextConfiguration>custom</richtextConfiguration>
+							</config>							
+                        </TCEforms>
+          </settings.wartungtext>
+        </el>
+      </ROOT>
+    </sDEF>
+  </sheets>
+</T3DataStructure>

@@ -1,0 +1,85 @@
+<f:layout name="Default" />
+<f:section name="HeaderAssets">
+  		<link rel="stylesheet" href="{f:uri.resource(path: 'CSS/customtp13dbadmin.css')}"/>  		
+</f:section>
+
+<f:section name="main">
+<h1>Filter</h1>
+<f:form method="post" controller="Teilnehmer" action="listangemeldet" name="listangemeldet"  noCacheHash="true" >
+		Name: <f:form.textfield size="20" value="{filtername}" name="name" />&nbsp;&nbsp;
+		Ort: <f:form.textfield size="20" value="{filterort}" name="ort" />&nbsp;&nbsp;
+		Beruf: <f:form.textfield size="20" value="{filterberuf}" name="beruf" />&nbsp;&nbsp;
+		Geburtsland: <f:form.textfield value="{filterland}" size="20" name="land" />&nbsp;&nbsp;&nbsp;&nbsp;
+		<f:if condition="{filteron}"><f:then><f:form.button name="filteraus" value="1" >Filter löschen</f:form.button></f:then></f:if>
+		<f:form.submit name="filteran" value="Filtern" />			
+</f:form>
+<br>
+<h1>{teilnehmers -> f:count()} angemeldete Ratsuchende <f:if condition="{filteron}"><f:then><span style="color: red;">(gefiltert)</span></f:then></f:if></h1>
+<f:flashMessages />
+<f:link.action class="linkbuttons" action="new" arguments="{calleraction: calleraction, callercontroller : callercontroller}">Neue*r Ratsuchende*r</f:link.action>
+
+<div class="pretablediv">
+<f:widget.paginate objects="{teilnehmers}" as="teilnehmerspag" configuration="{itemsPerPage: 50, insertAbove: 1}"> 
+	<table  class="tx_iqtp13db" >
+		<tr>
+			<th><f:link.action action="listangemeldet" arguments="{orderby : 'nachname'}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" /></f:link.action></th>
+			<th><f:link.action action="listangemeldet" arguments="{orderby : 'vorname'}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" /></f:link.action></th>
+			<th><f:link.action action="listangemeldet" arguments="{orderby : 'schonberaten'}">Bereits<br>beraten</f:link.action></th>
+			<th><f:link.action action="listangemeldet" arguments="{orderby : 'verificationDate'}"><f:translate key="anmeldedatum" /></f:link.action></th>
+			<th><f:link.action action="listangemeldet" arguments="{orderby : 'ort'}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.plz" />/<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ort" /></f:link.action></th>
+			<th><f:link.action action="listangemeldet" arguments="{orderby : 'fruehererantrag'}">Antrag<br>gestellt</f:link.action></th>
+			<th><f:link.action action="listangemeldet" arguments="{orderby : 'leistungsbezugjanein'}">Leistung</f:link.action></th>
+			<th><f:link.action action="listangemeldet" arguments="{orderby : 'geburtsland'}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geburtsland" />/-ort</f:link.action></th>
+			<th><f:link.action action="listangemeldet" arguments="{orderby : 'geschlecht'}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geschlecht" /></f:link.action></th>
+			<th><f:link.action action="listangemeldet" arguments="{orderby : 'deutscherReferenzberuf1'}">Referenzberuf</f:link.action></th>
+			<th> </th>
+			<th> </th>
+			<th> </th> 
+			<th> </th>
+		</tr>
+	 
+		<f:for each="{teilnehmerspag}" as="teilnehmer">		
+			<f:if condition="{teilnehmer.dublette}"><f:then>
+				<tr class="dublette">
+			</f:then>
+			<f:else>
+				{f:if(condition: "{teilnehmer.verificationDate} != 0", then: '<tr class="bestaetigt">', else: '<tr>')}
+			</f:else>
+			</f:if>
+				<td><f:link.action action="show" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}">{teilnehmer.nachname}</f:link.action></td>
+				<td><f:link.action action="show" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}">{teilnehmer.vorname}</f:link.action></td>
+				<td class="tdcenter">{f:if(condition: '{teilnehmer.schonberaten} == 1', then: '✓', else: '')}</td>
+				<td class="tdcenter">{f:if(condition: '{teilnehmer.verificationDate} == 0', then: 'unbestätigt', else: '{f:format.date(date: teilnehmer.verificationDate, format:"d.m.Y")}')}</td>
+				<td>{teilnehmer.plz} {teilnehmer.ort}</td>
+				<td class="tdcenter">{f:if(condition: '{teilnehmer.fruehererantrag} == 1', then: '✓', else: '')}</td>
+				<td class="tdcenter">{f:if(condition: '{teilnehmer.leistungsbezugjanein} == 1', then: '✓', else: '')}</td>
+				<td>{teilnehmer.geburtsland}</td>
+				<td class="tdcenter">{f:if(condition: '{teilnehmer.geschlecht} == 2', then: '<span style="color: #84a0ff;">M</span>')}
+				{f:if(condition: '{teilnehmer.geschlecht} == 1', then: '<span style="color: #fe7a84;">W</span>')}
+				{f:if(condition: '{teilnehmer.geschlecht} == 3', then: '<span>D</span>')}</td>
+				<td>{teilnehmer.deutscherReferenzberuf1} {f:if(condition: '{teilnehmer.deutscherReferenzberuf2} != ""', then: ', {teilnehmer.deutscherReferenzberuf2}', else: '')} </td>
+				<td><f:link.action class="linkbuttons buttontextsmall" action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}">Anmeldedaten</f:link.action></td>
+				<td>
+					<f:if condition="{teilnehmer.dublette} || {teilnehmer.verificationDate} == 0">
+						<f:then></f:then>
+						<f:else>
+							<f:link.action class="linkbuttons buttontextsmall" action="new" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}" controller="Beratung" >Erstberatung</f:link.action>
+						</f:else>
+					</f:if>
+					<f:if condition="{teilnehmer.dublette} && {teilnehmer.verificationDate} != 0"><f:then><f:link.action class="linkbuttons buttontextsmall" action="new" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}" controller="Beratung" onclick="return confirm('Trotz möglicher Dublette erstberaten?');">Erstberatung</f:link.action></f:then></f:if>
+					</td>
+				</td>
+				<td><f:if condition="{teilnehmer.verificationDate} == 0"><f:then><f:link.action class="linkbuttons buttontextsmall" action="askconsent" arguments="{teilnehmer : teilnehmer}" onclick="return confirm('E-Mail senden?');" >Einwilligung<br>anfordern</f:link.action></f:then></f:if></td>
+				<td><f:link.action class="iconbuttons" action="delete" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}" onclick="return confirm('Wirklich löschen?');" ><img src="/typo3conf/ext/iqtp13db/Resources/Public/Icons/delete-640.png" width="32" height="32" alt="Löschen" /></f:link.action></td>
+			</tr>
+		</f:for>
+	</table>
+</f:widget.paginate> 
+</div>
+
+<br>
+<span style="font-weight: bold; font-size: 0.7rem; margin-left: 5px;">Legende:</span>
+<table><tr><td>Anmeldung noch nicht bestätigt</td><td class="bestaetigt">Anmeldung bestätigt</td><td class="dublette">mögliche Dublette</td></tr></table>
+
+</f:section>
+

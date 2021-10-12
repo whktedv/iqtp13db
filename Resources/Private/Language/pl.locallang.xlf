@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="de" datatype="plaintext" original="messages" date="2016-09-01T11:23:16Z" product-name="iqtp13db" target-language="pl">
+    <header/>
+    <body>
+<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbadmin"><source>IQ TP13 DB Adminbereich</source><target>IQ TP13 DB administrator</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbadmin.description"><source></source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbwebapp"><source>IQ TP13 DB Webapp</source><target>IQ TP13 DB Webapp</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbwebapp.description"><source></source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer"><source>Teilnehmer</source><target>Uczestnik/ uczestniczka </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.beratungsstatus"><source>Beratungsstatus</source><target>Status konsultacji</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.niqchiffre"><source>NIQ Chiffre</source><target>NIQ kod</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.schonberaten"><source>Wurden Sie schon einmal zur Anerkennung Ihres ausländischen Berufsabschlusses beraten?</source><target>Czy konsultował/a się Pan/Pani kiedyś odnośnie nostryfikacji własnego zagranicznego świadectwa kwalifikacji zawodowych?</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.schonberatenvon"><source>Von wem wurden Sie beraten?</source><target>Kto udzielił Panu/Pani konsultacji?</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.nachname"><source>Nachname</source><target>Nazwisko</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.vorname"><source>Vorname</source><target>Imie</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.plz"><source>PLZ</source><target>Kod pocztowy</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ort"><source>Ort</source><target>Miejscowość</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.email"><source>E-Mail</source><target>E-mail</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.confirmemail"><source>E-Mail bestätigen</source><target>Potwierdź e-mail</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.telefon"><source>Telefon</source><target>Numer telefonu</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.lebensalter"><source>Alter</source><target>Wiek</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geburtsland"><source>Geburtsland</source><target>Miejsce urodzenia (państwo) </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geschlecht"><source>Geschlecht</source><target>Płeć</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erste_staatsangehoerigkeit"><source>Erste Staatsangehoerigkeit</source><target>Pierwsze obywatelstwo</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zweite_staatsangehoerigkeit"><source>Zweite Staatsangehoerigkeit</source><target>Drugie obywatelstwo</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einreisejahr"><source>Einreisejahr</source><target>Rok przyjazdu </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_deutschland"><source>Wohnsitz Deutschland</source><target>Miejsce zamieszkania w Niemczech</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_nein_in"><source>Wohnsitz in</source><target>Miejsce zamieszkania w</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><source>Deutsch als Muttersprache?</source><target>Niemiecki jako jezyk ojczysty?  </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikatdeutsch"><source>Zertifikatdeutsch</source><target>Znajomość języka niemieckiego potwierdzona certyfikatem </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><source>Wenn Zertifikat vorhanden, auf welchem Sprachniveau?</source><target>Jeśli tak, to na jakim poziomie językowym?</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussart1"><source>Abschlussart1</source><target>Rodzaj dyplomu1</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussart2"><source>Abschlussart2</source><target>Rodzaj dyplomu2</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsland1"><source>Erwerbsland1</source><target>Kraj uzyskania kwalifikacji zawodowych1</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.dauer_berufsausbildung1"><source>Dauer Berufsausbildung1</source><target>Czas trwania wykształcenia zawodowego1</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussjahr1"><source>Abschlussjahr1</source><target>Rok ukończenia1</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsinstitution1"><source>Ausbildungsinstitution1</source><target>Instytucja kształcąca1</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsort1"><source>Ausbildungsort1</source><target>Miejscowość, w której zdobyto wykształcenie1</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschluss1"><source>Abschluss1</source><target>Dyplom1</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.berufserfahrung1"><source>Berufserfahrung1</source><target>Doświadczenie zawodowe1</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutscher_referenzberuf1"><source>Deutscher Referenzberuf1</source><target>Niemiecki zawód porównywalny1</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wunschberuf1"><source>Wunschberuf1</source><target>Pożądany zawód1</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsstatus"><source>Erwerbsstatus</source><target>Status zatrudnienia</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezug"><source>Leistungsbezug</source><target>Otrzymywanie świadczeń</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus"><source>Aufenthaltsstatus</source><target>Status uprawnienia do pobytu w kraju</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatusfreitext"><source>Anmerkung zum Aufenthaltsstatus</source><target>Uwagi odnośnie statusu uprawnienia do pobytu w kraju</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag"><source>Wurde schon ein Antrag auf Anerkennung des Berufsabschlusses gestellt?</source><target>Czy został już złożony wniosek o uznanie kwalifikacji zawodowych?</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag_referenzberuf"><source>Für welchen Beruf?</source><target>Dla jakiego zawodu?</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag_institution"><source>Bei welcher Institution oder Behörde?</source><target>W jakiej instytucji lub urzedzie? </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.anz_beratungen"><source>Anz Beratungen</source><target>Ilość odbytych konsultacji</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.weitere_sprachkenntnisse"><source>Weitere Sprachkenntnisse</source><target>Znajomość języków</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.sprachen"><source>Welche Sprachen sprechen Sie?</source><target>Jakimi językami się Pan/Pani posługuje? </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.bescheidfrueherer_anerkennungsantrag"><source>Haben Sie schon die Entscheidung von der anerkennenden Stelle (Bescheid) erhalten?</source><target>Czy otrzymał/a Pan/ Pani już decyzję od organu zajmujęcego się uznawaniem kwalifikacji zawodowych (decyzja)?</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_beratungsstelle"><source>Wie haben Sie uns gefunden?</source><target>Jak nas Pan/Pani znalazł/a?</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligung"><source>Einwilligung</source><target>Zgoda</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsland2"><source>Erwerbsland2</source><target>Kraj uzyskania kwalifikacji zawodowych2</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.dauer_berufsausbildung2"><source>Dauer Berufsausbildung2</source><target>Czas trwania wyksztalcenia zawodowego2</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussjahr2"><source>Abschlussjahr2</source><target>Rok ukończenia2</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsinstitution2"><source>Ausbildungsinstitution2</source><target>Instytucja kształcąca2</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsort2"><source>Ausbildungsort2</source><target>Miejscowość, w której zdobyto wykształcenie2</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschluss2"><source>Abschluss2</source><target>Dyplom2</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.berufserfahrung2"><source>Berufserfahrung2</source><target>Doświadczenie zawodowe2</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutscher_referenzberuf2"><source>Deutscher Referenzberuf2</source><target>Niemiecki zawód porównywalny2</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wunschberuf2"><source>Wunschberuf2</source><target>Pożądany zawód2</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezugjanein"><source>Bekommen Sie Geld vom Jobcenter oder der Agentur für Arbeit?</source><target>Czy otrzymuje Pan/Pani świadczenia z Jobcenter lub urzędu pracy? </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezug"><source>Leistungsbezug</source><target>Otrzymywanie świadczeń</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungstextaa"><source>Mit der Angabe der folgenden Daten willige ich ein, dass der Agentur für Arbeit bzw. dem Jobcenter meine Daten zum Zwecke bzw. im Rahmen der Anerkennungsberatung weitergegeben werden dürfen.</source><target>Poprzez podanie poniższych informacji wyrażam zgodę na przekazanie moich danych do Jobcenter lub Urzędu Pracy w celu lub/i w ramach doradztwa w zakresie uznania kwalifikacji.</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_a"><source>Möchten Sie, dass wir das Beratungsergebnis an Ihre Berater*in weiterleiten?</source><target>Czy chce Pan/Pani, abyśmy przekazali wyniki konsultacji Pana/Pani doradcy/czyni?</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_adatum"><source>Datum der Einwilligung zur Weitergabe</source><target>Data wyrażenia zgody na przekazanie danych </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_amedium"><source>Medium der Einwilligung</source><target>Zgoda wyrażona poprzez </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_berater_a_a"><source>Name Berater*in</source><target>Nazwisko doradcy/czyni</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kontakt_berater_a_a"><source>Kontakt (E-Mail und Telefon)</source><target>Dane kontaktowe (e-mail i numer telefonu) </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kundennummer_a_a"><source>Ihre Kundennummer</source><target>Pana/Pani numer klienta</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstelle"><source>Einwilligung Weitergabe Daten an anerkennende Stelle</source><target>Zgoda na przekazanie danych do organu uznającego</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstelledatum"><source>Datum der Einwilligung zur Weitergabe</source><target>Data wyrażenia zgody na przekazanie danych </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstellemedium"><source>Medium der Einwilligung</source><target>Zgoda wyrażona poprzez </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstellename"><source>Name Ansprechpartner und Organisation</source><target>Nazwisko osoba kontaktowa i organizacja </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstellekontakt"><source>Kontakt (E-Mail und Telefon)</source><target>Dane kontaktowe (e-mail i numer telefonu) </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_person"><source>Einwilligung Weitergabe Daten an weitere Person</source><target>Zgoda na przekazanie danych innym osobom</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_persondatum"><source>Datum der Einwilligung zur Weitergabe</source><target>Data wyrażenia zgody na przekazanie danych </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personmedium"><source>Medium der Einwilligung</source><target>Zgoda wyrażona poprzez </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personname"><source>Name der Person und ggf. Organisation</source><target>Nazwisko osoby lub nazwa organizacji </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personkontakt"><source>Kontakt (E-Mail und Telefon)</source><target>Dane kontaktowe (e-mail i numer telefonu) </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus"><source>Aufenthaltsstatus</source><target>Status uprawnienia do pobytu w kraju</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.notizen"><source>Was möchten Sie uns noch mitteilen oder haben Sie schon eine konkrete Frage?</source><target>Co chciałby Pan/ chciałaby Pani nam jeszcze przekazać? Ma Pan/ Pani dodatkowe pytania? </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.verification_code"><source>Bestätigungscode</source><target>Kod potwierdzający </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.verification_date"><source>Bestätigungs-Datum</source><target>Data potwierdzenia </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.verification_ip"><source>Bestätigungs-IP</source><target>IP potwierdzenia </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung"><source>Beratung</source><target>Konsultacja </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.datum"><source>Datum Erstberatung</source><target>Data pierwszej konsultacji </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.beratungsart"><source>Beratungsart</source><target>Rodzaj konsultacji</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.beratungsartfreitext"><source>Beratungsart face-to-face Freitext</source><target>Rodzaj konsultacji twarzą w twarz dowolny tekst</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.beratungsort"><source>Beratungsort</source><target>Miejsce konsultacji </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.beratungzu"><source>Beratung zu</source><target>Konsultacja odnośnie</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.referenzberufe"><source>Referenzberufe</source><target>Porównywalne zawody</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.anerkennendestellen"><source>Anerkennende Stellen</source><target>Organy zajmujące się uznawaniem kwalifikacji zawodowych </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.anerkennungsberatung"><source>Anerkennungsberatung</source><target>Konsultacja odnośnie uznawania kwalifikacji zawodowych</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.anerkennungsberatungfreitext"><source>Freitext zu 'sonstige Themen bezogen auf das Anerkennungsverfahren'</source><target>Dowolny tekst odnośnie 'inne tematy dotyczące postępowania uznawania kwalifikacji'</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.qualifizierungsberatung"><source>Qualifizierungsberatung</source><target>Konsultacja odnośnie dodatkowych kwalifikacji </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.qualifizierungsberatungfreitext"><source>Freitext zu 'sonstige Themen bezogen auf Qualifizierung':</source><target>Dowolny tekst odnośnie 'inne tematy dotyczące dodatkowych kwalifikacji'</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.notizen"><source>Notizen</source><target>Notatki </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.erstberatungabgeschlossen"><source>Erstberatung abgeschlossen</source><target>Zakończona pierwsza konsultacja </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.teilnehmer"><source>Teilnehmer*in</source><target>Uczestnik/ uczestniczka </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.berater"><source>Berater*in</source><target>Doradca/ doradczyni </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_folgekontakt"><source>Folgekontakt</source><target>Kontakt wynikający z poprzednich ustaleń </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.datum"><source>Datum</source><target>Data</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.antraggestellt"><source>Antrag gestellt?</source><target>Złożony wniosek? </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.zab_gleichwertigkeit"><source>ZAB/Gleichwertigkeit</source><target>ZAB/równoważność</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.notizen"><source>Notizen</source><target>Notatki </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.teilnehmer"><source>Ratsuchende*r</source><target>Osoba potrzebująca porady</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.berater"><source>Berater*in</source><target>Doradca/ doradczyni </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_berater"><source>Berater*in</source><target>Doradca/ doradczyni </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_berater.name"><source>Name</source><target>Nazwisko </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_berater.organisation"><source>Organisation</source><target>Organizacja </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_berater.kuerzel"><source>Kürzel</source><target>Skrócony podpis</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_dokument"><source>Dokument</source><target>Dokument </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_dokument.name"><source>Name</source><target>Nazwisko</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_dokument.pfad"><source>Pfad</source><target>Ścieżka</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_dokument.teilnehmer"><source>Teilnehmer*in</source><target>Uczestnik/ uczestniczka </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbadmin"><source>IQ TP13 DB Adminbereich</source><target>IQ TP13 DB administrator</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbadmin.description"><source></source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbwebapp"><source>IQ TP13 DB Webapp</source><target>IQ TP13 DB Webapp</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbwebapp.description"><source></source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsfremdeberufserfahrung1"><source>Ausbildungsfremde Berufserfahrung (Dauer, Jahre)</source><target>Doświadczenie zawodowe niezwiązane z wykształceniem zawodowym (okres trwania, lata) </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsfremdeberufserfahrung2"><source>Ausbildungsfremde Berufserfahrung (Dauer, Jahre)</source><target>Doświadczenie zawodowe niezwiązane z wykształceniem zawodowym (okres trwania, lata) </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussart"><source>Abschlussart</source><target>Rodzaj świadectwa</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsland"><source>In welchem Land?</source><target>W jakim Państwie?</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.dauer_berufsausbildung"><source>Dauer der Berufsausbildung oder des Studiums</source><target>Okres trwania kształcenia zawodowego lub studiów </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussjahr"><source>Abschlussjahr</source><target>Rok ukończenia </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsinstitution"><source>Ausbildungsinstitution</source><target>Instytucja kształcąca </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsort"><source>Ausbildungsort</source><target>Miejscowość, w której zdobyto wykształcenie</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschluss"><source>Name des Abschlusses</source><target>Nazwa dyplomu</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutsch_abschlusstitel"><source>Deutsch Abschlusstitel</source><target>Niemiecki tytuł dyplomu </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutscher_referenzberuf"><source>Möglicher deutscher Beruf</source><target>Możliwy niemiecki zawód porównywalny</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.berufserfahrung"><source>Berufserfahrung im erlernten Beruf (Dauer, Jahre)</source><target>Doświadczenie zawodowe w wyuczonym zawodzie (okres trwania, lata) </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.original_dokumente_abschluss"><source>Liegen die Original-Dokumente des Abschlusses vor?</source><target>Posiada Pan/Pani oryginale dyplomy? </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wunschberuf"><source>Wunschberuf (wenn abweichend von Ausbildungsberuf)?</source><target>Pożądany zawód (jeżeli inny niż wyuczony zawód)</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdaten"><source>Einwilligung Datenübermittlung</source><target>Zgoda na przekazanie danych</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungtext"><source><![CDATA[
+				Ich bin damit einverstanden, dass meine Daten zum Zweck der Bearbeitung meiner Anfrage genutzt werden.
+				Die <a href="https://www.iq-netzwerk-nrw.de/1/datenschutz-und-einwilligung/" target="_blank">Informationen zur Datenverarbeitung</a> habe ich zur Kenntnis genommen.]]>
+				</source><target><![CDATA[Wyrażam zgodę na wykorzystanie moich danych w celach opracowania mojego zapytania.  <a href="https://www.iq-netzwerk-nrw.de/1/datenschutz-und-einwilligung/" target="_blank">Informationen zur Datenverarbeitung</a> przyjmuję do wiadomości]]></target></trans-unit>
+<trans-unit id="ja"><source>Ja</source><target>Tak</target></trans-unit>
+<trans-unit id="nein"><source>Nein</source><target>Nie</target></trans-unit>
+<trans-unit id="ka"><source>k.A.</source><target>Brak wpisu </target></trans-unit>
+<trans-unit id="maennlich"><source>männlich</source><target>Mężczyzna</target></trans-unit>
+<trans-unit id="weiblich"><source>weiblich</source><target>Kobieta</target></trans-unit>
+<trans-unit id="divers"><source>divers</source><target>Divers </target></trans-unit>
+<trans-unit id="weiter"><source>Weiter</source><target>dalej</target></trans-unit>
+<trans-unit id="zurueck"><source>Zurück</source><target>wstecz</target></trans-unit>
+<trans-unit id="abbruch"><source>Abbruch</source><target>anuluj</target></trans-unit>
+<trans-unit id="fragebogen"><source>Fragebogen Seite</source><target>Strona formularza</target></trans-unit>
+<trans-unit id="persdaten"><source>Persönliche Daten</source><target>Dane osobowe </target></trans-unit>
+<trans-unit id="deutschkenntnisse"><source>Deutsch als Muttersprache?</source><target>Niemiecki jako język ojczysty?  </target></trans-unit>
+<trans-unit id="abschlussartoption1"><source>Ausbildungsabschluss</source><target>Tytuł wykształcenia zawodowego</target></trans-unit>
+<trans-unit id="abschlussartoption2"><source>Universitätsabschluss</source><target>Dyplom ukończenia szkoły wyższej </target></trans-unit>
+<trans-unit id="auslaendischerabschluss"><source>Ausländischer Abschluss</source><target>Zagraniczny dyplom </target></trans-unit>
+<trans-unit id="beruflichesituation"><source>Berufliche Situation</source><target>Sytuacja zawodowa </target></trans-unit>
+<trans-unit id="datenjobcenterarbeitsagentur"><source>Daten Jobcenter/Agentur für Arbeit</source><target>Dane Jobcenter/ Urzędu Pracy</target></trans-unit>
+<trans-unit id="fruehereantraege"><source>Frühere Anträge</source><target>Wcześniejsze wnioski </target></trans-unit>
+<trans-unit id="angabenzurberatungsstelle"><source>Angaben zur Beratungsstelle</source><target>Informacje odnośnie poradni</target></trans-unit>
+<trans-unit id="beratungsprozess"><source>Beratungsprozess</source><target>Proces konsultacji</target></trans-unit>
+<trans-unit id="ergebnisderberatung"><source>Ergebnis der Beratung</source><target>Wynik konsultacji </target></trans-unit>
+<trans-unit id="falldokumentation"><source>Falldokumentation</source><target>Dokumentacja sprawy</target></trans-unit>
+<trans-unit id="qualifizierungsberatung"><source>Qualifizierungsberatung</source><target>Konsultacja odnośnie dodatkowych kwalifikacji </target></trans-unit>
+<trans-unit id="berater"><source>Berater*in</source><target>Doradca/ doradczyni </target></trans-unit>
+<trans-unit id="dokumente"><source>Dokumente</source><target>Dokumenty</target></trans-unit>
+<trans-unit id="dokumenteintro"><source><![CDATA[
+				Bitte laden Sie folgende Dokumente als PDF-Datei hoch (insgesamt maximal 30 MB): <br>
+				- Ihre Original-Abschlüsse und Übersetzungen<br>
+				- Ihren Aufenthaltstitel; Lebenslauf; Bescheid
+				<br><h3>Hochgeladene Dokumente:</h3>
+				]]></source><target><![CDATA[Proszę przesłać następujące dokumenty w formacie PDF 
+- Oryginalne dyplomy i ich tłumaczenia
+- uprawnienie do pobytu w kraju; CV; Decyzje
+    <br><h3>załączone dokumenty:</h3>]]></target></trans-unit>
+<trans-unit id="dokumentauswaehlen"><source>Dokument auswählen</source><target>Wybierz dokument</target></trans-unit>
+<trans-unit id="dokumenthochladen"><source>Dokument hochladen</source><target>Załącz dokument</target></trans-unit>
+<trans-unit id="speicherplatzhinweis"><source>Speicherplatz für Dokumente verfügbar:</source><target>Miejsce na dysku na dostępne dokumenty:</target></trans-unit>
+<trans-unit id="loeschen"><source>Löschen</source><target>Usuń</target></trans-unit>
+<trans-unit id="hochladen"><source>Jetzt hochladen</source><target>Załącz </target></trans-unit>
+<trans-unit id="absenden"><source>Jetzt absenden</source><target>Wyślij</target></trans-unit>
+<trans-unit id="hinweisdatenpruefen"><source>Bitte überprüfen Sie Ihre Daten an dieser Stelle. Sofern alle Daten korrekt sind, klicken Sie abschließend auf den 'Absenden'-Button.</source><target>Proszę sprawdzić swoje dane. Jeśli wszystkie dane są poprawne, Proszę kliknąć na „prześlij”. </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_tnseite1.geschlecht"><source>Geschlecht</source><target>Płeć</target></trans-unit>
+<trans-unit id="infoNachname"><source>Der Nachname entspricht Ihrem Familiennamen. Bitte geben Sie diesen hier an.</source><target>Nazwisko odpowiada nazwisku rodzinnemu. Proszę go tutaj wpisać. </target></trans-unit>
+<trans-unit id="infoVorname"><source>Der Vorname ist Ihr erster Name vor dem Nachnamen und entspricht meistens Ihrem Rufnamen. Bitte geben Sie diesen hier an.</source><target>Imię to piersze imię, które występuje przed nazwiskiem i jest najczęściej urzywane. Proszę je tutaj wpisać. </target></trans-unit>
+<trans-unit id="infoGeburtsland"><source>Das Geburtsland entspricht dem Land, in dem Sie geboren wurden. Bitte geben Sie dieses hier an.</source><target>Kraj urodzenia to kraj, w którym się Pan/Pani urodził/a. Proszę go tutaj wpisać. </target></trans-unit>
+<trans-unit id="infoStaatsangehoerigkeit"><source>Sofern Sie zwei verschiedene Staatsangehörigkeiten/Nationalitäten haben, geben Sie bitte beide an.</source><target>Jeżeli posiada Pan/Pani różne obywatelstwa, Proszę tutaj wpisać obydwa. </target></trans-unit>
+<trans-unit id="infoJahrEinreise"><source>Bitte geben Sie das Jahr an, in dem Sie nach Deutschland eingereist sind.</source><target>Proszę podać rok, w którym przyjechał/a Pan/i do Niemiec. </target></trans-unit>
+<trans-unit id="infoWohnsitzinDeutschlandNein"><source>Bitte geben Sie an, in welchem Land Sie aktuell leben.</source><target>Proszę podać, w jakim Państwie Pan/i aktualnie mieszka. </target></trans-unit>
+<trans-unit id="infoBundesland"><source>Bitte wählen Sie das Bundesland, in dem Sie aktuell leben.</source><target>Proszę podać w jakim kraju związkowym Pan/i aktualnie mieszka. </target></trans-unit>
+<trans-unit id="infoAbschluss"><source>Ein Ausbildungsabschluss ist ein Abschluss einer beruflichen Ausbildung. Ein Universitätsabschluss ist ein akademischer Abschluss der nach einem Studium an einer Hochschule/Universität erworben wurde. Das Studium hat in der Regel mindestens 3 Jahre gedauert. Bitte geben Sie an welchen Abschluss Sie erworben haben.</source><target>Tytuł wykształcenia zawodowego otrzymuje się po ukończeniu kształcenia zawodowego. Dyplom ukończenia szkoły wyższej otrzymuje się po ukończeniu studiów w szkole wyższej lub na uniwersytecie. Studia wyższe trwają zazwyczaj 3 lata. Proszę podać posiadany tytuł. </target></trans-unit>
+<trans-unit id="infoAusbildungsort"><source>Bitte geben Sie die Stadt an, in der Sie Ihren Abschluss gemacht haben.</source><target>Proszę podać miejscowoć, w której Pan/Pani zdobył/a wykształcenie </target></trans-unit>
+<trans-unit id="infoBerufserfahrung"><source>Bitte geben Sie an, wie lange Sie schon im Beruf der Ausbildung/des Studiums gearbeitet haben (Monate/Jahre).</source><target>Proszę podać jak długo pracował/a Pan/Pani w wyuczonym zawodzie (miesiące, lata)</target></trans-unit>
+<trans-unit id="infoAusbildungsfremdeBerufserfahrung"><source>“Ausbildungsfremd“ bedeutet, dass Sie in einem anderen Beruf als dem der Ausbildung/des Studiums gearbeitet haben. Bitte geben Sie an was das war und wie lange Sie gearbeitet haben (Monate/Jahre).</source><target>"Niezwiązane z wykształceniem zawodowym" oznacza, że pracował/a Pan/Pani w innym niż wyuczonym zawodzie. Proszę podać co to było i jak długo Pan/Pani pracował/a (miesiące/lata).</target></trans-unit>
+<trans-unit id="infodeutscherBeruf"><source>Falls bekannt, geben Sie zu Ihrem Abschluss die deutsche Bezeichnung des Berufes an.</source><target>Proszę podać niemiecką nazwe zawodu odnoszącą się do tytułu dyplomu, jeżeli jest znana. </target></trans-unit>
+<trans-unit id="infoBezug"><source>Von welcher Institution/Behörde/Amt erhalten Sie aktuell Geld für Ihren Lebensunterhalt? Bitte geben Sie diese Institution/Behörde/Amt hier an.</source><target>Od jakiej instytucji/jakiego urzędu otrzymuje Pan/Pani aktualnie świadczenia na utrzymanie. Proszę podać nazwę instytucji/ urzędu. </target></trans-unit>
+<trans-unit id="infoBezugsart"><source><![CDATA[Welche Art des Bezugs (Geld für den Lebensunterhalt) erhalten Sie aktuell?
+				SGB II: Grundsicherung für Arbeitssuchende (Hartz IV)
+				SGB III: Leistungen aus der Arbeitslosenversicherung und Arbeitsförderung
+				Asylbewerberleistungsbezug: Grundsicherung für Asylbewerber, Geduldete und Ausländer, die vollziehbar zur Ausreise verpflichtet sind.
+				Bitte geben Sie eine der Bezugsarten an.]]></source><target><![CDATA[W jakiej formie otrzymuje Pan/Pani świadczenia na utrzymanie?
+SGB II: Podstawowe zabezpieczenie dla osób poszukujących pracy (Hartz IV) 
+SGB ​​III: Świadczenia z ubezpieczenia na wypadek bezrobocia i wspomagania zatrudnienia. 
+Świadczenia dla osób ubiegających się o azyl: Podstawowe świadczenia dla osób ubiegających się o azyl, osób tolerowanych i cudzoziemców, na których ciąży obowiązek opuszczenia kraju.
+Proszę podać rodzaj świadczeń.]]></target></trans-unit>
+<trans-unit id="infofruehererAntrag"><source>Bitte geben Sie an, ob Sie in der Vergangenheit bereits schon einmal einen Antrag zur Anerkennung Ihres Abschlusses gestellt haben.</source><target>Proszę podać, czy w przeszłości składał/a już Pan/Pani wniosek o uznanie kwalifikacji zawodowych.</target></trans-unit>
+<trans-unit id="infoInstitution"><source>Sofern Sie bereits einen Antrag auf Anerkennung Ihres Abschlusses gestellt haben, geben Sie bitte an dieser Stelle an, bei welcher Institution/Behörde und ggf. in welchem Land Sie dies getan haben.</source><target>Jeżeli złożył/a Pan/Pani już wniosek o uznanie kwalifikacji zawodowych, prosimy o wskazanie w tym miejscu instytucji/organu oraz kraju, w którym to nastąpiło.</target></trans-unit>
+<trans-unit id="headabschlusslinks"><source><![CDATA[ &nbsp; ]]></source><target><![CDATA[	 &nbsp; ]]></target></trans-unit>
+<trans-unit id="headabschlussrechts"><source>weiterer Abschluss</source><target>Inne dyplomy </target></trans-unit>
+<trans-unit id="headabschlussrechtsausblenden"><source>Abschluss ausblenden</source><target>Ukryj dyplom </target></trans-unit>
+<trans-unit id="anredemail"><source>Guten Tag</source><target>Dzień dobry</target></trans-unit>
+<trans-unit id="mailtext"><source><![CDATA[
+					 <p>vielen Dank für Ihre Informationen.</p> <p>&nbsp;</p> <p>Sie sind jetzt zur Beratung angemeldet. Wir setzen uns mit Ihnen in Verbindung, sobald Sie an der Reihe sind. <br><br>Die Beratung erfolgt nach Wunsch über E-Mail, Telefon oder Videochat.</p> <p>Wir bemühen uns, Ihre Anfrage innerhalb von 6 Wochen zu bearbeiten. Wir bitten um Ihr Verständnis und Ihre Geduld.</p><p>&nbsp;</p> <p>Mit freundlichen Grüßen</p>Ihre Mobile IQ Anerkennungs- und Qualifizierungsberatung
+					 ]]></source><target><![CDATA[<p>Dziękujemy za informacje.</p> <p>&nbsp;</p> <p>Jest Pan/Pani teraz zarejestrowany/a do konsultacji. Skontaktujemy się z Panem/Panią jak tylko nadejdzie Pana/Pani kolej. <br><br>Konsultacje będą odbywać się za pośrednictwem poczty elektronicznej, telefonu lub czatu wideo zgodnie z życzeniem.</p> <p>Dążymy do rozpatrzenia wniosku w ciągu 6 tygodni. Prosimy o wyrozumiałość i cierpliwość.</p><p>&nbsp;</p> <p>Pozdrawiamy</p>Państwa Mobilny Serwis doradztwa z zakresu uznawania kwalifikacji zawodowych oraz dokształcania IQ.]]></target></trans-unit>
+<trans-unit id="subject"><source>Ihre Anmeldung zur Anerkennungserstberatung NRW</source><target>Państwa rejestracja konsultacji w sprawie uznawania kwalifikacji zawodowych</target></trans-unit>
+<trans-unit id="confirmlinktext"><source>
+					 Bestätigung der Anmeldung - Confirm registration
+					 </source><target>Potwierdzenie rejestracji </target></trans-unit>
+<trans-unit id="confirmmailtext1"><source><![CDATA[
+					 <p>Liebe*r Ratsuchende*r,</p> <p>&nbsp;</p> <p>bestätigen Sie Ihre Anmeldung zur Anerkennungserstberatung bitte hier:</p>
+					 ]]></source><target><![CDATA[<p>Drogdzy Państwo,</p> <p>&nbsp;</p> <p>Proszę potwierdzić rejestrację na doradztwo w zakresie uznawania kwalifikacji zawodowych tutaj: <p>.]]></target></trans-unit>
+<trans-unit id="confirmmailtext2"><source><![CDATA[
+					 <p>Mit freundlichem Gruß</p> <p>Ihre Mobile IQ Anerkennungs- und Qualifizierungsberatung</p>
+					 ]]></source><target><![CDATA[<p>Pozdrawiamy</p>Państwa Mobilny Serwis doradztwa z zakresu uznawania kwalifikacji zawodowych oraz dokształcania IQ.]]></target></trans-unit>
+<trans-unit id="confirmsubject"><source>Bitte bestätigen Sie Ihre Anmeldung zur Anerkennungserstberatung NRW</source><target>Proszę potwierdzić rejestrację na konsultację w NRW dotyczącą uznania kwalifikacji </target></trans-unit>
+<trans-unit id="wurdebereitsberaten"><source>Wurde bereits beraten, Ja</source><target>Konsultacja została już przeprowadzona, tak</target></trans-unit>
+<trans-unit id="erstberatungfertig"><source>Die Erstberatung ist beendet</source><target>Pierwsza konsultacja jest zakończona</target></trans-unit>
+<trans-unit id="anmeldedatum"><source>Anmeldedatum</source><target>Data rejestracji</target></trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -1,0 +1,58 @@
+<T3DataStructure>
+  <sheets>
+    <sDEF>
+      <ROOT>
+        <TCEforms>
+          <sheetTitle>Optionen</sheetTitle>
+        </TCEforms>
+        <type>array</type>
+        <el>
+          <settings.modtyp>
+            <TCEforms>
+              <label>Typ</label>
+				<config>
+  				<type>select</type>
+  				<renderType>selectSingle</renderType>
+  				<items type="array">
+			  	<numIndex index="0" type="array">
+      				<numIndex index="0">Übersicht</numIndex>
+     				<numIndex index="1">uebersicht</numIndex>
+   				</numIndex>
+    			<numIndex index="1" type="array">
+      				<numIndex index="0">Angemeldet</numIndex>
+     				<numIndex index="1">angemeldet</numIndex>
+   				</numIndex>
+   				<numIndex index="2" type="array">
+      				<numIndex index="0">Erstberatung</numIndex>
+     				<numIndex index="1">erstberatung</numIndex>
+   				</numIndex>
+   				<numIndex index="3" type="array">
+      				<numIndex index="0">NIQ Erfassung</numIndex>
+      				<numIndex index="1">niqerfassung</numIndex>
+   				</numIndex>
+				<numIndex index="4" type="array">
+      				<numIndex index="0">Archiv</numIndex>
+     				<numIndex index="1">archiv</numIndex>
+   				</numIndex>
+   				<numIndex index="5" type="array">
+      				<numIndex index="0">Export</numIndex>
+     				<numIndex index="1">export</numIndex>
+   				</numIndex>		  
+   				<numIndex index="6" type="array">
+      				<numIndex index="0">Berater</numIndex>
+     				<numIndex index="1">berater</numIndex>
+   				</numIndex>		  
+   				<numIndex index="7" type="array">
+      				<numIndex index="0">Gelöscht</numIndex>
+     				<numIndex index="1">deleted</numIndex>
+   				</numIndex>		  
+   						  	  
+   				</items>
+				</config>
+            </TCEforms>
+          </settings.modtyp>
+        </el>
+      </ROOT>
+    </sDEF>
+  </sheets>
+</T3DataStructure>

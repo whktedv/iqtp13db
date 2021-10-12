@@ -1,0 +1,27 @@
+
+<f:layout name="Default" />
+<f:section name="HeaderAssets">
+  		<link rel="stylesheet" href="{f:uri.resource(path: 'CSS/customtp13dbadmin.css')}"/>  		
+</f:section>
+
+<f:section name="main">
+<h1>Erstberatung anzeigen</h1>
+
+<f:flashMessages />
+
+<f:link.action class="linkbuttons" action="edit" arguments="{beratung:beratung, calleraction: calleraction, callercontroller : callercontroller}">Erstberatung</f:link.action>
+<f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}">Zurück zur Liste</f:link.action>
+
+<f:render partial="Beratung/Properties" arguments="{_all}" />
+
+<f:render partial="Folgekontakte4List" arguments="{folgekontakte : folgekontakte, beratung : beratung, calleraction: calleraction, callercontroller : callercontroller}" />
+<br><br>
+<f:link.action class="linkbuttons" action="edit" arguments="{beratung:beratung, calleraction: calleraction, callercontroller : callercontroller}">Erstberatung</f:link.action>
+<f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}">Zurück zur Liste</f:link.action>
+<hr>
+
+<h1>Anmeldedaten</h1>
+<f:render partial="Teilnehmer/Properties" arguments="{teilnehmer:teilnehmer, historie : historie}" />
+<f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}">Zurück zur Liste</f:link.action>
+
+</f:section> 

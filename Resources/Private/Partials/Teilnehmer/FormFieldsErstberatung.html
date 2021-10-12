@@ -1,0 +1,459 @@
+<div class="fframe">
+		<div class="tp13_formdivwebapp">
+			<label for="einwilligung">
+				Einwilligung&nbsp;<f:form.checkbox id="ein1" property="einwilligung" value="1" />
+			</label>				
+				<span class="einwilligungtext">Dem Ratsuchenden ggf. die <a href="https://www.iq-netzwerk-nrw.de/1/datenschutz-und-einwilligung/" target="_blank">Informationen zur Datenverarbeitung</a> vorlesen.</span>			
+		</div>		
+		<div class="tp13_formdivwebapp">
+			<label for="schonberaten">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.schonberaten" />
+			</label>
+			<div class="tp13_options">
+				<div class="tp13_formdivwebappradio"><f:form.radio id="schonberaten1" property="schonberaten" value="1" /><span class="abschlussradiotext"><f:translate key="ja" /></span></div>
+				<div class="tp13_formdivwebappradio"><f:form.radio id="schonberaten2" property="schonberaten" value="2" /><span class="abschlussradiotext"><f:translate key="nein" /></span></div>
+			</div>
+		</div>
+		<div id="divschonberatenvon" class="tp13_formdivwebapp">
+			<label for="schonberatenvon">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.schonberatenvon" />
+			</label>
+				<f:form.textfield id="txtschonberatenvon" property="schonberatenvon" />
+		</div>
+</div>
+<div class="fframe"><h2><f:translate key="persdaten" /></h2>
+		<div class="tp13_formdivwebapp">
+			<label for="nachname">
+				<span id="infolab" title="<f:translate key='infoNachname' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" />
+			</label>
+				<f:form.textfield  property="nachname" />
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="vorname">
+				<span id="infolab" title="<f:translate key='infoVorname' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" />
+			</label>
+				<f:form.textfield property="vorname" />
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="plz">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.plz" />/<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ort" />
+			</label>
+				<f:form.textfield class="plztextfield" property="plz" /><f:form.textfield class="orttextfield" property="ort" />
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="email">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.email" />
+			</label>
+				<f:form.textfield property="email" />
+		</div>	
+		<div class="tp13_formdivwebapp">
+			<label for="email">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.confirmemail" />
+			</label>			
+				<f:form.textfield property="confirmemail" />
+		</div>		
+		<div class="tp13_formdivwebapp">
+			<label for="telefon">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.telefon" />
+			</label>
+				<f:form.textfield  property="telefon" />
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="lebensalter">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.lebensalter" />
+			</label>
+				<f:form.textfield class="plztextfield" property="lebensalter" />
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="geburtsland">
+				<span id="infolab" title="<f:translate key='infoGeburtsland' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geburtsland" />
+			</label>
+				<f:form.textfield  property="geburtsland" />
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label class="tp13_options" for="geschlecht">
+			<f:translate key="tx_iqtp13db_domain_model_teilnehmer.geschlecht" />
+			</label>
+			<div class="tp13_options">
+				<div class="tp13_formdivwebappradio"><f:form.radio property="geschlecht" value="2"/><span class="abschlussradiotext"><f:translate key="maennlich" /></span></div>
+				<div class="tp13_formdivwebappradio"><f:form.radio property="geschlecht" value="1"/><span class="abschlussradiotext"><f:translate key="weiblich" /></span></div>
+				<div class="tp13_formdivwebappradio"><f:form.radio property="geschlecht" value="3"/><span class="abschlussradiotext"><f:translate key="divers" /></span></div>
+			</div>
+			<div style="clear: both;"></div>
+		</div>
+		
+		<div class="tp13_formdivwebapp">
+			<label for="ersteStaatsangehoerigkeit">
+				<span id="infolab" title="<f:translate key='infoStaatsangehoerigkeit' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.erste_staatsangehoerigkeit" />
+			</label>
+			<f:form.textfield  property="ersteStaatsangehoerigkeit" />
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="zweiteStaatsangehoerigkeit">
+				<span id="infolab" title="<f:translate key='infoStaatsangehoerigkeit' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.zweite_staatsangehoerigkeit" />
+			</label>
+				<f:form.textfield  property="zweiteStaatsangehoerigkeit" />
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="einreisejahr">
+				<span id="infolab" title="<f:translate key='infoJahrEinreise' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.einreisejahr" />
+			</label>
+				<f:form.textfield size="5" property="einreisejahr" />
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label class="tp13_options" for="wohnsitzDeutschland">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_deutschland" />
+			</label>
+			<div class="tp13_options">
+				<div class="tp13_formdivwebappradio"><f:form.radio id="checkwohnsitzDeutschland1" property="wohnsitzDeutschland" value="1" /><span class="abschlussradiotext"><f:translate key="ja" /></span></div>
+				<div class="tp13_formdivwebappradio"><f:form.radio id="checkwohnsitzDeutschland0" property="wohnsitzDeutschland" value="2" /><span class="abschlussradiotext"><f:translate key="nein" /></span></div>
+			</div>
+			<div style="clear: both;"></div>
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label id="labelwohnsitzNeinIn" for="wohnsitzNeinIn">
+				<span id="infolab" title="<f:translate key='infoWohnsitzinDeutschlandNein' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_nein_in" />
+			</label>
+				<f:form.textfield  id="inputwohnsitzNeinIn" property="wohnsitzNeinIn" />
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label id="labelortskraftafghanistan" for="ortskraftafghanistan">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ortskraftafghanistan" />
+			</label>
+				<f:form.checkbox id="ortskraftafghanistan1" property="ortskraftafghanistan" value="1" />
+		</div>
+		<div class="tp13_formdivwebapp" id="divaufenthaltsstatus">
+			<label for="aufenthaltsstatus" class="tp13_options">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus" />
+			</label>
+			<div class="tp13_formdivwebappmultiradio">
+			<span class="togglebutton" id="toggleallaufenthaltsstatus">Alle ein-/ausblenden</span>
+				<f:for each="{settings.aufenthaltsstatus}" as="text" key="wert" iteration="iter">
+					<div class="tp13_formdivwebappradio" id="divaufenthaltsstatusradio{iter.index}">	
+						<f:form.radio property="aufenthaltsstatus" value="{wert}" checked="{teilnehmer.aufenthaltsstatus} == {wert}" id="aufenthaltsstatusradio{iter.index}"/><span class="abschlussradiotext">{text}</span>
+					</div>
+				</f:for>
+			</div>			
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="aufenthaltsstatusfreitext">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatusfreitext" />
+			</label>
+				<f:form.textarea property="aufenthaltsstatusfreitext" rows="3" cols="100" />
+		</div>		
+</div>
+
+<div class="fframe"><h2><f:translate key="deutschkenntnisse" /></h2>
+		<div class="tp13_formdivwebapp">
+			<label for="deutschkenntnisse" class="tp13_options">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse" />
+			</label>
+			<div class="tp13_options">
+				<div class="tp13_formdivwebappradio"><f:form.radio property="deutschkenntnisse" value="1" /><span class="abschlussradiotext"><f:translate key="ja" /></span></div>
+				<div class="tp13_formdivwebappradio"><f:form.radio property="deutschkenntnisse" value="2" /><span class="abschlussradiotext"><f:translate key="nein" /></span></div>
+				<div style="clear: both;"></div>
+			</div>
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label id="labelzertsprachniveau" for="zertifikatSprachniveau">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau" />
+			</label>
+				<f:form.select property="zertifikatSprachniveau" options="{settings.zertifikatlevel}" optionValueField="key" optionLabelField="value" />
+		</div>
+</div>
+
+<div class="fframe"><h2><f:translate key="auslaendischerabschluss" /></h2>
+		<div class="tp13_formdivwebapp">
+			<label for="abschlussart" class="tp13_options">
+				<span id="infolab" title="<f:translate key='infoAbschluss' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.abschlussart" />
+			</label>
+			<div class="tp13_formdivwebappmultiradio">			
+				<div class="tp13_formdivwebappradio"><f:form.checkbox property="abschlussart1" value="1"  multiple="1"/>{settings.abschlussart.1}</div>
+				<div class="tp13_formdivwebappradio"><f:form.checkbox property="abschlussart1" value="2"  multiple="1"/>{settings.abschlussart.2}</div>
+			</div>
+			<div class="tp13_formdivwebappmultiradio">			
+				<div class="tp13_formdivwebappradio"><f:form.checkbox property="abschlussart2" value="1"  multiple="1"/>{settings.abschlussart.1}</div>
+				<div class="tp13_formdivwebappradio"><f:form.checkbox property="abschlussart2" value="2"  multiple="1"/>{settings.abschlussart.2}</div>
+			</div>
+		</div>
+		<div class="tp13_formdivwebapp">
+				<label for="erwerbsland1">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.erwerbsland" />
+			</label>
+				<f:form.textfield class="smallertextfield" property="erwerbsland1" />
+				<f:form.textfield class="smallertextfield" property="erwerbsland2" />
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="dauerBerufsausbildung">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.dauer_berufsausbildung" />
+			</label>
+				<f:form.textfield class="smallertextfield" property="dauerBerufsausbildung1" />
+				<f:form.textfield class="smallertextfield" property="dauerBerufsausbildung2" />
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="abschlussjahr">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.abschlussjahr" />
+			</label>
+				<f:form.textfield class="smallertextfield" property="abschlussjahr1" />
+				<f:form.textfield class="smallertextfield" property="abschlussjahr2" />
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="ausbildungsinstitution">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ausbildungsinstitution" />
+			</label>
+				<f:form.textfield class="smallertextfield" property="ausbildungsinstitution1" />
+				<f:form.textfield class="smallertextfield" property="ausbildungsinstitution2" />
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="ausbildungsort">
+				<span id="infolab" title="<f:translate key='infoAusbildungsort' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.ausbildungsort" />
+			</label>
+				<f:form.textfield class="smallertextfield" property="ausbildungsort1" />
+				<f:form.textfield class="smallertextfield" property="ausbildungsort2" />
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="originaltitelAbschluss">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.abschluss" />
+			</label>
+				<f:form.textfield class="smallertextfield" property="abschluss1" />
+				<f:form.textfield class="smallertextfield" property="abschluss2" />
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="deutscherReferenzberuf">
+				<span id="infolab" title="<f:translate key='infodeutscherBeruf' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.deutscher_referenzberuf" />
+			</label>
+				<f:form.textfield class="smallertextfield" property="deutscherReferenzberuf1" />
+				<f:form.textfield class="smallertextfield" property="deutscherReferenzberuf2" />
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label id="labelberufserfahrung" for="berufserfahrung">
+				<span id="infolab" title="<f:translate key='infoBerufserfahrung' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.berufserfahrung" />
+			</label>
+				<f:form.textfield class="smallertextfield" id="inputberufserfahrung" property="berufserfahrung1" />
+				<f:form.textfield class="smallertextfield" id="inputberufserfahrung" property="berufserfahrung2" />
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label id="labelausbildungsfremdeberufserfahrung1" for="ausbildungsfremdeberufserfahrung1">
+				<span id="infolab" title="<f:translate key='infoAusbildungsfremdeBerufserfahrung' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.ausbildungsfremdeberufserfahrung1" />
+			</label>
+				<f:form.textfield class="smallertextfield" id="inputausbildungsfremdeberufserfahrung1" property="ausbildungsfremdeberufserfahrung1" />
+				<f:form.textfield class="smallertextfield" id="inputausbildungsfremdeberufserfahrung1" property="ausbildungsfremdeberufserfahrung2" />
+		</div>	
+</div>
+
+<div class="fframe"><h2><f:translate key="beruflichesituation" /></h2>
+		<div class="tp13_formdivwebapp">
+			<label for="erwerbsstatus" class="tp13_options">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.erwerbsstatus" /></span>
+			</label>			
+			<div class="tp13_formdivwebappmultiradio">				
+				<span class="togglebutton" id="toggleallerwerbsstatus">Alle ein-/ausblenden</span>
+				<f:for each="{settings.erwerbsstatus}" as="text" key="wert" iteration="iter">
+					<div class="tp13_formdivwebappradio" id="diverwerbsstatusradio{iter.index}">
+						<f:form.radio property="erwerbsstatus" value="{wert}" checked="{teilnehmer.erwerbsstatus} == {wert}" id="erwerbsstatusradio{iter.index}"/><span class="abschlussradiotext">{text}</span>
+					</div>
+				</f:for>
+			</div>				
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="leistungsbezugjanein" class="tp13_options">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.leistungsbezugjanein" />
+			</label>
+			<div class="tp13_formdivwebappradio"><f:form.radio id="optleistungsbezugjanein1" property="leistungsbezugjanein" value="1" /><span class="abschlussradiotext"><f:translate key="ja" /></span></div>
+			<div class="tp13_formdivwebappradio"><f:form.radio id="optleistungsbezugjanein2" property="leistungsbezugjanein" value="2" /><span class="abschlussradiotext"><f:translate key="nein" /></span></div>
+			<div class="tp13_formdivwebappradio"><f:form.radio id="optleistungsbezugjanein3" property="leistungsbezugjanein" value="3" /><span class="abschlussradiotext"><f:translate key="ka" /></span></div>
+		</div>		
+		<div class="tp13_formdivwebapp" id="divleistungsbezug">
+			<label for="leistungsbezug" class="tp13_options">
+				<span id="infolab" title="<f:translate key='infoBezugsart' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.leistungsbezug" />
+			</label>
+			<div class="tp13_formdivwebappmultiradio">
+				<f:for each="{settings.leistungsbezug}" as="text" key="wert">
+					<div class="tp13_formdivwebappradio"><f:form.radio property="leistungsbezug" value="{wert}" checked="{teilnehmer.leistungsbezug} == {wert}" /><span class="abschlussradiotext">{text}</span></div>
+				</f:for>
+			</div>
+		</div>
+		<div class="tp13_formdivwebapp" id="einwdatenanAA">
+			<label for="einwilligungdatenanAA" class="tp13_options">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_a" />
+			</label>
+			<div class="tp13_formdivwebappradio"><f:form.radio id="opteinwilligungdatenanAA1" property="einwilligungdatenanAA" value="1" /><span class="abschlussradiotext"><f:translate key="ja" /></span></div>
+			<div class="tp13_formdivwebappradio"><f:form.radio id="opteinwilligungdatenanAA2" property="einwilligungdatenanAA" value="2" /><span class="abschlussradiotext"><f:translate key="nein" /></span></div>
+		</div>
+</div>
+
+<div class="fframe" id="datenAA"><h2><f:translate key="datenjobcenterarbeitsagentur" /></h2>
+		<div class="tp13_formdivwebapp">
+			<label for="einwilligungdatenanAAdatum">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_adatum" />
+			</label>
+				<f:form.textfield class="datumtextfield" property="einwilligungdatenanAAdatum" value="{teilnehmer.einwilligungdatenanAAdatum}" id="datepicker1" />				
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="einwilligungdatenanAAmedium">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_amedium" />
+			</label>
+			<div class="tp13_formdivwebappmultiradio">
+				<div class="tp13_formdivwebappradio"><f:form.checkbox property="einwilligungdatenanAAmedium" value="1" multiple="1"/>{settings.einwilligungaamedium.1}</div>
+				<div class="tp13_formdivwebappradio"><f:form.checkbox property="einwilligungdatenanAAmedium" value="2" multiple="1"/>{settings.einwilligungaamedium.2}</div>
+				<div class="tp13_formdivwebappradio"><f:form.checkbox property="einwilligungdatenanAAmedium" value="3" multiple="1"/>{settings.einwilligungaamedium.3}</div>
+			</div>				
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="nameBeraterAA">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.name_berater_a_a" />
+			</label>
+				<f:form.textfield property="nameBeraterAA" />
+		</div>		
+		<div class="tp13_formdivwebapp">
+			<label for="nameBeraterAA">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.kontakt_berater_a_a" />
+			</label>
+				<f:form.textfield property="kontaktBeraterAA" />
+		</div>		
+		<div class="tp13_formdivwebapp">
+			<label for="kundennummerAA">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.kundennummer_a_a" />
+			</label>
+				<f:form.textfield property="kundennummerAA" />
+		</div>				
+</div>
+
+  <div class="fframe"><h2>Datenweitergabe anerkennende Stelle</h2>
+    <div class="tp13_formdivwebapp">
+      <label for="einwAnerkstelle" class="tp13_options">
+        <f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstelle" />
+        </label>
+        <div class="tp13_formdivwebappradio"><f:form.radio id="opteinwAnerkstelle1" property="einwAnerkstelle" value="1" /><span class="abschlussradiotext"><f:translate key="ja" /></span></div>
+        <div class="tp13_formdivwebappradio"><f:form.radio id="opteinwAnerkstelle2" property="einwAnerkstelle" value="2" /><span class="abschlussradiotext"><f:translate key="nein" /></span></div>
+        </div>
+  		<div class="tp13_formdivwebapp">
+  			<label for="einwAnerkstelledatum">
+  				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstelledatum" />
+  			</label>
+  				<f:form.textfield class="datumtextfield" property="einwAnerkstelledatum" value="{teilnehmer.einwAnerkstelledatum}" id="datepicker3" />				
+  		</div>
+  		<div class="tp13_formdivwebapp">
+  			<label for="einwAnerkstellemedium">
+  				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstellemedium" />
+  			</label>
+  			<div class="tp13_formdivwebappmultiradio">
+  				<div class="tp13_formdivwebappradio"><f:form.checkbox property="einwAnerkstellemedium" value="1" multiple="1"/>{settings.einwilligungaamedium.1}</div>
+  				<div class="tp13_formdivwebappradio"><f:form.checkbox property="einwAnerkstellemedium" value="2" multiple="1"/>{settings.einwilligungaamedium.2}</div>
+  				<div class="tp13_formdivwebappradio"><f:form.checkbox property="einwAnerkstellemedium" value="3" multiple="1"/>{settings.einwilligungaamedium.3}</div>
+  			</div>				
+  		</div>
+  		<div class="tp13_formdivwebapp">
+  			<label for="einwAnerkstellename">
+  				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstellename" />
+  			</label>
+  				<f:form.textfield property="einwAnerkstellename" />
+  		</div>		
+  		<div class="tp13_formdivwebapp">
+  			<label for="einwAnerkstellekontakt">
+  				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstellekontakt" />
+  			</label>
+  				<f:form.textfield property="einwAnerkstellekontakt" />
+  		</div>		  					
+  </div> 
+      
+  <div class="fframe"><h2>Datenweitergabe weitere Person</h2>
+    <div class="tp13_formdivwebapp">
+      <label for="einwPerson" class="tp13_options">
+        <f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_person" />
+        </label>
+        <div class="tp13_formdivwebappradio"><f:form.radio id="opteinwPerson1" property="einwPerson" value="1" /><span class="abschlussradiotext"><f:translate key="ja" /></span></div>
+        <div class="tp13_formdivwebappradio"><f:form.radio id="opteinwPerson2" property="einwPerson" value="2" /><span class="abschlussradiotext"><f:translate key="nein" /></span></div>
+        </div>
+  		<div class="tp13_formdivwebapp">
+  			<label for="einwPersondatum">
+  				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_persondatum" />
+  			</label>
+  				<f:form.textfield class="datumtextfield" property="einwPersondatum" value="{teilnehmer.einwPersondatum}" id="datepicker4" />				
+  		</div>
+  		<div class="tp13_formdivwebapp">
+  			<label for="einwPersonmedium">
+  				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_personmedium" />
+  			</label>
+  			<div class="tp13_formdivwebappmultiradio">
+  				<div class="tp13_formdivwebappradio"><f:form.checkbox property="einwPersonmedium" value="1" multiple="1"/>{settings.einwilligungaamedium.1}</div>
+  				<div class="tp13_formdivwebappradio"><f:form.checkbox property="einwPersonmedium" value="2" multiple="1"/>{settings.einwilligungaamedium.2}</div>
+  				<div class="tp13_formdivwebappradio"><f:form.checkbox property="einwPersonmedium" value="3" multiple="1"/>{settings.einwilligungaamedium.3}</div>
+  			</div>				
+  		</div>
+  		<div class="tp13_formdivwebapp">
+  			<label for="einwPersonname">
+  				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_personname" />
+  			</label>
+  				<f:form.textfield property="einwPersonname" />
+  		</div>		
+  		<div class="tp13_formdivwebapp">
+  			<label for="einwPersonkontakt">
+  				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_personkontakt" />
+  			</label>
+  				<f:form.textfield property="einwPersonkontakt" />
+  		</div>		  					
+  </div>
+  
+<div class="fframe"><h2><f:translate key="fruehereantraege" /></h2>
+		<div class="tp13_formdivwebapp">
+			<label for="fruehererAntrag" class="tp13_options">
+				<span id="infolab" title="<f:translate key='infofruehererAntrag' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag" />
+			</label>
+			<div class="tp13_formdivwebappradio"><f:form.radio id="optfruehererAntrag1" property="fruehererAntrag" value="1" /><span class="abschlussradiotext"><f:translate key="ja" /></span></div>
+			<div class="tp13_formdivwebappradio"><f:form.radio id="optfruehererAntrag2" property="fruehererAntrag" value="2" /><span class="abschlussradiotext"><f:translate key="nein" /></span></div>			
+		</div>
+		<div class="tp13_formdivwebapp" id="fruehererantragdaten1">
+			<label for="fruehererAntragReferenzberuf">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag_referenzberuf" />
+			</label>
+				<f:form.textfield id="inputfruehererAntragReferenzberuf" property="fruehererAntragReferenzberuf" /><br />
+		</div>
+		<div class="tp13_formdivwebapp" id="fruehererantragdaten2">
+			<label for="fruehererAntragInstitution">
+				<span id="infolab" title="<f:translate key='infoInstitution' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag_institution" />
+			</label>
+				<f:form.textfield id="inputfruehererAntragInstitution" property="fruehererAntragInstitution" /><br />
+		</div>
+		<div class="tp13_formdivwebapp" id="fruehererantragdaten3">
+			<label for="bescheidfruehererAnerkennungsantrag" class="tp13_options">
+				<f:format.raw><f:translate key="tx_iqtp13db_domain_model_teilnehmer.bescheidfrueherer_anerkennungsantrag" /></f:format.raw>
+			</label>
+			<div class="tp13_formdivwebappradio"><f:form.radio id="optbescheidfruehererAnerkennungsantrag1" property="bescheidfruehererAnerkennungsantrag" value="1" /><span class="abschlussradiotext"><f:translate key="ja" /></span></div>
+			<div class="tp13_formdivwebappradio"><f:form.radio id="optbescheidfruehererAnerkennungsantrag2" property="bescheidfruehererAnerkennungsantrag" value="1" /><span class="abschlussradiotext"><f:translate key="nein" /></span></div>
+			<div class="tp13_formdivwebapp" id="textdokupload">
+					<span class="einwilligungtext">Bitte beim Dokumenten-Upload auf der folgenden Seite hochladen.</span>
+			</div>
+		</div>
+</div>
+<div class="fframe">
+		<div class="tp13_formdivwebapp">
+			<label for="nameBeratungsstelle" class="tp13_options">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.name_beratungsstelle" />
+			</label>
+			
+			<div class="tp13_formdivwebappmultiradio">
+				<span class="togglebutton" id="toggleallberatungsstelle">Alle ein-/ausblenden</span>
+				<f:for each="{settings.beratungsstelle}" as="text" key="wert" iteration="iter">
+					<div class="tp13_formdivwebappradio" id="divberatungsstelleradio{iter.index}">
+						<f:form.radio property="nameBeratungsstelle" value="{wert}" checked="{teilnehmer.nameBeratungsstelle} == {wert}" id="beratungsstelleradio{iter.index}"/><span class="abschlussradiotext">{text}</span>
+					</div>
+				</f:for>
+			</div>
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="notizen" class="tp13_options">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.notizen" />
+			</label>
+				<f:form.textarea property="notizen" rows="10" cols="100" />
+		</div>
+</div>
+
+<div class="fframe">
+		<div id="divniqchiffre" class="tp13_formdivwebapp">
+			<label for="niqchiffre">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.niqchiffre" />
+			</label>
+				<f:form.textfield id="txtniqchiffre" property="niqchiffre" />
+		</div>
+</div>

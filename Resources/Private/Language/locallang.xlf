@@ -1,0 +1,627 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="de" datatype="plaintext" original="messages" date="2018-09-21T10:35:12Z" product-name="iqtp13db">
+		<header/>
+		<body>
+			<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbadmin">
+				<source>IQ TP13 DB Adminbereich</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbadmin.description">
+				<source></source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbwebapp">
+				<source>IQ TP13 DB Webapp</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbwebapp.description">
+				<source></source>
+			</trans-unit>			
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer">
+				<source>Teilnehmer</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.beratungsstatus">
+				<source>Beratungsstatus</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.niqchiffre">
+				<source>NIQ Chiffre</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.schonberaten">
+				<source>Wurden Sie schon einmal zur Anerkennung Ihres ausländischen Berufsabschlusses beraten?</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.schonberatenvon">
+				<source>Von wem wurden Sie beraten?</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.nachname">
+				<source>Nachname</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.vorname">
+				<source>Vorname</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.plz">
+				<source>PLZ</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ort">
+				<source>Ort</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.email">
+				<source>E-Mail</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.confirmemail">
+				<source>E-Mail bestätigen</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.telefon">
+				<source>Telefon</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.lebensalter">
+				<source>Alter</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geburtsland">
+				<source>Geburtsland</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geschlecht">
+				<source>Geschlecht</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erste_staatsangehoerigkeit">
+				<source>Erste Staatsangehoerigkeit</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zweite_staatsangehoerigkeit">
+				<source>Zweite Staatsangehoerigkeit</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einreisejahr">
+				<source>Einreisejahr</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_deutschland">
+				<source>Wohnsitz Deutschland</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_nein_in">
+				<source>Wohnsitz in</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ortskraftafghanistan">
+				<source>Ortskraft Afghanistan</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse">
+				<source>Deutsch als Muttersprache?</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikatdeutsch">
+				<source>Zertifikatdeutsch</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau">
+				<source>Wenn Zertifikat vorhanden, auf welchem Sprachniveau?</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussart1">
+				<source>Abschlussart1</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussart2">
+				<source>Abschlussart2</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsland1">
+				<source>Erwerbsland1</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.dauer_berufsausbildung1">
+				<source>Dauer Berufsausbildung1</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussjahr1">
+				<source>Abschlussjahr1</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsinstitution1">
+				<source>Ausbildungsinstitution1</source>
+			</trans-unit> 
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsort1">
+				<source>Ausbildungsort1</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschluss1">
+				<source>Abschluss1</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.berufserfahrung1">
+				<source>Berufserfahrung1</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutscher_referenzberuf1">
+				<source>Deutscher Referenzberuf1</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wunschberuf1">
+				<source>Wunschberuf1</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsstatus">
+				<source>Erwerbsstatus</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezug">
+				<source>Leistungsbezug</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus">
+				<source>Aufenthaltsstatus</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatusfreitext">
+				<source>Anmerkung zum Aufenthaltsstatus</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag">
+				<source>Wurde schon ein Antrag auf Anerkennung des Berufsabschlusses gestellt?</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag_referenzberuf">
+				<source>Für welchen Beruf?</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag_institution">
+				<source>Bei welcher Institution oder Behörde?</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.anz_beratungen">
+				<source>Anz Beratungen</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.weitere_sprachkenntnisse">
+				<source>Weitere Sprachkenntnisse</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.sprachen">
+				<source>Welche Sprachen sprechen Sie?</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.bescheidfrueherer_anerkennungsantrag">
+				<source>Haben Sie schon die Entscheidung von der anerkennenden Stelle (Bescheid) erhalten?</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_beratungsstelle">
+				<source>Wie haben Sie uns gefunden?</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligung">
+				<source>Einwilligung</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsland2">
+				<source>Erwerbsland2</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.dauer_berufsausbildung2">
+				<source>Dauer Berufsausbildung2</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussjahr2">
+				<source>Abschlussjahr2</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsinstitution2">
+				<source>Ausbildungsinstitution2</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsort2">
+				<source>Ausbildungsort2</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschluss2">
+				<source>Abschluss2</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.berufserfahrung2">
+				<source>Berufserfahrung2</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutscher_referenzberuf2">
+				<source>Deutscher Referenzberuf2</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wunschberuf2">
+				<source>Wunschberuf2</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezugjanein">
+				<source>Bekommen Sie Geld vom Jobcenter oder der Agentur für Arbeit?</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezug">
+				<source>Leistungsbezug</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungstextaa">
+				<source>Mit der Angabe der folgenden Daten willige ich ein, dass der Agentur für Arbeit bzw. dem Jobcenter meine Daten zum Zwecke bzw. im Rahmen der Anerkennungsberatung weitergegeben werden dürfen.</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_a">
+				<source>Möchten Sie, dass wir das Beratungsergebnis an Ihre Berater*in weiterleiten?</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_adatum">
+				<source>Datum der Einwilligung zur Weitergabe</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_amedium">
+				<source>Medium der Einwilligung</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_berater_a_a">
+				<source>Name Berater*in</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kontakt_berater_a_a">
+				<source>Kontakt (E-Mail und Telefon)</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kundennummer_a_a">
+				<source>Ihre Kundennummer</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstelle">
+         <source>Einwilligung Weitergabe Daten an anerkennende Stelle</source>
+       </trans-unit>
+       <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstelledatum">
+         <source>Datum der Einwilligung zur Weitergabe</source>
+       </trans-unit>
+       <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstellemedium">
+         <source>Medium der Einwilligung</source>
+       </trans-unit>
+       <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstellename">
+         <source>Name Ansprechpartner und Organisation</source>
+       </trans-unit>
+       <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstellekontakt">
+         <source>Kontakt (E-Mail und Telefon)</source>
+       </trans-unit>
+       
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_person">
+				<source>Einwilligung Weitergabe Daten an weitere Person</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_persondatum">
+				<source>Datum der Einwilligung zur Weitergabe</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personmedium">
+				<source>Medium der Einwilligung</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personname">
+				<source>Name der Person und ggf. Organisation</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personkontakt">
+				<source>Kontakt (E-Mail und Telefon)</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus">
+				<source>Aufenthaltsstatus</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.notizen">
+				<source>Was möchten Sie uns noch mitteilen oder haben Sie schon eine konkrete Frage?</source>
+			</trans-unit>			
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.verification_code">
+                <source>Bestätigungscode</source>
+            </trans-unit>
+            <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.verification_date">
+                <source>Bestätigungs-Datum</source>
+            </trans-unit>
+            <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.verification_ip">
+                <source>Bestätigungs-IP</source>
+            </trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_beratung">
+				<source>Beratung</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_beratung.datum">
+				<source>Datum Erstberatung</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_beratung.beratungsart">
+				<source>Beratungsart</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_beratung.beratungsartfreitext">
+				<source>Beratungsart face-to-face Freitext</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_beratung.beratungsort">
+				<source>Beratungsort</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_beratung.beratungzu">
+				<source>Beratung zu</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_beratung.referenzberufe">
+				<source>Referenzberufe</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_beratung.anerkennendestellen">
+				<source>Anerkennende Stellen</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_beratung.anerkennungsberatung">
+				<source>Anerkennungsberatung</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_beratung.anerkennungsberatungfreitext">
+				<source>Freitext zu 'sonstige Themen bezogen auf das Anerkennungsverfahren'</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_beratung.qualifizierungsberatung">
+				<source>Qualifizierungsberatung</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_beratung.qualifizierungsberatungfreitext">
+				<source>Freitext zu 'sonstige Themen bezogen auf Qualifizierung':</source>
+			</trans-unit>			
+			<trans-unit id="tx_iqtp13db_domain_model_beratung.notizen">
+				<source>Notizen</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_beratung.erstberatungabgeschlossen">
+				<source>Erstberatung abgeschlossen</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_beratung.teilnehmer">
+				<source>Teilnehmer*in</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_beratung.berater">
+				<source>Berater*in</source>
+			</trans-unit>	
+			<trans-unit id="tx_iqtp13db_domain_model_folgekontakt">
+				<source>Folgekontakt</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.datum">
+				<source>Datum</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.antraggestellt">
+				<source>Antrag gestellt?</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.zab_gleichwertigkeit">
+				<source>ZAB/Gleichwertigkeit</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.notizen">
+				<source>Notizen</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.teilnehmer">
+				<source>Ratsuchende*r</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.berater">
+				<source>Berater*in</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_berater">
+				<source>Berater*in</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_berater.name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_berater.organisation">
+				<source>Organisation</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_berater.kuerzel">
+				<source>Kürzel</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_dokument">
+				<source>Dokument</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_dokument.name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_dokument.pfad">
+				<source>Pfad</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_dokument.teilnehmer">
+				<source>Teilnehmer*in</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbadmin">
+				<source>IQ TP13 DB Adminbereich</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbadmin.description">
+				<source></source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbwebapp">
+				<source>IQ TP13 DB Webapp</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbwebapp.description">
+				<source></source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsfremdeberufserfahrung1">
+				<source>Ausbildungsfremde Berufserfahrung (Dauer, Jahre)</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsfremdeberufserfahrung2">
+				<source>Ausbildungsfremde Berufserfahrung (Dauer, Jahre)</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussart">
+				<source>Abschlussart</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsland">
+				<source>In welchem Land?</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.dauer_berufsausbildung">
+				<source>Dauer der Berufsausbildung oder des Studiums</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussjahr">
+				<source>Abschlussjahr</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsinstitution">
+				<source>Ausbildungsinstitution</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsort">
+				<source>Ausbildungsort</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschluss">
+				<source>Name des Abschlusses</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutsch_abschlusstitel">
+				<source>Deutsch Abschlusstitel</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutscher_referenzberuf">
+				<source>Möglicher deutscher Beruf</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.berufserfahrung">
+				<source>Berufserfahrung im erlernten Beruf (Dauer, Jahre)</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.original_dokumente_abschluss">
+				<source>Liegen die Original-Dokumente des Abschlusses vor?</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wunschberuf">
+				<source>Wunschberuf (wenn abweichend von Ausbildungsberuf)?</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdaten">
+				<source>Einwilligung Datenübermittlung</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungtext">
+				<source><![CDATA[
+				Ich bin damit einverstanden, dass meine Daten zum Zweck der Bearbeitung meiner Anfrage genutzt werden. 
+				Die <a href="https://www.iq-netzwerk-nrw.de/1/datenschutz-und-einwilligung/" target="_blank">Informationen zur Datenverarbeitung</a> habe ich zur Kenntnis genommen.
+				]]></source>
+			</trans-unit>
+			<trans-unit id="ja">
+				<source>Ja</source>
+			</trans-unit>
+			<trans-unit id="nein">
+				<source>Nein</source>
+			</trans-unit>
+			<trans-unit id="ka">
+				<source>k.A.</source>
+			</trans-unit>
+			<trans-unit id="maennlich">
+				<source>männlich</source>
+			</trans-unit>
+			<trans-unit id="weiblich">
+				<source>weiblich</source>
+			</trans-unit>
+			<trans-unit id="divers">
+				<source>divers</source>
+			</trans-unit>
+			<trans-unit id="weiter">
+				<source>Weiter</source>
+			</trans-unit>
+			<trans-unit id="zurueck">
+				<source>Zurück</source>
+			</trans-unit>
+			<trans-unit id="abbruch">
+				<source>Abbruch</source>
+			</trans-unit>
+			<trans-unit id="fragebogen">
+				<source>Fragebogen Seite</source>
+			</trans-unit>
+			<trans-unit id="persdaten">
+				<source>Persönliche Daten</source>
+			</trans-unit>
+			<trans-unit id="deutschkenntnisse">
+				<source>Deutsch als Muttersprache?</source>
+			</trans-unit>
+			<trans-unit id="abschlussartoption1">
+				<source>Ausbildungsabschluss</source>
+			</trans-unit>
+			<trans-unit id="abschlussartoption2">
+				<source>Universitätsabschluss</source>
+			</trans-unit>
+			<trans-unit id="auslaendischerabschluss">
+				<source>Ausländischer Abschluss</source>
+			</trans-unit>
+			<trans-unit id="beruflichesituation">
+				<source>Berufliche Situation</source>
+			</trans-unit>
+			<trans-unit id="datenjobcenterarbeitsagentur">
+				<source>Daten Jobcenter/Agentur für Arbeit</source>
+			</trans-unit>
+			<trans-unit id="fruehereantraege">
+				<source>Frühere Anträge</source>
+			</trans-unit>
+			<trans-unit id="angabenzurberatungsstelle">
+				<source>Angaben zur Beratungsstelle</source>
+			</trans-unit>
+			<trans-unit id="beratungsprozess">
+				<source>Beratungsprozess</source>
+			</trans-unit>
+			<trans-unit id="ergebnisderberatung">
+				<source>Ergebnis der Beratung</source>
+			</trans-unit>
+			<trans-unit id="falldokumentation">
+				<source>Falldokumentation</source>
+			</trans-unit>
+			<trans-unit id="qualifizierungsberatung">
+				<source>Qualifizierungsberatung</source>
+			</trans-unit>
+			<trans-unit id="berater">
+				<source>Berater*in</source>
+			</trans-unit>
+			<trans-unit id="dokumente">
+				<source>Dokumente</source>
+			</trans-unit>
+			<trans-unit id="dokumenteintro">
+				<source><![CDATA[
+				Bitte laden Sie folgende Dokumente als PDF-Datei hoch (insgesamt maximal 30 MB): <br>
+				- Ihre Original-Abschlüsse und Übersetzungen<br>
+				- Ihren Aufenthaltstitel; Lebenslauf; Bescheid 
+				<br><h3>Hochgeladene Dokumente:</h3>				
+				]]></source>
+			</trans-unit>
+			<trans-unit id="dokumentauswaehlen">
+				<source>Dokument auswählen</source>
+			</trans-unit>
+			<trans-unit id="dokumenthochladen">
+				<source>Dokument hochladen</source>
+			</trans-unit>
+			<trans-unit id="speicherplatzhinweis">
+				<source>Speicherplatz für Dokumente verfügbar: </source>
+			</trans-unit>
+			<trans-unit id="loeschen">
+				<source>Löschen</source>
+			</trans-unit>
+			<trans-unit id="hochladen">
+				<source>Jetzt hochladen</source>
+			</trans-unit>
+			<trans-unit id="absenden">
+				<source>Jetzt absenden</source>
+			</trans-unit>
+			<trans-unit id="hinweisdatenpruefen">
+				<source>Bitte überprüfen Sie Ihre Daten an dieser Stelle. Sofern alle Daten korrekt sind, klicken Sie abschließend auf den 'Absenden'-Button.</source>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_tnseite1.geschlecht">
+				<source>Geschlecht</source>
+			</trans-unit>
+			<trans-unit id="infoNachname">
+				<source>Der Nachname entspricht Ihrem Familiennamen. Bitte geben Sie diesen hier an.</source>
+			</trans-unit>
+			<trans-unit id="infoVorname">
+				<source>Der Vorname ist Ihr erster Name vor dem Nachnamen und entspricht meistens Ihrem Rufnamen. Bitte geben Sie diesen hier an.</source>
+			</trans-unit>
+			<trans-unit id="infoGeburtsland">
+				<source>Das Geburtsland entspricht dem Land, in dem Sie geboren wurden. Bitte geben Sie dieses hier an.</source>
+			</trans-unit>
+			<trans-unit id="infoStaatsangehoerigkeit">
+				<source>Sofern Sie zwei verschiedene Staatsangehörigkeiten/Nationalitäten haben, geben Sie bitte beide an.</source>
+			</trans-unit>
+			<trans-unit id="infoJahrEinreise">
+				<source>Bitte geben Sie das Jahr an, in dem Sie nach Deutschland eingereist sind.</source>
+			</trans-unit>
+			<trans-unit id="infoWohnsitzinDeutschlandNein">
+				<source>Bitte geben Sie an, in welchem Land Sie aktuell leben.</source>
+			</trans-unit>
+			<trans-unit id="infoBundesland">
+				<source>Bitte wählen Sie das Bundesland, in dem Sie aktuell leben.</source>
+			</trans-unit>
+			<trans-unit id="infoAbschluss">
+				<source>Ein Ausbildungsabschluss ist ein Abschluss einer beruflichen Ausbildung. Ein Universitätsabschluss ist ein akademischer Abschluss der nach einem Studium an einer Hochschule/Universität erworben wurde. Das Studium hat in der Regel mindestens 3 Jahre gedauert. Bitte geben Sie an welchen Abschluss Sie erworben haben.</source>
+			</trans-unit>
+			<trans-unit id="infoAusbildungsort">
+				<source>Bitte geben Sie die Stadt an, in der Sie Ihren Abschluss gemacht haben.</source>
+			</trans-unit>
+			<trans-unit id="infoBerufserfahrung">
+				<source>Bitte geben Sie an, wie lange Sie schon im Beruf der Ausbildung/des Studiums gearbeitet haben (Monate/Jahre).</source>
+			</trans-unit>
+			<trans-unit id="infoAusbildungsfremdeBerufserfahrung">
+				<source>“Ausbildungsfremd“ bedeutet, dass Sie in einem anderen Beruf als dem der Ausbildung/des Studiums gearbeitet haben. Bitte geben Sie an was das war und wie lange Sie gearbeitet haben (Monate/Jahre).</source>
+			</trans-unit>
+			<trans-unit id="infodeutscherBeruf">
+				<source>Falls bekannt, geben Sie zu Ihrem Abschluss die deutsche Bezeichnung des Berufes an.</source>
+			</trans-unit>
+			<trans-unit id="infoBezug">
+				<source>Von welcher Institution/Behörde/Amt erhalten Sie aktuell Geld für Ihren Lebensunterhalt? Bitte geben Sie diese Institution/Behörde/Amt hier an.</source>
+			</trans-unit>
+			<trans-unit id="infoBezugsart">
+				<source><![CDATA[Welche Art des Bezugs (Geld für den Lebensunterhalt) erhalten Sie aktuell? 
+				SGB II: Grundsicherung für Arbeitssuchende (Hartz IV) 
+				SGB III: Leistungen aus der Arbeitslosenversicherung und Arbeitsförderung 
+				Asylbewerberleistungsbezug: Grundsicherung für Asylbewerber, Geduldete und Ausländer, die vollziehbar zur Ausreise verpflichtet sind.
+				Bitte geben Sie eine der Bezugsarten an.]]></source>
+			</trans-unit>
+			<trans-unit id="infofruehererAntrag">
+				<source>Bitte geben Sie an, ob Sie in der Vergangenheit bereits schon einmal einen Antrag zur Anerkennung Ihres Abschlusses gestellt haben.</source>
+			</trans-unit>
+			<trans-unit id="infoInstitution">
+				<source>Sofern Sie bereits einen Antrag auf Anerkennung Ihres Abschlusses gestellt haben, geben Sie bitte an dieser Stelle an, bei welcher Institution/Behörde und ggf. in welchem Land Sie dies getan haben.</source>
+			</trans-unit>
+			<trans-unit id="headabschlusslinks">
+				<source><![CDATA[ &nbsp; ]]></source>
+			</trans-unit>
+			<trans-unit id="headabschlussrechts">
+				<source>weiterer Abschluss</source>
+			</trans-unit>
+			<trans-unit id="headabschlussrechtsausblenden">
+				<source>Abschluss ausblenden</source>
+			</trans-unit>
+			<trans-unit id="anredemail">
+				<source>Guten Tag </source>
+			</trans-unit>
+			<trans-unit id="mailtext">
+				<source> <![CDATA[
+					 <p>vielen Dank für Ihre Informationen.</p> <p>&nbsp;</p> <p>Sie sind jetzt zur Beratung angemeldet. Wir setzen uns mit Ihnen in Verbindung, sobald Sie an der Reihe sind. <br><br>Die Beratung erfolgt nach Wunsch über E-Mail, Telefon oder Videochat.</p> <p>Wir bemühen uns, Ihre Anfrage innerhalb von 6 Wochen zu bearbeiten. Wir bitten um Ihr Verständnis und Ihre Geduld.</p><p>&nbsp;</p> <p>Mit freundlichen Grüßen</p>Ihre Mobile IQ Anerkennungs- und Qualifizierungsberatung 
+					 ]]></source>
+			</trans-unit>
+			<trans-unit id="subject">
+				<source>Ihre Anmeldung zur Anerkennungserstberatung NRW</source>
+			</trans-unit>
+			<trans-unit id="confirmlinktext">
+				<source> <![CDATA[
+					 Bestätigung der Anmeldung - Confirm registration
+					 ]]></source>
+			</trans-unit>
+			<trans-unit id="confirmmailtext1">
+				<source> <![CDATA[
+					 <p>Liebe*r Ratsuchende*r,</p> <p>&nbsp;</p> <p>bestätigen Sie Ihre Anmeldung zur Anerkennungserstberatung bitte hier:</p>
+					 ]]></source>
+			</trans-unit>			
+			<trans-unit id="confirmmailtext2">
+				<source> <![CDATA[
+					 <p>Mit freundlichem Gruß</p> <p>Ihre Mobile IQ Anerkennungs- und Qualifizierungsberatung</p>
+					 ]]></source>
+			</trans-unit>
+			<trans-unit id="confirmsubject">
+				<source>Bitte bestätigen Sie Ihre Anmeldung zur Anerkennungserstberatung NRW</source>
+			</trans-unit>
+			
+			<trans-unit id="wurdebereitsberaten">
+				<source>Wurde bereits beraten, Ja</source>
+			</trans-unit>
+			<trans-unit id="erstberatungfertig">
+				<source>Die Erstberatung ist beendet</source>
+			</trans-unit>
+			<trans-unit id="anmeldedatum">
+				<source>Anmeldedatum</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

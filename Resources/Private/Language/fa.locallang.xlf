@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="de" datatype="plaintext" original="messages" date="2016-09-01T11:23:16Z" product-name="iqtp13db" target-language="fa">
+    <header/>
+    <body>
+        			<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbadmin"><source>IQ TP13 DB Adminbereich</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbadmin.description"><source></source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbwebapp"><source>IQ TP13 DB Webapp</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbwebapp.description"><source></source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer"><source>Teilnehmer</source><target>Participant*ă</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.beratungsstatus"><source>Beratungsstatus</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.niqchiffre"><source>NIQ Chiffre</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer"><source>Teilnehmer</source><target>	شرکت‌کننده</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.beratungsstatus"><source>Beratungsstatus</source><target>	وضعیت مشاوره</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.schonberaten"><source>Wurden Sie schon einmal zur Anerkennung Ihres ausländischen Berufsabschlusses beraten?</source><target>	آیا درباره تایید مدارک شغلی خارجی خود مشاوره دریافت کرده‌اید؟</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.schonberatenvon"><source>Von wem wurden Sie beraten?</source><target>	از چه کسی مشاوره دریافت کردید؟</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.nachname"><source>Nachname</source><target>	نام خانوادگی</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.vorname"><source>Vorname</source><target>	نام</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.plz"><source>PLZ</source><target>	کد پستی</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ort"><source>Ort</source><target>	محل</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.email"><source>E-Mail</source><target>	ایمیل</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.confirmemail"><source>E-Mail bestätigen</source><target>	تایید ایمیل</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.telefon"><source>Telefon</source><target>	تلفن</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.lebensalter"><source>Alter</source><target>	سن</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geburtsland"><source>Geburtsland</source><target>	کشور محل تولد</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geschlecht"><source>Geschlecht</source><target>	جنسیت</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erste_staatsangehoerigkeit"><source>Erste Staatsangehoerigkeit</source><target>	تابعیت اول</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zweite_staatsangehoerigkeit"><source>Zweite Staatsangehoerigkeit</source><target>	تابعیت دوم</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einreisejahr"><source>Einreisejahr</source><target>	سال ورود</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_deutschland"><source>Wohnsitz Deutschland</source><target>	محل سکونت در آلمان</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_nein_in"><source>Wohnsitz in</source><target>	محل سکونت در</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><source>Deutsch als Muttersprache?</source><target>	آلمانی به عنوان زبان مادری؟</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikatdeutsch"><source>Zertifikatdeutsch</source><target>	گواهینامه آلمانی</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><source>Wenn Zertifikat vorhanden, auf welchem Sprachniveau?</source><target>	اگر گواهینامه زبان وجود دارد، در چه سطح است؟</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussart1"><source>Abschlussart1</source><target>	نوع گواهینامه 1</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussart2"><source>Abschlussart2</source><target>	نوع گواهینامه 2</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsland1"><source>Erwerbsland1</source><target>	کشور محل دریافت 1</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.dauer_berufsausbildung1"><source>Dauer Berufsausbildung1</source><target>	مدت آموزش حرفه‌ای 1</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussjahr1"><source>Abschlussjahr1</source><target>	سال دریافت گواهینامه</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsinstitution1"><source>Ausbildungsinstitution1</source><target>	موسسه آموزش‌دهنده 1</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsort1"><source>Ausbildungsort1</source><target>	نوع آموزش 1</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschluss1"><source>Abschluss1</source><target>	گواهینامه 1</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.berufserfahrung1"><source>Berufserfahrung1</source><target>	تجربه حرفه‌ای 1</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutscher_referenzberuf1"><source>Deutscher Referenzberuf1</source><target>	شغل مرجع آلمانی 1</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wunschberuf1"><source>Wunschberuf1</source><target>	شغل مورد نظر 1</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsstatus"><source>Erwerbsstatus</source><target>	وضعیت اشتغال</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezug"><source>Leistungsbezug</source><target>	دریافت کمک</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus"><source>Aufenthaltsstatus</source><target>	وضعیت اقامت</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatusfreitext"><source>Anmerkung zum Aufenthaltsstatus</source><target>	توضیح مربوط به مجوز اقامت</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag"><source>Wurde schon ein Antrag auf Anerkennung des Berufsabschlusses gestellt?</source><target>	آیا قبلا یک درخواست برای تایید گواهینامه شغلی ارائه شده است؟</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag_referenzberuf"><source>Für welchen Beruf?</source><target>	برای چه شغلی؟</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag_institution"><source>Bei welcher Institution oder Behörde?</source><target>	از کدام موسسه یا اداره؟</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.anz_beratungen"><source>Anz Beratungen</source><target>	مشاوره Anz</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.weitere_sprachkenntnisse"><source>Weitere Sprachkenntnisse</source><target>	سایر مهارت‌های زبانی</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.sprachen"><source>Welche Sprachen sprechen Sie?</source><target>	به چه زبان‌هایی صحبت می‌کنید؟</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.bescheidfrueherer_anerkennungsantrag"><source>Haben Sie schon die Entscheidung von der anerkennenden Stelle (Bescheid) erhalten?</source><target>	آیا تصمیم گرفته شده از سوی مرکز تایید‌کننده (گواهی) را دریافت کرده‌اید؟</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_beratungsstelle"><source>Wie haben Sie uns gefunden?</source><target>	ما را چگونه پیدا کردید؟</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligung"><source>Einwilligung</source><target>	موافقت</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsland2"><source>Erwerbsland2</source><target>	کشور محل دریافت 2</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.dauer_berufsausbildung2"><source>Dauer Berufsausbildung2</source><target>	مدت آموزش حرفه‌ای 2</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussjahr2"><source>Abschlussjahr2</source><target>	سال دریافت گواهینامه 2</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsinstitution2"><source>Ausbildungsinstitution2</source><target>	موسسه آموزش‌دهنده 2</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsort2"><source>Ausbildungsort2</source><target>	نوع آموزش 2</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschluss2"><source>Abschluss2</source><target>	گواهینامه 2</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.berufserfahrung2"><source>Berufserfahrung2</source><target>	تجربه شغلی 2</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutscher_referenzberuf2"><source>Deutscher Referenzberuf2</source><target>	شغل مرجع آلمانی 2</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wunschberuf2"><source>Wunschberuf2</source><target>	شغل مورد نظر 2</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezugjanein"><source>Bekommen Sie Geld vom Jobcenter oder der Agentur für Arbeit?</source><target>	آیا از مرکز کار یا آژانس کار پول دریافت می‌کنید؟</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezug"><source>Leistungsbezug</source><target>	دریافت کمک</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungstextaa"><source>Mit der Angabe der folgenden Daten willige ich ein, dass der Agentur für Arbeit bzw. dem Jobcenter meine Daten zum Zwecke bzw. im Rahmen der Anerkennungsberatung weitergegeben werden dürfen.</source><target>	با ارائه اطلاعات زیر، من موافقت می‌کنم که آژانس کار یا مرکز کار می‌تواند اطلاعات من را با هدف مشاوره تایید یا در چارچوب آن، به طرف‌های دیگر بفرستد.</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_a"><source>Möchten Sie, dass wir das Beratungsergebnis an Ihre Berater*in weiterleiten?</source><target>	آیا می‌خواهید ما نتایج مشاوره را به مشاور شما بفرستیم؟</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_adatum"><source>Datum der Einwilligung zur Weitergabe</source><target>	تاریخ موافقت با فرستادن</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_amedium"><source>Medium der Einwilligung</source><target>	وسیله موافقت</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_berater_a_a"><source>Name Berater*in</source><target>	نام مشاور</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kontakt_berater_a_a"><source>Kontakt (E-Mail und Telefon)</source><target>	تماس (ایمیل یا تلفن)</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kundennummer_a_a"><source>Ihre Kundennummer</source><target>	شماره مشتری شما</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstelle"><source>Einwilligung Weitergabe Daten an anerkennende Stelle</source><target>	موافقت با فرستادن اطلاعات به مرکز تایید‌کننده</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstelledatum"><source>Datum der Einwilligung zur Weitergabe</source><target>	تاریخ موافقت با فرستادن</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstellemedium"><source>Medium der Einwilligung</source><target>	وسیله موافقت</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstellename"><source>Name Ansprechpartner und Organisation</source><target>	نام فرد یا سازمان مسئول</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstellekontakt"><source>Kontakt (E-Mail und Telefon)</source><target>	تماس (ایمیل یا تلفن)</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_person"><source>Einwilligung Weitergabe Daten an weitere Person</source><target>	موافقت با فرستادن اطلاعات به شخص دیگر</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_persondatum"><source>Datum der Einwilligung zur Weitergabe</source><target>	تاریخ موافقت با فرستادن</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personmedium"><source>Medium der Einwilligung</source><target>	وسیله موافقت</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personname"><source>Name der Person und ggf. Organisation</source><target>	نام شخص یا در  صورت امکان سازمان</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personkontakt"><source>Kontakt (E-Mail und Telefon)</source><target>	تماس (ایمیل یا تلفن)</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus"><source>Aufenthaltsstatus</source><target>	وضعیت اقامت</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.notizen"><source>Was möchten Sie uns noch mitteilen oder haben Sie schon eine konkrete Frage?</source><target>	آیا می‌خواهید چیزی را به ما اطلاع دهید یا پرسش خاصی دارید؟</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.verification_code"><source>Bestätigungscode</source><target>	کد تایید</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.verification_date"><source>Bestätigungs-Datum</source><target>	تاریخ تایید</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.verification_ip"><source>Bestätigungs-IP</source><target>	آی‌پی تایید</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung"><source>Beratung</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.datum"><source>Datum Erstberatung</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.beratungsart"><source>Beratungsart</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.beratungsartfreitext"><source>Beratungsart face-to-face Freitext</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.beratungsort"><source>Beratungsort</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.beratungzu"><source>Beratung zu</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.referenzberufe"><source>Referenzberufe</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.anerkennendestellen"><source>Anerkennende Stellen</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.anerkennungsberatung"><source>Anerkennungsberatung</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.anerkennungsberatungfreitext"><source>Freitext zu 'sonstige Themen bezogen auf das Anerkennungsverfahren'</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.qualifizierungsberatung"><source>Qualifizierungsberatung</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.qualifizierungsberatungfreitext"><source>Freitext zu 'sonstige Themen bezogen auf Qualifizierung':</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.notizen"><source>Notizen</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.erstberatungabgeschlossen"><source>Erstberatung abgeschlossen</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.teilnehmer"><source>Teilnehmer*in</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.berater"><source>Berater*in</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_folgekontakt"><source>Folgekontakt</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.datum"><source>Datum</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.antraggestellt"><source>Antrag gestellt?</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.zab_gleichwertigkeit"><source>ZAB/Gleichwertigkeit</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.notizen"><source>Notizen</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.teilnehmer"><source>Ratsuchende*r</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.berater"><source>Berater*in</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_berater"><source>Berater*in</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_berater.name"><source>Name</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_berater.organisation"><source>Organisation</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_berater.kuerzel"><source>Kürzel</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_dokument"><source>Dokument</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_dokument.name"><source>Name</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_dokument.pfad"><source>Pfad</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_dokument.teilnehmer"><source>Teilnehmer*in</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbadmin"><source>IQ TP13 DB Adminbereich</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbadmin.description"><source></source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbwebapp"><source>IQ TP13 DB Webapp</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbwebapp.description"><source></source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsfremdeberufserfahrung1"><source>Ausbildungsfremde Berufserfahrung (Dauer, Jahre)</source><target>	تجربه حرفه‌ای غیرمرتبط با آموزش (مدت، سال)</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsfremdeberufserfahrung2"><source>Ausbildungsfremde Berufserfahrung (Dauer, Jahre)</source><target>	تجربه حرفه‌ای غیرمرتبط با آموزش (مدت، سال)</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussart"><source>Abschlussart</source><target>	نوع گواهینامه‌</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsland"><source>In welchem Land?</source><target>	در کدام کشور؟</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.dauer_berufsausbildung"><source>Dauer der Berufsausbildung oder des Studiums</source><target>	مدت آموزش حرفه‌ای یا تحصیل دانشگاهی</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussjahr"><source>Abschlussjahr</source><target>	سال دریافت گواهینامه</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsinstitution"><source>Ausbildungsinstitution</source><target>	موسسه آموزش‌دهنده</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsort"><source>Ausbildungsort</source><target>	نوع آموزش</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschluss"><source>Name des Abschlusses</source><target>	نام گواهینامه</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutsch_abschlusstitel"><source>Deutsch Abschlusstitel</source><target>	عنوان گواهینامه آلمانی</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutscher_referenzberuf"><source>Möglicher deutscher Beruf</source><target>	شغل احتمالی آلمانی</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.berufserfahrung"><source>Berufserfahrung im erlernten Beruf (Dauer, Jahre)</source><target>	تجربه حرفه‌‌ای در شغل آموزش داده شده (مدت، سال)</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.original_dokumente_abschluss"><source>Liegen die Original-Dokumente des Abschlusses vor?</source><target>	اصل مدارک پایان دوره آموزشی موجود هستند؟</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wunschberuf"><source>Wunschberuf (wenn abweichend von Ausbildungsberuf)?</source><target>	شغل مورد نظر (اگر متفاوت از شغل مشمول آموزش است)؟</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdaten"><source>Einwilligung Datenübermittlung</source><target>	موافقت با فرستادن اطلاعات</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungtext"><source><![CDATA[Ich bin damit einverstanden, dass meine Daten zum Zweck der Bearbeitung meiner Anfrage genutzt werden.
+      Die <a href="https://www.iq-netzwerk-nrw.de/1/datenschutz-und-einwilligung/" target="_blank">Informationen zur Datenverarbeitung</a> habe ich zur Kenntnis genommen.
+      ]]></source><target><![CDATA[من موافقت می‌‌کنم اطلاعات من با هدف پردازش درخواست من مورد استفاده قرار گیرند.
+      من از <a href="https://www.iq-netzwerk-nrw.de/1/datenschutz-und-einwilligung/" target="_blank">اطلاعات مربوط به پردازش داده‌ها</a> مطلع شده‌ام.
+      ]]></target></trans-unit>
+<trans-unit id="ja"><source>Ja</source><target>	بله</target></trans-unit>
+<trans-unit id="nein"><source>Nein</source><target>	خیر</target></trans-unit>
+<trans-unit id="ka"><source>k.A.</source><target>	نمی‌دانم</target></trans-unit>
+<trans-unit id="maennlich"><source>männlich</source><target>	مرد</target></trans-unit>
+<trans-unit id="weiblich"><source>weiblich</source><target>	زن</target></trans-unit>
+<trans-unit id="divers"><source>divers</source><target>	متفاوت</target></trans-unit>
+<trans-unit id="weiter"><source>Weiter</source><target>	ادامه</target></trans-unit>
+<trans-unit id="zurueck"><source>Zurück</source><target>	بازگشت</target></trans-unit>
+<trans-unit id="abbruch"><source>Abbruch</source><target>	لغو</target></trans-unit>
+<trans-unit id="fragebogen"><source>Fragebogen Seite</source><target>	فرم صفحه</target></trans-unit>
+<trans-unit id="persdaten"><source>Persönliche Daten</source><target>	اطلاعات شخصی</target></trans-unit>
+<trans-unit id="deutschkenntnisse"><source>Deutsch als Muttersprache?</source><target>	آلمانی به عنوان زبان مادری؟</target></trans-unit>
+<trans-unit id="abschlussartoption1"><source>Ausbildungsabschluss</source><target>	مدرک دوره آموزشی</target></trans-unit>
+<trans-unit id="abschlussartoption2"><source>Universitätsabschluss</source><target>	گواهینامه دانشگاه</target></trans-unit>
+<trans-unit id="auslaendischerabschluss"><source>Ausländischer Abschluss</source><target>	گواهینامه خارجی</target></trans-unit>
+<trans-unit id="beruflichesituation"><source>Berufliche Situation</source><target>	وضعیت شغلی</target></trans-unit>
+<trans-unit id="datenjobcenterarbeitsagentur"><source>Daten Jobcenter/Agentur für Arbeit</source><target>	اطلاعات مرکز کار/آژانس کار</target></trans-unit>
+<trans-unit id="fruehereantraege"><source>Frühere Anträge</source><target>	درخواست‌های قبلی</target></trans-unit>
+<trans-unit id="angabenzurberatungsstelle"><source>Angaben zur Beratungsstelle</source><target>	مشخصات مربوط به مرکز مشاوره</target></trans-unit>
+<trans-unit id="beratungsprozess"><source>Beratungsprozess</source><target>	فرایند مشاوره</target></trans-unit>
+<trans-unit id="ergebnisderberatung"><source>Ergebnis der Beratung</source><target>	نتیجه مشاوره</target></trans-unit>
+<trans-unit id="falldokumentation"><source>Falldokumentation</source><target>	مدارک پرونده</target></trans-unit>
+<trans-unit id="qualifizierungsberatung"><source>Qualifizierungsberatung</source><target>	مشاوره تعیین صلاحیت</target></trans-unit>
+<trans-unit id="berater"><source>Berater*in</source><target>	مشاور</target></trans-unit>
+<trans-unit id="dokumente"><source>Dokumente</source><target>	مدارک</target></trans-unit>
+<trans-unit id="dokumenteintro"><source><![CDATA[
+      Bitte laden Sie folgende Dokumente als PDF-Datei hoch (insgesamt maximal 30 MB): <br>
+      - Ihre Original-Abschlüsse und Übersetzungen<br>
+      - Ihren Aufenthaltstitel; Lebenslauf; Bescheid
+      <br><h3>Hochgeladene Dokumente:</h3>
+      ]]></source><target><![CDATA[
+      لطفا اسناد زیر را به صورت فایل پی‌دی‌اف آپلود کنید (مجموعا حداکثر 30 مگابایت): <br>
+      - اصل گواهینامه‌های شما و ترجمه‌ها<br>
+      - عنوان اقامت شما؛ رزومه؛ گواهی
+      <br><h3>اسناد آپلود شده:</h3>
+      ]]></target></trans-unit>
+<trans-unit id="dokumentauswaehlen"><source>Dokument auswählen</source><target>	انتخاب سند</target></trans-unit>
+<trans-unit id="dokumenthochladen"><source>Dokument hochladen</source><target>	بارگذاری سند</target></trans-unit>
+<trans-unit id="speicherplatzhinweis"><source>Speicherplatz für Dokumente verfügbar:</source><target>	حافظه موجود برای اسناد:</target></trans-unit>
+<trans-unit id="loeschen"><source>Löschen</source><target>	حذف</target></trans-unit>
+<trans-unit id="hochladen"><source>Jetzt hochladen</source><target>	حالا آپلود کنید</target></trans-unit>
+<trans-unit id="absenden"><source>Jetzt absenden</source><target>	حالا بفرستید</target></trans-unit>
+<trans-unit id="hinweisdatenpruefen"><source>Bitte überprüfen Sie Ihre Daten an dieser Stelle. Sofern alle Daten korrekt sind, klicken Sie abschließend auf den 'Absenden'-Button.</source><target>	لطفا اطلاعات خود را در اینجا کنترل کنید. اگر همه اطلاعات درست هستند، در مرحله بعدی روی دگمه «فرستادن» کلیک کنید.</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_tnseite1.geschlecht"><source>Geschlecht</source><target>	جنسیت</target></trans-unit>
+<trans-unit id="infoNachname"><source>Der Nachname entspricht Ihrem Familiennamen. Bitte geben Sie diesen hier an.</source><target>	نام‌ خانوادگی با نام خانوادگی شما مطابقت می‌کند. لطفاً آن را در اینجا وارد کنید.</target></trans-unit>
+<trans-unit id="infoVorname"><source>Der Vorname ist Ihr erster Name vor dem Nachnamen und entspricht meistens Ihrem Rufnamen. Bitte geben Sie diesen hier an.</source><target>	نام، نام کوچک شما است که پیش از نام خانوادگی شما می‌آید و اغلب با آن شما را صدا می‌زنند. لطفاً آن را در اینجا وارد کنید.</target></trans-unit>
+<trans-unit id="infoGeburtsland"><source>Das Geburtsland entspricht dem Land, in dem Sie geboren wurden. Bitte geben Sie dieses hier an.</source><target>	کشور محل تولد، با کشوری که در آن متولد شده‌اید مطابقت می‌کند. لطفاً آن را در اینجا وارد کنید.</target></trans-unit>
+<trans-unit id="infoStaatsangehoerigkeit"><source>Sofern Sie zwei verschiedene Staatsangehörigkeiten/Nationalitäten haben, geben Sie bitte beide an.</source><target>	اگر تابعیت دو کشور را دارید، لطفا هر دو را در اینجا وارد کنید.</target></trans-unit>
+<trans-unit id="infoJahrEinreise"><source>Bitte geben Sie das Jahr an, in dem Sie nach Deutschland eingereist sind.</source><target>	لطفا سالی را که در آن به آلمان وارد شده‌اید وارد کنید.</target></trans-unit>
+<trans-unit id="infoWohnsitzinDeutschlandNein"><source>Bitte geben Sie an, in welchem Land Sie aktuell leben.</source><target>	لطفا نام کشوری را که در حال حاضر در آن زندگی می‌کنید وارد کنید.</target></trans-unit>
+<trans-unit id="infoBundesland"><source>Bitte wählen Sie das Bundesland, in dem Sie aktuell leben.</source><target>	لطفا نام ایالت فدرال را که در حال حاضر در آن زندگی می‌کنید وارد کنید.</target></trans-unit>
+<trans-unit id="infoAbschluss"><source>Ein Ausbildungsabschluss ist ein Abschluss einer beruflichen Ausbildung. Ein Universitätsabschluss ist ein akademischer Abschluss der nach einem Studium an einer Hochschule/Universität erworben wurde. Das Studium hat in der Regel mindestens 3 Jahre gedauert. Bitte geben Sie an welchen Abschluss Sie erworben haben.</source><target>	یک گواهینامه آموزش، گواهینامه‌ یک دوره آموزش حرفه‌ای است. یک گواهینامه دانشگاه، یک مدرک آکادمیک است که پس از تحصیل در یک دانشگاه/کالج دریافت می‌شود. تحصیل در دانشگاه به طور معمول حداقل 3 سال طول می‌کشد. لطفا نام گواهینامه‌ای را که دریافت کرده‌اید وارد کنید.</target></trans-unit>
+<trans-unit id="infoAusbildungsort"><source>Bitte geben Sie die Stadt an, in der Sie Ihren Abschluss gemacht haben.</source><target>	لطفا نام شهری را که در آن گواهینامه خود را دریافت کرده‌اید وارد کنید.</target></trans-unit>
+<trans-unit id="infoBerufserfahrung"><source>Bitte geben Sie an, wie lange Sie schon im Beruf der Ausbildung/des Studiums gearbeitet haben (Monate/Jahre).</source><target>	لطفا مدتی را که در شغل مربوطه آموزش دیده‌اید یا در دانشگاه تحصیل کرده‌اید (ماه/سال) وارد کنید.</target></trans-unit>
+<trans-unit id="infoAusbildungsfremdeBerufserfahrung"><source>“Ausbildungsfremd“ bedeutet, dass Sie in einem anderen Beruf als dem der Ausbildung/des Studiums gearbeitet haben. Bitte geben Sie an was das war und wie lange Sie gearbeitet haben (Monate/Jahre).</source><target>	«غیرمرتبط با آموزش» یعنی این که شما در شغلی غیرمرتبط با شغل مورد آموزش/رشته دانشگاهی کار کرده‌اید. لطفا نام آن و مدتی را که کار کرده‌اید (ماه/سال) وارد کنید.</target></trans-unit>
+<trans-unit id="infodeutscherBeruf"><source>Falls bekannt, geben Sie zu Ihrem Abschluss die deutsche Bezeichnung des Berufes an.</source><target>	اگر نام آلمانی معادل شغل مربوط به گواهینامه خود را می‌دانید، بنویسید.</target></trans-unit>
+<trans-unit id="infoBezug"><source>Von welcher Institution/Behörde/Amt erhalten Sie aktuell Geld für Ihren Lebensunterhalt? Bitte geben Sie diese Institution/Behörde/Amt hier an.</source><target>	در حال حاضر برای مخارج زندگی خود از کدام موسسه/نهاد/اداره پول دریافت می‌کنید. لطفا نام این موسسه/نهاد/اداره را وارد کنید.</target></trans-unit>
+<trans-unit id="infoBezugsart"><source><![CDATA[Welche Art des Bezugs (Geld für den Lebensunterhalt) erhalten Sie aktuell?
+      SGB II: Grundsicherung für Arbeitssuchende (Hartz IV)
+      SGB III: Leistungen aus der Arbeitslosenversicherung und Arbeitsförderung
+      Asylbewerberleistungsbezug: Grundsicherung für Asylbewerber, Geduldete und Ausländer, die vollziehbar zur Ausreise verpflichtet sind.
+      Bitte geben Sie eine der Bezugsarten an.]]></source><target><![CDATA[در حال حاضر چه نوع کمک (پول برای مخارج زندگی) دریافت می‌کنید؟
+      SGB II: تامین نیازهای پایه برای کارجویان (Hartz IV)
+      SGB III: مزایای مربوط به تامین نیازهای بیکاران و حمایت از کار
+      دریافت مزایای پناهجویان: تامین نیازهای پایه پناهجویان، افراد دارای حکم تحمل و اتباع خارجی که به صورت قابل اجرا موظف به ترک کشور هستند.
+      لطفا نام یک نوع کمک را وارد کنید:]]></target></trans-unit>
+<trans-unit id="infofruehererAntrag"><source>Bitte geben Sie an, ob Sie in der Vergangenheit bereits schon einmal einen Antrag zur Anerkennung Ihres Abschlusses gestellt haben.</source><target>	لطفا اعلام کنید آیا در گذشته یکبار برای تایید گواهینامه‌های خود درخواست ارائه کرده‌اید یا نه.</target></trans-unit>
+<trans-unit id="infoInstitution"><source>Sofern Sie bereits einen Antrag auf Anerkennung Ihres Abschlusses gestellt haben, geben Sie bitte an dieser Stelle an, bei welcher Institution/Behörde und ggf. in welchem Land Sie dies getan haben.</source><target>	اگر قبلا یک درخواست برای تایید گواهینامه‌های خود ارائه کرده‌اید، لطفا در این قسمت نام موسسه/اداره‌ و در صورت امکان نام کشوری را که در آن این کار را انجام داده‌اید وارد کنید.</target></trans-unit>
+<trans-unit id="headabschlussrechts"><source>weiterer Abschluss</source><target>	گواهینامه دیگر</target></trans-unit>
+<trans-unit id="headabschlussrechtsausblenden"><source>Abschluss ausblenden</source><target>	پنهان کردن گواهینامه</target></trans-unit>
+<trans-unit id="anredemail"><source>Guten Tag</source><target>	روز به خیر</target></trans-unit>
+<trans-unit id="mailtext"><source><![CDATA[
+         <p>vielen Dank für Ihre Informationen.</p> <p>&nbsp;</p> <p>Sie sind jetzt zur Beratung angemeldet. Wir setzen uns mit Ihnen in Verbindung, sobald Sie an der Reihe sind. <br><br>Die Beratung erfolgt nach Wunsch über E-Mail, Telefon oder Videochat.</p> <p>Wir bemühen uns, Ihre Anfrage innerhalb von 6 Wochen zu bearbeiten. Wir bitten um Ihr Verständnis und Ihre Geduld.</p><p>&nbsp;</p> <p>Mit freundlichen Grüßen</p>Ihre Mobile IQ Anerkennungs- und Qualifizierungsberatung
+         ]]></source><target><![CDATA[
+         <p>از اطلاعات‌تان سپاسگزاریم.</p> <p>&nbsp;</p> <p>شما اکنون برای مشاوره نام‌نویسی کرده‌اید. هنگامی که در نوبت قرار گرفتید، ما با شما تماس می‌گیریم. <br><br>در صورت تمایل، انجام مشاوره از طریق ایمیل، تلفن یا چت تصویری ممکن است.</p> <p>ما تلاش می‌کنیم به درخواست شما را ظرف 6 هفته رسیدگی کنیم. از شما خواهشمندیم شرایط را درک کنید و بردبار باشید.</p><p>&nbsp;</p> <p>با احترامات دوستانه</p>تیم سیار مشاوره تایید و تعیین صلاحیت IQ (یکپارچگی از طریق تعیین صلاحیت)
+         ]]></target></trans-unit>
+<trans-unit id="subject"><source>Ihre Anmeldung zur Anerkennungserstberatung NRW</source><target>	نام‌نویسی شما برای مشاوره تایید نورد-راین‌ وستفالن</target></trans-unit>
+<trans-unit id="confirmlinktext"><source><![CDATA[
+         Bestätigung der Anmeldung - Confirm registration
+         ]]></source><target><![CDATA[
+         تایید نام‌نویسی
+         ]]></target></trans-unit>
+<trans-unit id="confirmmailtext1"><source><![CDATA[
+         <p>Liebe*r Ratsuchende*r,</p> <p>&nbsp;</p> <p>bestätigen Sie Ihre Anmeldung zur Anerkennungserstberatung bitte hier:</p>
+         ]]></source><target><![CDATA[
+         <p>متقاضی مشاوره عزیز</p> <p>&nbsp;</p> <p>لطفا نام‌نویسی خود را برای مشاوره تایید، در اینجا تایید کنید:</p>
+         ]]></target></trans-unit>
+<trans-unit id="confirmmailtext2"><source><![CDATA[
+         <p>Mit freundlichem Gruß</p> <p>Ihre Mobile IQ Anerkennungs- und Qualifizierungsberatung</p>
+         ]]></source><target><![CDATA[
+         <p>با احترام</p> <p>تیم سیار مشاوره تایید و تعیین صلاحیت IQ (یکپارچگی از طریق تعیین صلاحیت)</p>
+         ]]></target></trans-unit>
+<trans-unit id="confirmsubject"><source>Bitte bestätigen Sie Ihre Anmeldung zur Anerkennungserstberatung NRW</source><target>	لطفا نام‌نویسی خود را برای مشاوره تایید نورد-راین‌ وست‌فالن تایید کنید</target></trans-unit>
+<trans-unit id="wurdebereitsberaten"><source>Wurde bereits beraten, Ja</source><target>	قبلا مشاوره دریافت شده است، بله</target></trans-unit>
+<trans-unit id="erstberatungfertig"><source>Die Erstberatung ist beendet</source><target>	مشاوره نخست به پایان رسیده است</target></trans-unit>
+<trans-unit id="anmeldedatum"><source>Anmeldedatum</source><target>	تاریخ نام‌نویسی</target></trans-unit>
+	
+    </body>
+  </file>
+</xliff>

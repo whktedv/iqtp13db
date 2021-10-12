@@ -1,0 +1,32 @@
+
+<f:layout name="Default" />
+<f:section name="HeaderAssets">
+  		<link rel="stylesheet" href="{f:uri.resource(path: 'CSS/customtp13dbadmin.css')}"/>  		
+</f:section>
+<f:section name="main">
+<h1>Liste der Berater*innen</h1>
+
+<f:flashMessages />
+
+<table  class="tx_iqtp13db" >
+	<tr>
+		<th><f:translate key="tx_iqtp13db_domain_model_berater.name" /></th>
+		<th><f:translate key="tx_iqtp13db_domain_model_berater.kuerzel" /></th>
+		<th><f:translate key="tx_iqtp13db_domain_model_berater.organisation" /></th>
+		<th> </th>
+		<th> </th>
+	</tr>
+
+	<f:for each="{beraters}" as="berater">
+		<tr>
+			<td><f:link.action action="show" arguments="{berater : berater}">{berater.name}</f:link.action></td>
+			<td><f:link.action action="show" arguments="{berater : berater}">{berater.kuerzel}</f:link.action></td>
+			<td><f:link.action action="show" arguments="{berater : berater}">{berater.organisation}</f:link.action></td>
+			<td><f:link.action action="edit" class="linkbuttons" arguments="{berater : berater}">Bearbeiten</f:link.action></td>
+			<td><f:link.action action="delete" class="linkbuttons" arguments="{berater : berater}">Löschen</f:link.action></td>
+		</tr>
+	</f:for>
+</table>
+
+<f:link.action class="linkbuttons" action="new">Neue*r Berater*in</f:link.action>
+</f:section>

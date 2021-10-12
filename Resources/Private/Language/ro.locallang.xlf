@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="de" datatype="plaintext" original="messages" date="2016-09-01T11:23:16Z" product-name="iqtp13db" target-language="ro">
+    <header/>
+    <body>
+    			<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbadmin"><source>IQ TP13 DB Adminbereich</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbadmin.description"><source></source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbwebapp"><source>IQ TP13 DB Webapp</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbwebapp.description"><source></source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer"><source>Teilnehmer</source><target>Participant*ă</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.beratungsstatus"><source>Beratungsstatus</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.niqchiffre"><source>NIQ Chiffre</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.schonberaten"><source>Wurden Sie schon einmal zur Anerkennung Ihres ausländischen Berufsabschlusses beraten?</source><target>Ați fost vreodată consiliat cu privire la recunoașterea calificării dumneavoastră profesionale străine?</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.schonberatenvon"><source>Von wem wurden Sie beraten?</source><target>De cine ați fost consiliat?</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.nachname"><source>Nachname</source><target>Nume de familie</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.vorname"><source>Vorname</source><target>Prenume</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.plz"><source>PLZ</source><target>Codul poștal</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ort"><source>Ort</source><target>Localitate</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.email"><source>E-Mail</source><target>E-mail</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.confirmemail"><source>E-Mail bestätigen</source><target>Confirmați e-mail</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.telefon"><source>Telefon</source><target>Telefon</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.lebensalter"><source>Alter</source><target>Vârstă </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geburtsland"><source>Geburtsland</source><target>Țara de origine</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geschlecht"><source>Geschlecht</source><target>Sex</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erste_staatsangehoerigkeit"><source>Erste Staatsangehoerigkeit</source><target>Prima naționalitate</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zweite_staatsangehoerigkeit"><source>Zweite Staatsangehoerigkeit</source><target>A doua naționalitate</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einreisejahr"><source>Einreisejahr</source><target>Anul de intrare</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_deutschland"><source>Wohnsitz Deutschland</source><target>Reședința în Germania</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_nein_in"><source>Wohnsitz in</source><target>Reședința în </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><source>Deutsch als Muttersprache?</source><target>Germana ca limbă maternă?</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikatdeutsch"><source>Zertifikatdeutsch</source><target>Certificat germană</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><source>Wenn Zertifikat vorhanden, auf welchem Sprachniveau?</source><target>Dacă certificatul este disponibil, la ce nivel de limbă?</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussart1"><source>Abschlussart1</source><target>Tip de calificare1</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussart2"><source>Abschlussart2</source><target>Tip de calificare2</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsland1"><source>Erwerbsland1</source><target>Țară de dobândire1</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.dauer_berufsausbildung1"><source>Dauer Berufsausbildung1</source><target>Durată de pregătire profesională1</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussjahr1"><source>Abschlussjahr1</source><target>Anul absolvirii1</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsinstitution1"><source>Ausbildungsinstitution1</source><target>Instituția de formare1</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsort1"><source>Ausbildungsort1</source><target>Locul de formare1</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschluss1"><source>Abschluss1</source><target>Calificare1</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.berufserfahrung1"><source>Berufserfahrung1</source><target>Experiența de muncă1</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutscher_referenzberuf1"><source>Deutscher Referenzberuf1</source><target>Profesia germană de referință1</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wunschberuf1"><source>Wunschberuf1</source><target>Profesia dorită1</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsstatus"><source>Erwerbsstatus</source><target>Statutul de angajare1</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezug"><source>Leistungsbezug</source><target>Primirea de prestații</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus"><source>Aufenthaltsstatus</source><target>Statutul de ședere</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatusfreitext"><source>Anmerkung zum Aufenthaltsstatus</source><target>Observație privind statutul de ședere</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag"><source>Wurde schon ein Antrag auf Anerkennung des Berufsabschlusses gestellt?</source><target>A fost deja depusă o cerere de recunoaștere a calificării profesionale?</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag_referenzberuf"><source>Für welchen Beruf?</source><target>Pentru ce profesie?</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag_institution"><source>Bei welcher Institution oder Behörde?</source><target>Cu ce instituție sau autoritate?</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.anz_beratungen"><source>Anz Beratungen</source><target>Număr consultări</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.weitere_sprachkenntnisse"><source>Weitere Sprachkenntnisse</source><target>Alta cunoștințe de limbă</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.sprachen"><source>Welche Sprachen sprechen Sie?</source><target>Ce limbi vorbiți?</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.bescheidfrueherer_anerkennungsantrag"><source>Haben Sie schon die Entscheidung von der anerkennenden Stelle (Bescheid) erhalten?</source><target>Ați primit deja decizia din partea organismului de recunoaștere?</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_beratungsstelle"><source>Wie haben Sie uns gefunden?</source><target>Cum ne-ați găsit?</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligung"><source>Einwilligung</source><target>consimțământ</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsland2"><source>Erwerbsland2</source><target>Țară de dobândire2</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.dauer_berufsausbildung2"><source>Dauer Berufsausbildung2</source><target>Durată de pregătire profesională2</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussjahr2"><source>Abschlussjahr2</source><target>Anul absolvirii2</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsinstitution2"><source>Ausbildungsinstitution2</source><target>Instituția de formare2</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsort2"><source>Ausbildungsort2</source><target>Loc de formare2</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschluss2"><source>Abschluss2</source><target>Diplomă2</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.berufserfahrung2"><source>Berufserfahrung2</source><target>Experiența de muncă2</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutscher_referenzberuf2"><source>Deutscher Referenzberuf2</source><target>Profesia germană de referință2</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wunschberuf2"><source>Wunschberuf2</source><target>Profesia dorită2</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezugjanein"><source>Bekommen Sie Geld vom Jobcenter oder der Agentur für Arbeit?</source><target>Primiți bani de la Jobcenter sau Agenția pentru ocuparea forței de muncă? </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezug"><source>Leistungsbezug</source><target>Primirea de prestații</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungstextaa"><source>Mit der Angabe der folgenden Daten willige ich ein, dass der Agentur für Arbeit bzw. dem Jobcenter meine Daten zum Zwecke bzw. im Rahmen der Anerkennungsberatung weitergegeben werden dürfen.</source><target>Prin furnizarea următoarelor informații, sunt de acord ca datele mele să fie transmise către Agenția pentru ocuparea forței de muncă sau către Jobcenter în scopul sau în cadrul consilierii de recunoaștere.</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_a"><source>Möchten Sie, dass wir das Beratungsergebnis an Ihre Berater*in weiterleiten?</source><target>Doriți ca noi să transmitem rezultatul consultării consultantului/consultantei dumneavoastră?</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_adatum"><source>Datum der Einwilligung zur Weitergabe</source><target>Data consimțământului pentru divulgare</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_amedium"><source>Medium der Einwilligung</source><target>Mediul de consimțământ</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_berater_a_a"><source>Name Berater*in</source><target>Nume consultant*ă</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kontakt_berater_a_a"><source>Kontakt (E-Mail und Telefon)</source><target>Contact (e-mail și telefon)</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kundennummer_a_a"><source>Ihre Kundennummer</source><target>Numărul dumneavoastră de client</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstelle"><source>Einwilligung Weitergabe Daten an anerkennende Stelle</source><target>Consimțământul pentru transmiterea datelor către organismul de recunoaștere</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstelledatum"><source>Datum der Einwilligung zur Weitergabe</source><target>Data consimțământului pentru divulgare</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstellemedium"><source>Medium der Einwilligung</source><target>Mediul de consimțământ</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstellename"><source>Name Ansprechpartner und Organisation</source><target>Nume persoană de contact și organizație</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstellekontakt"><source>Kontakt (E-Mail und Telefon)</source><target>Contact (e-mail și telefon)</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_person"><source>Einwilligung Weitergabe Daten an weitere Person</source><target>Consimțământul de a transmite datele unei alte persoane</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_persondatum"><source>Datum der Einwilligung zur Weitergabe</source><target>Data consimțământului pentru divulgare</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personmedium"><source>Medium der Einwilligung</source><target>Mediul de consimțământ</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personname"><source>Name der Person und ggf. Organisation</source><target>Numele persoanei și, dacă este cazul, al organizației</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personkontakt"><source>Kontakt (E-Mail und Telefon)</source><target>Contact (e-mail și telefon)</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus"><source>Aufenthaltsstatus</source><target>Statutul de ședere</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.notizen"><source>Was möchten Sie uns noch mitteilen oder haben Sie schon eine konkrete Frage?</source><target>Ce altceva ați dori să ne spuneți sau aveți deja o întrebare specifică?</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.verification_code"><source>Bestätigungscode</source><target>Cod de confiramre</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.verification_date"><source>Bestätigungs-Datum</source><target>Data de confirmare</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.verification_ip"><source>Bestätigungs-IP</source><target>IP de confirmare</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung"><source>Beratung</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.datum"><source>Datum Erstberatung</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.beratungsart"><source>Beratungsart</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.beratungsartfreitext"><source>Beratungsart face-to-face Freitext</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.beratungsort"><source>Beratungsort</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.beratungzu"><source>Beratung zu</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.referenzberufe"><source>Referenzberufe</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.anerkennendestellen"><source>Anerkennende Stellen</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.anerkennungsberatung"><source>Anerkennungsberatung</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.anerkennungsberatungfreitext"><source>Freitext zu 'sonstige Themen bezogen auf das Anerkennungsverfahren'</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.qualifizierungsberatung"><source>Qualifizierungsberatung</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.qualifizierungsberatungfreitext"><source>Freitext zu 'sonstige Themen bezogen auf Qualifizierung':</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.notizen"><source>Notizen</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.erstberatungabgeschlossen"><source>Erstberatung abgeschlossen</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.teilnehmer"><source>Teilnehmer*in</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_beratung.berater"><source>Berater*in</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_folgekontakt"><source>Folgekontakt</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.datum"><source>Datum</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.antraggestellt"><source>Antrag gestellt?</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.zab_gleichwertigkeit"><source>ZAB/Gleichwertigkeit</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.notizen"><source>Notizen</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.teilnehmer"><source>Ratsuchende*r</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.berater"><source>Berater*in</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_berater"><source>Berater*in</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_berater.name"><source>Name</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_berater.organisation"><source>Organisation</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_berater.kuerzel"><source>Kürzel</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_dokument"><source>Dokument</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_dokument.name"><source>Name</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_dokument.pfad"><source>Pfad</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_dokument.teilnehmer"><source>Teilnehmer*in</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbadmin"><source>IQ TP13 DB Adminbereich</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbadmin.description"><source></source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbwebapp"><source>IQ TP13 DB Webapp</source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbwebapp.description"><source></source><target></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsfremdeberufserfahrung1"><source>Ausbildungsfremde Berufserfahrung (Dauer, Jahre)</source><target>Experienţă profesională în afara meseriei pentru care sunteţi calificat (luni, ani)</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsfremdeberufserfahrung2"><source>Ausbildungsfremde Berufserfahrung (Dauer, Jahre)</source><target>Experienţă profesională în afara meseriei pentru care sunteţi calificat (luni, ani)</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussart"><source>Abschlussart</source><target>Tipul de absolvire</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsland"><source>In welchem Land?</source><target>În ce ţară?</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.dauer_berufsausbildung"><source>Dauer der Berufsausbildung oder des Studiums</source><target>Durata formării profesionale sau studiului</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussjahr"><source>Abschlussjahr</source><target>Anul absolvirii</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsinstitution"><source>Ausbildungsinstitution</source><target>Instituția de formare</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsort"><source>Ausbildungsort</source><target>Localitate de formare</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschluss"><source>Name des Abschlusses</source><target>Denumirea calificării</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutsch_abschlusstitel"><source>Deutsch Abschlusstitel</source><target>Calificarea germană</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutscher_referenzberuf"><source>Möglicher deutscher Beruf</source><target>Posibilă meserie germană</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.berufserfahrung"><source>Berufserfahrung im erlernten Beruf (Dauer, Jahre)</source><target>Experienţă profesională în străinătate </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.original_dokumente_abschluss"><source>Liegen die Original-Dokumente des Abschlusses vor?</source><target>Sunt disponibile documentele originale ale situațiilor calificare?</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wunschberuf"><source>Wunschberuf (wenn abweichend von Ausbildungsberuf)?</source><target>Profesia dorită</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdaten"><source>Einwilligung Datenübermittlung</source><target>Consimțământul pentru transmiterea datelor</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungtext"><source><![CDATA[Ich bin damit einverstanden, dass meine Daten zum Zweck der Bearbeitung meiner Anfrage genutzt werden.
+      Die <a href="https://www.iq-netzwerk-nrw.de/1/datenschutz-und-einwilligung/" target="_blank">Informationen zur Datenverarbeitung</a> habe ich zur Kenntnis genommen.
+      ]]></source><target><![CDATA[Sunt de acord ca datele mele să fie utilizate în scopul procesării cererii mele.
+Am luat la cunoștință de <a href="https://www.iq-netzwerk-nrw.de/1/protectieadatelor-si-consimtamant/" target="_blank">informații privind prelucrarea datelor</a>.]]></target></trans-unit>
+<trans-unit id="ja"><source>Ja</source><target>Da</target></trans-unit>
+<trans-unit id="nein"><source>Nein</source><target>Nu</target></trans-unit>
+<trans-unit id="ka"><source>k.A.</source><target>Nespecificat</target></trans-unit>
+<trans-unit id="maennlich"><source>männlich</source><target>masculin</target></trans-unit>
+<trans-unit id="weiblich"><source>weiblich</source><target>feminin</target></trans-unit>
+<trans-unit id="divers"><source>divers</source><target>divers</target></trans-unit>
+<trans-unit id="weiter"><source>Weiter</source><target>Continuă</target></trans-unit>
+<trans-unit id="zurueck"><source>Zurück</source><target>înapoi</target></trans-unit>
+<trans-unit id="abbruch"><source>Abbruch</source><target>întrerupere</target></trans-unit>
+<trans-unit id="fragebogen"><source>Fragebogen Seite</source><target>Pagină chestionar</target></trans-unit>
+<trans-unit id="persdaten"><source>Persönliche Daten</source><target>Date personale</target></trans-unit>
+<trans-unit id="deutschkenntnisse"><source>Deutsch als Muttersprache?</source><target>Germana este limbă maternă?</target></trans-unit>
+<trans-unit id="abschlussartoption1"><source>Ausbildungsabschluss</source><target>Calificarea profesională</target></trans-unit>
+<trans-unit id="abschlussartoption2"><source>Universitätsabschluss</source><target>Diplomă universitară</target></trans-unit>
+<trans-unit id="auslaendischerabschluss"><source>Ausländischer Abschluss</source><target>Calificare străină</target></trans-unit>
+<trans-unit id="beruflichesituation"><source>Berufliche Situation</source><target>Situaţia profesională</target></trans-unit>
+<trans-unit id="datenjobcenterarbeitsagentur"><source>Daten Jobcenter/Agentur für Arbeit</source><target>Date Jobcenter/Agenția pentru ocuparea forței de muncă</target></trans-unit>
+<trans-unit id="fruehereantraege"><source>Frühere Anträge</source><target>Cereri anterioare</target></trans-unit>
+<trans-unit id="angabenzurberatungsstelle"><source>Angaben zur Beratungsstelle</source><target>Informații despre organizația de consiliere</target></trans-unit>
+<trans-unit id="berater"><source>Berater*in</source><target>Consultant*ă</target></trans-unit>
+<trans-unit id="dokumente"><source>Dokumente</source><target>Documente</target></trans-unit>
+<trans-unit id="dokumenteintro"><source><![CDATA[
+      Bitte laden Sie folgende Dokumente als PDF-Datei hoch (insgesamt maximal 30 MB): <br>
+      - Ihre Original-Abschlüsse und Übersetzungen<br>
+      - Ihren Aufenthaltstitel; Lebenslauf; Bescheid
+      <br><h3>Hochgeladene Dokumente:</h3>
+      ]]></source><target><![CDATA[Vă rugăm să încărcaţi următoarele documente, ca fișier PDF  (maxium 3 Mbit): 
+<br>
+- Diplomele şi traducerile acestora<br>, 
+- titlul dumneavoastră de rezidenţă; CV-ul dvs.; decizia
+<br><h3>Documente încărcate:</h3>]]></target></trans-unit>
+<trans-unit id="dokumentauswaehlen"><source>Dokument auswählen</source><target>Document a alege</target></trans-unit>
+<trans-unit id="dokumenthochladen"><source>Dokument hochladen</source><target>Document a încărca</target></trans-unit>
+<trans-unit id="speicherplatzhinweis"><source>Speicherplatz für Dokumente verfügbar:</source><target>Spaţiu de stocare pentru document disponibil</target></trans-unit>
+<trans-unit id="loeschen"><source>Löschen</source><target>Șterge</target></trans-unit>
+<trans-unit id="hochladen"><source>Jetzt hochladen</source><target>Încarcă acum</target></trans-unit>
+<trans-unit id="absenden"><source>Jetzt absenden</source><target>Trimite acum</target></trans-unit>
+<trans-unit id="hinweisdatenpruefen"><source>Bitte überprüfen Sie Ihre Daten an dieser Stelle. Sofern alle Daten korrekt sind, klicken Sie abschließend auf den 'Absenden'-Button.</source><target>Vă rugăm să vă verificați datele în acest moment. Dacă toate datele sunt corecte, faceți clic pe butonul "Trimitere".</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_tnseite1.geschlecht"><source>Geschlecht</source><target>Sex</target></trans-unit>
+<trans-unit id="infoNachname"><source>Der Nachname entspricht Ihrem Familiennamen. Bitte geben Sie diesen hier an.</source><target>Numele de familie corespunde numelui dumneavoastră de familie. Vă rugăm să îl introduceți aici.</target></trans-unit>
+<trans-unit id="infoVorname"><source>Der Vorname ist Ihr erster Name vor dem Nachnamen und entspricht meistens Ihrem Rufnamen. Bitte geben Sie diesen hier an.</source><target>Prenumele este numele dvs. înainte de numele de familie și de obicei corespunde prenumelui dvs. Vă rugăm să îl introduceți aici. </target></trans-unit>
+<trans-unit id="infoGeburtsland"><source>Das Geburtsland entspricht dem Land, in dem Sie geboren wurden. Bitte geben Sie dieses hier an.</source><target>Țara de origine este țara în care v-ați născut. Vă rugăm să indicați acici dvs. de origine.</target></trans-unit>
+<trans-unit id="infoStaatsangehoerigkeit"><source>Sofern Sie zwei verschiedene Staatsangehörigkeiten/Nationalitäten haben, geben Sie bitte beide an.</source><target>In măsură în care aveți două cetățenii/naționalități diferite, vă rugăm să le indicați pe amândouă.</target></trans-unit>
+<trans-unit id="infoJahrEinreise"><source>Bitte geben Sie das Jahr an, in dem Sie nach Deutschland eingereist sind.</source><target>Vă rugăm să introduceți anul în care ați sosit în Germania.</target></trans-unit>
+<trans-unit id="infoWohnsitzinDeutschlandNein"><source>Bitte geben Sie an, in welchem Land Sie aktuell leben.</source><target>Vă rugăm să indicați în ce țară locuiți în prezent.</target></trans-unit>
+<trans-unit id="infoBundesland"><source>Bitte wählen Sie das Bundesland, in dem Sie aktuell leben.</source><target>Vă rugăm să selectați land federal în care locuiți în prezent.</target></trans-unit>
+<trans-unit id="infoAbschluss"><source>Ein Ausbildungsabschluss ist ein Abschluss einer beruflichen Ausbildung. Ein Universitätsabschluss ist ein akademischer Abschluss der nach einem Studium an einer Hochschule/Universität erworben wurde. Das Studium hat in der Regel mindestens 3 Jahre gedauert. Bitte geben Sie an welchen Abschluss Sie erworben haben.</source><target>O calificare obținută se referă la diploma profesională obținută. O diplomă universitară se referă la o diplomă academică obținută la o universitate. Durata diplomei este, de obicei, de 3 ani. Vă rugăm să indicați ce calificare ați dobândit.</target></trans-unit>
+<trans-unit id="infoAusbildungsort"><source>Bitte geben Sie die Stadt an, in der Sie Ihren Abschluss gemacht haben.</source><target>Vă rugăm să indicați orașul în care ați absolvit.</target></trans-unit>
+<trans-unit id="infoBerufserfahrung"><source>Bitte geben Sie an, wie lange Sie schon im Beruf der Ausbildung/des Studiums gearbeitet haben (Monate/Jahre).</source><target>Vă rugăm să indicați de cât timp lucrați în profesia de ucenicie / studiu (luni / ani).</target></trans-unit>
+<trans-unit id="infoAusbildungsfremdeBerufserfahrung"><source>“Ausbildungsfremd“ bedeutet, dass Sie in einem anderen Beruf als dem der Ausbildung/des Studiums gearbeitet haben. Bitte geben Sie an was das war und wie lange Sie gearbeitet haben (Monate/Jahre).</source><target>„În afara meseriei pentru care sunteți calificat” înseamnă că ați profesat în alt domeniu/ altă meserie decât cea în care ați obținut calificarea profesională (luni / ani). </target></trans-unit>
+<trans-unit id="infodeutscherBeruf"><source>Falls bekannt, geben Sie zu Ihrem Abschluss die deutsche Bezeichnung des Berufes an.</source><target>În cazul în care știți, vă rugăm să indicați denumirea germană a meseriei per care o aveți. </target></trans-unit>
+<trans-unit id="infoBezug"><source>Von welcher Institution/Behörde/Amt erhalten Sie aktuell Geld für Ihren Lebensunterhalt? Bitte geben Sie diese Institution/Behörde/Amt hier an.</source><target>De la ce instituție/autoritate/oficiu primiți în prezent bani pentru cheltuielile de întreținere? Vă rugăm să indicați aici această instituție/autoritate/oficiu.</target></trans-unit>
+<trans-unit id="infoBezugsart"><source><![CDATA[Welche Art des Bezugs (Geld für den Lebensunterhalt) erhalten Sie aktuell?
+      SGB II: Grundsicherung für Arbeitssuchende (Hartz IV)
+      SGB III: Leistungen aus der Arbeitslosenversicherung und Arbeitsförderung
+      Asylbewerberleistungsbezug: Grundsicherung für Asylbewerber, Geduldete und Ausländer, die vollziehbar zur Ausreise verpflichtet sind.
+      Bitte geben Sie eine der Bezugsarten an.]]></source><target><![CDATA[Ce tip de prestație (bani pentru cheltuielile de întreținere) primiți în prezent?
+SGB II: Prestații de bază pentru persoanele aflate în căutarea unui loc de muncă (Hartz IV)
+SGB III: Prestații din sistemul de asigurare de șomaj și de promovare a ocupării forței de muncă
+Prestații pentru solicitanții de azil: prestații de bază pentru solicitanții de azil, persoanele tolerate și străinii care au obligația executorie de a părăsi țara.
+Vă rugăm să indicați unul dintre tipurile de beneficii.
+]]></target></trans-unit>
+<trans-unit id="infofruehererAntrag"><source>Bitte geben Sie an, ob Sie in der Vergangenheit bereits schon einmal einen Antrag zur Anerkennung Ihres Abschlusses gestellt haben.</source><target>Vă rugăm să indicați dacă ați solicitat deja recunoașterea diplomei dumneavoastră în trecut.</target></trans-unit>
+<trans-unit id="infoInstitution"><source>Sofern Sie bereits einen Antrag auf Anerkennung Ihres Abschlusses gestellt haben, geben Sie bitte an dieser Stelle an, bei welcher Institution/Behörde und ggf. in welchem Land Sie dies getan haben.</source><target>În cazul în care ați depus deja o cerere de recunoaștere a diplomei dumneavoastră, vă rugăm să indicați aici instituția/autoritatea și, dacă este cazul, țara în care ați făcut acest demers.</target></trans-unit>
+<trans-unit id="headabschlussrechts"><source>weiterer Abschluss</source><target>Alt tip de calificare</target></trans-unit>
+<trans-unit id="anredemail"><source>Guten Tag</source><target>Bună ziua</target></trans-unit>
+<trans-unit id="mailtext"><source><![CDATA[
+         <p>vielen Dank für Ihre Informationen.</p> <p>&nbsp;</p> <p>Sie sind jetzt zur Beratung angemeldet. Wir setzen uns mit Ihnen in Verbindung, sobald Sie an der Reihe sind. <br><br>Die Beratung erfolgt nach Wunsch über E-Mail, Telefon oder Videochat.</p> <p>Wir bemühen uns, Ihre Anfrage innerhalb von 6 Wochen zu bearbeiten. Wir bitten um Ihr Verständnis und Ihre Geduld.</p><p>&nbsp;</p> <p>Mit freundlichen Grüßen</p>Ihre Mobile IQ Anerkennungs- und Qualifizierungsberatung
+         ]]></source><target><![CDATA[<p>Vă mulțumim pentru informații.</p><p>&nbsp;</p><p>Sunteți acum înregistrat pentru consultare. Vă vom contacta de îndată ce vă va veni rândul. <br><br>Consultanța este oferită prin e-mail, telefon sau videochat, la cerere. </p> Ne propunem să procesăm cererea dumneavoastră în termen de 6 săptămâni. Vă rugăm să aveți înțelegere și răbdare. </p><p>&nbsp;</p><p>Cu stimă</p>Serviciul dumneavoastră de consultanță pentru recunoaștere și calificare Mobile IQ]]></target></trans-unit>
+<trans-unit id="subject"><source>Ihre Anmeldung zur Anerkennungserstberatung NRW</source><target>Înregistrarea dvs. pentru consultarea inițială de recunoaștere NRW</target></trans-unit>
+<trans-unit id="confirmlinktext"><source><![CDATA[
+         Bestätigung der Anmeldung - Confirm registration
+         ]]></source><target><![CDATA[Confirmare de înregistrare - Confirm registration]]></target></trans-unit>
+<trans-unit id="confirmmailtext1"><source><![CDATA[
+         <p>Liebe*r Ratsuchende*r,</p> <p>&nbsp;</p> <p>bestätigen Sie Ihre Anmeldung zur Anerkennungserstberatung bitte hier:</p>
+         ]]></source><target><![CDATA[<p>Dragi solicitanți de sfaturi, </p><p>&nbsp;</p><p>vă rugăm să confirmați aici înregistrarea dumneavoastră pentru consultarea de recunoaștere:</p>]]></target></trans-unit>
+<trans-unit id="confirmmailtext2"><source><![CDATA[
+         <p>Mit freundlichem Gruß</p> <p>Ihre Mobile IQ Anerkennungs- und Qualifizierungsberatung</p>
+         ]]></source><target><![CDATA[<p>Cu stimă</p><p>Consiliere calificare şi recunoaştere Mobile IQ NRW</p>]]></target></trans-unit>
+<trans-unit id="confirmsubject"><source>Bitte bestätigen Sie Ihre Anmeldung zur Anerkennungserstberatung NRW</source><target>Vă rugăm să confirmați înregistrarea dumneavoastră pentru consilierea de recunoaștere NRW</target></trans-unit>
+<trans-unit id="wurdebereitsberaten"><source>Wurde bereits beraten, Ja</source><target>Consilierea a avut loc, da</target></trans-unit>
+    </body>
+  </file>
+</xliff>

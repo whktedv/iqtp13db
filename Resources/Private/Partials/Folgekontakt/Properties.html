@@ -1,0 +1,43 @@
+<div class="fframe">
+		
+		<div class="tp13_formdivwebapp">
+			<label for="datum">
+				<f:translate key="tx_iqtp13db_domain_model_beratung.datum" />
+			</label>
+				<span class="propdat">{folgekontakt.datum -> f:format.date(format: 'd.m.Y')}</span>
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="berater">
+				<f:translate key="tx_iqtp13db_domain_model_beratung.berater" />
+			</label>
+				<span class="propdat">{folgekontakt.berater.name}</span>
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="antraggestellt">
+				<f:translate key="tx_iqtp13db_domain_model_folgekontakt.antraggestellt" />
+			</label>
+			<span class="propdat">
+			<f:if condition="{folgekontakt.antraggestellt} == 1"><f:then>
+				<f:translate key="ja" />
+			</f:then>
+			<f:else>
+				<f:translate key="nein" />
+			</f:else>
+			</f:if>
+			</span>
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="zab_gleichwertigkeit">
+				<f:translate key="tx_iqtp13db_domain_model_folgekontakt.zab_gleichwertigkeit" />
+			</label>
+			<span class="propdat">
+			{f:if(condition: "{folgekontakt.zabGleichwertigkeit} == 1", then: 'ZAB')}
+			{f:if(condition: "{folgekontakt.zabGleichwertigkeit} == 2", then: 'Gleichwertigkeit')}
+		</div>		
+		<div class="tp13_formdivwebapp">
+			<label for="notizen" class="tp13_options">
+				<f:translate key="tx_iqtp13db_domain_model_folgekontakt.notizen" />
+			</label>
+				<span class="propdat"><f:format.html>{folgekontakt.notizen}</f:format.html></span>
+		</div>		
+</div>

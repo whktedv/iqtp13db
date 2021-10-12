@@ -1,0 +1,67 @@
+<f:layout name="Default" />
+<f:section name="HeaderAssets">
+  		<link rel="stylesheet" href="{f:uri.resource(path: 'CSS/customtp13dbadmin.css')}"/>  		
+</f:section>
+
+<f:section name="main">
+<h1>Filter</h1>
+<f:form method="post" controller="Teilnehmer" action="listdeleted" name="listdeleted"  noCacheHash="true" >
+		Name: <f:form.textfield size="20" value="{filtername}" name="name" />&nbsp;&nbsp;
+		Ort: <f:form.textfield size="20" value="{filterort}" name="ort" />&nbsp;&nbsp;
+		Beruf: <f:form.textfield size="20" value="{filterberuf}" name="beruf" />&nbsp;&nbsp;
+		Geburtsland: <f:form.textfield value="{filterland}" size="20" name="land" />&nbsp;&nbsp;&nbsp;&nbsp;
+		<f:if condition="{filteron}"><f:then><f:form.button name="filteraus" value="1" >Filter löschen</f:form.button></f:then></f:if>
+		<f:form.submit name="filteran" value="Filtern" />			
+</f:form>
+<br>
+<h1>{teilnehmers -> f:count()} gelöschte Ratsuchende</h1>
+<f:flashMessages />
+
+<f:widget.paginate objects="{teilnehmers}" as="teilnehmerspag" configuration="{itemsPerPage: 50, insertAbove: 1}"> 
+	<table  class="tx_iqtp13db" >
+		<tr>
+			<th><f:link.action action="listdeleted" arguments="{orderby : 'nachname'}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" /></f:link.action></th>
+			<th><f:link.action action="listdeleted" arguments="{orderby : 'vorname'}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" /></f:link.action></th>
+			<th><f:link.action action="listdeleted" arguments="{orderby : 'schonberaten'}">Bereits<br>beraten</f:link.action></th>
+			<th><f:link.action action="listdeleted" arguments="{orderby : 'verificationDate'}"><f:translate key="anmeldedatum" /></f:link.action></th>
+			<th><f:link.action action="listdeleted" arguments="{orderby : 'ort'}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.plz" />/<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ort" /></f:link.action></th>
+			<th><f:link.action action="listdeleted" arguments="{orderby : 'bescheidfruehererAnerkennungsantrag'}">Früherer<br>Bescheid</f:link.action></th>
+			<th><f:link.action action="listdeleted" arguments="{orderby : 'leistungsbezugjanein'}">Leistung</f:link.action></th>
+			<th><f:link.action action="listdeleted" arguments="{orderby : 'geburtsland'}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geburtsland" />/-ort</f:link.action></th>
+			<th><f:link.action action="listdeleted" arguments="{orderby : 'geschlecht'}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geschlecht" /></f:link.action></th>
+			<th><f:link.action action="listdeleted" arguments="{orderby : 'deutscherReferenzberuf1'}">Referenzberuf</f:link.action></th>
+			<th> </th>
+		</tr>
+	
+		<f:for each="{teilnehmerspag}" as="teilnehmer">		
+			<f:if condition="{teilnehmer.dublette}"><f:then>
+				<tr class="dublette">
+			</f:then>
+			<f:else>
+				{f:if(condition: "{teilnehmer.verificationDate} != 0", then: '<tr class="bestaetigt">', else: '<tr>')}
+			</f:else>
+			</f:if>
+				<td>{teilnehmer.nachname}</td>
+				<td>{teilnehmer.vorname}</td>
+				<td class="tdcenter">{f:if(condition: '{teilnehmer.schonberaten} == 1', then: '✓', else: '')}</td>
+				<td class="tdcenter">{f:if(condition: '{teilnehmer.verificationDate} == 0', then: 'unbestätigt', else: '{f:format.date(date: teilnehmer.verificationDate, format:"d.m.Y")}')}</td>
+				<td>{teilnehmer.plz} {teilnehmer.ort}</td>
+				<td class="tdcenter">{f:if(condition: '{teilnehmer.bescheidfruehererAnerkennungsantrag} == 1', then: '✓', else: '')}</td>
+				<td class="tdcenter">{f:if(condition: '{teilnehmer.leistungsbezugjanein} == 1', then: '✓', else: '')}</td>
+				<td>{teilnehmer.geburtsland}</td>
+				<td class="tdcenter">{f:if(condition: '{teilnehmer.geschlecht} == 2', then: '<span style="color: #84a0ff;">M</span>')}
+				{f:if(condition: '{teilnehmer.geschlecht} == 1', then: '<span style="color: #fe7a84;">W</span>')}
+				{f:if(condition: '{teilnehmer.geschlecht} == 3', then: '<span>D</span>')}</td>
+				<td>{teilnehmer.deutscherReferenzberuf1} {f:if(condition: '{teilnehmer.deutscherReferenzberuf2} != ""', then: ', {teilnehmer.deutscherReferenzberuf2}', else: '')} </td>
+				<td><f:link.action class="linkbuttons" action="undelete" arguments="{tnuid : teilnehmer.uid}" onclick="return confirm('Wirklich wiederherstellen?');" >Wiederherstellen</f:link.action></td>
+			</tr>
+		</f:for>
+	</table>
+</f:widget.paginate> 
+
+<br>
+<span style="font-weight: bold; font-size: 0.7rem; margin-left: 5px;">Legende:</span>
+<table><tr><td>Anmeldung noch nicht bestätigt</td><td class="bestaetigt">Anmeldung bestätigt</td><td class="dublette">mögliche Dublette</td></tr></table>
+
+</f:section>
+

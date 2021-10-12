@@ -1,0 +1,107 @@
+<div class="fframe"><h2>Erstberatung</h2>
+		<div class="tp13_formdivwebapp">
+			<label for="datum">
+				<f:translate key="tx_iqtp13db_domain_model_beratung.datum" />
+			</label>
+				<span class="propdat">{beratung.datum}</span>
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="berater">
+				<f:translate key="tx_iqtp13db_domain_model_beratung.berater" />
+			</label>
+				<span class="propdat">{beratung.berater.name}</span>
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="beratungsart">
+				<f:translate key="tx_iqtp13db_domain_model_beratung.beratungsart" />
+			</label>
+			<f:for each="{beratung.beratungsart}" as="beratungart">
+				<f:for each="{settings.beratungsart}" as="text" key="wert">
+					{f:if(condition: '{beratungart} == {wert}', then: '<span class="propdat">{text}</span>')}
+				</f:for>
+			</f:for>		
+		</div>
+		<f:for each="{beratung.beratungsart}" as="beratungart">
+		<f:if condition="{beratungart} == 1"><f:then>
+			<div class="tp13_formdivwebapp">
+				<label for="beratungsartfreitext">
+					<f:translate key="tx_iqtp13db_domain_model_beratung.beratungsartfreitext" />
+				</label>
+					<span class="propdat">{beratung.beratungartfreitext}</span>
+			</div>
+			<div class="tp13_formdivwebapp">
+				<label for="beratungsort">
+					<f:translate key="tx_iqtp13db_domain_model_beratung.beratungsort" />
+				</label>
+					<span class="propdat">{beratung.beratungsort}</span>
+			</div>
+		</f:then>
+		</f:if>
+		</f:for>	
+		<div class="tp13_formdivwebapp">
+			<label for="beratungzu">
+				<f:translate key="tx_iqtp13db_domain_model_beratung.beratungzu" />
+			</label>
+			<f:for each="{beratung.beratungzu}" as="beratungzu">
+				<f:for each="{settings.beratungzu}" as="text" key="wert">
+					{f:if(condition: '{beratungzu} == {wert}', then: '<span class="propdat">{text}</span>')}
+				</f:for>
+			</f:for>		
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="referenzberufe">
+				<f:translate key="tx_iqtp13db_domain_model_beratung.referenzberufe" />
+			</label>
+			<span class="propdat">{beratung.referenzberufe}</span>
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="anerkennendestellen">
+				<f:translate key="tx_iqtp13db_domain_model_beratung.anerkennendestellen" />
+			</label>
+			<span class="propdat">{beratung.anerkennendestellen}</span>
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="anerkennungsberatung">
+				<f:translate key="tx_iqtp13db_domain_model_beratung.anerkennungsberatung" />
+			</label>
+			<f:for each="{beratung.anerkennungsberatung}" as="anerkennungsberatung">
+				<f:for each="{settings.anerkennungsberatung}" as="text" key="wert">
+					{f:if(condition: '{anerkennungsberatung} == {wert}', then: '<span class="propdat">{text}</span>')}
+				</f:for>
+			</f:for>	
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="anerkennungsberatungfreitext">
+				<f:translate key="tx_iqtp13db_domain_model_beratung.anerkennungsberatungfreitext" />
+			</label>
+			<span class="propdat">{beratung.anerkennungsberatungfreitext}</span>
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="qualifizierungsberatung">
+				<f:translate key="tx_iqtp13db_domain_model_beratung.qualifizierungsberatung" />
+			</label>
+			<f:for each="{beratung.qualifizierungsberatung}" as="qualifizierungsberatung">
+				<f:for each="{settings.qualifizierungsberatung}" as="text" key="wert">
+					{f:if(condition: '{qualifizierungsberatung} == {wert}', then: '<span class="propdat">{text}</span>')}
+				</f:for>
+			</f:for>		
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="qualifizierungsberatungfreitext">
+				<f:translate key="tx_iqtp13db_domain_model_beratung.qualifizierungsberatungfreitext" />
+			</label>
+			<span class="propdat">{beratung.qualifizierungsberatungfreitext}</span>
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="notizen">
+				<f:translate key="tx_iqtp13db_domain_model_beratung.notizen" />
+			</label>
+			<span class="propdat">{beratung.notizen}</span>
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="erstberatungabgeschlossen">
+				<f:translate key="tx_iqtp13db_domain_model_beratung.erstberatungabgeschlossen" />
+			</label>
+			<span class="propdat">{beratung.erstberatungabgeschlossen}</span>			
+		</div>
+</div>

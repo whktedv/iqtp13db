@@ -1,0 +1,157 @@
+#mainnavbar {
+	display: none;
+}
+
+.navbar-toggle {
+	display: none;
+}
+
+.navbar {
+	font-size: 1.0em;
+}
+
+.footernavi {
+	display: none;
+}
+
+.navbar-mainnavigation .navbar-brand {
+    height: 50px;
+}
+
+.navbar-mainnavigation > .container > .navbar-collapse, .navbar-mainnavigation > .container-fluid > .navbar-collapse {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.iq-standardcontainer-weiss {
+    margin-top: 0rem;
+    padding-top: 0rem;
+    overflow-x: scroll;
+}
+
+.defaultframe, .navbar-default, .navbar-default .container {
+	width: 100%;
+	max-width: 100%;
+}
+
+.tx-iqtp13db table {
+    border-collapse: separate;
+    border-spacing: 2px;
+    font-size: 0.9rem;
+}
+
+.tx-iqtp13db table th {
+	background-color: #dfefef;
+	padding: 3px;
+	text-align: center;
+	font-size: 0.7rem; 
+}
+
+.tx-iqtp13db table td {
+    vertical-align: middle;
+}
+
+.tx-iqtp13db table td.tdcenter {
+     text-align: center; 
+}
+
+.tx-iqtp13db table .dublette {
+    background-color: #ffc1c1;
+}
+
+.tx-iqtp13db table .bestaetigt {
+    background-color: bisque;
+}
+
+.pretablediv {
+	
+}
+
+td.fktd {
+	background-color: #d7e1f9;
+}
+
+table.fktable {
+	width: 100%;
+	display: none;
+}
+
+.showhidefk {
+	font-weight: bold;
+	color: #428BCA;
+}
+
+.tx_iqtp13db td.fklistdatum, .tx_iqtp13db td.fklistberater {
+	width: 15%;
+}
+
+.tx_iqtp13db td.fklistinhalt {
+	width: 70%;
+}
+
+
+td.tdcenter input[type="checkbox"] {
+	height: 1.5em;
+	width: 1.5em;
+	float: none;
+    margin: 0px;
+    width: auto;
+     -ms-transform: scale(1.5); 
+    -webkit-transform: scale(1.5);
+    transform: scale(1.5);
+}
+
+.historie {
+	margin-left: 40px;
+	display: flex;
+	flex-direction: column;
+	padding: 5px;
+	color: #ff4343;
+}
+
+.historieval {
+	font-size: 0.9rem;	
+}
+
+.tx-iqtp13db .linkbuttons {
+    background-color: #99CACA;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    margin-bottom: 0px;
+    font-weight: normal;
+    text-align: center;
+    line-height: 1.42857;
+    padding: 2px 4px;
+    vertical-align: middle;
+    border-radius: 3px;
+    margin: 1px;
+    color: #FFF;
+    cursor: pointer;
+    display: inline-block;
+    -moz-user-select: none;
+    text-decoration: none;
+}
+
+.togglebutton  {
+    background-color: #cfa6ce;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    margin-bottom: 0px;
+    font-weight: normal;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.42857;
+    padding: 2px 4px;
+    vertical-align: middle;
+    border-radius: 3px;
+    color: #FFF;
+    cursor: pointer;
+    display: inline-block;
+    -moz-user-select: none;
+	text-decoration: none;
+}
+
+.buttontextsmall {
+	font-size: 0.7rem !important;
+}
+

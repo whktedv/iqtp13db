@@ -1,0 +1,61 @@
+
+<f:layout name="Default" />
+
+<f:section name="main">
+<h1><f:translate key="fragebogen" /> 4 / 4</h1>
+
+<div id="dialog-confirm" title="Webapp - IQ Anerkennungsberatung">
+  <p><span class="ui-icon ui-icon-alert"></span>Anmeldung abbrechen / Cancel registration?</p>
+</div>
+
+<f:flashMessages />
+ 
+<f:form.validationResults for="{object}">
+	<f:if condition="{validationResults.flattenedErrors}">
+		<div class="error">
+			&nbsp;<b>Bitte prüfen Sie die rot markierten Felder / Please check the red highlighted fields.</b>
+		</div>
+	</f:if>
+</f:form.validationResults>
+				
+<div class="frame"><h2><f:translate key="dokumente" /></h2>
+	<p>
+		<f:format.raw><f:translate key="dokumenteintro" /></f:format.raw>
+	</p>		
+	<table>
+	<f:for each="{dokumente}" as="dokument">
+		<tr>
+		<td>{dokument.name}</td>
+		<td><f:link.action class="linkbuttons" action="deleteFileWebapp" controller="Dokument" arguments="{dokument:dokument, teilnehmer:teilnehmer}"><f:translate key="loeschen" /></f:link.action></td>
+		</tr>
+	</f:for>
+	</table>
+	<span class="speicherplatz"><f:translate key="speicherplatzhinweis" />{foldersize} %</span>
+	<f:form method="post" id="formupload" controller="Dokument" arguments="{teilnehmer:teilnehmer}" action="saveFileWebapp" name="dokument" object="{dokument}" enctype="multipart/form-data" noCacheHash="true" ><br />
+		<div class="tp13_formdiv100 dokupload">
+      		 <f:translate key="dokumentauswaehlen" />:&nbsp;
+      		<f:form.upload name="file" />
+      
+     	    <noscript>
+      		  <f:form.submit value="<f:translate key='hochladen' />" ></f:form.submit>
+      		</noscript>			
+  		</div>
+	</f:form>
+	
+</div>
+<hr>
+<f:form action="anmeldungcompleteredirect" name="teilnehmer" object="{teilnehmer}">
+	
+	<f:form.button name="btnzurueck"><f:translate key="zurueck" /></f:form.button>
+	<f:form.button type="button" name="btncancel" class="abbruchbtn" onclick="return btncancel_Click(0);"><f:translate key="abbruch" /></f:form.button>
+	<f:form.button name="btnAbsenden"><f:translate key="absenden" /></f:form.button>
+	
+	<f:translate key="hinweisdatenueberpruefen" /> 
+	<f:render partial="Teilnehmer/PropertiesAnmeldung" arguments="{teilnehmer:teilnehmer}" />
+	
+	<f:form.button name="btnzurueck"><f:translate key="zurueck" /></f:form.button>
+	<f:form.button type="button" name="btncancel" class="abbruchbtn" onclick="return btncancel_Click(0);"><f:translate key="abbruch" /></f:form.button>
+	<f:form.button name="btnAbsenden"><f:translate key="absenden" /></f:form.button>
+</f:form>
+
+</f:section>
