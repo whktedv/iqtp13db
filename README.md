@@ -52,29 +52,17 @@ Der System-Ordner <b>[DB] Daten Anerkennungsberatung</b> enthält die Berater, R
 <i>Zusätzlicher Hinweis zum Speicher: Wenn der Speicher mal nicht verfügbar war (z.B. wenn er auf einem NAS liegt), muss er im Backend im Bereich Dateispeicher manuell wieder "online" geschaltet werden. Die erfolgt mit der Checkbox "ist online?" in den Eigenschaften des jeweiligen Dateispeichers.)</i>
 In diesen Dateispeicher werden die Dateien der Ratsuchenden gespeichert, die während des Anmeldevorgangs hochgeladen werden können. Für jeden Ratsuchenden wird ein Verzeichnis erstellt, dass mit dem Format [Nachname]_[Vorname]_[UID] angelegt wird.<br></li>
 </ol>
-
-Im Typoscript Setup müssen folgende Werte eingetragen werden:
-
-plugin.tx_iqtp13db.settings {
-	sender = <E-Mail-Adresse des Absenders der automatisch erstellten E-Mails nach der Anmeldung>
-	bccmail = <BCC-E-Mail-Adresse der Anmeldungsbestätigung>
-	startseitelink = <Link zur Startseite der Webapp>
-	logolink = <Link zum Logo der Webapp für den Kopf der E-Mail-Bestätigung>
-  registrationpageuid = <ID der Anmeldungsseite (wird für die aus dem Backend angestossene Einwilligung benötigt)>
-}
-
-<h2>Hinweise zu den verschiedenen Unterseiten</h2>
-
-Die Startseite enthält nur einen einleitenden Text und einen Link auf die Seite „Anmelden“.<br>
-
-Auf der Seite <b>Anmeldung</b> ist das Plug-In <b>IQ TP13 DB Webapp</b> eingebunden. Als Typ bei Erweiterungsoptionen ist hier "Anmeldung" ausgewählt. Die <b>Anmelden Ende-Seite</b> wird aufgerufen, nachdem die Registrierung vom Ratsuchenden bestätigt wurde; in der oben angegebenen Seitenstruktur wäre das die Seite "Danke". Die Seite "Einwilligungsanforderung bestätigt" wird aufgerufen, wenn im Backend bei einem Teilnehmer per entsprechendem Button eine Einwilligung angefordert wird. Die weiteren Felder beziehen sich auf die E-Mails (Anfrage Registrierungsbestätigung und danach Anmeldebestätigung), die an den Ratsuchenden gehen. Die <b>Seite Bestätigungsmail angefordert</b> wird aufgerufen, nachdem der Ratsuchende in der Webapp Absenden angeklickt hat; in der o.a. Struktur ist das die Seite "Anmeldung versendet". Bei fehlerhafter Validierung (z.B. Link in der E-Mail defekt oder Eintrag nicht mehr vorhanden) erscheint die Seite, die unter <b>Seite Validierung fehlgeschlagen</b> angegeben ist; im Beispiel die Seite "Fehler". Über die Felder <b>Wartung von, Wartung bis</b> und <b>Wartung Text</b> werden genutzt, um die Anmeldung temporär zu deaktivieren und stattdessen den <b>Wartung Text</b> anzuzeigen.<br>
-Auf der Seite Datenschutz und Einwilligung sind die entsprechenden Datenschutzbestimmungen als normales Content-Element eingefügt. Unter Datensatzsammlung muss der Sysordner (im Beispiel oben „[DB] Daten Anerkennungsberatung“) ausgewählt werden. In diesen werden alle Daten der Beratenen gespeichert. Damit ist das Plugin konfiguriert und der Fragebogen zur Anmeldung sollte angezeigt werden.<br>
-
-Für das Backend (oder "Interner Bereich") muss eine Login-Seite für interne Nutzer angelegt werden. Diese enthält ein TYPO3-Inhaltselement vom Typ Formular/Anmeldung. Die Berechtigung für den Internen Bereich wird über den Zugriff der Seite gesetzt. Die zugehörigen Backend-User werden im System-Ordner <b>[DB] Benutzer</b> angelegt und sind ganz normale Website-Benutzer. Weitere Informationen dazu findet man, wenn man nach "Typo3 Zugriffsgeschützte Bereiche im Frontend" googelt.
-Im Internen Bereich werden Seiten entsprechend der Seitenstruktur angelegt, die jeweils ein Plugin <b>IQ TP13 DB Adminbereich</b> enthalten. Der Typ wird entsprechend dem Seitennamen eingestellt.
-Auch hier wird jeweils unter Datensatzsammlung der Sysordner (im Beispiel oben „[DB] Daten Anerkennungsberatung“) ausgewählt. Mindestens ein Datensatz vom Typ <b>Berater</b> <u>muss</u> angelegt sein, damit eine Anmeldung erfolgen kann. Das Kürzel des Beraters muss dem Typo3-Backend Benutzernamen entsprechen. Berater:innen legt man auf der Seite Berater*in an. <br><br>
-
-<h2>Texte/Sprachen</h2>
+<br>
+Im Typoscript Setup müssen folgende Werte eingetragen werden:<br>
+<br><br>
+<b>plugin.tx_iqtp13db.settings {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sender = (E-Mail-Adresse des Absenders der automatisch erstellten E-Mails nach der Anmeldung)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bccmail = (BCC-E-Mail-Adresse der Anmeldungsbestätigung)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;startseitelink = (Link zur Startseite der Webapp)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;logolink = (Link zum Logo der Webapp für den Kopf der E-Mail-Bestätigung)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;registrationpageuid = (ID der Anmeldungsseite - wird für die aus dem Backend angestossene Einwilligung benötigt)><br>
+}</b><br>
+<br>
 
 Um die Texte bzw. Beschriftungen im Formular anzupassen, können die entsprechend angepassten Texte im Typoscript Template angepasst werden per:<br>
 <b>plugin.tx_iqtp13db._LOCAL_LANG.[sprachcode].[tabelle].[wert] = [text]</b><br>
@@ -87,10 +75,22 @@ Die folgenden Texte sollten i.d.R. angepasst werden:<br>
 <b>plugin.tx_iqtp13db._LOCAL_LANG.de.confirmmailtext2 = (Grußformel im Text der E-Mail nach versendeter Anmeldung mit der Bitte um Bestätigung der Anmeldung)</b><br>
 <b>plugin.tx_iqtp13db._LOCAL_LANG.de.subject = (Betreffzeile der E-Mail nach bestätigter Anmeldung)</b><br>
 <b>plugin.tx_iqtp13db._LOCAL_LANG.de.mailtext = (Text der E-Mail nach bestätigter Anmeldung)</b><br>
-<b>plugin.tx_iqtp13db._LOCAL_LANG.de.tx_iqtp13db_domain_model_teilnehmer.einwilligungtext = (Text inkl. Link zur Datenschutzseite des Einwilligungshäkchens auf der ersten Seite der Anmeldung)</b><br>
-<b>Einwilligungstexte bitte für jede Sprache anpassen, da ansonsten immer der Link zu den Datenschutzbestimmungen des IQ Netzwerks NRW angegeben ist</b><br>
-
+<b>plugin.tx_iqtp13db._LOCAL_LANG.de.tx_iqtp13db_domain_model_teilnehmer.einwilligungtext = (Text inkl. Link zur Datenschutzseite des Einwilligungshäkchens auf der ersten Seite der Anmeldung)</b><br><br>
+Einwilligungstexte bitte für jede Sprache anpassen, da ansonsten immer der Link zu den Datenschutzbestimmungen des IQ Netzwerks NRW angegeben ist.<br>
+<br>
 Alle verfügbaren Variablen sind in den Language-Files der Extension zu finden. Insbesondere die Texte für die E-Mail an die/den Ratsuchende(n) sollten angepasst werden.<br>
+
+
+<h2>Hinweise zu den verschiedenen Unterseiten</h2>
+
+Die Startseite enthält nur einen einleitenden Text und einen Link auf die Seite „Anmelden“.<br>
+
+Auf der Seite <b>Anmeldung</b> ist das Plug-In <b>IQ TP13 DB Webapp</b> eingebunden. Als Typ bei Erweiterungsoptionen ist hier "Anmeldung" ausgewählt. Die <b>Anmelden Ende-Seite</b> wird aufgerufen, nachdem die Registrierung vom Ratsuchenden bestätigt wurde; in der oben angegebenen Seitenstruktur wäre das die Seite "Danke". Die Seite "Einwilligungsanforderung bestätigt" wird aufgerufen, wenn im Backend bei einem Teilnehmer per entsprechendem Button eine Einwilligung angefordert wird. Die weiteren Felder beziehen sich auf die E-Mails (Anfrage Registrierungsbestätigung und danach Anmeldebestätigung), die an den Ratsuchenden gehen. Die <b>Seite Bestätigungsmail angefordert</b> wird aufgerufen, nachdem der Ratsuchende in der Webapp Absenden angeklickt hat; in der o.a. Struktur ist das die Seite "Anmeldung versendet". Bei fehlerhafter Validierung (z.B. Link in der E-Mail defekt oder Eintrag nicht mehr vorhanden) erscheint die Seite, die unter <b>Seite Validierung fehlgeschlagen</b> angegeben ist; im Beispiel die Seite "Fehler". Über die Felder <b>Wartung von, Wartung bis</b> und <b>Wartung Text</b> werden genutzt, um die Anmeldung temporär zu deaktivieren und stattdessen den <b>Wartung Text</b> anzuzeigen.<br>
+Auf der Seite Datenschutz und Einwilligung sind die entsprechenden Datenschutzbestimmungen als normales Content-Element eingefügt. Unter Datensatzsammlung muss der Sysordner (im Beispiel oben „[DB] Daten Anerkennungsberatung“) ausgewählt werden. In diesen werden alle Daten der Beratenen gespeichert. Damit ist das Plugin konfiguriert und der Fragebogen zur Anmeldung sollte angezeigt werden.<br>
+
+Für das Backend (oder "Interner Bereich") muss eine Login-Seite für interne Nutzer angelegt werden. Diese enthält ein TYPO3-Inhaltselement vom Typ Formular/Anmeldung. Die Berechtigung für den Internen Bereich wird über den Zugriff der Seite gesetzt. Die zugehörigen Backend-User werden im System-Ordner <b>[DB] Benutzer</b> angelegt und sind ganz normale Website-Benutzer. Weitere Informationen dazu findet man, wenn man nach "Typo3 Zugriffsgeschützte Bereiche im Frontend" googelt.
+Im Internen Bereich werden Seiten entsprechend der Seitenstruktur angelegt, die jeweils ein Plugin <b>IQ TP13 DB Adminbereich</b> enthalten. Der Typ wird entsprechend dem Seitennamen eingestellt.
+Auch hier wird jeweils unter Datensatzsammlung der Sysordner (im Beispiel oben „[DB] Daten Anerkennungsberatung“) ausgewählt. Mindestens ein Datensatz vom Typ <b>Berater</b> <u>muss</u> angelegt sein, damit eine Anmeldung erfolgen kann. Das Kürzel des Beraters muss dem Typo3-Backend Benutzernamen entsprechen. Berater:innen legt man auf der Seite Berater*in an. <br><br>
 
 <h2>Eigene Templates</h2>
 
