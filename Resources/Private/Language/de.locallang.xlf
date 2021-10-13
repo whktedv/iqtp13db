@@ -75,6 +75,9 @@
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_nein_in">
 				<target>Wohnsitz in</target>
 			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ortskraftafghanistan">
+				<target>Ortskraft Afghanistan</target>
+			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse">
 				<target>Deutsch als Muttersprache?</target>
 			</trans-unit>

@@ -75,6 +75,9 @@
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_nein_in">
 			<source>Residence in</source>
 		</trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ortskraftafghanistan">
+			<source>Local force from afghanistan</source>
+		</trans-unit>		
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse">
 			<source>German as a native language?</source>
 		</trans-unit>
