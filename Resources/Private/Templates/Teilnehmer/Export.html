@@ -14,21 +14,18 @@ Nach Klick auf den Button werden die Daten in eine CSV-Datei zum Download export
 Wenn einzelne Ratsuchende in der Spalte "Export" ausgewählt wurden, werden nur die Daten aus der Anmeldung exportiert.</b>
 <h1>Filter</h1>
 <f:form method="post" controller="Teilnehmer" action="export" name="export" noCacheHash="true" >
-		Name: <f:form.textfield size="20" value="{filtername}" name="name" />&nbsp;&nbsp;
-		Ort: <f:form.textfield size="20" value="{filterort}" name="ort" />&nbsp;&nbsp;
-		Beruf: <f:form.textfield size="20" value="{filterberuf}" name="beruf" />&nbsp;&nbsp;
-		Geburtsland: <f:form.textfield value="{filterland}" size="20" name="land" />&nbsp;&nbsp;&nbsp;&nbsp;
-		<f:if condition="{filteron}"><f:then><f:form.button name="filteraus" value="1" >Filter löschen</f:form.button></f:then></f:if>
+		Auswahl Status: <f:form.select value="{filterberatungsstatus}" name="filterberatungsstatus" options="{settings.filterberatungsstatus}" optionValueField="key" optionLabelField="value" />
+		<f:if condition="{filteron}"><f:then><f:form.button name="filteraus" value="1" >Filter löschen</f:form.button></f:then></f:if>		
 		<f:form.submit name="filteran" value="Filtern" />			
 </f:form>
 <br>
 <h1>{teilnehmers -> f:count()} Ratsuchende <f:if condition="{filteron}"><f:then><span style="color: red;">(gefiltert)</span></f:then></f:if></h1>
 <br>
-<f:form method="post" controller="Teilnehmer" action="export" name="export" enctype="multipart/form-data" noCacheHash="true"><br />
+<f:form method="post" controller="Teilnehmer" action="export" name="export" enctype="multipart/form-data" noCacheHash="true">
+<f:form.submit name="export" value="Daten exportieren" />
 	<f:widget.paginate objects="{teilnehmers}" as="teilnehmerspag" configuration="{itemsPerPage: 50, insertAbove: 1}"> 
 		<table class="tx_iqtp13db" >
 			<tr>
-				<th>Export</th>
 				<th><f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" /></th>
 				<th><f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" /></th>
 				<th><f:translate key="anmeldedatum" /></th>
@@ -48,7 +45,6 @@ Wenn einzelne Ratsuchende in der Spalte "Export" ausgewählt wurden, werden nur 
 					{f:if(condition: "{teilnehmer.verificationDate} != 0", then: '<tr class="bestaetigt">', else: '<tr>')}
 				</f:else>
 				</f:if>
-					<td class="tdcenter"><f:form.checkbox name="chktoexport" multiple="1" value="{teilnehmer.uid}" /></td>			
 					<td><f:link.action action="show" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}">{teilnehmer.nachname}</f:link.action></td>
 					<td><f:link.action action="show" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}">{teilnehmer.vorname}</f:link.action></td>
 					<td class="tdcenter">{f:if(condition: '{teilnehmer.verificationDate} == 0', then: 'unbestätigt', else: '{f:format.date(date: teilnehmer.verificationDate, format:"d.m.Y")}')}</td>
@@ -64,10 +60,7 @@ Wenn einzelne Ratsuchende in der Spalte "Export" ausgewählt wurden, werden nur 
 			</f:for>
 		</table>
 	</f:widget.paginate> 
-	<f:form.hidden value="{filtername}" name="name" />
-	<f:form.hidden value="{filterort}" name="ort" />
-	<f:form.hidden value="{filterberuf}" name="beruf" />
-	<f:form.hidden value="{filterland}" name="land" />
+	<f:form.hidden value="{filterberatungsstatus}" name="filterberatungsstatus" />
 <f:form.submit name="export" value="Daten exportieren" />			
 </f:form>
 

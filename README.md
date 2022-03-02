@@ -13,6 +13,7 @@ Mail: udohmen@whkt.de<br>
 </ul>
 
 <h2>Installation</h2>
+Sofern TYPO3 noch nicht installiert ist, zuerst eine leere TYPO3-Installation einrichten. Dann im Modul Erweiterungen bei den vorkonfigurierten Erweiterungen das "Official TYPO3 Introduction Package" installieren. Im Modul Seiten das IntroPackage als Root setzen, dazu den Einstiegspunkt '/', ggf. andere Seite vorher löschen. Au0erdem hier den ErrorHandler 403 als Weiterleitung auf die Login-Seite (s.u.) setzen.
 <ol>
 <li>Für Mehrsprachigkeit müssen in Typo3 auf der Root-Seite die entsprechenden Website-Sprachen angelegt und anschließend im Modul Seitenverwaltung->Seiten in der Seitenkonfiguration im Reiter "Sprachen" der Seite hinzugefügt werden. Ggf. macht es Sinn die Standardsprache (ID=0) auf Deutsch umzustellen, sofern noch nicht erfolgt.<br>Folgende Sprachen werden derzeit von der Extension unterstützt: Englisch, Arabisch, Persisch (Farsi), Französisch, Polnisch, Rumänisch, Russisch, Spanisch, Türkisch. Beim Anlegen der Sprachen daran denken, dass Arabisch und Farsi RTL-Sprachen sind (Right-to-Left) und in der Seitenverwaltung diese Option aktiviert werden muss.<br>
 Die Identifizierung der Sprachen erfolgt in Typo3 bzw. der Extension über das 2-Buchstaben-Sprachkürzel (z.B. de für Deutsch oder fa für Farsi).
@@ -53,7 +54,7 @@ Der System-Ordner <b>[DB] Daten Anerkennungsberatung</b> enthält die Berater, R
 In diesen Dateispeicher werden die Dateien der Ratsuchenden gespeichert, die während des Anmeldevorgangs hochgeladen werden können. Für jeden Ratsuchenden wird ein Verzeichnis erstellt, dass mit dem Format [Nachname]_[Vorname]_[UID] angelegt wird.<br></li>
 </ol>
 <br>
-<h2>Typoscript Template Setup</h2> 
+<h2>Typoscript Template Setup</h2>
 Im Typoscript Template müssen im Setup mindestens folgende Werte eingetragen werden:<br>
 <br>
 <small><b>plugin.tx_iqtp13db {<br>
@@ -113,4 +114,3 @@ plugin.tx_iqtp13db_iqtp13dbwebapp.view {<br>
 &nbsp;&nbsp;partialRootPaths.10 = <eigener_template_pfad>/Resources/Private/Partials/<br>
 &nbsp;&nbsp;layoutRootPaths.10 = <eigener_template_pfad>/Resources/Private/Layouts/ <br>
 }</b>
-

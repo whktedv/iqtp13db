@@ -584,7 +584,7 @@
 				<target>Abschluss ausblenden</target>
 			</trans-unit>
 			<trans-unit id="anredemail">
-				<target>Guten Tag </target>
+				<target>Guten Tag</target>
 			</trans-unit>
 			<trans-unit id="mailtext">
 				<target> <![CDATA[

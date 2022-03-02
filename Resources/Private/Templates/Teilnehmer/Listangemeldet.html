@@ -10,6 +10,7 @@
 		Ort: <f:form.textfield size="20" value="{filterort}" name="ort" />&nbsp;&nbsp;
 		Beruf: <f:form.textfield size="20" value="{filterberuf}" name="beruf" />&nbsp;&nbsp;
 		Geburtsland: <f:form.textfield value="{filterland}" size="20" name="land" />&nbsp;&nbsp;&nbsp;&nbsp;
+		<f:form.hidden value="99" name="fberatungsstatus" />
 		<f:if condition="{filteron}"><f:then><f:form.button name="filteraus" value="1" >Filter löschen</f:form.button></f:then></f:if>
 		<f:form.submit name="filteran" value="Filtern" />			
 </f:form>
@@ -25,7 +26,7 @@
 			<th><f:link.action action="listangemeldet" arguments="{orderby : 'nachname'}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" /></f:link.action></th>
 			<th><f:link.action action="listangemeldet" arguments="{orderby : 'vorname'}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" /></f:link.action></th>
 			<th><f:link.action action="listangemeldet" arguments="{orderby : 'schonberaten'}">Bereits<br>beraten</f:link.action></th>
-			<th><f:link.action action="listangemeldet" arguments="{orderby : 'verificationDate'}"><f:translate key="anmeldedatum" /></f:link.action></th>
+			<th><f:link.action action="listangemeldet" arguments="{orderby : 'verificationDate'}">Bestätigungsdatum</f:link.action></th>
 			<th><f:link.action action="listangemeldet" arguments="{orderby : 'ort'}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.plz" />/<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ort" /></f:link.action></th>
 			<th><f:link.action action="listangemeldet" arguments="{orderby : 'fruehererantrag'}">Antrag<br>gestellt</f:link.action></th>
 			<th><f:link.action action="listangemeldet" arguments="{orderby : 'leistungsbezugjanein'}">Leistung</f:link.action></th>
