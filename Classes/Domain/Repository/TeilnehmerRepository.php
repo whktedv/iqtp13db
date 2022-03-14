@@ -2,6 +2,7 @@
 namespace Ud\Iqtp13db\Domain\Repository;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /***
  *
@@ -35,6 +36,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $ort = $ort == '' ? '%' : $ort;
         $beruf = $beruf == '' ? '%' : $beruf;
         $land = $land == '' ? '%' : $land;
+        
         $query = $this->createQuery();
         if($auchverstecktundgelöscht == 1) {
             $query->getQuerySettings()->setIgnoreEnableFields(TRUE);
@@ -56,7 +58,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 $query->logicalOr($query->like('beratungsstatus', '0'), $query->like('beratungsstatus', '1'))
              ));            
         }
-        
+        //$query->logicalOr($query->like('beratungsstatus', '0'), $query->like('beratungsstatus', '1'))
         return $query->execute();
     }
 
@@ -99,9 +101,30 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $query = $this->createQuery();        
         $query->matching($query->logicalOr($query->like('beratungsstatus', '0'), $query->like('beratungsstatus', '1')));        
         if($order == 'DESC') {
-        	$query->setOrderings(array($orderby => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING));
+            //$query->setOrderings(array('beratungsstatus' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING, $orderby => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING));
+            $query->setOrderings(array($orderby => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING));
         } else {
-        	$query->setOrderings(array($orderby => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING));
+            //$query->setOrderings(array('beratungsstatus' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING, $orderby => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING));
+            $query->setOrderings(array($orderby => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING));
+        }
+        $query = $query->execute();
+        return $query;
+    }
+    
+    /**
+     * @param $orderby
+     * @param $order
+     */
+    public function findAllArchiviert($orderby, $order)
+    {
+        $query = $this->createQuery();
+        $query->matching($query->like('beratungsstatus', '4'));
+        if($order == 'DESC') {
+            //$query->setOrderings(array('beratungsstatus' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING, $orderby => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING));
+            $query->setOrderings(array($orderby => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING));
+        } else {
+            //$query->setOrderings(array('beratungsstatus' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING, $orderby => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING));
+            $query->setOrderings(array($orderby => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING));
         }
         $query = $query->execute();
         return $query;
@@ -115,7 +138,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     {
         $query = $this->createQuery();        
         $query->matching($query->logicalAnd(
-            $query->like('nachname', '%'.$nachname.'%'), 
+            $query->like('nachname', '%'.$nachname.'%'),
             $query->like('vorname', '%'.$vorname.'%'),
             $query->logicalNot($query->like('beratungsstatus', '99'))
         ));        

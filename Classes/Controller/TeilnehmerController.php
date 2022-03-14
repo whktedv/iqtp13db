@@ -1,10 +1,14 @@
 <?php
 namespace Ud\Iqtp13db\Controller;
 use \Datetime;
+use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+
+
+require_once(Environment::getPublicPath() . '/' . 'typo3conf/ext/iqtp13db/Resources/Public/PHP/xlsxwriter.class.php');
 
 /***
  *
@@ -337,7 +341,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	//DebuggerUtility::var_dump($valArray);
 
     	if(empty($valArray['orderby'])) {
-    		$orderby = 'crdate';
+    		$orderby = 'verificationDate';
     		$GLOBALS['TSFE']->fe_user->setKey('ses', 'listangemeldetorder', 'DESC');
     		$order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listangemeldetorder');
     	} else {
@@ -352,10 +356,10 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	$teilnehmers = $this->setfilter(0, $valArray, $orderby, $order);
 
     	for($j=0; $j < count($teilnehmers); $j++) {
-    	    $anz = $this->teilnehmerRepository->findDublette4Angemeldet($teilnehmers[$j]->getNachname(), $teilnehmers[$j]->getVorname());
-    	    if($anz > 1) $teilnehmers[$j]->setDublette(TRUE);
+    	    $anz = $this->teilnehmerRepository->findDublette4Angemeldet($teilnehmers[$j]->getNachname(), $teilnehmers[$j]->getVorname());    	    
+    	    if($anz > 1) $teilnehmers[$j]->setDublette(TRUE);    	    
     	}
-    	//DebuggerUtility::var_dump($anz);
+    	
 
     	$this->view->assign('teilnehmers', $teilnehmers);
     	$this->view->assign('calleraction', 'listangemeldet');
@@ -447,6 +451,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	$persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
     	$persistenceManager->persistAll();
 
+    	$tfolder = $this->createFolder($teilnehmer);
+    	
     	$valArray = $this->request->getArguments();
     	$this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('teilnehmer' => $teilnehmer));
     }
@@ -685,11 +691,11 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $this->redirect('listangemeldet', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
         }
     }
-
+ 
     /**
      * Check Beratungsstatus
      *
-     * Beratungsstatus: 0 = angemeldet, 1 = Anmeldung bestätigt, 2 = Erstberatung Start, 3 = Erstberatung abgeschlossen, 4 = NIQ erfasst
+     * Beratungsstatus: 0 = angemeldet, 1 = Anmeldung bestätigt, 2 = Erstberatung Start, 3 = Erstberatung abgeschlossen, 4 = NIQ erfasst, 99 = Anmeldung (noch) nicht beendet
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return int
      */
@@ -733,44 +739,78 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function exportAction()
     {
         $valArray = $this->request->getArguments();
-
+            
+        $orderby = 'crdate';
+        $order = 'ASC';
+        $fberatungsstatus = $valArray['filterberatungsstatus'];
+        
+        if($fberatungsstatus == 12) {
+            $teilnehmers = $this->setfilter(4, $valArray, $orderby, $order);
+        } elseif($fberatungsstatus == 13) {
+            $teilnehmers = $this->setfilter(1, $valArray, $orderby, $order);
+        } else {
+            $teilnehmers = $this->setfilter(0, $valArray, $orderby, $order);
+        }
+            
         // ******************** EXPORT ****************************
         if ($valArray['export'] == 'Daten exportieren') {
-            $fname = $valArray['name'];
-            $fort = $valArray['ort'];
-            $fberuf = $valArray['beruf'];
-            $fland = $valArray['land'];
+           
+            $x = 0;
+            foreach($teilnehmers as $tn) {
+                $props = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getGettablePropertyNames($tn);
+                
+                $beratung = $this->beratungRepository->findOneByTeilnehmer(\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'uid'));
+                if($beratung != NULL) $berater = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($beratung, 'berater');
 
-        	$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_iqtp13db_domain_model_teilnehmer');
+                foreach ($props as $prop) {
+                    $rows[$x]['verificationDate'] = date('d.m.Y H:i:s', \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'verificationDate'));
+                    $rows[$x]['Nachname'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'nachname');
+                    $rows[$x]['Vorname'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'vorname');
+                    $rows[$x]['PLZ'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'plz');
+                    $rows[$x]['Ort'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'ort');
+                    $rows[$x]['Email'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'email');
+                    $rows[$x]['Telefon'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'telefon');
+                    $rows[$x]['BescheidfrühererAnerkennungsantrag'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'bescheidfruehererAnerkennungsantrag');
+                    $rows[$x]['Leistungsbezugjanein'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'leistungsbezugjanein');
+                    $rows[$x]['Geburtsland'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'geburtsland');
+                    $rows[$x]['Geschlecht'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'geschlecht');
+                    $rows[$x]['DeutscherReferenzberuf1'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'deutscherReferenzberuf1');
+                }
+                if($beratung != NULL) $rows[$x]['Beraterin'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($berater, 'kuerzel');
+                $x++;
+            }
 
-        	$arraytoexport = $valArray['chktoexport'];
-
-        	if(is_array($arraytoexport)) {
-				$strlisttoexport = implode(",", $arraytoexport);
-
-				$rows = $queryBuilder
-						->select('niqchiffre', 'nachname', 'vorname', 'plz', 'ort', 'email', 'telefon', 'lebensalter', 'geschlecht', 'erste_staatsangehoerigkeit', 'zweite_staatsangehoerigkeit',
-								'einreisejahr', 'wohnsitz_deutschland', 'wohnsitz_nein_in', 'ortskraftafghanistan', 'zertifikat_sprachniveau', 'erwerbsland1', 'erwerbsland2',
-								'abschluss1', 'abschluss2', 'deutscher_referenzberuf1', 'deutscher_referenzberuf2', 'bescheidfrueherer_anerkennungsantrag', 'name_beratungsstelle')
-						->from('tx_iqtp13db_domain_model_teilnehmer')
-						->where(
-						    $queryBuilder->expr()->in('tx_iqtp13db_domain_model_teilnehmer.uid', $queryBuilder->createNamedParameter(GeneralUtility::intExplode(',', $strlisttoexport, true), Connection::PARAM_INT_ARRAY))
-						 )
-						->execute()
-						->fetchAll();
-        	} else {
-        		$rows = $queryBuilder
-        		->select('niqchiffre', 'b.erstberatungabgeschlossen', 'b.beratungsart', 'c.kuerzel', 'nachname', 'vorname', 'plz', 'ort', 'email', 'telefon', 'lebensalter', 'geschlecht',
-						'erste_staatsangehoerigkeit', 'zweite_staatsangehoerigkeit', 'einreisejahr', 'wohnsitz_deutschland', 'wohnsitz_nein_in', 'ortskraftafghanistan', 'zertifikat_sprachniveau',
-						'erwerbsland1', 'erwerbsland2', 'abschluss1', 'abschluss2', 'deutscher_referenzberuf1', 'deutscher_referenzberuf2', 'bescheidfrueherer_anerkennungsantrag', 'b.beratungzu', 'name_beratungsstelle')
-						->from('tx_iqtp13db_domain_model_teilnehmer')
-						->leftJoin('tx_iqtp13db_domain_model_teilnehmer', 'tx_iqtp13db_domain_model_beratung', 'b',	$queryBuilder->expr()->eq('b.teilnehmer', $queryBuilder->quoteIdentifier('tx_iqtp13db_domain_model_teilnehmer.uid')))
-						->leftJoin('b', 'tx_iqtp13db_domain_model_berater', 'c', $queryBuilder->expr()->eq('c.uid', $queryBuilder->quoteIdentifier('b.berater')))
-						->execute()
-						->fetchAll();
-        	}
-
-            $filename = 'export_' . date('Y-m-d_H-i', time()) . '.csv';
+            // XLSX
+            $filename = 'export_' . date('Y-m-d_H-i', time()) . '.xlsx';
+            $header = [ 
+                'Bestätigungsdatum' => 'string',
+                'Nachname' => 'string',
+                'Vorname' => 'string',
+                'PLZ' => 'string',
+                'Ort' => 'string',
+                'E-Mail' => 'string',
+                'Telefon' => 'string',
+                'Bescheid früherer Anerkennungsantrag' => 'string',
+                'Leistungsbezug ja/nein' => 'string',
+                'Geburtsland' => 'string',
+                'Geschlecht' => 'string',
+                'Deutscher Referenzberuf1' => 'string',
+                'Berater:in' => 'string'
+            ];
+            
+            $writer = new \XLSXWriter();
+            $writer->setAuthor('IQ Webapp');
+            $writer->writeSheet($rows, 'Blatt1', $header);  // with headers
+            
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment;filename="'.$filename.'"');
+            header('Cache-Control: max-age=0');
+            $writer->writeToStdOut();
+            exit;
+            
+            /*
+            // CSV
+        	$filename = 'export_' . date('Y-m-d_H-i', time()) . '.csv';
             header('Content-Type: text/csv');
             header('Content-Disposition: attachment;filename=' . $filename);
             $fp = fopen('php://output', 'w');
@@ -782,22 +822,19 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 
             for($i=0; $i < count($rows); $i++) {
                 fputcsv($fp, $rows[$i]);
-            }
+            }            
+            
             fclose($fp);
-            exit;
+            exit;*/
         } else {
-
-        	//$teilnehmers = $this->teilnehmerRepository->findAll();
-        	$orderby = 'crdate';
-        	$order = 'ASC';
-        	$teilnehmers = $this->setfilter(0, $valArray, $orderby, $order);
 
         	for($j=0; $j < count($teilnehmers); $j++) {
         	    $anz = $this->teilnehmerRepository->findDublette4Angemeldet($teilnehmers[$j]->getNachname(), $teilnehmers[$j]->getVorname());
         		if($anz > 1) $teilnehmers[$j]->setDublette(TRUE);
         	}
-
-        	$this->view->assign('teilnehmers', $teilnehmers);
+            
+        	$this->view->assign('teilnehmers', $teilnehmers); 
+        	$this->view->assign('filterberatungsstatus', $fberatungsstatus); 
         }
     }
 
@@ -1038,13 +1075,14 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	//die;
     	if($teilnehmer) {
     		// it's a valid verificationCode
+    	    $teilnehmer->setBeratungsstatus(1);
     		$teilnehmer->setVerificationDate(new \DateTime);
-    		$teilnehmer->setVerificationIp($_SERVER['REMOTE_ADDR']);
+    		$teilnehmer->setVerificationIp($_SERVER['REMOTE_ADDR']);    		
     		$this->teilnehmerRepository->update($teilnehmer);
 
-    		if($askconsent == 0) $this->sendconfirmedMail($teilnehmer);
-
-
+    		//if($askconsent == 0) $this->sendconfirmedMail($teilnehmer);
+    		$this->sendconfirmedMail($teilnehmer);
+    		
     		$uriBuilder = $this->controllerContext->getUriBuilder();
     		$uriBuilder->reset();
     		if($askconsent == 0) {
@@ -1133,7 +1171,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	$anrede = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('anredemail', 'Iqtp13db');
     	$mailtext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtext', 'Iqtp13db');
     	$variables = array(
-    			'anrede' => $anrede . $teilnehmer->getVorname(). ' ' . $teilnehmer->getNachname() . ',',
+    	        'anrede' => $anrede. ' ' .$teilnehmer->getVorname(). ' ' .$teilnehmer->getNachname() . ',',
     			'mailtext' => $mailtext,
     			'startseitelink' => $this->settings['startseitelink'],
     			'logolink' => $this->settings['logolink'],
@@ -1276,41 +1314,49 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		return $teilnehmer;
 	}
 
-	function setfilter(int $type, array $valArray, $orderby, $order) {
+	function setfilter(int $type, array $valArray, $orderby, $order, int $fberatungsstatus = 99) {
 	    // FILTER
 	    if ($valArray['filteraus']) {
 	        $GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', NULL);
 	        $GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', NULL);
 	        $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', NULL);
 	        $GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', NULL);
+	        $GLOBALS['TSFE']->fe_user->setKey('ses', 'filterberatungsstatus', '99');
 	    }
 	    if ($valArray['filteran']) {
 	        $GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', $valArray['name']);
 	        $GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', $valArray['ort']);
 	        $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', $valArray['beruf']);
 	        $GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', $valArray['land']);
+	        $GLOBALS['TSFE']->fe_user->setKey('ses', 'filterberatungsstatus', $valArray['filterberatungsstatus']);
 	    }
 	    $fname = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fname');
 	    $fort = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fort');
 	    $fberuf = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fberuf');
 	    $fland = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fland');
+	    $fberatungsstatus = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filterberatungsstatus');
+	    
 	    if ($fname == '' && $fort == '' && $fberuf == '' && $fland == '') {
 	        if($type == 0) {
 	            $teilnehmers = $this->teilnehmerRepository->findAllOrder4List($orderby, $order);
 	        } elseif($type == 1) {
 	            $teilnehmers = $this->teilnehmerRepository->findhidden4list($orderby, $order);
-	        } else {
+	        } elseif($type == 4) {
+	            $teilnehmers = $this->teilnehmerRepository->findAllArchiviert($orderby, $order);
+	        }  else {
 
 	        }
 	    } else {
 	        $teilnehmers = $this->teilnehmerRepository->searchTeilnehmer($fname, $fort, $fberuf, $fland, $type);
+	        
 	        $this->view->assign('filtername', $fname);
 	        $this->view->assign('filterort', $fort);
 	        $this->view->assign('filterberuf', $fberuf);
 	        $this->view->assign('filterland', $fland);
+	        $this->view->assign('filterberatungsstatus', $fberatungsstatus);
 	        $this->view->assign('filteron', 1);
-	    }
-	    // FILTER bis hier
+	    } 
+	    // FILTER bis hier	    
 	    return $teilnehmers;
 	}
 
