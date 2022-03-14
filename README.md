@@ -54,7 +54,7 @@ Der System-Ordner <b>[DB] Daten Anerkennungsberatung</b> enthält die Berater, R
 In diesen Dateispeicher werden die Dateien der Ratsuchenden gespeichert, die während des Anmeldevorgangs hochgeladen werden können. Für jeden Ratsuchenden wird ein Verzeichnis erstellt, dass mit dem Format [Nachname]_[Vorname]_[UID] angelegt wird.<br></li>
 </ol>
 <br>
-<h2>Typoscript Template Setup</h2>
+<h2>Typoscript Template Setup</h2> 
 Im Typoscript Template müssen im Setup mindestens folgende Werte eingetragen werden:<br>
 <br>
 <small><b>plugin.tx_iqtp13db {<br>
