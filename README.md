@@ -3,7 +3,7 @@ URL: https://www.iq-netzwerk-nrw.de<br>
 Author: Ulrich Dohmen<br>
 Mail: udohmen@whkt.de<br>
 
-<h3>Version 2.1.1 </h3>
+<h3>Version 3.0.0 </h3>
 
 <h2>Systemvoraussetzung</h2>
 <ul>
@@ -23,7 +23,7 @@ Alle Schritte hinsichtlich Mehrsprachigkeit folgen sonst den Standard-Regeln zur
 
 <li>Zunächst auf der github-Seite oben rechts auf "Clone or Download" und dann auf "Download ZIP" klicken und die Extension als ZIP herunterladen, und in das Verzeichnis typo3conf/ext/ entpacken. Das Verzeichnis muss dann noch in "iqtp13db" umbenannt werden. Die Installation der Extension erfolgt danach per Extension Manager. <br></li>
 
-<li>Nach der Installation muss das statische Template der Extension <b>IQ TP13 Webapp Annerkennungsberatung NRW (iqtp13db)</b> in das Root Template aufgenommen werden.<br></li>
+<li>Nach der Installation muss das statische Template der Extension <b>IQ Webapp Annerkennungsberatung NRW (iqtp13db)</b> in das Root Template aufgenommen werden.<br></li>
 
 <li>Nun sollte die folgende Seitenstruktur eingerichtet werden: <br>
 
@@ -50,7 +50,7 @@ Alle Schritte hinsichtlich Mehrsprachigkeit folgen sonst den Standard-Regeln zur
 
 Der System-Ordner <b>[DB] Daten Anerkennungsberatung</b> enthält die Ratsuchenden (aka Teilnehmer) inkl. Historie, Dokumente und Beratungsvorgänge inkl. Folgekontakte. </li>
 
-<li>Im Typo3-Backend auf der Root-Seite muss "iqwebappdata" als <b>Dateispeicher</b> angelegt sein. Der Pfad muss auf ein Verzeichnis auf dem Server verweisen. Das kann z.B. /mnt/iqwebappdata/ als absoluter Pfad oder alternativ ein externer Speicher mit entpsrechend angegebenen Mount-Punkt sein. So oder so muss der Pfad aber geschützt werden, damit ein Zugriff von Extern außerhalb der Webapp nicht möglich ist. Dies muss vor Live-Schaltung unbedingt getestet werden.<br>
+<li>Im Typo3-Backend auf der Root-Seite muss "iqwebappdata" als <b>Dateispeicher</b> angelegt sein. Der Pfad muss auf ein Verzeichnis auf dem Server verweisen. Das kann z.B. /mnt/iqwebappdata/ als absoluter Pfad oder alternativ ein externer Speicher mit entsprechend angegebenen Mount-Punkt sein. So oder so muss der Pfad aber geschützt werden, damit ein Zugriff von Extern außerhalb der Webapp nicht möglich ist. Dies muss vor Live-Schaltung unbedingt getestet werden.<br>
 <i>Zusätzlicher Hinweis zum Speicher: Wenn der Speicher mal nicht verfügbar war (z.B. wenn er auf einem NAS liegt), muss er im Backend im Bereich Dateispeicher manuell wieder "online" geschaltet werden. Die erfolgt mit der Checkbox "ist online?" in den Eigenschaften des jeweiligen Dateispeichers.)</i><br>
 In diesen Dateispeicher werden die Dateien der Ratsuchenden gespeichert, die während des Anmeldevorgangs hochgeladen werden können. Für jeden Ratsuchenden wird ein Verzeichnis erstellt, dass mit dem Format [Nachname]_[Vorname]_[UID] angelegt wird.<br></li>
 </ol>
@@ -64,6 +64,7 @@ Im Typoscript Template müssen im Setup mindestens folgende Werte eingetragen we
 &nbsp;&nbsp;&nbsp;&nbsp;bccmail = (BCC-E-Mail-Adresse der Anmeldungsbestätigung)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;startseitelink = (Link zur Startseite der Webapp)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;logolink = (Link zum Logo der Webapp für den Kopf der E-Mail-Bestätigung)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;datenschutzeinwilligungurl = (URL zu den Datenschutzinformationen)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;registrationpageuid = (ID der Anmeldungsseite - wird für die aus dem Backend angestossene Einwilligung benötigt)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;standardberatungort = (Hier kann der Standard-Standort für die Beratung angegeben werden. Dieser Wert wird an die NIQ-DB übertragen)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;beraterstoragepid = (ID der [DB] Berater)<br>
