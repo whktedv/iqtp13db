@@ -5,7 +5,7 @@ namespace Ud\Iqtp13db\Domain\Model;
  *
  *  Copyright notice
  *
- *  (c) 2021 Uli Dohmen <edv@whkt.de>, WHKT
+ *  (c) 2016 Uli Dohmen <edv@whkt.de>, WHKT
  *
  *  All rights reserved
  *

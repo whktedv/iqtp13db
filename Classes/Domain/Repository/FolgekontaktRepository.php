@@ -3,12 +3,12 @@ namespace Ud\Iqtp13db\Domain\Repository;
 
 /***
  *
- * This file is part of the "IQ TP13 Datenbank Anerkennungserstberatung NRW" Extension for TYPO3 CMS.
+ * This file is part of the "IQ Webapp Anerkennungserstberatung" Extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2020 Uli Dohmen <edv@whkt.de>, WHKT
+ *  (c) 2022 Uli Dohmen <edv@whkt.de>, WHKT
  *
  ***/
 
@@ -28,6 +28,20 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 		$query = $query->execute();
 		
 		return count($query);
+	}
+	
+	/**
+	 * @param $orderby
+	 * @param $order
+	 */
+	public function findLastByTNuid($teilnehmeruid)
+	{
+	    $query = $this->createQuery();
+	    $query->matching($query->like('teilnehmer', $teilnehmeruid));
+        $query->setOrderings(array('uid' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING));
+        $query->setLimit(1);
+	    $query = $query->execute();
+	    return $query[0];
 	}
 	
 }

@@ -11,7 +11,7 @@
 <f:render partial="FormErrors" arguments="{object:Berater}" />
 
 <f:form action="update" name="berater" object="{berater}" >
-<f:render partial="Berater/FormFields" arguments="{berater:berater}" />
+	<f:render partial="Berater/FormFields" arguments="{berater:berater, usergroups:usergroups}" />
 	<f:form.submit class="linkbuttons" value="Speichern" />
 </f:form>
 </f:section>

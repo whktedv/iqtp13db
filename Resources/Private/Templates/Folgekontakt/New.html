@@ -12,13 +12,13 @@
 
 <f:render partial="FormErrors" arguments="{object:Folgekontakt}" />
 
-<f:form action="create" name="folgekontakt" object="{folgekontakt}" arguments="{teilnehmer:teilnehmer, calleraction: calleraction, callercontroller : callercontroller}">
+<f:form action="create" name="folgekontakt" object="{folgekontakt}" arguments="{calleraction: calleraction, callercontroller : callercontroller}">
 
 	<f:render partial="Folgekontakt/FormFields" arguments="{_all}" />
 	<f:form.hidden property="teilnehmer" value="{teilnehmer.uid}" />
 	
 	<f:form.submit value="Speichern" />
-	<f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}">Zurück zur Liste</f:link.action>
+	<f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}" arguments="{callerpage : callerpage}">Zurück zur Liste</f:link.action>
 </f:form>
 
 </f:section>

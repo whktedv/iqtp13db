@@ -1,3 +1,4 @@
+{namespace iqtp13db=Ud\Iqtp13db\ViewHelpers}
 <div class="fframe"><h2><f:translate key="beruflichesituation" /></h2>
 		<div class="tp13_formdivwebapp">
 			<label for="erwerbsstatus" class="tp13_options">
@@ -5,7 +6,7 @@
 			</label>
 			<div class="tp13_formdivwebappmultiradio">
 				<f:for each="{settings.erwerbsstatus}" as="text" key="wert">
-					<div class="tp13_formdivwebappradio"><f:form.radio property="erwerbsstatus" value="{wert}" checked="{tnseite3.erwerbsstatus} == {wert}" /><span class="abschlussradiotext">{text}</span></div>
+					<div class="tp13_formdivwebappradio"><f:form.radio property="erwerbsstatus" value="{wert}" checked="{teilnehmer.erwerbsstatus} == {wert}" /><span class="abschlussradiotext">{text}</span></div>
 				</f:for>
 			</div>				
 		</div>
@@ -22,7 +23,7 @@
 			</label>
 			<div class="tp13_formdivwebappmultiradio">
 				<f:for each="{settings.leistungsbezug}" as="text" key="wert">
-					<div class="tp13_formdivwebappradio"><f:form.radio property="leistungsbezug" value="{wert}" checked="{tnseite3.leistungsbezug} == {wert}" /><span class="abschlussradiotext">{text}</span></div>
+					<div class="tp13_formdivwebappradio"><f:form.radio property="leistungsbezug" value="{wert}" checked="{teilnehmer.leistungsbezug} == {wert}" /><span class="abschlussradiotext">{text}</span></div>
 				</f:for>
 			</div>
 		</div>
@@ -59,48 +60,52 @@
 		</div>				
 </div>
 
-<div class="fframe"><h2><f:translate key="fruehereantraege" /></h2>
-		<div class="tp13_formdivwebapp">
-			<label for="fruehererAntrag" class="tp13_options">
-				<span id="infolab" title="<f:translate key='infofruehererAntrag' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag" />
-			</label>
-			<div class="tp13_formdivwebappradio"><f:form.radio id="optfruehererAntrag1" property="fruehererAntrag" value="1" /><span class="abschlussradiotext"><f:translate key="ja" /></span></div>
-			<div class="tp13_formdivwebappradio"><f:form.radio id="optfruehererAntrag2" property="fruehererAntrag" value="2" /><span class="abschlussradiotext"><f:translate key="nein" /></span></div>			
-		</div>
-		<div class="tp13_formdivwebapp" id="fruehererantragdaten1">
-			<label for="fruehererAntragReferenzberuf">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag_referenzberuf" />
-			</label>
-				<f:form.textfield id="inputfruehererAntragReferenzberuf" property="fruehererAntragReferenzberuf" /><br />
-		</div>
-		<div class="tp13_formdivwebapp" id="fruehererantragdaten2">
-			<label for="fruehererAntragInstitution">
-				<span id="infolab" title="<f:translate key='infoInstitution' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag_institution" />
-			</label>
-				<f:form.textfield id="inputfruehererAntragInstitution" property="fruehererAntragInstitution" /><br />
-		</div>
-		<div class="tp13_formdivwebapp" id="fruehererantragdaten3">
-			<label for="bescheidfruehererAnerkennungsantrag" class="tp13_options">
-				<f:format.raw><f:translate key="tx_iqtp13db_domain_model_teilnehmer.bescheidfrueherer_anerkennungsantrag" /></f:format.raw>
-			</label>
-			<div class="tp13_formdivwebappradio"><f:form.radio id="optbescheidfruehererAnerkennungsantrag1" property="bescheidfruehererAnerkennungsantrag" value="1" /><span class="abschlussradiotext"><f:translate key="ja" /></span></div>
-			<div class="tp13_formdivwebappradio"><f:form.radio id="optbescheidfruehererAnerkennungsantrag2" property="bescheidfruehererAnerkennungsantrag" value="1" /><span class="abschlussradiotext"><f:translate key="nein" /></span></div>
-			<div class="tp13_formdivwebapp" id="textdokupload">
-					<span class="einwilligungtext">Bitte beim Dokumenten-Upload auf der folgenden Seite hochladen.</span>
-			</div>
-		</div>
+<div class="fframe"><h2><f:translate key="datenweitereperson" /></h2>
+    <div class="tp13_formdivwebapp">
+      <label for="einwPerson" class="tp13_options">
+        <f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_person" />
+        </label>
+        <div class="tp13_formdivwebappradio"><f:form.radio id="opteinwPerson1" property="einwPerson" value="1" /><span class="abschlussradiotext"><f:translate key="ja" /></span></div>
+        <div class="tp13_formdivwebappradio"><f:form.radio id="opteinwPerson2" property="einwPerson" value="2" /><span class="abschlussradiotext"><f:translate key="nein" /></span></div>
+        </div>
+  		<div id="einwpersonname" class="tp13_formdivwebapp">
+  			<label for="einwPersonname">
+  				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_personname" />
+  			</label>
+  				<f:form.textfield id="txteinwpersonname" property="einwPersonname" />
+  		</div>		
+  		<div id="einwpersonkontakt" class="tp13_formdivwebapp">
+  			<label for="einwPersonkontakt">
+  				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_personkontakt" />
+  			</label>
+  				<f:form.textfield id="txteinwpersonkontakt" property="einwPersonkontakt" />
+  		</div>		  					
 </div>
-<div class="fframe">
+  
+<div class="fframe"><h2><f:translate key="beratung" /></h2>
 		<div class="tp13_formdivwebapp">
 			<label for="nameBeratungsstelle" class="tp13_options">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.name_beratungsstelle" />
 			</label>
 			<div class="tp13_formdivwebappmultiradio">
 				<f:for each="{settings.beratungsstelle}" as="text" key="wert">
-					<div class="tp13_formdivwebappradio"><f:form.radio property="nameBeratungsstelle" value="{wert}" checked="{tnseite3.nameBeratungsstelle} == {wert}" /><span class="abschlussradiotext">{text}</span></div>
+					<div class="tp13_formdivwebappradio"><f:form.radio property="nameBeratungsstelle" value="{wert}" checked="{teilnehmer.nameBeratungsstelle} == {wert}" /><span class="abschlussradiotext">{text}</span></div>
 				</f:for>
 			</div>
 		</div>
+		<div class="tp13_formdivwebapp">
+  			<label for="wieberaten">
+  				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.wieberaten" />
+  			</label>
+  			<div class="tp13_formdivwebappmultiradio">
+  				<f:for each="{settings.wieberaten}" as="option" key="key">
+					<f:variable name="varstring">{value -> f:for(each: '{teilnehmer.wieberaten}', as: 'value')}</f:variable>
+					<div class="tp13_formdivwebappradio">
+						<f:form.checkbox name="teilnehmer[wieberaten]" checked="{iqtp13db:instring(haystack:'{varstring}',needle:'{key}',then:'TRUE',else:'FALSE')}" multiple="1" value="{key}" />{option}
+					</div>
+				</f:for>	
+  			</div>				
+  		</div>
 		<label for="notizen" class="tp13_options">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.notizen" />
 		</label>

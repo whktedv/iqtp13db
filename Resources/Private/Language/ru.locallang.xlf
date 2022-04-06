@@ -3,10 +3,6 @@
   <file source-language="de" datatype="plaintext" original="messages" date="2016-09-01T11:23:16Z" product-name="iqtp13db" target-language="ru">
     <header/>
     <body>
-<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbadmin"><source>IQ TP13 DB Adminbereich</source><target>IQ TP13 DB Администрация</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbadmin.description"><source></source><target></target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbwebapp"><source>IQ TP13 DB Webapp</source><target>IQ TP13 DB Веб-приложение</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbwebapp.description"><source></source><target></target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer"><source>Teilnehmer</source><target>Участники</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.beratungsstatus"><source>Beratungsstatus</source><target>Консультативный статус</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.niqchiffre"><source>NIQ Chiffre</source><target>NIQ лицо</target></trans-unit>
@@ -30,17 +26,16 @@
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><source>Deutsch als Muttersprache?</source><target>Немецкий как родной язык?</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikatdeutsch"><source>Zertifikatdeutsch</source><target>Немецкий сертификат</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><source>Wenn Zertifikat vorhanden, auf welchem Sprachniveau?</source><target>Если есть сертификат, на каком уровне языка?</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussart1"><source>Abschlussart1</source><target>Степень типа1</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussart2"><source>Abschlussart2</source><target>Степень типа2</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsland1"><source>Erwerbsland1</source><target>Страна приобретения1</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.dauer_berufsausbildung1"><source>Dauer Berufsausbildung1</source><target>Продолжительность профессионального обучения 1</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussjahr1"><source>Abschlussjahr1</source><target>Год выпуска1</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsinstitution1"><source>Ausbildungsinstitution1</source><target>Учебное заведение 1</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsort1"><source>Ausbildungsort1</source><target>Место обучения 1</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschluss1"><source>Abschluss1</source><target>Выпуск1</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.berufserfahrung1"><source>Berufserfahrung1</source><target>Опыт работы1</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutscher_referenzberuf1"><source>Deutscher Referenzberuf1</source><target>Немецкая справочная профессия1</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wunschberuf1"><source>Wunschberuf1</source><target>Желаемая профессия 1</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><source>Abschlussart1</source><target>Степень типа</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_abschluss.erwerbsland"><source>Erwerbsland1</source><target>Страна приобретения</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_abschluss.dauer_berufsausbildung"><source>Dauer Berufsausbildung1</source><target>Продолжительность профессионального обучения </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussjahr"><source>Abschlussjahr1</source><target>Год выпуска</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_abschluss.ausbildungsinstitution"><source>Ausbildungsinstitution1</source><target>Учебное заведение </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_abschluss.ausbildungsort"><source>Ausbildungsort1</source><target>Место обучения </target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschluss"><source>Abschluss1</source><target>Выпуск</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_abschluss.berufserfahrung"><source>Berufserfahrung1</source><target>Опыт работы</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_abschluss.deutscher_referenzberuf"><source>Deutscher Referenzberuf1</source><target>Немецкая справочная профессия</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_abschluss.wunschberuf"><source>Wunschberuf1</source><target>Желаемая профессия </target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsstatus"><source>Erwerbsstatus</source><target>Статус занятости</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezug"><source>Leistungsbezug</source><target>Получение пособия</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus"><source>Aufenthaltsstatus</source><target>жилой статус</target></trans-unit>
@@ -87,29 +82,6 @@
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.verification_code"><source>Bestätigungscode</source><target>Проверочный код</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.verification_date"><source>Bestätigungs-Datum</source><target>Дата подтверждения</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.verification_ip"><source>Bestätigungs-IP</source><target>Подтверждение IP</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_beratung"><source>Beratung</source><target>консультация</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_beratung.datum"><source>Datum Erstberatung</source><target>Дата первичной консультации</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_beratung.beratungsart"><source>Beratungsart</source><target>Тип совета</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_beratung.beratungsartfreitext"><source>Beratungsart face-to-face Freitext</source><target>Тип совета очная форма произвольный текст</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_beratung.beratungsort"><source>Beratungsort</source><target>Место консультации</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_beratung.beratungzu"><source>Beratung zu</source><target>Совет</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_beratung.referenzberufe"><source>Referenzberufe</source><target>Справочные профессии </target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_beratung.anerkennendestellen"><source>Anerkennende Stellen</source><target>Узнавание тел</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_beratung.anerkennungsberatung"><source>Anerkennungsberatung</source><target>Совет по признанию</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_beratung.anerkennungsberatungfreitext"><source>Freitext zu 'sonstige Themen bezogen auf das Anerkennungsverfahren'</source><target>Свободный текст по «другим темам, связанным с процедурой признания»</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_beratung.qualifizierungsberatung"><source>Qualifizierungsberatung</source><target>Квалификационный совет</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_beratung.qualifizierungsberatungfreitext"><source>Freitext zu 'sonstige Themen bezogen auf Qualifizierung':</source><target>Свободный текст по «другим темам, связанным с квалификацией»:</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_beratung.notizen"><source>Notizen</source><target>заметки</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_beratung.erstberatungabgeschlossen"><source>Erstberatung abgeschlossen</source><target>Первоначальная консультация завершена</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_beratung.teilnehmer"><source>Teilnehmer*in</source><target>Участник</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_beratung.berater"><source>Berater*in</source><target>Советник, Консультант</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_folgekontakt"><source>Folgekontakt</source><target>Последующий контакт</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.datum"><source>Datum</source><target>Дата</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.antraggestellt"><source>Antrag gestellt?</source><target>Заявка подана?</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.zab_gleichwertigkeit"><source>ZAB/Gleichwertigkeit</source><target>ZAB / эквивалент </target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.notizen"><source>Notizen</source><target>заметки</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.teilnehmer"><source>Ratsuchende*r</source><target>Ищущий совет</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.berater"><source>Berater*in</source><target>Советник, Консультант</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_berater"><source>Berater*in</source><target>Советник, Консультант</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_berater.name"><source>Name</source><target>Имя</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_berater.organisation"><source>Organisation</source><target>организация</target></trans-unit>
@@ -118,30 +90,12 @@
 <trans-unit id="tx_iqtp13db_domain_model_dokument.name"><source>Name</source><target>Имя</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_dokument.pfad"><source>Pfad</source><target>дорожка</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_dokument.teilnehmer"><source>Teilnehmer*in</source><target>Участник</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbadmin"><source>IQ TP13 DB Adminbereich</source><target>IQ TP13 DB Администрация</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbadmin.description"><source></source><target></target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbwebapp"><source>IQ TP13 DB Webapp</source><target>IQ TP13 DB Веб-приложение</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbwebapp.description"><source></source><target></target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsfremdeberufserfahrung1"><source>Ausbildungsfremde Berufserfahrung (Dauer, Jahre)</source><target>Профессиональный опыт, не связанный с обучением (продолжительность, годы)</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsfremdeberufserfahrung2"><source>Ausbildungsfremde Berufserfahrung (Dauer, Jahre)</source><target>Профессиональный опыт, не связанный с обучением (продолжительность, годы)</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussart"><source>Abschlussart</source><target>Тип степени</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsland"><source>In welchem Land?</source><target>В какой стране?</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.dauer_berufsausbildung"><source>Dauer der Berufsausbildung oder des Studiums</source><target>Продолжительность профессионального обучения или учебы</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussjahr"><source>Abschlussjahr</source><target>Год выпуска</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsinstitution"><source>Ausbildungsinstitution</source><target>Учебное заведение</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsort"><source>Ausbildungsort</source><target>Место обучения</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschluss"><source>Name des Abschlusses</source><target>Название степени</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutsch_abschlusstitel"><source>Deutsch Abschlusstitel</source><target>Немецкий диплом</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutscher_referenzberuf"><source>Möglicher deutscher Beruf</source><target>Возможная немецкая Профессия (специальнось)</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.berufserfahrung"><source>Berufserfahrung im erlernten Beruf (Dauer, Jahre)</source><target>Профессиональный опыт в полученной профессии (продолжительность, год)</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.original_dokumente_abschluss"><source>Liegen die Original-Dokumente des Abschlusses vor?</source><target>Доступны ли оригиналы документов об образовании? </target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wunschberuf"><source>Wunschberuf (wenn abweichend von Ausbildungsberuf)?</source><target>Желаемое занятие (специальнось) (Если Это отличаетсяcя от обpазовательной профессии)?</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdaten"><source>Einwilligung Datenübermittlung</source><target>Согласие на передачу данных</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungtext"><source><![CDATA[
 				Ich bin damit einverstanden, dass meine Daten zum Zweck der Bearbeitung meiner Anfrage genutzt werden.
-				Die <a href="https://www.iq-netzwerk-nrw.de/1/datenschutz-und-einwilligung/" target="_blank">Informationen zur Datenverarbeitung</a> habe ich zur Kenntnis genommen.
+				Die <a href="http://www2.iq-netzwerk-nrw.de:81/1/datenschutz-und-einwilligung/" target="_blank">Informationen zur Datenverarbeitung</a> habe ich zur Kenntnis genommen.
 				]]></source><target><![CDATA[Я согласен с тем, что мои данные будут использованы для обработки моего запроса.
-Я принял к сведению <a href="https://www.iq-netzwerk-nrw.de/1/datenschutz-und-einwilligung/" target="_blank"> информацию об обработке данных </a>.]]></target></trans-unit>
+Я принял к сведению <a href="http://www2.iq-netzwerk-nrw.de:81/1/datenschutz-und-einwilligung/" target="_blank"> информацию об обработке данных </a>.]]></target></trans-unit>
 <trans-unit id="ja"><source>Ja</source><target>Да  (Согласен/а)</target></trans-unit>
 <trans-unit id="nein"><source>Nein</source><target>Нет</target></trans-unit>
 <trans-unit id="ka"><source>k.A.</source><target>не указан</target></trans-unit>

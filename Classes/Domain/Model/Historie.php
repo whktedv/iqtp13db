@@ -3,14 +3,15 @@ namespace Ud\Iqtp13db\Domain\Model;
 
 /***
  *
-* This file is part of the "IQ Webapp Anerkennungsberatung" Extension for TYPO3 CMS.
-*
-* For the full copyright and license information, please read the
-* LICENSE.txt file that was distributed with this source code.
-*
-*  (c) 2021
-*
-***/
+ * This file is part of the "IQ Webapp Anerkennungserstberatung" Extension for TYPO3 CMS.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ *
+ *  (c) 2022 Uli Dohmen <edv@whkt.de>, WHKT
+ *
+ ***/
+
 /**
  * Historie
  */

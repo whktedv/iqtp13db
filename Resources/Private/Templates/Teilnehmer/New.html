@@ -12,14 +12,22 @@
 
 <f:render partial="FormErrors" arguments="{object:Teilnehmer}" />
 
-<f:form action="create"  name="teilnehmer" object="{teilnehmer}" arguments="{calleraction: calleraction, callercontroller : callercontroller}">
+<f:form action="create"  name="teilnehmer" object="{teilnehmer}" arguments="{calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">
 	<f:form.submit value="Speichern" />
-	<f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}">Zurück zur Liste</f:link.action>
+	<f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}" arguments="{callerpage : callerpage}">Zurück zur Liste</f:link.action>
 	
-	<f:render partial="Teilnehmer/FormFieldsErstberatung" arguments="{_all}" />
+	<f:render partial="Teilnehmer/FormFields-Part1" arguments="{_all}" />
 	
 	<f:form.submit value="Speichern" />
-	<f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}">Zurück zur Liste</f:link.action>
+	
+	<div class="frameabschluesse">
+		<f:render partial="Abschluss/FormFields" arguments="{abschluss:abschluss}" />
+	</div>	
+	
+	<f:render partial="Teilnehmer/FormFields-Part2" arguments="{_all}" />
+	
+	<f:form.submit value="Speichern" />
+	<f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}" arguments="{callerpage : callerpage}">Zurück zur Liste</f:link.action>
 </f:form>
 
 </f:section>

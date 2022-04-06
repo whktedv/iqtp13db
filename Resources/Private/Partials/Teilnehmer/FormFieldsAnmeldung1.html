@@ -1,8 +1,6 @@
 <div class="frameeinwilligung">
 	<f:form.checkbox id="ein1" property="einwilligung" value="1" />
-	<span class="einwilligungtext">
-		<f:format.raw><f:translate key="tx_iqtp13db_domain_model_teilnehmer.einwilligungtext" /></f:format.raw>
-	</span>
+	<span class="einwilligungtext"><f:format.raw><f:translate key="tx_iqtp13db_domain_model_teilnehmer.einwilligungtext1" />{settings.datenschutzeinwilligungurl}<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einwilligungtext2" /></f:format.raw></span>
 </div>
 
 <div class="fframe">
@@ -77,14 +75,15 @@
 			<label for="lebensalter">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.lebensalter" />
 			</label>
-				<f:form.textfield size="8" property="lebensalter" />
+				<f:form.select property="lebensalter" options="{altervonbis}" optionValueField="value" optionLabelField="value" />
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="geburtsland">
 				<span id="infolab" title="<f:translate key='infoGeburtsland' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geburtsland" />
 			</label>
-				<f:form.textfield  property="geburtsland" />
+				<f:form.select property="geburtsland" options="{wohnsitzstaaten}" optionValueField="value" optionLabelField="value" />
 		</div>
+		
 		<div class="tp13_formdivwebapp">
 			<label class="tp13_options" for="geschlecht">
 			<f:translate key="tx_iqtp13db_domain_model_teilnehmer.geschlecht" />
@@ -93,6 +92,7 @@
 				<div class="tp13_formdivwebappradio"><f:form.radio property="geschlecht" value="2"/><span class="abschlussradiotext"><f:translate key="maennlich" /></span></div>
 				<div class="tp13_formdivwebappradio"><f:form.radio property="geschlecht" value="1"/><span class="abschlussradiotext"><f:translate key="weiblich" /></span></div>
 				<div class="tp13_formdivwebappradio"><f:form.radio property="geschlecht" value="3"/><span class="abschlussradiotext"><f:translate key="divers" /></span></div>
+				<div class="tp13_formdivwebappradio"><f:form.radio property="geschlecht" value="-1"/><span class="abschlussradiotext"><f:translate key="ka" /></span></div>
 			</div>
 			<div style="clear: both;"></div>
 		</div>
@@ -101,19 +101,13 @@
 			<label for="ersteStaatsangehoerigkeit">
 				<span id="infolab" title="<f:translate key='infoStaatsangehoerigkeit' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.erste_staatsangehoerigkeit" />
 			</label>
-			<f:form.textfield  property="ersteStaatsangehoerigkeit" />
+			<f:form.select property="ersteStaatsangehoerigkeit" options="{staatsangehoerigkeitstaaten}" optionValueField="value" optionLabelField="value" />
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="zweiteStaatsangehoerigkeit">
 				<span id="infolab" title="<f:translate key='infoStaatsangehoerigkeit' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.zweite_staatsangehoerigkeit" />
 			</label>
-				<f:form.textfield  property="zweiteStaatsangehoerigkeit" />
-		</div>
-		<div class="tp13_formdivwebapp">
-			<label for="einreisejahr">
-				<span id="infolab" title="<f:translate key='infoJahrEinreise' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.einreisejahr" />
-			</label>
-				<f:form.textfield size="5" property="einreisejahr" />
+			<f:form.select property="zweiteStaatsangehoerigkeit" options="{staatsangehoerigkeitstaaten}" optionValueField="value" optionLabelField="value" />
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label class="tp13_options" for="wohnsitzDeutschland">
@@ -121,22 +115,69 @@
 			</label>
 			<div class="tp13_options">
 				<div class="tp13_formdivwebappradio"><f:form.radio id="checkwohnsitzDeutschland1" property="wohnsitzDeutschland" value="1" /><span class="abschlussradiotext"><f:translate key="ja" /></span></div>
-				<div class="tp13_formdivwebappradio"><f:form.radio id="checkwohnsitzDeutschland0" property="wohnsitzDeutschland" value="2" /><span class="abschlussradiotext"><f:translate key="nein" /></span></div>
+				<div class="tp13_formdivwebappradio"><f:form.radio id="checkwohnsitzDeutschland2" property="wohnsitzDeutschland" value="2" /><span class="abschlussradiotext"><f:translate key="nein" /></span></div>
+				<div class="tp13_formdivwebappradio"><f:form.radio id="checkwohnsitzDeutschland0" property="wohnsitzDeutschland" value="-1" /><span class="abschlussradiotext"><f:translate key="ka" /></span></div>
 			</div>
 			<div style="clear: both;"></div>
+		</div>
+		<div id="labeleinreisejahr" class="tp13_formdivwebapp">
+			<label for="einreisejahr">
+				<span id="infolab" title="<f:translate key='infoJahrEinreise' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.einreisejahr" />
+			</label>
+				<f:form.textfield id="inputeinreisejahr" size="5" property="einreisejahr" />
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label id="labelwohnsitzNeinIn" for="wohnsitzNeinIn">
 				<span id="infolab" title="<f:translate key='infoWohnsitzinDeutschlandNein' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_nein_in" />
 			</label>
-				<f:form.textfield  id="inputwohnsitzNeinIn" property="wohnsitzNeinIn" />
+				<f:form.select id="inputwohnsitzNeinIn" property="wohnsitzNeinIn" options="{wohnsitzstaaten}" optionValueField="value" optionLabelField="value" />
+		</div>
+		
+		<div class="tp13_formdivwebapp" class="tp13_options">
+	      <label for="sonstigerstatus">
+	        	<f:translate key="tx_iqtp13db_domain_model_teilnehmer.sonstigerstatus" />
+	       </label>
+	        <div class="tp13_formdivwebappmultiradio">			
+					<div class="tp13_formdivwebappradio"><f:form.checkbox property="sonstigerstatus" value="1"  multiple="1"/><f:translate key="sonstigerstatus.1"/></div>
+					<div class="tp13_formdivwebappradio"><f:form.checkbox property="sonstigerstatus" value="2"  multiple="1"/><f:translate key="sonstigerstatus.2"/></div>
+			</div>
+		</div>
+	
+		<div class="tp13_formdivwebapp" >
+			<label for="aufenthaltsstatus" class="tp13_options">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus" />
+			</label>
+			<div class="tp13_formdivwebappmultiradio">
+				<f:for each="{settings.aufenthaltsstatus}" as="text" key="wert">
+					<div class="tp13_formdivwebappradio" >	
+						<f:form.radio property="aufenthaltsstatus" value="{wert}" checked="{tnseite1.aufenthaltsstatus} == {wert}"/><span class="abschlussradiotext">{text}</span>
+					</div>
+				</f:for>				
+			</div>			
 		</div>
 		<div class="tp13_formdivwebapp">
-			<label id="labelortskraftafghanistan" for="ortskraftafghanistan">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ortskraftafghanistan" />
+			<label for="aufenthaltsstatusfreitext">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatusfreitext" />
 			</label>
-				<f:form.checkbox id="ortskraftafghanistan1" property="ortskraftafghanistan" value="1" />
+				<f:form.textarea property="aufenthaltsstatusfreitext" rows="2" cols="50" />
+		</div>	
+</div>
+<div class="fframe"><h2><f:translate key="deutschkenntnisse" /></h2>
+		<div class="tp13_formdivwebapp">
+			<label for="deutschkenntnisse" class="tp13_options">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse" />
+			</label>
+			<div class="tp13_options">
+				<div class="tp13_formdivwebappradio"><f:form.radio id="checkdeutschkenntnisse1" property="deutschkenntnisse" value="1" /><span class="abschlussradiotext"><f:translate key="ja" /></span></div>
+				<div class="tp13_formdivwebappradio"><f:form.radio id="checkdeutschkenntnisse2" property="deutschkenntnisse" value="2" /><span class="abschlussradiotext"><f:translate key="nein" /></span></div>
+				<div class="tp13_formdivwebappradio"><f:form.radio id="checkdeutschkenntnisse0" property="deutschkenntnisse" value="-1" /><span class="abschlussradiotext"><f:translate key="ka" /></span></div>
+			</div>
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label id="labelzertsprachniveau" for="zertifikatSprachniveau">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau" />
+			</label>
+				<f:form.select id="selectzertsprachniveau" property="zertifikatSprachniveau" options="{settings.zertifikatlevel}" optionValueField="key" optionLabelField="value" />
 		</div>
 </div>
-
 

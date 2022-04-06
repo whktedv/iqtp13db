@@ -1,32 +1,43 @@
-
 <f:layout name="Default" />
 <f:section name="HeaderAssets">
   		<link rel="stylesheet" href="{f:uri.resource(path: 'CSS/customtp13dbadmin.css')}"/>  		
 </f:section>
+
 <f:section name="main">
-<h1>Liste der Berater*innen</h1>
-Damit sich Berater*innen auch im Webapp-Backend einloggen können, muss ein Website-Benutzer mit dem Kürzel als Namen im Typo3-Backend im Ordner [DB] Benutzer angelegt sein.<br>
 <f:flashMessages />
+<h1>Liste Berater</h1>
 
-<table  class="tx_iqtp13db" >
-	<tr>
-		<th><f:translate key="tx_iqtp13db_domain_model_berater.name" /></th>
-		<th><f:translate key="tx_iqtp13db_domain_model_berater.kuerzel" /></th>
-		<th><f:translate key="tx_iqtp13db_domain_model_berater.organisation" /></th>
-		<th> </th>
-		<th> </th>
-	</tr>
-
-	<f:for each="{beraters}" as="berater">
+<f:render partial="Paginator" arguments="{pagination: pagination, pages: pages, paginator: paginator, action: calleraction}" />
+ 
+	<table  class="tx_iqtp13db" >
 		<tr>
-			<td><f:link.action action="show" arguments="{berater : berater}">{berater.name}</f:link.action></td>
-			<td><f:link.action action="show" arguments="{berater : berater}">{berater.kuerzel}</f:link.action></td>
-			<td><f:link.action action="show" arguments="{berater : berater}">{berater.organisation}</f:link.action></td>
-			<td><f:link.action action="edit" class="linkbuttons" arguments="{berater : berater}">Bearbeiten</f:link.action></td>
-			<td><f:link.action action="delete" class="linkbuttons" arguments="{berater : berater}">Löschen</f:link.action></td>
+			<th>Username</th>
+			<th>Nachname</th>
+			<th>Vorname</th>
+			<th>E-Mail</th>
+			<th>Letzter Login</th>
+			<th>Benutzergruppe</th>
+			<th></th>
+			<th></th>
 		</tr>
-	</f:for>
-</table>
-
-<f:link.action class="linkbuttons" action="new">Neue*r Berater*in</f:link.action>
+	
+			<f:for each="{paginator.paginatedItems}" as="berat" iteration="it">
+			<tr>
+				<td>{berat.username}</td>
+				<td>{berat.lastname}</td>
+				<td>{berat.firstname}</td>
+				<td>{berat.email}</td>
+				<td><f:format.date format="d.m.Y - H:i">{berat.lastlogin}</f:format.date> Uhr</td>
+				<td><f:for each="{berat.usergroup}" as="group">{group.title} </f:for></td>
+				<td><f:link.action action="edit" class="linkbuttons" arguments="{berater : berat}">Bearbeiten</f:link.action></td>
+				<td><f:link.action action="delete" class="linkbuttons" arguments="{berater : berat}">Löschen</f:link.action></td>
+			</tr>
+			
+		</f:for>
+	</table>
+	
+	<f:link.action class="linkbuttons" action="new">Neue*r Berater*in</f:link.action>
 </f:section>
+
+
+

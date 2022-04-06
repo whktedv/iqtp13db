@@ -53,6 +53,10 @@
 	<f:translate key="hinweisdatenueberpruefen" /> 
 	<f:render partial="Teilnehmer/PropertiesAnmeldung" arguments="{teilnehmer:teilnehmer}" />
 	
+	<f:for each="{abschluesse}" as="abschluss">
+		<f:render partial="Abschluss/PropertiesAnmeldung" arguments="{abschluss:abschluss}" />
+	</f:for>
+	
 	<f:form.button name="btnzurueck"><f:translate key="zurueck" /></f:form.button>
 	<f:form.button type="button" name="btncancel" class="abbruchbtn" onclick="return btncancel_Click(0);"><f:translate key="abbruch" /></f:form.button>
 	<f:form.button name="btnAbsenden"><f:translate key="absenden" /></f:form.button>

@@ -3,14 +3,15 @@ namespace Ud\Iqtp13db\Domain\Model;
 
 /***
  *
-* This file is part of the "IQ Webapp Anerkennungsberatung" Extension for TYPO3 CMS.
-*
-* For the full copyright and license information, please read the
-* LICENSE.txt file that was distributed with this source code.
-*
-*  (c) 2021
-*
-***/
+ * This file is part of the "IQ Webapp Anerkennungserstberatung" Extension for TYPO3 CMS.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ *
+ *  (c) 2022 Uli Dohmen <edv@whkt.de>, WHKT
+ *
+ ***/
+
 /**
  * Folgekontakt
  */
@@ -25,26 +26,19 @@ class Folgekontakt extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 	protected $datum = '';
 
 	/**
-	 * antraggestellt
-	 *
-	 * @var int
-	 */
-	protected $antraggestellt = 0;
-
-	/**
-	 * zabGleichwertigkeit
-	 *
-	 * @var int
-	 */
-	protected $zabGleichwertigkeit = 0;
-
-	/**
 	 * notizen
 	 *
 	 * @var string
 	 */
 	protected $notizen = '';
 
+	/**
+	 * beratungsform
+	 *
+	 * @var int
+	 */
+	protected $beratungsform = 0;
+	
 	/**
 	 * teilnehmer
 	 *
@@ -81,48 +75,6 @@ class Folgekontakt extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 	}
 
 	/**
-	 * Returns the antraggestellt
-	 *
-	 * @return int $antraggestellt
-	 */
-	public function getAntraggestellt()
-	{
-		return $this->antraggestellt;
-	}
-
-	/**
-	 * Sets the antraggestellt
-	 *
-	 * @param int $antraggestellt
-	 * @return void
-	 */
-	public function setAntraggestellt($antraggestellt)
-	{
-		$this->antraggestellt = $antraggestellt;
-	}
-
-	/**
-	 * Returns the zabGleichwertigkeit
-	 *
-	 * @return int $zabGleichwertigkeit
-	 */
-	public function getZabGleichwertigkeit()
-	{
-		return $this->zabGleichwertigkeit;
-	}
-
-	/**
-	 * Sets the zabGleichwertigkeit
-	 *
-	 * @param int $zabGleichwertigkeit
-	 * @return void
-	 */
-	public function setZabGleichwertigkeit($zabGleichwertigkeit)
-	{
-		$this->zabGleichwertigkeit = $zabGleichwertigkeit;
-	}
-
-	/**
 	 * Returns the notizen
 	 *
 	 * @return string $notizen
@@ -141,6 +93,27 @@ class Folgekontakt extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 	public function setNotizen($notizen)
 	{
 		$this->notizen = $notizen;
+	}
+	
+	/**
+	 * Returns the beratungsform
+	 *
+	 * @return int $beratungsform
+	 */
+	public function getBeratungsform()
+	{
+	    return $this->beratungsform;
+	}
+	
+	/**
+	 * Sets the beratungsform
+	 *
+	 * @param int $beratungsform
+	 * @return void
+	 */
+	public function setBeratungsform($beratungsform)
+	{
+	    $this->beratungsform = $beratungsform;
 	}
 
 	/**

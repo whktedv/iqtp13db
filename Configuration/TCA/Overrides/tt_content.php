@@ -34,5 +34,3 @@ $pluginSignature2 = $extensionName.'_'.$pluginName2;
 
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature2] = 'pi_flexform';
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue($pluginSignature2, 'FILE:EXT:iqtp13db/Configuration/FlexForms/PluginFormWebapp.xml');
-
-

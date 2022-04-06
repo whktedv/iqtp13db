@@ -1,29 +1,18 @@
 
 <f:layout name="Default" />
-<f:section name="HeaderAssets">
-  		<link rel="stylesheet" href="{f:uri.resource(path: 'CSS/customtp13dbadmin.css')}"/>  		
-</f:section>
 
 <f:section name="main">
-<h1>Erstberatung für {teilnehmer.nachname}, {teilnehmer.vorname}</h1>
+<h1>Neue Beratung für {teilnehmer.nachname}, {teilnehmer.vorname}</h1>
 
 <f:flashMessages />
 
 <f:render partial="FormErrors" arguments="{object:Beratung}" />
 
-				
-<f:form action="create" name="beratung" object="{beratung}" arguments="{calleraction: calleraction, callercontroller : callercontroller}">
-	<f:form.submit value="Speichern" />
-	<f:link.action class="linkbuttons" action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}" controller="Teilnehmer">Anmeldedaten</f:link.action>
-	<f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}">Zurück zur Liste</f:link.action>
-	
-	<f:render partial="Beratung/FormFields" arguments="{_all}" />
+<f:form action="create" name="beratung" object="{beratung}" arguments="{teilnehmer:teilnehmer}">
+<f:render partial="Beratung/FormFields" arguments="{_all}" />
 	<f:form.hidden property="teilnehmer" value="{teilnehmer.uid}" />
-	
 	<f:form.submit value="Speichern" />
-	<f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}">Zurück zur Liste</f:link.action>
-	<f:link.action class="linkbuttons" action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}" controller="Teilnehmer">Anmeldedaten</f:link.action>
-	
+	<f:link.action class="linkbuttons" action="show" arguments="{teilnehmer:teilnehmer}" controller="Teilnehmer">Zurück zum Beratenen</f:link.action><br />
 </f:form>
 
 </f:section>

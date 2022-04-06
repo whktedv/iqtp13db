@@ -10,8 +10,8 @@
 
 <f:render partial="FormErrors" arguments="{object:Berater}" />
 
-<f:form action="create"  name="newBerater" object="{newBerater}">
-<f:render partial="Berater/FormFields" />
+<f:form action="create" name="berater" object="{berater}">
+<f:render partial="Berater/FormFields" arguments="{usergroups:usergroups}" />
 	<f:form.submit class="linkbuttons" value="Speichern" />
 </f:form>
 </f:section>

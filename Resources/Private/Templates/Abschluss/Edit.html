@@ -1,0 +1,17 @@
+
+<f:layout name="Default" />
+<f:section name="HeaderAssets">
+  		<link rel="stylesheet" href="{f:uri.resource(path: 'CSS/customtp13dbadmin.css')}"/>  		
+</f:section>
+<f:section name="main">
+<h1>Abschluss/Beruf bearbeiten</h1>
+
+<f:flashMessages />
+
+<f:render partial="FormErrors" arguments="{object:Beruf}" />
+
+<f:form action="update" name="beruf" object="{beruf}" >
+<f:render partial="Beruf/FormFields" arguments="{beruf:beruf}" />
+	<f:form.submit class="linkbuttons" value="Speichern" />
+</f:form>
+</f:section>

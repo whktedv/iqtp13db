@@ -3,13 +3,7 @@
   <file source-language="de" datatype="plaintext" original="messages" date="2016-09-01T11:23:16Z" product-name="iqtp13db" target-language="ar">
     <header/>
     <body>
-<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbadmin"><source>IQ TP13 DB Adminbereich</source><target>		</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbadmin.description"><source></source><target>		</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbwebapp"><source>IQ TP13 DB Webapp</source><target>		</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbwebapp.description"><source></source><target>		</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer"><source>Teilnehmer</source><target>	المشترك	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.beratungsstatus"><source>Beratungsstatus</source><target>	وضعية الإستشارة	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.niqchiffre"><source>NIQ Chiffre</source><target>	رقم الملف	</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.schonberaten"><source>Wurden Sie schon einmal zur Anerkennung Ihres ausländischen Berufsabschlusses beraten?</source><target>	هل حدث وحصلت على استشارة حول تعديل شهاداتك المهنية الأجنبية؟	</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.schonberatenvon"><source>Von wem wurden Sie beraten?</source><target>	من قبل من تم تقديم المشورة لك؟	</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.nachname"><source>Nachname</source><target>	إسم العائلة / الكنية	</target></trans-unit>
@@ -30,39 +24,25 @@
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><source>Deutsch als Muttersprache?</source><target>	اللغة الألمانية كلغة الأم؟	</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikatdeutsch"><source>Zertifikatdeutsch</source><target>	شهادة اللغة الألمانية	</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><source>Wenn Zertifikat vorhanden, auf welchem Sprachniveau?</source><target>	في حالة وجود شهادة لغة ألمانية، في أي مستوى؟	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussart1"><source>Abschlussart1</source><target>	نوعية درجة التخرج 1	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussart2"><source>Abschlussart2</source><target>	نوعية درجة التخرج 2 	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsland1"><source>Erwerbsland1</source><target>	بلد التخرج 1	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.dauer_berufsausbildung1"><source>Dauer Berufsausbildung1</source><target>	مدة التحصيل المهني / العلمي	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussjahr1"><source>Abschlussjahr1</source><target>	سنة التخرح 1	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsinstitution1"><source>Ausbildungsinstitution1</source><target>	المؤسسة التعليمية التي تم التخرج منها 1	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsort1"><source>Ausbildungsort1</source><target>	مكان التحصيل المهني / العلمي 1	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschluss1"><source>Abschluss1</source><target>	درجة التخرج 1	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.berufserfahrung1"><source>Berufserfahrung1</source><target>	الخبرة المهنية 1	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutscher_referenzberuf1"><source>Deutscher Referenzberuf1</source><target>	المهنة المطابقة في ألمانيا 1	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wunschberuf1"><source>Wunschberuf1</source><target>	المهنة المنشودة 1	</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><source>Abschlussart1</source><target>	نوعية درجة التخرج 	</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_abschluss.erwerbsland"><source>Erwerbsland1</source><target>	بلد التخرج 	</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_abschluss.dauer_berufsausbildung"><source>Dauer Berufsausbildung1</source><target>	مدة التحصيل المهني / العلمي	</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussjahr"><source>Abschlussjahr1</source><target>	سنة التخرح 1	</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_abschluss.ausbildungsinstitution"><source>Ausbildungsinstitution1</source><target>	المؤسسة التعليمية التي تم التخرج منها 1	</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_abschluss.ausbildungsort"><source>Ausbildungsort1</source><target>	مكان التحصيل المهني / العلمي 	</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschluss"><source>Abschluss1</source><target>	درجة التخرج 	</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_abschluss.berufserfahrung"><source>Berufserfahrung1</source><target>	الخبرة المهنية 	</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_abschluss.deutscher_referenzberuf"><source>Deutscher Referenzberuf1</source><target>	المهنة المطابقة في ألمانيا 	</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_abschluss.wunschberuf"><source>Wunschberuf1</source><target>	المهنة المنشودة 	</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsstatus"><source>Erwerbsstatus</source><target>	الحالة الوظيفية	</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezug"><source>Leistungsbezug</source><target>	الحصول على دعم مالي	</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus"><source>Aufenthaltsstatus</source><target>	وضع الإقامة	</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatusfreitext"><source>Anmerkung zum Aufenthaltsstatus</source><target>	توضيح حول وضع الإقامة	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag"><source>Wurde schon ein Antrag auf Anerkennung des Berufsabschlusses gestellt?</source><target>	هل تم تقديم طلب لتعديل الشهادات المهنية أو العلمية؟	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag_referenzberuf"><source>Für welchen Beruf?</source><target>	لأية مهنة؟	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag_institution"><source>Bei welcher Institution oder Behörde?</source><target>	لدى أية مؤسسة أو دائرة؟	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.anz_beratungen"><source>Anz Beratungen</source><target>	عدد الجلسات الإستشارية	</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.weitere_sprachkenntnisse"><source>Weitere Sprachkenntnisse</source><target>	مهارات لغوية إضافية	</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.sprachen"><source>Welche Sprachen sprechen Sie?</source><target>	ما هي اللغات التي تتكلمها؟	</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.bescheidfrueherer_anerkennungsantrag"><source>Haben Sie schon die Entscheidung von der anerkennenden Stelle (Bescheid) erhalten?</source><target>	هل حصلت على قرار حول التعديل من قبل المؤسسة المعنية؟	</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_beratungsstelle"><source>Wie haben Sie uns gefunden?</source><target>	كيف تعرفت علينا؟	</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligung"><source>Einwilligung</source><target>	القبول	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsland2"><source>Erwerbsland2</source><target>	بلد التخرج 2	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.dauer_berufsausbildung2"><source>Dauer Berufsausbildung2</source><target>	المؤسسة التعليمية التي تم التخرج منها 2	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussjahr2"><source>Abschlussjahr2</source><target>	سنة التخرح 2	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsinstitution2"><source>Ausbildungsinstitution2</source><target>	المؤسسة التعليمية التي تم التخرج منها 2	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsort2"><source>Ausbildungsort2</source><target>	مكان التحصيل المهني / العلمي 2	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschluss2"><source>Abschluss2</source><target>	درجة التخرج 2	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.berufserfahrung2"><source>Berufserfahrung2</source><target>	الخبرة المهنية 2	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutscher_referenzberuf2"><source>Deutscher Referenzberuf2</source><target>	المهنة المطابقة في ألمانيا 2	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wunschberuf2"><source>Wunschberuf2</source><target>	المهنة المنشودة 2	</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezugjanein"><source>Bekommen Sie Geld vom Jobcenter oder der Agentur für Arbeit?</source><target>	هل تحصل على دعم مالي من مركز العمل أو وكالة التوظيف؟	</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezug"><source>Leistungsbezug</source><target>	الحصول على دعم مالي	</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungstextaa"><source>Mit der Angabe der folgenden Daten willige ich ein, dass der Agentur für Arbeit bzw. dem Jobcenter meine Daten zum Zwecke bzw. im Rahmen der Anerkennungsberatung weitergegeben werden dürfen.</source><target>	من خلال تقديم البيانات التالية، أوافق على أنه قد يتم تمرير بياناتي  لوكالة التوظيف أو مركز العمل لغرض أو ضمن إطار الاعتراف بالشهادات.	</target></trans-unit>
@@ -87,29 +67,6 @@
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.verification_code"><source>Bestätigungscode</source><target>	شيفرة التأكيد 	</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.verification_date"><source>Bestätigungs-Datum</source><target>	تاريخ التأكيد	</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.verification_ip"><source>Bestätigungs-IP</source><target>	بروتوكول الإنترنت للتأكيد	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_beratung"><source>Beratung</source><target>	الإستشارة	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_beratung.datum"><source>Datum Erstberatung</source><target>	تاريخ الإستشارة الأولى	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_beratung.beratungsart"><source>Beratungsart</source><target>	طريقة الإستشارة	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_beratung.beratungsartfreitext"><source>Beratungsart face-to-face Freitext</source><target>	الإستشارة المباشرة وجه لوجه	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_beratung.beratungsort"><source>Beratungsort</source><target>	مكان الإستشارة	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_beratung.beratungzu"><source>Beratung zu</source><target>	إستشارة حول	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_beratung.referenzberufe"><source>Referenzberufe</source><target>	المهن المطابقة / المرادفة	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_beratung.anerkennendestellen"><source>Anerkennende Stellen</source><target>	جهة التعديل	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_beratung.anerkennungsberatung"><source>Anerkennungsberatung</source><target>	إستشارة حول التعديل	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_beratung.anerkennungsberatungfreitext"><source>Freitext zu 'sonstige Themen bezogen auf das Anerkennungsverfahren'</source><target>	نص حر حول ‘مواضيع أخرى تتعلق بإجراءات الاعتراف’	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_beratung.qualifizierungsberatung"><source>Qualifizierungsberatung</source><target>	مشورة التأهيل 	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_beratung.qualifizierungsberatungfreitext"><source>Freitext zu 'sonstige Themen bezogen auf Qualifizierung':</source><target>	نص حر حول ‘مواضيع أخرى تتعلق بالتأهيل’	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_beratung.notizen"><source>Notizen</source><target>	ملاحظات	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_beratung.erstberatungabgeschlossen"><source>Erstberatung abgeschlossen</source><target>	اكتملت المشورة الأولية	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_beratung.teilnehmer"><source>Teilnehmer*in</source><target>	المشترك	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_beratung.berater"><source>Berater*in</source><target>	مقدم المشورة	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_folgekontakt"><source>Folgekontakt</source><target>	إتصال متابع	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.datum"><source>Datum</source><target>	التاريخ	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.antraggestellt"><source>Antrag gestellt?</source><target>	هل تم تقديم طلب؟	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.zab_gleichwertigkeit"><source>ZAB/Gleichwertigkeit</source><target>	ZAB المعادلة 	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.notizen"><source>Notizen</source><target>	ملاحظات	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.teilnehmer"><source>Ratsuchende*r</source><target>	الباحث عن المشورة	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.berater"><source>Berater*in</source><target>	مقدم/ة المشورة	</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_berater"><source>Berater*in</source><target>	مقدم/ة المشورة	</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_berater.name"><source>Name</source><target>	الإسم	</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_berater.organisation"><source>Organisation</source><target>	المؤسسة	</target></trans-unit>
@@ -118,26 +75,12 @@
 <trans-unit id="tx_iqtp13db_domain_model_dokument.name"><source>Name</source><target>	الإسم	</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_dokument.pfad"><source>Pfad</source><target>	طريق	</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_dokument.teilnehmer"><source>Teilnehmer*in</source><target>	المشترك	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbadmin"><source>IQ TP13 DB Adminbereich</source><target>		</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbadmin.description"><source></source><target>		</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbwebapp"><source>IQ TP13 DB Webapp</source><target>		</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbwebapp.description"><source></source><target>		</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsfremdeberufserfahrung1"><source>Ausbildungsfremde Berufserfahrung (Dauer, Jahre)</source><target>	الخبرة المهنية غير المتعلقة بالتدريب (المدة، السنوات) 	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsfremdeberufserfahrung2"><source>Ausbildungsfremde Berufserfahrung (Dauer, Jahre)</source><target>	الخبرة المهنية غير المتعلقة بالتدريب (المدة، السنوات) 	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussart"><source>Abschlussart</source><target>	نوع الدرجة	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsland"><source>In welchem Land?</source><target>	في أية بلد؟	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.dauer_berufsausbildung"><source>Dauer der Berufsausbildung oder des Studiums</source><target>	مدة التدريب المهني أو الدراسة الجامعية 	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschlussjahr"><source>Abschlussjahr</source><target>	سنة التخرج	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsinstitution"><source>Ausbildungsinstitution</source><target>	مؤسسة التأهيل المهني / العلمي	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ausbildungsort"><source>Ausbildungsort</source><target>	مكان التحصيل المهني / العلمي	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.abschluss"><source>Name des Abschlusses</source><target>	اسم الشهادة	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutsch_abschlusstitel"><source>Deutsch Abschlusstitel</source><target>	الترجمة الألمانية لشهادة التخرج	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutscher_referenzberuf"><source>Möglicher deutscher Beruf</source><target>	المهنة الألمانية المحتملة	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.berufserfahrung"><source>Berufserfahrung im erlernten Beruf (Dauer, Jahre)</source><target>	الخبرة المهنية في المهنة التي تعلمتها (المدة ، سنوات) 	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.original_dokumente_abschluss"><source>Liegen die Original-Dokumente des Abschlusses vor?</source><target>	هل الوثائق الأصلية للدرجة متاحة؟	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wunschberuf"><source>Wunschberuf (wenn abweichend von Ausbildungsberuf)?</source><target>	المهنة المرغوبة (إذا كانت مختلفة عن المهنة التي تم التخرج منها)؟	</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdaten"><source>Einwilligung Datenübermittlung</source><target>	الموافقة على تمرير البيانات	</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungtext"><source></source><target><![CDATA[أوافق على استخدام بياناتي لغرض متابعة طلبي ولاحظت المعلومات في الموقع: <a href="https://www.iq-netzwerk-nrw.de/en/1/consent-web-app-recognition-counselling/" target="_blank">information on data processing</a>]]></target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungtext"><source><![CDATA[
+				Ich bin damit einverstanden, dass meine Daten zum Zweck der Bearbeitung meiner Anfrage genutzt werden.
+				Die Informationen zur Datenverarbeitung habe ich zur Kenntnis genommen.
+				]]></source><target>أوافق على استخدام بياناتي لغرض متابعة طلبي ولاحظت المعلومات في الموقع: Informationen zur Datenverarbeitung
+</target></trans-unit>
 <trans-unit id="ja"><source>Ja</source><target>	نعم	</target></trans-unit>
 <trans-unit id="nein"><source>Nein</source><target>	لا	</target></trans-unit>
 <trans-unit id="ka"><source>k.A.</source><target>	لا أدري	</target></trans-unit>

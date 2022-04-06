@@ -1,0 +1,128 @@
+
+		<div class="tp13_formdivwebapp">
+		  <label><f:translate key="tx_iqtp13db_domain_model_abschluss.abschlussart" />
+		  <span class="niqfield" /></label>
+		  <span class="propdat">
+				<f:for each="{beruf.abschlussart}" as="abschlussart" iteration="iter">
+					{f:if(condition: '{iter.index} > 0', then: ',', else: '')}
+					<f:if condition="{abschlussart} == 1"><f:then>
+						<f:translate key="abschlussart.1"/>
+					</f:then></f:if>
+					<f:if condition="{abschlussart} == 2"><f:then>
+						<f:translate key="abschlussart.2"/>
+					</f:then></f:if>										
+				</f:for>
+		  </span>	
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="erwerbsland">
+				<f:translate key="tx_iqtp13db_domain_model_abschluss.erwerbsland" />
+				<span class="niqfield" />
+			</label>
+			<f:for each="{settings.staaten}" as="text" key="wert">
+				{f:if(condition: '{beruf.erwerbsland} == {wert}', then: '<span class="propdat">{text}</span>')}
+			</f:for>		    
+		</div>
+		<div class="tp13_formdivwebapp">
+		  <label><f:translate key="tx_iqtp13db_domain_model_abschluss.dauer_berufsausbildung" /></label>
+		    <span class="propdat">{beruf.dauerBerufsausbildung}</span>
+		</div>
+		<div class="tp13_formdivwebapp">
+		  <label><f:translate key="tx_iqtp13db_domain_model_abschluss.abschlussjahr" /></label>
+		    <span class="propdat">{beruf.abschlussjahr}</span>
+		</div>
+		<div class="tp13_formdivwebapp">
+		  <label><f:translate key="tx_iqtp13db_domain_model_abschluss.ausbildungsinstitution" /></label>
+		    <span class="propdat">{beruf.ausbildungsinstitution}</span>
+		</div>
+		<div class="tp13_formdivwebapp">
+		  <label><f:translate key="tx_iqtp13db_domain_model_abschluss.ausbildungsort" /></label>
+		    <span class="propdat">{beruf.ausbildungsort}</span>
+		</div>
+		<div class="tp13_formdivwebapp">
+		  <label><f:translate key="tx_iqtp13db_domain_model_abschluss.abschluss" /></label>
+		    <span class="propdat">{beruf.abschluss}</span>
+		</div>
+		<div class="tp13_formdivwebapp">
+		  <label><f:translate key="tx_iqtp13db_domain_model_abschluss.berufserfahrung" />
+		  <span class="niqfield" /></label>
+		      <f:for each="{settings.berufserfahrung}" as="text" key="wert">
+					{f:if(condition: '{beruf.berufserfahrung} == {wert}', then: '<span class="propdat">{text}&nbsp;</span>')}
+			</f:for>
+		</div>
+
+		<div class="tp13_formdivwebapp">
+		  <label><f:translate key="tx_iqtp13db_domain_model_abschluss.deutscher_referenzberuf" />
+		  <span class="niqfield" /></label>
+		    <span class="propdat">{beruf.deutscherReferenzberuf}</span>
+		</div>
+		<div class="tp13_formdivwebapp">
+		  <label><f:translate key="tx_iqtp13db_domain_model_abschluss.wunschberuf" /></label>
+		    <span class="propdat">{beruf.wunschberuf}</span>
+		</div>
+		
+		<div class="tp13_formdivwebapp">
+		  <label><f:translate key="tx_iqtp13db_domain_model_abschluss.antragstellungvorher" />
+		  	<span class="niqfield" /></label>
+		    <f:for each="{settings.antragstellungvorher}" as="text" key="wert">
+					{f:if(condition: '{beruf.antragstellungvorher} == {wert}', then: '<span class="propdat">{text}&nbsp;</span>')}
+			</f:for>
+		</div>
+		<div class="tp13_formdivwebapp">
+		  <label><f:translate key="tx_iqtp13db_domain_model_abschluss.antragstellunggwpvorher" />
+		  	<span class="niqfield" /></label>
+		    <f:for each="{settings.ergebnisgleichwertigkeitvorher}" as="text" key="wert">
+					{f:if(condition: '{beruf.antragstellunggwpvorher} == {wert}', then: '<span class="propdat">{text}&nbsp;</span>')}
+			</f:for>
+		</div>
+		<div class="tp13_formdivwebapp">
+		  <label><f:translate key="tx_iqtp13db_domain_model_abschluss.antragstellungzabvorher" />
+		  	<span class="niqfield" /></label>
+		    <f:for each="{settings.ergebniszab}" as="text" key="wert">
+					{f:if(condition: '{beruf.antragstellungzabvorher} == {wert}', then: '<span class="propdat">{text}&nbsp;</span>')}
+			</f:for>
+		</div>		
+		<br>
+		<h2>Anerkennungsverfahren zu "{settings.berufe.{beruf.referenzberufzugewiesen}}"</h2>
+		<br>
+		<div class="tp13_formdivwebapp" id="divantragstellungerfolgt">
+				<label for="antragstellungerfolgt">
+					<f:translate key="tx_iqtp13db_domain_model_abschluss.antragstellungerfolgt" />
+					<span class="niqfield" />
+				</label>
+				<f:for each="{settings.antragstellungerfolgt}" as="text" key="wert">
+						{f:if(condition: '{beruf.antragstellungerfolgt} == {wert}', then: '<span class="propdat">{text}&nbsp;</span>')}
+				</f:for>
+		</div>
+		<div class="tp13_formdivwebapp" id="divantragstellunggwpdatum">
+		      <label for="antragstellunggwpdatum">
+		        <f:translate key="tx_iqtp13db_domain_model_abschluss.antragstellunggwpdatum" />
+		        <span class="niqfield" />
+		       </label>
+		       <span class="propdat">{beruf.antragstellunggwpdatum}</span>
+		</div>
+		<div class="tp13_formdivwebapp" id="divantragstellunggwpergebnis">
+				<label for="antragstellunggwpergebnis">
+					<f:translate key="tx_iqtp13db_domain_model_abschluss.antragstellunggwpergebnis" />
+					<span class="niqfield" />
+				</label>
+				<f:for each="{settings.ergebnisgleichwertigkeit}" as="text" key="wert">
+						{f:if(condition: '{beruf.antragstellunggwpergebnis} == {wert}', then: '<span class="propdat">{text}&nbsp;</span>')}
+				</f:for>
+		</div>
+		<div class="tp13_formdivwebapp" id="divantragstellungzabdatum">
+		      <label for="antragstellungzabdatum">
+		        <f:translate key="tx_iqtp13db_domain_model_abschluss.antragstellungzabdatum" />
+		        <span class="niqfield" />
+		       </label>
+		       <span class="propdat">{beruf.antragstellungzabdatum}</span>
+		</div>
+		<div class="tp13_formdivwebapp" id="divantragstellungzabergebnis">
+				<label for="antragstellungzabergebnis">
+					<f:translate key="tx_iqtp13db_domain_model_abschluss.antragstellungzabergebnis" />
+					<span class="niqfield" />
+				</label>
+				<f:for each="{settings.ergebniszab}" as="text" key="wert">
+						{f:if(condition: '{beruf.antragstellungzabergebnis} == {wert}', then: '<span class="propdat">{text}&nbsp;</span>')}
+				</f:for>				
+		</div>	

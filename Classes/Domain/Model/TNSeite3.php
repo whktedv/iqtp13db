@@ -1,30 +1,16 @@
 <?php
 namespace Ud\Iqtp13db\Domain\Model;
 
-/***************************************************************
+/***
  *
- *  Copyright notice
+ * This file is part of the "IQ Webapp Anerkennungserstberatung" Extension for TYPO3 CMS.
  *
- *  (c) 2021 Uli Dohmen <edv@whkt.de>, WHKT
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
  *
- *  All rights reserved
+ *  (c) 2022 Uli Dohmen <edv@whkt.de>, WHKT
  *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+ ***/
 
 /**
  * TNSeite3
@@ -79,41 +65,41 @@ class TNSeite3 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * @var string
 	 */
 	protected $kundennummerAA = '';
-
-	/**
-	 * Aufenthaltsstatus des/der Teilnehmers/in bei Beginn der Maßnahme
-	 *
-	 * @var int
-	 */
-	protected $aufenthaltsstatus = 0;
-
-	/**
-	 * Wurde früher ein Antrag auf Anerkennung gestellt?
-	 *
-	 * @var int
-	 */
-	protected $fruehererAntrag = 0;
-
-	/**
-	 * Zu welchem Referenzberuf?
-	 *
-	 * @var string
-	 */
-	protected $fruehererAntragReferenzberuf = '';
-
-	/**
-	 * Bei welcher Institution?
-	 *
-	 * @var string
-	 */
-	protected $fruehererAntragInstitution = '';
 	
 	/**
-	 * bescheidfruehererAnerkennungsantrag
+	 * einwPerson
 	 *
-	 * @var bool
+	 * @var int
 	 */
-	protected $bescheidfruehererAnerkennungsantrag = FALSE;
+	protected $einwPerson = 0;
+	
+	/**
+	 * einwPersondatum
+	 *
+	 * @var string
+	 */
+	protected $einwPersondatum = '';
+	
+	/**
+	 * einwPersonmedium
+	 *
+	 * @var string
+	 */
+	protected $einwPersonmedium = '';
+	
+	/**
+	 * einwPersonname
+	 *
+	 * @var string
+	 */
+	protected $einwPersonname = '';
+	
+	/**
+	 * einwPersonkontakt
+	 *
+	 * @var string
+	 */
+	protected $einwPersonkontakt = '';
 	
 	/**
 	 * nameBeratungsstelle
@@ -123,12 +109,27 @@ class TNSeite3 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	protected $nameBeratungsstelle = '';
 		
 	/**
+	 * wieberaten
+	 *
+	 * @var string
+	 */
+	protected $wieberaten = '';
+	
+	/**
 	 * notizen
 	 *
 	 * @var string
 	 */
 	protected $notizen = '';
 	
+	/**
+	 * initializes this object
+	 *
+	 * @param array $wieberaten
+	 */
+	public function __construct(array $wieberaten = array()) {
+	    $this->setWieberaten($wieberaten);
+	}
 	
 	/**
 	 * Returns the erwerbsstatus
@@ -273,111 +274,113 @@ class TNSeite3 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	{
 	    $this->kundennummerAA = $kundennummerAA;
 	}
-	
-	/**
-	 * Returns the aufenthaltsstatus
-	 *
-	 * @return int $aufenthaltsstatus
-	 */
-	public function getAufenthaltsstatus() {
-		return $this->aufenthaltsstatus;
-	}
 
 	/**
-	 * Sets the aufenthaltsstatus
+	 * Returns the einwPerson
 	 *
-	 * @param int $aufenthaltsstatus
-	 * @return void
+	 * @return int $einwPerson
 	 */
-	public function setAufenthaltsstatus($aufenthaltsstatus) {
-		$this->aufenthaltsstatus = $aufenthaltsstatus;
-	}
-
-	/**
-	 * Returns the fruehererAntrag
-	 *
-	 * @return int $fruehererAntrag
-	 */
-	public function getFruehererAntrag() {
-		return $this->fruehererAntrag;
-	}
-
-	/**
-	 * Sets the fruehererAntrag
-	 *
-	 * @param int $fruehererAntrag
-	 * @return void
-	 */
-	public function setFruehererAntrag($fruehererAntrag) {
-		$this->fruehererAntrag = $fruehererAntrag;
-	}
-
-	/**
-	 * Returns the fruehererAntragReferenzberuf
-	 *
-	 * @return string $fruehererAntragReferenzberuf
-	 */
-	public function getFruehererAntragReferenzberuf() {
-		return $this->fruehererAntragReferenzberuf;
-	}
-
-	/**
-	 * Sets the fruehererAntragReferenzberuf
-	 *
-	 * @param string $fruehererAntragReferenzberuf
-	 * @return void
-	 */
-	public function setFruehererAntragReferenzberuf($fruehererAntragReferenzberuf) {
-		$this->fruehererAntragReferenzberuf = $fruehererAntragReferenzberuf;
-	}
-
-	/**
-	 * Returns the fruehererAntragInstitution
-	 *
-	 * @return string $fruehererAntragInstitution
-	 */
-	public function getFruehererAntragInstitution() {
-		return $this->fruehererAntragInstitution;
+	public function getEinwPerson()
+	{
+	    return $this->einwPerson;
 	}
 	
 	/**
-	 * Sets the fruehererAntragInstitution
+	 * Sets the einwPerson
 	 *
-	 * @param string $fruehererAntragInstitution
+	 * @param int $einwPerson
 	 * @return void
 	 */
-	public function setFruehererAntragInstitution($fruehererAntragInstitution) {
-		$this->fruehererAntragInstitution = $fruehererAntragInstitution;
+	public function setEinwPerson($einwPerson)
+	{
+	    $this->einwPerson = $einwPerson;
 	}
 	
 	/**
-	 * Returns the bescheidfruehererAnerkennungsantrag
+	 * Returns the einwPersondatum
 	 *
-	 * @return bool $bescheidfruehererAnerkennungsantrag
+	 * @return string $einwPersondatum
 	 */
-	public function getBescheidfruehererAnerkennungsantrag() {
-		return $this->bescheidfruehererAnerkennungsantrag;
+	public function getEinwPersondatum()
+	{
+	    return $this->einwPersondatum;
 	}
 	
 	/**
-	 * Sets the bescheidfruehererAnerkennungsantrag
+	 * Sets the einwPersondatum
 	 *
-	 * @param bool $bescheidfruehererAnerkennungsantrag
+	 * @param string $einwPersondatum
 	 * @return void
 	 */
-	public function setBescheidfruehererAnerkennungsantrag($bescheidfruehererAnerkennungsantrag) {
-		$this->bescheidfruehererAnerkennungsantrag = $bescheidfruehererAnerkennungsantrag;
+	public function setEinwPersondatum($einwPersondatum)
+	{
+	    $this->einwPersondatum = $einwPersondatum;
 	}
 	
 	/**
-	 * Returns the boolean state of bescheidfruehererAnerkennungsantrag
+	 * Returns the einwPersonmedium
 	 *
-	 * @return bool
+	 * @return array $einwPersonmedium
 	 */
-	public function isBescheidfruehererAnerkennungsantrag() {
-		return $this->bescheidfruehererAnerkennungsantrag;
-	}	
-
+	public function getEinwPersonmedium()
+	{
+	    return explode(',', $this->einwPersonmedium);
+	}
+	
+	/**
+	 * Sets the einwPersonmedium
+	 *
+	 * @param array $einwPersonmedium
+	 * @return void
+	 */
+	public function setEinwPersonmedium(array $einwPersonmedium)
+	{
+	    $this->einwPersonmedium = implode(',', $einwPersonmedium);
+	}
+	
+	/**
+	 * Returns the einwPersonname
+	 *
+	 * @return string $einwPersonname
+	 */
+	public function getEinwPersonname()
+	{
+	    return $this->einwPersonname;
+	}
+	
+	/**
+	 * Sets the einwPersonname
+	 *
+	 * @param string $einwPersonname
+	 * @return void
+	 */
+	public function setEinwPersonname($einwPersonname)
+	{
+	    $this->einwPersonname = $einwPersonname;
+	}
+	
+	/**
+	 * Returns the einwPersonkontakt
+	 *
+	 * @return string $einwPersonkontakt
+	 */
+	public function getEinwPersonkontakt()
+	{
+	    return $this->einwPersonkontakt;
+	}
+	
+	/**
+	 * Sets the einwPersonkontakt
+	 *
+	 * @param string $einwPersonkontakt
+	 * @return void
+	 */
+	public function setEinwPersonkontakt($einwPersonkontakt)
+	{
+	    $this->einwPersonkontakt = $einwPersonkontakt;
+	}
+	
+	
 	/**
 	 * Returns the nameBeratungsstelle
 	 *
@@ -397,6 +400,28 @@ class TNSeite3 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	public function setNameBeratungsstelle($nameBeratungsstelle)
 	{
 		$this->nameBeratungsstelle = $nameBeratungsstelle;
+	}
+	
+	/**
+	 * Sets the wieberaten
+	 *
+	 * @param array $wieberaten
+	 * @return void
+	 */
+	public function setWieberaten(array $wieberaten)
+	{
+	    $this->wieberaten = implode(',', $wieberaten);
+
+	}
+	
+	/**
+	 * Returns the wieberaten
+	 *
+	 * @return array $wieberaten
+	 */
+	public function getWieberaten()
+	{
+	    return explode(',', $this->wieberaten);
 	}
 	
 	/**

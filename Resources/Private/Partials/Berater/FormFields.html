@@ -1,20 +1,34 @@
-<div class="fframe"><h2>Daten Berater*in</h2>
+<div class="fframe">
+	<input type="hidden" name="berater[uid]" value="{berater.uid}">
+			
 	<div class="tp13_formdivwebapp">
-			<label for="name">
-				<f:translate key="tx_iqtp13db_domain_model_berater.name" />
-			</label>
-				<f:form.textfield property="name" />
+	      <label for="username">Username</label>
+	      <f:form.textfield property="username" />  
 	</div>
+	
 	<div class="tp13_formdivwebapp">
-			<label for="kuerzel">
-				<f:translate key="tx_iqtp13db_domain_model_berater.kuerzel" />
-			</label>
-				<f:form.textfield property="kuerzel" />
+	      <label for="password">Passwort</label>
+	      <f:form.textfield type="password" property="password" />  
 	</div>
+	
 	<div class="tp13_formdivwebapp">
-			<label for="organisation">
-				<f:translate key="tx_iqtp13db_domain_model_berater.organisation" />
-			</label>
-				<f:form.textfield property="organisation" />
+	      <label for="lastname">Nachname</label>
+	      <f:form.textfield property="lastName" />  
 	</div>
+	
+	<div class="tp13_formdivwebapp">
+	      <label for="firstname">Vorname</label>
+	      <f:form.textfield property="firstName" />  
+	</div>
+	
+	<div class="tp13_formdivwebapp">
+	      <label for="email">E-Mail</label>
+	      <f:form.textfield type="email" property="email" />  
+	</div>
+	
+	<div class="tp13_formdivwebapp">
+	      <label for="usergroup">Benutzergruppe</label>
+	      <f:form.select property="usergroup" options="{usergroups}" optionValueField="uid" optionLabelField="title" />  
+	</div>
+		
 </div>

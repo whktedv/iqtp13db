@@ -4,7 +4,7 @@
 <h1><f:translate key="fragebogen" /> 2 / 4</h1>
 
 <div id="dialog-confirm" title="Webapp - IQ Anerkennungsberatung">
-  <p><span class="ui-icon ui-icon-alert"></span>Anmeldung abbrechen / Cancel registration?</p>
+  <p><span class="ui-icon ui-icon-alert"></span><f:translate key="dialoganmeldungabbrechen" /></p>
 </div>
 
 <f:form.validationResults for="{object}">
@@ -16,11 +16,46 @@
 </f:form.validationResults>
 
 <f:flashMessages />
-<f:form action="anmeldseite2redirect" name="tnseite2" object="{tnseite2}">
-		<f:render partial="Teilnehmer/FormFieldsAnmeldung2" arguments="{_all}" />
-		<f:form.button name="btnzurueck"><f:translate key="zurueck" /></f:form.button>
+
+<h2><f:translate key="abschluesse" /></h2>
+	 	
+<div class="frameabschluesse">
+
+	<f:if condition="{abschluesse -> f:count()} > 1">
+	<f:then>
+		<f:form method="post" controller="Abschluss" arguments="{teilnehmer:teilnehmer}" action="selectWebapp" name="abschluss" >
+			<div class="tp13_formdivwebapp">
+				<label for="selectboxabschluss">
+					<f:translate key="auswahlabschluss" />:		        	
+		       </label>
+				<f:form.select onclick="this.form.submit();" value="selecteduid" name="selectboxabschluss" options="{abschluesse}" optionValueField="uid" optionLabelField="deutscherReferenzberuf" prependOptionLabel="-" prependOptionValue="-1"/>
+			</div>	
+		</f:form>
+	</f:then>
+	</f:if>
+	
+	<div class="fframe formabschluss"><h2><f:translate key="datenabschluss" /></h2>
+ 	
+	<f:form controller="Abschluss" action="addupdateWebapp" name="abschluss" arguments="{teilnehmer:teilnehmer}" object="{selectedabschluss}">
+			<f:render partial="Abschluss/FormFieldsAnmeldung" arguments="{_all}" />
+			<br>
+			<f:if condition="{abschluesse -> f:count()} > 1"><f:then>
+				<f:variable name="textaskdelete" value="{f:translate(key:'dialogaabschlussloeschen')}" />
+ 				<f:form.button name="btndelete" class="abbruchbtn" onclick="return confirm('{textaskdelete}');"><f:translate key="abschlussloeschen" /></f:form.button>
+ 			</f:then></f:if>
+ 			
+ 			<f:if condition="{abschluesse -> f:count()} < 4"><f:then>
+ 				<f:form.button name="btnweitererabschluss" class="weitererabschlussbtn"><f:translate key="headabschlussrechts" /></f:form.button>
+ 			</f:then></f:if>
+		</div>
+
+
+ 		<f:form.button name="btnzurueck"><f:translate key="zurueck" /></f:form.button>
 		<f:form.button name="btnweiter"><f:translate key="weiter" /></f:form.button> 
 		<f:form.button type="button" class="abbruchbtn" onclick="return btncancel_Click(0);"><f:translate key="abbruch" /></f:form.button>
-</f:form>
+		
+	</f:form>
+	
+</div>
 
 </f:section>

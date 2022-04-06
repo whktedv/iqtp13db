@@ -1,5 +1,6 @@
+{namespace iqtp13db=Ud\Iqtp13db\ViewHelpers}
 <div class="fframe"><h2><f:translate key="persdaten" /></h2>
-		<f:if condition="{teilnehmer.schonberaten} == 1">
+		<f:if condition="{schonberaten} == 1">
 			<f:then>
 				<div class="tp13_formdivwebapp">
 					<label for="nachname">
@@ -12,11 +13,12 @@
 		<div class="tp13_formdivwebapp">
 			<label for="nachname">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" />
+				<span class="niqfield" />
 			</label>
 				<span class="propdat">{teilnehmer.nachname}</span>
 				<div class="historie">
 				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "nachname"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+					{f:if(condition: '{hist.property} == "nachname"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
 				</f:for>
 				</div>
 				
@@ -24,11 +26,12 @@
 		<div class="tp13_formdivwebapp">
 			<label for="vorname">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" />
+				<span class="niqfield" />
 			</label>
 				<span class="propdat">{teilnehmer.vorname}</span>
 				<div class="historie">
 				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "vorname"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+					{f:if(condition: '{hist.property} == "vorname"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
 				</f:for>
 				</div>
 		</div>
@@ -39,7 +42,7 @@
 				<span class="propdat">{teilnehmer.plz}</span>
 				<div class="historie">
 				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "plz"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+					{f:if(condition: '{hist.property} == "plz"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
 				</f:for>
 				</div>
 		</div>
@@ -50,7 +53,7 @@
 				<span class="propdat">{teilnehmer.ort}</span>
 				<div class="historie">
 				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "ort"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+					{f:if(condition: '{hist.property} == "ort"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
 				</f:for>
 				</div>
 		</div>		
@@ -61,7 +64,7 @@
 				<span class="propdat">{teilnehmer.email}</span>
 				<div class="historie">
 				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "email"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+					{f:if(condition: '{hist.property} == "email"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
 				</f:for>
 				</div>
 		</div>
@@ -72,18 +75,19 @@
 				<span class="propdat">{teilnehmer.telefon}</span>
 				<div class="historie">
 				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "telefon"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+					{f:if(condition: '{hist.property} == "telefon"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
 				</f:for>
 				</div>
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="geburtsjahr">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.lebensalter" />
+				<span class="niqfield" />
 			</label>
-				<span class="propdat">{teilnehmer.lebensalter}</span>
+				<span class="propdat">{f:if(condition: '{teilnehmer.lebensalter} == -1000', then: '-', else: '{teilnehmer.lebensalter}')}</span>
 				<div class="historie">
 				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "lebensalter"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+					{f:if(condition: '{hist.property} == "lebensalter"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
 				</f:for>
 				</div>
 		</div>
@@ -91,17 +95,21 @@
 			<label for="geburtsland">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.geburtsland" />
 			</label>
-				<span class="propdat">{teilnehmer.geburtsland}</span>
+				<f:for each="{settings.staaten}" as="text" key="wert">
+					{f:if(condition: '{teilnehmer.geburtsland} == {wert}', then: '<span class="propdat">{text}</span>')}					 
+				</f:for>
+				{iqtp13db:isint(field:'{teilnehmer.geburtsland}',then:'',else:'<span class="propdat">{teilnehmer.geburtsland}</span>')}
 				<div class="historie">
 				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "geburtsland"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+					{f:if(condition: '{hist.property} == "geburtsland"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
 				</f:for>
 				</div>
 				
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="geschlecht">
-			<f:translate key="tx_iqtp13db_domain_model_teilnehmer.geschlecht" />
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.geschlecht" />
+				<span class="niqfield" />
 			</label>
 			<span class="propdat">
 			<f:if condition="{teilnehmer.geschlecht} == 2"><f:then>
@@ -120,109 +128,109 @@
 			</span>
 			<div class="historie">
 			<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "geschlecht"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+					{f:if(condition: '{hist.property} == "geschlecht"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
 			</f:for>
 			</div>
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="ersteStaatsangehoerigkeit">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.erste_staatsangehoerigkeit" />
+				<span class="niqfield" />
 			</label>
-			<span class="propdat">{teilnehmer.ersteStaatsangehoerigkeit}</span>
-			<div class="historie">
-			<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "ersteStaatsangehoerigkeit"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
-			</f:for>
-			</div>
+				<f:for each="{settings.staaten}" as="text" key="wert">
+					{f:if(condition: '{teilnehmer.ersteStaatsangehoerigkeit} == {wert}', then: '<span class="propdat">{text}</span>')}					 
+				</f:for>
+				{iqtp13db:isint(field:'{teilnehmer.ersteStaatsangehoerigkeit}',then:'',else:'<span class="propdat">{teilnehmer.ersteStaatsangehoerigkeit}</span>')}
+				<div class="historie">
+				<f:for each="{historie}" as="hist" key="wert">
+						{f:if(condition: '{hist.property} == "ersteStaatsangehoerigkeit"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+				</f:for>
+				</div>
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="zweiteStaatsangehoerigkeit">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.zweite_staatsangehoerigkeit" />
 			</label>
-				<span class="propdat">{teilnehmer.zweiteStaatsangehoerigkeit}</span>
+				<f:for each="{settings.staaten}" as="text" key="wert">
+					{f:if(condition: '{teilnehmer.zweiteStaatsangehoerigkeit} == {wert}', then: '<span class="propdat">{text}</span>')}					 
+				</f:for>
+				{iqtp13db:isint(field:'{teilnehmer.zweiteStaatsangehoerigkeit}',then:'',else:'<span class="propdat">{teilnehmer.zweiteStaatsangehoerigkeit}</span>')}				
 				<div class="historie">
 				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "zweiteStaatsangehoerigkeit"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+					{f:if(condition: '{hist.property} == "zweiteStaatsangehoerigkeit"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
 				</f:for>
 				</div>
-		</div>
-		<div class="tp13_formdivwebapp">
-			<label for="einreisejahr">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einreisejahr" />
-			</label>
-				<span class="propdat">{teilnehmer.einreisejahr}</span>
-				<div class="historie">
-				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "einreisejahr"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
-				</f:for>
-				</div>
-		</div>
+		</div>		
 		<div class="tp13_formdivwebapp">
 			<label for="wohnsitzDeutschland">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_deutschland" />
+				<span class="niqfield" />
 			</label>
 			<span class="propdat">
 			<f:if condition="{teilnehmer.wohnsitzDeutschland} == 1"><f:then>
 				<f:translate key="ja" />
 			</f:then>
 			<f:else>
-				<f:translate key="nein" />
+				<f:if condition="{teilnehmer.wohnsitzDeutschland} == 2"><f:then>
+					<f:translate key="nein" />
+				</f:then>
+				<f:else>
+					k.A.
+				</f:else>
+				</f:if>
 			</f:else>
 			</f:if>
 			</span>
 			<div class="historie">
 			<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "wohnsitzDeutschland"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+					{f:if(condition: '{hist.property} == "wohnsitzDeutschland"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
 			</f:for>
 			</div>
 		</div>
 		<div class="tp13_formdivwebapp">
-			<label id="labelwohnsitzNeinIn4propertypage" for="wohnsitzNeinIn">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_nein_in" />
+			<label for="einreisejahr">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einreisejahr" />
+				<span class="niqfield" />
 			</label>
-				<span class="propdat">{teilnehmer.wohnsitzNeinIn}</span>
+				<span class="propdat">{teilnehmer.einreisejahr}</span>
 				<div class="historie">
 				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "wohnsitzNeinIn"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+					{f:if(condition: '{hist.property} == "einreisejahr"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
 				</f:for>
 				</div>
 		</div>
-		
+		<f:if condition="{teilnehmer.wohnsitzDeutschland} == 2">
 		<div class="tp13_formdivwebapp">
-			<label for="ortskraftafghanistan">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ortskraftafghanistan" />
+			<label id="labelwohnsitzNeinIn4propertypage" for="wohnsitzNeinIn">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_nein_in" />
+				<span class="niqfield" />
 			</label>
-			<span class="propdat">
-			<f:if condition="{teilnehmer.ortskraftafghanistan} == 1">
-				<f:then>
-					<f:translate key="ja" />
-				</f:then>
-				<f:else>
-					<f:translate key="nein" />
-				</f:else>
-			</f:if>
-			</span>
-			<div class="historie">
-			<f:for each="{historie}" as="hist" key="wert">
-				{f:if(condition: '{hist.property} == "ortskraftafghanistan"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
-			</f:for>
-			</div>
+				<f:for each="{settings.staaten}" as="text" key="wert">
+					{f:if(condition: '{teilnehmer.wohnsitzNeinIn} == {wert}', then: '<span class="propdat">{text}</span>')}					 
+				</f:for>
+				{iqtp13db:isint(field:'{teilnehmer.wohnsitzNeinIn}',then:'',else:'<span class="propdat">{teilnehmer.wohnsitzNeinIn}</span>')}
+				<div class="historie">
+				<f:for each="{historie}" as="hist" key="wert">
+					{f:if(condition: '{hist.property} == "wohnsitzNeinIn"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+				</f:for>
+				</div>
 		</div>
-		
-		
+		</f:if>
 		<div class="tp13_formdivwebapp">
 			<label for="aufenthaltsstatus">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus" />
+				<span class="niqfield" />
 			</label>
 				<f:for each="{settings.aufenthaltsstatus}" as="text" key="wert">
 					{f:if(condition: '{teilnehmer.aufenthaltsstatus} == {wert}', then: '<span class="propdat">{text}</span>')}					 
 				</f:for>
 				<div class="historie">
 				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "aufenthaltsstatus"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+					{f:if(condition: '{hist.property} == "aufenthaltsstatus"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
 				</f:for>
 				</div>
 		</div>
+		
 		<div class="tp13_formdivwebapp">
 			<label for="aufenthaltsstatusfreitext">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatusfreitext" />
@@ -230,7 +238,7 @@
 				<span class="propdat"><f:format.html>{teilnehmer.aufenthaltsstatusfreitext}</f:format.html></span>
 				<div class="historie">
 				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "aufenthaltsstatusfreitext"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+					{f:if(condition: '{hist.property} == "aufenthaltsstatusfreitext"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
 				</f:for>
 				</div>
 		</div>
@@ -239,163 +247,46 @@
 <div class="fframe"><h2><f:translate key="deutschkenntnisse" /></h2>
 		<div class="tp13_formdivwebapp">
 			<label for="deutschkenntnisse">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse" />
+			<f:translate key="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse" />
 			</label>
-				<f:for each="{settings.deutschkenntnisse}" as="text" key="wert">
-					{f:if(condition: '{teilnehmer.deutschkenntnisse} == {wert}', then: '<span class="propdat">{text}</span>')}					 
-				</f:for>
-				<div class="historie">
+			<span class="propdat">
+			<f:if condition="{teilnehmer.deutschkenntnisse} == 1"><f:then>
+				<f:translate key="ja" />
+			</f:then>
+			<f:else>
+				<f:if condition="{teilnehmer.deutschkenntnisse} == 2"><f:then>
+					<f:translate key="nein" />
+				</f:then>
+				<f:else>
+					<f:if condition="{teilnehmer.deutschkenntnisse} == -1"><f:then>
+						<f:translate key="ka" />
+					</f:then>
+					<f:else>
+						
+					</f:else>
+					</f:if>
+				</f:else>
+				</f:if>
+			</f:else>
+			</f:if>
+			</span>
+			<div class="historie">
 				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "deutschkenntnisse"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+					{f:if(condition: '{hist.property} == "deutschkenntnisse"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
 				</f:for>
-				</div>
+			</div>
 		</div>
 		<div class="tp13_formdivwebapp">
-			<label id="labelzertsprachniveau" for="zertifikatSprachniveau">
+			<label for="zertifikatSprachniveau">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau" />
+				<span class="niqfield" />
 			</label>
 			<f:for each="{settings.zertifikatlevel}" as="text" key="wert">
 					{f:if(condition: '{teilnehmer.zertifikatSprachniveau} == {wert}', then: '<span class="propdat">{text}</span>')}					 
 			</f:for>
 			<div class="historie">
 				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "zertifikatSprachniveau"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
-				</f:for>
-				</div>
-		</div>		
-</div>
-
-<div class="fframe"><h2><f:translate key="auslaendischerabschluss" /></h2>
-		<div class="tp13_formdivwebapp">
-			<label for="abschlussart">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.abschlussart" />
-			</label>
-				<f:for each="{teilnehmer.abschlussart1}" as="abschlussart1">
-					<f:for each="{settings.abschlussart}" as="text" key="wert">
-						{f:if(condition: '{abschlussart1} == {wert}', then: '<span class="propdat">{text}</span>')}
-					</f:for>
-				</f:for>
-				<div class="historie">
-				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "abschlussart1"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
-				</f:for>
-				</div>
-				<f:for each="{teilnehmer.abschlussart2}" as="abschlussart2">
-					<f:for each="{settings.abschlussart}" as="text" key="wert">
-						{f:if(condition: '{abschlussart2} == {wert}', then: '<span class="propdat">{text}</span>')}
-					</f:for>
-				</f:for>		
-				<div class="historie">
-				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "abschlussart2"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
-				</f:for>
-				</div>
-		</div>
-		<div class="tp13_formdivwebapp">
-				<label for="erwerbsland">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.erwerbsland" />
-			</label>
-				<span class="propdat">{teilnehmer.erwerbsland1};{teilnehmer.erwerbsland2}</span>
-				<div class="historie">
-				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "erwerbsland1"', then: '<span class="historieval">1: {hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}
-					{f:if(condition: '{hist.property} == "erwerbsland2"', then: '<span class="historieval">2: {hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
-				</f:for>
-				</div>
-		</div>
-		<div class="tp13_formdivwebapp">
-			<label for="dauerBerufsausbildung">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.dauer_berufsausbildung" />
-			</label>
-				<span class="propdat">{teilnehmer.dauerBerufsausbildung1};{teilnehmer.dauerBerufsausbildung2}</span>
-				<div class="historie">
-				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "dauerBerufsausbildung1"', then: '<span class="historieval">1: {hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}
-					{f:if(condition: '{hist.property} == "dauerBerufsausbildung2"', then: '<span class="historieval">2: {hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
-				</f:for>
-				</div>
-		</div>
-		<div class="tp13_formdivwebapp">
-			<label for="abschlussjahr">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.abschlussjahr" />
-			</label>
-				<span class="propdat">{teilnehmer.abschlussjahr1};{teilnehmer.abschlussjahr2}</span>
-				<div class="historie">
-				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "abschlussjahr1"', then: '<span class="historieval">1: {hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}
-					{f:if(condition: '{hist.property} == "abschlussjahr2"', then: '<span class="historieval">2: {hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
-				</f:for>
-				</div>
-		</div>
-		<div class="tp13_formdivwebapp">
-			<label for="ausbildungsinstitution">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ausbildungsinstitution" />
-			</label>
-				<span class="propdat">{teilnehmer.ausbildungsinstitution1};{teilnehmer.ausbildungsinstitution2}</span>
-				<div class="historie">
-				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "ausbildungsinstitution1"', then: '<span class="historieval">1: {hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}
-					{f:if(condition: '{hist.property} == "ausbildungsinstitution2"', then: '<span class="historieval">2: {hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
-				</f:for>
-				</div>
-		</div>
-		<div class="tp13_formdivwebapp">
-			<label for="ausbildungsort">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ausbildungsort" />
-			</label>
-				<span class="propdat">{teilnehmer.ausbildungsort1};{teilnehmer.ausbildungsort2}</span>
-				<div class="historie">
-				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "ausbildungsort1"', then: '<span class="historieval">1: {hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}
-					{f:if(condition: '{hist.property} == "ausbildungsort2"', then: '<span class="historieval">2: {hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
-				</f:for>
-				</div>
-		</div>
-		<div class="tp13_formdivwebapp">
-			<label for="originaltitelAbschluss">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.abschluss" />
-			</label>
-				<span class="propdat">{teilnehmer.abschluss1};{teilnehmer.abschluss2}</span>
-				<div class="historie">
-				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "abschluss1"', then: '<span class="historieval">1: {hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}
-					{f:if(condition: '{hist.property} == "abschluss2"', then: '<span class="historieval">2: {hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
-				</f:for>
-				</div>
-		</div>
-		<div class="tp13_formdivwebapp">
-					<label for="deutscherReferenzberuf">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.deutscher_referenzberuf" />
-			</label>
-				<span class="propdat">{teilnehmer.deutscherReferenzberuf1};{teilnehmer.deutscherReferenzberuf2}</span>
-				<div class="historie">
-				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "deutscherReferenzberuf1"', then: '<span class="historieval">1: {hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}
-					{f:if(condition: '{hist.property} == "deutscherReferenzberuf2"', then: '<span class="historieval">2: {hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
-				</f:for>
-				</div>
-		</div>
-		<div class="tp13_formdivwebapp">
-			<label for="berufserfahrungAusland">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.berufserfahrung" />
-			</label>
-			<span class="propdat">{teilnehmer.berufserfahrung1};{teilnehmer.berufserfahrung2}</span>
-				<div class="historie">
-				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "berufserfahrung1"', then: '<span class="historieval">1: {hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}
-					{f:if(condition: '{hist.property} == "berufserfahrung2"', then: '<span class="historieval">2: {hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
-				</f:for>
-				</div>
-		</div>
-		<div class="tp13_formdivwebapp">
-			<label id="labelausbildungsfremdeberufserfahrung1" for="ausbildungsfremdeberufserfahrung1">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ausbildungsfremdeberufserfahrung1" />
-			</label>
-				<span class="propdat">{teilnehmer.ausbildungsfremdeberufserfahrung1};{teilnehmer.ausbildungsfremdeberufserfahrung2}</span>
-				<div class="historie">
-				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "ausbildungsfremdeberufserfahrung1"', then: '<span class="historieval">1: {hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}
-					{f:if(condition: '{hist.property} == "ausbildungsfremdeberufserfahrung2"', then: '<span class="historieval">2: {hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+					{f:if(condition: '{hist.property} == "zertifikatSprachniveau"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
 				</f:for>
 				</div>
 		</div>		
@@ -405,19 +296,21 @@
 		<div class="tp13_formdivwebapp">
 			<label for="erwerbsstatus">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.erwerbsstatus" />
+				<span class="niqfield" />
 			</label>
 				<f:for each="{settings.erwerbsstatus}" as="text" key="wert">
 					{f:if(condition: '{teilnehmer.erwerbsstatus} == {wert}', then: '<span class="propdat">{text}</span>')}					 
 				</f:for>
 				<div class="historie">
 				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "erwerbsstatus"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+					{f:if(condition: '{hist.property} == "erwerbsstatus"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
 				</f:for>
 				</div>
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="leistungsbezugjanein">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.leistungsbezugjanein" />
+				<span class="niqfield" />
 			</label>
 			<span class="propdat"><f:if condition="{teilnehmer.leistungsbezugjanein} == 1"><f:then>
 				<f:translate key="ja" />
@@ -433,7 +326,7 @@
 			</f:if></span>
 			<div class="historie">
 			<f:for each="{historie}" as="hist" key="wert">
-				{f:if(condition: '{hist.property} == "leistungsbezugjanein"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+				{f:if(condition: '{hist.property} == "leistungsbezugjanein"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
 			</f:for>
 			</div>
 		</div>
@@ -441,13 +334,14 @@
 			<div class="tp13_formdivwebapp">
 				<label for="leistungsbezug">
 					<f:translate key="tx_iqtp13db_domain_model_teilnehmer.leistungsbezug" />
+					<span class="niqfield" />
 				</label>
 					<f:for each="{settings.leistungsbezug}" as="text" key="wert">
 						{f:if(condition: '{teilnehmer.leistungsbezug} == {wert}', then: '<span class="propdat">{text}</span>')}					 
 					</f:for>
 					<div class="historie">
 					<f:for each="{historie}" as="hist" key="wert">
-						{f:if(condition: '{hist.property} == "leistungsbezug"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+						{f:if(condition: '{hist.property} == "leistungsbezug"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
 					</f:for>
 					</div>
 			</div>
@@ -464,7 +358,7 @@
 				</f:if></span>
 				<div class="historie">
 				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "einwilligungdatenanAA"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+					{f:if(condition: '{hist.property} == "einwilligungdatenanAA"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
 				</f:for>
 				</div>
 			</div>
@@ -478,12 +372,38 @@
 	<div class="fframe"><h2><f:translate key="datenjobcenterarbeitsagentur" /></h2>
 		<div class="tp13_formdivwebapp">
 			<label for="nameBeraterAA">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_adatum" />
+			</label>
+				<span class="propdat">{teilnehmer.einwilligungdatenanAAdatum}</span>
+				<div class="historie">
+				<f:for each="{historie}" as="hist" key="wert">
+					{f:if(condition: '{hist.property} == "einwilligungdatenanAAdatum"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+				</f:for>
+				</div>
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="nameBeraterAA">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_amedium" />
+			</label>
+				<f:for each="{teilnehmer.einwilligungdatenanAAmedium}" as="text" key="wert">				
+					<f:for each="{settings.einwilligungaamedium}" as="textset" key="wertset">					
+						{f:if(condition: '{text} == {wertset}', then: '<span class="propdat">{textset}</span>')}
+					</f:for>
+				</f:for>				
+				<div class="historie">
+				<f:for each="{historie}" as="hist" key="wert">
+					{f:if(condition: '{hist.property} == "einwilligungdatenanAAmedium"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+				</f:for>
+				</div>
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="nameBeraterAA">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.name_berater_a_a" />
 			</label>
 				<span class="propdat">{teilnehmer.nameBeraterAA}</span>
 				<div class="historie">
 				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "nameBeraterAA"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+					{f:if(condition: '{hist.property} == "nameBeraterAA"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
 				</f:for>
 				</div>
 		</div>
@@ -494,7 +414,7 @@
 				<span class="propdat">{teilnehmer.kontaktBeraterAA}</span>
 				<div class="historie">
 				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "kontaktBeraterAA"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+					{f:if(condition: '{hist.property} == "kontaktBeraterAA"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
 				</f:for>
 				</div>
 		</div>
@@ -505,14 +425,13 @@
 				<span class="propdat">{teilnehmer.kundennummerAA}</span>
 				<div class="historie">
 				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "kundennummerAA"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+					{f:if(condition: '{hist.property} == "kundennummerAA"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
 				</f:for>
 				</div>
 		</div>
 	</div>
 </f:then>
 </f:if>
-
 
 
 	<div class="fframe"><h2>Datenweitergabe anerkennende Stelle</h2>
@@ -529,7 +448,7 @@
 				</f:if></span>
 				<div class="historie">
 				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "einwAnerkstelle"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+					{f:if(condition: '{hist.property} == "einwAnerkstelle"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
 				</f:for>
 				</div>
 			</div>
@@ -541,7 +460,7 @@
   				<span class="propdat">{teilnehmer.einwAnerkstelledatum}</span>
   				<div class="historie">
   				<f:for each="{historie}" as="hist" key="wert">
-  					{f:if(condition: '{hist.property} == "einwAnerkstelledatum"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+  					{f:if(condition: '{hist.property} == "einwAnerkstelledatum"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
   				</f:for>
   				</div>
   		</div>
@@ -550,13 +469,14 @@
   			<label for="einwAnerkstellemedium">
   				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstellemedium" />
   			</label>
-  				<f:for each="{settings.einwilligungaamedium}" as="text" key="wert">
-					{f:if(condition: '{teilnehmer.einwAnerkstellemedium.0} == {wert}', then: '<span class="propdat">{text}</span>')}					 
+				<f:for each="{teilnehmer.einwAnerkstellemedium}" as="text" key="wert">				
+					<f:for each="{settings.einwilligungaamedium}" as="textset" key="wertset">					
+						{f:if(condition: '{text} == {wertset}', then: '<span class="propdat">{textset}</span>')}
+					</f:for>
 				</f:for>
-
   				<div class="historie">
   				<f:for each="{historie}" as="hist" key="wert">
-  					{f:if(condition: '{hist.property} == "einwAnerkstellemedium"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+  					{f:if(condition: '{hist.property} == "einwAnerkstellemedium"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
   				</f:for>
   				</div>
   		</div>
@@ -568,7 +488,7 @@
 				<span class="propdat">{teilnehmer.einwAnerkstellename}</span>
 				<div class="historie">
 				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "einwAnerkstellename"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+					{f:if(condition: '{hist.property} == "einwAnerkstellename"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
 				</f:for>
 				</div>
 		</div>
@@ -579,7 +499,7 @@
 				<span class="propdat">{teilnehmer.einwAnerkstellekontakt}</span>
 				<div class="historie">
 				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "einwAnerkstellekontakt"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+					{f:if(condition: '{hist.property} == "einwAnerkstellekontakt"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
 				</f:for>
 				</div>
 		</div>
@@ -587,7 +507,7 @@
 	</div>
 	
 	
-	<div class="fframe"><h2>Datenweitergabe weitere Person</h2>
+<div class="fframe"><h2>Datenweitergabe weitere Person</h2>
   <div class="tp13_formdivwebapp">
 				<label for="einwPerson">
 					<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_person" />
@@ -601,7 +521,7 @@
 				</f:if></span>
 				<div class="historie">
 				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "einwPerson"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+					{f:if(condition: '{hist.property} == "einwPerson"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
 				</f:for>
 				</div>
 			</div>
@@ -613,7 +533,7 @@
   				<span class="propdat">{teilnehmer.einwPersondatum}</span>
   				<div class="historie">
   				<f:for each="{historie}" as="hist" key="wert">
-  					{f:if(condition: '{hist.property} == "einwPersondatum"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+  					{f:if(condition: '{hist.property} == "einwPersondatum"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
   				</f:for>
   				</div>
   		</div>
@@ -622,12 +542,15 @@
   			<label for="einwPersonmedium">
   				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_personmedium" />
   			</label>
-  				<f:for each="{settings.einwilligungaamedium}" as="text" key="wert">
-					{f:if(condition: '{teilnehmer.einwPersonmedium.0} == {wert}', then: '<span class="propdat">{text}</span>')}					 
+				<f:for each="{teilnehmer.einwPersonmedium}" as="text" key="wert">				
+					<f:for each="{settings.einwilligungweiterepersonmedium}" as="textset" key="wertset">					
+						{f:if(condition: '{text} == {wertset}', then: '<span class="propdat">{textset}</span>')}
+					</f:for>
 				</f:for>
+				
   				<div class="historie">
   				<f:for each="{historie}" as="hist" key="wert">
-  					{f:if(condition: '{hist.property} == "einwPersonmedium"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+  					{f:if(condition: '{hist.property} == "einwPersonmedium"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
   				</f:for>
   				</div>
   		</div>
@@ -639,7 +562,7 @@
 				<span class="propdat">{teilnehmer.einwPersonname}</span>
 				<div class="historie">
 				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "einwPersonname"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+					{f:if(condition: '{hist.property} == "einwPersonname"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
 				</f:for>
 				</div>
 		</div>
@@ -650,95 +573,45 @@
 				<span class="propdat">{teilnehmer.einwPersonkontakt}</span>
 				<div class="historie">
 				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "einwPersonkontakt"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+					{f:if(condition: '{hist.property} == "einwPersonkontakt"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
 				</f:for>
 				</div>
 		</div>
 	
-	</div>
-	
-<div class="fframe"><h2><f:translate key="fruehereantraege" /></h2>
-		<div class="tp13_formdivwebapp">
-			<label for="fruehererAntrag">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag" />
-			</label>
-			<span class="propdat"><f:if condition="{teilnehmer.fruehererAntrag} == 1"><f:then>
-				<f:translate key="ja" />
-			</f:then>
-			<f:else>
-				<f:translate key="nein" />
-			</f:else>
-			</f:if></span>
-			<div class="historie">
-			<f:for each="{historie}" as="hist" key="wert">
-				{f:if(condition: '{hist.property} == "fruehererAntrag"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
-			</f:for>
-			</div>
-		</div>		
-	<f:if condition="{teilnehmer.fruehererAntrag} == 1">
-	<f:then>
-		<div class="tp13_formdivwebapp">
-			<label id="labelfruehererAntragReferenzberuf" for="fruehererAntragReferenzberuf">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag_referenzberuf" />
-			</label>
-				<span class="propdat">{teilnehmer.fruehererAntragReferenzberuf}</span>
-			<div class="historie">
-			<f:for each="{historie}" as="hist" key="wert">
-				{f:if(condition: '{hist.property} == "fruehererAntragReferenzberuf"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
-			</f:for>
-			</div>
-
-		</div>
-		<div class="tp13_formdivwebapp">
-			<label id="labelfruehererAntragInstitution" for="fruehererAntragInstitution">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag_institution" />
-			</label>
-				<span class="propdat">{teilnehmer.fruehererAntragInstitution}</span>
-			<div class="historie">
-			<f:for each="{historie}" as="hist" key="wert">
-				{f:if(condition: '{hist.property} == "fruehererAntragInstitution"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
-			</f:for>
-			</div>
-
-		</div>
-		<div class="tp13_formdivwebapp">
-			<label id="labelfruehererAntragInstitution" for="fruehererAntragInstitution">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.bescheidfrueherer_anerkennungsantrag" />
-			</label>
-			<span class="propdat"><f:if condition="{teilnehmer.bescheidfruehererAnerkennungsantrag} == 1"><f:then>
-				<f:translate key="ja" />
-			</f:then>
-			<f:else>
-				<f:translate key="nein" />
-			</f:else>
-			</f:if></span>
-			<div class="historie">
-			<f:for each="{historie}" as="hist" key="wert">
-				{f:if(condition: '{hist.property} == "bescheidfruehererAnerkennungsantrag"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
-			</f:for>
-			</div>
-
-		</div>
-	</f:then>
-	</f:if>		
 </div>
 
-
-<div class="fframe">
+<div class="fframe"><h2>Sonstiges</h2>
 	<div class="tp13_formdivwebapp">
 		<label for="nameBeratungsstelle">
 			<f:translate key="tx_iqtp13db_domain_model_teilnehmer.name_beratungsstelle" />
+			<span class="niqfield" />
 		</label>
 			<f:for each="{settings.beratungsstelle}" as="text" key="wert">
 				{f:if(condition: '{teilnehmer.nameBeratungsstelle} == {wert}', then: '<span class="propdat">{text}</span>')}					 
 			</f:for>
 			<div class="historie">
 			<f:for each="{historie}" as="hist" key="wert">
-				{f:if(condition: '{hist.property} == "nameBeratungsstelle"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+				{f:if(condition: '{hist.property} == "nameBeratungsstelle"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
 			</f:for>
 			</div>
 
 	</div>
+	<div class="tp13_formdivwebapp">
+  			<label for="wieberaten">
+  				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.wieberaten" />
+  			</label>
+				<f:for each="{teilnehmer.wieberaten}" as="wieberaten">
+					<f:for each="{settings.wieberaten}" as="text" key="wert">
+						{f:if(condition: '{wieberaten} == {wert}', then: '<span class="propdat">{text}</span>')}
+					</f:for>
+				</f:for>	
+				
+				<div class="historie">
+				<f:for each="{historie}" as="hist" key="wert">
+					{f:if(condition: '{hist.property} == "wieberaten"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+				</f:for>
+				</div>  			
+ 	</div>
 	<div class="tp13_formdivwebapp">
 		<label for="notizen">
 			<f:translate key="tx_iqtp13db_domain_model_teilnehmer.notizen" />
@@ -746,7 +619,7 @@
 			<span class="propdat"><f:format.html>{teilnehmer.notizen}</f:format.html></span>
 			<div class="historie">
 			<f:for each="{historie}" as="hist" key="wert">
-				{f:if(condition: '{hist.property} == "notizen"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+				{f:if(condition: '{hist.property} == "notizen"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
 			</f:for>
 			</div>
 
@@ -754,16 +627,159 @@
 	<div id="divniqchiffre" class="tp13_formdivwebapp">
 		<label for="niqchiffre">
 			<f:translate key="tx_iqtp13db_domain_model_teilnehmer.niqchiffre" />
+			<span class="niqfield" />
 		</label>
 			<span class="propdat"><f:format.html>{teilnehmer.niqchiffre}</f:format.html></span>
 			<div class="historie">
 			<f:for each="{historie}" as="hist" key="wert">
-				{f:if(condition: '{hist.property} == "niqchiffre"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.kuerzel}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+				{f:if(condition: '{hist.property} == "niqchiffre"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
 			</f:for>
 			</div>
 
 	</div>
 </div>
 
+<div class="fframe"><h2>Erstberatung</h2>
+		<div class="tp13_formdivwebapp">
+			<label for="datum">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungdatum" />
+				<span class="niqfield" />
+			</label>
+				<span class="propdat"><f:if condition="{teilnehmer.beratungdatum} != '0000-00-00'">{teilnehmer.beratungdatum -> f:format.date(format: 'd.m.Y')}</f:if></span>
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="berater">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.berater" />
+			</label>
+				<span class="propdat">{teilnehmer.berater.username}</span>
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="beratungsart">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungsart" />
+				<span class="niqfield" />
+			</label>
+			<f:for each="{teilnehmer.beratungsart}" as="beratungart">
+				<f:for each="{settings.beratungsart}" as="text" key="wert">
+					{f:if(condition: '{beratungart} == {wert}', then: '<span class="propdat">{text}</span>')}
+				</f:for>
+			</f:for>
+		</div>
+		<f:for each="{beratungsart}" as="beratungart">
+		<f:if condition="{beratungart} == 1"><f:then>
+			<div class="tp13_formdivwebapp">
+				<label for="beratungsartfreitext">
+					<f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungsartfreitext" />
+				</label>
+					<span class="propdat">{teilnehmer.beratungartfreitext}</span>
+			</div>
+			<div class="tp13_formdivwebapp">
+				<label for="beratungsort">
+					<f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungsort" />
+				</label>
+					<span class="propdat">{teilnehmer.beratungsort}</span>
+					<span class="niqfield" />
+			</div>
+		</f:then>
+		</f:if>
+		</f:for>			
+		<div class="tp13_formdivwebapp">
+			<label for="anerkennendestellen">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.anerkennendestellen" />
+			</label>
+			<span class="propdat">{teilnehmer.anerkennendestellen}</span>
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="anerkennungsberatung">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.anerkennungsberatung" />
+				<span class="niqfield" />
+			</label>
+			<f:for each="{teilnehmer.anerkennungsberatung}" as="anerkennungsberatung">
+				<f:for each="{settings.anerkennungsberatung}" as="text" key="wert">
+					{f:if(condition: '{anerkennungsberatung} == {wert}', then: '<span class="propdat">{text}</span>')}
+				</f:for>
+			</f:for>	
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="anerkennungsberatungfreitext">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.anerkennungsberatungfreitext" />
+				<span class="niqfield" />
+			</label>
+			<span class="propdat">{teilnehmer.anerkennungsberatungfreitext}</span>
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="qualifizierungsberatung">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.qualifizierungsberatung" />
+				<span class="niqfield" />
+			</label>
+			<f:for each="{teilnehmer.qualifizierungsberatung}" as="qualifizierungsberatung">
+				<f:for each="{settings.qualifizierungsberatung}" as="text" key="wert">
+					{f:if(condition: '{qualifizierungsberatung} == {wert}', then: '<span class="propdat">{text}</span>')}
+				</f:for>
+			</f:for>		
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="qualifizierungsberatungfreitext">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.qualifizierungsberatungfreitext" />
+				<span class="niqfield" />
+			</label>
+			<span class="propdat">{teilnehmer.qualifizierungsberatungfreitext}</span>
+		</div>
+		
+		<div class="tp13_formdivwebapp">
+		<label for="beratungzu">
+			<f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungzu" />
+		</label>
+			<span class="propdat">
+			<f:if condition="{teilnehmer.beratungzu} != ''"><f:then>
+				{f:if(condition: '{teilnehmer.beratungzu} == 1', then: 'Ja', else: 'Nein')}
+				</f:then><f:else>-</f:else></f:if>
+			</span>
+			<div class="historie">
+				<f:for each="{historie}" as="hist" key="wert">
+					{f:if(condition: '{hist.property} == "beratungzu"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+				</f:for>
+			</div>
+		</div>
+		<div class="tp13_formdivwebapp">
+		<label for="anerkennungszuschussbeantragt">
+			<f:translate key="tx_iqtp13db_domain_model_teilnehmer.anerkennungszuschussbeantragt" />
+		</label>
+			<span class="propdat">
+			<f:if condition="{teilnehmer.anerkennungszuschussbeantragt} != ''"><f:then>
+				{f:if(condition: '{teilnehmer.anerkennungszuschussbeantragt} == 1', then: 'Ja', else: 'Nein')}
+			</f:then><f:else>-</f:else></f:if>
+			</span>
+			<div class="historie">
+				<f:for each="{historie}" as="hist" key="wert">
+					{f:if(condition: '{hist.property} == "anerkennungszuschussbeantragt"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+				</f:for>
+			</div>
+		</div>
+		
+		<div class="tp13_formdivwebapp">
+		<label for="kooperationgruppe">
+			<f:translate key="tx_iqtp13db_domain_model_teilnehmer.kooperationgruppe" />
+		</label>
+		<span class="propdat"><f:format.html>{teilnehmer.kooperationgruppe}</f:format.html></span>
+			<div class="historie">
+				<f:for each="{historie}" as="hist" key="wert">
+					{f:if(condition: '{hist.property} == "kooperationgruppe"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+				</f:for>
+			</div>
+		</div>
+	
+		<div class="tp13_formdivwebapp">
+			<label for="notizen">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungnotizen" />
+			</label>
+			<span class="propdat">{teilnehmer.beratungnotizen}</span>
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="erstberatungabgeschlossen">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.erstberatungabgeschlossen" />
+			</label>
+			<span class="propdat"><f:if condition="{teilnehmer.erstberatungabgeschlossen} != '0000-00-00'">{teilnehmer.erstberatungabgeschlossen -> f:format.date(format: 'd.m.Y')}</f:if></span>			
+		</div>
+</div>
 <b>Verification Code:</b> {teilnehmer.verificationCode} <b>VerificationIP:</b> {teilnehmer.verificationIp} <b>VerificationDate:</b> <f:format.date format="d.m.Y - H:i">{teilnehmer.verificationDate}</f:format.date><br>
 

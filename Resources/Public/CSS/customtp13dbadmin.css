@@ -34,6 +34,12 @@
 	max-width: 100%;
 }
 
+.tx-iqtp13db .fframeadminonly {
+	border: 2px dashed #2f3bf4;
+	padding: 15px;
+	margin: 15px 0px;
+}
+
 .tx-iqtp13db table {
     border-collapse: separate;
     border-spacing: 2px;
@@ -67,12 +73,20 @@
 	
 }
 
+.pagination .current {
+	font-weight: bold;
+}
+
 td.fktd {
 	background-color: #d7e1f9;
 }
 
 table.fktable {
 	width: 100%;
+	display: none;
+}
+
+.niqfehltlist {
 	display: none;
 }
 
@@ -155,3 +169,41 @@ td.tdcenter input[type="checkbox"] {
 	font-size: 0.7rem !important;
 }
 
+button.weitererabschlussbtn {
+	margin-bottom: 10px;
+}
+
+.tx-iqtp13db .niqstatusgruen {
+	background-color: rgb(176, 200, 47);
+}
+
+.tx-iqtp13db .niqstatusgelb {
+	background-color: rgb(246, 218, 58);
+}
+
+.tx-iqtp13db .niqstatusrot {
+	background-color: rgb(224, 0, 33);
+}
+
+.niqfield {
+	background-image: url(../Icons/niq-icon.png);
+	background-repeat: no-repeat;
+	background-position: right;
+	background-size: 1.1em;
+	padding-right: 25px;
+}
+
+.niqfieldpflicht {
+	background-image: url(../Icons/niq-icon-pflicht.png);
+	background-repeat: no-repeat;
+	background-position: right;
+	background-size: 1.1em;
+	padding-right: 25px;
+}
+
+#dialog-gelb {
+	display: none;
+}
+#dialog-rot {
+	display: none;
+}

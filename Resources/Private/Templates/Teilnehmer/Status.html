@@ -5,6 +5,9 @@
 <f:layout name="Default" />
 
 <f:section name="main">
+<b>Beratungsstelle:</b> {beratungsstelle}<br>
+<b>Beratungsstellen-ID:</b> {niqbid}<br>
+<b>NIQ-Datenbank-Status: <f:format.raw>{niqdbstatus}</f:format.raw></b><br><br>
 <h1>Status aktuell</h1>
 
 <f:flashMessages />
@@ -94,8 +97,9 @@
 
 <hr>
 
-<h2>Historie Änderung Anmeldedaten im Backend</h2>
-<f:widget.paginate objects="{historie}" as="histpag" configuration="{itemsPerPage: 50, insertAbove: 1}"> 
+<h2>Historie Änderung Daten Ratsuchende im Backend</h2>
+<f:render partial="Paginator" arguments="{pagination: pagination, pages: pages, paginator: paginator, action: calleraction}" />
+
 	<table  class="tx_iqtp13db" >
 		<tr>
 			<th>Datum/Zeit</th>
@@ -106,10 +110,10 @@
 			<th>neuer Wert</th>
 		</tr>
 	
-		<f:for each="{histpag}" as="hist">
+		<f:for each="{paginator.paginatedItems}" as="hist" iteration="it">
 			<tr>		
 				<td>{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}</td>
-				<td>{hist.berater.kuerzel}</td>
+				<td>{hist.berater.username}</td>
 				<td>{hist.teilnehmer.nachname}, {hist.teilnehmer.vorname} (UID: {hist.teilnehmer.uid})</td>
 				<td>{hist.property}</td>
 				<td>{hist.oldvalue}</td>
@@ -117,6 +121,5 @@
 			</tr>
 		</f:for>
 	</table>
-</f:widget.paginate> 
 
 </f:section>

@@ -1,10 +1,34 @@
 ( function($) {
     $(document).ready(function() {
     	
-    	// Seite 2
     	toggleschonberaten();
     	togglecheckwohnsitz();
+    	togglecheckdeutschkenntnisse();
     	
+		toggleeinwanerkennendestelle();
+		toggleeinwperson();
+		toggleselectreferenzberuf();
+		
+		
+		$('#selectreferenzberuf').change(function() {
+			toggleselectreferenzberuf();
+		});
+		
+		$('#opteinwAnerkstelle1').change(function() {
+			toggleeinwanerkennendestelle();
+		});
+		$('#opteinwAnerkstelle2').change(function() {
+			toggleeinwanerkennendestelle();
+		});
+		
+		$('#opteinwPerson1').change(function() {
+			toggleeinwperson();
+		});
+		$('#opteinwPerson2').change(function() {
+			toggleeinwperson();
+		});
+		
+	
     	$('#schonberaten1').change(function() {
 			toggleschonberaten();
 		});    	
@@ -18,12 +42,23 @@
 		$('#checkwohnsitzDeutschland1').change(function() {
 			togglecheckwohnsitz();
 		}); 
+		$('#checkwohnsitzDeutschland2').change(function() {
+			togglecheckwohnsitz();
+		}); 
+		
+		$('#checkdeutschkenntnisse0').change(function() {
+			togglecheckdeutschkenntnisse();
+		});
+		$('#checkdeutschkenntnisse1').change(function() {
+			togglecheckdeutschkenntnisse();
+		});    	
+		$('#checkdeutschkenntnisse2').change(function() {
+			togglecheckdeutschkenntnisse();
+		}); 
 		
     	// Seite 3
     	toggleleistungsbezugjanein();
     	toggleeinwdatenaa();
-    	togglefruehererantrag();
-    	togglefruehererantragupload();
 		
 		$('#optleistungsbezugjanein1').change(function() {
 			toggleleistungsbezugjanein();
@@ -38,20 +73,6 @@
 		$('#opteinwilligungdatenanAA2').change(function() {
 			toggleeinwdatenaa();
 		});
-				
-		$('#optfruehererAntrag1').change(function() {
-			togglefruehererantrag();
-		});    	
-		$('#optfruehererAntrag2').change(function() {
-			togglefruehererantrag();
-		}); 
-		
-		$('#optbescheidfruehererAnerkennungsantrag1').change(function() {
-			togglefruehererantragupload();
-		});    	
-		$('#optbescheidfruehererAnerkennungsantrag2').change(function() {
-			togglefruehererantragupload();
-		}); 
 		
 		// für Backend		
 		for (i = 0; i < 17; i++) {
@@ -87,21 +108,20 @@
 		}); 
 		
 		// Erstberatung
-		toggleberatungface2face();
-		
+		toggleberatungface2face();		
 		$('#chkberatungsartface2face').click(function() {
 			toggleberatungface2face();
 		});
 		
-		// Folgekontakt
-		toggleantraggestellt();
+		toggleantragstellungvorher();
+		$('#selectantragstellungvorher').change(function() {
+			toggleantragstellungvorher();
+		});
 		
-		$('#optantraggestellt1').change(function() {
-			toggleantraggestellt();
-		});    	
-		$('#optantraggestellt2').change(function() {
-			toggleantraggestellt();
-		}); 
+		toggleantragstellung();
+		$('#selectantragstellungerfolgt').change(function() {
+			toggleantragstellung();
+		});
 
    });
     
@@ -120,21 +140,46 @@
     
     
     function togglecheckwohnsitz() {
-    	if($('#checkwohnsitzDeutschland0').is(":checked")) {
+    	if($('#checkwohnsitzDeutschland2').is(":checked")) {
 			$('#labelwohnsitzNeinIn').fadeIn();
 			$('#inputwohnsitzNeinIn').fadeIn();
+			$('#labeleinreisejahr').fadeOut();
+			$('#inputeinreisejahr').fadeOut();
+			$('#inputeinreisejahr').val('');
 			return;
 		} else if($('#checkwohnsitzDeutschland1').is(":checked")) {
 			 $('#labelwohnsitzNeinIn').fadeOut();
 			 $('#inputwohnsitzNeinIn').fadeOut();
 			 $('#inputwohnsitzNeinIn').val('');
+			 $('#labeleinreisejahr').fadeIn();
+			 $('#inputeinreisejahr').fadeIn();
 			return;
 		} else {
 			 $('#labelwohnsitzNeinIn').fadeOut();
 			 $('#inputwohnsitzNeinIn').fadeOut();
 			 $('#inputwohnsitzNeinIn').val('');
+			 $('#labeleinreisejahr').fadeOut();
+			 $('#inputeinreisejahr').fadeOut();
+			 $('#inputeinreisejahr').val('');
 		}
 	}
+    
+    function togglecheckdeutschkenntnisse() {
+    	if($('#checkdeutschkenntnisse1').is(":checked")) {
+			$('#labelzertsprachniveau').fadeOut();
+			$('#selectzertsprachniveau').fadeOut();
+			$('#selectzertsprachniveau').val('1');
+			return;
+		} else if($('#checkdeutschkenntnisse2').is(":checked")) {
+			$('#labelzertsprachniveau').fadeIn();
+			$('#selectzertsprachniveau').fadeIn();
+			return;
+		} else {
+			$('#labelzertsprachniveau').fadeOut();
+			$('#selectzertsprachniveau').fadeOut();
+			$('#selectzertsprachniveau').val('1');
+		}	
+    }
     
     function toggleleistungsbezugjanein() {
     	if($('#optleistungsbezugjanein1').is(":checked")) {
@@ -163,39 +208,76 @@
 		} else {
 			$('#datenAA').fadeOut();
 		}
-	}
-    
-    function togglefruehererantrag() {
-    	if($('#optfruehererAntrag1').is(":checked")) {
-			$('#fruehererantragdaten1').fadeIn();
-			$('#fruehererantragdaten2').fadeIn();
-			$('#fruehererantragdaten3').fadeIn();
-			return;
-		} else if($('#optfruehererAntrag2').is(":checked")) {
-			 $('#fruehererantragdaten1').fadeOut();
-			 $('#fruehererantragdaten2').fadeOut();
-			 $('#fruehererantragdaten3').fadeOut();
-			return;
-		} else {
-			$('#fruehererantragdaten1').fadeOut();
-			$('#fruehererantragdaten2').fadeOut();
-			$('#fruehererantragdaten3').fadeOut();
-		}
-	}
-    
-    function togglefruehererantragupload() {
-    	if($('#optbescheidfruehererAnerkennungsantrag1').is(":checked")) {
-			$('#textdokupload').fadeIn();
-			return;
-		} else if($('#optbescheidfruehererAnerkennungsantrag2').is(":checked")) {
-			 $('#textdokupload').fadeOut();
-			return;
-		} else {
-			$('#textdokupload').fadeOut();
-		}
-	}
+	}   
     
 // für BACKEND
+
+	function toggleselectreferenzberuf() {
+		if($('#selectreferenzberuf').val() == '-4') {
+			$('#divsonstigerberuf').fadeOut();
+			$('#txtsonstigerberuf').val('');
+			$('#divnregberuf').fadeIn();
+			return;
+		} else if($('#selectreferenzberuf').val() == '-3') {
+			$('#divnregberuf').fadeOut();
+			$('#txtnregberuf').val('');
+			$('#divsonstigerberuf').fadeIn();
+			return;
+		} else {
+			$('#divsonstigerberuf').fadeOut();
+			$('#divnregberuf').fadeOut();
+			$('#txtsonstigerberuf').val('');
+			$('#txtnregberuf').val('');			
+		}
+	}
+
+
+	function toggleeinwanerkennendestelle() {		
+		if($('#opteinwAnerkstelle1').is(":checked")) {
+			$('#einwanerkenndatum').fadeIn();
+			$('#einwanerkennmedium').fadeIn();
+			$('#einwanerkennname').fadeIn();
+			$('#einwanerkennkontakt').fadeIn();
+		} else {
+			$('#einwanerkenndatum').fadeOut();
+			$('#einwanerkennmedium').fadeOut();
+			$('#einwanerkennname').fadeOut();
+			$('#einwanerkennkontakt').fadeOut();
+			$('#txteinwanerkenndatum').val('');
+			$('#chkeinwanerkennmedium1').prop("checked", false);
+			$('#chkeinwanerkennmedium2').prop("checked", false);
+			$('#chkeinwanerkennmedium3').prop("checked", false);
+			$('#chkeinwanerkennmedium4').prop("checked", false);
+			$('#txteinwanerkennname').val('');
+			$('#txteinwanerkennkontakt').val('');			
+		}
+		return;
+	}
+	
+	function toggleeinwperson() {		
+		if($('#opteinwPerson1').is(":checked")) {
+			$('#einwpersondatum').fadeIn();
+			$('#einwpersonmedium').fadeIn();
+			$('#einwpersonname').fadeIn();
+			$('#einwpersonkontakt').fadeIn();
+		} else {
+			$('#einwpersondatum').fadeOut();
+			$('#einwpersonmedium').fadeOut();
+			$('#einwpersonname').fadeOut();
+			$('#einwpersonkontakt').fadeOut();
+			$('#txteinwpersondatum').val('');
+			$('#chkeinwpersonmedium1').prop("checked", false);
+			$('#chkeinwpersonmedium2').prop("checked", false);
+			$('#chkeinwpersonmedium3').prop("checked", false);
+			$('#chkeinwpersonmedium4').prop("checked", false);
+			$('#txteinwpersonname').val('');
+			$('#txteinwpersonkontakt').val('');			
+		}
+		return;
+	}
+
+
+
     // Aufenthaltsstatus
     function toggleaufenthaltsstatusradio() {
     	for (var i = 0; i < 17; i++) {
@@ -264,19 +346,59 @@
 		}
 	} 
     
-    // Folgekontakt
-    function toggleantraggestellt() {
-    	if($('#optantraggestellt1').is(":checked")) {
-			$('#divzabgleichwertigkeit').fadeIn(); 
-			return;
-		} else if($('#optantraggestellt2').is(":checked")) {
-			 $('#divzabgleichwertigkeit').fadeOut();
-			return;
+    // Anerkennung vorher?
+    function toggleantragstellungvorher() {    	
+    	if($('#selectantragstellungvorher').val() == 1) {
+			$("#divantragstellunggwpvorher").show(); 
+			$("[name='tx_iqtp13db_iqtp13dbadmin[abschluss][antragstellungzabvorher]']").val(0);			
+    		$("#divantragstellungzabvorher").hide(); 
+		} else if($('#selectantragstellungvorher').val() == 2) {
+    		$("#divantragstellungzabvorher").show();
+    		$("[name='tx_iqtp13db_iqtp13dbadmin[abschluss][antragstellunggwpvorher]']").val(0);			
+    		$("#divantragstellunggwpvorher").hide(); 
+		} else if($('#selectantragstellungvorher').val() == 3) {
+			$("#divantragstellunggwpvorher").show(); 
+    		$("#divantragstellungzabvorher").show();
 		} else {
-			$('#divzabgleichwertigkeit').fadeOut();
+			$("[name='tx_iqtp13db_iqtp13dbadmin[abschluss][antragstellungzabvorher]']").val(0);
+			$("[name='tx_iqtp13db_iqtp13dbadmin[abschluss][antragstellunggwpvorher]']").val(0);
+    		$("#divantragstellunggwpvorher").hide(); 
+    		$("#divantragstellungzabvorher").hide(); 
 		}
-	}
+	} 
     
+    // Anerkennungsverfahren
+    function toggleantragstellung() {
+    	if($('#selectantragstellungerfolgt').val() == 0) {
+    		$("#divantragstellunggwpdatum").hide(); 
+    		$("#divantragstellunggwpergebnis").hide(); 
+    		$("#divantragstellungzabdatum").hide(); 
+    		$("#divantragstellungzabergebnis").hide(); 
+		}
+    	if($('#selectantragstellungerfolgt').val() == 1) {
+    		$("#divantragstellunggwpdatum").show(); 
+			$("#divantragstellunggwpergebnis").show(); 
+			$("[name='tx_iqtp13db_iqtp13dbadmin[abschluss][antragstellungzabdatum]']").val('');
+			$("[name='tx_iqtp13db_iqtp13dbadmin[abschluss][antragstellungzabergebnis]']").val(0);			
+			$("#divantragstellungzabdatum").hide(); 
+    		$("#divantragstellungzabergebnis").hide(); 
+		} 
+    	if($('#selectantragstellungerfolgt').val() == 2) {
+    		$("#divantragstellungzabdatum").show();
+    		$("#divantragstellungzabergebnis").show();
+    		$("[name='tx_iqtp13db_iqtp13dbadmin[abschluss][antragstellunggwpdatum]']").val('');
+    		$("[name='tx_iqtp13db_iqtp13dbadmin[abschluss][antragstellunggwpergebnis]']").val(0);			
+    		$("#divantragstellunggwpdatum").hide(); 
+    		$("#divantragstellunggwpergebnis").hide(); 
+		}
+    	if($('#selectantragstellungerfolgt').val() == 3) {
+    		$("#divantragstellunggwpdatum").show(); 
+			$("#divantragstellunggwpergebnis").show(); 
+			$("#divantragstellungzabdatum").show();
+    		$("#divantragstellungzabergebnis").show();
+		}
+	} 
+        
     $("input[name='tx_iqtp13db_iqtp13dbwebapp[file]']").change(function() { 
     	this.form.submit(); 
     	$("#overlay").show();

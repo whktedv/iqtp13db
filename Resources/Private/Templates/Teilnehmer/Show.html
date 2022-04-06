@@ -6,13 +6,28 @@
 
 
 <f:section name="main">
+
 <h1>Einzelansicht Ratsuchende*r</h1>
 
 <f:flashMessages />
-<f:link.action class="linkbuttons" action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}">Anmeldedaten</f:link.action>
-<f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}">Zurück zur Liste</f:link.action>
+<f:link.action class="linkbuttons" action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">Bearbeiten</f:link.action>
+<f:link.action class="linkbuttons" action="savedatenblattpdf" controller="{callercontroller}" arguments="{teilnehmer:teilnehmer}">Datenblatt speichern (PDF)</f:link.action>
+<f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}" arguments="{callerpage : callerpage}">Zurück zur Liste</f:link.action>
 
 <f:render partial="Teilnehmer/Properties" arguments="{teilnehmer:teilnehmer, historie : historie}" />
+
+	<div id="divabschluesse" class="fframe">
+		<h2>Abschlüsse</h2>
+		<f:if condition="{abschluesse -> f:count()} > 0">
+		<f:then>			
+			<f:for each="{abschluesse}" as="sabschluss">
+				<div class="fframe"><h2>Daten Beruf <i>{sabschluss.deutscherReferenzberuf}</i></h2>
+					<f:render partial="Abschluss/Properties" arguments="{beruf:sabschluss, historie : historie}" />
+				</div>
+			</f:for>
+		</f:then>
+		</f:if>
+	</div>
 
 	<f:if condition="{dokumente}"><f:then>
 		<div class="frame"><h2><f:translate key="dokumente" /></h2>
@@ -25,8 +40,8 @@
 		</table>
 		</div>
 	</f:then></f:if>
-
-<f:link.action class="linkbuttons" action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}">Anmeldedaten</f:link.action>
-<f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}">Zurück zur Liste</f:link.action>
+	
+<f:link.action class="linkbuttons" action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">Bearbeiten</f:link.action>
+<f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}" arguments="{callerpage : callerpage}">Zurück zur Liste</f:link.action>
 
 </f:section>

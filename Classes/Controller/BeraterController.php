@@ -1,14 +1,18 @@
 <?php
 namespace Ud\Iqtp13db\Controller;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
+use TYPO3\CMS\Core\Pagination\SimplePagination;
+
 
 /***
  *
- * This file is part of the "IQ Webapp Anerkennungsberatung" Extension for TYPO3 CMS.
+ * This file is part of the "IQ Webapp Anerkennungserstberatung" Extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2020 Uli Dohmen <edv@whkt.de>, WHKT
+ *  (c) 2022 Uli Dohmen <edv@whkt.de>, WHKT
  *
  ***/
 
@@ -17,36 +21,49 @@ namespace Ud\Iqtp13db\Controller;
  */
 class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
+   
     /**
      * beraterRepository
      *
      * @var \Ud\Iqtp13db\Domain\Repository\BeraterRepository
      * @TYPO3\CMS\Extbase\Annotation\Inject
      */
-    protected $beraterRepository = NULL;
-
+    protected $beraterRepository;
+    
+    /**
+     * frontendUserGroupRepository
+     *
+     * @var \TYPO3\CMS\Extbase\Domain\Repository\FrontendUserGroupRepository
+     * @TYPO3\CMS\Extbase\Annotation\Inject
+     */
+    protected $frontendUserGroupRepository;
+       
+    
     /**
      * action list
      *
+     * @param int $currentPage
      * @return void
      */
-    public function listAction()
+    public function listAction(int $currentPage = 1)
     {
-        $beraters = $this->beraterRepository->findAll();
-        $this->view->assign('beraters', $beraters);
+        $berater = $this->beraterRepository->findAllBerater($this->settings['beraterstoragepid']);
+        
+    	$currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : $currentPage;
+    	$paginator = new QueryResultPaginator($berater, $currentPage, 25);
+    	$pagination = new SimplePagination($paginator);
+    	
+    	$this->view->assignMultiple(
+    	    [
+    	        'callerpage' => $currentPage,
+    	        'paginator' => $paginator,
+    	        'pagination' => $pagination,
+    	        'pages' => range(1, $pagination->getLastPageNumber()),
+    	        'berater' => $berater
+    	    ]
+   	    );
     }
-
-    /**
-     * action show
-     *
-     * @param \Ud\Iqtp13db\Domain\Model\Berater $berater
-     * @return void
-     */
-    public function showAction(\Ud\Iqtp13db\Domain\Model\Berater $berater)
-    {
-        $this->view->assign('berater', $berater);
-    }
-
+    
     /**
      * action new
      *
@@ -54,22 +71,22 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      */
     public function newAction()
     {
-
+        
     }
-
+    
     /**
      * action create
      *
-     * @param \Ud\Iqtp13db\Domain\Model\Berater $newBerater
+     * @param \Ud\Iqtp13db\Domain\Model\Berater $berater
      * @return void
      */
-    public function createAction(\Ud\Iqtp13db\Domain\Model\Berater $newBerater)
+    public function createAction(\Ud\Iqtp13db\Domain\Model\Berater $berater)
     {
         $this->addFlashMessage('Berater erstellt.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
-        $this->beraterRepository->add($newBerater);
+        $this->beraterRepository->add($berater);
         $this->redirect('list');
     }
-
+    
     /**
      * action edit
      *
@@ -79,9 +96,12 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      */
     public function editAction(\Ud\Iqtp13db\Domain\Model\Berater $berater)
     {
+        $usergroups = $this->frontendUserGroupRepository->findAll();
+        
         $this->view->assign('berater', $berater);
+        $this->view->assign('usergroups', $usergroups);
     }
-
+    
     /**
      * action update
      *
@@ -91,10 +111,19 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function updateAction(\Ud\Iqtp13db\Domain\Model\Berater $berater)
     {
         $this->addFlashMessage('Berater aktualisiert.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+        
+        $valArray = $this->request->getArguments();
+        //DebuggerUtility::var_dump($valArray);
+        //die;
+        
+        $usergroup = $this->frontendUserGroupRepository->findByIdentifier($valArray['berater']['usergroup']);        
+        $berater->addUsergroup($usergroup);        
+        $berater->setPassword(password_hash($berater->getPassword(), PASSWORD_ARGON2I));
+                
         $this->beraterRepository->update($berater);
         $this->redirect('list');
     }
-
+    
     /**
      * action delete
      *
@@ -106,5 +135,6 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $this->addFlashMessage('Berater gelöscht.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
         $this->beraterRepository->remove($berater);
         $this->redirect('list');
-    }
+    }   
+    
 }

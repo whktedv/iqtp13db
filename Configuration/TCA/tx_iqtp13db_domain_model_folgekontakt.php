@@ -20,10 +20,10 @@ return [
         'iconfile' => 'EXT:iqtp13db/Resources/Public/Icons/tx_iqtp13db_domain_model_folgekontakt.gif'
     ],
     'interface' => [
-        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, datum, antraggestellt, zab_gleichwertigkeit, notizen, teilnehmer, berater',
+        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, datum, notizen, beratungsform, teilnehmer, berater',
     ],
     'types' => [
-        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, datum, antraggestellt, zab_gleichwertigkeit, notizen, teilnehmer, berater, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, datum, notizen, beratungsform, teilnehmer, berater, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
     'columns' => [
         'sys_language_uid' => [
@@ -124,25 +124,7 @@ return [
                 'size' => 30,
                 'eval' => 'trim'
             ],
-        ],
-        'antraggestellt' => [
-            'exclude' => true,
-            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_folgekontakt.antraggestellt',
-            'config' => [
-                'type' => 'input',
-                'size' => 4,
-                'eval' => 'int'
-            ]
-        ],
-        'zab_gleichwertigkeit' => [
-            'exclude' => true,
-            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_folgekontakt.zab_gleichwertigkeit',
-            'config' => [
-                'type' => 'input',
-                'size' => 4,
-                'eval' => 'int'
-            ]
-        ],
+        ],       
         'notizen' => [
             'exclude' => true,
             'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_folgekontakt.notizen',
@@ -151,6 +133,15 @@ return [
                 'cols' => 40,
                 'rows' => 15,
                 'eval' => 'trim'
+            ]
+        ],
+        'beratungsform' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_folgekontakt.beratungsform',
+            'config' => [
+                'type' => 'input',
+                'size' => 4,
+                'eval' => 'int'
             ]
         ],
         'teilnehmer' => [
@@ -185,7 +176,7 @@ return [
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
-                'foreign_table' => 'tx_iqtp13db_domain_model_berater',
+                'foreign_table' => 'fe_users',
                 'default' => 0,
                 'minitems' => 0,
                 'maxitems' => 1,

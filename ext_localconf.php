@@ -9,22 +9,22 @@ call_user_func(
             'Ud.Iqtp13db',
             'Iqtp13dbadmin',
             [
-        		'Teilnehmer' => 'start, listangemeldet, show, new, create, edit, update, delete, status, export, askconsent, listdeleted, undelete',
-                'Beratung' => 'listerstberatung, listniqerfassung, listarchiv, show, new, create, edit, update, delete',
+        		'Teilnehmer' => 'start, listangemeldet, listerstberatung, listarchiv, checkniqconnection, sendtoniq, show, new, create, edit, update, delete, status, export, askconsent, listdeleted, undelete, savedatenblattpdf',
         		'Folgekontakt' => 'list, show, new, create, edit, update, delete',
                 'Dokument' => 'list, saveFileTeilnehmer, deleteFileTeilnehmer',
-                'Berater' => 'list, show, new, create, edit, update, delete',
-        		'Historie' => 'list'
+        		'Historie' => 'list',
+                'Abschluss' => 'list, show, new, create, edit, update, delete',
+                'Berater' => 'list, new, create, edit, update, delete'
             ], 
 
             // non-cacheable actions
             [
-        		'Teilnehmer' => 'start, listangemeldet, show, new, create, edit, update, delete, status, export, askconsent, listdeleted, undelete',
-                'Beratung' => 'listerstberatung, listniqerfassung, listarchiv, show, new, create, edit, update, delete',
+        		'Teilnehmer' => 'start, listangemeldet, listerstberatung, listarchiv, checkniqconnection, sendtoniq, show, new, create, edit, update, delete, status, export, askconsent, listdeleted, undelete, savedatenblattpdf',
         		'Folgekontakt' => 'list, show, new, create, edit, update, delete',
                 'Dokument' => 'list, saveFileTeilnehmer, deleteFileTeilnehmer',
-                'Berater' => 'list, show, new, create, edit, update, delete',
-        		'Historie' => 'list'
+        		'Historie' => 'list',
+                'Abschluss' => 'list, show, new, create, edit, update, delete',
+                'Berater' => 'list, new, create, edit, update, delete'
             ]
         );
 
@@ -33,12 +33,14 @@ call_user_func(
             'Iqtp13dbwebapp',
             [
                 'Teilnehmer' => 'start, anmeldseite1, anmeldseite1redirect, anmeldseite2, anmeldseite2redirect, anmeldseite3, anmeldseite3redirect, anmeldseite4, anmeldseite4redirect, anmeldungcomplete, anmeldungcompleteredirect, confirm, validationFailed, wartung',
-                'Dokument' => 'saveFileWebapp, deleteFileWebapp'
+                'Dokument' => 'saveFileWebapp, deleteFileWebapp',
+                'Abschluss' => 'addupdateWebapp, deleteWebapp, selectWebapp'
             ],
             // non-cacheable actions
             [
                'Teilnehmer' => 'start, anmeldseite1, anmeldseite1redirect, anmeldseite2, anmeldseite2redirect, anmeldseite3, anmeldseite3redirect, anmeldseite4, anmeldseite4redirect, anmeldungcomplete, anmeldungcompleteredirect, confirm, validationFailed, wartung',
-               'Dokument' => 'saveFileWebapp, deleteFileWebapp'
+               'Dokument' => 'saveFileWebapp, deleteFileWebapp',
+               'Abschluss' => 'addupdateWebapp, deleteWebapp, selectWebapp'
             ]
         );
         
@@ -74,4 +76,6 @@ call_user_func(
     },
     'iqtp13db'
 );
+
+
 ## EXTENSION BUILDER DEFAULTS END TOKEN - Everything BEFORE this line is overwritten with the defaults of the extension builder

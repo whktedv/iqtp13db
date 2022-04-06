@@ -3,12 +3,12 @@ namespace Ud\Iqtp13db\Domain\Model;
 
 /***
  *
- * This file is part of the "IQ Webapp Anerkennungsberatung" Extension for TYPO3 CMS.
+ * This file is part of the "IQ Webapp Anerkennungserstberatung" Extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2021 Uli Dohmen <edv@whkt.de>, WHKT
+ *  (c) 2022 Uli Dohmen <edv@whkt.de>, WHKT
  *
  ***/
 
@@ -17,7 +17,21 @@ namespace Ud\Iqtp13db\Domain\Model;
  */
 class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
-
+    
+    /**
+     * niqidberatungsstelle
+     *
+     * @var int
+     */
+    protected $niqidberatungsstelle = 0;
+    
+    /**
+     * tstamp
+     *
+     * @var int
+     */
+    protected $tstamp = 0;
+    
     /**
      * beratungsstatus
      *
@@ -32,6 +46,13 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $niqchiffre = '';
     
+    /**
+     * niqtstamp
+     *
+     * @var int
+     */
+    protected $niqtstamp = 0;
+        
     /**
      * schonberaten
      *
@@ -76,7 +97,8 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     
     /**
      * email
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty"), @TYPO3\CMS\Extbase\Annotation\Validate("EmailAddress")
+     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty") 
+     * @TYPO3\CMS\Extbase\Annotation\Validate("EmailAddress")
      * @var string
      */
     protected $email = '';
@@ -85,7 +107,8 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * E-Mail bestätigung
      *
      * @var string
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty"), @TYPO3\CMS\Extbase\Annotation\Validate("EmailAddress")
+     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
+     * @TYPO3\CMS\Extbase\Annotation\Validate("EmailAddress")
      */
     protected $confirmemail = '';
     
@@ -151,11 +174,11 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $wohnsitzNeinIn = '';
     
     /**
-     * Ortskraft Afghanistan
+     * sonstigerstatus
      *
-     * @var bool
+     * @var string
      */
-    protected $ortskraftafghanistan = false;
+    protected $sonstigerstatus = '';
     
     /**
      * deutschkenntnisse
@@ -177,161 +200,6 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var string
      */
     protected $zertifikatSprachniveau = '';
-    
-	/**
-	 * Abschlussart1
-	 *
-	 * @var string
-	 */
-	protected $abschlussart1 = '';
-
-	/**
-	 * Abschlussart2
-	 *
-	 * @var string
-	 */
-	protected $abschlussart2 = '';
-    
-	/**
-	 * Erwerbsland
-	 *
-	 * @var string
-	 */
-	protected $erwerbsland1 = '';
-    
-    /**
-     * dauerBerufsausbildung1
-     *
-     * @var string
-     */
-    protected $dauerBerufsausbildung1 = '';
-    
-	/**
-	 * Abschlussjahr
-	 *
-	 * @var string
-	 */
-	protected $abschlussjahr1 = '';
-    
-    /**
-     * ausbildungsinstitution1
-     *
-     * @var string
-     */
-    protected $ausbildungsinstitution1 = '';
-    
-    /**
-     * ausbildungsort1
-     *
-     * @var string
-     */
-    protected $ausbildungsort1 = '';
-    
-	/**
-	 * Abschluss
-	 *
-	 * @var string
-	 */
-	protected $abschluss1 = '';
-    
-    /**
-     * berufserfahrung1
-     *
-     * @var string
-     */
-    protected $berufserfahrung1 = '';
-    
-    /**
-     * ausbildungsfremdeberufserfahrung1
-     *
-     * @var string
-     */
-    protected $ausbildungsfremdeberufserfahrung1 = '';
-        
-    /**
-     * deutscherReferenzberuf1
-     *
-     * @var string
-     */
-    protected $deutscherReferenzberuf1 = '';
-    
-    /**
-     * wunschberuf1
-     *
-     * @var string
-     */
-    protected $wunschberuf1 = '';
-    
-    /**
-     * erwerbsland2
-     *
-     * @var string
-     */
-    protected $erwerbsland2 = '';
-    
-    /**
-     * dauerBerufsausbildung2
-     *
-     * @var string
-     */
-    protected $dauerBerufsausbildung2 = '';
-    
-    /**
-     * abschlussjahr2
-     *
-     * @var string
-     */
-    protected $abschlussjahr2 = '';
-    
-    /**
-     * ausbildungsinstitution2
-     *
-     * @var string
-     */
-    protected $ausbildungsinstitution2 = '';
-    
-    /**
-     * ausbildungsort2
-     *
-     * @var string
-     */
-    protected $ausbildungsort2 = '';
-    
-    /**
-     * abschluss2
-     *
-     * @var string
-     */
-    protected $abschluss2 = '';
-    
-    /**
-     * berufserfahrung2
-     *
-     * @var string
-     */
-    protected $berufserfahrung2 = '';
-    
-    /**
-     * ausbildungsfremdeberufserfahrung2
-     *
-     * @var string
-     */
-    protected $ausbildungsfremdeberufserfahrung2 = '';
-    
-    
-    /**
-     * deutscherReferenzberuf2
-     *
-     * @var string
-     */
-    protected $deutscherReferenzberuf2 = '';
-    
-    /**
-     * wunschberuf2
-     *
-     * @var string
-     */
-    protected $wunschberuf2 = '';
     
     /**
      * erwerbsstatus
@@ -479,35 +347,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var string
      */
     protected $aufenthaltsstatusfreitext = '';
-    
-    /**
-     * fruehererAntrag
-     *
-     * @var int
-     */
-    protected $fruehererAntrag = 0;
-    
-    /**
-     * fruehererAntragReferenzberuf
-     *
-     * @var string
-     */
-    protected $fruehererAntragReferenzberuf = '';
-    
-    /**
-     * fruehererAntragInstitution
-     *
-     * @var string
-     */
-    protected $fruehererAntragInstitution = '';
-    
-    /**
-     * bescheidfruehererAnerkennungsantrag
-     *
-     * @var int
-     */
-    protected $bescheidfruehererAnerkennungsantrag = 0;
-    
+           
     /**
      * nameBeratungsstelle
      *
@@ -526,7 +366,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * Einwilligung Datenübermittlung
      *
      * @var bool
-     * @TYPO3\CMS\Extbase\Annotation\Validate("\Ud\Iqtp13db\Validation\Validator\EinwilligungValidator")
+     * @TYPO3\CMS\Extbase\Annotation\Validate("\Ud\Iqtp13db\Domain\Validator\EinwilligungValidator")
      */
     protected $einwilligung = NULL;
     
@@ -552,6 +392,117 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $verificationIp = '';
     
     /**
+     * anerkennungszuschussbeantragt
+     *
+     * @var string
+     */
+    protected $anerkennungszuschussbeantragt = '';
+    
+    /**
+     * wieberaten
+     *
+     * @var string
+     */
+    protected $wieberaten = '';
+    
+    /**
+     * kooperationgruppe
+     *
+     * @var string
+     */
+    protected $kooperationgruppe = '';
+    
+    /**
+     * beratungdatum
+     * @var string
+     */
+    protected $beratungdatum = '';
+    
+    /**
+     * beratungsart
+     *
+     * @var string
+     */
+    protected $beratungsart = 0;
+    
+    /**
+     * beratungsartfreitext
+     *
+     * @var string
+     */
+    protected $beratungsartfreitext = '';
+    
+    /**
+     * beratungsort
+     *
+     * @var string
+     */
+    protected $beratungsort = '';
+    
+    /**
+     * beratungzu
+     *
+     * @var string
+     */
+    protected $beratungzu = '';
+        
+    /**
+     * anerkennendestellen
+     *
+     * @var string
+     */
+    protected $anerkennendestellen = '';
+    
+    /**
+     * anerkennungsberatung
+     *
+     * @var string
+     */
+    protected $anerkennungsberatung = '';
+    
+    /**
+     * anerkennungsberatungfreitext
+     *
+     * @var string
+     */
+    protected $anerkennungsberatungfreitext = '';
+    
+    /**
+     * qualifizierungsberatung
+     *
+     * @var string
+     */
+    protected $qualifizierungsberatung = '';
+    
+    /**
+     * qualifizierungsberatungfreitext
+     *
+     * @var string
+     */
+    protected $qualifizierungsberatungfreitext = '';
+    
+    /**
+     * beratungnotizen
+     *
+     * @var string
+     */
+    protected $beratungnotizen = '';
+    
+    /**
+     * erstberatungabgeschlossen
+     *
+     * @var string
+     */
+    protected $erstberatungabgeschlossen = '';
+    
+    /**
+     * berater
+     *
+     * @var \Ud\Iqtp13db\Domain\Model\Berater
+     */
+    protected $berater = null;
+    
+    /**
      * dublette
      *
      * @var boolean
@@ -566,19 +517,67 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * initializes this object
      *
-     * @param array $abschlussart1
-     * @param array $abschlussart2
+     * @param array $sonstigerstatus
      * @param array $einwilligungdatenanAAmedium
      * @param array $einwAnerkstellemedium
      * @param array $einwPersonmedium
+     * @param array $beratungsart
+     * @param array $anerkennungsberatung
+     * @param array $qualifizierungsberatung
+     * @param array $wieberaten
      */
-    public function __construct(array $abschlussart1 = array(), array $abschlussart2 = array(), array $einwilligungdatenanAAmedium = array(), array $einwAnerkstellemedium = array(), array $einwPersonmedium = array()) {
-    	$this->setAbschlussart1($abschlussart1);
-    	$this->setAbschlussart2($abschlussart2);
+    public function __construct(array $sonstigerstatus = array(), array $einwilligungdatenanAAmedium = array(), array $einwAnerkstellemedium = array(), array $einwPersonmedium = array(), array $beratungsart = array(), array $anerkennungsberatung = array(), array $qualifizierungsberatung = array(), array $wieberaten = array()) {
+        $this->setSonstigerstatus($sonstigerstatus);
     	$this->setEinwilligungdatenanAAmedium($einwilligungdatenanAAmedium);    	
     	$this->setEinwAnerkstellemedium($einwAnerkstellemedium);
     	$this->setEinwPersonmedium($einwPersonmedium);
     	$this->initVerificationCode();
+    	$this->setBeratungsart($beratungsart);
+    	$this->setAnerkennungsberatung($anerkennungsberatung);
+    	$this->setQualifizierungsberatung($qualifizierungsberatung);
+    	$this->setWieberaten($wieberaten);
+    }
+    
+    /**
+     * Returns the niqidberatungsstelle
+     *
+     * @return int $niqidberatungsstelle
+     */
+    public function getNiqidberatungsstelle()
+    {
+        return $this->niqidberatungsstelle;
+    }
+    
+    /**
+     * Sets the niqidberatungsstelle
+     *
+     * @param int $niqidberatungsstelle
+     * @return void
+     */
+    public function setNiqidberatungsstelle($niqidberatungsstelle)
+    {
+        $this->niqidberatungsstelle = $niqidberatungsstelle;
+    }
+    
+    /**
+     * Returns the tstamp
+     *
+     * @return int $tstamp
+     */
+    public function getTstamp()
+    {
+        return $this->tstamp;
+    }
+    
+    /**
+     * Sets the tstamp
+     *
+     * @param int $tstamp
+     * @return void
+     */
+    public function setTstamp($tstamp)
+    {
+        $this->tstamp = $tstamp;
     }
     
      /**
@@ -623,6 +622,27 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->niqchiffre = $niqchiffre;
     }
 
+    /**
+     * Returns the niqtstamp
+     *
+     * @return int $niqtstamp
+     */
+    public function getNiqtstamp()
+    {
+        return $this->niqtstamp;
+    }
+    
+    /**
+     * Sets the niqtstamp
+     *
+     * @param int $niqtstamp
+     * @return void
+     */
+    public function setNiqtstamp($niqtstamp)
+    {
+        $this->niqtstamp = $niqtstamp;
+    }
+    
     /**
      * Returns the schonberaten
      * 
@@ -979,24 +999,25 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Returns the ortskraftafghanistan
+     * Returns the sonstigerstatus
      *
-     * @return boolean $ortskraftafghanistan
+     * @return array $sonstigerstatus
      */
-    public function getOrtskraftafghanistan() {
-        return $this->ortskraftafghanistan;
+    public function getSonstigerstatus()
+    {
+        return explode(',', $this->sonstigerstatus);
     }
     
     /**
-     * Sets the ortskraftafghanistan
+     * Sets the sonstigerstatus
      *
-     * @param boolean $ortskraftafghanistan
+     * @param array $sonstigerstatus
      * @return void
      */
-    public function setOrtskraftafghanistan($ortskraftafghanistan) {
-        $this->ortskraftafghanistan = $ortskraftafghanistan;
+    public function setSonstigerstatus(array $sonstigerstatus)
+    {
+        $this->sonstigerstatus = implode(',', $sonstigerstatus);
     }
-    
     
     /**
      * Returns the deutschkenntnisse
@@ -1059,468 +1080,6 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setZertifikatSprachniveau($zertifikatSprachniveau)
     {
         $this->zertifikatSprachniveau = $zertifikatSprachniveau;
-    }
-
-/**
-     * Returns the abschlussart1
-     * 
-     * @return array $abschlussart1
-     */
-    public function getAbschlussart1()
-    {
-        return explode(',', $this->abschlussart1);
-    }
-
-    /**
-     * Sets the abschlussart1
-     * 
-     * @param array $abschlussart1
-     * @return void
-     */
-    public function setAbschlussart1(array $abschlussart1)
-    {
-        $this->abschlussart1 = implode(',', $abschlussart1);
-    }
-
-    /**
-     * Returns the abschlussart2
-     * 
-     * @return array $abschlussart2
-     */
-    public function getAbschlussart2()
-    {
-        return explode(',', $this->abschlussart2);
-    }
-
-    /**
-     * Sets the abschlussart2
-     * 
-     * @param array $abschlussart2
-     * @return void
-     */
-    public function setAbschlussart2(array $abschlussart2)
-    {
-        $this->abschlussart2 = implode(',', $abschlussart2);
-    }
-
-    /**
-     * Returns the erwerbsland1
-     * 
-     * @return string $erwerbsland1
-     */
-    public function getErwerbsland1()
-    {
-        return $this->erwerbsland1;
-    }
-
-    /**
-     * Sets the erwerbsland1
-     * 
-     * @param string $erwerbsland1
-     * @return void
-     */
-    public function setErwerbsland1($erwerbsland1)
-    {
-        $this->erwerbsland1 = $erwerbsland1;
-    }
-
-    /**
-     * Returns the dauerBerufsausbildung1
-     * 
-     * @return string $dauerBerufsausbildung1
-     */
-    public function getDauerBerufsausbildung1()
-    {
-        return $this->dauerBerufsausbildung1;
-    }
-
-    /**
-     * Sets the dauerBerufsausbildung1
-     * 
-     * @param string $dauerBerufsausbildung1
-     * @return void
-     */
-    public function setDauerBerufsausbildung1($dauerBerufsausbildung1)
-    {
-        $this->dauerBerufsausbildung1 = $dauerBerufsausbildung1;
-    }
-
-    /**
-     * Returns the abschlussjahr1
-     * 
-     * @return string $abschlussjahr1
-     */
-    public function getAbschlussjahr1()
-    {
-        return $this->abschlussjahr1;
-    }
-
-    /**
-     * Sets the abschlussjahr1
-     * 
-     * @param string $abschlussjahr1
-     * @return void
-     */
-    public function setAbschlussjahr1($abschlussjahr1)
-    {
-        $this->abschlussjahr1 = $abschlussjahr1;
-    }
-
-    /**
-     * Returns the ausbildungsinstitution1
-     * 
-     * @return string $ausbildungsinstitution1
-     */
-    public function getAusbildungsinstitution1()
-    {
-        return $this->ausbildungsinstitution1;
-    }
-
-    /**
-     * Sets the ausbildungsinstitution1
-     * 
-     * @param string $ausbildungsinstitution1
-     * @return void
-     */
-    public function setAusbildungsinstitution1($ausbildungsinstitution1)
-    {
-        $this->ausbildungsinstitution1 = $ausbildungsinstitution1;
-    }
-
-    /**
-     * Returns the ausbildungsort1
-     * 
-     * @return string $ausbildungsort1
-     */
-    public function getAusbildungsort1()
-    {
-        return $this->ausbildungsort1;
-    }
-
-    /**
-     * Sets the ausbildungsort1
-     * 
-     * @param string $ausbildungsort1
-     * @return void
-     */
-    public function setAusbildungsort1($ausbildungsort1)
-    {
-        $this->ausbildungsort1 = $ausbildungsort1;
-    }
-
-    /**
-     * Returns the abschluss1
-     * 
-     * @return string $abschluss1
-     */
-    public function getAbschluss1()
-    {
-        return $this->abschluss1;
-    }
-
-    /**
-     * Sets the abschluss1
-     * 
-     * @param string $abschluss1
-     * @return void
-     */
-    public function setAbschluss1($abschluss1)
-    {
-        $this->abschluss1 = $abschluss1;
-    }
-
-    /**
-     * Returns the berufserfahrung1
-     *
-     * @return string $berufserfahrung1
-     */
-    public function getBerufserfahrung1()
-    {
-        return $this->berufserfahrung1;
-    }
-    
-    /**
-     * Sets the berufserfahrung1
-     *
-     * @param string $berufserfahrung1
-     * @return void
-     */
-    public function setBerufserfahrung1($berufserfahrung1)
-    {
-        $this->berufserfahrung1 = $berufserfahrung1;
-    }
-    
-    /**
-     * Returns the ausbildungsfremdeberufserfahrung1
-     *
-     * @return string $ausbildungsfremdeberufserfahrung1
-     */
-    public function getAusbildungsfremdeberufserfahrung1()
-    {
-        return $this->ausbildungsfremdeberufserfahrung1;
-    }
-    
-    /**
-     * Sets the ausbildungsfremdeberufserfahrung1
-     *
-     * @param string $ausbildungsfremdeberufserfahrung1
-     * @return void
-     */
-    public function setAusbildungsfremdeberufserfahrung1($ausbildungsfremdeberufserfahrung1)
-    {
-        $this->ausbildungsfremdeberufserfahrung1 = $ausbildungsfremdeberufserfahrung1;
-    }
-    
-    /**
-     * Returns the deutscherReferenzberuf1
-     * 
-     * @return string $deutscherReferenzberuf1
-     */
-    public function getDeutscherReferenzberuf1()
-    {
-        return $this->deutscherReferenzberuf1;
-    }
-
-    /**
-     * Sets the deutscherReferenzberuf1
-     * 
-     * @param string $deutscherReferenzberuf1
-     * @return void
-     */
-    public function setDeutscherReferenzberuf1($deutscherReferenzberuf1)
-    {
-        $this->deutscherReferenzberuf1 = $deutscherReferenzberuf1;
-    }
-
-    /**
-     * Returns the wunschberuf1
-     * 
-     * @return string $wunschberuf1
-     */
-    public function getWunschberuf1()
-    {
-        return $this->wunschberuf1;
-    }
-
-    /**
-     * Sets the wunschberuf1
-     * 
-     * @param string $wunschberuf1
-     * @return void
-     */
-    public function setWunschberuf1($wunschberuf1)
-    {
-        $this->wunschberuf1 = $wunschberuf1;
-    }
-
-    /**
-     * Returns the erwerbsland2
-     * 
-     * @return string $erwerbsland2
-     */
-    public function getErwerbsland2()
-    {
-        return $this->erwerbsland2;
-    }
-
-    /**
-     * Sets the erwerbsland2
-     * 
-     * @param string $erwerbsland2
-     * @return void
-     */
-    public function setErwerbsland2($erwerbsland2)
-    {
-        $this->erwerbsland2 = $erwerbsland2;
-    }
-
-    /**
-     * Returns the dauerBerufsausbildung2
-     * 
-     * @return string $dauerBerufsausbildung2
-     */
-    public function getDauerBerufsausbildung2()
-    {
-        return $this->dauerBerufsausbildung2;
-    }
-
-    /**
-     * Sets the dauerBerufsausbildung2
-     * 
-     * @param string $dauerBerufsausbildung2
-     * @return void
-     */
-    public function setDauerBerufsausbildung2($dauerBerufsausbildung2)
-    {
-        $this->dauerBerufsausbildung2 = $dauerBerufsausbildung2;
-    }
-
-    /**
-     * Returns the abschlussjahr2
-     * 
-     * @return string $abschlussjahr2
-     */
-    public function getAbschlussjahr2()
-    {
-        return $this->abschlussjahr2;
-    }
-
-    /**
-     * Sets the abschlussjahr2
-     * 
-     * @param string $abschlussjahr2
-     * @return void
-     */
-    public function setAbschlussjahr2($abschlussjahr2)
-    {
-        $this->abschlussjahr2 = $abschlussjahr2;
-    }
-
-    /**
-     * Returns the ausbildungsinstitution2
-     * 
-     * @return string $ausbildungsinstitution2
-     */
-    public function getAusbildungsinstitution2()
-    {
-        return $this->ausbildungsinstitution2;
-    }
-
-    /**
-     * Sets the ausbildungsinstitution2
-     * 
-     * @param string $ausbildungsinstitution2
-     * @return void
-     */
-    public function setAusbildungsinstitution2($ausbildungsinstitution2)
-    {
-        $this->ausbildungsinstitution2 = $ausbildungsinstitution2;
-    }
-
-    /**
-     * Returns the ausbildungsort2
-     * 
-     * @return string $ausbildungsort2
-     */
-    public function getAusbildungsort2()
-    {
-        return $this->ausbildungsort2;
-    }
-
-    /**
-     * Sets the ausbildungsort2
-     * 
-     * @param string $ausbildungsort2
-     * @return void
-     */
-    public function setAusbildungsort2($ausbildungsort2)
-    {
-        $this->ausbildungsort2 = $ausbildungsort2;
-    }
-
-    /**
-     * Returns the abschluss2
-     * 
-     * @return string $abschluss2
-     */
-    public function getAbschluss2()
-    {
-        return $this->abschluss2;
-    }
-
-    /**
-     * Sets the abschluss2
-     * 
-     * @param string $abschluss2
-     * @return void
-     */
-    public function setAbschluss2($abschluss2)
-    {
-        $this->abschluss2 = $abschluss2;
-    }
-
-    /**
-     * Returns the berufserfahrung2
-     * 
-     * @return string $berufserfahrung2
-     */
-    public function getBerufserfahrung2()
-    {
-        return $this->berufserfahrung2;
-    }
-
-    /**
-     * Sets the berufserfahrung2
-     * 
-     * @param string $berufserfahrung2
-     * @return void
-     */
-    public function setBerufserfahrung2($berufserfahrung2)
-    {
-        $this->berufserfahrung2 = $berufserfahrung2;
-    }
-
-    /**
-     * Returns the ausbildungsfremdeberufserfahrung2
-     *
-     * @return string $ausbildungsfremdeberufserfahrung2
-     */
-    public function getAusbildungsfremdeberufserfahrung2()
-    {
-        return $this->ausbildungsfremdeberufserfahrung2;
-    }
-    
-    /**
-     * Sets the ausbildungsfremdeberufserfahrung2
-     *
-     * @param string $ausbildungsfremdeberufserfahrung2
-     * @return void
-     */
-    public function setAusbildungsfremdeberufserfahrung2($ausbildungsfremdeberufserfahrung2)
-    {
-        $this->ausbildungsfremdeberufserfahrung2 = $ausbildungsfremdeberufserfahrung2;
-    }
-    
-    /**
-     * Returns the deutscherReferenzberuf2
-     * 
-     * @return string $deutscherReferenzberuf2
-     */
-    public function getDeutscherReferenzberuf2()
-    {
-        return $this->deutscherReferenzberuf2;
-    }
-
-    /**
-     * Sets the deutscherReferenzberuf2
-     * 
-     * @param string $deutscherReferenzberuf2
-     * @return void
-     */
-    public function setDeutscherReferenzberuf2($deutscherReferenzberuf2)
-    {
-        $this->deutscherReferenzberuf2 = $deutscherReferenzberuf2;
-    }
-
-    /**
-     * Returns the wunschberuf2
-     * 
-     * @return string $wunschberuf2
-     */
-    public function getWunschberuf2()
-    {
-        return $this->wunschberuf2;
-    }
-
-    /**
-     * Sets the wunschberuf2
-     * 
-     * @param string $wunschberuf2
-     * @return void
-     */
-    public function setWunschberuf2($wunschberuf2)
-    {
-        $this->wunschberuf2 = $wunschberuf2;
     }
 
     /**
@@ -1965,90 +1524,6 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Returns the fruehererAntrag
-     * 
-     * @return int $fruehererAntrag
-     */
-    public function getFruehererAntrag()
-    {
-        return $this->fruehererAntrag;
-    }
-
-    /**
-     * Sets the fruehererAntrag
-     * 
-     * @param int $fruehererAntrag
-     * @return void
-     */
-    public function setFruehererAntrag($fruehererAntrag)
-    {
-        $this->fruehererAntrag = $fruehererAntrag;
-    }
-
-    /**
-     * Returns the fruehererAntragReferenzberuf
-     * 
-     * @return string $fruehererAntragReferenzberuf
-     */
-    public function getFruehererAntragReferenzberuf()
-    {
-        return $this->fruehererAntragReferenzberuf;
-    }
-
-    /**
-     * Sets the fruehererAntragReferenzberuf
-     * 
-     * @param string $fruehererAntragReferenzberuf
-     * @return void
-     */
-    public function setFruehererAntragReferenzberuf($fruehererAntragReferenzberuf)
-    {
-        $this->fruehererAntragReferenzberuf = $fruehererAntragReferenzberuf;
-    }
-
-    /**
-     * Returns the fruehererAntragInstitution
-     * 
-     * @return string $fruehererAntragInstitution
-     */
-    public function getFruehererAntragInstitution()
-    {
-        return $this->fruehererAntragInstitution;
-    }
-
-    /**
-     * Sets the fruehererAntragInstitution
-     * 
-     * @param string $fruehererAntragInstitution
-     * @return void
-     */
-    public function setFruehererAntragInstitution($fruehererAntragInstitution)
-    {
-        $this->fruehererAntragInstitution = $fruehererAntragInstitution;
-    }
-
-    /**
-     * Returns the bescheidfruehererAnerkennungsantrag
-     * 
-     * @return int $bescheidfruehererAnerkennungsantrag
-     */
-    public function getBescheidfruehererAnerkennungsantrag()
-    {
-        return $this->bescheidfruehererAnerkennungsantrag;
-    }
-
-    /**
-     * Sets the bescheidfruehererAnerkennungsantrag
-     * 
-     * @param int $bescheidfruehererAnerkennungsantrag
-     * @return void
-     */
-    public function setBescheidfruehererAnerkennungsantrag($bescheidfruehererAnerkennungsantrag)
-    {
-        $this->bescheidfruehererAnerkennungsantrag = $bescheidfruehererAnerkennungsantrag;
-    }
-
-    /**
      * Returns the nameBeratungsstelle
      * 
      * @return string $nameBeratungsstelle
@@ -2180,6 +1655,367 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         return $this->verificationIp;
     }
+    
+    /**
+     * Sets the anerkennungszuschussbeantragt
+     *
+     * @param string $anerkennungszuschussbeantragt
+     * @return void
+     */
+    public function setAnerkennungszuschussbeantragt($anerkennungszuschussbeantragt)
+    {
+        $this->anerkennungszuschussbeantragt = $anerkennungszuschussbeantragt;
+    }
+    
+    /**
+     * Returns the anerkennungszuschussbeantragt
+     *
+     * @return string $anerkennungszuschussbeantragt
+     */
+    public function getAnerkennungszuschussbeantragt()
+    {
+        return $this->anerkennungszuschussbeantragt;
+    }
+    
+    /**
+     * Sets the wieberaten
+     *
+     * @param array $wieberaten
+     * @return void
+     */
+    public function setWieberaten(array $wieberaten)
+    {
+        $this->wieberaten = implode(',', $wieberaten);
+    }
+    
+    /**
+     * Returns the wieberaten
+     *
+     * @return array $wieberaten
+     */
+    public function getWieberaten()
+    {
+        return explode(',', $this->wieberaten);
+    }
+    
+    /**
+     * Sets the kooperationgruppe
+     *
+     * @param string $kooperationgruppe
+     * @return void
+     */
+    public function setKooperationgruppe($kooperationgruppe)
+    {
+        $this->kooperationgruppe = $kooperationgruppe;
+    }
+    
+    /**
+     * Returns the kooperationgruppe
+     *
+     * @return string $kooperationgruppe
+     */
+    public function getKooperationgruppe()
+    {
+        return $this->kooperationgruppe;
+    }
+    
+    
+   //****** BERATUNG *****
+    
+    /**
+     * Returns the beratungdatum
+     *
+     * @return string $beratungdatum
+     */
+    public function getBeratungdatum()
+    {
+        return $this->beratungdatum;
+    }
+    
+    /**
+     * Sets the beratungdatum
+     *
+     * @param string $beratungdatum
+     * @return void
+     */
+    public function setBeratungdatum($beratungdatum)
+    {
+        $this->beratungdatum = $beratungdatum;
+    }
+    
+    /**
+     * Returns the beratungsart
+     *
+     * @return array $beratungsart
+     */
+    public function getBeratungsart()
+    {
+        return explode(',', $this->beratungsart);
+    }
+    
+    /**
+     * Sets the beratungsart
+     *
+     * @param array $beratungsart
+     * @return void
+     */
+    public function setBeratungsart(array $beratungsart)
+    {
+        $this->beratungsart = implode(',', $beratungsart);
+    }
+    
+    /**
+     * Returns the beratungsartfreitext
+     *
+     * @return string $beratungsartfreitext
+     */
+    public function getBeratungsartfreitext()
+    {
+        return $this->beratungsartfreitext;
+    }
+    
+    /**
+     * Sets the beratungsartfreitext
+     *
+     * @param string $beratungsartfreitext
+     * @return void
+     */
+    public function setBeratungsartfreitext($beratungsartfreitext)
+    {
+        $this->beratungsartfreitext = $beratungsartfreitext;
+    }
+    
+    /**
+     * Returns the beratungsort
+     *
+     * @return string $beratungsort
+     */
+    public function getBeratungsort()
+    {
+        return $this->beratungsort;
+    }
+    
+    /**
+     * Sets the beratungsort
+     *
+     * @param string $beratungsort
+     * @return void
+     */
+    public function setBeratungsort($beratungsort)
+    {
+        $this->beratungsort = $beratungsort;
+    }
+    
+    /**
+     * Returns the beratungzu
+     *
+     * @return string $beratungzu
+     */
+    public function getBeratungzu()
+    {
+        return $this->beratungzu;
+    }
+    
+    /**
+     * Sets the beratungzu
+     *
+     * @param string $beratungzu
+     * @return void
+     */
+    public function setBeratungzu($beratungzu)
+    {
+        $this->beratungzu = $beratungzu;
+    }
+    
+    /**
+     * Returns the referenzberufe
+     *
+     * @return string $referenzberufe
+     */
+    public function getReferenzberufe()
+    {
+        return $this->referenzberufe;
+    }
+    
+    /**
+     * Sets the referenzberufe
+     *
+     * @param string $referenzberufe
+     * @return void
+     */
+    public function setReferenzberufe($referenzberufe)
+    {
+        $this->referenzberufe = $referenzberufe;
+    }
+    
+    /**
+     * Returns the anerkennendestellen
+     *
+     * @return string $anerkennendestellen
+     */
+    public function getAnerkennendestellen()
+    {
+        return $this->anerkennendestellen;
+    }
+    
+    /**
+     * Sets the anerkennendestellen
+     *
+     * @param string $anerkennendestellen
+     * @return void
+     */
+    public function setAnerkennendestellen($anerkennendestellen)
+    {
+        $this->anerkennendestellen = $anerkennendestellen;
+    }
+    
+    /**
+     * Returns the anerkennungsberatung
+     *
+     * @return array $anerkennungsberatung
+     */
+    public function getAnerkennungsberatung()
+    {
+        return explode(',', $this->anerkennungsberatung);
+    }
+    
+    /**
+     * Sets the anerkennungsberatung
+     *
+     * @param array $anerkennungsberatung
+     * @return void
+     */
+    public function setAnerkennungsberatung(array $anerkennungsberatung)
+    {
+        $this->anerkennungsberatung = implode(',', $anerkennungsberatung);
+    }
+    
+    /**
+     * Returns the anerkennungsberatungfreitext
+     *
+     * @return string $anerkennungsberatungfreitext
+     */
+    public function getAnerkennungsberatungfreitext()
+    {
+        return $this->anerkennungsberatungfreitext;
+    }
+    
+    /**
+     * Sets the anerkennungsberatungfreitext
+     *
+     * @param string $anerkennungsberatungfreitext
+     * @return void
+     */
+    public function setAnerkennungsberatungfreitext($anerkennungsberatungfreitext)
+    {
+        $this->anerkennungsberatungfreitext = $anerkennungsberatungfreitext;
+    }
+    
+    /**
+     * Returns the qualifizierungsberatung
+     *
+     * @return array $qualifizierungsberatung
+     */
+    public function getQualifizierungsberatung()
+    {
+        return explode(',', $this->qualifizierungsberatung);
+    }
+    
+    /**
+     * Sets the qualifizierungsberatung
+     *
+     * @param array $qualifizierungsberatung
+     * @return void
+     */
+    public function setQualifizierungsberatung(array $qualifizierungsberatung)
+    {
+        $this->qualifizierungsberatung = implode(',', $qualifizierungsberatung);
+    }
+    
+    /**
+     * Returns the qualifizierungsberatungfreitext
+     *
+     * @return string $qualifizierungsberatungfreitext
+     */
+    public function getQualifizierungsberatungfreitext()
+    {
+        return $this->qualifizierungsberatungfreitext;
+    }
+    
+    /**
+     * Sets the qualifizierungsberatungfreitext
+     *
+     * @param string $qualifizierungsberatungfreitext
+     * @return void
+     */
+    public function setQualifizierungsberatungfreitext($qualifizierungsberatungfreitext)
+    {
+        $this->qualifizierungsberatungfreitext = $qualifizierungsberatungfreitext;
+    }
+    
+    /**
+     * Returns the beratungnotizen
+     *
+     * @return string $beratungnotizen
+     */
+    public function getBeratungnotizen()
+    {
+        return $this->beratungnotizen;
+    }
+    
+    /**
+     * Sets the beratungnotizen
+     *
+     * @param string $beratungnotizen
+     * @return void
+     */
+    public function setBeratungnotizen($beratungnotizen)
+    {
+        $this->beratungnotizen = $beratungnotizen;
+    }
+    
+    /**
+     * Returns the erstberatungabgeschlossen
+     *
+     * @return string $erstberatungabgeschlossen
+     */
+    public function getErstberatungabgeschlossen()
+    {
+        return $this->erstberatungabgeschlossen;
+    }
+    
+    /**
+     * Sets the erstberatungabgeschlossen
+     *
+     * @param string $erstberatungabgeschlossen
+     * @return void
+     */
+    public function setErstberatungabgeschlossen($erstberatungabgeschlossen)
+    {
+        $this->erstberatungabgeschlossen = $erstberatungabgeschlossen;
+    }
+    
+    /**
+     * Returns the berater
+     *
+     * @return \Ud\Iqtp13db\Domain\Model\Berater $berater
+     */
+    public function getBerater()
+    {
+        return $this->berater;
+    }
+    
+    /**
+     * Sets the berater
+     *
+     * @param \Ud\Iqtp13db\Domain\Model\Berater $berater
+     * @return void
+     */
+    public function setBerater(\Ud\Iqtp13db\Domain\Model\Berater $berater)
+    {
+        $this->berater = $berater;
+    }
+    
     
     /**
      * Initializes the verificationCode

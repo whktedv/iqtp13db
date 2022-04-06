@@ -1,30 +1,16 @@
 <?php
 namespace Ud\Iqtp13db\Domain\Model;
 
-/***************************************************************
+/***
  *
- *  Copyright notice
+ * This file is part of the "IQ Webapp Anerkennungserstberatung" Extension for TYPO3 CMS.
  *
- *  (c) 2021 Uli Dohmen <edv@whkt.de>, WHKT
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
  *
- *  All rights reserved
+ *  (c) 2022 Uli Dohmen <edv@whkt.de>, WHKT
  *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+ ***/
 
 /**
  * TNSeite1
@@ -60,7 +46,6 @@ class TNSeite1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
 	 */
 	protected $vorname = '';
-
 	
 	/**
 	 * PLZ
@@ -155,23 +140,66 @@ class TNSeite1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * @var string
 	 */
 	protected $wohnsitzNeinIn = '';
+
+	/**
+	 * aufenthaltsstatus
+	 *
+	 * @var int
+	 */
+	protected $aufenthaltsstatus = 0;
 	
 	/**
-	 * Ortskraft Afghanistan 
+	 * aufenthaltsstatusfreitext
 	 *
-	 * @var bool
+	 * @var string
 	 */
-	protected $ortskraftafghanistan = false;
-
+	protected $aufenthaltsstatusfreitext = '';
+	
+	/**
+	 * Deutschkenntnisse
+	 *
+	 * @var int
+	 */
+	protected $deutschkenntnisse = 0;
+	
+	/**
+	 * Zertifikat Deutschkenntnisse vorhanden?
+	 *
+	 * @var int
+	 */
+	protected $zertifikatdeutsch = 0;
+	
+	/**
+	 * Welches Sprachniveau?
+	 *
+	 * @var string
+	 */
+	protected $zertifikatSprachniveau = '';
+	
+	/**
+	 * sonstigerstatus
+	 *
+	 * @var string
+	 */
+	protected $sonstigerstatus = '';
 	
 	/**
 	 * Einwilligung Datenübermittlung
 	 *
 	 * @var bool
-	 * @TYPO3\CMS\Extbase\Annotation\Validate("\Ud\Iqtp13db\Validation\Validator\EinwilligungValidator")
+	 * @TYPO3\CMS\Extbase\Annotation\Validate("\Ud\Iqtp13db\Domain\Validator\EinwilligungValidator")
 	 */
 	protected $einwilligung = false;
 
+	/**
+	 * initializes this object
+	 *
+	 * @param array $sonstigerstatus
+	 */
+	public function __construct(array $sonstigerstatus = array()) {
+	    $this->setSonstigerstatus($sonstigerstatus);
+	}
+	
 	/**
 	 * Returns the schonberaten
 	 *
@@ -500,24 +528,67 @@ class TNSeite1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 	
 	/**
-	 * Returns the ortskraftafghanistan
+	 * Returns the sonstigerstatus
 	 *
-	 * @return boolean $ortskraftafghanistan
+	 * @return array $sonstigerstatus
 	 */
-	public function getOrtskraftafghanistan() {
-	    return $this->ortskraftafghanistan;
+	public function getSonstigerstatus()
+	{
+	    return explode(',', $this->sonstigerstatus);
 	}
 	
 	/**
-	 * Sets the ortskraftafghanistan
+	 * Sets the sonstigerstatus
 	 *
-	 * @param boolean $ortskraftafghanistan
+	 * @param array $sonstigerstatus
 	 * @return void
 	 */
-	public function setOrtskraftafghanistan($ortskraftafghanistan) {
-	    $this->ortskraftafghanistan = $ortskraftafghanistan;
+	public function setSonstigerstatus(array $sonstigerstatus)
+	{
+	    $this->sonstigerstatus = implode(',', $sonstigerstatus);
 	}
 	
+	/**
+	 * Returns the aufenthaltsstatus
+	 *
+	 * @return int $aufenthaltsstatus
+	 */
+	public function getAufenthaltsstatus()
+	{
+	    return $this->aufenthaltsstatus;
+	}
+	
+	/**
+	 * Sets the aufenthaltsstatus
+	 *
+	 * @param int $aufenthaltsstatus
+	 * @return void
+	 */
+	public function setAufenthaltsstatus($aufenthaltsstatus)
+	{
+	    $this->aufenthaltsstatus = $aufenthaltsstatus;
+	}
+	
+	/**
+	 * Returns the aufenthaltsstatusfreitext
+	 *
+	 * @return string $aufenthaltsstatusfreitext
+	 */
+	public function getAufenthaltsstatusfreitext()
+	{
+	    return $this->aufenthaltsstatusfreitext;
+	}
+	
+	/**
+	 * Sets the aufenthaltsstatusfreitext
+	 *
+	 * @param string $aufenthaltsstatusfreitext
+	 * @return void
+	 */
+	public function setAufenthaltsstatusfreitext($aufenthaltsstatusfreitext)
+	{
+	    $this->aufenthaltsstatusfreitext = $aufenthaltsstatusfreitext;
+	}
 	
 	/**
 	 * Returns the einwilligung
@@ -544,5 +615,63 @@ class TNSeite1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	public function setEinwilligung($einwilligung) {
 		$this->einwilligung = $einwilligung;
 	}
+	
+	/**
+	 * Returns the deutschkenntnisse
+	 *
+	 * @return int $deutschkenntnisse
+	 */
+	public function getDeutschkenntnisse() {
+	    return $this->deutschkenntnisse;
+	}
+	
+	/**
+	 * Sets the deutschkenntnisse
+	 *
+	 * @param int $deutschkenntnisse
+	 * @return void
+	 */
+	public function setDeutschkenntnisse($deutschkenntnisse) {
+	    $this->deutschkenntnisse = $deutschkenntnisse;
+	}
+	
+	/**
+	 * Returns the zertifikatdeutsch
+	 *
+	 * @return int $zertifikatdeutsch
+	 */
+	public function getZertifikatdeutsch() {
+	    return $this->zertifikatdeutsch;
+	}
+	
+	/**
+	 * Sets the zertifikatdeutsch
+	 *
+	 * @param int $zertifikatdeutsch
+	 * @return void
+	 */
+	public function setZertifikatdeutsch($zertifikatdeutsch) {
+	    $this->zertifikatdeutsch = $zertifikatdeutsch;
+	}
+	
+	/**
+	 * Returns the zertifikatSprachniveau
+	 *
+	 * @return string $zertifikatSprachniveau
+	 */
+	public function getZertifikatSprachniveau() {
+	    return $this->zertifikatSprachniveau;
+	}
+	
+	/**
+	 * Sets the zertifikatSprachniveau
+	 *
+	 * @param string $zertifikatSprachniveau
+	 * @return void
+	 */
+	public function setZertifikatSprachniveau($zertifikatSprachniveau) {
+	    $this->zertifikatSprachniveau = $zertifikatSprachniveau;
+	}
+	
 
 }

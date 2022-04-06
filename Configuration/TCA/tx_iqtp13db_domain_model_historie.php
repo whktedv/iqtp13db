@@ -70,8 +70,7 @@ return [
 				'config' => [ 
 						'type' => 'select',
 						'renderType' => 'selectSingle',
-						'foreign_table' => 'tx_iqtp13db_domain_model_berater',
-						'default' => 0,
+						'foreign_table' => 'fe_users',
 						'minitems' => 0,
 						'maxitems' => 1 
 				] 

@@ -49,13 +49,15 @@
 			<label for="geburtsjahr">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.lebensalter" />
 			</label>
-				<span class="propdat">{teilnehmer.lebensalter}</span>
+				<span class="propdat">{f:if(condition: '{teilnehmer.lebensalter} == -1000', then: '-', else: '{teilnehmer.lebensalter}')}</span>
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="geburtsland">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.geburtsland" />
 			</label>
-				<span class="propdat">{teilnehmer.geburtsland}</span>
+				<f:for each="{settings.staaten}" as="text" key="wert">
+					{f:if(condition: '{teilnehmer.geburtsland} == {wert}', then: '<span class="propdat">{text}</span>')}					 
+				</f:for>
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="geschlecht">
@@ -81,20 +83,27 @@
 			<label for="ersteStaatsangehoerigkeit">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.erste_staatsangehoerigkeit" />
 			</label>
-			<span class="propdat">{teilnehmer.ersteStaatsangehoerigkeit}</span>
+			<f:for each="{settings.staaten}" as="text" key="wert">
+				{f:if(condition: '{teilnehmer.ersteStaatsangehoerigkeit} == {wert}', then: '<span class="propdat">{text}</span>')}					 
+			</f:for>
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="zweiteStaatsangehoerigkeit">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.zweite_staatsangehoerigkeit" />
 			</label>
-				<span class="propdat">{teilnehmer.zweiteStaatsangehoerigkeit}</span>
+				<f:for each="{settings.staaten}" as="text" key="wert">
+					{f:if(condition: '{teilnehmer.zweiteStaatsangehoerigkeit} == {wert}', then: '<span class="propdat">{text}</span>')}					 
+				</f:for>
 		</div>
-		<div class="tp13_formdivwebapp">
-			<label for="einreisejahr">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einreisejahr" />
-			</label>
-				<span class="propdat">{teilnehmer.einreisejahr}</span>
-		</div>
+		<f:if condition="{teilnehmer.einreisejahr} != ''"><f:then>
+			<div class="tp13_formdivwebapp">
+				<label for="einreisejahr">
+					<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einreisejahr" />
+				</label>
+					<span class="propdat">{teilnehmer.einreisejahr}</span>
+			</div>
+		</f:then></f:if>
+		
 		<div class="tp13_formdivwebapp">
 			<label for="wohnsitzDeutschland">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_deutschland" />
@@ -104,127 +113,87 @@
 				<f:translate key="ja" />
 			</f:then>
 			<f:else>
-				<f:translate key="nein" />
+				<f:if condition="{teilnehmer.wohnsitzDeutschland} == 2"><f:then>
+					<f:translate key="nein" />
+				</f:then>
+				<f:else>
+					<f:translate key="ka" />
+				</f:else>
+				</f:if>
 			</f:else>
 			</f:if>
 			</span>
 		</div>
+		<f:if condition="{teilnehmer.wohnsitzNeinIn} != ''">
+			<div class="tp13_formdivwebapp">
+				<label id="labelwohnsitzNeinIn4propertypage" for="wohnsitzNeinIn">
+					<f:translate key="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_nein_in" />
+				</label>
+					<f:for each="{settings.staaten}" as="text" key="wert">
+						{f:if(condition: '{teilnehmer.wohnsitzNeinIn} == {wert}', then: '<span class="propdat">{text}</span>')}					 
+					</f:for>
+			</div>
+		</f:if>
 		<div class="tp13_formdivwebapp">
-			<label id="labelwohnsitzNeinIn4propertypage" for="wohnsitzNeinIn">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_nein_in" />
-			</label>
-				<span class="propdat">{teilnehmer.wohnsitzNeinIn}</span>
-		</div>
-		
-		<div class="tp13_formdivwebapp">
-			<label for="ortskraftafghanistan">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ortskraftafghanistan" />
+			<label for="sonstigerstatus">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.sonstigerstatus" />
 			</label>
 			<span class="propdat">
-			<f:if condition="{teilnehmer.ortskraftafghanistan} == 1">
-				<f:then>
-					<f:translate key="ja" />
-				</f:then>
-				<f:else>
-					<f:translate key="nein" />
-				</f:else>
-			</f:if>
+				<f:for each="{teilnehmer.sonstigerstatus}" as="sonstigerstatus">
+					{f:if(condition: '{iter.index} > 0', then: ',', else: '')}
+					<f:if condition="{sonstigerstatus} == 1"><f:then>
+						<f:translate key="sonstigerstatus.1"/>
+					</f:then></f:if>
+					<f:if condition="{sonstigerstatus} == 2"><f:then>
+						<f:translate key="sonstigerstatus.2"/>
+					</f:then></f:if>
+				</f:for>
 			</span>			
 		</div>
-		
+		<div class="tp13_formdivwebapp">
+			<label for="aufenthaltsstatus">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus" />
+			</label>
+				<f:for each="{settings.aufenthaltsstatus}" as="text" key="wert">
+					{f:if(condition: '{teilnehmer.aufenthaltsstatus} == {wert}', then: '<span class="propdat">{text}</span>')}					 
+				</f:for>
+		</div>
 </div>
 
 <div class="fframe"><h2><f:translate key="deutschkenntnisse" /></h2>
 		<div class="tp13_formdivwebapp">
 			<label for="deutschkenntnisse">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse" />
+			<f:translate key="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse" />
 			</label>
-				<f:for each="{settings.deutschkenntnisse}" as="text" key="wert">
-					{f:if(condition: '{teilnehmer.deutschkenntnisse} == {wert}', then: '<span class="propdat">{text}</span>')}					 
-				</f:for>
+			<span class="propdat">
+			<f:if condition="{teilnehmer.deutschkenntnisse} == 1"><f:then>
+				<f:translate key="ja" />
+			</f:then>
+			<f:else>
+				<f:if condition="{teilnehmer.deutschkenntnisse} == 2"><f:then>
+					<f:translate key="nein" />
+				</f:then>
+				<f:else>
+					<f:if condition="{teilnehmer.deutschkenntnisse} == -1"><f:then>
+						<f:translate key="ka" />
+					</f:then>
+					<f:else>
+						
+					</f:else>
+					</f:if>
+				</f:else>
+				</f:if>
+			</f:else>
+			</f:if>
+			</span>
 		</div>
 		<div class="tp13_formdivwebapp">
-			<label id="labelzertsprachniveau" for="zertifikatSprachniveau">
+			<label for="zertifikatSprachniveau">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau" />
 			</label>
 			<f:for each="{settings.zertifikatlevel}" as="text" key="wert">
 					{f:if(condition: '{teilnehmer.zertifikatSprachniveau} == {wert}', then: '<span class="propdat">{text}</span>')}					 
 				</f:for>
-		</div>		
-</div>
-
-<div class="fframe"><h2><f:translate key="auslaendischerabschluss" /></h2>
-		<div class="tp13_formdivwebapp">
-			<label for="abschlussart">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.abschlussart" />
-			</label>
-				<span class="propdat">
-				<f:for each="{teilnehmer.abschlussart1}" as="abschlussart1">
-					<f:for each="{settings.abschlussart}" as="text" key="wert">
-						{f:if(condition: '{abschlussart1} == {wert}', then: '{text}&nbsp;')}
-					</f:for>
-				</f:for>
-				;
-				<f:for each="{teilnehmer.abschlussart2}" as="abschlussart2">
-					<f:for each="{settings.abschlussart}" as="text" key="wert">
-						{f:if(condition: '{abschlussart2} == {wert}', then: '{text}&nbsp;')}
-					</f:for>
-				</f:for>
-				</span>		
-		</div>
-		<div class="tp13_formdivwebapp">
-				<label for="erwerbsland">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.erwerbsland" />
-			</label>
-				<span class="propdat">{teilnehmer.erwerbsland1};{teilnehmer.erwerbsland2}</span>
-		</div>
-		<div class="tp13_formdivwebapp">
-			<label for="dauerBerufsausbildung">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.dauer_berufsausbildung" />
-			</label>
-				<span class="propdat">{teilnehmer.dauerBerufsausbildung1};{teilnehmer.dauerBerufsausbildung2}</span>
-		</div>
-		<div class="tp13_formdivwebapp">
-			<label for="abschlussjahr">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.abschlussjahr" />
-			</label>
-				<span class="propdat">{teilnehmer.abschlussjahr1};{teilnehmer.abschlussjahr2}</span>
-		</div>
-		<div class="tp13_formdivwebapp">
-			<label for="ausbildungsinstitution">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ausbildungsinstitution" />
-			</label>
-				<span class="propdat">{teilnehmer.ausbildungsinstitution1};{teilnehmer.ausbildungsinstitution2}</span>
-		</div>
-		<div class="tp13_formdivwebapp">
-			<label for="ausbildungsort">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ausbildungsort" />
-			</label>
-				<span class="propdat">{teilnehmer.ausbildungsort1};{teilnehmer.ausbildungsort2}</span>
-		</div>
-		<div class="tp13_formdivwebapp">
-			<label for="originaltitelAbschluss">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.abschluss" />
-			</label>
-				<span class="propdat">{teilnehmer.abschluss1};{teilnehmer.abschluss2}</span>
-		</div>
-		<div class="tp13_formdivwebapp">
-					<label for="deutscherReferenzberuf">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.deutscher_referenzberuf" />
-			</label>
-				<span class="propdat">{teilnehmer.deutscherReferenzberuf1};{teilnehmer.deutscherReferenzberuf2}</span>
-		</div>
-		<div class="tp13_formdivwebapp">
-			<label for="berufserfahrungAusland">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.berufserfahrung" />
-			</label>
-			<span class="propdat">{teilnehmer.berufserfahrung1};{teilnehmer.berufserfahrung2}</span>
-		</div>
-		<div class="tp13_formdivwebapp">
-			<label id="labelausbildungsfremdeberufserfahrung1" for="ausbildungsfremdeberufserfahrung1">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ausbildungsfremdeberufserfahrung1" />
-			</label>
-				<span class="propdat">{teilnehmer.ausbildungsfremdeberufserfahrung1};{teilnehmer.ausbildungsfremdeberufserfahrung2}</span>
 		</div>		
 </div>
 
@@ -306,52 +275,38 @@
 </f:then>
 </f:if>
 
-
-<div class="fframe"><h2><f:translate key="fruehereantraege" /></h2>
+<f:if condition="{teilnehmer.einwPerson} == 1">
+<f:then>
+<div class="fframe"><h2><f:translate key="datenweitereperson" /></h2>
+	  <div class="tp13_formdivwebapp">
+				<label for="einwPerson">
+					<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_person" />
+				</label>
+				<span class="propdat"><f:if condition="{teilnehmer.einwPerson} == 1"><f:then>
+					<f:translate key="ja" />
+				</f:then>
+				<f:else>
+					<f:translate key="nein" />
+				</f:else>
+				</f:if></span>
+		</div>  
 		<div class="tp13_formdivwebapp">
-			<label for="fruehererAntrag">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag" />
+			<label for="einwPersonname">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_personname" />
 			</label>
-			<span class="propdat"><f:if condition="{teilnehmer.fruehererAntrag} == 1"><f:then>
-				<f:translate key="ja" />
-			</f:then>
-			<f:else>
-				<f:translate key="nein" />
-			</f:else>
-			</f:if></span>
-		</div>		
-	<f:if condition="{teilnehmer.fruehererAntrag} == 1">
-	<f:then>
-		<div class="tp13_formdivwebapp">
-			<label id="labelfruehererAntragReferenzberuf" for="fruehererAntragReferenzberuf">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag_referenzberuf" />
-			</label>
-				<span class="propdat">{teilnehmer.fruehererAntragReferenzberuf}</span>
+				<span class="propdat">{teilnehmer.einwPersonname}</span>
 		</div>
 		<div class="tp13_formdivwebapp">
-			<label id="labelfruehererAntragInstitution" for="fruehererAntragInstitution">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag_institution" />
+			<label for="einwPersonkontakt">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_personkontakt" />
 			</label>
-				<span class="propdat">{teilnehmer.fruehererAntragInstitution}</span>
-		</div>
-		<div class="tp13_formdivwebapp">
-			<label id="labelfruehererAntragInstitution" for="fruehererAntragInstitution">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.bescheidfrueherer_anerkennungsantrag" />
-			</label>
-			<span class="propdat"><f:if condition="{teilnehmer.bescheidfruehererAnerkennungsantrag} == 1"><f:then>
-				<f:translate key="ja" />
-			</f:then>
-			<f:else>
-				<f:translate key="nein" />
-			</f:else>
-			</f:if></span>
-		</div>
-	</f:then>
-	</f:if>		
+				<span class="propdat">{teilnehmer.einwPersonkontakt}</span>
+		</div>	
 </div>
+</f:then>
+</f:if>
 
-
-<div class="fframe">
+<div class="fframe"><h2><f:translate key="beratung" /></h2>
 	<div class="tp13_formdivwebapp">
 		<label for="nameBeratungsstelle">
 			<f:translate key="tx_iqtp13db_domain_model_teilnehmer.name_beratungsstelle" />
@@ -360,6 +315,17 @@
 				{f:if(condition: '{teilnehmer.nameBeratungsstelle} == {wert}', then: '<span class="propdat">{text}</span>')}					 
 			</f:for>
 	</div>
+	<div class="tp13_formdivwebapp">
+  		<label for="wieberaten">
+  			<f:translate key="tx_iqtp13db_domain_model_teilnehmer.wieberaten" />
+  		</label>
+			<f:for each="{teilnehmer.wieberaten}" as="wieberaten">
+				<f:for each="{settings.wieberaten}" as="text" key="wert">
+					{f:if(condition: '{wieberaten} == {wert}', then: '<span class="propdat">{text}</span>')}
+				</f:for>
+			</f:for>	
+	</div>
+ 	
 	<div class="tp13_formdivwebapp">
 		<label for="notizen">
 			<f:translate key="tx_iqtp13db_domain_model_teilnehmer.notizen" />

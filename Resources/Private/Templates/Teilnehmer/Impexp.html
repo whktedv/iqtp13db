@@ -1,0 +1,25 @@
+
+<f:layout name="Default" />
+
+<f:section name="main">
+<f:flashMessages />
+<br />
+<h1>Daten Beratene exportieren</h1>
+Nach Klick auf den Button werden die Daten in eine CSV-Datei zum Download exportiert.
+<f:form method="post" controller="Teilnehmer" action="impexp" name="impexp" enctype="multipart/form-data" noCacheHash="true" ><br />
+		<f:form.submit name="export" value="Daten exportieren" />			
+</f:form>
+<!-- 
+<hr>
+<h1>Daten Beratene importieren</h1>
+Wichtig: Sofern die Daten als Excel-Datei vorliegen, muss die Datei zunächst in Libreoffice geöffnet werden und dort als CSV-Datei abgespeichert werden.<br />
+Die CSV-Datei muss im Unicode/UTF-8-Format abgespeichert sein. Feldtrenner: Tabulator (\t), Texttrenner: obere Anführungszeichen (").<br /> 
+
+<h2><span style="color: red;">ACHTUNG: Beim Import werden alle bereits vorhandenen Daten überschrieben!<br>Der Vorgang dauert 1-2 Minuten.</span></h2>
+<f:form method="post" controller="Teilnehmer" action="impexp" name="impexp" enctype="multipart/form-data" noCacheHash="true" ><br />
+       CSV-Datei zum Import auswählen:<br /><br />
+		<f:form.upload name="formdoc[0]" /><br />
+		<f:form.submit name="import" value="Datei importieren" /><br /><br />			
+</f:form>
+ -->
+</f:section>
