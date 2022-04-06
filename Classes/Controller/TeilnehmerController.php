@@ -393,7 +393,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     {
     	$valArray = $this->request->getArguments();
     	if(!empty($valArray['callerpage'])) $currentPage = $valArray['callerpage'];
-    	
+    	 
     	if(empty($valArray['orderby'])) {
     	    // ANMERKUNG: Nach Telefonat mit T. Schiller Standardsortierung per Bestätigungsdatum (verificationDate)
     	    $orderby = 'verification_date';
