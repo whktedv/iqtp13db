@@ -1,0 +1,30 @@
+<f:layout name="Default4pdf" />
+
+<f:section name="main">
+<h1>{teilnehmer.nachname}, {teilnehmer.vorname}</h1>
+
+<f:render partial="Teilnehmer/Properties" arguments="{teilnehmer:teilnehmer}" />
+
+<h2>Abschlüsse/Berufe</h2>
+<f:if condition="{abschluesse -> f:count()} > 0">
+<f:then>			
+	<f:for each="{abschluesse}" as="sabschluss">
+		<div class="fframe"><h2>Daten Abschluss/Beruf <i>{sabschluss.deutscherReferenzberuf}</i></h2>
+			<f:render partial="Abschluss/Properties" arguments="{beruf:sabschluss}" />
+		</div>
+	</f:for>
+</f:then>
+</f:if>
+
+<f:if condition="{dokumente}"><f:then>
+	<h2><f:translate key="dokumente" /></h2>
+	<table>
+	<f:for each="{dokumente}" as="dokument">
+		<tr>
+		<td>{dokument.name}</td>
+		</tr>
+	</f:for>
+	</table>	
+</f:then></f:if>
+
+</f:section>

@@ -1,0 +1,78 @@
+<div class="fframe"><h2><f:translate key="datenabschluss" /></h2>
+		<div class="tp13_formdivwebapp">
+		  <label><f:translate key="tx_iqtp13db_domain_model_abschluss.abschlussart" /></label>
+			<span class="propdat">
+				<f:for each="{abschluss.abschlussart}" as="abschlussart" iteration="iter">
+					{f:if(condition: '{iter.index} > 0', then: ',', else: '')}
+					<f:if condition="{abschlussart} == 1"><f:then>
+						<f:translate key="abschlussart.1"/>
+					</f:then></f:if>
+					<f:if condition="{abschlussart} == 2"><f:then>
+						<f:translate key="abschlussart.2"/>
+					</f:then></f:if>										
+				</f:for>
+		  	</span>	
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="erwerbsland">
+				<f:translate key="tx_iqtp13db_domain_model_abschluss.erwerbsland" />
+			</label>
+			<f:for each="{settings.staaten}" as="text" key="wert">
+				{f:if(condition: '{abschluss.erwerbsland} == {wert}', then: '<span class="propdat">{text}</span>')}
+			</f:for>		    
+		</div>
+		<div class="tp13_formdivwebapp">
+		  <label><f:translate key="tx_iqtp13db_domain_model_abschluss.dauer_berufsausbildung" /></label>
+		    <span class="propdat">{abschluss.dauerBerufsausbildung}</span>
+		</div>
+		<div class="tp13_formdivwebapp">
+		  <label><f:translate key="tx_iqtp13db_domain_model_abschluss.abschlussjahr" /></label>
+		    <span class="propdat">{abschluss.abschlussjahr}</span>
+		</div>
+		<div class="tp13_formdivwebapp">
+		  <label><f:translate key="tx_iqtp13db_domain_model_abschluss.ausbildungsinstitution" /></label>
+		    <span class="propdat">{abschluss.ausbildungsinstitution}</span>
+		</div>
+		<div class="tp13_formdivwebapp">
+		  <label><f:translate key="tx_iqtp13db_domain_model_abschluss.ausbildungsort" /></label>
+		    <span class="propdat">{abschluss.ausbildungsort}</span>
+		</div>
+		<div class="tp13_formdivwebapp">
+		  <label><f:translate key="tx_iqtp13db_domain_model_abschluss.abschluss" /></label>
+		    <span class="propdat">{abschluss.abschluss}</span>
+		</div>
+		<div class="tp13_formdivwebapp">
+		  <label><f:translate key="tx_iqtp13db_domain_model_abschluss.berufserfahrung" /></label>
+		      <f:for each="{settings.berufserfahrung}" as="text" key="wert">
+					{f:if(condition: '{abschluss.berufserfahrung} == {wert}', then: '<span class="propdat">{text}&nbsp;</span>')}
+			</f:for>
+		</div>
+		<div class="tp13_formdivwebapp">
+		  <label><f:translate key="tx_iqtp13db_domain_model_abschluss.deutscher_referenzberuf" /></label>
+		    <span class="propdat">{abschluss.deutscherReferenzberuf}</span>
+		</div>
+		<div class="tp13_formdivwebapp">
+		  <label><f:translate key="tx_iqtp13db_domain_model_abschluss.wunschberuf" /></label>
+		    <span class="propdat">{abschluss.wunschberuf}</span>
+		</div>
+		
+		<div class="tp13_formdivwebapp">
+		  <label><f:translate key="tx_iqtp13db_domain_model_abschluss.antragstellungvorher" /></label>
+		    <f:for each="{settings.antragstellungvorher}" as="text" key="wert">
+					{f:if(condition: '{abschluss.antragstellungvorher} == {wert}', then: '<span class="propdat">{text}&nbsp;</span>')}
+			</f:for>
+		</div>
+		<div class="tp13_formdivwebapp">
+		  <label><f:translate key="tx_iqtp13db_domain_model_abschluss.antragstellunggwpvorher" /></label>
+		    <f:for each="{settings.ergebnisgleichwertigkeit}" as="text" key="wert">
+					{f:if(condition: '{abschluss.antragstellunggwpvorher} == {wert}', then: '<span class="propdat">{text}&nbsp;</span>')}
+			</f:for>
+		</div>
+		<div class="tp13_formdivwebapp">
+		  <label><f:translate key="tx_iqtp13db_domain_model_abschluss.antragstellungzabvorher" /></label>
+		    <f:for each="{settings.ergebniszab}" as="text" key="wert">
+					{f:if(condition: '{abschluss.antragstellungzabvorher} == {wert}', then: '<span class="propdat">{text}&nbsp;</span>')}
+			</f:for>
+		</div>		
+</div>
+

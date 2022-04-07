@@ -1,0 +1,25 @@
+
+<f:layout name="Default" />
+
+<f:section name="main">
+<h1><f:translate key="fragebogen" /> {page} / 5</h1>
+<br>
+<f:flashMessages />
+<f:form action="anmeldung"  name="teilnehmer" object="{teilnehmer}">
+	<f:if condition="{page} == 1"><f:then>
+		<f:render partial="Teilnehmer/FormFieldsAnmeldung1" arguments="{_all}" />
+		<f:form.button name="btnweiter" value="1" ><f:translate key="weiter" /></f:form.button>
+	</f:then></f:if>
+	<f:if condition="{page} == 2"><f:then>
+		<f:render partial="Teilnehmer/FormFieldsAnmeldung2" arguments="{_all}" />
+		<f:form.button name="btnzurueck" value="2" ><f:translate key="zurueck" /></f:form.button>
+		<f:form.button name="btnweiter" value="2" ><f:translate key="weiter" /></f:form.button>
+	</f:then></f:if>
+	<f:if condition="{page} == 3"><f:then>
+		<f:render partial="Teilnehmer/FormFieldsAnmeldung3" arguments="{_all}" />
+		<f:form.button name="btnzurueck" value="3" ><f:translate key="zurueck" /></f:form.button>
+		<f:form.button name="btnweiter" value="3" ><f:translate key="weiter" /></f:form.button>
+	</f:then></f:if>	
+</f:form>
+
+</f:section>
