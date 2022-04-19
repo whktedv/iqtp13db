@@ -20,6 +20,7 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
  */
 class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
+    
     /**
      * Finds Teilnehmer by the specified name, ort and/or geburtsland
      *

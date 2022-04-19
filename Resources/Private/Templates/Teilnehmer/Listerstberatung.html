@@ -27,6 +27,7 @@
 			<th><f:link.action action="listerstberatung" arguments="{orderby : 'verificationDate', changeorder : 1}">Anmeldedatum</f:link.action></th>
 			<th><f:link.action action="listerstberatung" arguments="{orderby : 'ort', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.plz" />/<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ort" /></f:link.action></th>
 			<th>Leistung</th>
+			<th>Anerkenn.-<br>zusch.<br>beantragt?</th>
 			<th><f:link.action action="listerstberatung" arguments="{orderby : 'berater.username', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.berater" /></f:link.action></th>
 			<th><f:link.action action="listerstberatung" arguments="{orderby : 'beratungdatum', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungdatum" /></f:link.action></th>
 			<th><f:translate key="tx_iqtp13db_domain_model_abschluss.referenzberufzugewiesen" /></th>
@@ -48,6 +49,7 @@
 				<td><f:format.date format="d.m.Y">@{teilnehmer.verificationDate}</f:format.date></td>
 				<td>{teilnehmer.plz} {teilnehmer.ort}</td>
 				<td>{f:if(condition: '{teilnehmer.leistungsbezugjanein} == 1', then: '✓', else: '')}</td>
+				<td>{f:if(condition: '{teilnehmer.anerkennungszuschussbeantragt} == 1', then: '✓', else: '')}</td>
 				<td>{teilnehmer.berater.username}</td> 
 				<td><f:format.date format="d.m.Y">{teilnehmer.beratungdatum}</f:format.date></td>
 				<td>

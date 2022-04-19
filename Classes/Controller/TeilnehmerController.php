@@ -878,6 +878,18 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 }
             }
             
+            if($teilnehmer->getVerificationDate() == 0 && ($this->validateDateYmd($teilnehmer->getErstberatungabgeschlossen()) || $this->validateDateYmd($teilnehmer->getBeratungdatum()))) {
+                $this->addFlashMessage("Datensatz NICHT gespeichert. Vor Eintragung von -Datum Erstberatung- oder -Erstberatung abgeschlossen- muss die Anmeldung bestätigt werden!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
+                
+            }
+            
+            if($this->validateDateYmd($teilnehmer->getErstberatungabgeschlossen()) && !$this->validateDateYmd($teilnehmer->getBeratungdatum())) {
+                $this->addFlashMessage("Datensatz NICHT gespeichert. -Datum Erstberatung– muss eingetragen sein, wenn -Erstberatung abgeschlossen- ausgefüllt ist.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
+                
+            }
+            
     		$this->createHistory($teilnehmer, "niqchiffre");
     		$this->createHistory($teilnehmer, "schonberaten");
     		$this->createHistory($teilnehmer, "schonberatenvon");

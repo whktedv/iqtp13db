@@ -100,6 +100,7 @@ class NiqInterface
                 
         elseif ($staatsangehoerigkeit == -1000) return 2; //gelb 
         if ($teilnehmer->getWohnsitzDeutschland() == 1 && ($teilnehmer->getEinreisejahr() == '' || !is_numeric($teilnehmer->getEinreisejahr()))) return 2; //gelb
+        if ($teilnehmer->getEinreisejahr() != -1 && ($teilnehmer->getEinreisejahr() < 1939 || $teilnehmer->getEinreisejahr() > date("Y"))) return 2; //gelb
         elseif ($teilnehmer->getWohnsitzDeutschland() == 2 && ($teilnehmer->getWohnsitzNeinIn() < -1 || $teilnehmer->getWohnsitzNeinIn() == '')) return 2; //gelb 
         elseif ($teilnehmer->getErwerbsstatus() == 0) return 2; //gelb 
         elseif ($teilnehmer->getAufenthaltsstatus() == 0) return 2; //gelb 
@@ -185,7 +186,7 @@ class NiqInterface
         
         if ($staatsangehoerigkeit == -1000) array_push($returnarr,"Staatsangehörigkeit");
         if ($teilnehmer->getWohnsitzDeutschland() == 1 && ($teilnehmer->getEinreisejahr() == '' || !is_numeric($teilnehmer->getEinreisejahr()))) array_push($returnarr,"Einreisejahr (muss viertellige Zahl sein)");
-        
+        if ($teilnehmer->getWohnsitzDeutschland() == -1 && ($teilnehmer->getEinreisejahr() < 1939 || $teilnehmer->getEinreisejahr() > date("Y"))) array_push($returnarr,"Einreisejahr nicht plausibel");
         if ($teilnehmer->getWohnsitzDeutschland() == 2 && ($teilnehmer->getWohnsitzNeinIn() < -1 || $teilnehmer->getWohnsitzNeinIn() == '')) array_push($returnarr,"Wohnsitz in");
         if ($teilnehmer->getErwerbsstatus() == 0) array_push($returnarr,"Erwerbsstatus");
         if ($teilnehmer->getAufenthaltsstatus() == 0) array_push($returnarr,"Aufenthaltsstatus");
@@ -272,6 +273,7 @@ class NiqInterface
             
             // Erwerbsstatus
             $erwerbsstatustn = $teilnehmer->getErwerbsstatus();
+            if($erwerbsstatustn == -1) $erwerbsstatus = -1; // k.A.
             if($erwerbsstatustn == 0) $erwerbsstatus = -1000; // NICHTS AUSGEWÄHLT
             if($erwerbsstatustn == 8) $erwerbsstatus = -1; // sonstiges (nicht in NIQ)
             if($erwerbsstatustn == 1 || $erwerbsstatustn == 2 || $erwerbsstatustn == 3) $erwerbsstatus = 1; // erwerbstätig in Deutschland
