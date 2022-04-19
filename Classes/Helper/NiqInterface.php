@@ -97,7 +97,7 @@ class NiqInterface
         $staatsangehoerigkeit = $teilnehmer->getErsteStaatsangehoerigkeit();
         // Wenn die erste Stattsangehörigkeit Deutsch ist, nimm die Zweite.
         if($teilnehmer->getErsteStaatsangehoerigkeit() == 37) $staatsangehoerigkeit = $teilnehmer->getZweiteStaatsangehoerigkeit() != -1000 ? $teilnehmer->getZweiteStaatsangehoerigkeit() : $teilnehmer->getErsteStaatsangehoerigkeit();
-                
+        
         elseif ($staatsangehoerigkeit == -1000) return 2; //gelb 
         if ($teilnehmer->getWohnsitzDeutschland() == 1 && ($teilnehmer->getEinreisejahr() == '' || !is_numeric($teilnehmer->getEinreisejahr()))) return 2; //gelb
         if ($teilnehmer->getEinreisejahr() != -1 && ($teilnehmer->getEinreisejahr() < 1939 || $teilnehmer->getEinreisejahr() > date("Y"))) return 2; //gelb
