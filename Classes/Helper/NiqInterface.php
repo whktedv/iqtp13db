@@ -92,7 +92,7 @@ class NiqInterface
         if (!is_numeric($teilnehmer->getLebensalter())) return 2; //gelb
         elseif ($teilnehmer->getGeschlecht() == 0) return 2; //gelb 
         elseif ($teilnehmer->getWohnsitzDeutschland() == 0) return 2; //gelb; 
-        
+         
         // übertragene Staatsangehörigkeit ist standardmäßig die Erste
         $staatsangehoerigkeit = $teilnehmer->getErsteStaatsangehoerigkeit();
         // Wenn die erste Stattsangehörigkeit Deutsch ist, nimm die Zweite.
