@@ -229,3 +229,13 @@ CREATE TABLE tx_iqtp13db_domain_model_historie (
 	KEY parent (pid),
 
 );
+
+#
+# Table extension for table 'fe_groups'
+#
+CREATE TABLE fe_groups (
+        niqbid varchar(255) DEFAULT '' NOT NULL,
+        generalmail varchar(255) DEFAULT '' NOT NULL,
+        plzlist text NOT NULL,
+        keywordlist text NOT NULL,
+);

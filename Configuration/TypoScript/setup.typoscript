@@ -1,7 +1,7 @@
 plugin.tx_iqtp13db.settings {
 	standardniqidberatungsstelle =
 	sender = 
-	bccmail = 
+	standardbccmail = 
 	mailattacheinwilligung = 
 	startseitelink = 
 	logolink = 

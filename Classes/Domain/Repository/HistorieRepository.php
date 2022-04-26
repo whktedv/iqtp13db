@@ -17,6 +17,7 @@ namespace Ud\Iqtp13db\Domain\Repository;
  */
 class HistorieRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
+    
 	/**
 	 * @param $tnuid
 	 */
@@ -30,10 +31,14 @@ class HistorieRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 	}
 	
 	/**
+	 * @param $niqbid
 	 */
-	public function findAllDesc()
+	public function findAllDesc($niqbid)
 	{
-		$query = $this->createQuery();		
+		$query = $this->createQuery();
+		$query->matching(
+		    $query->equals('teilnehmer.niqidberatungsstelle', $niqbid)
+        );
 		$query->setOrderings(array('crdate' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING));
 		$query = $query->execute();
 		return $query;

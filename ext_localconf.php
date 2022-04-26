@@ -11,9 +11,9 @@ call_user_func(
             [
         		'Teilnehmer' => 'start, listangemeldet, listerstberatung, listarchiv, checkniqconnection, sendtoniq, show, new, create, edit, update, delete, status, export, askconsent, listdeleted, undelete, savedatenblattpdf',
         		'Folgekontakt' => 'list, show, new, create, edit, update, delete',
-                'Dokument' => 'list, saveFileTeilnehmer, deleteFileTeilnehmer',
+                'Dokument' => 'saveFileTeilnehmer, deleteFileTeilnehmer',
         		'Historie' => 'list',
-                'Abschluss' => 'list, show, new, create, edit, update, delete',
+                'Abschluss' => 'show, new, create, edit, update, delete',
                 'Berater' => 'list, new, create, edit, update, delete'
             ], 
 
@@ -21,9 +21,9 @@ call_user_func(
             [
         		'Teilnehmer' => 'start, listangemeldet, listerstberatung, listarchiv, checkniqconnection, sendtoniq, show, new, create, edit, update, delete, status, export, askconsent, listdeleted, undelete, savedatenblattpdf',
         		'Folgekontakt' => 'list, show, new, create, edit, update, delete',
-                'Dokument' => 'list, saveFileTeilnehmer, deleteFileTeilnehmer',
+                'Dokument' => 'saveFileTeilnehmer, deleteFileTeilnehmer',
         		'Historie' => 'list',
-                'Abschluss' => 'list, show, new, create, edit, update, delete',
+                'Abschluss' => 'show, new, create, edit, update, delete',
                 'Berater' => 'list, new, create, edit, update, delete'
             ]
         );
@@ -73,6 +73,9 @@ call_user_func(
 			}
 	   }'
 	);
+	
+	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\Container\Container::class)->registerImplementation(\TYPO3\CMS\Extbase\Domain\Model\FrontendUserGroup::class, \Ud\Iqtp13db\Domain\Model\UserGroup::class);
+	
     },
     'iqtp13db'
 );

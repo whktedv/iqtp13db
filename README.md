@@ -2,7 +2,7 @@
 URL: https://www.iq-netzwerk-nrw.de<br>
 Author: Ulrich Dohmen<br>
 Mail: udohmen@whkt.de<br>
-
+ 
 <h3>Version 3.0.0 </h3>
 
 <h2>Systemvoraussetzung</h2>
@@ -45,7 +45,7 @@ Alle Schritte hinsichtlich Mehrsprachigkeit folgen sonst den Standard-Regeln zur
 -- Berater*in<br>
 -- Gelöscht<br>
 * [DB] Daten Anerkennungsberatung<br>
-* [DB] Berater<br>
+* [DB] Benutzer<br>
  </b>
 
 Der System-Ordner <b>[DB] Daten Anerkennungsberatung</b> enthält die Ratsuchenden (aka Teilnehmer) inkl. Historie, Dokumente und Beratungsvorgänge inkl. Folgekontakte. </li>
@@ -61,14 +61,14 @@ Im Typoscript Template müssen im Setup mindestens folgende Werte eingetragen we
 <small><b>plugin.tx_iqtp13db {<br>
 &nbsp;&nbsp;settings {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;sender = (E-Mail-Adresse des Absenders der automatisch erstellten E-Mails nach der Anmeldung)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;bccmail = (BCC-E-Mail-Adresse der Anmeldungsbestätigung)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;standardbccmail = (Standard-BCC-E-Mail-Adresse der Anmeldebestätigung)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;startseitelink = (Link zur Startseite der Webapp)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;logolink = (Link zum Logo der Webapp für den Kopf der E-Mail-Bestätigung)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;datenschutzeinwilligungurl = (URL zu den Datenschutzinformationen)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;registrationpageuid = (ID der Anmeldungsseite - wird für die aus dem Backend angestossene Einwilligung benötigt)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;standardberatungort = (Hier kann der Standard-Standort für die Beratung angegeben werden. Dieser Wert wird an die NIQ-DB übertragen)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;beraterstoragepid = (ID der [DB] Berater)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;standardniqidberatungsstelle = (Standard-NIQ-BeratungsstellenID - s.u.)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;standardniqidberatungsstelle = (Standard NIQ-Beratungsstellen-ID - s.u.)<br>
 &nbsp;&nbsp;}<br>
 &nbsp;&nbsp;_LOCAL_LANG {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;de {<br>
@@ -104,7 +104,7 @@ Auf der Seite Datenschutz und Einwilligung sind die entsprechenden Datenschutzbe
 Damit ist das Plugin konfiguriert und der Fragebogen zur Anmeldung sollte angezeigt werden.<br>
 
 Für das Backend (oder "Interner Bereich") muss eine Login-Seite für interne Nutzer angelegt werden. Diese enthält ein TYPO3-Inhaltselement vom Typ Formular/Anmeldung. Die Berechtigung für den Internen Bereich wird über den Zugriff der Seite gesetzt. <br>
-Die zugehörigen Backend-User bzw. Berater werden im System-Ordner <b>[DB] Berater</b> angelegt und sind ganz normale Website-Benutzer. Je Beratungsstelle können verschiedene Benutzergruppen angelegt werden. Jede Gruppe sollte im Feld "Beschreibung" die von der NIQ vergebene Beratungsstellen-ID hinterlegt haben.<br>Bei neu angemeldeten Ratsuchenden oder wenn dieser Wert fehlt, wird die Standard-ID aus den Settings verwendet.<br><br>
+Die zugehörigen Backend-User bzw. Berater werden im System-Ordner <b>[DB] Benutzer</b> angelegt und sind ganz normale Website-Benutzer. Je Beratungsstelle können verschiedene Benutzergruppen angelegt werden. Jede Gruppe sollte im Reiter Erweitert des Gruppendatensatzes im Feld "NIQ Beratungsstellen-ID" die von der NIQ bzw. f-bb vergebene Beratungsstellen-ID hinterlegt und im Feld "Allgemeine Mailadresse" die E-Mail-Adresse, an die die Kopien der Anmeldebestätigungen gehen, eingetragen haben.<br>Wenn diese Werte fehlen, werden die Standard-Werte aus den Settings verwendet.<br><br>
 
 Weitere Informationen zu dem Absichern von Unterseiten findet man, wenn man nach "Typo3 Zugriffsgeschützte Bereiche im Frontend" googelt.<br><br>
 
@@ -122,4 +122,3 @@ plugin.tx_iqtp13db_iqtp13dbwebapp.view {<br>
 &nbsp;&nbsp;partialRootPaths.10 = <eigener_template_pfad>/Resources/Private/Partials/<br>
 &nbsp;&nbsp;layoutRootPaths.10 = <eigener_template_pfad>/Resources/Private/Layouts/ <br>
 }</b>
-

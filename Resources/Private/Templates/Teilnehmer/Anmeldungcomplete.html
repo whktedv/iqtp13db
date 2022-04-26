@@ -26,7 +26,7 @@
 	<f:for each="{dokumente}" as="dokument">
 		<tr>
 		<td>{dokument.name}</td>
-		<td><f:link.action class="linkbuttons" action="deleteFileWebapp" controller="Dokument" arguments="{dokument:dokument, teilnehmer:teilnehmer}"><f:translate key="loeschen" /></f:link.action></td>
+		<td><f:link.action id="linkdeletefile" class="linkbuttons" action="deleteFileWebapp" controller="Dokument" arguments="{dokument:dokument, teilnehmer:teilnehmer}"><f:translate key="loeschen" /></f:link.action></td>
 		</tr>
 	</f:for>
 	</table>

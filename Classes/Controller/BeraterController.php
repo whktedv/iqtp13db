@@ -39,6 +39,29 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     protected $frontendUserGroupRepository;
        
     
+    protected $niqbid, $usergroup;
+    
+    /**
+     * action init
+     *
+     * @param void
+     */
+    public function initializeAction()
+    {
+        $this->user=null;
+        $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
+        if($context->getPropertyFromAspect('frontend.user', 'isLoggedIn')){
+            $this->user=$GLOBALS['TSFE']->fe_user->user;
+        }
+        
+        if($this->user != NULL) {
+            $standardniqidberatungsstelle = $this->settings['standardniqidberatungsstelle'];
+            $this->usergroup = $this->frontendUserGroupRepository->findByIdentifier($this->user['usergroup']);
+            $userniqidbstelle = $this->usergroup->getNiqbid();
+            $this->niqbid = $userniqidbstelle == '' ? $standardniqidberatungsstelle : $userniqidbstelle;
+        }
+    }
+    
     /**
      * action list
      *
@@ -47,7 +70,7 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      */
     public function listAction(int $currentPage = 1)
     {
-        $berater = $this->beraterRepository->findAllBerater($this->settings['beraterstoragepid']);
+        $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
         
     	$currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : $currentPage;
     	$paginator = new QueryResultPaginator($berater, $currentPage, 25);
@@ -113,8 +136,6 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $this->addFlashMessage('Berater aktualisiert.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
         
         $valArray = $this->request->getArguments();
-        //DebuggerUtility::var_dump($valArray);
-        //die;
         
         $usergroup = $this->frontendUserGroupRepository->findByIdentifier($valArray['berater']['usergroup']);        
         $berater->addUsergroup($usergroup);        

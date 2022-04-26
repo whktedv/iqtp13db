@@ -75,11 +75,10 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
             $this->user=$GLOBALS['TSFE']->fe_user->user;
         }
         
-        //DebuggerUtility::var_dump($this->user);
         if($this->user != NULL) {
             $standardniqidberatungsstelle = $this->settings['standardniqidberatungsstelle'];
             $this->usergroup = $this->frontendUserGroupRepository->findByIdentifier($this->user['usergroup']);
-            $userniqidbstelle = $this->usergroup->getDescription();
+            $userniqidbstelle = $this->usergroup->getNiqbid();
             $this->niqbid = $userniqidbstelle == '' ? $standardniqidberatungsstelle : $userniqidbstelle;
         }
                 
@@ -140,8 +139,6 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     {  		
         $valArray = $this->request->getArguments();
         $teilnehmer = $this->teilnehmerRepository->findByUid($valArray['folgekontakt']['teilnehmer']);
-        //DebuggerUtility::var_dump($teilnehmer);
-        //die;
         
         if($teilnehmer->getNiqchiffre() != '' && $this->niqinterface->check_curl() == FALSE) {
             $this->addFlashMessage("Bearbeiten von bereits übertragenen Datensätzen vorübergehend nicht möglich, da NIQ-Datenbank nicht erreichbar.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
@@ -175,8 +172,6 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
                     }
                     $returnarray = $this->niqinterface->uploadtoNIQ($teilnehmer, $abschluesse, $folgekontakte, $niqidbstelle);
                     
-//                    DebuggerUtility::var_dump($returnarray[0]);
- //                   die;
                     $retteilnehmer = $this->teilnehmerRepository->findByUid($returnarray[0]->getUid());
                     $retstring = $returnarray[1];
                     

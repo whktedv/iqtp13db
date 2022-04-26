@@ -404,6 +404,10 @@
     	$("#overlay").show();
     });
     
+	$("#linkdeletefile").click(function() {
+    	$("#overlay").show();
+    });
+    
     $("body").prepend('<div id="overlay" class="ui-widget-overlay" style="z-index: 1001; display: none;"><div style="width:500px; margin:300px auto;"><img width="300" height="300" src="/typo3conf/ext/iqtp13db/Resources/Public/Icons/giphy.gif"/></div></div>');
     
     

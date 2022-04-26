@@ -55,17 +55,6 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         }
         
     }
-    
-    /**
-     * action list
-     *
-     * @return void
-     */
-    public function listAction()
-    {
-        $abschlusss = $this->abschlussRepository->findAll();
-        $this->view->assign('abschlusss', $abschlusss);
-    }
 
     /**
      * action show
@@ -146,36 +135,40 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return void
      */
-    public function addupdateWebappAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    public function addupdateWebappAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss = NULL, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
-        $valArray = $this->request->getArguments();
-        //DebuggerUtility::var_dump($valArray);
-        //die;
-        
-        $abschluss->setNiquebertragung(1);
-        $this->abschlussRepository->update($abschluss);
-        
-        // Daten sofort in die Datenbank schreiben
-        $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
-        $persistenceManager->persistAll();
-        
-        if (isset($valArray['btnweitererabschluss'])) {
-            $newabschluss = new \Ud\Iqtp13db\Domain\Model\Abschluss();
-            $newabschluss->setTeilnehmer($teilnehmer);
-            $this->abschlussRepository->add($newabschluss);
+        if($abschluss == NULL) {
+            $this->redirect('anmeldseite2', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
+        } else {
+            $valArray = $this->request->getArguments();
+            //DebuggerUtility::var_dump($valArray);
+            //die;
+            
+            $abschluss->setNiquebertragung(1);
+            $this->abschlussRepository->update($abschluss);
+            
             // Daten sofort in die Datenbank schreiben
             $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
-            $persistenceManager->persistAll();   
-            $this->redirect('anmeldseite2', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'abschluss' => $newabschluss));
-        } elseif(isset($valArray['btndelete'])) {
-            $this->abschlussRepository->remove($abschluss);
-            $this->redirect('anmeldseite2', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));                                  
-        } elseif (isset($valArray['btnzurueck'])) {
-            $this->redirect('anmeldseite1', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
-        } elseif(isset($valArray['btnweiter'])) {
-            $this->redirect('anmeldseite3', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
-        } else {
-            $this->redirect('anmeldseite2redirect', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+            $persistenceManager->persistAll();
+            
+            if (isset($valArray['btnweitererabschluss'])) {
+                $newabschluss = new \Ud\Iqtp13db\Domain\Model\Abschluss();
+                $newabschluss->setTeilnehmer($teilnehmer);
+                $this->abschlussRepository->add($newabschluss);
+                // Daten sofort in die Datenbank schreiben
+                $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+                $persistenceManager->persistAll();
+                $this->redirect('anmeldseite2', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'abschluss' => $newabschluss));
+            } elseif(isset($valArray['btndelete'])) {
+                $this->abschlussRepository->remove($abschluss);
+                $this->redirect('anmeldseite2', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
+            } elseif (isset($valArray['btnzurueck'])) {
+                $this->redirect('anmeldseite1', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+            } elseif(isset($valArray['btnweiter'])) {
+                $this->redirect('anmeldseite3', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+            } else {
+                $this->redirect('anmeldseite2redirect', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+            }            
         }
     }
       

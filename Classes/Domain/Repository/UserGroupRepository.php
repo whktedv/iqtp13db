@@ -13,12 +13,12 @@ namespace Ud\Iqtp13db\Domain\Repository;
  ***/
 
 /**
- * The repository for Berater
+ * The repository for UserGroup
  */
-class BeraterRepository extends \TYPO3\CMS\Extbase\Domain\Repository\FrontendUserRepository
+class UserGroupRepository extends \TYPO3\CMS\Extbase\Domain\Repository\FrontendUserGroupRepository
 {
     
-    public function findAllBerater($customStoragePid)
+    public function findAllGroups($customStoragePid)
     {
         // Get the default Settings
         $querySettings = $this->objectManager->get('TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings');
@@ -29,17 +29,5 @@ class BeraterRepository extends \TYPO3\CMS\Extbase\Domain\Repository\FrontendUse
         $queryResult = $this->findAll();
         return $queryResult;
     }
-    
-    public function findBerater4Group($customStoragePid, $usergroup)
-    {
-        // Get the default Settings
-        $querySettings = $this->objectManager->get('TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings');
-        $querySettings->setStoragePageIds(array($customStoragePid));
-        $this->setDefaultQuerySettings($querySettings);
-        
-        // Now get all (only Presets)
-        $queryResult = $this->findByUsergroup($usergroup);
-        return $queryResult;
-    }
-    
+       
 }

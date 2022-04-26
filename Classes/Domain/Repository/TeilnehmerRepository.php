@@ -33,7 +33,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      * @param int $auchverstecktundgelöscht
      * @return Tx_Extbase_Persistence_QueryResultInterface Teilnehmer
      */
-    public function searchTeilnehmer($type, $name, $ort, $beruf, $land, $gruppe, $auchverstecktundgelöscht)
+    public function searchTeilnehmer($type, $name, $ort, $beruf, $land, $gruppe, $auchverstecktundgelöscht, $niqbid)
     {
         $name = $name == '' ? '%' : $name;
         $ort = $ort == '' ? '%' : $ort;
@@ -55,7 +55,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $sql = "SELECT t.* FROM tx_iqtp13db_domain_model_teilnehmer t
     			LEFT JOIN tx_iqtp13db_domain_model_abschluss a ON a.teilnehmer = t.uid WHERE
                 (t.nachname LIKE '%$name%' OR t.vorname LIKE '%$name%') AND t.ort LIKE '%$ort%' AND t.geburtsland LIKE '$land'
-                AND $beruf AND t.kooperationgruppe LIKE '%$gruppe%' AND $sqlberatungsstatus $hidden GROUP BY t.uid";            
+                AND $beruf AND t.kooperationgruppe LIKE '%$gruppe%' AND $sqlberatungsstatus $hidden AND niqidberatungsstelle LIKE $niqbid GROUP BY t.uid";            
               
         $query->statement($sql);
         
@@ -67,13 +67,13 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      * @param $orderby
      * @param $order
      */
-    public function findAllOrder4List($beratungsstatus, $orderby, $order)
+    public function findAllOrder4List($beratungsstatus, $orderby, $order, $niqbid)
     {
         $query = $this->createQuery();
         
-        if($beratungsstatus == 0 || $beratungsstatus == 1) $query->matching($query->logicalOr($query->like('beratungsstatus', '0'),$query->like('beratungsstatus', '1')));
-        elseif($beratungsstatus == 2 || $beratungsstatus == 3) $query->matching($query->logicalAnd($query->logicalOr($query->like('beratungsstatus', '2'),$query->like('beratungsstatus', '3')),$query->greaterThan('verification_date', '0')));
-        else $query->matching($query->logicalAnd($query->like('beratungsstatus', '4'),$query->greaterThan('verification_date', '0')));
+        if($beratungsstatus == 0 || $beratungsstatus == 1) $query->matching($query->logicalAnd($query->logicalOr($query->like('beratungsstatus', '0'),$query->like('beratungsstatus', '1')), $query->like('niqidberatungsstelle', $niqbid)));
+        elseif($beratungsstatus == 2 || $beratungsstatus == 3) $query->matching($query->logicalAnd($query->logicalOr($query->like('beratungsstatus', '2'),$query->like('beratungsstatus', '3')),$query->greaterThan('verification_date', '0'), $query->like('niqidberatungsstelle', $niqbid)));
+        else $query->matching($query->logicalAnd($query->like('beratungsstatus', '4'),$query->greaterThan('verification_date', '0'), $query->like('niqidberatungsstelle', $niqbid)));
         
         if($order == 'DESC') $order = \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING;
         else $order = \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING;
@@ -96,10 +96,10 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      * @param $beratungsstatus
      */
-    public function findAllOrder4Status($beratungsstatus)
+    public function findAllOrder4Status($beratungsstatus, $niqbid)
     {
         $query = $this->createQuery();        
-        $query->matching($query->like('beratungsstatus', $beratungsstatus));
+        $query->matching($query->logicalAnd($query->like('beratungsstatus', $beratungsstatus), $query->like('niqidberatungsstelle', $niqbid)));
         $query = $query->execute();
         return $query;
     }
@@ -120,12 +120,12 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      * @param $orderby
      * @param $order
      */
-    public function findhidden4list($orderby, $order)
+    public function findhidden4list($orderby, $order, $niqbid)
     {
     	$query = $this->createQuery();
     	$query->getQuerySettings()->setIgnoreEnableFields(TRUE);
     	$query->getQuerySettings()->setEnableFieldsToBeIgnored(array('disabled', 'hidden'));
-    	$query->matching($query->like('hidden', '1'));
+    	$query->matching($query->logicalAnd($query->like('hidden', '1'), $query->like('niqidberatungsstelle', $niqbid)));
    		if($order == 'DESC') {
         	$query->setOrderings(array($orderby => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING));
         } else {
@@ -140,12 +140,13 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      * @param $nachname
      * @param $vorname
      */
-    public function findDublette4Angemeldet($nachname, $vorname)
+    public function findDublette4Angemeldet($nachname, $vorname, $niqbid)
     {
         $query = $this->createQuery();        
         $query->matching($query->logicalAnd(
             $query->like('nachname', '%'.$nachname.'%'), 
             $query->like('vorname', '%'.$vorname.'%'),
+            $query->like('niqidberatungsstelle', $niqbid),
             $query->logicalNot($query->like('beratungsstatus', '99'))
         ));        
         $query = $query->execute();
@@ -156,36 +157,37 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      * @param $nachname
      * @param $vorname
      */
-    public function findDublette4Deleted($nachname, $vorname)
+    public function findDublette4Deleted($nachname, $vorname, $niqbid)
     {
         $query = $this->createQuery();
         $query->matching($query->logicalAnd(
             $query->like('nachname', '%'.$nachname.'%'),
-            $query->like('vorname', '%'.$vorname.'%')
+            $query->like('vorname', '%'.$vorname.'%'),
+            $query->like('niqidberatungsstelle', $niqbid)
             ));
         $query = $query->execute();
         return count($query);
     }
 
     
-    public function count4Status($datum1, $datum2)
+    public function count4Status($datum1, $datum2, $niqbid)
     {
     	$query = $this->createQuery();
 		$query->statement("SELECT * FROM tx_iqtp13db_domain_model_teilnehmer WHERE 
 				DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),FROM_UNIXTIME(verification_date)) <= 0 AND
 				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),FROM_UNIXTIME(verification_date)) >= 0 AND
-				verification_date > 0 AND deleted = 0"); 
+				verification_date > 0 AND deleted = 0 AND niqidberatungsstelle LIKE $niqbid"); 
 		$query = $query->execute();
     	return count($query);
     }
     
-    public function count4Statusniqerfasst($datum1, $datum2)
+    public function count4Statusniqerfasst($datum1, $datum2, $niqbid)
     {
     	$query = $this->createQuery();
 		$query->statement("SELECT * FROM tx_iqtp13db_domain_model_teilnehmer WHERE				
 				DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),erstberatungabgeschlossen) <= 0 AND
 				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),erstberatungabgeschlossen) >= 0 AND
-        		niqchiffre != '' AND deleted = 0"); 
+        		niqchiffre != '' AND deleted = 0 AND niqidberatungsstelle LIKE $niqbid"); 
 		$query = $query->execute();
     	return count($query);
     }
@@ -217,47 +219,47 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         }
     }
    
-    public function count4StatusErstberatung($datum1, $datum2)
+    public function count4StatusErstberatung($datum1, $datum2, $niqbid)
     {
         $query = $this->createQuery();
         $query->statement("SELECT * FROM tx_iqtp13db_domain_model_teilnehmer WHERE
 				DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),beratungdatum) <= 0 AND
 				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),beratungdatum) >= 0
-                AND deleted = 0");
+                AND deleted = 0 AND niqidberatungsstelle LIKE $niqbid");
         $query = $query->execute();
         return count($query);
     }
     
-    public function count4StatusBeratungfertig($datum1, $datum2)
+    public function count4StatusBeratungfertig($datum1, $datum2, $niqbid)
     {
         $query = $this->createQuery();
         $query->statement("SELECT * FROM tx_iqtp13db_domain_model_teilnehmer WHERE
 				DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),erstberatungabgeschlossen) <= 0 AND
 				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),erstberatungabgeschlossen) >= 0
-                AND deleted = 0");
+                AND deleted = 0 AND niqidberatungsstelle LIKE $niqbid");
         $query = $query->execute();
         return count($query);
     }
     
-    public function days4Beratungfertig($datum1, $datum2)
+    public function days4Beratungfertig($datum1, $datum2, $niqbid)
     {
         $query = $this->createQuery();
         $query->statement("SELECT * FROM tx_iqtp13db_domain_model_teilnehmer WHERE
 				DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),erstberatungabgeschlossen) <= 0 AND
 				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),erstberatungabgeschlossen) >= 0
-                AND deleted = 0");
+                AND deleted = 0 AND niqidberatungsstelle LIKE $niqbid");
         $query = $query->execute();
         
         return $query;
     }
     
-    public function days4Wartezeit($datum1, $datum2)
+    public function days4Wartezeit($datum1, $datum2, $niqbid)
     {
         $query = $this->createQuery();
         $query->statement("SELECT * FROM tx_iqtp13db_domain_model_teilnehmer WHERE
 				DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),beratungdatum) <= 0 AND
 				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),beratungdatum) >= 0
-                AND deleted = 0");
+                AND deleted = 0 AND niqidberatungsstelle LIKE $niqbid");
         $query = $query->execute();
         
         return $query;
