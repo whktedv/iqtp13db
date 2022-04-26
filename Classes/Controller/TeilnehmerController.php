@@ -935,7 +935,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     		$this->createHistory($teilnehmer, "zertifikatdeutsch");
     		$this->createHistory($teilnehmer, "zertifikatSprachniveau");
     
-            // TODO: Abschlüsse nicht mehr bei Teilnehmer, ggf. hier aus der Tabelle Abschluss neu einfügen in die Historie
+            // TODO: ggf. hier Daten aus der Tabelle Abschluss einfügen
     		$this->createHistory($teilnehmer, "erwerbsstatus");
     		$this->createHistory($teilnehmer, "leistungsbezugjanein");
     		$this->createHistory($teilnehmer, "leistungsbezug");
@@ -960,7 +960,6 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     		$this->createHistory($teilnehmer, "nameBeratungsstelle");
     		$this->createHistory($teilnehmer, "wieberaten");
     		$this->createHistory($teilnehmer, "notizen");
-    
     		$this->createHistory($teilnehmer, "anerkennungszuschussbeantragt");
     		$this->createHistory($teilnehmer, "kooperationgruppe");
     		$this->createHistory($teilnehmer, "beratungdatum");
@@ -1253,7 +1252,6 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 $rows[$x]['Beraterin'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($berater, 'username');
                 $x++;
             }
-// TODO: Referenzberuf ausgeben, Leistungsbezug, Geburtsland und Geschlecht entschlüsseln
 
             // XLSX
             $filename = 'export_' . date('Y-m-d_H-i', time()) . '.xlsx';

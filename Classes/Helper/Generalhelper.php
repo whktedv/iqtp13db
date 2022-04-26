@@ -38,7 +38,7 @@ class Generalhelper
             // Wenn kein Treffer, dann PLZ checken:
             $plzlistarray = $group->getPlzlist();
             foreach($plzlistarray as $plz) {
-                if($plz == $teilnehmer->getPlz()) return $group->getNiqbid();
+                if($plz == trim($teilnehmer->getPlz())) return $group->getNiqbid();
             }           
         }        
         

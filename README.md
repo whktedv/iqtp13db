@@ -15,7 +15,7 @@ Mail: udohmen@whkt.de<br>
 </ul>
 
 <h2>Installation</h2>
-Sofern TYPO3 noch nicht installiert ist, zuerst eine leere TYPO3-Installation einrichten. Dann im Modul Erweiterungen bei den vorkonfigurierten Erweiterungen das "Official TYPO3 Introduction Package" installieren. Im Modul Seiten das IntroPackage als Root setzen, dazu den Einstiegspunkt '/', ggf. andere Seite vorher löschen. Au0erdem hier den ErrorHandler 403 als Weiterleitung auf die Login-Seite (s.u.) setzen.
+Sofern TYPO3 noch nicht installiert ist, zuerst eine leere TYPO3-Installation einrichten. Dann im Modul Erweiterungen bei den vorkonfigurierten Erweiterungen das "Official TYPO3 Introduction Package" installieren. Im Modul Seiten das IntroPackage als Root setzen, dazu den Einstiegspunkt '/', ggf. andere Seite vorher löschen. Außerdem hier den ErrorHandler 403 als Weiterleitung auf die Login-Seite (s.u.) setzen.
 <ol>
 <li>Für Mehrsprachigkeit müssen in Typo3 auf der Root-Seite die entsprechenden Website-Sprachen angelegt und anschließend im Modul Seitenverwaltung->Seiten in der Seitenkonfiguration im Reiter "Sprachen" der Seite hinzugefügt werden. Ggf. macht es Sinn die Standardsprache (ID=0) auf Deutsch umzustellen, sofern noch nicht erfolgt.<br>Folgende Sprachen werden derzeit von der Extension unterstützt: Englisch, Arabisch, Persisch (Farsi), Französisch, Polnisch, Rumänisch, Russisch, Spanisch, Türkisch. Beim Anlegen der Sprachen daran denken, dass Arabisch und Farsi RTL-Sprachen sind (Right-to-Left) und in der Seitenverwaltung diese Option aktiviert werden muss.<br>
 Die Identifizierung der Sprachen erfolgt in Typo3 bzw. der Extension über das 2-Buchstaben-Sprachkürzel (z.B. de für Deutsch oder fa für Farsi).
@@ -52,7 +52,7 @@ Der System-Ordner <b>[DB] Daten Anerkennungsberatung</b> enthält die Ratsuchend
 
 <li>Im Typo3-Backend auf der Root-Seite muss "iqwebappdata" als <b>Dateispeicher</b> angelegt sein. Der Pfad muss auf ein Verzeichnis auf dem Server verweisen. Das kann z.B. /mnt/iqwebappdata/ als absoluter Pfad oder alternativ ein externer Speicher mit entsprechend angegebenen Mount-Punkt sein. So oder so muss der Pfad aber geschützt werden, damit ein Zugriff von Extern außerhalb der Webapp nicht möglich ist. Dies muss vor Live-Schaltung unbedingt getestet werden.<br>
 <i>Zusätzlicher Hinweis zum Speicher: Wenn der Speicher mal nicht verfügbar war (z.B. wenn er auf einem NAS liegt), muss er im Backend im Bereich Dateispeicher manuell wieder "online" geschaltet werden. Die erfolgt mit der Checkbox "ist online?" in den Eigenschaften des jeweiligen Dateispeichers.)</i><br>
-In diesen Dateispeicher werden die Dateien der Ratsuchenden gespeichert, die während des Anmeldevorgangs hochgeladen werden können. Für jeden Ratsuchenden wird ein Verzeichnis erstellt, dass mit dem Format [Nachname]_[Vorname]_[UID] angelegt wird.<br></li>
+In diesem Dateispeicher wird für jede Beratungsstelle ein Ordner angelegt, dessen Name die von f-bb vergebene Beratungsstellen-ID ist. In diesem Ordner werden die Dateien der Ratsuchenden gespeichert, die während des Anmeldevorgangs hochgeladen werden können. Für jeden Ratsuchenden wird ein Verzeichnis erstellt, dass mit dem Format [Nachname]_[Vorname]_[UID] angelegt wird.<br></li>
 </ol>
 <br>
 <h2>Typoscript Template Setup</h2>
@@ -61,13 +61,13 @@ Im Typoscript Template müssen im Setup mindestens folgende Werte eingetragen we
 <small><b>plugin.tx_iqtp13db {<br>
 &nbsp;&nbsp;settings {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;sender = (E-Mail-Adresse des Absenders der automatisch erstellten E-Mails nach der Anmeldung)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;standardbccmail = (Standard-BCC-E-Mail-Adresse der Anmeldebestätigung)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;startseitelink = (Link zur Startseite der Webapp)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;logolink = (Link zum Logo der Webapp für den Kopf der E-Mail-Bestätigung)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;datenschutzeinwilligungurl = (URL zu den Datenschutzinformationen)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;registrationpageuid = (ID der Anmeldungsseite - wird für die aus dem Backend angestossene Einwilligung benötigt)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;standardberatungort = (Hier kann der Standard-Standort für die Beratung angegeben werden. Dieser Wert wird an die NIQ-DB übertragen)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;beraterstoragepid = (ID der [DB] Berater)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;standardbccmail = (Standard-BCC-E-Mail-Adresse der Anmeldebestätigung)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;standardniqidberatungsstelle = (Standard NIQ-Beratungsstellen-ID - s.u.)<br>
 &nbsp;&nbsp;}<br>
 &nbsp;&nbsp;_LOCAL_LANG {<br>
@@ -104,13 +104,15 @@ Auf der Seite Datenschutz und Einwilligung sind die entsprechenden Datenschutzbe
 Damit ist das Plugin konfiguriert und der Fragebogen zur Anmeldung sollte angezeigt werden.<br>
 
 Für das Backend (oder "Interner Bereich") muss eine Login-Seite für interne Nutzer angelegt werden. Diese enthält ein TYPO3-Inhaltselement vom Typ Formular/Anmeldung. Die Berechtigung für den Internen Bereich wird über den Zugriff der Seite gesetzt. <br>
-Die zugehörigen Backend-User bzw. Berater werden im System-Ordner <b>[DB] Benutzer</b> angelegt und sind ganz normale Website-Benutzer. Je Beratungsstelle können verschiedene Benutzergruppen angelegt werden. Jede Gruppe sollte im Reiter Erweitert des Gruppendatensatzes im Feld "NIQ Beratungsstellen-ID" die von der NIQ bzw. f-bb vergebene Beratungsstellen-ID hinterlegt und im Feld "Allgemeine Mailadresse" die E-Mail-Adresse, an die die Kopien der Anmeldebestätigungen gehen, eingetragen haben.<br>Wenn diese Werte fehlen, werden die Standard-Werte aus den Settings verwendet.<br><br>
-
-Weitere Informationen zu dem Absichern von Unterseiten findet man, wenn man nach "Typo3 Zugriffsgeschützte Bereiche im Frontend" googelt.<br><br>
+Die zugehörigen Beratungsstellen und Berater werden als Website-Benutzergruppe und Website-Benutzer im System-Ordner <b>[DB] Benutzer</b> angelegt und sind ganz normale Frontend Gruppen bzw. Benutzer. Je Beratungsstelle wird eine Benutzergruppe angelegt werden. Jede Gruppe muss im Reiter Erweitert des Gruppendatensatzes im Feld "NIQ Beratungsstellen-ID" die von der NIQ bzw. f-bb vergebene Beratungsstellen-ID hinterlegt und im Feld "Allgemeine Mailadresse" die E-Mail-Adresse, an die die Kopien der Anmeldebestätigungen gehen, eingetragen haben. Wenn diese Werte fehlen, werden die Standard-Werte aus den Settings verwendet.<br>
+<br>Außerdem können in den Feldern "Liste PLZ..." und "Liste Keywords..." weitere Werte eingetragen werden. Das Feld "Liste PLZ..." enthält eine Komma-separierte Liste von Postleitzahlen, für die diese Beratungsstelle sozusagen zuständig ist. Sofern Ratsuchende das Feld PLZ korrekt ausgefüllt haben, landet die Anfrage automatisch nur bei der entsprechenden Beratungsstellen-Gruppe. 
+<br>Die gleiche Funktionalität bietet das Feld "Liste Keywords...", wobei hier auf Schlüsselbegriffe im Feld Nachname geprüft wird. Sofern im Feld "Nachname" also beispielsweise "Mustermann (Sonderstatus)" eingetragen wurde und bei der Beratungsstellengruppe das Keyword "(Sonderstatus)" (inkl. Klammern!) eingetragen ist, landet diese Anfrage automatisch nur bei der entsprechenden Beratungsstellen-Gruppe.<br><br> 
 
 Im Internen Bereich werden Seiten entsprechend der Seitenstruktur angelegt, die jeweils ein Plugin <b>IQ TP13 DB Adminbereich</b> enthalten. Der Typ wird entsprechend dem Seitennamen eingestellt.<br>
-Auch hier wird jeweils unter Datensatzsammlung der Sysordner (im Beispiel oben „[DB] Daten Anerkennungsberatung“) ausgewählt.<br><br>
-Mindestens ein Websiteuser <u>muss</u> angelegt sein, damit eine Anmeldung erfolgen kann. Berater:innen legt man auf der Seite Berater*in an.<br>
+Auch hier wird jeweils unter Datensatzsammlung der Sysordner (im Beispiel oben „[DB] Daten Anerkennungsberatung“) ausgewählt.<br>
+Mindestens eine Website-Benutzergruppe und ein Website-Benutzer <u>muss</u> angelegt sein, damit eine Anmeldung erfolgen kann. Weitere Berater:innen legt man auf der Seite Berater*in an.<br><br>
+
+Informationen zum Absichern von Unterseiten findet man, wenn man nach "Typo3 Zugriffsgeschützte Bereiche im Frontend" googelt.<br><br>
 
 <h2>Eigene Templates</h2>
 
