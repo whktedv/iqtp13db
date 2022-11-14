@@ -1,0 +1,15 @@
+<f:form.validationResults for="{object}">
+	<f:if condition="{validationResults.flattenedErrors}">
+		<f:for each="{validationResults.flattenedErrors}" key="propertyName" as="errors">
+			<f:if condition="{errors -> f:count()}==1">
+					<div class="error">
+					
+					<b><f:translate key="tx_iqtp13db_domain_model_{propertyName}">{propertyName}</f:translate>:</b>						
+						<f:for each="{errors}" as="error" iteration="iterator">
+							<f:translate key="error.{error.code}">{error}</f:translate>
+						</f:for>									
+					</div>
+			</f:if>
+		</f:for>
+	</f:if>
+</f:form.validationResults>

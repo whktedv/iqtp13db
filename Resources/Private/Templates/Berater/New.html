@@ -1,0 +1,17 @@
+
+<f:layout name="Default" />
+<f:section name="HeaderAssets">
+  		<link rel="stylesheet" href="{f:uri.resource(path: 'CSS/customtp13dbadmin.css')}"/>  		
+</f:section>
+<f:section name="main">
+<h1>Neue*r Berater*in</h1>
+
+<f:flashMessages />
+
+<f:render partial="FormErrors" arguments="{object:Berater}" />
+
+<f:form action="create" name="berater" object="{berater}">
+<f:render partial="Berater/FormFields" arguments="{usergroups:usergroups}" />
+	<f:form.submit class="linkbuttons" value="Speichern" />
+</f:form>
+</f:section>

@@ -1,0 +1,13 @@
+
+<f:layout name="Default" />
+<f:section name="HeaderAssets">
+  		<link rel="stylesheet" href="{f:uri.resource(path: 'CSS/customtp13dbadmin.css')}"/>  		
+</f:section>
+<f:section name="main">
+<h1>Daten Abschluss/Beruf</h1>
+
+<f:flashMessages />
+<f:render partial="Beruf/Properties" arguments="{beruf:beruf}" />
+<f:link.action class="linkbuttons" action="list">Zurück zur Liste</f:link.action>
+<f:link.action class="linkbuttons" action="new">Neuer Abschluss/Beruf</f:link.action>
+</f:section>

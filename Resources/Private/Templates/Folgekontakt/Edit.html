@@ -1,0 +1,24 @@
+
+<f:layout name="Default" />
+<f:section name="HeaderAssets">
+  		<link rel="stylesheet" href="{f:uri.resource(path: 'CSS/customtp13dbadmin.css')}"/>  		
+</f:section>
+
+
+<f:section name="main">
+<h1>Folgekontakt bearbeiten</h1>
+
+<f:flashMessages />
+
+<f:render partial="FormErrors" arguments="{object:Folgekontakt}" />
+
+<f:form action="update" name="folgekontakt" object="{folgekontakt}" arguments="{folgekontakt:folgekontakt, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" >
+
+	<f:render partial="Folgekontakt/FormFields" arguments="{_all}" />
+
+	<f:form.submit value="Speichern" />
+	<f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}" arguments="{callerpage : callerpage}">Zurück zur Liste</f:link.action>
+</f:form>
+
+
+</f:section>

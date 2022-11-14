@@ -1,0 +1,28 @@
+<div class="fframe">
+		<div class="tp13_formdivwebapp">
+			<label for="datum">
+				<f:translate key="tx_iqtp13db_domain_model_folgekontakt.datum" />
+			</label>
+				<f:form.textfield class="datumtextfield" property="datum" value="{datum}" id="datepicker1" />
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="berater">
+				<f:translate key="tx_iqtp13db_domain_model_folgekontakt.berater" />
+			</label>
+				<f:form.select property="berater" options="{alleberater}" optionLabelField="username" optionValueField="uid" prependOptionLabel="{berater.username}" prependOptionValue="{berater.uid}" sortByOptionLabel="1" />	
+		</div>
+		
+		<div class="tp13_formdivwebapp">
+			<label for="beratungsform">
+				<span class="infolabel"><f:translate key="tx_iqtp13db_domain_model_folgekontakt.beratungsform" />
+			</label>
+			<f:form.select property="beratungsform" options="{settings.beratungsformfolgeberatung}" optionValueField="value" optionLabelField="value" prependOptionValue="-1000" prependOptionLabel="-" />
+		</div>
+			
+		<div class="tp13_formdivwebapp">
+			<label for="notizen" class="tp13_options">
+				<f:translate key="tx_iqtp13db_domain_model_folgekontakt.notizen" />
+			</label>
+				<f:form.textarea property="notizen" rows="10" cols="100" />
+		</div>
+</div>
