@@ -74,8 +74,6 @@ call_user_func(
 	   }'
 	);
 	
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\Container\Container::class)->registerImplementation(\TYPO3\CMS\Extbase\Domain\Model\FrontendUserGroup::class, \Ud\Iqtp13db\Domain\Model\UserGroup::class);
-	
     },
     'iqtp13db'
 );

@@ -118,8 +118,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $arguments = $this->request->getArguments();
         if($this->dokumentRepository->countByUid($arguments['dokument']) == 0) {
             //DebuggerUtility::var_dump($arguments);
-            $this->forward('anmeldungcomplete', 'Teilnehmer', null, null);
-            die;
+            return (new ForwardResponse('anmeldungcomplete'))->withControllerName('Teilnehmer');
         }
     }
     /**
@@ -132,7 +131,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     public function deleteFileWebappAction(\Ud\Iqtp13db\Domain\Model\Dokument $dokument, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
         $this->deleteFileTeilnehmer($dokument, $teilnehmer);
-        $this->forward('anmeldungcomplete', 'Teilnehmer', null, null);
+        return (new ForwardResponse('anmeldungcomplete'))->withControllerName('Teilnehmer');
     }
 
     /**
