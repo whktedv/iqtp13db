@@ -3,27 +3,28 @@ URL: https://www.iq-netzwerk-nrw.de<br>
 Author: Ulrich Dohmen<br>
 Mail: udohmen@whkt.de<br>
  
-<h3>Version 3.0.0 </h3>
+<h3>Version 3.0.2 </h3>
 
 <h2>Systemvoraussetzung</h2>
 <ul>
  <li>TYPO3 9.5.0 - 10.4.99</li>
- <li>ausreichend Speicherplatz für die Anhänge der Beratenen/Ratsuchenden; im Schnitt je Beratene(n) etwa 5 MB</li>
+ <li>ausreichend Speicherplatz für die Anhänge der Ratsuchenden; im Schnitt je Ratsuchenden etwa 5 MB</li>
  <li>der Webserver muss E-Mails versenden können</li>
- <li>composer</li>
- <li>mpdf installiert</li>
+ <li>TYPO3 Extension lib_jquery (oder alternativ jQuery händisch einbinden)</li>
+ <li>TYPO3 Extension web2pdf (oder alternativ mit composer mpdf installieren)</li>
+ <li>TYPO3 Extension fal-securedownload (Installationshinweise: https://jweiland.net/typo3/showcase/fal-securedownload.html )</li>
 </ul>
 
 <h2>Installation</h2>
 Sofern TYPO3 noch nicht installiert ist, zuerst eine leere TYPO3-Installation einrichten. Dann im Modul Erweiterungen bei den vorkonfigurierten Erweiterungen das "Official TYPO3 Introduction Package" installieren. Im Modul Seiten das IntroPackage als Root setzen, dazu den Einstiegspunkt '/', ggf. andere Seite vorher löschen. Außerdem hier den ErrorHandler 403 als Weiterleitung auf die Login-Seite (s.u.) setzen.
 <ol>
-<li>Für Mehrsprachigkeit müssen in Typo3 auf der Root-Seite die entsprechenden Website-Sprachen angelegt und anschließend im Modul Seitenverwaltung->Seiten in der Seitenkonfiguration im Reiter "Sprachen" der Seite hinzugefügt werden. Ggf. macht es Sinn die Standardsprache (ID=0) auf Deutsch umzustellen, sofern noch nicht erfolgt.<br>Folgende Sprachen werden derzeit von der Extension unterstützt: Englisch, Arabisch, Persisch (Farsi), Französisch, Polnisch, Rumänisch, Russisch, Spanisch, Türkisch. Beim Anlegen der Sprachen daran denken, dass Arabisch und Farsi RTL-Sprachen sind (Right-to-Left) und in der Seitenverwaltung diese Option aktiviert werden muss.<br>
+<li>Für Mehrsprachigkeit müssen in Typo3 auf der Root-Seite die entsprechenden Website-Sprachen angelegt und anschließend im Modul Seitenverwaltung->Seiten in der Seitenkonfiguration im Reiter "Sprachen" der Seite hinzugefügt werden. Für alle Sprachen sollte Englisch als Fallback-Sprache eingerichtet werden. Auf den Seiten "Anmeldung versendet", "Danke", etc. sollte dann zu der deutschen Seite eine englische Übersetzung angelegt werden.<br>Folgende Sprachen werden derzeit von der Extension unterstützt: Englisch, Arabisch, Persisch (Farsi), Französisch, Polnisch, Rumänisch, Russisch, Spanisch, Türkisch, Ukrainisch. Beim Anlegen der Sprachen daran denken, dass Arabisch und Farsi RTL-Sprachen sind (Right-to-Left) und in der Seitenverwaltung diese Option aktiviert werden muss.<br>
 Die Identifizierung der Sprachen erfolgt in Typo3 bzw. der Extension über das 2-Buchstaben-Sprachkürzel (z.B. de für Deutsch oder fa für Farsi).
 Alle Schritte hinsichtlich Mehrsprachigkeit folgen sonst den Standard-Regeln zur Einrichtung von mehrsprachigen Webseiten.<br></li>
 
 <li>Zunächst auf der github-Seite oben rechts auf "Clone or Download" und dann auf "Download ZIP" klicken und die Extension als ZIP herunterladen, und in das Verzeichnis typo3conf/ext/ entpacken. Das Verzeichnis muss dann noch in "iqtp13db" umbenannt werden. Die Installation der Extension erfolgt danach per Extension Manager. <br></li>
 
-<li>Nach der Installation muss das statische Template der Extension <b>IQ Webapp Annerkennungsberatung NRW (iqtp13db)</b> in das Root Template aufgenommen werden.<br></li>
+<li>Nach der Installation müssen das statische Template der Extensions <b>IQ Webapp Annerkennungsberatung NRW (iqtp13db)</b>, <b>JS Library: jQuery</b> (sofern installiert, s.o.) und <b>Web2PDF Generator</b> (sofern installiert s.o.) in das Root Template aufgenommen werden.<br></li>
 
 <li>Nun sollte die folgende Seitenstruktur eingerichtet werden: <br>
 
@@ -32,9 +33,9 @@ Alle Schritte hinsichtlich Mehrsprachigkeit folgen sonst den Standard-Regeln zur
 -- Anmeldung<br>
 -- Anmeldung versendet<br>
 -- Danke<br>
--- Einwilligungsanforderung bestätigt
+-- Einwilligungsanforderung bestätigt<br>
 -- Fehler bei der Anmeldung<br>
-* Datenschutz und Einwilligung
+* Datenschutz und Einwilligung<br>
 * Login interner Bereich<br>
 * Interner Bereich<br>
 -- Übersicht<br>
@@ -106,7 +107,8 @@ Damit ist das Plugin konfiguriert und der Fragebogen zur Anmeldung sollte angeze
 Für das Backend (oder "Interner Bereich") muss eine Login-Seite für interne Nutzer angelegt werden. Diese enthält ein TYPO3-Inhaltselement vom Typ Formular/Anmeldung. Die Berechtigung für den Internen Bereich wird über den Zugriff der Seite gesetzt. <br>
 Die zugehörigen Beratungsstellen und Berater werden als Website-Benutzergruppe und Website-Benutzer im System-Ordner <b>[DB] Benutzer</b> angelegt und sind ganz normale Frontend Gruppen bzw. Benutzer. Je Beratungsstelle wird eine Benutzergruppe angelegt werden. Jede Gruppe muss im Reiter Erweitert des Gruppendatensatzes im Feld "NIQ Beratungsstellen-ID" die von der NIQ bzw. f-bb vergebene Beratungsstellen-ID hinterlegt und im Feld "Allgemeine Mailadresse" die E-Mail-Adresse, an die die Kopien der Anmeldebestätigungen gehen, eingetragen haben. Wenn diese Werte fehlen, werden die Standard-Werte aus den Settings verwendet.<br>
 <br>Außerdem können in den Feldern "Liste PLZ..." und "Liste Keywords..." weitere Werte eingetragen werden. Das Feld "Liste PLZ..." enthält eine Komma-separierte Liste von Postleitzahlen, für die diese Beratungsstelle sozusagen zuständig ist. Sofern Ratsuchende das Feld PLZ korrekt ausgefüllt haben, landet die Anfrage automatisch nur bei der entsprechenden Beratungsstellen-Gruppe. 
-<br>Die gleiche Funktionalität bietet das Feld "Liste Keywords...", wobei hier auf Schlüsselbegriffe im Feld Nachname geprüft wird. Sofern im Feld "Nachname" also beispielsweise "Mustermann (Sonderstatus)" eingetragen wurde und bei der Beratungsstellengruppe das Keyword "(Sonderstatus)" (inkl. Klammern!) eingetragen ist, landet diese Anfrage automatisch nur bei der entsprechenden Beratungsstellen-Gruppe.<br><br> 
+<br>Die gleiche Funktionalität bietet das Feld "Liste Keywords...", wobei hier auf Schlüsselbegriffe im Feld Nachname geprüft wird. Sofern im Feld "Nachname" also beispielsweise "Mustermann (Sonderstatus)" eingetragen wurde und bei der Beratungsstellengruppe das Keyword "(Sonderstatus)" (inkl. Klammern!) eingetragen ist, landet diese Anfrage automatisch nur bei der entsprechenden Beratungsstellen-Gruppe.<br>
+<br>Im Feld "Beratungsarten" werden die von der Beratungsstelle angebotenen Beratungsarten (mit gedrückter STRG- oder CMD-Taste) ausgewählt. Diese können auf Seite 3 der Anmeldung von Ratsuchenden als Option ausgewählt werden.<br><br> 
 
 Im Internen Bereich werden Seiten entsprechend der Seitenstruktur angelegt, die jeweils ein Plugin <b>IQ TP13 DB Adminbereich</b> enthalten. Der Typ wird entsprechend dem Seitennamen eingestellt.<br>
 Auch hier wird jeweils unter Datensatzsammlung der Sysordner (im Beispiel oben „[DB] Daten Anerkennungsberatung“) ausgewählt.<br>

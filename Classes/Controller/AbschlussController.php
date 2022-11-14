@@ -197,7 +197,11 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $valArray = $this->request->getArguments();
         if($valArray['selectboxabschluss'] != -1) {
             $abschluss=$this->abschlussRepository->findByUid($valArray['selectboxabschluss']);
-            $teilnehmer = $abschluss->getTeilnehmer();
+            if($abschluss != NULL) {
+                $teilnehmer = $abschluss->getTeilnehmer();
+            } else {
+                $teilnehmer = $this->teilnehmerRepository->findbyUid($valArray['teilnehmer']);
+            }
             $this->redirect('anmeldseite2', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'abschluss' => $abschluss));
         } else {
             $teilnehmer = $this->teilnehmerRepository->findbyUid($valArray['teilnehmer']);

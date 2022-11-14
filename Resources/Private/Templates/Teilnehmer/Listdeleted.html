@@ -6,11 +6,12 @@
 
 <f:section name="main">
 <h1>Filter</h1>
-<f:form method="post" controller="Teilnehmer" action="listdeleted" name="listdeleted"  noCacheHash="true" >
-		Name: <f:form.textfield size="20" value="{filtername}" name="name" />&nbsp;&nbsp;
-		Ort: <f:form.textfield size="20" value="{filterort}" name="ort" />&nbsp;&nbsp;
-		Beruf: <f:form.textfield size="20" value="{filterberuf}" name="beruf" />&nbsp;&nbsp;
-		Geburtsland: <f:form.select value="{filterland}" name="land" options="{wohnsitzstaaten}" optionValueField="value" optionLabelField="value" />&nbsp;&nbsp;&nbsp;&nbsp;
+<f:form class="filterform" method="post" controller="Teilnehmer" action="listdeleted" name="listdeleted"  noCacheHash="true" >
+		<div>Name: <f:form.textfield size="20" value="{filtername}" name="name" /></div>
+		<div>Ort: <f:form.textfield size="20" value="{filterort}" name="ort" /></div>
+		<div>Beruf: <f:form.textfield size="20" value="{filterberuf}" name="beruf" /></div>
+		<div>Geburtsland: <f:form.select value="{filterland}" name="land" options="{wohnsitzstaaten}" optionValueField="value" optionLabelField="value" /></div>
+		<div>Gruppe: <f:form.textfield size="20" value="{filtergruppe}" name="gruppe" /></div>
 		<f:if condition="{filteron}"><f:then><f:form.button name="filteraus" value="1" >Filter löschen</f:form.button></f:then></f:if>
 		<f:form.submit name="filteran" value="Filtern" />			
 </f:form>
@@ -31,6 +32,7 @@
 			<th><f:link.action action="listdeleted" arguments="{orderby : 'geburtsland', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geburtsland" />/-ort</f:link.action></th>
 			<th><f:link.action action="listdeleted" arguments="{orderby : 'geschlecht', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geschlecht" /></f:link.action></th>
 			<th>Möglicher deutscher Beruf</th>
+			<th>Gruppe</th>
 			<th> </th>
 		</tr>
 	
@@ -57,6 +59,7 @@
 						{f:if(condition: '{abschluesse.{it.index} -> f:count()} > 1', then: '{iter.index + 1}.', else: '')} {abschluss.deutscherReferenzberuf}<br>
 					</f:for>
 				</td>
+				<td>{teilnehmer.kooperationgruppe}</td>
 				<td><f:link.action class="linkbuttons" action="undelete" arguments="{tnuid : teilnehmer.uid}" onclick="return confirm('Wirklich wiederherstellen?');" >Wiederherstellen</f:link.action></td>
 			</tr>
 		</f:for>

@@ -24,43 +24,106 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      * Finds Teilnehmer by the specified name, ort and/or geburtsland
      *
-     * @param string $type
-     * @param string $name
-     * @param string $ort
-     * @param string $beruf
-     * @param string $land
-     * @param string $gruppe
-     * @param int $auchverstecktundgelöscht
-     * @return Tx_Extbase_Persistence_QueryResultInterface Teilnehmer
+     *
      */
-    public function searchTeilnehmer($type, $name, $ort, $beruf, $land, $gruppe, $auchverstecktundgelöscht, $niqbid)
+    public function searchTeilnehmer($type, $name, $ort, $land, $gruppe, $verstecktundgelöscht, $niqbid, $fberuf, $berufearr, $orderby, $order)
+    {
+        $name = $name == '' ? '%' : $name;
+        $ort = $ort == '' ? '%' : $ort;
+        $land = $land == '' ? '%' : $land;
+        $gruppe = $gruppe == '' ? '%' : $gruppe;
+        $orderby = $orderby == 'verificationDate' ? 'verification_date' : $orderby;
+        
+        if($type == 0 || $type == 1) $sqlberatungsstatus = " (beratungsstatus = 0 OR beratungsstatus = 1) ";
+        elseif($type == 2 || $type == 3) $sqlberatungsstatus = " (beratungsstatus = 2 OR beratungsstatus = 3) ";
+        elseif($type == 999) $sqlberatungsstatus = " beratungsstatus LIKE '%' ";
+        else $sqlberatungsstatus = " beratungsstatus = 4 ";
+        
+         // Beruf
+        if($type != 0) {
+            if($fberuf != '') {
+                
+                foreach ($berufearr as $beruf => $bkey) {
+                    if (strpos(strtolower($bkey), strtolower($fberuf)) !== false) { $results[] = $beruf; }
+                }
+                if(!empty($results)) {
+                    $beruf = " a.referenzberufzugewiesen IN ('".implode("','", $results)."') ";
+                }
+            } else {
+                $beruf = "a.deutscher_referenzberuf LIKE '%".$fberuf."%'";
+            }
+        } else {
+            $beruf = "a.deutscher_referenzberuf LIKE '%".$fberuf."%'";
+        }
+        
+        $query = $this->createQuery();
+        
+        if($verstecktundgelöscht == 1) {
+            $query->getQuerySettings()->setIgnoreEnableFields(TRUE);
+            $query->getQuerySettings()->setEnableFieldsToBeIgnored(array('disabled', 'hidden'));
+            $hidden = " AND t.hidden = 1 ";
+        } else {
+           $hidden = " AND t.hidden = 0 ";
+        }
+        
+         $sql = "SELECT t.* FROM tx_iqtp13db_domain_model_teilnehmer t
+    			LEFT JOIN tx_iqtp13db_domain_model_abschluss a ON a.teilnehmer = t.uid
+                WHERE (t.nachname LIKE '%$name%' OR t.vorname LIKE '%$name%') 
+                AND t.ort LIKE '%$ort%' 
+                AND t.geburtsland LIKE '$land'
+                AND $beruf 
+                AND t.kooperationgruppe LIKE '%$gruppe%' 
+                AND $sqlberatungsstatus $hidden 
+                AND niqidberatungsstelle LIKE $niqbid 
+                GROUP BY t.uid ORDER BY $orderby $order";
+        
+        //DebuggerUtility::var_dump($sql);
+        $query->statement($sql);
+        
+        return $query->execute();
+    }
+    
+    
+    /**
+     * Finds Teilnehmer by the specified name, ort and/or geburtsland
+     
+    public function searchTeilnehmer($type, $name, $ort, $land, $gruppe, $auchverstecktundgelöscht, $niqbid)
     {
         $name = $name == '' ? '%' : $name;
         $ort = $ort == '' ? '%' : $ort;
         $land = $land == '' ? '%' : $land;
         $gruppe = $gruppe == '' ? '%' : $gruppe;
         
-        if($type == 0 || $type == 1) $sqlberatungsstatus = "(beratungsstatus = 0 OR beratungsstatus = 1)";
-        elseif($type == 2 || $type == 3) $sqlberatungsstatus = "(beratungsstatus = 2 OR beratungsstatus = 3)";
-        else $sqlberatungsstatus = "beratungsstatus = 4";
-        
         $query = $this->createQuery();
+        
         if($auchverstecktundgelöscht == 1) {
             $query->getQuerySettings()->setIgnoreEnableFields(TRUE);
             $query->getQuerySettings()->setEnableFieldsToBeIgnored(array('disabled', 'hidden'));
-        } else {
-           $hidden = " AND t.hidden = 0 ";
         }
         
-        $sql = "SELECT t.* FROM tx_iqtp13db_domain_model_teilnehmer t
-    			LEFT JOIN tx_iqtp13db_domain_model_abschluss a ON a.teilnehmer = t.uid WHERE
-                (t.nachname LIKE '%$name%' OR t.vorname LIKE '%$name%') AND t.ort LIKE '%$ort%' AND t.geburtsland LIKE '$land'
-                AND $beruf AND t.kooperationgruppe LIKE '%$gruppe%' AND $sqlberatungsstatus $hidden AND niqidberatungsstelle LIKE $niqbid GROUP BY t.uid";            
-              
-        $query->statement($sql);
-        
+        // Beratungsstatus
+        if($type == 0 || $type == 1) $bstatus = $query->logicalOr($query->like('beratungsstatus', '0'),$query->like('beratungsstatus', '1'));
+        elseif($type == 2 || $type == 3) $bstatus = $query->logicalOr($query->like('beratungsstatus', '2'),$query->like('beratungsstatus', '3'));
+        elseif($type == 999) $bstatus = $query->like('beratungsstatus', '%');
+        else $bstatus = $query->like('beratungsstatus', '4');
+         
+        $query->matching(
+            $query->logicalAnd(
+                $query->logicalOr(
+                    $query->like('nachname', '%'.$name.'%'),$query->like('vorname', '%'.$name.'%')
+                    ),
+                $query->like('ort', '%'.$ort.'%'),
+                $query->like('geburtsland', $land),
+                $query->like('kooperationgruppe', '%'.$gruppe.'%'),
+                $query->like('niqidberatungsstelle', $niqbid),
+                $bstatus,
+                $beruf
+            )
+        );
+         
         return $query->execute();
     }
+    */
     
     /**
      * @param $beratungsstatus
@@ -72,7 +135,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $query = $this->createQuery();
         
         if($beratungsstatus == 0 || $beratungsstatus == 1) $query->matching($query->logicalAnd($query->logicalOr($query->like('beratungsstatus', '0'),$query->like('beratungsstatus', '1')), $query->like('niqidberatungsstelle', $niqbid)));
-        elseif($beratungsstatus == 2 || $beratungsstatus == 3) $query->matching($query->logicalAnd($query->logicalOr($query->like('beratungsstatus', '2'),$query->like('beratungsstatus', '3')),$query->greaterThan('verification_date', '0'), $query->like('niqidberatungsstelle', $niqbid)));
+        elseif($beratungsstatus == 2 || $beratungsstatus == 3) $query->matching($query->logicalAnd($query->logicalOr($query->like('beratungsstatus', '2'),$query->like('beratungsstatus', '3')),$query->greaterThan('verification_date', '0'), $query->like('niqidberatungsstelle', $niqbid)));        
         else $query->matching($query->logicalAnd($query->like('beratungsstatus', '4'),$query->greaterThan('verification_date', '0'), $query->like('niqidberatungsstelle', $niqbid)));
         
         if($order == 'DESC') $order = \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING;
@@ -263,5 +326,49 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $query = $query->execute();
         
         return $query;
+    }
+    
+    
+    /**
+     *
+     */
+    public function search4exportTeilnehmer($type, $verstecktundgelöscht, $filtervon, $filterbis, $niqbid)
+    {
+        $orderby = 'verification_date';
+        
+        if($type == 0 || $type == 1) {
+            $sqlberatungsstatus = " (beratungsstatus = 0 OR beratungsstatus = 1) ";
+            $filternach = "FROM_UNIXTIME(verification_date)";
+        } elseif($type == 4) {
+            $sqlberatungsstatus = " beratungsstatus = 4 ";
+            $filternach = "erstberatungabgeschlossen";
+        } else {
+            // fehler!
+        }
+        
+        $query = $this->createQuery();
+        
+        if($verstecktundgelöscht == 1) {
+            $query->getQuerySettings()->setIgnoreEnableFields(TRUE);
+            $query->getQuerySettings()->setEnableFieldsToBeIgnored(array('disabled', 'hidden'));
+            $hidden = " AND t.hidden = 1 ";
+        } else {
+            $hidden = " AND t.hidden = 0 ";
+        }
+                
+        
+        $sql = "SELECT t.* FROM tx_iqtp13db_domain_model_teilnehmer t
+    			LEFT JOIN tx_iqtp13db_domain_model_abschluss a ON a.teilnehmer = t.uid
+                WHERE 
+                DATEDIFF(STR_TO_DATE('$filtervon', '%d.%m.%Y'),$filternach) <= 0 AND
+				DATEDIFF(STR_TO_DATE('$filterbis', '%d.%m.%Y'),$filternach) >= 0
+                AND $sqlberatungsstatus $hidden
+                AND niqidberatungsstelle LIKE $niqbid
+                GROUP BY t.uid ORDER BY $orderby ASC";
+        
+        //DebuggerUtility::var_dump($sql);
+        $query->statement($sql);
+        
+        return $query->execute();
     }
 }

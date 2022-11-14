@@ -415,6 +415,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * beratungdatum
      * @var string
+     * @TYPO3\CMS\Extbase\Annotation\Validate("\Ud\Iqtp13db\Domain\Validator\DatumValidator")
      */
     protected $beratungdatum = '';
     
@@ -492,6 +493,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * erstberatungabgeschlossen
      *
      * @var string
+     * @TYPO3\CMS\Extbase\Annotation\Validate("\Ud\Iqtp13db\Domain\Validator\DatumValidator")
      */
     protected $erstberatungabgeschlossen = '';
     

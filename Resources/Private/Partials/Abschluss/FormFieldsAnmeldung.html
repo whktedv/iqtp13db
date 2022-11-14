@@ -2,7 +2,8 @@
       <label for="abschlussart">
         <span id="infolab" title="<f:translate key='infoAbschluss' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_abschluss.abschlussart" />
        </label>
-        <div class="tp13_formdivwebappmultiradio">			
+        <div class="tp13_formdivwebappmultiradio">
+        		<div class="tp13_formdivwebappradio"><f:form.checkbox property="abschlussart" value="-1"  multiple="1"/><f:translate key="ka" /></div>
 				<div class="tp13_formdivwebappradio"><f:form.checkbox property="abschlussart" value="1"  multiple="1"/><f:translate key="abschlussart.1" /></div>
 				<div class="tp13_formdivwebappradio"><f:form.checkbox property="abschlussart" value="2"  multiple="1"/><f:translate key="abschlussart.2" /></div>
 		</div>
@@ -74,7 +75,7 @@
 			<label for="antragstellunggwpvorher">
 				<f:translate key="tx_iqtp13db_domain_model_abschluss.antragstellunggwpvorher" />
 			</label>
-			<f:form.select property="antragstellunggwpvorher" options="{settings.ergebnisgleichwertigkeit}" optionValueField="key" optionLabelField="value" />	
+			<f:form.select property="antragstellunggwpvorher" options="{settings.ergebnisgleichwertigkeitvorher}" optionValueField="key" optionLabelField="value" />	
 	</div>
 	<div class="tp13_formdivwebapp" id="divantragstellungzabvorher">
 			<label for="antragstellungzabvorher">

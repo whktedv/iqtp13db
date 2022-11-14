@@ -307,13 +307,14 @@
 
 .tx-iqtp13db .navbar {
 	display: flex;
-	font-size: 1.1em;
+	font-size: 0.9em;
 }
 
 .tx-iqtp13db .navbar-default {
 	border-bottom: 1px solid #dfdfdf;
 	border-top: 1px solid #dfdfdf;
 	padding: 6px 3px;
+	margin: 2px auto;
 }
 
 .tx-iqtp13db .dropdown-menu {
@@ -438,9 +439,22 @@ button.abbruchbtn {
   display: flex;
 }
 
+form.filterform {
+	display: flex;
+	flex-flow: row wrap;
+}
+
+form.filterform div {
+	margin: 0 3px;
+}
+
 #dialog-confirm {
 	display: none;
 } 
+
+.iq-standardcontainer-weiss {
+	padding-top: 1rem;
+}
 
 
 @media print {

@@ -82,7 +82,8 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     	        'paginator' => $paginator,
     	        'pagination' => $pagination,
     	        'pages' => range(1, $pagination->getLastPageNumber()),
-    	        'berater' => $berater
+    	        'berater' => $berater,
+    	        'thisuser' => $this->user
     	    ]
    	    );
     }
@@ -94,7 +95,8 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      */
     public function newAction()
     {
-        
+        $usergroups = $this->frontendUserGroupRepository->findAll();
+        $this->view->assign('usergroups', $usergroups);
     }
     
     /**
@@ -123,6 +125,7 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $this->view->assign('berater', $berater);
         $this->view->assign('usergroups', $usergroups);
+        $this->view->assign('thisuser', $this->user);
     }
     
     /**

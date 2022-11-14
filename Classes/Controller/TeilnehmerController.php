@@ -29,7 +29,7 @@ require_once(Environment::getPublicPath() . '/' . 'typo3conf/ext/iqtp13db/Resour
 class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
     
-    protected $generalhelper, $niqinterface, $allusergroups, $usergroup, $niqbid, $groupbccmail;
+    protected $generalhelper, $niqinterface, $niqapiurl, $allusergroups, $usergroup, $niqbid, $groupbccmail;
     
     /**
      * teilnehmerRepository
@@ -165,6 +165,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	
     	$this->generalhelper = new \Ud\Iqtp13db\Helper\Generalhelper();
     	$this->niqinterface = new \Ud\Iqtp13db\Helper\NiqInterface();
+    	$this->niqapiurl = $this->settings['niqapiurl'];
     	
     	$this->user=null;
     	$context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
@@ -227,7 +228,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             }
             else
             {
-                $this->forward('anmeldseite1', 'Teilnehmer', 'Iqtp13db');            
+                $this->forward('startseite', 'Teilnehmer', 'Iqtp13db');         
             }  
         }        
     }
@@ -245,6 +246,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function statusAction(int $currentPage = 1)
     {
         // Seite "Übersicht"
+        //DebuggerUtility::var_dump($this->settings['niqapiurl']);
+
         
     	$valArray = $this->request->getArguments();
     	   
@@ -340,7 +343,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	$paginator = new QueryResultPaginator($historie, $currentPage, 25);
     	$pagination = new SimplePagination($paginator);
     	
-    	$niqdbstatus = $this->niqinterface->check_curl() ? "<span style='color: green;'>erreichbar</span>" : "<span style='color: red;'>nicht erreichbar!</span>";
+    	$niqdbstatus = $this->niqinterface->check_curl($this->niqapiurl) ? "<span style='color: green;'>erreichbar</span>" : "<span style='color: red;'>nicht erreichbar!</span>";
     	
 		// ******************** EXPORT Statistik ****************************
 		$rows[0] = $monatsnamen;
@@ -438,11 +441,17 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		
     	$teilnehmer = $this->setfilter(0, $valArray, $orderby, $order, 0);
     	
+    	// Wegen Bug in Paginator, der nicht mit Custom SQL Queryresults funktioniert, werden hier alle gefilterten Einträge auf einer Seite dargestellt. Queryresultpaginator hat dann keine Auswahl an Datensätzen, sondern alle. 
+   	    $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 250 : 25;
+    	
     	$currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : $currentPage;
-    	$paginator = new QueryResultPaginator($teilnehmer, $currentPage, 25);
+    	$paginator = new QueryResultPaginator($teilnehmer, $currentPage, $anzperpag);
     	$pagination = new SimplePagination($paginator);
     	
     	$teilnehmerpag = $paginator->getPaginatedItems();
+    	    
+    	//DebuggerUtility::var_dump($GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus'));
+        //die;
     	
     	for($j=0; $j < count($teilnehmerpag); $j++) {
     	    $anz = $this->teilnehmerRepository->findDublette4Angemeldet($teilnehmerpag[$j]->getNachname(), $teilnehmerpag[$j]->getVorname(), $this->niqbid);
@@ -496,8 +505,11 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         
         $teilnehmer = $this->setfilter(3, $valArray, $orderby, $order, 0);
         
+        // Wegen Bug in Paginator, der nicht mit Custom SQL Queryresults funktioniert, werden hier alle gefilterten Einträge auf einer Seite dargestellt. Queryresultpaginator hat dann keine Auswahl an Datensätzen, sondern alle.
+        $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 250 : 25;
+        
         $currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : $currentPage;
-        $paginator = new QueryResultPaginator($teilnehmer, $currentPage, 20);
+        $paginator = new QueryResultPaginator($teilnehmer, $currentPage, $anzperpag);
         $pagination = new SimplePagination($paginator);
         
         $teilnehmerpag = $paginator->getPaginatedItems();
@@ -555,7 +567,10 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function listarchivAction(int $currentPage = 1)
     {
         $valArray = $this->request->getArguments();
+        
+        
         if(!empty($valArray['callerpage'])) $currentPage = $valArray['callerpage'];
+        
         
         if(empty($valArray['orderby'])) {
             $orderby = 'erstberatungabgeschlossen';
@@ -572,14 +587,16 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         }
         
         $teilnehmer = $this->setfilter(4, $valArray, $orderby, $order, 0);
-            
+        
+        // Wegen Bug in Paginator, der nicht mit Custom SQL Queryresults funktioniert, werden hier alle gefilterten Einträge auf einer Seite dargestellt. Queryresultpaginator hat dann keine Auswahl an Datensätzen, sondern alle.
+        $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 250 : 25;
         
         $currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : $currentPage;
-        $paginator = new QueryResultPaginator($teilnehmer, $currentPage, 20);
+        $paginator = new QueryResultPaginator($teilnehmer, $currentPage, $anzperpag);
         $pagination = new SimplePagination($paginator);
         
         $teilnehmerpag = $paginator->getPaginatedItems();
-        
+
         foreach ($teilnehmerpag as $key => $tn) {
             $anzfolgekontakte[$key] = count($this->folgekontaktRepository->findByTeilnehmer($tn->getUid()));
             
@@ -649,10 +666,13 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	    $GLOBALS['TSFE']->fe_user->setKey('ses', 'listdeletedorder', $order);
     	}
     	
-    	$teilnehmer = $this->setfilter(0, $valArray, $orderby, $order, 1);
+    	$teilnehmer = $this->setfilter(999, $valArray, $orderby, $order, 1);
+    	
+    	// Wegen Bug in Paginator, der nicht mit Custom SQL Queryresults funktioniert, werden hier alle gefilterten Einträge auf einer Seite dargestellt. Queryresultpaginator hat dann keine Auswahl an Datensätzen, sondern alle.
+    	$anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 250 : 25;
     	
     	$currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : $currentPage;
-    	$paginator = new QueryResultPaginator($teilnehmer, $currentPage, 25);
+    	$paginator = new QueryResultPaginator($teilnehmer, $currentPage, $anzperpag);
     	$pagination = new SimplePagination($paginator);
     	
     	$teilnehmerpag = $paginator->getPaginatedItems();
@@ -695,10 +715,14 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $abschluesse = $this->abschlussRepository->findByTeilnehmer($teilnehmer);        
     	$historie = $this->historieRepository->findByTeilnehmerOrdered($teilnehmer->getUid());
     	$dokumente = $this->dokumentRepository->findByTeilnehmer($teilnehmer);
+    	$dokumentpfad = $this->generalhelper->sanitizeFileFolderName($teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid(). '/');
+    	
+    	//DebuggerUtility::var_dump($teilnehmer->getBeratungdatum());
     	
     	$this->view->assignMultiple(
     	    [
     	        'dokumente' => $dokumente,
+    	        'dokumentpfad' => $dokumentpfad,
     	        'calleraction' => $valArray['calleraction'],
     	        'callercontroller' => $valArray['callercontroller'],
     	        'callerpage' => $valArray['callerpage'],
@@ -732,6 +756,18 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $altervonbis[$i] = $i;
         }
         
+        $group = $this->userGroupRepository->findByUid($this->user['usergroup']);
+        $beratungsartenarray = $group->getBeratungsarten();
+        $newwieberatenarray = array();
+        foreach($this->settings['wieberaten'] as $key => $wieber){
+            if(in_array($key, $beratungsartenarray)) $newwieberatenarray[$key] = $wieber;
+        }
+        if(count($newwieberatenarray) != 0) {
+            $this->view->assign('wieberatenarr', $newwieberatenarray);
+        } else {
+            $this->view->assign('wieberatenarr', $this->settings['wieberaten']);
+        }
+                
         $this->view->assignMultiple(
             [
                 'altervonbis' => $altervonbis,
@@ -817,7 +853,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     {          
         $valArray = $this->request->getArguments();
         
-        if($teilnehmer->getNiqchiffre() != '' && $this->niqinterface->check_curl() == FALSE) {
+        if($teilnehmer->getNiqchiffre() != '' && $this->niqinterface->check_curl($this->niqapiurl) == FALSE) {
             $this->addFlashMessage("Bearbeiten von bereits übertragenen Datensätzen vorübergehend nicht möglich, da NIQ-Datenbank nicht erreichbar.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
         } else {
@@ -844,7 +880,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
             
             $dokumente = $this->dokumentRepository->findByTeilnehmer($teilnehmer);
-                
+            $dokumentpfad = $this->generalhelper->sanitizeFileFolderName($teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid(). '/');
+            
             $staatsangehoerigkeitstaaten = $this->settings['staaten'];
             $wohnsitzstaaten = $this->settings['staaten'];
             unset($wohnsitzstaaten[201]);
@@ -855,6 +892,18 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 $altervonbis[$i] = $i;
             }
             
+            $group = $this->userGroupRepository->findByUid($this->user['usergroup']);
+            $beratungsartenarray = $group->getBeratungsarten();
+            $newwieberatenarray = array();
+            foreach($this->settings['wieberaten'] as $key => $wieber){
+                if(in_array($key, $beratungsartenarray)) $newwieberatenarray[$key] = $wieber;
+            }
+            if(count($newwieberatenarray) != 0) {
+                $this->view->assign('wieberatenarr', $newwieberatenarray);
+            } else {
+                $this->view->assign('wieberatenarr', $this->settings['wieberaten']);
+            }
+                        
             $this->view->assignMultiple(
                 [
                     'altervonbis' => $altervonbis,
@@ -869,6 +918,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     'wohnsitzstaaten' => $wohnsitzstaaten,
                     'teilnehmer' => $teilnehmer,
                     'dokumente' => $dokumente,
+                    'dokumentpfad' => $dokumentpfad,
                     'selectedabschluss' => $abschluss,
                     'selectboxsubmit' => $selectboxsubmit,
                     'selecteduid' => $abschluss->getUid(),
@@ -889,7 +939,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     {
         $valArray = $this->request->getArguments();
 
-        if($teilnehmer->getNiqchiffre() != '' && $this->niqinterface->check_curl() == FALSE) {
+        if($teilnehmer->getNiqchiffre() != '' && $this->niqinterface->check_curl($this->niqapiurl) == FALSE) {
             $this->addFlashMessage("Datensatz NICHT gespeichert. Bearbeiten von bereits übertragenen Datensätzen vorübergehend nicht möglich, da NIQ-Datenbank nicht erreichbar.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
         } else {
@@ -1030,7 +1080,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         	    } else {
         	        $niqidbstelle = $this->niqbid;
         	    }
-        	    $returnarray = $this->niqinterface->uploadtoNIQ($teilnehmer, $abschluesse, $folgekontakte, $niqidbstelle);
+        	    $returnarray = $this->niqinterface->uploadtoNIQ($teilnehmer, $abschluesse, $folgekontakte, $niqidbstelle, $this->niqapiurl);
         	    
         	    $retteilnehmer = $returnarray[0];
         	    $retstring = $returnarray[1];
@@ -1167,8 +1217,22 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function savedatenblattpdfAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
-        require_once \TYPO3\CMS\Core\Core\Environment::getConfigPath() . '/ext/vendor/autoload.php';
-        
+        // MPDF per composer einbinden - wenn nicht vorhanden, dann s.u.
+        $mpdfComposer = \TYPO3\CMS\Core\Core\Environment::getConfigPath() . '/ext/vendor/autoload.php';
+        if (file_exists($mpdfComposer)) {
+            require_once($mpdfComposer);
+        } else {
+            // MPDF nicht per composer eingebunden, dann prüfe, ob extension web2pdf installiert ist und binde MPDF aus der ext web2pdf ein
+            $mpdfAutoload = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('web2pdf') . 'Resources/Private/Libraries/vendor/autoload.php';
+            if (file_exists($mpdfAutoload)) {
+                require_once($mpdfAutoload);
+            } else {
+                // PDF erstellen nicht möglich
+                $this->addFlashMessage('Datenblatt kann nicht erstellt werden, da MPDF nicht installiert. Bitte Admin kontaktieren.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                $this->redirect('show', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));               
+            } 
+        }
+                    
         $abschluesse = $this->abschlussRepository->findByTeilnehmer($teilnehmer);
         $dokumente = $this->dokumentRepository->findByTeilnehmer($teilnehmer);
         
@@ -1181,7 +1245,21 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         
         $htmlcode = $this->view->render();
         
-        $mpdf = new \Mpdf\Mpdf();
+        $default_mpdfconfig = [
+            'mode' => 'c',
+            'format' => 'A4',
+            'default_font_size' => 0,
+            'default_font' => '',
+            'margin_left' => 15,
+            'margin_right' => 15,
+            'margin_top' => 16,
+            'margin_bottom' => 16,
+            'margin_header' => 9,
+            'margin_footer' => 9,
+            'orientation' => 'P',
+        ];
+        
+        $mpdf = new \Mpdf\Mpdf($default_mpdfconfig);
         
         $stylesheet = file_get_contents(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('iqtp13db').'/Resources/Public/CSS/customtp13db.css');
         
@@ -1195,7 +1273,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $filename = 'DB-' .$this->generalhelper->sanitizeFileFolderName($teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid()). '.pdf';
         $storage = $this->generalhelper->getTP13Storage( $this->storageRepository->findAll());
         
-        $niqbid = $this->generalhelper->getNiqberatungsstellenid($teilnehmer, $this->allusergroups, $this->settings['standardniqidberatungsstelle']);
+        $niqbid = $this->niqbid;
         $beratungsstellenfolder = $niqbid == '10143' ? 'Beratene' : $niqbid;
         $fullpath = $storage->getConfiguration()['basePath'] .$beratungsstellenfolder. '/' .$pfad->getName().'/'. $filename;
                  
@@ -1215,28 +1293,57 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function exportAction(int $currentPage = 1)
     {
         $valArray = $this->request->getArguments();
-            
+        
+        //DebuggerUtility::var_dump($valArray);
+        //die; 
+        
+        //$filtervondate = new DateTime($valArray['filtervon'].' 00:00');
+        
+        $filtervon = $valArray['filtervon'] == '' ? '01.01.1970' : $valArray['filtervon'];
+        $filterbis = $valArray['filtervon'] == '' ? '31.12.2099' : $valArray['filterbis'];
+        
+        $arrjanein = array(0 => 'keine Angabe', 1 => 'ja', 2 => 'nein');
+        $arrerwerbsstatus = $this->settings['erwerbsstatus'];
+        $arrleistungsbezug = $this->settings['leistungsbezug'];
+        $arrstaaten = $this->settings['staaten'];
+        $arraufenthaltsstatus = $this->settings['aufenthaltsstatus'];
+        $arrberatungsart = $this->settings['beratungsart'];
+        $arranerkennungsberatung = $this->settings['anerkennungsberatung'];
+        $arrqualifizierungsberatung = $this->settings['qualifizierungsberatung'];
+        $arrberatungsstelle = $this->settings['beratungsstelle'];
+        $arrberatungzu = $this->settings['beratungzu'];
+        $arrberufe = $this->settings['berufe'];
+        $arrabschlussart =  array('-1' => 'keine Angabe', '1' => 'Ausbildungsabschluss', '2' => 'Universitätsabschluss');
+        $arrantragstellungerfolgt = $this->settings['antragstellungerfolgt'];
+        
         $orderby = 'crdate';
         $order = 'ASC';
         $fberatungsstatus = $valArray['filterberatungsstatus'];
         
-        if($fberatungsstatus == 12) {
-            $teilnehmers = $this->setfilter(4, $valArray, $orderby, $order, 0);
-        } elseif($fberatungsstatus == 13) {
-            $teilnehmers = $this->setfilter(1, $valArray, $orderby, $order, 0);
+        if($fberatungsstatus == 1 || $fberatungsstatus == NULL) {
+            $teilnehmers = array();
+        } elseif($fberatungsstatus == 12) {
+            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer(4, 0, $filtervon, $filterbis, $this->niqbid);            
+        } elseif($fberatungsstatus == 11) {
+            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer(1, 0, $filtervon, $filterbis, $this->niqbid);
         } else {
-            $teilnehmers = $this->setfilter(0, $valArray, $orderby, $order, 1);
+            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer(0, 1, $filtervon, $filterbis, $this->niqbid);
         }
-            
+        
+        foreach ($teilnehmers as $akey => $atn) {
+            $anzfolgekontakte[$akey] = count($this->folgekontaktRepository->findByTeilnehmer($atn->getUid()));
+            $abschluesse[$akey] = $this->abschlussRepository->findByTeilnehmer($atn);
+        }
+        
         // ******************** EXPORT ****************************
-        if ($valArray['export'] == 'Daten exportieren') {
-           
-            $x = 0;
-            foreach($teilnehmers as $tn) {
+        if ($valArray['export'] && $fberatungsstatus != '') {
+            
+            //$x = 0;
+            foreach($teilnehmers as $x => $tn) {
                 $props = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getGettablePropertyNames($tn);
                 
                 $berater = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'berater');
-
+                
                 foreach ($props as $prop) {
                     $rows[$x]['verificationDate'] = date('d.m.Y H:i:s', \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'verificationDate'));
                     $rows[$x]['Nachname'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'nachname');
@@ -1245,17 +1352,46 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     $rows[$x]['Ort'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'ort');
                     $rows[$x]['Email'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'email');
                     $rows[$x]['Telefon'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'telefon');
-                    $rows[$x]['Leistungsbezugjanein'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'leistungsbezugjanein');
-                    $rows[$x]['Geburtsland'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'geburtsland');
-                    $rows[$x]['Geschlecht'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'geschlecht');
+                    $rows[$x]['erwerbsstatus'] = $arrerwerbsstatus[\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'erwerbsstatus')];
+                    $rows[$x]['Leistungsbezugjanein'] = $arrjanein[\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'leistungsbezugjanein')];
+                    $rows[$x]['Leistungsbezug'] = $arrleistungsbezug[\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'leistungsbezug')];
+                    $rows[$x]['Geburtsland'] = $arrstaaten[\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'geburtsland')];
+                    $rows[$x]['aufenthaltsstatus'] = $arraufenthaltsstatus[\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'aufenthaltsstatus')];
+                    $geschlecht = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'geschlecht');
+                    if($geschlecht == 1) $geschlecht = 'w';
+                    if($geschlecht == 2) $geschlecht = 'm';
+                    if($geschlecht == 3) $geschlecht = 'd';
+                    $rows[$x]['Geschlecht'] = $geschlecht;
                 }
-                $rows[$x]['Beraterin'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($berater, 'username');
-                $x++;
+                
+                if($berater != NULL) {
+                    $rows[$x]['Beraterin'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($berater, 'username');
+                }
+                                
+                foreach (\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungsart') as $atn) $rows[$x]['beratungsart'] .= $arrberatungsart[$atn]." ";
+                foreach (\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'anerkennungsberatung') as $atn) $rows[$x]['anerkennungsberatung'] .= $arranerkennungsberatung[$atn]." ";
+                foreach (\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'qualifizierungsberatung') as $atn) $rows[$x]['qualifizierungsberatung'] .= $arrqualifizierungsberatung[$atn]." ";
+                $rows[$x]['nameberatungsstelle'] = $arrberatungsstelle[\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'name_beratungsstelle')];
+                $rows[$x]['beratungzuschulabschluss'] = $arrberatungzu[\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungzu')];
+                
+                $rows[$x]['AnzFolgekontakte'] = $anzfolgekontakte[$x];
+                
+                foreach($abschluesse[$x] as $y => $abschluss) {
+                    $aprops = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getGettablePropertyNames($abschluss);
+                    
+                    $rows[$x]['Abschluss'.$y.' Referenzberufzugewiesen'] = $arrberufe[\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'referenzberufzugewiesen')];
+                    foreach (\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'abschlussart') as $atn) $rows[$x]['Abschluss'.$y.' Abschlussart'] .= $arrabschlussart[$atn]." ";
+                    $rows[$x]['Abschluss'.$y.' Erwerbsland'] = $arrstaaten[\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'erwerbsland')];
+                    $rows[$x]['Abschluss'.$y.' Antragstellungerfolgt'] = $arrantragstellungerfolgt[\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'antragstellungerfolgt')];
+                    
+                }
+                //$x++;
             }
 
+            
             // XLSX
             $filename = 'export_' . date('Y-m-d_H-i', time()) . '.xlsx';
-            $header = [ 
+            $header = [
                 'Bestätigungsdatum' => 'string',
                 'Nachname' => 'string',
                 'Vorname' => 'string',
@@ -1263,10 +1399,36 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'Ort' => 'string',
                 'E-Mail' => 'string',
                 'Telefon' => 'string',
+                'Erwerbsstatus' => 'string',
                 'Leistungsbezug ja/nein' => 'string',
+                'Leistungsbezug' => 'string',
                 'Geburtsland' => 'string',
+                'Aufenthaltsstatus' => 'string',
                 'Geschlecht' => 'string',
-                'Berater:in' => 'string'
+                'Berater:in' => 'string',
+                'Beratungsart' => 'string',
+                'Anerkennungsberatung' => 'string',
+                'Qualifizierungsberatung' => 'string',
+                'Beratungsstelle' => 'string',
+                'Beratung zu Schulabschluss' => 'string',
+                'Anz. Folgekontakte' => 'string',                
+                'Abschluss1 Referenzberuf zugewiesen' => 'string',
+                'Abschluss1 Abschlussart' => 'string',
+                'Abschluss1 Erwerbsland' => 'string',
+                'Abschluss1 Antragstellung erfolgt' => 'string',
+                'Abschluss2 Referenzberuf zugewiesen' => 'string',
+                'Abschluss2 Abschlussart' => 'string',
+                'Abschluss2 Erwerbsland' => 'string',
+                'Abschluss2 Antragstellung erfolgt' => 'string',
+                'Abschluss3 Referenzberuf zugewiesen' => 'string',
+                'Abschluss3 Abschlussart' => 'string',
+                'Abschluss3 Erwerbsland' => 'string',
+                'Abschluss3 Antragstellung erfolgt' => 'string',
+                'Abschluss4 Referenzberuf zugewiesen' => 'string',
+                'Abschluss4 Abschlussart' => 'string',
+                'Abschluss4 Erwerbsland' => 'string',
+                'Abschluss4 Antragstellung erfolgt' => 'string'                
+                
             ];
             
             $writer = new \XLSXWriter();
@@ -1278,34 +1440,33 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             header('Cache-Control: max-age=0');
             $writer->writeToStdOut();
             exit;
-          
+            
+        } elseif($valArray['export'] && $fberatungsstatus == '') {
+            
+            $this->addFlashMessage("Bitte Status für Export auswählen.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->view->assignMultiple(
+                [
+                    'anzgesamt' => count($teilnehmers),
+                    'calleraction' => 'export',
+                    'callercontroller' => 'Teilnehmer',
+                    'callerpage' => $currentPage,
+                    'filterberatungsstatus' => $fberatungsstatus,
+                    'filteron' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus')
+                ]
+                );
         } else {
-
-            $currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : $currentPage;
-            $paginator = new QueryResultPaginator($teilnehmers, $currentPage, 25);
-            $pagination = new SimplePagination($paginator);
-            
-            $teilnehmerpag = $paginator->getPaginatedItems();
-            
-        	for($j=0; $j < count($teilnehmers); $j++) {
-        	    $anz = $this->teilnehmerRepository->findDublette4Angemeldet($teilnehmers[$j]->getNachname(), $teilnehmers[$j]->getVorname(), $this->niqbid);
-        		if($anz > 1) $teilnehmers[$j]->setDublette(TRUE);
-        		$abschluesse[$j] = $this->abschlussRepository->findByTeilnehmer($teilnehmerpag[$j]);
-        	}
-            
-        	$this->view->assignMultiple(
-        	    [
-        	        'anzgesamt' => count($teilnehmers),
-        	        'abschluesse' => $abschluesse,
-        	        'calleraction' => 'export',
-        	        'callercontroller' => 'Teilnehmer',
-        	        'callerpage' => $currentPage,
-        	        'paginator' => $paginator,
-        	        'pagination' => $pagination,
-        	        'pages' => range(1, $pagination->getLastPageNumber()),
-        	        'filterberatungsstatus' => $fberatungsstatus
-        	    ]
-        	);
+            $this->view->assignMultiple(
+                [
+                    'anzgesamt' => count($teilnehmers),
+                    'calleraction' => 'export',
+                    'callercontroller' => 'Teilnehmer',
+                    'callerpage' => $currentPage,
+                    'filterberatungsstatus' => $fberatungsstatus,
+                    'filteron' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus'),
+                    'filtervon' => $valArray['filtervon'],
+                    'filterbis' => $valArray['filterbis']
+                ]
+                );
         }
     }
     
@@ -1330,13 +1491,19 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     {
         if($teilnehmer->_isDirty($property)) {
             $history = new \Ud\Iqtp13db\Domain\Model\Historie();
-            $berater = new \Ud\Iqtp13db\Domain\Model\Berater($this->user['username']);
+            //$berater = new \Ud\Iqtp13db\Domain\Model\Berater($this->user['username']);
+            $berater = $this->beraterRepository->findAllBerater($this->settings['beraterstoragepid']);
+            foreach($berater as $thisberater) {
+                if($this->user['username'] == $thisberater->getUsername()) $history->setBerater($thisberater);
+            }
+            //DebuggerUtility::var_dump($berater);
+            //die;
             
             $history->setTeilnehmer($teilnehmer);
             $history->setProperty($property);
             $history->setOldvalue($teilnehmer->_getCleanProperty($property));
             $history->setNewvalue($teilnehmer->_getProperty($property));
-            $history->setBerater($berater);
+            
             
             $this->historieRepository->add($history);
         }
@@ -1347,6 +1514,27 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     /*************************************************************************/
     
     /**
+     * action startseite
+     *
+     * @return void
+     */
+    public function startseiteAction()
+    {
+        $valArray = $this->request->getArguments();
+        $beratungsstellenname = $valArray['beratung'];
+        if($beratungsstellenname != '') {
+            foreach ($this->allusergroups as $group) {
+                if(strtolower($group->getTitle()) == $beratungsstellenname) {
+                    $this->view->assign('beratungsstelle', $group->getNiqbid());
+                    $GLOBALS['TSFE']->fe_user->setKey('ses', 'beratungsstellenid', $group->getNiqbid());
+                }
+            }
+        } else {
+            $this->view->assign('beratungsstelle', $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid'));
+        }                
+    }
+    
+    /**
      * action anmeldseite1
      *
      * @param \Ud\Iqtp13db\Domain\Model\TNSeite1 $tnseite1
@@ -1354,6 +1542,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function anmeldseite1Action(\Ud\Iqtp13db\Domain\Model\TNSeite1 $tnseite1 = NULL)
     {
+        $valArray = $this->request->getArguments();
+
         if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnseite1') && $tnseite1 == NULL) {
     		$tnseite1 = unserialize($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnseite1'));
     	}
@@ -1374,7 +1564,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	        'staatsangehoerigkeitstaaten' => $staatsangehoerigkeitstaaten,
     	        'wohnsitzstaaten' => $wohnsitzstaaten,
     	        'tnseite1' => $tnseite1,
-    	        'settings' => $this->settings
+    	        'settings' => $this->settings,
+    	        'beratungsstelle' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid')
     	    ]
   	    );        
     }
@@ -1408,8 +1599,23 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     $teilnehmer = $this->teilnehmerRepository->findByUid($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid'));
                     $teilnehmer = $this->getTeilnehmerFromSession($teilnehmer);
                     $teilnehmer->setBeratungsstatus(99);
-                    $this->teilnehmerRepository->update($teilnehmer);
                 }
+                
+                // Hier entscheidet sich, welcher Beratungsstelle der Ratsuchende zugewiesen wird. 
+                // Wenn durch Link angegeben, dann nimm diese, sonst ermittel aus Generalhelper 
+                if($GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid') != '') {
+                    $niqbid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid');
+                } else {
+                    $niqbid = $this->generalhelper->getNiqberatungsstellenid($teilnehmer, $this->allusergroups, $this->settings['standardniqidberatungsstelle']);
+                    $GLOBALS['TSFE']->fe_user->setKey('ses', 'beratungsstellenid', $niqbid);
+                }
+                $teilnehmer->setNiqidberatungsstelle($niqbid);
+                $this->teilnehmerRepository->update($teilnehmer);
+                
+                // Daten sofort in die Datenbank schreiben
+                $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+                $persistenceManager->persistAll();
+                
                 $this->redirect('anmeldseite2', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
             } else {
                 $this->cancelregistration(null);
@@ -1459,14 +1665,12 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     'abschluesse' => $abschluesse,
                     'teilnehmer' => $teilnehmer,
                     'selectedabschluss' => $abschluss,
-                    'selecteduid' => $abschluss->getUid()
+                    'selecteduid' => $abschluss->getUid(),
+                    'beratungsstelle' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid')
                 ]
              );            
         } else {
-            $uriBuilder = $this->controllerContext->getUriBuilder();
-            $uriBuilder->reset();
-            $uriBuilder->setTargetPageUid($this->settings['startseite']);
-            $this->redirectToUri($uriBuilder->build());
+            $this->forward('startseite', 'Teilnehmer', 'Iqtp13db');
         }
     }
     
@@ -1489,14 +1693,26 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function anmeldseite3Action(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
+        foreach ($this->allusergroups as $group) {
+            if($group->getNiqbid() == $teilnehmer->getNiqidberatungsstelle()) {
+                $beratungsartenarray = $group->getBeratungsarten();
+                $newwieberatenarray = array();
+                foreach($this->settings['wieberaten'] as $key => $wieber){
+                    if(in_array($key, $beratungsartenarray)) $newwieberatenarray[$key] = $wieber;
+                }
+                if(count($newwieberatenarray) != 0) {
+                    $this->view->assign('wieberatenarr', $newwieberatenarray);
+                } else {
+                    $this->view->assign('wieberatenarr', $this->settings['wieberaten']);
+                }
+            }
+        }
+        
         if($this->teilnehmerRepository->countByUid($teilnehmer) != 0) {
             $this->view->assign('settings', $this->settings);
             $this->view->assign('teilnehmer', $teilnehmer);            
         } else {
-            $uriBuilder = $this->controllerContext->getUriBuilder();
-            $uriBuilder->reset();
-            $uriBuilder->setTargetPageUid($this->settings['startseite']);
-            $this->redirectToUri($uriBuilder->build());
+            $this->forward('startseite', 'Teilnehmer', 'Iqtp13db');            
         }
     }
     
@@ -1556,10 +1772,10 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	$valArray = $this->request->getArguments();
     	
     	if($this->teilnehmerRepository->countByUid($teilnehmer) != 0) {
-    	    $niqbid = $this->generalhelper->getNiqberatungsstellenid($teilnehmer, $this->allusergroups, $this->settings['standardniqidberatungsstelle']);
+    	    $niqbid = $teilnehmer->getNiqidberatungsstelle();
     	    $beratungsstellenfolder = $niqbid == '10143' ? 'Beratene' : $niqbid;
     	    $newFilePath = $beratungsstellenfolder.'/' . $teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid(). '/';
-    	    $storage = $this->generalhelper->getTP13Storage( $this->storageRepository->findAll());
+    	    $storage = $this->generalhelper->getTP13Storage($this->storageRepository->findAll());
     	    $foldersize = $this->generalhelper->getFolderSize($storage->getConfiguration()['basePath'].$newFilePath);
     	    if(!is_numeric($foldersize)) $foldersize = 0;
     	    $dokumente = $this->dokumentRepository->findByTeilnehmer($teilnehmer);
@@ -1577,10 +1793,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	        ]
     	        );    	    
     	} else {
-    	    $uriBuilder = $this->controllerContext->getUriBuilder();
-    	    $uriBuilder->reset();
-    	    $uriBuilder->setTargetPageUid($this->settings['startseite']);
-    	    $this->redirectToUri($uriBuilder->build());
+    	    $this->forward('startseite', 'Teilnehmer', 'Iqtp13db');    	    
     	}
     }
     
@@ -1608,14 +1821,11 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 $sonst = $teilnehmer->getSonstigerstatus()[0] == '2' ? 'Geflüchtet aus der Ukraine' : '';
                 $teilnehmer->setKooperationgruppe($sonst);
                 
-                $niqbid = $this->generalhelper->getNiqberatungsstellenid($teilnehmer, $this->allusergroups, $this->settings['standardniqidberatungsstelle']);
-                $teilnehmer->setNiqidberatungsstelle($niqbid);
-                
                 $this->teilnehmerRepository->update($teilnehmer);
                 $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
                 $persistenceManager->persistAll();
                 
-                $bcc = $this->generalhelper->getGeneralmailBeratungsstelle($niqbid, $this->allusergroups, $this->settings['standardbccmail']);
+                $bcc = $this->generalhelper->getGeneralmailBeratungsstelle($teilnehmer->getNiqidberatungsstelle(), $this->allusergroups, $this->settings['standardbccmail']);
                 $sender = $this->settings['sender'];
                 if($bcc == '' || $sender == '') {
                     $this->addFlashMessage('Fehler 101.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
@@ -1712,7 +1922,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             
             $teilnehmer = $this->teilnehmerRepository->findByUid($tnuid);
             
-            $niqbid = $this->generalhelper->getNiqberatungsstellenid($teilnehmer, $this->allusergroups, $this->settings['standardniqidberatungsstelle']);
+            $niqbid = $teilnehmer->getNiqidberatungsstelle();
             $beratungsstellenfolder = $niqbid == '10143' ? 'Beratene' : $niqbid;            
             $filePath = $beratungsstellenfolder.'/' . $teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid(). '/';
             $storage = $this->generalhelper->getTP13Storage( $this->storageRepository->findAll());
@@ -1739,11 +1949,15 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 
         $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnseite1', null);
         $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnuid', null);
+        $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('ses', null);
         
-        $uriBuilder = $this->controllerContext->getUriBuilder();
-        $uriBuilder->reset();
-        $uriBuilder->setTargetPageUid($this->settings['startseite']);
-        $this->redirectToUri($uriBuilder->build());
+        /*
+         $uriBuilder = $this->controllerContext->getUriBuilder();
+         $uriBuilder->reset();
+         $uriBuilder->setTargetPageUid($this->settings['startseite']);
+         $this->redirectToUri($uriBuilder->build());
+         */
+        $this->forward('startseite', 'Teilnehmer', 'Iqtp13db');        
     }
     
     /**
@@ -1756,13 +1970,14 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     {
     	$GLOBALS['TSFE']->fe_user->setKey('ses', 'tn', '');
     	$recipient = $teilnehmer->getEmail();
-    	$niqbid = $this->generalhelper->getNiqberatungsstellenid($teilnehmer, $this->allusergroups, $this->settings['standardniqidberatungsstelle']);
+    	$niqbid = $teilnehmer->getNiqidberatungsstelle();
     	$bcc = $this->generalhelper->getGeneralmailBeratungsstelle($niqbid, $this->allusergroups, $this->settings['standardbccmail']);
     	$sender = $this->settings['sender'];
     	$subject = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('subject', 'Iqtp13db');
     	$templateName = 'Mail';
     	$anrede = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('anredemail', 'Iqtp13db');
-    	$mailtext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtext', 'Iqtp13db');    	
+    	$mailtext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtext', 'Iqtp13db');  
+    	$mailtext = str_replace("WARTEZEITWOCHEN", $this->settings['wartezeitwochen'], $mailtext);
     	$variables = array(
     			'anrede' => $anrede . $teilnehmer->getVorname(). ' ' . $teilnehmer->getNachname() . ',',
     			'mailtext' => $mailtext,
@@ -1866,7 +2081,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 	 */
 	public function checkniqconnectionAction()
 	{
-	    $retval = $this->niqinterface->check_curl();
+	    $retval = $this->niqinterface->check_curl($this->niqapiurl);
 	    
 	    if($retval) {
 	        $this->addFlashMessage('NIQ Verbindung verfügbar.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
@@ -1887,7 +2102,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 	    $valArray = $this->request->getArguments();
 	    
         // NIQ verfügbar?
-	    $retval = $this->niqinterface->check_curl();
+	    $retval = $this->niqinterface->check_curl($this->niqapiurl);
 	    if(!$retval) {	        
 	        $this->addFlashMessage('NIQ Verbindung nicht erreichbar!', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
 	        $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']), null);
@@ -1900,7 +2115,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 	        } else {
 	            $niqidbstelle = $this->niqbid;
 	        }
-	        $returnarray = $this->niqinterface->uploadtoNIQ($teilnehmer, $abschluesse, $folgekontakte, $niqidbstelle);
+	        $returnarray = $this->niqinterface->uploadtoNIQ($teilnehmer, $abschluesse, $folgekontakte, $niqidbstelle, $this->niqapiurl);
 	        
 	        $retteilnehmer = $returnarray[0];
 	        $retstring = $returnarray[1];
@@ -1952,13 +2167,14 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 	 *
 	 */
 	function setfilter(int $type, array $valArray, $orderby, $order, $deleted) {
-	    // FILTER
+	    // FILTER 
 	    if ($valArray['filteraus']) {
 	        $GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', NULL);
 	        $GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', NULL);
 	        $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', NULL);
 	        $GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', NULL);
 	        $GLOBALS['TSFE']->fe_user->setKey('ses', 'fgruppe', NULL);
+	        $GLOBALS['TSFE']->fe_user->setKey('ses', 'filtermodus', NULL);
 	    }
 	    if ($valArray['filteran']) {
 	        $GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', $valArray['name']);
@@ -1966,7 +2182,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 	        $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', $valArray['beruf']);
 	        $GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', $valArray['land']);
 	        $GLOBALS['TSFE']->fe_user->setKey('ses', 'fgruppe', $valArray['gruppe']);
+	        $GLOBALS['TSFE']->fe_user->setKey('ses', 'filtermodus', '1');
 	    }
+	    
 	    $fname = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fname');
 	    $fort = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fort');
 	    $fberuf = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fberuf');
@@ -1982,35 +2200,22 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 	            $teilnehmers = $this->teilnehmerRepository->findAllOrder4List($type, $orderby, $order, $this->niqbid);
 	        }    
 	    } else {
-	        if($type != 0) {
-    	        if($fberuf != '') {
-    	            $berufearr = $this->settings['berufe'];
-    	            foreach ($berufearr as $beruf => $bkey) {
-    	                if (strpos(strtolower($bkey), strtolower($fberuf)) !== false) { $results[] = $beruf; }
-    	            }
-    	            
-    	            if( empty($results) ) { $sberuf = ""; }
-    	            else { $sberuf = "a.referenzberufzugewiesen IN (".implode(', ', $results).")"; }
-    	        } else {
-    	            $sberuf = "a.referenzberufzugewiesen LIKE '%'";
-    	        }
-	        } else {
-	            $sberuf = "a.deutscher_referenzberuf LIKE '%$fberuf%'";
-	        }
-
-	        $teilnehmers = $this->teilnehmerRepository->searchTeilnehmer($type, $fname, $fort, $sberuf, $fland, $fgruppe, $deleted, $this->niqbid);
+	        $teilnehmers = $this->teilnehmerRepository->searchTeilnehmer($type, $fname, $fort, $fland, $fgruppe, $deleted, $this->niqbid, $fberuf, $this->settings['berufe'], $orderby, $order);	            
+	        
+	        //DebuggerUtility::var_dump($GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus'));
+	        
 	        $this->view->assign('filtername', $fname);
 	        $this->view->assign('filterort', $fort);
 	        $this->view->assign('filterberuf', $fberuf);
 	        $this->view->assign('filterland', $fland);
 	        $this->view->assign('filtergruppe', $fgruppe);
-	        $this->view->assign('filterberatungsstatus', $fstatus);
-	        $this->view->assign('filteron', 1);
+	        $this->view->assign('filteron', $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus'));
 	    }
 	        
 	    // FILTER bis hier
 	    return $teilnehmers;
 	}
+	
 	
 	/**
 	 * A template method for displaying custom error flash messages, or to

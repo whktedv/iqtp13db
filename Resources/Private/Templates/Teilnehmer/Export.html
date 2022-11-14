@@ -9,97 +9,18 @@
 <f:flashMessages />
 <br />
 <h1>Daten Ratsuchende exportieren</h1>
-Nach Klick auf den Button werden die Daten in eine CSV-Datei zum Download exportiert.<br>
-<b>HINWEIS: Wenn kein Datensatz ausgewählt wurde, werden alle Ratsuchende exportiert.<br>
-Wenn einzelne Ratsuchende in der Spalte "Export" ausgewählt wurden, werden nur die Daten aus der Anmeldung exportiert.</b>
-<h1>Filter</h1>
-<f:form method="post" controller="Teilnehmer" action="export" name="export" noCacheHash="true" >
-		Auswahl Status: <f:form.select value="{filterberatungsstatus}" name="filterberatungsstatus" options="{settings.filterberatungsstatus}" optionValueField="key" optionLabelField="value" />
-		<f:if condition="{filteron}"><f:then><f:form.button name="filteraus" value="1" >Filter löschen</f:form.button></f:then></f:if>		
-		<f:form.submit name="filteran" value="Filtern" />			
+Nach Klick auf den Button werden die Daten in eine Excel-Datei zum Download exportiert.<br>
+Das Datum von/bis bezieht sich bei den Optionen Angemeldet und Gelöscht auf das Bestätigungsdatum der Anmeldung und bei der Option Archiviert auf das Datum 'Erstberatung abgeschlossen'.<br>
+<br>
+<f:form class="filterform" id="exportfilterform" method="post" controller="Teilnehmer" action="export" name="export" noCacheHash="true" >
+		<div>von: <f:form.textfield size="10" id="datepickerfiltervon" value="{filtervon}" name="filtervon" />
+		bis: <f:form.textfield size="10" id="datepickerfilterbis" value="{filterbis}" name="filterbis" />				
+		Auswahl Status: <f:form.select id="exportfilterselect" value="{filterberatungsstatus}" name="filterberatungsstatus" options="{settings.filterberatungsstatus}" optionValueField="key" optionLabelField="value" prependOptionValue="1" prependOptionLabel="-" />
 </f:form>
-<br>
-<h1>{anzgesamt} Ratsuchende <f:if condition="{filteron}"><f:then><span style="color: red;">(gefiltert)</span></f:then></f:if></h1>
-<br>
+<br><br>
 <f:form method="post" controller="Teilnehmer" action="export" name="export" enctype="multipart/form-data" noCacheHash="true">
-<f:form.submit name="export" value="Daten exportieren" />
-	
-	<f:render partial="Paginator" arguments="{pagination: pagination, pages: pages, paginator: paginator, action: calleraction}" />
-	 
-		<table class="tx_iqtp13db" >
-			<tr>
-				<th><f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" /></th>
-				<th><f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" /></th>
-				<th>Anmeldedatum</th>
-				<th><f:translate key="tx_iqtp13db_domain_model_teilnehmer.plz" />/<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ort" /></th>
-				<th>Leistung</th>
-				<th><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geburtsland" />/-ort</th>
-				<th><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geschlecht" /></th>
-				<th>Möglicher deutscher Beruf</th>
-			</tr> 
-		
-			<f:for each="{paginator.paginatedItems}" as="teilnehmer" iteration="it">	
-				<f:if condition="{teilnehmer.dublette}"><f:then>
-					<tr class="dublette">
-				</f:then>
-				<f:else>
-					{f:if(condition: "{teilnehmer.verificationDate} != 0", then: '<tr class="bestaetigt">', else: '<tr>')}
-				</f:else>
-				</f:if>
-					<td><f:link.action action="show" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}">{teilnehmer.nachname}</f:link.action></td>
-					<td><f:link.action action="show" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}">{teilnehmer.vorname}</f:link.action></td>
-					<td class="tdcenter">{f:if(condition: '{teilnehmer.verificationDate} == 0', then: 'unbestätigt', else: '{f:format.date(date: teilnehmer.verificationDate, format:"d.m.Y")}')}</td>
-					<td>{teilnehmer.plz} {teilnehmer.ort}</td>
-					<td class="tdcenter">{f:if(condition: '{teilnehmer.leistungsbezugjanein} == 1', then: '✓', else: '')}</td>
-					<td>{iqtp13db:isint(field:'{teilnehmer.geburtsland}',then:'{settings.staaten.{teilnehmer.geburtsland}}',else:'{teilnehmer.geburtsland}')}</td>
-					<td class="tdcenter">{f:if(condition: '{teilnehmer.geschlecht} == 2', then: '<span style="color: #84a0ff;">M</span>')}
-					{f:if(condition: '{teilnehmer.geschlecht} == 1', then: '<span style="color: #fe7a84;">W</span>')}
-					{f:if(condition: '{teilnehmer.geschlecht} == 3', then: '<span>D</span>')}</td>
-					<td>
-					<f:for each="{abschluesse.{it.index}}" as="abschluss" iteration="iter">
-						{f:if(condition: '{abschluesse.{it.index} -> f:count()} > 1', then: '{iter.index + 1}.', else: '')} {abschluss.deutscherReferenzberuf}<br>
-					</f:for>
-				</td>
-				</tr>
-			</f:for>
-		</table>
-
 	<f:form.hidden value="{filterberatungsstatus}" name="filterberatungsstatus" />
-<f:form.submit name="export" value="Daten exportieren" />			
+	<f:form.submit name="export" value="{anzgesamt} Ratsuchende exportieren" />
 </f:form>
 
-<div style="margin-top:30px; padding: 10px; border: 1px solid #ccc;">
-<h2>Legende</h2>
-
-<h3>Ja/Nein-Fragen</h3>
-<span class="propdat">1 = Ja</span><br>
-<span class="propdat">2 = Nein</span><br>
-
-<br>
-<h3><f:translate key="tx_iqtp13db_domain_model_beratung.beratungsart" /></h3>
-<f:for each="{settings.beratungsart}" as="text" key="wert">
- <span class="propdat">{wert} = {text}</span><br>
-</f:for>
-
-<br>
-<h3><f:translate key="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau" /></h3>
-<f:for each="{settings.zertifikatlevel}" as="text" key="wert">
- <span class="propdat">{wert} = {text}</span><br>
-</f:for>
-
-<br>
-<h3><f:translate key="tx_iqtp13db_domain_model_beratung.beratungzu" /></h3>
-<f:for each="{settings.beratungzu}" as="text" key="wert">
- <span class="propdat">{wert} = {text}</span><br>
-</f:for>
-
-<br>
-<h3><f:translate key="tx_iqtp13db_domain_model_teilnehmer.name_beratungsstelle" /></h3>
-<f:for each="{settings.beratungsstelle}" as="text" key="wert">
- <span class="propdat">{wert} = {text}</span><br>
-</f:for>
-
-
-
-</div>
 </f:section>

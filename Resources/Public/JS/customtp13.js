@@ -36,12 +36,51 @@ $(document).ready(function() {
         firstDay: 1,
         dateFormat : "dd.mm.yy"
     });
+
+    $('#datepickerfiltervon').datepicker({
+        showButtonPanel : true,
+        firstDay: 1,
+        dateFormat : "dd.mm.yy"
+    });
+
+    $('#datepickerfilterbis').datepicker({
+        showButtonPanel : true,
+        firstDay: 1,
+        dateFormat : "dd.mm.yy"
+    });
 	
 	$("a[href='#top']").click(function(){
 		$("html, body").animate({ scrollTop: 0 }, "fast");
   		return false;
 	})
 	
+    $( "#resizablecol1" ).resizable({
+      maxWidth: 450,
+      minWidth: 200
+    });
+	$( "#resizablecol2" ).resizable({
+      maxWidth: 450,
+	  minWidth: 200
+    });
+	$( "#resizablecol3" ).resizable({
+      maxWidth: 450,
+      minWidth: 200
+    });
+
+	$('#exportfilterselect').change(function() {
+	  $("#exportfilterform").submit(); 
+	});
+	
+	$('#datepickerfiltervon').change(function() {
+	  $("#exportfilterform").submit(); 
+	});
+	
+	$('#datepickerfilterbis').change(function() {
+	  $("#exportfilterform").submit(); 
+	});
+
+
+
 });
 
 $(function ($) {
@@ -83,7 +122,6 @@ function showDetail(num) {
 }
  
 function btncancel_Click(link) {
-	
 	dialog = $("#dialog-confirm").dialog({
 	      autoOpen: false,
 	      resizable: false,

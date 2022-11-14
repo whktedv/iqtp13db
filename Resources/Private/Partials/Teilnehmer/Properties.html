@@ -645,7 +645,7 @@
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungdatum" />
 				<span class="niqfield" />
 			</label>
-				<span class="propdat"><f:if condition="{teilnehmer.beratungdatum} != '0000-00-00'">{teilnehmer.beratungdatum -> f:format.date(format: 'd.m.Y')}</f:if></span>
+				<span class="propdat"><f:if condition="{teilnehmer.beratungdatum} != '0000-00-00' && {teilnehmer.beratungdatum} != ''">{teilnehmer.beratungdatum -> f:format.date(format: 'd.m.Y')}</f:if></span>
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="berater">
@@ -778,7 +778,7 @@
 			<label for="erstberatungabgeschlossen">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.erstberatungabgeschlossen" />
 			</label>
-			<span class="propdat"><f:if condition="{teilnehmer.erstberatungabgeschlossen} != '0000-00-00'">{teilnehmer.erstberatungabgeschlossen -> f:format.date(format: 'd.m.Y')}</f:if></span>			
+			<span class="propdat"><f:if condition="{teilnehmer.erstberatungabgeschlossen} != '0000-00-00' && {teilnehmer.erstberatungabgeschlossen} != ''">{teilnehmer.erstberatungabgeschlossen -> f:format.date(format: 'd.m.Y')}</f:if></span>			
 		</div>
 </div>
 <b>Verification Code:</b> {teilnehmer.verificationCode} <b>VerificationIP:</b> {teilnehmer.verificationIp} <b>VerificationDate:</b> <f:format.date format="d.m.Y - H:i">{teilnehmer.verificationDate}</f:format.date><br>

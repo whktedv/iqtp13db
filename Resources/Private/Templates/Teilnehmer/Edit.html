@@ -14,7 +14,7 @@
 	<script>
 	$(document).ready(function() {
 		var aTag = $("#divabschluesse");
-		$(document).scrollTop( aTag.offset().top - 2500 ); 
+		$(document).scrollTop( aTag.offset().top - 2900); 
 	});
 	</script>
 </f:then>
@@ -31,7 +31,7 @@
 	<f:form.submit value="Speichern" />
 
 	<f:if condition="{dokumente}"><f:then>
-		<div class="frame"><h2><f:translate key="dokumente" /></h2>
+		<div class="frame"><h2><f:translate key="dokumente" /> in '{dokumentpfad}'</h2>
 		<table>
 		<f:for each="{dokumente}" as="dokument">
 			<tr>
@@ -51,7 +51,7 @@
 						<label for="selectboxabschluss">
 				        	Auswahl Abschluss:
 				       </label>
-				       <select onclick="form_submit();" name="tx_iqtp13db_iqtp13dbadmin[selectboxabschluss]">
+				       <select onChange="form_submit();" name="tx_iqtp13db_iqtp13dbadmin[selectboxabschluss]">
 				       		<option value="">-</option>			       		
 				       		<f:for each="{abschluesse}" as="sabschluss">			       		
 								<option value="{sabschluss.uid}" {f:if(condition: '{sabschluss.uid} == {selectedabschluss.uid}', then: 'selected')}>{f:if(condition:'{sabschluss.deutscherReferenzberuf} == ""', then: '-leer-', else: '{sabschluss.deutscherReferenzberuf}')}</option>

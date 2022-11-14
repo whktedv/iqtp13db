@@ -11,7 +11,7 @@ call_user_func(
             [
         		'Teilnehmer' => 'start, listangemeldet, listerstberatung, listarchiv, checkniqconnection, sendtoniq, show, new, create, edit, update, delete, status, export, askconsent, listdeleted, undelete, savedatenblattpdf',
         		'Folgekontakt' => 'list, show, new, create, edit, update, delete',
-                'Dokument' => 'saveFileTeilnehmer, deleteFileTeilnehmer',
+                'Dokument' => 'saveFileTeilnehmer, deleteFileTeilnehmer, openfile',
         		'Historie' => 'list',
                 'Abschluss' => 'show, new, create, edit, update, delete',
                 'Berater' => 'list, new, create, edit, update, delete'
@@ -21,7 +21,7 @@ call_user_func(
             [
         		'Teilnehmer' => 'start, listangemeldet, listerstberatung, listarchiv, checkniqconnection, sendtoniq, show, new, create, edit, update, delete, status, export, askconsent, listdeleted, undelete, savedatenblattpdf',
         		'Folgekontakt' => 'list, show, new, create, edit, update, delete',
-                'Dokument' => 'saveFileTeilnehmer, deleteFileTeilnehmer',
+                'Dokument' => 'saveFileTeilnehmer, deleteFileTeilnehmer, openfile',
         		'Historie' => 'list',
                 'Abschluss' => 'show, new, create, edit, update, delete',
                 'Berater' => 'list, new, create, edit, update, delete'
@@ -32,13 +32,13 @@ call_user_func(
             'Ud.Iqtp13db',
             'Iqtp13dbwebapp',
             [
-                'Teilnehmer' => 'start, anmeldseite1, anmeldseite1redirect, anmeldseite2, anmeldseite2redirect, anmeldseite3, anmeldseite3redirect, anmeldseite4, anmeldseite4redirect, anmeldungcomplete, anmeldungcompleteredirect, confirm, validationFailed, wartung',
+                'Teilnehmer' => 'start, startseite, anmeldseite1, anmeldseite1redirect, anmeldseite2, anmeldseite2redirect, anmeldseite3, anmeldseite3redirect, anmeldseite4, anmeldseite4redirect, anmeldungcomplete, anmeldungcompleteredirect, confirm, validationFailed, wartung',
                 'Dokument' => 'saveFileWebapp, deleteFileWebapp',
                 'Abschluss' => 'addupdateWebapp, deleteWebapp, selectWebapp'
             ],
             // non-cacheable actions
             [
-               'Teilnehmer' => 'start, anmeldseite1, anmeldseite1redirect, anmeldseite2, anmeldseite2redirect, anmeldseite3, anmeldseite3redirect, anmeldseite4, anmeldseite4redirect, anmeldungcomplete, anmeldungcompleteredirect, confirm, validationFailed, wartung',
+               'Teilnehmer' => 'start, startseite, anmeldseite1, anmeldseite1redirect, anmeldseite2, anmeldseite2redirect, anmeldseite3, anmeldseite3redirect, anmeldseite4, anmeldseite4redirect, anmeldungcomplete, anmeldungcompleteredirect, confirm, validationFailed, wartung',
                'Dokument' => 'saveFileWebapp, deleteFileWebapp',
                'Abschluss' => 'addupdateWebapp, deleteWebapp, selectWebapp'
             ]

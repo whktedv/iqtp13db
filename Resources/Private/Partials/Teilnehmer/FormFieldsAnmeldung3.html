@@ -98,7 +98,7 @@
   				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.wieberaten" />
   			</label>
   			<div class="tp13_formdivwebappmultiradio">
-  				<f:for each="{settings.wieberaten}" as="option" key="key">
+  				<f:for each="{wieberatenarr}" as="option" key="key">
 					<f:variable name="varstring">{value -> f:for(each: '{teilnehmer.wieberaten}', as: 'value')}</f:variable>
 					<div class="tp13_formdivwebappradio">
 						<f:form.checkbox name="teilnehmer[wieberaten]" checked="{iqtp13db:instring(haystack:'{varstring}',needle:'{key}',then:'TRUE',else:'FALSE')}" multiple="1" value="{key}" />{option}

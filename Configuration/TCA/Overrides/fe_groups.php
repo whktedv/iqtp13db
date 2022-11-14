@@ -39,7 +39,34 @@ $fields = array(
                 'rows' => 15,
                 'eval' => 'trim'
             ),
+        ),    
+        'beratungsarten' => array(
+            'exclude' => 1,
+            'label' => 'Beratungsarten',
+            'config' => array(
+                'type' => 'select',
+                'renderType' => 'selectSingleBox',
+                'items' => array(
+                    [
+                        'Telefon',
+                        1,
+                    ],
+                    [
+                        'E-Mail',
+                        2,
+                    ],
+                    [
+                        'Video',
+                        3,
+                    ],
+                    [
+                        'Face-to-face',
+                        4,
+                    ],
+                ),
+            ),
         ),
+    
 );
 
 
@@ -47,7 +74,7 @@ $fields = array(
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
     'fe_groups',
-    'niqbid, generalmail, plzlist, keywordlist',
+    'niqbid, generalmail, plzlist, keywordlist, beratungsarten',
     '',
     ''
     );

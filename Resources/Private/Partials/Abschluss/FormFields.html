@@ -14,6 +14,7 @@
         <span class="niqfield" />
        </label>
         <div class="tp13_formdivwebappmultiradio">			
+        		<div class="tp13_formdivwebappradio"><f:form.checkbox name="abschluss[abschlussart]" value="-1" checked="{abschluss.abschlussart.0} == '-1'" multiple="1"/><f:translate key="ka" /></div>
 				<div class="tp13_formdivwebappradio"><f:form.checkbox name="abschluss[abschlussart]" value="1" checked="{abschluss.abschlussart.0} == '1' || {abschluss.abschlussart.1} == '1'" multiple="1"/><f:translate key="abschlussart.1" /></div>
 				<div class="tp13_formdivwebappradio"><f:form.checkbox name="abschluss[abschlussart]" value="2" checked="{abschluss.abschlussart.0} == '2' || {abschluss.abschlussart.1} == '2'" multiple="1"/><f:translate key="abschlussart.2" /></div>
 		</div>
@@ -135,7 +136,7 @@
  		
  	
 <div class="fframeadminonly"><h2>Anerkennungsverfahren zu "{settings.berufe.{abschluss.referenzberufzugewiesen}}"</h2>
-<h3>(nicht in Anmeldeformular von Ratsuchendem/r ausfüllbar)</h3>
+<h3>während oder nach der Beratung<br>(nicht in Anmeldeformular von Ratsuchendem/r ausfüllbar)</h3>
 	<div class="tp13_formdivwebapp" id="divantragstellungerfolgt">
 			<label for="antragstellungerfolgt">
 				<f:translate key="tx_iqtp13db_domain_model_abschluss.antragstellungerfolgt" />

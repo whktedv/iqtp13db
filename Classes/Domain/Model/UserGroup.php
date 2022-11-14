@@ -38,14 +38,22 @@ class UserGroup extends FrontendUserGroup
     protected $keywordlist = '';
     
     /**
+     * beratungsarten
+     *
+     * @var string
+     */
+    protected $beratungsarten = '';
+    
+    /**
      * initializes this object
      *
      * @param array $plzlist
      * @param array $keywordlist
      */
-    public function __construct(array $plzlist = array(), array $keywordlist = array()) {
+    public function __construct(array $plzlist = array(), array $keywordlist = array(), array $beratungsarten = array()) {
         $this->setPlzlist($plzlist);
         $this->setKeywordlist($keywordlist);
+        $this->setBeratungsarten($beratungsarten);
     }
     
     /**
@@ -130,5 +138,26 @@ class UserGroup extends FrontendUserGroup
     public function setKeywordlist(array $keywordlist)
     {
         $this->keywordlist = implode(',', $keywordlist);
+    }
+    
+    /**
+     * Returns the beratungsarten
+     *
+     * @return array $beratungsarten
+     */
+    public function getBeratungsarten()
+    {
+        return explode(',', $this->beratungsarten);
+    }
+    
+    /**
+     * Sets the beratungsarten
+     *
+     * @param array $beratungsarten
+     * @return void
+     */
+    public function setBeratungsarten(array $beratungsarten)
+    {
+        $this->beratungsarten = implode(',', $beratungsarten);
     }
 }

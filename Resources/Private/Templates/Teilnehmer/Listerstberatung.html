@@ -5,12 +5,12 @@
 
 <f:section name="main">
 <h1>Filter</h1>
-<f:form method="post" action="listerstberatung" name="listerstberatung"  noCacheHash="true" >
-		Name: <f:form.textfield size="20" value="{filtername}" name="name" />&nbsp;&nbsp;
-		Ort: <f:form.textfield size="20" value="{filterort}" name="ort" />&nbsp;&nbsp;
-		Beruf: <f:form.textfield size="20" value="{filterberuf}" name="beruf" />&nbsp;&nbsp;
-		Geburtsland: <f:form.select value="{filterland}" name="land" options="{wohnsitzstaaten}" optionValueField="value" optionLabelField="value" />&nbsp;&nbsp;
-		Gruppe: <f:form.textfield size="20" value="{filtergruppe}" name="gruppe" />&nbsp;&nbsp;&nbsp;&nbsp;
+<f:form class="filterform" method="post" action="listerstberatung" name="listerstberatung"  noCacheHash="true" >
+		<div>Name: <f:form.textfield size="20" value="{filtername}" name="name" /></div>
+		<div>Ort: <f:form.textfield size="20" value="{filterort}" name="ort" /></div>
+		<div>Beruf: <f:form.textfield size="20" value="{filterberuf}" name="beruf" /></div>
+		<div>Geburtsland: <f:form.select value="{filterland}" name="land" options="{wohnsitzstaaten}" optionValueField="value" optionLabelField="value" /></div>
+		<div>Gruppe: <f:form.textfield size="20" value="{filtergruppe}" name="gruppe" /></div>
 		<f:if condition="{filteron}"><f:then><f:form.button name="filteraus" value="1" >Filter löschen</f:form.button></f:then></f:if>
 		<f:form.submit name="filteran" value="Filtern" />			
 </f:form>
@@ -30,9 +30,9 @@
 			<th>Anerkenn.-<br>zusch.<br>beantragt?</th>
 			<th><f:link.action action="listerstberatung" arguments="{orderby : 'berater.username', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.berater" /></f:link.action></th>
 			<th><f:link.action action="listerstberatung" arguments="{orderby : 'beratungdatum', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungdatum" /></f:link.action></th>
-			<th><f:translate key="tx_iqtp13db_domain_model_abschluss.referenzberufzugewiesen" /></th>
+			<th id="resizablecol1"><f:translate key="tx_iqtp13db_domain_model_abschluss.referenzberufzugewiesen" /></th>
 			<th><f:link.action action="listerstberatung" arguments="{orderby : 'erstberatungabgeschlossen', changeorder : 1}">Fertig</f:link.action></th>
-			<th><f:link.action action="listerstberatung" arguments="{orderby : 'kooperationgruppe', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.kooperationgruppe" /></f:link.action></th>
+			<th id="resizablecol2"><f:link.action action="listerstberatung" arguments="{orderby : 'kooperationgruppe', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.kooperationgruppe" /></f:link.action></th>
 			<th> </th>
 			<th> </th>
 			<th> </th>
@@ -93,7 +93,7 @@
 				<td><f:link.action class="iconbuttons" action="delete" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Teilnehmer" onclick="return confirm('Wirklich löschen?');"><img src="/typo3conf/ext/iqtp13db/Resources/Public/Icons/delete-640.png" width="32" height="32" alt="Löschen" /></f:link.action></td>
 			</tr>
 			<f:if condition="{anzfolgekontakte.{it.index}} != 0"><f:then>
-				<f:render partial="Folgekontakte4List" arguments="{folgekontakte : folgekontakte, teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" />
+				<f:render partial="Folgekontakt/Folgekontakte4List" arguments="{folgekontakte : folgekontakte, teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" />
 			</f:then></f:if>
 		</f:for>
 	</table>

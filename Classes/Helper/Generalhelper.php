@@ -51,17 +51,23 @@ class Generalhelper
      */
     function getGeneralmailBeratungsstelle($niqbid, $usergroups, $standardbccmail) {
         foreach ($usergroups as $group) {
-            if($group->getNiqbid() == $niqbid) return $group->getGeneralmail();                        
+            if($group->getNiqbid() == $niqbid) {
+                return $group->getGeneralmail() == '' ? $standardbccmail : $group->getGeneralmail();                        
+            }
         }        
         return $standardbccmail;
     }
     
     public function sanitizeFileFolderName($name)
     {
+        /*
         // Remove special accented characters - ie. sí.
         $fileName = strtr($name, array('Š' => 'S','Ž' => 'Z','š' => 's','ž' => 'z','Ÿ' => 'Y','À' => 'A','Á' => 'A','Â' => 'A','Ã' => 'A','Ä' => 'A','Å' => 'A','Ç' => 'C','È' => 'E','É' => 'E','Ê' => 'E','Ë' => 'E','Ì' => 'I','Í' => 'I','Î' => 'I','Ï' => 'I','Ñ' => 'N','Ò' => 'O','Ó' => 'O','Ô' => 'O','Õ' => 'O','Ö' => 'O','Ø' => 'O','Ù' => 'U','Ú' => 'U','Û' => 'U','Ü' => 'U','Ý' => 'Y','à' => 'a','á' => 'a','â' => 'a','ã' => 'a','ä' => 'a','å' => 'a','ç' => 'c','è' => 'e','é' => 'e','ê' => 'e','ë' => 'e','ì' => 'i','í' => 'i','î' => 'i','ï' => 'i','ñ' => 'n','ò' => 'o','ó' => 'o','ô' => 'o','õ' => 'o','ö' => 'o','ø' => 'o','ù' => 'u','ú' => 'u','û' => 'u','ü' => 'u','ý' => 'y','ÿ' => 'y'));
         $fileName = strtr($fileName, array('Þ' => 'TH', 'þ' => 'th', 'Ð' => 'DH', 'ð' => 'dh', 'ß' => 'ss', 'Œ' => 'OE', 'œ' => 'oe', 'Æ' => 'AE', 'æ' => 'ae', 'µ' => 'u'));
         $clean_name = preg_replace(array('/\s/', '/\.[\.]+/', '/[^\w_\.\-]/'), array('_', '.', ''), $fileName);
+        */
+        // Statt oben einzelne Buchstaben zu konvertieren, nutze die Funktion transliterate, um alle Schritzeichen in lateinische Buchstaben zu konvertieren (auch kyrillische, arabische, farsi Schriftzeichen)
+        $clean_name = transliterator_transliterate('Any-Latin; Latin-ASCII;', $name);
         
         return $clean_name;
     }
@@ -82,10 +88,11 @@ class Generalhelper
         foreach ( $storages as $s ) {
             $storageObject = $s;
             $storageRecord = $storageObject->getStorageRecord ();
+            
             if ($storageRecord ['name'] == 'iqwebappdata') {
                 $storage = $s;
                 break;
-            }
+            } 
         }
         
         return $storage;
@@ -94,7 +101,7 @@ class Generalhelper
     public function createFolder($teilnehmer, $standardniqidberatungsstelle, $allusergroups, $storages)
     {
         $pfadname = $teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid(). '/';
-        $niqbid = $this->getNiqberatungsstellenid($teilnehmer, $allusergroups, $standardniqidberatungsstelle);
+        $niqbid = $teilnehmer->getNiqidberatungsstelle();
         $beratungsstellenfolder = $niqbid == '10143' ? 'Beratene' : $niqbid;
         $clean_path = $beratungsstellenfolder. '/' . $this->sanitizeFileFolderName($pfadname);
         $storage = $this->getTP13Storage($storages);

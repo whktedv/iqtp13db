@@ -29,8 +29,13 @@
 				<td>{berat.email}</td>
 				<td><f:format.date format="d.m.Y - H:i">{berat.lastlogin}</f:format.date> Uhr</td>
 				<td><f:for each="{berat.usergroup}" as="group">{group.title} </f:for></td>
-				<td><f:link.action action="edit" class="linkbuttons" arguments="{berater : berat}">Bearbeiten</f:link.action></td>
-				<td><f:link.action action="delete" class="linkbuttons" arguments="{berater : berat}">Löschen</f:link.action></td>
+				<td>
+					<f:if condition="{thisuser.username} == {berat.username}">
+						<f:then>
+							<f:link.action action="edit" class="linkbuttons" arguments="{berater : berat}">Bearbeiten</f:link.action>
+						</f:then>
+					</f:if>
+				</td>
 			</tr>
 			
 		</f:for>

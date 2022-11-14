@@ -20,7 +20,7 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
    
-    protected $niqinterface, $niqbid, $usergroup;
+    protected $niqinterface, $niqbid, $niqapiurl, $usergroup;
     
     /**
      * folgekontaktRepository
@@ -82,6 +82,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
             $this->niqbid = $userniqidbstelle == '' ? $standardniqidberatungsstelle : $userniqidbstelle;
         }
                 
+        $this->niqapiurl = $this->settings['niqapiurl'];
         $this->niqinterface = new \Ud\Iqtp13db\Helper\NiqInterface();
     }
     
@@ -111,7 +112,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     {
         $valArray = $this->request->getArguments();
         
-        if($teilnehmer->getNiqchiffre() != '' && $this->niqinterface->check_curl() == FALSE) {
+        if($teilnehmer->getNiqchiffre() != '' && $this->niqinterface->check_curl($this->niqapiurl) == FALSE) {
             $this->addFlashMessage("Bearbeiten von bereits übertragenen Datensätzen vorübergehend nicht möglich, da NIQ-Datenbank nicht erreichbar.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
         } else {
@@ -140,7 +141,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $valArray = $this->request->getArguments();
         $teilnehmer = $this->teilnehmerRepository->findByUid($valArray['folgekontakt']['teilnehmer']);
         
-        if($teilnehmer->getNiqchiffre() != '' && $this->niqinterface->check_curl() == FALSE) {
+        if($teilnehmer->getNiqchiffre() != '' && $this->niqinterface->check_curl($this->niqapiurl) == FALSE) {
             $this->addFlashMessage("Bearbeiten von bereits übertragenen Datensätzen vorübergehend nicht möglich, da NIQ-Datenbank nicht erreichbar.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
         } else {
@@ -170,7 +171,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
                     } else {
                         $niqidbstelle = $this->niqbid;
                     }
-                    $returnarray = $this->niqinterface->uploadtoNIQ($teilnehmer, $abschluesse, $folgekontakte, $niqidbstelle);
+                    $returnarray = $this->niqinterface->uploadtoNIQ($teilnehmer, $abschluesse, $folgekontakte, $niqidbstelle, $this->niqapiurl);
                     
                     $retteilnehmer = $this->teilnehmerRepository->findByUid($returnarray[0]->getUid());
                     $retstring = $returnarray[1];
@@ -204,7 +205,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $valArray = $this->request->getArguments();
         $teilnehmer = $folgekontakt->getTeilnehmer();
         
-        if($teilnehmer->getNiqchiffre() != '' && $this->niqinterface->check_curl() == FALSE) {
+        if($teilnehmer->getNiqchiffre() != '' && $this->niqinterface->check_curl($this->niqapiurl) == FALSE) {
             $this->addFlashMessage("Bearbeiten von bereits übertragenen Datensätzen vorübergehend nicht möglich, da NIQ-Datenbank nicht erreichbar.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
         } else {
@@ -233,7 +234,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $valArray = $this->request->getArguments();
         $teilnehmer = $folgekontakt->getTeilnehmer();
         
-        if($teilnehmer->getNiqchiffre() != '' && $this->niqinterface->check_curl() == FALSE) {
+        if($teilnehmer->getNiqchiffre() != '' && $this->niqinterface->check_curl($this->niqapiurl) == FALSE) {
             $this->addFlashMessage("Bearbeiten von bereits übertragenen Datensätzen vorübergehend nicht möglich, da NIQ-Datenbank nicht erreichbar.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
         } else {
@@ -253,7 +254,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
                 } else {
                     $niqidbstelle = $this->niqbid;
                 }
-                $returnarray = $this->niqinterface->uploadtoNIQ($teilnehmer, $abschluesse, $folgekontakte, $niqidbstelle);
+                $returnarray = $this->niqinterface->uploadtoNIQ($teilnehmer, $abschluesse, $folgekontakte, $niqidbstelle, $this->niqapiurl);
                 
                 $retteilnehmer = $this->teilnehmerRepository->findByUid($returnarray[0]->getUid());
                 $retstring = $returnarray[1];
@@ -282,7 +283,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $valArray = $this->request->getArguments();
         $teilnehmer = $folgekontakt->getTeilnehmer();
         
-        if($teilnehmer->getNiqchiffre() != '' && $this->niqinterface->check_curl() == FALSE) {
+        if($teilnehmer->getNiqchiffre() != '' && $this->niqinterface->check_curl($this->niqapiurl) == FALSE) {
             $this->addFlashMessage("Bearbeiten von bereits übertragenen Datensätzen vorübergehend nicht möglich, da NIQ-Datenbank nicht erreichbar.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
         } else {
@@ -301,7 +302,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
                 } else {
                     $niqidbstelle = $this->niqbid;
                 }
-                $returnarray = $this->niqinterface->uploadtoNIQ($teilnehmer, $abschluesse, $folgekontakte, $niqidbstelle);
+                $returnarray = $this->niqinterface->uploadtoNIQ($teilnehmer, $abschluesse, $folgekontakte, $niqidbstelle, $this->niqapiurl);
                 
                 $retteilnehmer = $returnarray[0];
                 $retstring = $returnarray[1];

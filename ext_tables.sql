@@ -238,4 +238,6 @@ CREATE TABLE fe_groups (
         generalmail varchar(255) DEFAULT '' NOT NULL,
         plzlist text NOT NULL,
         keywordlist text NOT NULL,
+        beratungsarten varchar(255) DEFAULT '' NOT NULL,
 );
+

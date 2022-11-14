@@ -2,6 +2,9 @@
 namespace Ud\Iqtp13db\Controller;
 
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\PathUtility;
+use TYPO3\CMS\Core\Core\Environment;
 
 /***
  *
@@ -254,4 +257,33 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         return $erg;
     }
 
+    /**
+     * action openfile
+     *
+     * @param \Ud\Iqtp13db\Domain\Model\Dokument $dokument
+     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
+     * @return void
+     */
+    public function openfileAction(\Ud\Iqtp13db\Domain\Model\Dokument $dokument, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    {
+        $storage = $this->generalhelper->getTP13Storage($this->storageRepository->findAll());
+        $pfad = $this->generalhelper->createFolder($teilnehmer, $this->settings['standardniqidberatungsstelle'], $this->allusergroups, $this->storageRepository->findAll());
+        $beratenepath = ltrim($pfad->getIdentifier(), '/');
+        $tmpName = $dokument->getName();
+    
+        if($storage->getConfiguration()['pathType'] == 'relative') {
+            $folder = $storage->getFolder($beratenepath);
+            $targetfile = $folder->getStorage()->getFileInFolder($tmpName, $folder);
+        } else {
+            $targetfile = $storage->getFile($beratenepath . $tmpName);
+        }
+        
+        $queryParameterArray = ['eID' => 'dumpFile', 't' => 'f'];
+        $queryParameterArray['f'] = $targetfile->getUid();
+        $queryParameterArray['token'] = GeneralUtility::hmac(implode('|', $queryParameterArray), 'resourceStorageDumpFile');
+        $publicUrl = GeneralUtility::locationHeaderUrl(PathUtility::getAbsoluteWebPath(Environment::getPublicPath() . '/index.php'));
+        $publicUrl .= '?' . http_build_query($queryParameterArray, '', '&', PHP_QUERY_RFC3986);
+                
+        $this->redirectToURI($publicUrl, $delay=0, $statusCode=303);
+    }
 }

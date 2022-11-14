@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="de" datatype="plaintext" original="messages" date="2016-09-01T11:23:16Z" product-name="iqtp13db" target-language="uk">
+    <header/>
+    <body>    
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.startseitetext">
+		<target> <![CDATA[ <p>Шановні шукачі порад, дорогі шукачі порад,</p><p>ми консультуємо, супроводжуємо та підтримуємо тих, хто потребує консультації щодо процеса визнання іноземної професійної кваліфікації.</p><p>Для того щоб ми могли добре проконсультувати вас, буде дуже корисно, якщо ми отримаємо від вас деяку інформацію про вас, вашу професійну кваліфікацію та досвід.</p><p>Тому ми хотіли б попросити вас якомога повніше заповнити наступну анкету. Ви можете відображати запитання різними мовами. Будь ласка, виберіть мову на початку. Будь ласка, відповідайте на запитання лише німецькою або англійською мовою. Інакше ваш запит не може бути оброблений.</p><p>Ваші дані можуть бути оброблені, лише якщо ви заповните всю форму та надішлете її.</p><p>Поради щодо визнання кваліфікації зазвичай надаються електронною поштою. Якщо у нас виникнуть запитання, ми зв’яжемося з вами по телефону.</p><p>З повагою</p><p>Ваша консультаційна установа з визнання професійної кваліфікації IQ</p> ]]> </target>
+	</trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.linkanmeldeseitetext">
+		<target>Реєстрація для консультації щодо визнання</target>
+	</trans-unit>
+    <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungtext1"><target><![CDATA[Я даю згоду на використання моїх даних з метою обробки мого запиту. Я взяла до відома <a href="]]></target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungtext2"><target><![CDATA["  target="_blank">iнформацію про обробку даних</a>я взяла до відомаю]]></target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.schonberaten"><target>Чи отримували Ви вже консультації щодо визнання Вашої іноземної професійної кваліфікації?</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.schonberatenvon"><target>Хто Вас консультував?</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.nachname"><target>Прізвище</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.vorname"><target>Ім'я </target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.plz"><target>Поштовий індекс </target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ort"><target>Mісце проживання</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.email"><target>Електронна пошта</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.confirmemail"><target>Підтвердити електронну пошту</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.telefon"><target>Номер телефону</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.lebensalter"><target>Вік</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geburtsland"><target>Країна народження </target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geschlecht"><target>Стать</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erste_staatsangehoerigkeit"><target>Перше громадянство</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zweite_staatsangehoerigkeit"><target>Друге громадянство</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einreisejahr"><target>Рік в'їзду в Німеччину</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_deutschland"><target>Місце проживання в Німеччині</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_nein_in"><target>Місце проживання в </target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.sonstigerstatus"><target>Інший статус</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus"><target>Cтатус проживання</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatusfreitext"><target>Примітка до статусу проживання</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><target>Німецька мова як рідна?</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikatdeutsch"><target>Сертифікат про знання німецької мови</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Якщо є сертифікат, то на якому рівні володіння мовою?</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsstatus"><target>Cтатус зайнятості</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezugjanein"><target>Чи отримуєте Ви гроші від Jobcenter або від агенства зайнятості Arbeitsagentur?</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezug"><target>Який вид виплати допомоги?</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_a"><target>Хочете, щоб ми передали результат консультації вашому куратору?</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungstextaa"><target>Надаючи наведені нижче дані, я погоджуюся з тим, що мої дані можуть бути передані агентству зайнятості або центру зайнятості з метою визнання професійної кваліфікаціі або як частина консультацій щодо її визнання.</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_berater_a_a"><target>Ім'я Вашого куратора в агентстві зайнятості або центрі зайнятості</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kontakt_berater_a_a"><target>Контактні дані (е-мейл і телефон)</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kundennummer_a_a"><target>Ваш номер клієнта</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_person"><target>Чи є хтось, кого б Ви хотіли залучити до своєї консультації?</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personname"><target>Ім’я особи та організації, якщо є</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personkontakt"><target>Контактні дані (е-мейл і телефон)</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_beratungsstelle"><target>Як Ви дізналися про нас?</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wieberaten"><target>В який спосіб Ви би хотіли проконсультуватися?</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.notizen"><target>Що б Ви ще хотіли нам розповісти чи може у Вас вже є конкретне запитання?</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss"><target>Закінчена професійна або вища освіта</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Вид/ступінь закінченої професійної або вищої освіти</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.erwerbsland"><target>Країна здобуття освітньої кваліфікації</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.dauer_berufsausbildung"><target>Тривалість професійного навчання</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussjahr"><target>Рік завершення освіти</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.ausbildungsinstitution"><target>Навчальний заклад </target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.ausbildungsort"><target>В якому місті Ви навчалися?</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschluss"><target>Закінчена професійна або вища освіта</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.berufserfahrung"><target>Досвід роботи</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.deutscher_referenzberuf"><target>Можлива професія в Німеччині</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.wunschberuf"><target>Бажана професія</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.antragstellungvorher"><target>Чи подано вже заяву про визнання професійної кваліфікації?</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.antragstellunggwpvorher"><target>Результат попередньої перевірки диплома на еквівалентність</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.antragstellungzabvorher"><target>Результат попередньої оцінки диплома від ZAB</target></trans-unit>
+	<trans-unit id="ja"><target>Так</target></trans-unit>
+	<trans-unit id="nein"><target>Ні</target></trans-unit>
+	<trans-unit id="ka"><target>Без відповіді</target></trans-unit>
+	<trans-unit id="maennlich"><target>чоловіча</target></trans-unit>
+	<trans-unit id="weiblich"><target>жіноча</target></trans-unit>
+	<trans-unit id="divers"><target>діверс</target></trans-unit>
+	<trans-unit id="sonstigerstatus.1"><target>місцевий персонал з Афганістану</target></trans-unit>
+	<trans-unit id="sonstigerstatus.2"><target>біженець з України</target></trans-unit>
+	<trans-unit id="abschlussart.1"><target>професійно-технічна освіта</target></trans-unit>
+	<trans-unit id="abschlussart.2"><target>вища університетська освіта</target></trans-unit>
+	<trans-unit id="weiter"><target>Далі</target></trans-unit>
+	<trans-unit id="zurueck"><target>Назад</target></trans-unit>
+	<trans-unit id="abbruch"><target>Скасувати</target></trans-unit>
+	<trans-unit id="dialoganmeldungabbrechen"><target>Скасувати реєстрацію?</target></trans-unit>
+	<trans-unit id="abschlussloeschen"><target>Видалити цю кваліфікацію</target></trans-unit>
+	<trans-unit id="dialogaabschlussloeschen"><target>Видалити цю кваліфікацію?</target></trans-unit>
+	<trans-unit id="fragebogen"><target>Сторінка анкети</target></trans-unit>
+	<trans-unit id="persdaten"><target>Персональні дані</target></trans-unit>
+	<trans-unit id="deutschkenntnisse"><target>Знання німецької мови</target></trans-unit>
+	<trans-unit id="abschluesse"><target>Закінчена професійна або вища освіта</target></trans-unit>
+	<trans-unit id="datenabschluss"><target>Дані щодо освітнього диплома</target></trans-unit>
+	<trans-unit id="auswahlabschluss"><target>Виберіть кваліфікацію</target></trans-unit>
+	<trans-unit id="abschlussartoption1"><target>професійно-технічна освіта</target></trans-unit>
+	<trans-unit id="abschlussartoption2"><target>вища університетська освіта</target></trans-unit>
+	<trans-unit id="auslaendischerabschluss"><target>Іноземний диплом</target></trans-unit>
+	<trans-unit id="beruflichesituation"><target>Ситуація з роботою</target></trans-unit>
+	<trans-unit id="datenjobcenterarbeitsagentur"><target>Дані центра зайнятості/агентства зайнятості</target></trans-unit>
+	<trans-unit id="datenweitereperson"><target>Передача даних іншій особі</target></trans-unit>
+	<trans-unit id="beratung"><target>Консультація</target></trans-unit>
+	<trans-unit id="dokumente"><target>Документи</target></trans-unit>
+	<trans-unit id="dokumenteintro"><target><![CDATA[Будь ласка, завантажте наступні документи у вигляді PDF-файлу (усього не більше 30 МБ): <br>-Ваші оригінальні дипломи та переклади<br>-Ваш вид на проживання; резюме; повідомлення від інстанцій<br><h3> Завантажені документи:</h3>]]></target></trans-unit>
+	<trans-unit id="dokumentauswaehlen"><target>Виберіть документ</target></trans-unit>
+	<trans-unit id="dokumenthochladen"><target>Завантажити документ</target></trans-unit>
+	<trans-unit id="speicherplatzhinweis"><target>Mісцe для зберігання документів:</target></trans-unit>
+	<trans-unit id="loeschen"><target>Bидалити</target></trans-unit>
+	<trans-unit id="hochladen"><target>Завантажити зараз</target></trans-unit>
+	<trans-unit id="absenden"><target>Відправити зараз</target></trans-unit>
+	<trans-unit id="hinweisdatenpruefen"><target>Будь ласка, перевірте свої дані на цьому етапі. Якщо всі дані правильні, натисніть кнопку «Відправити».</target></trans-unit>
+	<trans-unit id="infoNachname"><target>Будь ласка, введіть своє прізвище тут.</target></trans-unit>
+	<trans-unit id="infoVorname"><target>Будь ласка, введіть своє ім'я тут.</target></trans-unit>
+	<trans-unit id="infoGeburtsland"><target>Будь ласка, введіть тут країну, де Ви народилися</target></trans-unit>
+	<trans-unit id="infoStaatsangehoerigkeit"><target>Якщо у вас два різних громадянства/національності, вкажіть обидва.</target></trans-unit>
+	<trans-unit id="infoJahrEinreise"><target>Будь ласка, введіть рік, в якому Ви в’їхали в Німеччину.</target></trans-unit>
+	<trans-unit id="infoWohnsitzinDeutschlandNein"><target>Будь ласка, вкажіть, в якій країні Ви зараз проживаєте.</target></trans-unit>
+	<trans-unit id="infoAbschluss"><target>Професійно-технічна освіта - це завершення професійної підготовки. Університетський диплом – це науковий ступінь, отриманий після навчання в коледжі/університеті. Зазвичай курс тривав не менше 3 років. Вкажіть, будь ласка, який ступінь ви отримали.</target></trans-unit>
+	<trans-unit id="infoAusbildungsort"><target>Будь ласка, введіть місто, де Ви закінчили навчання.</target></trans-unit>
+	<trans-unit id="infoBerufserfahrung"><target>Будь ласка, вкажіть, скільки часу Ви працювали за професією (місяці/роки).</target></trans-unit>
+	<trans-unit id="infoBezug"><target>З якої установи/органу/управління Ви зараз отримуєте гроші на витрати на проживання? Будь ласка, введіть цю установу/орган/установу тут.</target></trans-unit>
+	<trans-unit id="infoBezugsart"><target><![CDATA[Який вид грошової підтримки (гроші на проживання) ви зараз отримуєте?<br>SGB II: Базова фінансова підтримка для шукачів роботи (Hartz IV)<br>SGB III: Страхові виплати по безробіттю та виплати за сприяння працевлаштуванню <br>Asylbewerberleistungsbezug: Основні пільги для шукачів притулку, толерованих осіб та іноземців, які підлягають виконанню зобов'язання залишити країну.<br>Введіть один із типів посилання]]></target></trans-unit>
+	<trans-unit id="headabschlussrechts"><target>Ще одна завершена освіта?</target></trans-unit>
+	<trans-unit id="anredemail"><target>Доброго дня</target></trans-unit>
+	<trans-unit id="mailtext"><target><![CDATA[<p>Дякуємо за інформацію.</p> <p>&nbsp</p> <p>Тепер Ви зареєстровані на консультацію. Ми зв’яжемося з Вами, як тільки настане Ваша черга. <br><br>Консультація буде надаватися електронною поштою, телефоном або відеочатом за запитом.</p> <p>Ми намагатимемося обробити ваш запит протягом WARTEZEITWOCHEN тижнів. Просимо вашого розуміння та терпіння.</p><p>&nbsp</p> <p>З повагою</p>Ваша консультаційна установа по визнанню професійних дипломів та кваліфікацій]]></target></trans-unit>
+	<trans-unit id="subject"><target>Ваша реєстрація для консультації по визнанню професійної кваліфікації в мережі IQ</target></trans-unit>
+	<trans-unit id="confirmlinktext"><target><![CDATA[Підтвердити реєстрацію - Confirm registration]]></target></trans-unit>
+	<trans-unit id="confirmmailtext1"><target><![CDATA[<p>Шановний шукач порад,</p> <p>&nbsp</p> <p>Будь ласка, підтвердьте свою реєстрацію для консультації по визнанню професійної кваліфікації тут:</p>]]></target></trans-unit>
+	<trans-unit id="confirmmailtext2"><target><![CDATA[<p>З повагою</p> <p> Ваша консультаційна установа по визнанню професійних дипломів та кваліфікацій мережі IQ</p>]]></target></trans-unit>
+	<trans-unit id="confirmsubject"><target>Будь ласка, підтвердьте Вашу реєстрацію в консультаційній установі по визнанню професійної кваліфікації мережі IQ</target></trans-unit>
+    </body>
+  </file>
+</xliff>

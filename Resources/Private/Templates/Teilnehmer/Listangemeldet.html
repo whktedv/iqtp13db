@@ -6,12 +6,12 @@
 
 <f:section name="main">
 <h1>Filter</h1>
-<f:form method="post" controller="Teilnehmer" action="listangemeldet" name="listangemeldet"  noCacheHash="true" >
-		Name: <f:form.textfield size="20" value="{filtername}" name="name" />&nbsp;&nbsp;
-		Ort: <f:form.textfield size="20" value="{filterort}" name="ort" />&nbsp;&nbsp;
-		Beruf: <f:form.textfield size="20" value="{filterberuf}" name="beruf" />&nbsp;&nbsp;
-		Geburtsland: <f:form.select value="{filterland}" name="land" options="{wohnsitzstaaten}" optionValueField="value" optionLabelField="value" />&nbsp;&nbsp;
-		Gruppe: <f:form.textfield size="20" value="{filtergruppe}" name="gruppe" />&nbsp;&nbsp;&nbsp;&nbsp;
+<f:form class="filterform" method="post" controller="Teilnehmer" action="listangemeldet" name="listangemeldet"  noCacheHash="true" >
+		<div>Name: <f:form.textfield size="20" value="{filtername}" name="name" /></div>
+		<div>Ort: <f:form.textfield size="20" value="{filterort}" name="ort" /></div>
+		<div>Beruf: <f:form.textfield size="20" value="{filterberuf}" name="beruf" /></div>
+		<div>Geburtsland: <f:form.select value="{filterland}" name="land" options="{wohnsitzstaaten}" optionValueField="value" optionLabelField="value" /></div>
+		<div>Gruppe: <f:form.textfield size="20" value="{filtergruppe}" name="gruppe" /></div>
 		<f:if condition="{filteron}"><f:then><f:form.button name="filteraus" value="1" >Filter löschen</f:form.button></f:then></f:if>
 		<f:form.submit name="filteran" value="Filtern" />			
 </f:form>
@@ -34,8 +34,8 @@
 			<th>Leistung</th>
 			<th><f:link.action action="listangemeldet" arguments="{orderby : 'geburtsland', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geburtsland" />/-ort</f:link.action></th>
 			<th><f:link.action action="listangemeldet" arguments="{orderby : 'geschlecht', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geschlecht" /></f:link.action></th>
-			<th><f:translate key="tx_iqtp13db_domain_model_abschluss.deutscher_referenzberuf" /></th>
-			<th><f:link.action action="listangemeldet" arguments="{orderby : 'kooperationgruppe', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.kooperationgruppe" /></f:link.action></th>
+			<th id="resizablecol1"><f:translate key="tx_iqtp13db_domain_model_abschluss.deutscher_referenzberuf" /></th>
+			<th id="resizablecol2"><f:link.action action="listangemeldet" arguments="{orderby : 'kooperationgruppe', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.kooperationgruppe" /></f:link.action></th>
 			<th> </th>
 			<th> </th>
 			<th> </th> 

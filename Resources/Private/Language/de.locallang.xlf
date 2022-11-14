@@ -18,6 +18,14 @@
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer">
 				<target>Ratsuchende*r</target>
 			</trans-unit>
+			
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.startseitetext">
+				<target> <![CDATA[ <p>Liebe Ratsuchende,</p><p>wir beraten, begleiten und unterstützen Ratsuchende mit ausländischen Berufsqualifikationen auf ihrem Weg in und durch die Anerkennungsverfahren. &nbsp;</p><p>Um Sie gut beraten zu können, ist es sehr hilfreich, wenn wir einige Informationen über Sie und Ihre beruflichen Qualifikationen und Erfahrungen von Ihnen erhalten.</p><p>Deshalb möchten wir Sie bitten, den folgenden Fragebogen so vollständig wie möglich auszufüllen. Sie können sich die Fragen in verschiedenen Sprachen anzeigen lassen. Bitte wählen Sie hierfür zu Beginn eine Sprache aus. Beantworten Sie die Fragen bitte nur auf Deutsch oder Englisch. Ihre Anfrage kann sonst nicht bearbeitet werden.</p><p>Ihre Daten können nur bearbeitet werden, wenn Sie das gesamte Formular ausgefüllt absenden.</p><p>Die Anerkennungsberatung erfolgt in der Regel per E-Mail. Bei Rückfragen kontaktieren wir Sie telefonisch.</p><p>Mit freundlichen Grüßen</p><p>Ihre IQ Anerkennungs- und Qualifizierungsberatung</p> ]]> </target>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.linkanmeldeseitetext">
+				<target>Anmeldung zur Anerkennungsberatung</target>
+			</trans-unit>
+			
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligung">
 				<target>Einwilligung</target>
 			</trans-unit>			
@@ -502,7 +510,7 @@
 			</trans-unit>
 			<trans-unit id="mailtext">
 				<target> <![CDATA[
-					 <p>vielen Dank für Ihre Informationen.</p> <p>&nbsp;</p> <p>Sie sind jetzt zur Beratung angemeldet. Wir setzen uns mit Ihnen in Verbindung, sobald Sie an der Reihe sind. <br><br>Die Beratung erfolgt nach Wunsch über E-Mail, Telefon oder Videochat.</p> <p>Wir bemühen uns, Ihre Anfrage innerhalb von 8-10 Wochen zu bearbeiten. Wir bitten um Ihr Verständnis und Ihre Geduld.</p><p>&nbsp;</p> <p>Mit freundlichen Grüßen</p>Ihre Mobile IQ Anerkennungs- und Qualifizierungsberatung 
+					 <p>vielen Dank für Ihre Informationen.</p> <p>&nbsp;</p> <p>Sie sind jetzt zur Beratung angemeldet. Wir setzen uns mit Ihnen in Verbindung, sobald Sie an der Reihe sind. <br><br>Die Beratung erfolgt nach Wunsch über E-Mail, Telefon oder Videochat.</p> <p>Wir bemühen uns, Ihre Anfrage innerhalb von ca. WARTEZEITWOCHEN Wochen zu bearbeiten. Wir bitten um Ihr Verständnis und Ihre Geduld.</p><p>&nbsp;</p> <p>Mit freundlichen Grüßen</p>Ihre IQ Anerkennungs- und Qualifizierungsberatung 
 					 ]]></target>
 			</trans-unit>
 			<trans-unit id="subject">

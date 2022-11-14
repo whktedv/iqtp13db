@@ -108,6 +108,8 @@ class NiqInterface
         elseif ($teilnehmer->getDeutschkenntnisse() == 2 && ($teilnehmer->getZertifikatSprachniveau() == 1 || $teilnehmer->getZertifikatSprachniveau() == 1)) return 2; //gelb 
         elseif ($teilnehmer->getNameBeratungsstelle() < -1 || $teilnehmer->getNameBeratungsstelle() == '') return 2; //gelb 
         
+        if($teilnehmer->getLeistungsbezugjanein() == 1 && $teilnehmer->getLeistungsbezug() == '') return 2;
+
         return 1; // grün         
     }
     
@@ -181,7 +183,7 @@ class NiqInterface
         if ($teilnehmer->getWohnsitzDeutschland() == 0) array_push($returnarr,"Wohnsitz Deutschland?");
         // übertragene Staatsangehörigkeit ist standardmäßig die Erste
         $staatsangehoerigkeit = $teilnehmer->getErsteStaatsangehoerigkeit();
-        // Wenn die erste Stattsangehörigkeit Deutsch ist, nimm die Zweite.
+        // Wenn die erste Stattsangehörigkeit Deutsch ist, nimm die Zweite. 
         if($teilnehmer->getErsteStaatsangehoerigkeit() == 37) $staatsangehoerigkeit = $teilnehmer->getZweiteStaatsangehoerigkeit() != -1000 ? $teilnehmer->getZweiteStaatsangehoerigkeit() : $teilnehmer->getErsteStaatsangehoerigkeit();
         
         if ($staatsangehoerigkeit == -1000) array_push($returnarr,"Staatsangehörigkeit");
@@ -190,9 +192,10 @@ class NiqInterface
         if ($teilnehmer->getWohnsitzDeutschland() == 2 && ($teilnehmer->getWohnsitzNeinIn() < -1 || $teilnehmer->getWohnsitzNeinIn() == '')) array_push($returnarr,"Wohnsitz in");
         if ($teilnehmer->getErwerbsstatus() == 0) array_push($returnarr,"Erwerbsstatus");
         if ($teilnehmer->getAufenthaltsstatus() == 0) array_push($returnarr,"Aufenthaltsstatus");
-        if ($teilnehmer->getDeutschkenntnisse() == 0) array_push($returnarr,"Deutschkenntnisse");
+        if ($teilnehmer->getDeutschkenntnisse() == 0) array_push($returnarr,"Deutschkenntnisse"); 
         if ($teilnehmer->getDeutschkenntnisse() == 2 && ($teilnehmer->getZertifikatSprachniveau() == 1 || $teilnehmer->getZertifikatSprachniveau() == 1)) array_push($returnarr,"Sprachniveau");
-        if ($teilnehmer->getNameBeratungsstelle() <-1) array_push($returnarr,"Beratungsstelle");
+        if ($teilnehmer->getNameBeratungsstelle() <-1 || $teilnehmer->getNameBeratungsstelle() == '') array_push($returnarr,"Wie haben Sie uns gefunden?");
+        if($teilnehmer->getLeistungsbezugjanein() == 1 && $teilnehmer->getLeistungsbezug() == '') array_push($returnarr,"Leistungsbezug");
         
         return $returnarr;
     }
@@ -200,7 +203,7 @@ class NiqInterface
     /**
      * NIQ Upload/Update
      */
-    public function uploadtoNIQ($teilnehmer, $abschluesse, $folgekontakte, $niqidberatungsstelle) {
+    public function uploadtoNIQ($teilnehmer, $abschluesse, $folgekontakte, $niqidberatungsstelle, $niqapiurl) {
         //\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($post);
         //die();
 
@@ -219,7 +222,7 @@ class NiqInterface
             }
         }
         
-        if($this->check_curl()) {
+        if($this->check_curl($niqapiurl)) {
             
             // --------------------------------------
             // Parameterübersetzung Transformationsmatrizen Webapp <-> NIQ DB
@@ -292,6 +295,7 @@ class NiqInterface
             if($leistungsbezugjanein == 2) $leistungsbezug = 1; // ohne Leistungsbezug
             if($leistungsbezugjanein == 3) $leistungsbezug = -1; // k.A. ob Leistungsbezug
             if($leistungsbezugjanein == '') $leistungsbezug = -1000; // NICHTS AUSGEWÄHLT
+     
             
             // Beratungsart
             //  1 = face-to-face, 2 = Telefon, 3 = E-Mail, 5 = Video
@@ -458,7 +462,7 @@ class NiqInterface
             }
             
             // Sende Daten per curl
-            $retval = $this->post_curl(http_build_query($post));
+            $retval = $this->post_curl(http_build_query($post), $niqapiurl);
             
             // Checke den Rückgabewert
             if($retval['status'] == 'Update OK') {  // Update erfolgreich?
@@ -486,10 +490,9 @@ class NiqInterface
      * Check Verbindung
      *
      */
-    public function check_curl() {
+    public function check_curl($niqapiurl) {
         $ch = curl_init();
-        //curl_setopt($ch, CURLOPT_URL,"https://niq-datenbank.de/apptest/save_app.php"); curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_URL,"https://niq-datenbank.de/hsp1/save_json_app.php"); curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_URL,$niqapiurl); curl_setopt($ch, CURLOPT_POST, 1);
         
         curl_setopt($ch, CURLOPT_POSTFIELDS, "id=2&do=nothing");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -505,10 +508,9 @@ class NiqInterface
      * Übertrage Daten
      *
      */
-    public function post_curl($post) {
+    public function post_curl($post, $niqapiurl) {
         $ch = curl_init();
-        //curl_setopt($ch, CURLOPT_URL,"https://niq-datenbank.de/apptest/save_json_app.php"); curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_URL,"https://niq-datenbank.de/hsp1/save_json_app.php"); curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_URL,$niqapiurl); curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         

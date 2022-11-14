@@ -5,12 +5,12 @@
 
 <f:section name="main">
 <h1>Filter</h1>
-<f:form method="post" action="listarchiv" name="listarchiv"  noCacheHash="true" >
-		Name: <f:form.textfield size="20" value="{filtername}" name="name" />&nbsp;&nbsp;
-		Ort: <f:form.textfield size="20" value="{filterort}" name="ort" />&nbsp;&nbsp;
-		Beruf: <f:form.textfield size="20" value="{filterberuf}" name="beruf" />&nbsp;&nbsp;
-		Geburtsland: <f:form.select value="{filterland}" name="land" options="{wohnsitzstaaten}" optionValueField="value" optionLabelField="value" />&nbsp;&nbsp;
-		Gruppe: <f:form.textfield size="20" value="{filtergruppe}" name="gruppe" />&nbsp;&nbsp;&nbsp;&nbsp;
+<f:form class="filterform" method="post" action="listarchiv" name="listarchiv"  noCacheHash="true" >
+		<div>Name: <f:form.textfield size="20" value="{filtername}" name="name" /></div>
+		<div>Ort: <f:form.textfield size="20" value="{filterort}" name="ort" /></div>
+		<div>Beruf: <f:form.textfield size="20" value="{filterberuf}" name="beruf" /></div>
+		<div>Geburtsland: <f:form.select value="{filterland}" name="land" options="{wohnsitzstaaten}" optionValueField="value" optionLabelField="value" /></div>
+		<div>Gruppe: <f:form.textfield size="20" value="{filtergruppe}" name="gruppe" /></div>
 		<f:if condition="{filteron}"><f:then><f:form.button name="filteraus" value="1" >Filter löschen</f:form.button></f:then></f:if>
 		<f:form.submit name="filteran" value="Filtern" />			
 </f:form>
@@ -30,11 +30,12 @@
 			<th><f:link.action action="listarchiv" arguments="{orderby : 'ort', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.plz" />/<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ort" /></f:link.action></th>
 			<th>Leistung</th>
 			<th>Anerkenn.-<br>zusch.<br>beantragt?</th>
-			<th><f:link.action action="listarchiv" arguments="{orderby : 'berater.kuerzel', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.berater" /></f:link.action></th>
+			<th><f:link.action action="listarchiv" arguments="{orderby : 'berater.username', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.berater" /></f:link.action></th>
 			<th><f:link.action action="listarchiv" arguments="{orderby : 'beratungdatum', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungdatum" /></f:link.action></th>
-			<th><f:translate key="tx_iqtp13db_domain_model_abschluss.referenzberufzugewiesen" /></th>
+			<th id="resizablecol1"><f:translate key="tx_iqtp13db_domain_model_abschluss.deutscher_referenzberuf" /></th>
+			<th id="resizablecol2"><f:translate key="tx_iqtp13db_domain_model_abschluss.referenzberufzugewiesen" /></th>
 			<th><f:link.action action="listarchiv" arguments="{orderby : 'erstberatungabgeschlossen', changeorder : 1}">Fertig</f:link.action></th>
-			<th><f:link.action action="listarchiv" arguments="{orderby : 'kooperationgruppe', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.kooperationgruppe" /></f:link.action></th>
+			<th id="resizablecol3"><f:link.action action="listarchiv" arguments="{orderby : 'kooperationgruppe', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.kooperationgruppe" /></f:link.action></th>
 			<th><f:translate key="tx_iqtp13db_domain_model_teilnehmer.niqchiffre" /></th>
 			<th> </th>
 			<th> </th>
@@ -52,6 +53,11 @@
 				<td>{f:if(condition: '{teilnehmer.anerkennungszuschussbeantragt} == 1', then: '✓', else: '')}</td>
 				<td>{teilnehmer.berater.username}</td>
 				<td><f:format.date format="d.m.Y">{teilnehmer.beratungdatum}</f:format.date></td>
+				<td>
+					<f:for each="{abschluesse.{it.index}}" as="abschluss" iteration="iter">
+						{f:if(condition: '{abschluesse.{it.index} -> f:count()} > 1', then: '{iter.index + 1}.', else: '')} {abschluss.deutscherReferenzberuf}<br>
+					</f:for>
+				</td>
 				<td>
 					<f:for each="{abschluesse.{it.index}}" as="abschluss" iteration="iter">
 						<f:for each="{settings.berufe}" as="beruf" key="key">
