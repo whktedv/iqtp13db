@@ -82,49 +82,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         
         return $query->execute();
     }
-    
-    
-    /**
-     * Finds Teilnehmer by the specified name, ort and/or geburtsland
-     
-    public function searchTeilnehmer($type, $name, $ort, $land, $gruppe, $auchverstecktundgelöscht, $niqbid)
-    {
-        $name = $name == '' ? '%' : $name;
-        $ort = $ort == '' ? '%' : $ort;
-        $land = $land == '' ? '%' : $land;
-        $gruppe = $gruppe == '' ? '%' : $gruppe;
         
-        $query = $this->createQuery();
-        
-        if($auchverstecktundgelöscht == 1) {
-            $query->getQuerySettings()->setIgnoreEnableFields(TRUE);
-            $query->getQuerySettings()->setEnableFieldsToBeIgnored(array('disabled', 'hidden'));
-        }
-        
-        // Beratungsstatus
-        if($type == 0 || $type == 1) $bstatus = $query->logicalOr($query->like('beratungsstatus', '0'),$query->like('beratungsstatus', '1'));
-        elseif($type == 2 || $type == 3) $bstatus = $query->logicalOr($query->like('beratungsstatus', '2'),$query->like('beratungsstatus', '3'));
-        elseif($type == 999) $bstatus = $query->like('beratungsstatus', '%');
-        else $bstatus = $query->like('beratungsstatus', '4');
-         
-        $query->matching(
-            $query->logicalAnd(
-                $query->logicalOr(
-                    $query->like('nachname', '%'.$name.'%'),$query->like('vorname', '%'.$name.'%')
-                    ),
-                $query->like('ort', '%'.$ort.'%'),
-                $query->like('geburtsland', $land),
-                $query->like('kooperationgruppe', '%'.$gruppe.'%'),
-                $query->like('niqidberatungsstelle', $niqbid),
-                $bstatus,
-                $beruf
-            )
-        );
-         
-        return $query->execute();
-    }
-    */
-    
     /**
      * @param $beratungsstatus
      * @param $orderby
@@ -166,7 +124,6 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $query = $query->execute();
         return $query;
     }
-    
     
     /**
      * @param $uid

@@ -1,6 +1,8 @@
 <?php
 namespace Ud\Iqtp13db\Domain\Repository;
 
+use TYPO3\CMS\Extbase\Persistence\Repository;
+
 /***
  *
  * This file is part of the "IQ Webapp Anerkennungserstberatung" Extension for TYPO3 CMS.
@@ -15,7 +17,7 @@ namespace Ud\Iqtp13db\Domain\Repository;
 /**
  * The repository for Berater
  */
-class BeraterRepository extends \TYPO3\CMS\Extbase\Domain\Repository\FrontendUserRepository
+class BeraterRepository
 {
     
     public function findAllBerater($customStoragePid)

@@ -31,12 +31,12 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     protected $beraterRepository;
     
     /**
-     * frontendUserGroupRepository
+     * userGroupRepository
      *
-     * @var \TYPO3\CMS\Extbase\Domain\Repository\FrontendUserGroupRepository
+     * @var \Ud\Iqtp13db\Domain\Repository\userGroupRepository
      * @TYPO3\CMS\Extbase\Annotation\Inject
      */
-    protected $frontendUserGroupRepository;
+    protected $userGroupRepository;
        
     
     protected $niqbid, $usergroup;
@@ -56,7 +56,7 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         if($this->user != NULL) {
             $standardniqidberatungsstelle = $this->settings['standardniqidberatungsstelle'];
-            $this->usergroup = $this->frontendUserGroupRepository->findByIdentifier($this->user['usergroup']);
+            $this->usergroup = $this->userGroupRepository->findByIdentifier($this->user['usergroup']);
             $userniqidbstelle = $this->usergroup->getNiqbid();
             $this->niqbid = $userniqidbstelle == '' ? $standardniqidberatungsstelle : $userniqidbstelle;
         }
@@ -95,7 +95,7 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      */
     public function newAction()
     {
-        $usergroups = $this->frontendUserGroupRepository->findAll();
+        $usergroups = $this->userGroupRepository->findAll();
         $this->view->assign('usergroups', $usergroups);
     }
     
@@ -121,7 +121,7 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      */
     public function editAction(\Ud\Iqtp13db\Domain\Model\Berater $berater)
     {
-        $usergroups = $this->frontendUserGroupRepository->findAll();
+        $usergroups = $this->userGroupRepository->findAll();
         
         $this->view->assign('berater', $berater);
         $this->view->assign('usergroups', $usergroups);
@@ -140,7 +140,7 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $valArray = $this->request->getArguments();
         
-        $usergroup = $this->frontendUserGroupRepository->findByIdentifier($valArray['berater']['usergroup']);        
+        $usergroup = $this->userGroupRepository->findByIdentifier($valArray['berater']['usergroup']);        
         $berater->addUsergroup($usergroup);        
         $berater->setPassword(password_hash($berater->getPassword(), PASSWORD_ARGON2I));
                 
