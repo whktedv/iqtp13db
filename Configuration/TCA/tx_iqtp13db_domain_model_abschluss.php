@@ -1,14 +1,13 @@
 <?php
 return [
     'ctrl' => [
-        'title' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang_db.xlf:tx_iqtp13db_domain_model_abschluss',
+        'title' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_abschluss',
         'label' => 'teilnehmer',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
         'versioningWS' => true,
         'languageField' => 'sys_language_uid',
-        'transOrigPointerField' => 'l10n_parent',
         'transOrigDiffSourceField' => 'l10n_diffsource',
         'delete' => 'deleted',
         'enablecolumns' => [
@@ -18,9 +17,6 @@ return [
         ],
         'searchFields' => 'deutscher_referenzberuf, nregberuf, teilnehmer',
         'iconfile' => 'EXT:iqtp13db/Resources/Public/Icons/tx_iqtp13db_domain_model_abschluss.gif'
-    ],
-    'interface' => [
-        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, abschlussart, erwerbsland, dauer_berufsausbildung, abschlussjahr, ausbildungsinstitution, ausbildungsort, abschluss, berufserfahrung, deutscher_referenzberuf, beraterreferenzberuf, wunschberuf, antragstellungvorher, antragstellunggwpvorher, antragstellungzabvorher, antragstellungerfolgt, antragstellunggwpdatum, antragstellunggwpergebnis, antragstellungzabdatum, antragstellungzabergebnis, niquebertragung, sonstigerberuf, nregberuf, teilnehmer',
     ],
     'types' => [
         '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, abschlussart, erwerbsland, dauer_berufsausbildung, abschlussjahr, ausbildungsinstitution, ausbildungsort, abschluss, berufserfahrung, deutscher_referenzberuf, beraterreferenzberuf, wunschberuf, antragstellungvorher, antragstellunggwpvorher, antragstellungzabvorher, antragstellungerfolgt, antragstellunggwpdatum, antragstellunggwpergebnis, antragstellungzabdatum, antragstellungzabergebnis, niquebertragung, sonstigerberuf, nregberuf, teilnehmer, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],

@@ -11,9 +11,6 @@ return [
         'searchFields' => 'property',
         'iconfile' => 'EXT:iqtp13db/Resources/Public/Icons/tx_iqtp13db_domain_model_historie.gif'
     ],
-    'interface' => [
-        'showRecordFieldList' => 'teilnehmer, property, oldvalue, newvalue, berater, tstamp',
-    ],
     'types' => [
         '1' => ['showitem' => 'teilnehmer, property, oldvalue, newvalue, berater, tstamp, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access'],
     ],

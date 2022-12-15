@@ -58,22 +58,14 @@
 		
     	// Seite 3
     	toggleleistungsbezugjanein();
-    	toggleeinwdatenaa();
-		
+    	
 		$('#optleistungsbezugjanein1').change(function() {
 			toggleleistungsbezugjanein();
 		});    	
 		$('#optleistungsbezugjanein2').change(function() {
 			toggleleistungsbezugjanein();
 		}); 
-		
-		$('#opteinwilligungdatenanAA1').change(function() {
-			toggleeinwdatenaa();
-		});    	
-		$('#opteinwilligungdatenanAA2').change(function() {
-			toggleeinwdatenaa();
-		});
-		
+						
 		// für Backend		
 		for (i = 0; i < 17; i++) {
 			$('#aufenthaltsstatusradio'+i).change(function() {
@@ -184,28 +176,16 @@
     function toggleleistungsbezugjanein() {
     	if($('#optleistungsbezugjanein1').is(":checked")) {
 			$('#divleistungsbezug').fadeIn();
-			$('#einwdatenanAA').fadeIn();			
+			$('#datenAA').fadeIn();		
 			return;
 		} else if($('#optleistungsbezugjanein2').is(":checked")) {
 			 $('#divleistungsbezug').fadeOut();
-			 $('#einwdatenanAA').fadeOut();
+			 $('#datenAA').fadeOut();
 			 $('#opteinwilligungdatenanAA2').prop("checked", true);
 			 toggleeinwdatenaa();
 			return;
 		} else {
 			$('#divleistungsbezug').fadeOut();
-			$('#einwdatenanAA').fadeOut();
-		}
-	}
-    
-    function toggleeinwdatenaa() {
-    	if($('#opteinwilligungdatenanAA1').is(":checked")) {
-			$('#datenAA').fadeIn();
-			return;
-		} else if($('#opteinwilligungdatenanAA2').is(":checked")) {
-			 $('#datenAA').fadeOut();
-			return;
-		} else {
 			$('#datenAA').fadeOut();
 		}
 	}   

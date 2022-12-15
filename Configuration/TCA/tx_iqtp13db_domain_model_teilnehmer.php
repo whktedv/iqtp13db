@@ -8,7 +8,6 @@ return [
         'cruser_id' => 'cruser_id',
         'versioningWS' => true,
         'languageField' => 'sys_language_uid',
-        'transOrigPointerField' => 'l10n_parent',
         'transOrigDiffSourceField' => 'l10n_diffsource',
         'delete' => 'deleted',
         'enablecolumns' => [
@@ -18,9 +17,6 @@ return [
         ],
         'searchFields' => 'niqchiffre,nachname,vorname,plz,ort,email,telefon,lebensalter,geburtsland,erste_staatsangehoerigkeit,zweite_staatsangehoerigkeit,einreisejahr,wohnsitz_nein_in, zertifikat_sprachniveau,erwerbsland1,dauer_berufsausbildung1,abschlussjahr1,ausbildungsinstitution1,ausbildungsort1,abschluss1,berufserfahrung1,berufserfahrunginland1,ausbildungsfremdeberufserfahrung1,deutscher_referenzberuf1,wunschberuf1,erwerbsland2,dauer_berufsausbildung2,abschlussjahr2,ausbildungsinstitution2,ausbildungsort2,abschluss2,berufserfahrung2,berufserfahrunginland2,ausbildungsfremdeberufserfahrung2,deutscher_referenzberuf2,wunschberuf2,leistungsbezug,name_berater_a_a,kontakt_berater_a_a,kundennummer_a_a,einw_anerkstelle, einw_anerkstelledatum, einw_anerkstellemedium, einw_anerkstellename, einw_anerkstellekontakt, einw_person, einw_persondatum, einw_personmedium, einw_personname, einw_personkontakt, name_beratungsstelle,verification_code,verification_ip,anerkennungszuschussbeantragt,wieberaten,kooperationgruppe',
         'iconfile' => 'EXT:iqtp13db/Resources/Public/Icons/tx_iqtp13db_domain_model_teilnehmer.gif'
-    ],
-    'interface' => [
-        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, niqidberatungsstelle, beratungsstatus, niqchiffre, niqtstamp, schonberaten, schonberatenvon, nachname, vorname, plz, ort, email, confirmemail, telefon, lebensalter, geburtsland, geschlecht, erste_staatsangehoerigkeit, zweite_staatsangehoerigkeit, einreisejahr, wohnsitz_deutschland, wohnsitz_nein_in, sonstigerstatus, deutschkenntnisse, zertifikatdeutsch, zertifikat_sprachniveau, erwerbsstatus, leistungsbezugjanein, leistungsbezug, einwilligungdatenan_a_a, einwilligungdatenan_a_adatum, einwilligungdatenan_a_amedium, name_berater_a_a, kontakt_berater_a_a, kundennummer_a_a, einw_anerkstelle, einw_anerkstelledatum, einw_anerkstellemedium, einw_anerkstellename, einw_anerkstellekontakt, einw_person, einw_persondatum, einw_personmedium, einw_personname, einw_personkontakt, aufenthaltsstatus, aufenthaltsstatusfreitext, name_beratungsstelle, notizen, einwilligung, verification_code, verification_date, verification_ip,anerkennungszuschussbeantragt,wieberaten,kooperationgruppe, beratungdatum, beratungsart, beratungsartfreitext, beratungsort, beratungzu, anerkennendestellen, anerkennungsberatung, anerkennungsberatungfreitext, qualifizierungsberatung, qualifizierungsberatung, beratungnotizen, erstberatungabgeschlossen, berater',
     ],
     'types' => [
         '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, niqidberatungsstelle, beratungsstatus, niqchiffre, niqtstamp, schonberaten, schonberatenvon, nachname, vorname, plz, ort, email, confirmemail, telefon, lebensalter, geburtsland, geschlecht, erste_staatsangehoerigkeit, zweite_staatsangehoerigkeit, einreisejahr, wohnsitz_deutschland, wohnsitz_nein_in, sonstigerstatus, deutschkenntnisse, zertifikatdeutsch, zertifikat_sprachniveau, erwerbsstatus, leistungsbezugjanein, leistungsbezug, einwilligungdatenan_a_a, einwilligungdatenan_a_adatum, einwilligungdatenan_a_amedium, name_berater_a_a, kontakt_berater_a_a, kundennummer_a_a, einw_anerkstelle, einw_anerkstelledatum, einw_anerkstellemedium, einw_anerkstellename, einw_anerkstellekontakt, einw_person, einw_persondatum, einw_personmedium, einw_personname, einw_personkontakt, aufenthaltsstatus, aufenthaltsstatusfreitext, name_beratungsstelle, notizen, einwilligung, verification_code, verification_date, verification_ip,anerkennungszuschussbeantragt,wieberaten,kooperationgruppe, beratungdatum, beratungsart, beratungsartfreitext, beratungsort, beratungzu, anerkennendestellen, anerkennungsberatung, anerkennungsberatungfreitext, qualifizierungsberatung, qualifizierungsberatung, beratungnotizen, erstberatungabgeschlossen, berater, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
@@ -118,7 +114,7 @@ return [
         
         'niqidberatungsstelle' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.niqidberatungsstelle',
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.niqidberatungsstelle',
             'config' => [
                 'type' => 'input',
                 'size' => 4,

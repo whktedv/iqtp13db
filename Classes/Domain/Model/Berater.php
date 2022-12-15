@@ -12,10 +12,12 @@ namespace Ud\Iqtp13db\Domain\Model;
  *
  ***/
 
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+
 /**
  * Berater
  */
-class Berater
+class Berater extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
     /**
      * @var string
@@ -28,7 +30,7 @@ class Berater
     protected $password = '';
     
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Ud\Iqtp13db\Domain\Model\UserGroup>
+     * @var ?ObjectStorage<\Ud\Iqtp13db\Domain\Model\UserGroup>
      */
     protected $usergroup;
     
@@ -41,7 +43,7 @@ class Berater
      * @var string
      */
     protected $lastName = '';
-       
+    
     /**
      * @var string
      */
@@ -51,7 +53,7 @@ class Berater
      * @var string
      */
     protected $company = '';
-
+    
     /**
      * @var \DateTime|null
      */
@@ -67,7 +69,7 @@ class Berater
     {
         $this->username = $username;
         $this->password = $password;
-        $this->usergroup = new ObjectStorage();
+        $this->initializeObject();
     }
     
     /**
@@ -122,7 +124,7 @@ class Berater
      * Sets the usergroups. Keep in mind that the property is called "usergroup"
      * although it can hold several usergroups.
      *
-     * @param ObjectStorage $usergroup
+     * @param ObjectStorage<UserGroup> $usergroup
      */
     public function setUsergroup(ObjectStorage $usergroup)
     {
@@ -132,9 +134,9 @@ class Berater
     /**
      * Adds a usergroup to the frontend user
      *
-     * @param FrontendUserGroup $usergroup
+     * @param UserGroup $usergroup
      */
-    public function addUsergroup(FrontendUserGroup $usergroup)
+    public function addUsergroup(UserGroup $usergroup)
     {
         $this->usergroup->attach($usergroup);
     }
@@ -142,9 +144,9 @@ class Berater
     /**
      * Removes a usergroup from the frontend user
      *
-     * @param FrontendUserGroup $usergroup
+     * @param UserGroup $usergroup
      */
-    public function removeUsergroup(FrontendUserGroup $usergroup)
+    public function removeUsergroup(UserGroup $usergroup)
     {
         $this->usergroup->detach($usergroup);
     }
@@ -153,13 +155,13 @@ class Berater
      * Returns the usergroups. Keep in mind that the property is called "usergroup"
      * although it can hold several usergroups.
      *
-     * @return ObjectStorage An object storage containing the usergroup
+     * @return ObjectStorage<UserGroup> An object storage containing the usergroup
      */
-    public function getUsergroup()
+    public function getUsergroup(): ObjectStorage
     {
         return $this->usergroup;
     }
-
+    
     /**
      * Sets the firstName value
      *
@@ -199,7 +201,7 @@ class Berater
     {
         return $this->lastName;
     }
-   
+    
     /**
      * Sets the email value
      *
@@ -259,5 +261,5 @@ class Berater
     {
         return $this->lastlogin;
     }
-
+    
 }

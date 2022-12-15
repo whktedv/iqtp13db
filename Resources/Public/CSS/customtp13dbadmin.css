@@ -2,6 +2,14 @@
 	display: none;
 }
 
+.frame-container-default {
+  max-width: 100%;
+}
+
+.body-bg-top {
+  padding-top: 25px;
+}
+
 .navbar-toggle {
 	display: none;
 }

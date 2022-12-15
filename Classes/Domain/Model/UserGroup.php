@@ -5,7 +5,7 @@ namespace Ud\Iqtp13db\Domain\Model;
 /**
  * Class UserGroup
  */
-class UserGroup
+class UserGroup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
     /**
      * @var string
@@ -53,13 +53,14 @@ class UserGroup
      * @param string $title
      * @param array $plzlist
      * @param array $keywordlist
+     * @param array $beratungsarten
      */
     public function __construct($title = '', array $plzlist = array(), array $keywordlist = array(), array $beratungsarten = array()) {
         $this->setTitle($title);
         $this->setPlzlist($plzlist);
         $this->setKeywordlist($keywordlist);
         $this->setBeratungsarten($beratungsarten);
-    }   
+    }
     
     /**
      * Sets the title value

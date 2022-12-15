@@ -1,29 +1,20 @@
 <?php
 namespace Ud\Iqtp13db\Domain\Repository;
 
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Repository;
-
-/***
- *
- * This file is part of the "IQ Webapp Anerkennungserstberatung" Extension for TYPO3 CMS.
- *
- * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- *
- *  (c) 2022 Uli Dohmen <edv@whkt.de>, WHKT
- *
- ***/
+use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
 
 /**
  * The repository for Berater
  */
-class BeraterRepository
+class BeraterRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
-    
     public function findAllBerater($customStoragePid)
     {
-        // Get the default Settings
-        $querySettings = $this->objectManager->get('TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings');
+        $querySettings = GeneralUtility::makeInstance(Typo3QuerySettings::class);
+        $querySettings->setRespectStoragePage(TRUE);
         $querySettings->setStoragePageIds(array($customStoragePid));
         $this->setDefaultQuerySettings($querySettings);
         
@@ -34,11 +25,11 @@ class BeraterRepository
     
     public function findBerater4Group($customStoragePid, $usergroup)
     {
-        // Get the default Settings
-        $querySettings = $this->objectManager->get('TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings');
+        $querySettings = GeneralUtility::makeInstance(Typo3QuerySettings::class);
+        $querySettings->setRespectStoragePage(TRUE);
         $querySettings->setStoragePageIds(array($customStoragePid));
         $this->setDefaultQuerySettings($querySettings);
-        
+
         // Now get all (only Presets)
         $queryResult = $this->findByUsergroup($usergroup);
         return $queryResult;

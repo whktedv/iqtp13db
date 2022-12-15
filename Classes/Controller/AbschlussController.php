@@ -5,6 +5,10 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
+use Psr\Http\Message\ResponseInterface;
+use Ud\Iqtp13db\Domain\Repository\TeilnehmerRepository;
+use Ud\Iqtp13db\Domain\Repository\AbschlussRepository;
+
 /***
  *
  * This file is part of the "IQ Webapp Anerkennungserstberatung" Extension for TYPO3 CMS.
@@ -21,22 +25,17 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
  */
 class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
-    /**
-     * abschlussRepository
-     *
-     * @var \Ud\Iqtp13db\Domain\Repository\AbschlussRepository
-     * @TYPO3\CMS\Extbase\Annotation\Inject
-     */
-    protected $abschlussRepository = NULL;
+    protected $generalhelper, $niqinterface, $niqapiurl, $allusergroups, $usergroup, $niqbid, $groupbccmail;
     
-    /**
-     * teilnehmerRepository
-     *
-     * @var \Ud\Iqtp13db\Domain\Repository\TeilnehmerRepository
-     * @TYPO3\CMS\Extbase\Annotation\Inject
-     */
-    protected $teilnehmerRepository = NULL;
-
+    protected $teilnehmerRepository;
+    protected $abschlussRepository;
+    
+    public function __construct(TeilnehmerRepository $teilnehmerRepository, AbschlussRepository $abschlussRepository)
+    {
+        $this->teilnehmerRepository = $teilnehmerRepository;
+        $this->abschlussRepository = $abschlussRepository;
+    }
+    
     /**
      * action init
      *

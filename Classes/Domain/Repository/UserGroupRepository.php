@@ -1,29 +1,22 @@
 <?php
 namespace Ud\Iqtp13db\Domain\Repository;
 
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Repository;
+use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
 
-/***
- *
- * This file is part of the "IQ Webapp Anerkennungserstberatung" Extension for TYPO3 CMS.
- *
- * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- *
- *  (c) 2022 Uli Dohmen <edv@whkt.de>, WHKT
- *
- ***/
 
 /**
  * The repository for UserGroup
  */
-class UserGroupRepository
+class UserGroupRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
     
     public function findAllGroups($customStoragePid)
     {
-        // Get the default Settings
-        $querySettings = $this->objectManager->get('TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings');
+        $querySettings = GeneralUtility::makeInstance(Typo3QuerySettings::class);
+        $querySettings->setRespectStoragePage(TRUE);
         $querySettings->setStoragePageIds(array($customStoragePid));
         $this->setDefaultQuerySettings($querySettings);
         
@@ -31,5 +24,5 @@ class UserGroupRepository
         $queryResult = $this->findAll();
         return $queryResult;
     }
-       
+    
 }
