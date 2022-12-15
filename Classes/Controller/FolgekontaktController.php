@@ -55,12 +55,12 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     protected $abschlussRepository;	
     
     /**
-     * frontendUserGroupRepository
+     * userGroupRepository
      *
-     * @var \TYPO3\CMS\Extbase\Domain\Repository\FrontendUserGroupRepository
+     * @var \TYPO3\CMS\Extbase\Domain\Repository\UserGroupRepository
      * @TYPO3\CMS\Extbase\Annotation\Inject
      */
-    protected $frontendUserGroupRepository;
+    protected $userGroupRepository;
     
     /**
      * action init
@@ -77,13 +77,13 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         
         if($this->user != NULL) {
             $standardniqidberatungsstelle = $this->settings['standardniqidberatungsstelle'];
-            $this->usergroup = $this->frontendUserGroupRepository->findByIdentifier($this->user['usergroup']);
+            $this->usergroup = $this->userGroupRepository->findByIdentifier($this->user['usergroup']);
             $userniqidbstelle = $this->usergroup->getNiqbid();
             $this->niqbid = $userniqidbstelle == '' ? $standardniqidberatungsstelle : $userniqidbstelle;
         }
                 
-        $this->niqapiurl = $this->settings['niqapiurl'];
-        $this->niqinterface = new \Ud\Iqtp13db\Helper\NiqInterface();
+        //$this->niqapiurl = $this->settings['niqapiurl'];
+        //$this->niqinterface = new \Ud\Iqtp13db\Helper\NiqInterface();
     }
     
     /**
@@ -112,10 +112,12 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     {
         $valArray = $this->request->getArguments();
         
+        /*
         if($teilnehmer->getNiqchiffre() != '' && $this->niqinterface->check_curl($this->niqapiurl) == FALSE) {
             $this->addFlashMessage("Bearbeiten von bereits übertragenen Datensätzen vorübergehend nicht möglich, da NIQ-Datenbank nicht erreichbar.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
         } else {
+        */
             $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
         	
         	$this->view->assign('alleberater', $alleberater);
@@ -126,7 +128,9 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
             $this->view->assign('callercontroller', $valArray['callercontroller']);
             $this->view->assign('callerpage', $valArray['callerpage']);
             $this->view->assign('settings', $this->settings);
-        }
+        /*
+          }
+         */
     }
     
 
@@ -141,10 +145,12 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $valArray = $this->request->getArguments();
         $teilnehmer = $this->teilnehmerRepository->findByUid($valArray['folgekontakt']['teilnehmer']);
         
+        /*
         if($teilnehmer->getNiqchiffre() != '' && $this->niqinterface->check_curl($this->niqapiurl) == FALSE) {
             $this->addFlashMessage("Bearbeiten von bereits übertragenen Datensätzen vorübergehend nicht möglich, da NIQ-Datenbank nicht erreichbar.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
         } else {
+        */  
             $teilnehmer = $folgekontakt->getTeilnehmer();
             
             $letzterfolgekontakt = $this->folgekontaktRepository->findLastByTNuid($teilnehmer->getUid());
@@ -163,7 +169,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
                 $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
                 $persistenceManager->persistAll();
                 
-                if($teilnehmer->getNiqchiffre() != '') {
+                /*if($teilnehmer->getNiqchiffre() != '') {*/
                     $abschluesse = $this->abschlussRepository->findByTeilnehmer($teilnehmer);
                     $folgekontakte = $this->folgekontaktRepository->findByTeilnehmer($teilnehmer);                
                     if($teilnehmer->getNiqidberatungsstelle() != '0') {
@@ -171,15 +177,16 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
                     } else {
                         $niqidbstelle = $this->niqbid;
                     }
-                    $returnarray = $this->niqinterface->uploadtoNIQ($teilnehmer, $abschluesse, $folgekontakte, $niqidbstelle, $this->niqapiurl);
+                    /* $returnarray = $this->niqinterface->uploadtoNIQ($teilnehmer, $abschluesse, $folgekontakte, $niqidbstelle, $this->niqapiurl); */
                     
                     $retteilnehmer = $this->teilnehmerRepository->findByUid($returnarray[0]->getUid());
-                    $retstring = $returnarray[1];
+                    /* $retstring = $returnarray[1]; */
+                    $retstring = 'OK';
                     
                     $this->teilnehmerRepository->update($retteilnehmer);
                     
                     $this->addFlashMessage($retstring, '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
-                }
+               /* }*/
                 
                 // Daten sofort in die Datenbank schreiben
                 $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
@@ -190,7 +197,9 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
             }
                
             $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, null);
-        }
+        /*
+         } 
+         */
     }
 	
 	 /**
@@ -205,11 +214,14 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $valArray = $this->request->getArguments();
         $teilnehmer = $folgekontakt->getTeilnehmer();
         
+        /*         
         if($teilnehmer->getNiqchiffre() != '' && $this->niqinterface->check_curl($this->niqapiurl) == FALSE) {
             $this->addFlashMessage("Bearbeiten von bereits übertragenen Datensätzen vorübergehend nicht möglich, da NIQ-Datenbank nicht erreichbar.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
         } else {
-       		$this->view->assign('berater', $this->user);
+       		*/
+            
+            $this->view->assign('berater', $this->user);
        		$alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
        		
         	$this->view->assign('alleberater', $alleberater);
@@ -220,7 +232,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
             $this->view->assign('calleraction', $valArray['calleraction']);
             $this->view->assign('callercontroller', $valArray['callercontroller']);
             $this->view->assign('settings', $this->settings);
-        }
+       /* } */
     }
 
     /**
@@ -234,10 +246,12 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $valArray = $this->request->getArguments();
         $teilnehmer = $folgekontakt->getTeilnehmer();
         
+        /*
         if($teilnehmer->getNiqchiffre() != '' && $this->niqinterface->check_curl($this->niqapiurl) == FALSE) {
             $this->addFlashMessage("Bearbeiten von bereits übertragenen Datensätzen vorübergehend nicht möglich, da NIQ-Datenbank nicht erreichbar.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
         } else {
+         */
             $this->folgekontaktRepository->update($folgekontakt);
              
             // Daten sofort in die Datenbank schreiben
@@ -246,7 +260,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
             
             $teilnehmer = $folgekontakt->getTeilnehmer();
             
-            if($teilnehmer->getNiqchiffre() != '') {
+           /* if($teilnehmer->getNiqchiffre() != '') { */
                 $abschluesse = $this->abschlussRepository->findByTeilnehmer($teilnehmer);
                 $folgekontakte = $this->folgekontaktRepository->findByTeilnehmer($teilnehmer);
                 if($teilnehmer->getNiqidberatungsstelle() != '0') {
@@ -254,22 +268,23 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
                 } else {
                     $niqidbstelle = $this->niqbid;
                 }
-                $returnarray = $this->niqinterface->uploadtoNIQ($teilnehmer, $abschluesse, $folgekontakte, $niqidbstelle, $this->niqapiurl);
+                /* $returnarray = $this->niqinterface->uploadtoNIQ($teilnehmer, $abschluesse, $folgekontakte, $niqidbstelle, $this->niqapiurl); */
                 
                 $retteilnehmer = $this->teilnehmerRepository->findByUid($returnarray[0]->getUid());
-                $retstring = $returnarray[1];
+                /* $retstring = $returnarray[1]; */
+                $retstring = 'OK';
                 
                 $this->teilnehmerRepository->update($retteilnehmer);
                 
                 $this->addFlashMessage($retstring, '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
-            }
+           /*  } */
             
             // Daten sofort in die Datenbank schreiben
             $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
             $persistenceManager->persistAll();
             
             $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
-        }
+        /* } */
     }
 
     /**
@@ -283,10 +298,12 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $valArray = $this->request->getArguments();
         $teilnehmer = $folgekontakt->getTeilnehmer();
         
+        /*
         if($teilnehmer->getNiqchiffre() != '' && $this->niqinterface->check_curl($this->niqapiurl) == FALSE) {
             $this->addFlashMessage("Bearbeiten von bereits übertragenen Datensätzen vorübergehend nicht möglich, da NIQ-Datenbank nicht erreichbar.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
         } else {
+            */
             $this->folgekontaktRepository->remove($folgekontakt);
             
             // Daten sofort in die Datenbank schreiben
@@ -294,7 +311,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
             $persistenceManager->persistAll();
             
             $teilnehmer = $folgekontakt->getTeilnehmer();
-            if($teilnehmer->getNiqchiffre() != '') {
+            /* if($teilnehmer->getNiqchiffre() != '') { */
                 $abschluesse = $this->abschlussRepository->findByTeilnehmer($teilnehmer);
                 $folgekontakte = $this->folgekontaktRepository->findByTeilnehmer($teilnehmer);
                 if($teilnehmer->getNiqidberatungsstelle() != '0') {
@@ -302,15 +319,16 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
                 } else {
                     $niqidbstelle = $this->niqbid;
                 }
-                $returnarray = $this->niqinterface->uploadtoNIQ($teilnehmer, $abschluesse, $folgekontakte, $niqidbstelle, $this->niqapiurl);
+                /* $returnarray = $this->niqinterface->uploadtoNIQ($teilnehmer, $abschluesse, $folgekontakte, $niqidbstelle, $this->niqapiurl); */
                 
                 $retteilnehmer = $returnarray[0];
-                $retstring = $returnarray[1];
+                /* $retstring = $returnarray[1]; */
+                $retstring = 'OK';
                 
                 $this->teilnehmerRepository->update($retteilnehmer);
                 
                 $this->addFlashMessage($retstring, '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
-            }
+           /* } */
             // Daten sofort in die Datenbank schreiben
             $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
             $persistenceManager->persistAll();

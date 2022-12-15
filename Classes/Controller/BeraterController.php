@@ -33,7 +33,7 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     /**
      * userGroupRepository
      *
-     * @var \Ud\Iqtp13db\Domain\Repository\userGroupRepository
+     * @var \Ud\Iqtp13db\Domain\Repository\UserGroupRepository
      * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $userGroupRepository;

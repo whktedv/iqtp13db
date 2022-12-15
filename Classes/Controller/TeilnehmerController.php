@@ -86,15 +86,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $userGroupRepository = NULL;
-    
-    /**
-     * frontendUserGroupRepository
-     *
-     * @var \TYPO3\CMS\Extbase\Domain\Repository\FrontendUserGroupRepository
-     * @TYPO3\CMS\Extbase\Annotation\Inject
-     */
-    protected $frontendUserGroupRepository;
-    
+        
     /**
      * storageRepository
      *
@@ -164,8 +156,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	$this->allusergroups = $this->userGroupRepository->findAllGroups($this->settings['beraterstoragepid']);
     	
     	$this->generalhelper = new \Ud\Iqtp13db\Helper\Generalhelper();
-    	$this->niqinterface = new \Ud\Iqtp13db\Helper\NiqInterface();
-    	$this->niqapiurl = $this->settings['niqapiurl'];
+    	//$this->niqinterface = new \Ud\Iqtp13db\Helper\NiqInterface();
+    	//$this->niqapiurl = $this->settings['niqapiurl'];
     	
     	$this->user=null;
     	$context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
@@ -177,7 +169,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	    $standardniqidberatungsstelle = $this->settings['standardniqidberatungsstelle'];
     	    $standardbccmail = $this->settings['standardbccmail'];
     	    
-    	    $this->usergroup = $this->frontendUserGroupRepository->findByIdentifier($this->user['usergroup']);
+    	    $this->usergroup = $this->userGroupRepository->findByIdentifier($this->user['usergroup']);
     	    $userniqidbstelle = $this->usergroup->getNiqbid();
     	    $userbccmail = $this->usergroup->getGeneralmail();
     	    
@@ -343,7 +335,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	$paginator = new QueryResultPaginator($historie, $currentPage, 25);
     	$pagination = new SimplePagination($paginator);
     	
-    	$niqdbstatus = $this->niqinterface->check_curl($this->niqapiurl) ? "<span style='color: green;'>erreichbar</span>" : "<span style='color: red;'>nicht erreichbar!</span>";
+    	//$niqdbstatus = $this->niqinterface->check_curl($this->niqapiurl) ? "<span style='color: green;'>erreichbar</span>" : "<span style='color: red;'>nicht erreichbar!</span>";
     	
 		// ******************** EXPORT Statistik ****************************
 		$rows[0] = $monatsnamen;
@@ -518,7 +510,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $anzfolgekontakte[$key] = count($this->folgekontaktRepository->findByTeilnehmer($tn->getUid()));
             
             $abschluesse[$key] = $this->abschlussRepository->findByTeilnehmer($tn);
-            $niqstat = $this->niqinterface->niqstatus($tn, $abschluesse[$key]);
+            /* $niqstat = $this->niqinterface->niqstatus($tn, $abschluesse[$key]); */
             if($niqstat == 0) {
                 $niqstatusberatung[$key] = 'rot';                
             } elseif($niqstat == 2) {
@@ -529,7 +521,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 $niqstatusberatung[$key] = '';
             }
             
-            if($niqstat == 0 || $niqstat == 2) $niqwasfehlt[$key] = $this->niqinterface->niqwasfehlt($tn, $abschluesse[$key]);
+            /* if($niqstat == 0 || $niqstat == 2) $niqwasfehlt[$key] = $this->niqinterface->niqwasfehlt($tn, $abschluesse[$key]); */
         }
         $folgekontakte = $this->folgekontaktRepository->findAll4List($this->niqbid);
         
@@ -601,7 +593,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $anzfolgekontakte[$key] = count($this->folgekontaktRepository->findByTeilnehmer($tn->getUid()));
             
             $abschluesse[$key] = $this->abschlussRepository->findByTeilnehmer($tn);
-            $niqstat = $this->niqinterface->niqstatus($tn, $abschluesse[$key]);
+            /* $niqstat = $this->niqinterface->niqstatus($tn, $abschluesse[$key]); */
             if($niqstat == 0) {
                 $niqstatusberatung[$key] = 'rot';
             } elseif($niqstat == 2) {
@@ -612,7 +604,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 $niqstatusberatung[$key] = '';
             }
             
-            if($niqstat == 0 || $niqstat == 2) $niqwasfehlt[$key] = $this->niqinterface->niqwasfehlt($tn, $abschluesse[$key]);
+            /* if($niqstat == 0 || $niqstat == 2) $niqwasfehlt[$key] = $this->niqinterface->niqwasfehlt($tn, $abschluesse[$key]); */
         }
         $folgekontakte = $this->folgekontaktRepository->findAll4List($this->niqbid);
         
@@ -853,11 +845,12 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     {          
         $valArray = $this->request->getArguments();
         
+        /*
         if($teilnehmer->getNiqchiffre() != '' && $this->niqinterface->check_curl($this->niqapiurl) == FALSE) {
             $this->addFlashMessage("Bearbeiten von bereits übertragenen Datensätzen vorübergehend nicht möglich, da NIQ-Datenbank nicht erreichbar.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
         } else {
-            
+          */  
             $abschluesse = new \Ud\Iqtp13db\Domain\Model\Abschluss();
             $abschluesse = $this->abschlussRepository->findByTeilnehmer($teilnehmer);
             
@@ -925,7 +918,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     'weitererabschluss' => $valArray['weitererabschluss']
                 ]
                 );
-        }
+        /* } */
     }
 
     /**
@@ -938,12 +931,12 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function updateAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer, \Ud\Iqtp13db\Domain\Model\Abschluss $abschluss = NULL)
     {
         $valArray = $this->request->getArguments();
-
+/*
         if($teilnehmer->getNiqchiffre() != '' && $this->niqinterface->check_curl($this->niqapiurl) == FALSE) {
             $this->addFlashMessage("Datensatz NICHT gespeichert. Bearbeiten von bereits übertragenen Datensätzen vorübergehend nicht möglich, da NIQ-Datenbank nicht erreichbar.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
         } else {
-            
+            */
             if(is_numeric($teilnehmer->getLebensalter())) {
                 if($teilnehmer->getLebensalter() > 0 && ($teilnehmer->getLebensalter() < 15 || $teilnehmer->getLebensalter() > 80)) {
                     $this->addFlashMessage("Datensatz NICHT gespeichert. Lebensalter muss zwischen 15 und 80 oder k.A. sein.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
@@ -1072,7 +1065,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         	$persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         	$persistenceManager->persistAll();
         	    	
-        	if($teilnehmer->getNiqchiffre() != '') {
+        /*	if($teilnehmer->getNiqchiffre() != '') { */
         	    $abschluesse = $this->abschlussRepository->findByTeilnehmer($teilnehmer);
         	    $folgekontakte = $this->folgekontaktRepository->findByTeilnehmer($teilnehmer);
         	    if($teilnehmer->getNiqidberatungsstelle() != '0') {
@@ -1080,10 +1073,11 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         	    } else {
         	        $niqidbstelle = $this->niqbid;
         	    }
-        	    $returnarray = $this->niqinterface->uploadtoNIQ($teilnehmer, $abschluesse, $folgekontakte, $niqidbstelle, $this->niqapiurl);
-        	    
+        	    /* $returnarray = $this->niqinterface->uploadtoNIQ($teilnehmer, $abschluesse, $folgekontakte, $niqidbstelle, $this->niqapiurl); */
+        	            	    
         	    $retteilnehmer = $returnarray[0];
-        	    $retstring = $returnarray[1];
+        	    /* $retstring = $returnarray[1]; */
+        	    $retstring = 'OK';
         	    
         	    if($retteilnehmer instanceof \Ud\Iqtp13db\Domain\Model\Teilnehmer) {
         	        $this->teilnehmerRepository->update($retteilnehmer);
@@ -1096,7 +1090,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         	        $this->addFlashMessage($retstring, '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
         	    }
         	    
-        	}
+        /*	} */
     
         	if (isset($valArray['btnweitererabschluss'])) {
         	    $newabschluss = new \Ud\Iqtp13db\Domain\Model\Abschluss();
@@ -1114,7 +1108,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         	} else {
         	    $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
         	}
-        }
+       /* }*/
     }
     
     /**
@@ -1127,7 +1121,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     {
         $valArray = $this->request->getArguments();
         
-        if($teilnehmer->getNiqchiffre() == '') {
+        /* if($teilnehmer->getNiqchiffre() == '') { */
         	$teilnehmer->setHidden(1);
     
         	$this->teilnehmerRepository->update($teilnehmer);
@@ -1135,9 +1129,10 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         	// Daten sofort in die Datenbank schreiben
         	$persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         	$persistenceManager->persistAll();
-        } else {
+       /* } else {
             $this->addFlashMessage('Bereits in NIQ übertragene Datensätze können nicht gelöscht werden.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
         }
+        */
         $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
     }
     
@@ -1273,8 +1268,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $filename = 'DB-' .$this->generalhelper->sanitizeFileFolderName($teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid()). '.pdf';
         $storage = $this->generalhelper->getTP13Storage( $this->storageRepository->findAll());
         
-        $niqbid = $this->niqbid;
-        $beratungsstellenfolder = $niqbid == '10143' ? 'Beratene' : $niqbid;
+        $beratungsstellenfolder = $this->niqbid;
         $fullpath = $storage->getConfiguration()['basePath'] .$beratungsstellenfolder. '/' .$pfad->getName().'/'. $filename;
                  
         $mpdf->Output($fullpath, 'F');
@@ -1773,7 +1767,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     	
     	if($this->teilnehmerRepository->countByUid($teilnehmer) != 0) {
     	    $niqbid = $teilnehmer->getNiqidberatungsstelle();
-    	    $beratungsstellenfolder = $niqbid == '10143' ? 'Beratene' : $niqbid;
+    	    $beratungsstellenfolder = $niqbid;
     	    $newFilePath = $beratungsstellenfolder.'/' . $teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid(). '/';
     	    $storage = $this->generalhelper->getTP13Storage($this->storageRepository->findAll());
     	    $foldersize = $this->generalhelper->getFolderSize($storage->getConfiguration()['basePath'].$newFilePath);
@@ -1923,7 +1917,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $teilnehmer = $this->teilnehmerRepository->findByUid($tnuid);
             
             $niqbid = $teilnehmer->getNiqidberatungsstelle();
-            $beratungsstellenfolder = $niqbid == '10143' ? 'Beratene' : $niqbid;            
+            $beratungsstellenfolder = $niqbid;            
             $filePath = $beratungsstellenfolder.'/' . $teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid(). '/';
             $storage = $this->generalhelper->getTP13Storage( $this->storageRepository->findAll());
             $dokumente = $this->dokumentRepository->findByTeilnehmer($teilnehmer);
