@@ -26,7 +26,7 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.language',
             'config' => [
-                'type' => 'select',
+                'type' => 'language',
                 'renderType' => 'selectSingle',
                 'special' => 'languages',
                 'items' => [
