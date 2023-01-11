@@ -44,12 +44,6 @@
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdaten">
 				<target>Einwilligung Datenübermittlung</target>
 			</trans-unit>
-			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_adatum">
-				<target>Datum der Einwilligung zur Weitergabe</target>
-			</trans-unit>
-			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_amedium">
-				<target>Medium der Einwilligung</target>
-			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_persondatum">
 				<target>Datum der Einwilligung zur Weitergabe</target>
 			</trans-unit>
@@ -272,12 +266,6 @@
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezug">
 				<target>Leistungsbezug</target>
 			</trans-unit>
-			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_a">
-				<target>Möchten Sie, dass wir das Beratungsergebnis an Ihre Berater*in weiterleiten?</target>
-			</trans-unit>
-			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungstextaa">
-				<target>Mit der Angabe der folgenden Daten willige ich ein, dass der Agentur für Arbeit bzw. dem Jobcenter meine Daten zum Zwecke bzw. im Rahmen der Anerkennungsberatung weitergegeben werden dürfen.</target>
-			</trans-unit>			
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_berater_a_a">
 				<target>Name Berater*in</target>
 			</trans-unit>

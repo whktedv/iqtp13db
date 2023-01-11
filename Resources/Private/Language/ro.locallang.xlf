@@ -56,10 +56,6 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligung"><target>consimțământ</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezugjanein"><target>Primiți bani de la Jobcenter sau Agenția pentru ocuparea forței de muncă? </target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezug"><target>Primirea de prestații</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungstextaa"><target>Prin furnizarea următoarelor informații, sunt de acord ca datele mele să fie transmise către Agenția pentru ocuparea forței de muncă sau către Jobcenter în scopul sau în cadrul consilierii de recunoaștere.</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_a"><target>Doriți ca noi să transmitem rezultatul consultării consultantului/consultantei dumneavoastră?</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_adatum"><target>Data consimțământului pentru divulgare</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_amedium"><target>Mediul de consimțământ</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_berater_a_a"><target>Nume consultant*ă</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kontakt_berater_a_a"><target>Contact (e-mail și telefon)</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kundennummer_a_a"><target>Numărul dumneavoastră de client</target></trans-unit>

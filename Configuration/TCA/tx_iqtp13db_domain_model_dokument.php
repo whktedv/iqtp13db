@@ -8,6 +8,7 @@ return [
         'cruser_id' => 'cruser_id',
         'versioningWS' => true,
         'delete' => 'deleted',
+        'hideTable' => true, 
         'enablecolumns' => [
             'disabled' => 'hidden',
             'starttime' => 'starttime',

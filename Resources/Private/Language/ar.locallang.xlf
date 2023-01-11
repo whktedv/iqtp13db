@@ -49,10 +49,6 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligung"><target>	القبول	</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezugjanein"><target>	هل تحصل على دعم مالي من مركز العمل أو وكالة التوظيف؟	</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezug"><target>	الحصول على دعم مالي	</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungstextaa"><target>	من خلال تقديم البيانات التالية، أوافق على أنه قد يتم تمرير بياناتي  لوكالة التوظيف أو مركز العمل لغرض أو ضمن إطار الاعتراف بالشهادات.	</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_a"><target>	هل تريد منا إرسال نتيجة الاستشارة إلى مستشارك؟	</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_adatum"><target>	تاريخ الموافقة على تمرير البيانات 	</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_amedium"><target>	طريقة الموافقة على تمرير البيانات 	</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_berater_a_a"><target>	اسم مقدم الإستشارة	</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kontakt_berater_a_a"><target>	للإتصال (البريد الإلكتروني ورقم التلفون)	</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kundennummer_a_a"><target>	الرقم الشخصي لدى مركز العمل أو وكالة التوظيف	</target></trans-unit>

@@ -8,6 +8,7 @@ return [
         'cruser_id' => 'cruser_id',
         'versioningWS' => true,
         'delete' => 'deleted',
+        'hideTable' => true, 
         'searchFields' => 'property',
         'iconfile' => 'EXT:iqtp13db/Resources/Public/Icons/tx_iqtp13db_domain_model_historie.gif'
     ],

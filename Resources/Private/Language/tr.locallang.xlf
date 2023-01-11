@@ -55,10 +55,6 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligung"><target>Veri bilgilerinizin onayı</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezugjanein"><target>Jobcenter'den yada iş ve işçi bulma kurumundan para alıyormusunuz?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezug"><target>(Devletten) Maddi yardım durumu?</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungstextaa"><target>Aşağıdaki bilgileri vererek, Jobcenter yada  iş ve işçi bulma kurumununun (Arbeitsamt) bilgilerimi denklik işlemleri ve danışmanlık hizmeti için kullanıma sunmasını onaylıyorum. </target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_a"><target>Danışmanlık görüşmesinin sonuçlarını danışmanınıza iletmemizi istermisiniz?</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_adatum"><target>İletim için onayın verildiği tarih</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_amedium"><target>Onayın verilme yolu (Online yada yazılı)</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_berater_a_a"><target>Danışmanın adı</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kontakt_berater_a_a"><target>İletişim (E-Mail ve Telefon)</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kundennummer_a_a"><target>Müşteri numaranız</target></trans-unit>

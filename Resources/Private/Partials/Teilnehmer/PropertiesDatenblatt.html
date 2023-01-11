@@ -224,43 +224,13 @@
 					<f:for each="{settings.leistungsbezug}" as="text" key="wert">
 						{f:if(condition: '{teilnehmer.leistungsbezug} == {wert}', then: '<span class="propdat">{text}</span>')}					 
 					</f:for>
-			</div>
-			<div class="tp13_formdivwebapp">
-				<label for="einwilligungdatenanAA">
-					<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_a" />
-				</label>
-				<span class="propdat"><f:if condition="{teilnehmer.einwilligungdatenanAA} == 1"><f:then>
-					<f:translate key="ja" />
-				</f:then>
-				<f:else>
-					<f:translate key="nein" />
-				</f:else>
-				</f:if></span>
-			</div>
+			</div>			
 		</f:then>
 		</f:if>
 </div>
 
 
-<f:if condition="{teilnehmer.einwilligungdatenanAA} == 1">
-<f:then>
-	<div class="fframe"><h2><f:translate key="datenjobcenterarbeitsagentur" /></h2>
-		<div class="tp13_formdivwebapp">
-			<label for="nameBeraterAA">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_adatum" />
-			</label>
-				<span class="propdat">{teilnehmer.einwilligungdatenanAAdatum}</span>				
-		</div>
-		<div class="tp13_formdivwebapp">
-			<label for="nameBeraterAA">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_amedium" />
-			</label>
-				<f:for each="{teilnehmer.einwilligungdatenanAAmedium}" as="text" key="wert">				
-					<f:for each="{settings.einwilligungaamedium}" as="textset" key="wertset">					
-						{f:if(condition: '{text} == {wertset}', then: '<span class="propdat">{textset}</span>')}
-					</f:for>
-				</f:for>							
-		</div>
+<div class="fframe"><h2><f:translate key="datenjobcenterarbeitsagentur" /></h2>
 		<div class="tp13_formdivwebapp">
 			<label for="nameBeraterAA">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.name_berater_a_a" />
@@ -279,13 +249,9 @@
 			</label>
 				<span class="propdat">{teilnehmer.kundennummerAA}</span>
 		</div>
-	</div>
-</f:then>
-</f:if>
+</div>
 
-
-
-	<div class="fframe"><h2>Datenweitergabe anerkennende Stelle</h2>
+<div class="fframe"><h2>Datenweitergabe anerkennende Stelle</h2>
   <div class="tp13_formdivwebapp">
 				<label for="einwAnerkstelle">
 					<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstelle" />

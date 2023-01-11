@@ -176,12 +176,11 @@
     function toggleleistungsbezugjanein() {
     	if($('#optleistungsbezugjanein1').is(":checked")) {
 			$('#divleistungsbezug').fadeIn();
-			$('#datenAA').fadeIn();		
+			$('#datenAA').fadeIn();
 			return;
 		} else if($('#optleistungsbezugjanein2').is(":checked")) {
 			 $('#divleistungsbezug').fadeOut();
 			 $('#datenAA').fadeOut();
-			 $('#opteinwilligungdatenanAA2').prop("checked", true);
 			 toggleeinwdatenaa();
 			return;
 		} else {

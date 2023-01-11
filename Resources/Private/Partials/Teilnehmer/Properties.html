@@ -345,57 +345,12 @@
 					</f:for>
 					</div>
 			</div>
-			<div class="tp13_formdivwebapp">
-				<label for="einwilligungdatenanAA">
-					<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_a" />
-				</label>
-				<span class="propdat"><f:if condition="{teilnehmer.einwilligungdatenanAA} == 1"><f:then>
-					<f:translate key="ja" />
-				</f:then>
-				<f:else>
-					<f:translate key="nein" />
-				</f:else>
-				</f:if></span>
-				<div class="historie">
-				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "einwilligungdatenanAA"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
-				</f:for>
-				</div>
-			</div>
 		</f:then>
 		</f:if>
 </div>
 
 
-<f:if condition="{teilnehmer.einwilligungdatenanAA} == 1">
-<f:then>
-	<div class="fframe"><h2><f:translate key="datenjobcenterarbeitsagentur" /></h2>
-		<div class="tp13_formdivwebapp">
-			<label for="nameBeraterAA">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_adatum" />
-			</label>
-				<span class="propdat">{teilnehmer.einwilligungdatenanAAdatum}</span>
-				<div class="historie">
-				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "einwilligungdatenanAAdatum"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
-				</f:for>
-				</div>
-		</div>
-		<div class="tp13_formdivwebapp">
-			<label for="nameBeraterAA">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_amedium" />
-			</label>
-				<f:for each="{teilnehmer.einwilligungdatenanAAmedium}" as="text" key="wert">				
-					<f:for each="{settings.einwilligungaamedium}" as="textset" key="wertset">					
-						{f:if(condition: '{text} == {wertset}', then: '<span class="propdat">{textset}</span>')}
-					</f:for>
-				</f:for>				
-				<div class="historie">
-				<f:for each="{historie}" as="hist" key="wert">
-					{f:if(condition: '{hist.property} == "einwilligungdatenanAAmedium"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
-				</f:for>
-				</div>
-		</div>
+<div class="fframe"><h2><f:translate key="datenjobcenterarbeitsagentur" /></h2>
 		<div class="tp13_formdivwebapp">
 			<label for="nameBeraterAA">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.name_berater_a_a" />
@@ -429,12 +384,10 @@
 				</f:for>
 				</div>
 		</div>
-	</div>
-</f:then>
-</f:if>
+</div>
 
 
-	<div class="fframe"><h2>Datenweitergabe anerkennende Stelle</h2>
+<div class="fframe"><h2>Datenweitergabe anerkennende Stelle</h2>
   <div class="tp13_formdivwebapp">
 				<label for="einwAnerkstelle">
 					<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstelle" />

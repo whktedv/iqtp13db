@@ -10,6 +10,7 @@ return [
         'languageField' => 'sys_language_uid',
         'transOrigDiffSourceField' => 'l10n_diffsource',
         'delete' => 'deleted',
+        'hideTable' => true, 
         'enablecolumns' => [
             'disabled' => 'hidden',
             'starttime' => 'starttime',

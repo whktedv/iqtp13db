@@ -3,6 +3,8 @@ return [
     'ctrl' => [
         'title' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer',
         'label' => 'nachname',
+        'label_alt' => 'vorname, plz',
+        'label_alt_force' => true,
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
@@ -15,11 +17,11 @@ return [
             'starttime' => 'starttime',
             'endtime' => 'endtime',
         ],
-        'searchFields' => 'niqchiffre,nachname,vorname,plz,ort,email,telefon,lebensalter,geburtsland,erste_staatsangehoerigkeit,zweite_staatsangehoerigkeit,einreisejahr,wohnsitz_nein_in, zertifikat_sprachniveau,erwerbsland1,dauer_berufsausbildung1,abschlussjahr1,ausbildungsinstitution1,ausbildungsort1,abschluss1,berufserfahrung1,berufserfahrunginland1,ausbildungsfremdeberufserfahrung1,deutscher_referenzberuf1,wunschberuf1,erwerbsland2,dauer_berufsausbildung2,abschlussjahr2,ausbildungsinstitution2,ausbildungsort2,abschluss2,berufserfahrung2,berufserfahrunginland2,ausbildungsfremdeberufserfahrung2,deutscher_referenzberuf2,wunschberuf2,leistungsbezug,name_berater_a_a,kontakt_berater_a_a,kundennummer_a_a,einw_anerkstelle, einw_anerkstelledatum, einw_anerkstellemedium, einw_anerkstellename, einw_anerkstellekontakt, einw_person, einw_persondatum, einw_personmedium, einw_personname, einw_personkontakt, name_beratungsstelle,verification_code,verification_ip,anerkennungszuschussbeantragt,wieberaten,kooperationgruppe',
+        'searchFields' => 'nachname,vorname,plz,ort,email',
         'iconfile' => 'EXT:iqtp13db/Resources/Public/Icons/tx_iqtp13db_domain_model_teilnehmer.gif'
     ],
     'types' => [
-        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, niqidberatungsstelle, beratungsstatus, niqchiffre, niqtstamp, schonberaten, schonberatenvon, nachname, vorname, plz, ort, email, confirmemail, telefon, lebensalter, geburtsland, geschlecht, erste_staatsangehoerigkeit, zweite_staatsangehoerigkeit, einreisejahr, wohnsitz_deutschland, wohnsitz_nein_in, sonstigerstatus, deutschkenntnisse, zertifikatdeutsch, zertifikat_sprachniveau, erwerbsstatus, leistungsbezugjanein, leistungsbezug, einwilligungdatenan_a_a, einwilligungdatenan_a_adatum, einwilligungdatenan_a_amedium, name_berater_a_a, kontakt_berater_a_a, kundennummer_a_a, einw_anerkstelle, einw_anerkstelledatum, einw_anerkstellemedium, einw_anerkstellename, einw_anerkstellekontakt, einw_person, einw_persondatum, einw_personmedium, einw_personname, einw_personkontakt, aufenthaltsstatus, aufenthaltsstatusfreitext, name_beratungsstelle, notizen, einwilligung, verification_code, verification_date, verification_ip,anerkennungszuschussbeantragt,wieberaten,kooperationgruppe, beratungdatum, beratungsart, beratungsartfreitext, beratungsort, beratungzu, anerkennendestellen, anerkennungsberatung, anerkennungsberatungfreitext, qualifizierungsberatung, qualifizierungsberatung, beratungnotizen, erstberatungabgeschlossen, berater, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+        '1' => ['showitem' => 'hidden, niqidberatungsstelle, beratungsstatus, nachname, vorname, plz, ort, email, confirmemail, telefon, lebensalter, geschlecht, einwilligung, beratungdatum, erstberatungabgeschlossen, berater, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
     'columns' => [
         'sys_language_uid' => [
@@ -112,17 +114,6 @@ return [
             ],
         ],
         
-        'niqidberatungsstelle' => [
-            'exclude' => true,
-            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.niqidberatungsstelle',
-            'config' => [
-                'type' => 'input',
-                'size' => 4,
-                'eval' => 'int',
-                'default' => 0
-            ],
-        ],
-        
         'tstamp' => [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.tstamp',
@@ -131,6 +122,17 @@ return [
                 'renderType' => 'inputDateTime',
                 'eval' => 'datetime,int',
                 'default' => 0               
+            ],
+        ],
+        
+        'niqidberatungsstelle' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.niqidberatungsstelle',
+            'config' => [
+                'type' => 'input',
+                'size' => 4,
+                'eval' => 'int',
+                'default' => 0
             ],
         ],
         
@@ -376,33 +378,6 @@ return [
                 'size' => 30,
                 'eval' => 'trim'
             ],
-        ],
-        'einwilligungdatenan_a_a' => [
-            'exclude' => true,
-            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_a',
-            'config' => [
-                'type' => 'input',
-                'size' => 4,
-                'eval' => 'int'
-            ]
-        ],
-        'einwilligungdatenan_a_adatum' => [
-            'exclude' => true,
-            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_adatum',
-            'config' => [
-                 'type' => 'input',
-                'size' => 30,
-                'eval' => 'trim'
-            ],
-        ],
-        'einwilligungdatenan_a_amedium' => [
-            'exclude' => true,
-            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_amedium',
-            'config' => [
-                'type' => 'input',
-                'size' => 4,
-                'eval' => 'int'
-            ]
         ],
         'name_berater_a_a' => [
             'exclude' => true,

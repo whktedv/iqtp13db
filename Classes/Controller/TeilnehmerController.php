@@ -84,9 +84,6 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $this->arguments->getArgument('teilnehmer')->getPropertyMappingConfiguration()->allowProperties('sonstigerstatus');
             $this->arguments->getArgument('teilnehmer')->getPropertyMappingConfiguration()->setTargetTypeForSubProperty('sonstigerstatus', 'array');
             
-            $this->arguments->getArgument('teilnehmer')->getPropertyMappingConfiguration()->allowProperties('einwilligungdatenanAAmedium');
-            $this->arguments->getArgument('teilnehmer')->getPropertyMappingConfiguration()->setTargetTypeForSubProperty('einwilligungdatenanAAmedium', 'array');
-            
             $this->arguments->getArgument('teilnehmer')->getPropertyMappingConfiguration()->allowProperties('einwAnerkstellemedium');
             $this->arguments->getArgument('teilnehmer')->getPropertyMappingConfiguration()->setTargetTypeForSubProperty('einwAnerkstellemedium', 'array');
             
@@ -966,9 +963,6 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $this->createHistory($teilnehmer, "erwerbsstatus");
         $this->createHistory($teilnehmer, "leistungsbezugjanein");
         $this->createHistory($teilnehmer, "leistungsbezug");
-        $this->createHistory($teilnehmer, "einwilligungdatenanAA");
-        $this->createHistory($teilnehmer, "einwilligungdatenanAAdatum");
-        $this->createHistory($teilnehmer, "einwilligungdatenanAAmedium");
         $this->createHistory($teilnehmer, "name_beraterAA");
         $this->createHistory($teilnehmer, "kontakt_beraterAA");
         $this->createHistory($teilnehmer, "kundennummerAA");
@@ -1713,13 +1707,6 @@ public function anmeldseite3redirectAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer 
         $valArray = $this->request->getArguments();
         $thisdate = new DateTime();
         
-        if($teilnehmer->getEinwilligungdatenanaa() == 1) {
-            $teilnehmer->setEinwilligungdatenanaadatum($thisdate->format('d.m.Y'));
-            $teilnehmer->setEinwilligungdatenanaamedium(explode(',', 4));
-        } else {
-            $teilnehmer->setEinwilligungdatenanaadatum('');
-            $teilnehmer->setEinwilligungdatenanaamedium(array());
-        }
         if($teilnehmer->getEinwperson() == 1) {
             $teilnehmer->setEinwpersondatum($thisdate->format('d.m.Y'));
             $teilnehmer->setEinwpersonmedium(explode(',', 4));
