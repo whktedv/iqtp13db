@@ -3,7 +3,7 @@ return [
     'ctrl' => [
         'title' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer',
         'label' => 'nachname',
-        'label_alt' => 'vorname, plz',
+        'label_alt' => 'vorname',
         'label_alt_force' => true,
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',

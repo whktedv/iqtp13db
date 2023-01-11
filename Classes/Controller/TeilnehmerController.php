@@ -115,6 +115,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         
         /* Propertymapping bis hier */
         
+        $this->allusergroups = $this->userGroupRepository->findAllGroups($this->settings['beraterstoragepid']);
+        
         $this->generalhelper = new \Ud\Iqtp13db\Helper\Generalhelper();
         // **** NIQ deaktiviert **** $this->niqinterface = new \Ud\Iqtp13db\Helper\NiqInterface();
         // **** NIQ deaktiviert **** $this->niqapiurl = $this->settings['niqapiurl'];
@@ -1498,7 +1500,7 @@ public function createHistory(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer, 
 public function startseiteAction()
 {
     $valArray = $this->request->getArguments();
-    $beratungsstellenname = $valArray['beratung'];
+    $beratungsstellenname = $valArray['beratung'] ?? '';
     if($beratungsstellenname != '') {
         foreach ($this->allusergroups as $group) {
             if(strtolower($group->getTitle()) == $beratungsstellenname) {
