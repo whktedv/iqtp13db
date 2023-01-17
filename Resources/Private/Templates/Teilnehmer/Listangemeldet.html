@@ -6,7 +6,7 @@
 
 <f:section name="main">
 <h1>Filter</h1>
-<f:form class="filterform" method="post" controller="Teilnehmer" action="listangemeldet" name="listangemeldet" >
+<f:form class="filterform" method="post" controller="Teilnehmer" action="listangemeldet" name="listangemeldet"  noCacheHash="true" >
 		<div>Name: <f:form.textfield size="20" value="{filtername}" name="name" /></div>
 		<div>Ort: <f:form.textfield size="20" value="{filterort}" name="ort" /></div>
 		<div>Beruf: <f:form.textfield size="20" value="{filterberuf}" name="beruf" /></div>
@@ -31,9 +31,9 @@
 			<th>Bereits<br>beraten</th>
 			<th><f:link.action action="listangemeldet" arguments="{orderby : 'verificationDate', changeorder : 1}">Anmeldedatum</f:link.action></th>
 			<th><f:link.action action="listangemeldet" arguments="{orderby : 'ort', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.plz" />/<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ort" /></f:link.action></th>
-			<th>Leistung</th>
-			<th><f:link.action action="listangemeldet" arguments="{orderby : 'geburtsland', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geburtsland" />/-ort</f:link.action></th>
 			<th><f:link.action action="listangemeldet" arguments="{orderby : 'geschlecht', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geschlecht" /></f:link.action></th>
+			<th><f:link.action action="listangemeldet" arguments="{orderby : 'geburtsland', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geburtsland" />/-ort</f:link.action></th>
+			<th>Leistungsbezug</th>
 			<th id="resizablecol1"><f:translate key="tx_iqtp13db_domain_model_abschluss.deutscher_referenzberuf" /></th>
 			<th id="resizablecol2"><f:link.action action="listangemeldet" arguments="{orderby : 'kooperationgruppe', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.kooperationgruppe" /></f:link.action></th>
 			<th> </th>
@@ -54,11 +54,11 @@
 				<td class="tdcenter">{f:if(condition: '{teilnehmer.schonberaten} == 1', then: '✓', else: '')}</td>
 				<td class="tdcenter">{f:if(condition: '{teilnehmer.verificationDate} == 0', then: 'unbestätigt', else: '{f:format.date(date: teilnehmer.verificationDate, format:"d.m.Y")}')}</td>
 				<td>{teilnehmer.plz} {teilnehmer.ort}</td>
-				<td class="tdcenter">{f:if(condition: '{teilnehmer.leistungsbezugjanein} == 1', then: '✓', else: '')}</td>
-				<td>{iqtp13db:isint(field:'{teilnehmer.geburtsland}',then:'{settings.staaten.{teilnehmer.geburtsland}}',else:'{teilnehmer.geburtsland}')}</td>
 				<td class="tdcenter">{f:if(condition: '{teilnehmer.geschlecht} == 2', then: '<span style="color: #84a0ff;">M</span>')}
 				{f:if(condition: '{teilnehmer.geschlecht} == 1', then: '<span style="color: #fe7a84;">W</span>')}
 				{f:if(condition: '{teilnehmer.geschlecht} == 3', then: '<span>D</span>')}</td>
+				<td>{iqtp13db:isint(field:'{teilnehmer.geburtsland}',then:'{settings.staaten.{teilnehmer.geburtsland}}',else:'{teilnehmer.geburtsland}')}</td>
+				<td class="tdcenter">{f:if(condition: '{teilnehmer.leistungsbezugjanein} == 1', then: '✓', else: '')}</td>
 				<td>
 					<f:for each="{abschluesse.{it.index}}" as="abschluss" iteration="iter">
 						{f:if(condition: '{abschluesse.{it.index} -> f:count()} > 1', then: '{iter.index + 1}.', else: '')} {abschluss.deutscherReferenzberuf}<br>

@@ -990,6 +990,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $this->createHistory($teilnehmer, "beratungsart");
         $this->createHistory($teilnehmer, "beratungsartfreitext");
         $this->createHistory($teilnehmer, "beratungsort");
+        $this->createHistory($teilnehmer, "beratungsdauer");
         $this->createHistory($teilnehmer, "beratungzu");
         $this->createHistory($teilnehmer, "anerkennendestellen");
         $this->createHistory($teilnehmer, "anerkennungsberatung");
