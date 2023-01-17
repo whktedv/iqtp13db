@@ -441,6 +441,13 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $beratungsort = '';
     
     /**
+     * beratungsdauer
+     *
+     * @var string
+     */
+    protected $beratungsdauer = '';
+    
+    /**
      * beratungzu
      *
      * @var string
@@ -1806,6 +1813,27 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setBeratungsort($beratungsort)
     {
         $this->beratungsort = $beratungsort;
+    }
+    
+    /**
+     * Returns the beratungsdauer
+     *
+     * @return string $beratungsdauer
+     */
+    public function getBeratungsdauer()
+    {
+        return $this->beratungsdauer;
+    }
+    
+    /**
+     * Sets the beratungsdauer
+     *
+     * @param string $beratungsdauer
+     * @return void
+     */
+    public function setBeratungsdauer($beratungsdauer)
+    {
+        $this->beratungsdauer = $beratungsdauer;
     }
     
     /**

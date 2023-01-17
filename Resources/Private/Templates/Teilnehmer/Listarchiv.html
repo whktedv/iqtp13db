@@ -28,7 +28,8 @@
 			<th><f:link.action action="listarchiv" arguments="{orderby : 'vorname', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" /></f:link.action></th>
 			<th><f:link.action action="listarchiv" arguments="{orderby : 'verification_date', changeorder : 1}">Anmeldedatum</f:link.action></th>
 			<th><f:link.action action="listarchiv" arguments="{orderby : 'ort', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.plz" />/<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ort" /></f:link.action></th>
-			<th>Leistung</th>
+			<th><f:link.action action="listarchiv" arguments="{orderby : 'geschlecht', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geschlecht" /></f:link.action></th>
+			<th>Leistungsbezug</th>
 			<th>Anerkenn.-<br>zusch.<br>beantragt?</th>
 			<th><f:link.action action="listarchiv" arguments="{orderby : 'berater.username', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.berater" /></f:link.action></th>
 			<th><f:link.action action="listarchiv" arguments="{orderby : 'beratungdatum', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungdatum" /></f:link.action></th>
@@ -36,7 +37,7 @@
 			<th id="resizablecol2"><f:translate key="tx_iqtp13db_domain_model_abschluss.referenzberufzugewiesen" /></th>
 			<th><f:link.action action="listarchiv" arguments="{orderby : 'erstberatungabgeschlossen', changeorder : 1}">Fertig</f:link.action></th>
 			<th id="resizablecol3"><f:link.action action="listarchiv" arguments="{orderby : 'kooperationgruppe', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.kooperationgruppe" /></f:link.action></th>
-			<th><f:translate key="tx_iqtp13db_domain_model_teilnehmer.niqchiffre" /></th>
+			<th>Anz. FK</th>
 			<th> </th>
 			<th> </th>
 			<th> </th>
@@ -49,6 +50,9 @@
 				<td>{teilnehmer.vorname}</td>
 				<td><f:format.date format="d.m.Y">@{teilnehmer.verificationDate}</f:format.date></td>
 				<td>{teilnehmer.plz} {teilnehmer.ort}</td>
+				<td class="tdcenter">{f:if(condition: '{teilnehmer.geschlecht} == 2', then: '<span style="color: #84a0ff;">M</span>')}
+				{f:if(condition: '{teilnehmer.geschlecht} == 1', then: '<span style="color: #fe7a84;">W</span>')}
+				{f:if(condition: '{teilnehmer.geschlecht} == 3', then: '<span>D</span>')}</td>
 				<td>{f:if(condition: '{teilnehmer.leistungsbezugjanein} == 1', then: '✓', else: '')}</td>
 				<td>{f:if(condition: '{teilnehmer.anerkennungszuschussbeantragt} == 1', then: '✓', else: '')}</td>
 				<td>{teilnehmer.berater.username}</td>
@@ -81,7 +85,7 @@
 				</f:if>				
 				</td>
 				<td>{teilnehmer.kooperationgruppe}</td>
-				<td>{teilnehmer.niqchiffre} {f:if(condition: '{teilnehmer.tstamp} > {teilnehmer.niqtstamp}', then: '&#9888;', else: '&#9989;')}</td>
+				<td>{anzfolgekontakte.{it.index}}</td>
 				<td><f:link.action class="linkbuttons" action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Teilnehmer">Bearbeiten</f:link.action></td>
 				<td><f:link.action class="linkbuttons" action="new" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Folgekontakt">Folgekontakt</f:link.action></td>
 				<td>

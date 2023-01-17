@@ -95,6 +95,9 @@
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.beratungsort">
 				<target>Beratungsort</target>
 			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.beratungsdauer">
+				<target>Beratungsdauer (in Stunden)</target>
+			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.anerkennendestellen">
 				<target>Anerkennende Stellen</target>
 			</trans-unit>

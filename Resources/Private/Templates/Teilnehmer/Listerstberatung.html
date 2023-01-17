@@ -23,16 +23,16 @@
 		<tr>
 			<th><f:link.action action="listerstberatung" arguments="{orderby : 'nachname', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" /></f:link.action></th>
 			<th><f:link.action action="listerstberatung" arguments="{orderby : 'vorname', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" /></f:link.action></th>
-			<th>Bereits<br>beraten</th>
 			<th><f:link.action action="listerstberatung" arguments="{orderby : 'verificationDate', changeorder : 1}">Anmeldedatum</f:link.action></th>
 			<th><f:link.action action="listerstberatung" arguments="{orderby : 'ort', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.plz" />/<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ort" /></f:link.action></th>
-			<th>Leistung</th>
+			<th>Leistungsbezug</th>
 			<th>Anerkenn.-<br>zusch.<br>beantragt?</th>
 			<th><f:link.action action="listerstberatung" arguments="{orderby : 'berater.username', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.berater" /></f:link.action></th>
 			<th><f:link.action action="listerstberatung" arguments="{orderby : 'beratungdatum', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungdatum" /></f:link.action></th>
-			<th id="resizablecol1"><f:translate key="tx_iqtp13db_domain_model_abschluss.referenzberufzugewiesen" /></th>
+			<th id="resizablecol1"><f:translate key="tx_iqtp13db_domain_model_abschluss.deutscher_referenzberuf" /></th>
+			<th id="resizablecol2"><f:translate key="tx_iqtp13db_domain_model_abschluss.referenzberufzugewiesen" /></th>
 			<th><f:link.action action="listerstberatung" arguments="{orderby : 'erstberatungabgeschlossen', changeorder : 1}">Fertig</f:link.action></th>
-			<th id="resizablecol2"><f:link.action action="listerstberatung" arguments="{orderby : 'kooperationgruppe', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.kooperationgruppe" /></f:link.action></th>
+			<th id="resizablecol3"><f:link.action action="listerstberatung" arguments="{orderby : 'kooperationgruppe', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.kooperationgruppe" /></f:link.action></th>
 			<th> </th>
 			<th> </th>
 			<th> </th>
@@ -45,13 +45,17 @@
 			<tr>
 				<td><f:link.action action="show" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">{teilnehmer.nachname}</f:link.action></td>
 				<td>{teilnehmer.vorname}</td>
-				<td>{f:if(condition: '{teilnehmer.schonberaten} == 1', then: '✓', else: '')}</td>
 				<td><f:format.date format="d.m.Y">@{teilnehmer.verificationDate}</f:format.date></td>
 				<td>{teilnehmer.plz} {teilnehmer.ort}</td>
 				<td>{f:if(condition: '{teilnehmer.leistungsbezugjanein} == 1', then: '✓', else: '')}</td>
 				<td>{f:if(condition: '{teilnehmer.anerkennungszuschussbeantragt} == 1', then: '✓', else: '')}</td>
 				<td>{teilnehmer.berater.username}</td> 
 				<td><f:format.date format="d.m.Y">{teilnehmer.beratungdatum}</f:format.date></td>
+				<td>
+					<f:for each="{abschluesse.{it.index}}" as="abschluss" iteration="iter">
+						{f:if(condition: '{abschluesse.{it.index} -> f:count()} > 1', then: '{iter.index + 1}.', else: '')} {abschluss.deutscherReferenzberuf}<br>
+					</f:for>
+				</td>
 				<td>
 					<f:for each="{abschluesse.{it.index}}" as="abschluss" iteration="iter">
 						<f:for each="{settings.berufe}" as="beruf" key="key">

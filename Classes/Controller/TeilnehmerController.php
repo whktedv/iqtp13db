@@ -1017,6 +1017,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     		$this->createHistory($teilnehmer, "beratungsart");
     		$this->createHistory($teilnehmer, "beratungsartfreitext");
     		$this->createHistory($teilnehmer, "beratungsort");
+    		$this->createHistory($teilnehmer, "beratungsdauer");
     		$this->createHistory($teilnehmer, "beratungzu");
     		$this->createHistory($teilnehmer, "anerkennendestellen");
     		$this->createHistory($teilnehmer, "anerkennungsberatung");
@@ -1305,6 +1306,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $arrjanein = array(0 => 'keine Angabe', 1 => 'ja', 2 => 'nein');
         $arrerwerbsstatus = $this->settings['erwerbsstatus'];
         $arrleistungsbezug = $this->settings['leistungsbezug'];
+        $arrzertifikatlevel = $this->settings['zertifikatlevel'];
         $arrstaaten = $this->settings['staaten'];
         $arraufenthaltsstatus = $this->settings['aufenthaltsstatus'];
         $arrberatungsart = $this->settings['beratungsart'];
@@ -1352,9 +1354,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     $rows[$x]['Ort'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'ort');
                     $rows[$x]['Email'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'email');
                     $rows[$x]['Telefon'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'telefon');
-                    $rows[$x]['erwerbsstatus'] = $arrerwerbsstatus[\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'erwerbsstatus')];
-                    $rows[$x]['Leistungsbezugjanein'] = $arrjanein[\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'leistungsbezugjanein')];
-                    $rows[$x]['Leistungsbezug'] = $arrleistungsbezug[\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'leistungsbezug')];
+                    $rows[$x]['Lebensalter'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'lebensalter');
                     $rows[$x]['Geburtsland'] = $arrstaaten[\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'geburtsland')];
                     $rows[$x]['aufenthaltsstatus'] = $arraufenthaltsstatus[\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'aufenthaltsstatus')];
                     $geschlecht = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'geschlecht');
@@ -1362,18 +1362,31 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     if($geschlecht == 2) $geschlecht = 'm';
                     if($geschlecht == 3) $geschlecht = 'd';
                     $rows[$x]['Geschlecht'] = $geschlecht;
+                    $rows[$x]['ErsteStaatsangehoerigkeit'] = $arrstaaten[\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'erste_staatsangehoerigkeit')];
+                    $rows[$x]['Einreisejahr'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'einreisejahr');
+                    $rows[$x]['wohnsitz_deutschland'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'wohnsitz_deutschland');
+                    $rows[$x]['wohnsitz_nein_in'] = $arrstaaten[\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'wohnsitz_nein_in')];
+                    $rows[$x]['deutschkenntnisse'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'deutschkenntnisse');
+                    $rows[$x]['zertifikat_sprachniveau'] = $arrzertifikatlevel[\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'zertifikat_sprachniveau')];
+                    $rows[$x]['erwerbsstatus'] = $arrerwerbsstatus[\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'erwerbsstatus')];
+                    $rows[$x]['Leistungsbezugjanein'] = $arrjanein[\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'leistungsbezugjanein')];
+                    $rows[$x]['Leistungsbezug'] = $arrleistungsbezug[\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'leistungsbezug')];
+                    
                 }
-                
+                $rows[$x]['beratungdatum'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungdatum');
+                $rows[$x]['erstberatungabgeschlossen'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'erstberatungabgeschlossen');
                 if($berater != NULL) {
                     $rows[$x]['Beraterin'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($berater, 'username');
                 }
                                 
                 foreach (\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungsart') as $atn) $rows[$x]['beratungsart'] .= $arrberatungsart[$atn]." ";
+                $rows[$x]['beratungsort'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungsort');
+                $rows[$x]['beratungsdauer'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungsdauer');
                 foreach (\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'anerkennungsberatung') as $atn) $rows[$x]['anerkennungsberatung'] .= $arranerkennungsberatung[$atn]." ";
                 foreach (\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'qualifizierungsberatung') as $atn) $rows[$x]['qualifizierungsberatung'] .= $arrqualifizierungsberatung[$atn]." ";
                 $rows[$x]['nameberatungsstelle'] = $arrberatungsstelle[\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'name_beratungsstelle')];
                 $rows[$x]['beratungzuschulabschluss'] = $arrberatungzu[\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungzu')];
-                
+                                
                 $rows[$x]['AnzFolgekontakte'] = $anzfolgekontakte[$x];
                 
                 foreach($abschluesse[$x] as $y => $abschluss) {
@@ -1399,14 +1412,25 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'Ort' => 'string',
                 'E-Mail' => 'string',
                 'Telefon' => 'string',
-                'Erwerbsstatus' => 'string',
-                'Leistungsbezug ja/nein' => 'string',
-                'Leistungsbezug' => 'string',
+                'Lebensalter' => 'string',
                 'Geburtsland' => 'string',
                 'Aufenthaltsstatus' => 'string',
                 'Geschlecht' => 'string',
+                'ErsteStaatsangehoerigkeit' => 'string',
+                'Einreisejahr' => 'string',
+                'Wohnsitz_Deutschland' => 'string',
+                'Wohnsitz_nein_in' => 'string',
+                'Deutschkenntnisse' => 'string',
+                'Zertifikat_Sprachniveau' => 'string',
+                'Erwerbsstatus' => 'string',
+                'Leistungsbezug ja/nein' => 'string',
+                'Leistungsbezug' => 'string',
+                'Beratungdatm' => 'string',
+                'Erstberatungabgeschlossen' => 'string',
                 'Berater:in' => 'string',
                 'Beratungsart' => 'string',
+                'Beratungsort' => 'string',
+                'Beratungsdauer' => 'string',
                 'Anerkennungsberatung' => 'string',
                 'Qualifizierungsberatung' => 'string',
                 'Beratungsstelle' => 'string',
