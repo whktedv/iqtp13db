@@ -75,7 +75,8 @@ CREATE TABLE tx_iqtp13db_domain_model_teilnehmer (
 	beratungsart varchar(255) DEFAULT '' NOT NULL,
 	beratungsartfreitext text NOT NULL,
 	beratungsort varchar(255) DEFAULT '' NOT NULL,
-		
+	beratungsdauer varchar(255) DEFAULT '' NOT NULL,
+	
 	beratungzu varchar(255) DEFAULT '' NOT NULL,
 	anerkennendestellen text NOT NULL,
 	anerkennungsberatung varchar(255) DEFAULT '' NOT NULL,

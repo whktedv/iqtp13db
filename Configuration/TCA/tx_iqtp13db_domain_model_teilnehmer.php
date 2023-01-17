@@ -633,6 +633,15 @@ return [
                 'eval' => 'trim'
             ]
         ],
+        'beratungsdauer' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.beratungsdauer',
+            'config' => [
+                'type' => 'input',
+                'size' => 8,
+                'eval' => 'trim'
+            ]
+        ],
         'beratungzu' => [
             'exclude' => true,
             'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.beratungzu',

@@ -52,7 +52,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var int
      */
     protected $niqtstamp = 0;
-        
+    
     /**
      * schonberaten
      *
@@ -97,7 +97,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     
     /**
      * email
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty") 
+     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
      * @TYPO3\CMS\Extbase\Annotation\Validate("EmailAddress")
      * @var string
      */
@@ -121,14 +121,14 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     
     /**
      * lebensalter
-     * 
+     *
      * @var string
      */
     protected $lebensalter = '';
     
     /**
      * geburtsland
-     * 
+     *
      * @var string
      */
     protected $geburtsland = '';
@@ -165,7 +165,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var int
      */
     protected $wohnsitzDeutschland = 0;
-        
+    
     /**
      * wohnsitzNeinIn
      *
@@ -221,6 +221,27 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var string
      */
     protected $leistungsbezug = '';
+    
+    /**
+     * einwilligungdatenanAA
+     *
+     * @var int
+     */
+    protected $einwilligungdatenanAA = 0;
+    
+    /**
+     * einwilligungdatenanAAdatum
+     *
+     * @var string
+     */
+    protected $einwilligungdatenanAAdatum = '';
+    
+    /**
+     * einwilligungdatenanAAmedium
+     *
+     * @var string
+     */
+    protected $einwilligungdatenanAAmedium = '';
     
     /**
      * nameBeraterAA
@@ -319,14 +340,14 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var int
      */
     protected $aufenthaltsstatus = 0;
-
+    
     /**
      * aufenthaltsstatusfreitext
      *
      * @var string
      */
     protected $aufenthaltsstatusfreitext = '';
-           
+    
     /**
      * nameBeratungsstelle
      *
@@ -340,7 +361,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var string
      */
     protected $notizen = '';
-   
+    
     /**
      * Einwilligung Datenübermittlung
      *
@@ -420,12 +441,19 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $beratungsort = '';
     
     /**
+     * beratungsdauer
+     *
+     * @var string
+     */
+    protected $beratungsdauer = '';
+    
+    /**
      * beratungzu
      *
      * @var string
      */
     protected $beratungzu = '';
-        
+    
     /**
      * anerkennendestellen
      *
@@ -494,11 +522,12 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var boolean
      */
     protected $hidden;
-  
+    
     /**
      * initializes this object
      *
      * @param array $sonstigerstatus
+     * @param array $einwilligungdatenanAAmedium
      * @param array $einwAnerkstellemedium
      * @param array $einwPersonmedium
      * @param array $beratungsart
@@ -506,15 +535,16 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param array $qualifizierungsberatung
      * @param array $wieberaten
      */
-    public function __construct(array $sonstigerstatus = array(), array $einwAnerkstellemedium = array(), array $einwPersonmedium = array(), array $beratungsart = array(), array $anerkennungsberatung = array(), array $qualifizierungsberatung = array(), array $wieberaten = array()) {
-        $this->setSonstigerstatus($sonstigerstatus);    	    	
-    	$this->setEinwAnerkstellemedium($einwAnerkstellemedium);
-    	$this->setEinwPersonmedium($einwPersonmedium);
-    	$this->initVerificationCode();
-    	$this->setBeratungsart($beratungsart);
-    	$this->setAnerkennungsberatung($anerkennungsberatung);
-    	$this->setQualifizierungsberatung($qualifizierungsberatung);
-    	$this->setWieberaten($wieberaten);
+    public function __construct(array $sonstigerstatus = array(), array $einwilligungdatenanAAmedium = array(), array $einwAnerkstellemedium = array(), array $einwPersonmedium = array(), array $beratungsart = array(), array $anerkennungsberatung = array(), array $qualifizierungsberatung = array(), array $wieberaten = array()) {
+        $this->setSonstigerstatus($sonstigerstatus);
+        $this->setEinwilligungdatenanAAmedium($einwilligungdatenanAAmedium);
+        $this->setEinwAnerkstellemedium($einwAnerkstellemedium);
+        $this->setEinwPersonmedium($einwPersonmedium);
+        $this->initVerificationCode();
+        $this->setBeratungsart($beratungsart);
+        $this->setAnerkennungsberatung($anerkennungsberatung);
+        $this->setQualifizierungsberatung($qualifizierungsberatung);
+        $this->setWieberaten($wieberaten);
     }
     
     /**
@@ -559,19 +589,19 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->tstamp = $tstamp;
     }
     
-     /**
+    /**
      * Returns the beratungsstatus
-     * 
+     *
      * @return int $beratungsstatus
      */
     public function getBeratungsstatus()
     {
         return $this->beratungsstatus;
     }
-
+    
     /**
      * Sets the beratungsstatus
-     * 
+     *
      * @param int $beratungsstatus
      * @return void
      */
@@ -579,20 +609,20 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->beratungsstatus = $beratungsstatus;
     }
-
+    
     /**
      * Returns the niqchiffre
-     * 
+     *
      * @return string $niqchiffre
      */
     public function getNiqchiffre()
     {
         return $this->niqchiffre;
     }
-
+    
     /**
      * Sets the niqchiffre
-     * 
+     *
      * @param string $niqchiffre
      * @return void
      */
@@ -600,7 +630,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->niqchiffre = $niqchiffre;
     }
-
+    
     /**
      * Returns the niqtstamp
      *
@@ -624,17 +654,17 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     
     /**
      * Returns the schonberaten
-     * 
+     *
      * @return int $schonberaten
      */
     public function getSchonberaten()
     {
         return $this->schonberaten;
     }
-
+    
     /**
      * Sets the schonberaten
-     * 
+     *
      * @param int $schonberaten
      * @return void
      */
@@ -642,20 +672,20 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->schonberaten = $schonberaten;
     }
-
+    
     /**
      * Returns the schonberatenvon
-     * 
+     *
      * @return string $schonberatenvon
      */
     public function getSchonberatenvon()
     {
         return $this->schonberatenvon;
     }
-
+    
     /**
      * Sets the schonberatenvon
-     * 
+     *
      * @param string $schonberatenvon
      * @return void
      */
@@ -663,20 +693,20 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->schonberatenvon = $schonberatenvon;
     }
-
+    
     /**
      * Returns the nachname
-     * 
+     *
      * @return string $nachname
      */
     public function getNachname()
     {
         return $this->nachname;
     }
-
+    
     /**
      * Sets the nachname
-     * 
+     *
      * @param string $nachname
      * @return void
      */
@@ -684,20 +714,20 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->nachname = $nachname;
     }
-
+    
     /**
      * Returns the vorname
-     * 
+     *
      * @return string $vorname
      */
     public function getVorname()
     {
         return $this->vorname;
     }
-
+    
     /**
      * Sets the vorname
-     * 
+     *
      * @param string $vorname
      * @return void
      */
@@ -705,20 +735,20 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->vorname = $vorname;
     }
-
+    
     /**
      * Returns the plz
-     * 
+     *
      * @return string $plz
      */
     public function getPlz()
     {
         return $this->plz;
     }
-
+    
     /**
      * Sets the plz
-     * 
+     *
      * @param string $plz
      * @return void
      */
@@ -726,20 +756,20 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->plz = $plz;
     }
-
+    
     /**
      * Returns the ort
-     * 
+     *
      * @return string $ort
      */
     public function getOrt()
     {
         return $this->ort;
     }
-
+    
     /**
      * Sets the ort
-     * 
+     *
      * @param string $ort
      * @return void
      */
@@ -747,20 +777,20 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->ort = $ort;
     }
-
+    
     /**
      * Returns the email
-     * 
+     *
      * @return string $email
      */
     public function getEmail()
     {
         return $this->email;
     }
-
+    
     /**
      * Sets the email
-     * 
+     *
      * @param string $email
      * @return void
      */
@@ -787,20 +817,20 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setConfirmemail($confirmemail) {
         $this->confirmemail = $confirmemail;
     }
-
+    
     /**
      * Returns the telefon
-     * 
+     *
      * @return string $telefon
      */
     public function getTelefon()
     {
         return $this->telefon;
     }
-
+    
     /**
      * Sets the telefon
-     * 
+     *
      * @param string $telefon
      * @return void
      */
@@ -808,20 +838,20 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->telefon = $telefon;
     }
-
+    
     /**
      * Returns the lebensalter
-     * 
+     *
      * @return string $lebensalter
      */
     public function getLebensalter()
     {
         return $this->lebensalter;
     }
-
+    
     /**
      * Sets the lebensalter
-     * 
+     *
      * @param string $lebensalter
      * @return void
      */
@@ -829,20 +859,20 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->lebensalter = $lebensalter;
     }
-
+    
     /**
      * Returns the geburtsland
-     * 
+     *
      * @return string $geburtsland
      */
     public function getGeburtsland()
     {
         return $this->geburtsland;
     }
-
+    
     /**
      * Sets the geburtsland
-     * 
+     *
      * @param string $geburtsland
      * @return void
      */
@@ -850,20 +880,20 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->geburtsland = $geburtsland;
     }
-
+    
     /**
      * Returns the geschlecht
-     * 
+     *
      * @return int $geschlecht
      */
     public function getGeschlecht()
     {
         return $this->geschlecht;
     }
-
+    
     /**
      * Sets the geschlecht
-     * 
+     *
      * @param int $geschlecht
      * @return void
      */
@@ -871,20 +901,20 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->geschlecht = $geschlecht;
     }
-
+    
     /**
      * Returns the ersteStaatsangehoerigkeit
-     * 
+     *
      * @return string $ersteStaatsangehoerigkeit
      */
     public function getErsteStaatsangehoerigkeit()
     {
         return $this->ersteStaatsangehoerigkeit;
     }
-
+    
     /**
      * Sets the ersteStaatsangehoerigkeit
-     * 
+     *
      * @param string $ersteStaatsangehoerigkeit
      * @return void
      */
@@ -892,20 +922,20 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->ersteStaatsangehoerigkeit = $ersteStaatsangehoerigkeit;
     }
-
+    
     /**
      * Returns the zweiteStaatsangehoerigkeit
-     * 
+     *
      * @return string $zweiteStaatsangehoerigkeit
      */
     public function getZweiteStaatsangehoerigkeit()
     {
         return $this->zweiteStaatsangehoerigkeit;
     }
-
+    
     /**
      * Sets the zweiteStaatsangehoerigkeit
-     * 
+     *
      * @param string $zweiteStaatsangehoerigkeit
      * @return void
      */
@@ -913,20 +943,20 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->zweiteStaatsangehoerigkeit = $zweiteStaatsangehoerigkeit;
     }
-
+    
     /**
      * Returns the einreisejahr
-     * 
+     *
      * @return string $einreisejahr
      */
     public function getEinreisejahr()
     {
         return $this->einreisejahr;
     }
-
+    
     /**
      * Sets the einreisejahr
-     * 
+     *
      * @param string $einreisejahr
      * @return void
      */
@@ -934,20 +964,20 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->einreisejahr = $einreisejahr;
     }
-
+    
     /**
      * Returns the wohnsitzDeutschland
-     * 
+     *
      * @return int $wohnsitzDeutschland
      */
     public function getWohnsitzDeutschland()
     {
         return $this->wohnsitzDeutschland;
     }
-
+    
     /**
      * Sets the wohnsitzDeutschland
-     * 
+     *
      * @param int $wohnsitzDeutschland
      * @return void
      */
@@ -955,20 +985,20 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->wohnsitzDeutschland = $wohnsitzDeutschland;
     }
-
+    
     /**
      * Returns the wohnsitzNeinIn
-     * 
+     *
      * @return string $wohnsitzNeinIn
      */
     public function getWohnsitzNeinIn()
     {
         return $this->wohnsitzNeinIn;
     }
-
+    
     /**
      * Sets the wohnsitzNeinIn
-     * 
+     *
      * @param string $wohnsitzNeinIn
      * @return void
      */
@@ -976,7 +1006,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->wohnsitzNeinIn = $wohnsitzNeinIn;
     }
-
+    
     /**
      * Returns the sonstigerstatus
      *
@@ -1000,17 +1030,17 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     
     /**
      * Returns the deutschkenntnisse
-     * 
+     *
      * @return int $deutschkenntnisse
      */
     public function getDeutschkenntnisse()
     {
         return $this->deutschkenntnisse;
     }
-
+    
     /**
      * Sets the deutschkenntnisse
-     * 
+     *
      * @param int $deutschkenntnisse
      * @return void
      */
@@ -1018,20 +1048,20 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->deutschkenntnisse = $deutschkenntnisse;
     }
-
+    
     /**
      * Returns the zertifikatdeutsch
-     * 
+     *
      * @return int $zertifikatdeutsch
      */
     public function getZertifikatdeutsch()
     {
         return $this->zertifikatdeutsch;
     }
-
+    
     /**
      * Sets the zertifikatdeutsch
-     * 
+     *
      * @param int $zertifikatdeutsch
      * @return void
      */
@@ -1039,20 +1069,20 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->zertifikatdeutsch = $zertifikatdeutsch;
     }
-
+    
     /**
      * Returns the zertifikatSprachniveau
-     * 
+     *
      * @return string $zertifikatSprachniveau
      */
     public function getZertifikatSprachniveau()
     {
         return $this->zertifikatSprachniveau;
     }
-
+    
     /**
      * Sets the zertifikatSprachniveau
-     * 
+     *
      * @param string $zertifikatSprachniveau
      * @return void
      */
@@ -1060,20 +1090,20 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->zertifikatSprachniveau = $zertifikatSprachniveau;
     }
-
+    
     /**
      * Returns the erwerbsstatus
-     * 
+     *
      * @return int $erwerbsstatus
      */
     public function getErwerbsstatus()
     {
         return $this->erwerbsstatus;
     }
-
+    
     /**
      * Sets the erwerbsstatus
-     * 
+     *
      * @param int $erwerbsstatus
      * @return void
      */
@@ -1081,20 +1111,20 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->erwerbsstatus = $erwerbsstatus;
     }
-
+    
     /**
      * Returns the leistungsbezugjanein
-     * 
+     *
      * @return int $leistungsbezugjanein
      */
     public function getLeistungsbezugjanein()
     {
         return $this->leistungsbezugjanein;
     }
-
+    
     /**
      * Sets the leistungsbezugjanein
-     * 
+     *
      * @param int $leistungsbezugjanein
      * @return void
      */
@@ -1102,20 +1132,20 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->leistungsbezugjanein = $leistungsbezugjanein;
     }
-
+    
     /**
      * Returns the leistungsbezug
-     * 
+     *
      * @return string $leistungsbezug
      */
     public function getLeistungsbezug()
     {
         return $this->leistungsbezug;
     }
-
+    
     /**
      * Sets the leistungsbezug
-     * 
+     *
      * @param string $leistungsbezug
      * @return void
      */
@@ -1123,20 +1153,83 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->leistungsbezug = $leistungsbezug;
     }
-
+    
+    /**
+     * Returns the einwilligungdatenanAA
+     *
+     * @return int $einwilligungdatenanAA
+     */
+    public function getEinwilligungdatenanAA()
+    {
+        return $this->einwilligungdatenanAA;
+    }
+    
+    /**
+     * Sets the einwilligungdatenanAA
+     *
+     * @param int $einwilligungdatenanAA
+     * @return void
+     */
+    public function setEinwilligungdatenanAA($einwilligungdatenanAA)
+    {
+        $this->einwilligungdatenanAA = $einwilligungdatenanAA;
+    }
+    
+    /**
+     * Returns the einwilligungdatenanAAdatum
+     *
+     * @return string $einwilligungdatenanAAdatum
+     */
+    public function getEinwilligungdatenanAAdatum()
+    {
+        return $this->einwilligungdatenanAAdatum;
+    }
+    
+    /**
+     * Sets the einwilligungdatenanAAdatum
+     *
+     * @param string $einwilligungdatenanAAdatum
+     * @return void
+     */
+    public function setEinwilligungdatenanAAdatum($einwilligungdatenanAAdatum)
+    {
+        $this->einwilligungdatenanAAdatum = $einwilligungdatenanAAdatum;
+    }
+    
+    /**
+     * Returns the einwilligungdatenanAAmedium
+     *
+     * @return array $einwilligungdatenanAAmedium
+     */
+    public function getEinwilligungdatenanAAmedium()
+    {
+        return explode(',', $this->einwilligungdatenanAAmedium);
+    }
+    
+    /**
+     * Sets the einwilligungdatenanAAmedium
+     *
+     * @param array $einwilligungdatenanAAmedium
+     * @return void
+     */
+    public function setEinwilligungdatenanAAmedium(array $einwilligungdatenanAAmedium)
+    {
+        $this->einwilligungdatenanAAmedium = implode(',', $einwilligungdatenanAAmedium);
+    }
+    
     /**
      * Returns the nameBeraterAA
-     * 
+     *
      * @return string $nameBeraterAA
      */
     public function getNameBeraterAA()
     {
         return $this->nameBeraterAA;
     }
-
+    
     /**
      * Sets the nameBeraterAA
-     * 
+     *
      * @param string $nameBeraterAA
      * @return void
      */
@@ -1144,20 +1237,20 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->nameBeraterAA = $nameBeraterAA;
     }
-
+    
     /**
      * Returns the kontaktBeraterAA
-     * 
+     *
      * @return string $kontaktBeraterAA
      */
     public function getKontaktBeraterAA()
     {
         return $this->kontaktBeraterAA;
     }
-
+    
     /**
      * Sets the kontaktBeraterAA
-     * 
+     *
      * @param string $kontaktBeraterAA
      * @return void
      */
@@ -1165,7 +1258,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->kontaktBeraterAA = $kontaktBeraterAA;
     }
-
+    
     /**
      * Returns the einwAnerkstelle
      *
@@ -1378,17 +1471,17 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     
     /**
      * Returns the kundennummerAA
-     * 
+     *
      * @return string $kundennummerAA
      */
     public function getKundennummerAA()
     {
         return $this->kundennummerAA;
     }
-
+    
     /**
      * Sets the kundennummerAA
-     * 
+     *
      * @param string $kundennummerAA
      * @return void
      */
@@ -1396,20 +1489,20 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->kundennummerAA = $kundennummerAA;
     }
-
+    
     /**
      * Returns the aufenthaltsstatus
-     * 
+     *
      * @return int $aufenthaltsstatus
      */
     public function getAufenthaltsstatus()
     {
         return $this->aufenthaltsstatus;
     }
-
+    
     /**
      * Sets the aufenthaltsstatus
-     * 
+     *
      * @param int $aufenthaltsstatus
      * @return void
      */
@@ -1425,7 +1518,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function getAufenthaltsstatusfreitext()
     {
-    	return $this->aufenthaltsstatusfreitext;
+        return $this->aufenthaltsstatusfreitext;
     }
     
     /**
@@ -1436,22 +1529,22 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function setAufenthaltsstatusfreitext($aufenthaltsstatusfreitext)
     {
-    	$this->aufenthaltsstatusfreitext = $aufenthaltsstatusfreitext;
+        $this->aufenthaltsstatusfreitext = $aufenthaltsstatusfreitext;
     }
-
+    
     /**
      * Returns the nameBeratungsstelle
-     * 
+     *
      * @return string $nameBeratungsstelle
      */
     public function getNameBeratungsstelle()
     {
         return $this->nameBeratungsstelle;
     }
-
+    
     /**
      * Sets the nameBeratungsstelle
-     * 
+     *
      * @param string $nameBeratungsstelle
      * @return void
      */
@@ -1459,7 +1552,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->nameBeratungsstelle = $nameBeratungsstelle;
     }
-
+    
     /**
      * Returns the notizen
      *
@@ -1483,30 +1576,30 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     
     /**
      * Returns the einwilligung
-     * 
+     *
      * @return int $einwilligung
      */
     public function getEinwilligung()
     {
         return $this->einwilligung;
     }
-
+    
     /**
      * Sets the einwilligung
-     * 
+     *
      * @param int $einwilligung
      * @return void
      */
     public function setEinwilligung($einwilligung)
     {
         $this->einwilligung = $einwilligung;
-    }    
-
+    }
+    
     /**
      * @return boolean $einwilligung
      */
     public function isEinwilligung() {
-    	return $this->getEinwilligung();
+        return $this->getEinwilligung();
     }
     
     /**
@@ -1636,7 +1729,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
     
     
-   //****** BERATUNG *****
+    //****** BERATUNG *****
     
     /**
      * Returns the beratungdatum
@@ -1720,6 +1813,27 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setBeratungsort($beratungsort)
     {
         $this->beratungsort = $beratungsort;
+    }
+    
+    /**
+     * Returns the beratungsdauer
+     *
+     * @return string $beratungsdauer
+     */
+    public function getBeratungsdauer()
+    {
+        return $this->beratungsdauer;
+    }
+    
+    /**
+     * Sets the beratungsdauer
+     *
+     * @param string $beratungsdauer
+     * @return void
+     */
+    public function setBeratungsdauer($beratungsdauer)
+    {
+        $this->beratungsdauer = $beratungsdauer;
     }
     
     /**
@@ -1960,33 +2074,33 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param boolean $dublette
      * @return void
      */
-    public function setDublette($dublette) 
+    public function setDublette($dublette)
     {
         $this->dublette = $dublette;
     }
-     
-	
-	/**
-	 * @return boolean $hidden
-	 */
-	public function getHidden() {
-	    return $this->hidden;
-	}
-	
-	/**
-	 * @return boolean $hidden
-	 */
-	public function isHidden() {
-	    return $this->getHidden();
-	}
-	
-	/**
-	 * @param boolean $hidden
-	 * @return void
-	 */
-	public function setHidden($hidden) {
-	    $this->hidden = $hidden;
-	}
+    
+    
+    /**
+     * @return boolean $hidden
+     */
+    public function getHidden() {
+        return $this->hidden;
+    }
+    
+    /**
+     * @return boolean $hidden
+     */
+    public function isHidden() {
+        return $this->getHidden();
+    }
+    
+    /**
+     * @param boolean $hidden
+     * @return void
+     */
+    public function setHidden($hidden) {
+        $this->hidden = $hidden;
+    }
     
     /**
      * Returns random string

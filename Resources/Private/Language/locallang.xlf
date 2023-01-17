@@ -31,6 +31,7 @@
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.beratungsart"><source></source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.beratungsartfreitext"><source></source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.beratungsort"><source></source></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.beratungsdauer"><source></source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.anerkennendestellen"><source></source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.anerkennungsberatung"><source></source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.anerkennungsberatungfreitext"><source></source></trans-unit>
