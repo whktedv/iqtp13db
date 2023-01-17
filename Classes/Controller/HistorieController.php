@@ -4,6 +4,7 @@ namespace Ud\Iqtp13db\Controller;
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3\CMS\Core\Pagination\SimplePagination;
 
+use Ud\Iqtp13db\Domain\Repository\HistorieRepository;
 
 /***
  *
@@ -22,14 +23,13 @@ use TYPO3\CMS\Core\Pagination\SimplePagination;
 class HistorieController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
    
-    /**
-     * historieRepository
-     *
-     * @var \Ud\Iqtp13db\Domain\Repository\HistorieRepository
-     * @TYPO3\CMS\Extbase\Annotation\Inject
-     */
-    protected $historieRepository = NULL;
+    protected $historieRepository;
 
+    public function __construct(HistorieRepository $historieRepository)
+    {
+        $this->historieRepository = $historieRepository;
+    }
+    
     /**
      * action list
      *

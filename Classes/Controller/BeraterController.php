@@ -3,43 +3,24 @@ namespace Ud\Iqtp13db\Controller;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3\CMS\Core\Pagination\SimplePagination;
-
-
-/***
- *
- * This file is part of the "IQ Webapp Anerkennungserstberatung" Extension for TYPO3 CMS.
- *
- * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- *
- *  (c) 2022 Uli Dohmen <edv@whkt.de>, WHKT
- *
- ***/
+use Ud\Iqtp13db\Domain\Repository\UserGroupRepository;
+use Ud\Iqtp13db\Domain\Repository\BeraterRepository;
 
 /**
  * BeraterController
  */
 class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
-   
-    /**
-     * beraterRepository
-     *
-     * @var \Ud\Iqtp13db\Domain\Repository\BeraterRepository
-     * @TYPO3\CMS\Extbase\Annotation\Inject
-     */
+    protected $niqbid, $usergroup;
+    protected $userGroupRepository;
     protected $beraterRepository;
     
-    /**
-     * frontendUserGroupRepository
-     *
-     * @var \TYPO3\CMS\Extbase\Domain\Repository\FrontendUserGroupRepository
-     * @TYPO3\CMS\Extbase\Annotation\Inject
-     */
-    protected $frontendUserGroupRepository;
-       
+    public function __construct(UserGroupRepository $userGroupRepository, BeraterRepository $beraterRepository)
+    {
+        $this->userGroupRepository = $userGroupRepository;
+        $this->beraterRepository = $beraterRepository;
+    }
     
-    protected $niqbid, $usergroup;
     
     /**
      * action init
@@ -56,10 +37,11 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         if($this->user != NULL) {
             $standardniqidberatungsstelle = $this->settings['standardniqidberatungsstelle'];
-            $this->usergroup = $this->frontendUserGroupRepository->findByIdentifier($this->user['usergroup']);
+            $this->usergroup = $this->userGroupRepository->findByUid($this->user['usergroup']);
             $userniqidbstelle = $this->usergroup->getNiqbid();
             $this->niqbid = $userniqidbstelle == '' ? $standardniqidberatungsstelle : $userniqidbstelle;
         }
+        
     }
     
     /**
@@ -95,7 +77,7 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      */
     public function newAction()
     {
-        $usergroups = $this->frontendUserGroupRepository->findAll();
+        $usergroups = $this->userGroupRepository->findAll();
         $this->view->assign('usergroups', $usergroups);
     }
     
@@ -121,7 +103,7 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      */
     public function editAction(\Ud\Iqtp13db\Domain\Model\Berater $berater)
     {
-        $usergroups = $this->frontendUserGroupRepository->findAll();
+        $usergroups = $this->userGroupRepository->findAll();
         
         $this->view->assign('berater', $berater);
         $this->view->assign('usergroups', $usergroups);
@@ -140,7 +122,7 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $valArray = $this->request->getArguments();
         
-        $usergroup = $this->frontendUserGroupRepository->findByIdentifier($valArray['berater']['usergroup']);        
+        $usergroup = $this->userGroupRepository->findByIdentifier($valArray['berater']['usergroup']);        
         $berater->addUsergroup($usergroup);        
         $berater->setPassword(password_hash($berater->getPassword(), PASSWORD_ARGON2I));
                 

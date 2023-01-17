@@ -6,6 +6,11 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Core\Core\Environment;
 
+use Psr\Http\Message\ResponseInterface;
+use Ud\Iqtp13db\Domain\Repository\UserGroupRepository;
+use Ud\Iqtp13db\Domain\Repository\TeilnehmerRepository;
+use Ud\Iqtp13db\Domain\Repository\DokumentRepository;
+use TYPO3\CMS\Core\Resource\StorageRepository;
 /***
  *
  * This file is part of the "IQ Webapp Anerkennungserstberatung" Extension for TYPO3 CMS.
@@ -24,38 +29,19 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
 {
     protected $generalhelper, $allusergroups;
     
-    /**
-     * dokumentRepository
-     *
-     * @var \Ud\Iqtp13db\Domain\Repository\DokumentRepository
-     * @TYPO3\CMS\Extbase\Annotation\Inject
-     */
-    protected $dokumentRepository = NULL;
-
-    /**
-     * teilnehmerRepository
-     *
-     * @var \Ud\Iqtp13db\Domain\Repository\TeilnehmerRepository
-     * @TYPO3\CMS\Extbase\Annotation\Inject
-     */
-    protected $teilnehmerRepository = NULL;
-    
-    /**
-     * userGroupRepository
-     *
-     * @var \Ud\Iqtp13db\Domain\Repository\UserGroupRepository
-     * @TYPO3\CMS\Extbase\Annotation\Inject
-     */
-    protected $userGroupRepository = NULL;
-
-    /**
-     * storageRepository
-     *
-     * @var \TYPO3\CMS\Core\Resource\StorageRepository
-     * @TYPO3\CMS\Extbase\Annotation\Inject
-     */
+    protected $userGroupRepository;
+    protected $teilnehmerRepository;
+    protected $dokumentRepository;
     protected $storageRepository;
     
+    public function __construct(UserGroupRepository $userGroupRepository, TeilnehmerRepository $teilnehmerRepository, DokumentRepository $dokumentRepository, StorageRepository $storageRepository)
+    {
+        $this->userGroupRepository = $userGroupRepository;
+        $this->teilnehmerRepository = $teilnehmerRepository;
+        $this->dokumentRepository = $dokumentRepository;
+        $this->storageRepository = $storageRepository;
+    }
+        
     /**
      * action init
      *
@@ -109,6 +95,22 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     }
     
     /**
+     * action saveFileBackend
+     *
+     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
+     * @return void
+     */
+    public function saveFileBackendAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    {
+        if ($_FILES['tx_iqtp13db_iqtp13dbwebapp']['tmp_name']['file'] == '') {
+            $this->addFlashMessage('Error in saveFileWebapp: maximum filesize exceeded or permission error', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+        } else {
+            $this->saveFileTeilnehmer($teilnehmer, $_FILES['tx_iqtp13db_iqtp13dbwebapp']);
+        }
+        $this->redirect('edit', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
+    }
+    
+    /**
      * action initdeleteFileWebapp
      *
      * @param void
@@ -118,10 +120,10 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $arguments = $this->request->getArguments();
         if($this->dokumentRepository->countByUid($arguments['dokument']) == 0) {
             //DebuggerUtility::var_dump($arguments);
-            $this->forward('anmeldungcomplete', 'Teilnehmer', null, null);
-            die;
+            return (new ForwardResponse('anmeldungcomplete'))->withControllerName('Teilnehmer');
         }
     }
+    
     /**
      * action deleteFileWebapp
      *
@@ -132,7 +134,20 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     public function deleteFileWebappAction(\Ud\Iqtp13db\Domain\Model\Dokument $dokument, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
         $this->deleteFileTeilnehmer($dokument, $teilnehmer);
-        $this->forward('anmeldungcomplete', 'Teilnehmer', null, null);
+        return (new ForwardResponse('anmeldungcomplete'))->withControllerName('Teilnehmer');
+    }
+    
+    /**
+     * action deleteFileBackend
+     *
+     * @param \Ud\Iqtp13db\Domain\Model\Dokument $dokument
+     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
+     * @return void
+     */
+    public function deleteFileBackendAction(\Ud\Iqtp13db\Domain\Model\Dokument $dokument, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    {
+        $this->deleteFileTeilnehmer($dokument, $teilnehmer);
+        return (new ForwardResponse('edit'))->withControllerName('Teilnehmer');
     }
 
     /**

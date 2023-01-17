@@ -37,8 +37,6 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsstatus"><target>Cтатус зайнятості</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezugjanein"><target>Чи отримуєте Ви гроші від Jobcenter або від агенства зайнятості Arbeitsagentur?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezug"><target>Який вид виплати допомоги?</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_a"><target>Хочете, щоб ми передали результат консультації вашому куратору?</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungstextaa"><target>Надаючи наведені нижче дані, я погоджуюся з тим, що мої дані можуть бути передані агентству зайнятості або центру зайнятості з метою визнання професійної кваліфікаціі або як частина консультацій щодо її визнання.</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_berater_a_a"><target>Ім'я Вашого куратора в агентстві зайнятості або центрі зайнятості</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kontakt_berater_a_a"><target>Контактні дані (е-мейл і телефон)</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kundennummer_a_a"><target>Ваш номер клієнта</target></trans-unit>

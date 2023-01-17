@@ -223,27 +223,6 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $leistungsbezug = '';
     
     /**
-     * einwilligungdatenanAA
-     *
-     * @var int
-     */
-    protected $einwilligungdatenanAA = 0;
-    
-    /**
-     * einwilligungdatenanAAdatum
-     *
-     * @var string
-     */
-    protected $einwilligungdatenanAAdatum = '';
-    
-    /**
-     * einwilligungdatenanAAmedium
-     *
-     * @var string
-     */
-    protected $einwilligungdatenanAAmedium = '';
-    
-    /**
      * nameBeraterAA
      *
      * @var string
@@ -520,7 +499,6 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * initializes this object
      *
      * @param array $sonstigerstatus
-     * @param array $einwilligungdatenanAAmedium
      * @param array $einwAnerkstellemedium
      * @param array $einwPersonmedium
      * @param array $beratungsart
@@ -528,9 +506,8 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param array $qualifizierungsberatung
      * @param array $wieberaten
      */
-    public function __construct(array $sonstigerstatus = array(), array $einwilligungdatenanAAmedium = array(), array $einwAnerkstellemedium = array(), array $einwPersonmedium = array(), array $beratungsart = array(), array $anerkennungsberatung = array(), array $qualifizierungsberatung = array(), array $wieberaten = array()) {
-        $this->setSonstigerstatus($sonstigerstatus);
-    	$this->setEinwilligungdatenanAAmedium($einwilligungdatenanAAmedium);    	
+    public function __construct(array $sonstigerstatus = array(), array $einwAnerkstellemedium = array(), array $einwPersonmedium = array(), array $beratungsart = array(), array $anerkennungsberatung = array(), array $qualifizierungsberatung = array(), array $wieberaten = array()) {
+        $this->setSonstigerstatus($sonstigerstatus);    	    	
     	$this->setEinwAnerkstellemedium($einwAnerkstellemedium);
     	$this->setEinwPersonmedium($einwPersonmedium);
     	$this->initVerificationCode();
@@ -1145,69 +1122,6 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setLeistungsbezug($leistungsbezug)
     {
         $this->leistungsbezug = $leistungsbezug;
-    }
-
-    /**
-     * Returns the einwilligungdatenanAA
-     * 
-     * @return int $einwilligungdatenanAA
-     */
-    public function getEinwilligungdatenanAA()
-    {
-        return $this->einwilligungdatenanAA;
-    }
-
-    /**
-     * Sets the einwilligungdatenanAA
-     * 
-     * @param int $einwilligungdatenanAA
-     * @return void
-     */
-    public function setEinwilligungdatenanAA($einwilligungdatenanAA)
-    {
-        $this->einwilligungdatenanAA = $einwilligungdatenanAA;
-    }
-
-    /**
-     * Returns the einwilligungdatenanAAdatum
-     * 
-     * @return string $einwilligungdatenanAAdatum
-     */
-    public function getEinwilligungdatenanAAdatum()
-    {
-        return $this->einwilligungdatenanAAdatum;
-    }
-
-    /**
-     * Sets the einwilligungdatenanAAdatum
-     * 
-     * @param string $einwilligungdatenanAAdatum
-     * @return void
-     */
-    public function setEinwilligungdatenanAAdatum($einwilligungdatenanAAdatum)
-    {
-        $this->einwilligungdatenanAAdatum = $einwilligungdatenanAAdatum;
-    }
-
-    /**
-     * Returns the einwilligungdatenanAAmedium
-     * 
-     * @return array $einwilligungdatenanAAmedium
-     */
-    public function getEinwilligungdatenanAAmedium()
-    {
-        return explode(',', $this->einwilligungdatenanAAmedium);
-    }
-
-    /**
-     * Sets the einwilligungdatenanAAmedium
-     * 
-     * @param array $einwilligungdatenanAAmedium
-     * @return void
-     */
-    public function setEinwilligungdatenanAAmedium(array $einwilligungdatenanAAmedium)
-    {
-        $this->einwilligungdatenanAAmedium = implode(',', $einwilligungdatenanAAmedium);
     }
 
     /**

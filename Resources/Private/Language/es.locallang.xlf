@@ -55,10 +55,6 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligung"><target>Consentimiento</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezugjanein"><target>¿Recibe usted dinero del Jobcenter o de la Agentur für Arbeit?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezug"><target>Recepción de prestaciones</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungstextaa"><target>Al proporcionar la siguiente información, estoy de acuerdo en que mis datos sean transmitidos a la Agentur für Arbeit o al Centro de Empleo con el fin o en el marco del asesoramiento de reconocimiento.</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_a"><target>¿Desea que transmitamos los resultados de la consulta a su asesor?</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_adatum"><target>Fecha de consentimiento para la divulgación</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_amedium"><target>Medio de consentimiento</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_berater_a_a"><target>Nombre del consultor</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kontakt_berater_a_a"><target>Contacto (correo electrónico y teléfono)</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kundennummer_a_a"><target>Su número de cliente</target></trans-unit>

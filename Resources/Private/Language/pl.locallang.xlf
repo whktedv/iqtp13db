@@ -51,10 +51,6 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligung"><target>Zgoda</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezugjanein"><target>Czy otrzymuje Pan/Pani świadczenia z Jobcenter lub urzędu pracy? </target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezug"><target>Otrzymywanie świadczeń</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungstextaa"><target>Poprzez podanie poniższych informacji wyrażam zgodę na przekazanie moich danych do Jobcenter lub Urzędu Pracy w celu lub/i w ramach doradztwa w zakresie uznania kwalifikacji.</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_a"><target>Czy chce Pan/Pani, abyśmy przekazali wyniki konsultacji Pana/Pani doradcy/czyni?</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_adatum"><target>Data wyrażenia zgody na przekazanie danych </target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_amedium"><target>Zgoda wyrażona poprzez </target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_berater_a_a"><target>Nazwisko doradcy/czyni</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kontakt_berater_a_a"><target>Dane kontaktowe (e-mail i numer telefonu) </target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kundennummer_a_a"><target>Pana/Pani numer klienta</target></trans-unit>

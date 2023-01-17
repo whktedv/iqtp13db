@@ -39,9 +39,6 @@ CREATE TABLE tx_iqtp13db_domain_model_teilnehmer (
 	leistungsbezugjanein int(11) DEFAULT '0' NOT NULL,
 	leistungsbezug varchar(255) DEFAULT '' NOT NULL,
 	
-	einwilligungdatenan_a_a int(11) DEFAULT '0' NOT NULL,
-	einwilligungdatenan_a_adatum varchar(255) DEFAULT '' NOT NULL,
-	einwilligungdatenan_a_amedium varchar(255) DEFAULT '' NOT NULL,
 	name_berater_a_a varchar(255) DEFAULT '' NOT NULL,
 	kontakt_berater_a_a varchar(255) DEFAULT '' NOT NULL,
 	kundennummer_a_a varchar(255) DEFAULT '' NOT NULL,

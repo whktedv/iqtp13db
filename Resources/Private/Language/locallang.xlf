@@ -16,8 +16,6 @@
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.niqchiffre"><source></source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.niqtstamp"><source></source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdaten"><source></source></trans-unit>
-		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_adatum"><source></source></trans-unit>
-		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_amedium"><source></source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_persondatum"><source></source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personmedium"><source></source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstelle"><source></source></trans-unit>
@@ -90,8 +88,6 @@
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsstatus"><source>Employment status</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezugjanein"><source>Do you receive money from the Job Centre or the Employment Agency?</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezug"><source>What type of benefit payment?</source></trans-unit>
-		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_a"><source>Would you like us to forward the result of the consultation to your advisor?</source></trans-unit>
-		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungstextaa"><source>By providing the following data, I consent to my data being passed on to the Employment Agency or the Job Centre for the purpose of or within the framework of recognition counselling.</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_berater_a_a"><source>Name of the adviser at the job centre or employment agency</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kontakt_berater_a_a"><source>Contact details (e-mail, telephones)</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kundennummer_a_a"><source>Your client number</source></trans-unit>

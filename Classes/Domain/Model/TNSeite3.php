@@ -37,13 +37,6 @@ class TNSeite3 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * @var string
 	 */
 	protected $leistungsbezug = '';
-	
-	/**
-	 * einwilligungdatenanAA
-	 *
-	 * @var int
-	 */
-	protected $einwilligungdatenanAA = 0;
 		
 	/**
 	 * nameBeraterAA
@@ -188,28 +181,6 @@ class TNSeite3 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 */
 	public function setLeistungsbezug($leistungsbezug) {
 		$this->leistungsbezug = $leistungsbezug;
-	}
-
-	
-	/**
-	 * Returns the einwilligungdatenanAA
-	 *
-	 * @return int $einwilligungdatenanAA
-	 */
-	public function getEinwilligungdatenanAA()
-	{
-	    return $this->einwilligungdatenanAA;
-	}
-	
-	/**
-	 * Sets the einwilligungdatenanAA
-	 *
-	 * @param int $einwilligungdatenanAA
-	 * @return void
-	 */
-	public function setEinwilligungdatenanAA($einwilligungdatenanAA)
-	{
-	    $this->einwilligungdatenanAA = $einwilligungdatenanAA;
 	}
 	
 	/**

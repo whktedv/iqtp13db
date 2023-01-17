@@ -56,10 +56,6 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligung"><target>	موافقت</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezugjanein"><target>	آیا از مرکز کار یا آژانس کار پول دریافت می‌کنید؟</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezug"><target>	دریافت کمک</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungstextaa"><target>	با ارائه اطلاعات زیر، من موافقت می‌کنم که آژانس کار یا مرکز کار می‌تواند اطلاعات من را با هدف مشاوره تایید یا در چارچوب آن، به طرف‌های دیگر بفرستد.</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_a"><target>	آیا می‌خواهید ما نتایج مشاوره را به مشاور شما بفرستیم؟</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_adatum"><target>	تاریخ موافقت با فرستادن</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdatenan_a_amedium"><target>	وسیله موافقت</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_berater_a_a"><target>	نام مشاور</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kontakt_berater_a_a"><target>	تماس (ایمیل یا تلفن)</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kundennummer_a_a"><target>	شماره مشتری شما</target></trans-unit>

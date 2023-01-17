@@ -8,6 +8,7 @@ return [
         'cruser_id' => 'cruser_id',
         'versioningWS' => true,
         'delete' => 'deleted',
+        'hideTable' => true, 
         'enablecolumns' => [
             'disabled' => 'hidden',
             'starttime' => 'starttime',
@@ -15,9 +16,6 @@ return [
         ],
         'searchFields' => 'name,pfad,teilnehmer',
         'iconfile' => 'EXT:iqtp13db/Resources/Public/Icons/tx_iqtp13db_domain_model_dokument.gif'
-    ],
-    'interface' => [
-        'showRecordFieldList' => 'hidden, name, pfad, teilnehmer',
     ],
     'types' => [
         '1' => ['showitem' => 'hidden, name, pfad, teilnehmer, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],

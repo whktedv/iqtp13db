@@ -2,13 +2,16 @@
 declare(strict_types = 1);
 namespace Ud\Iqtp13db\Domain\Model;
 
-use TYPO3\CMS\Extbase\Domain\Model\FrontendUserGroup;
-
 /**
  * Class UserGroup
  */
-class UserGroup extends FrontendUserGroup
+class UserGroup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
+    /**
+     * @var string
+     */
+    protected $title = '';
+    
     /**
      * niqbid
      *
@@ -47,13 +50,36 @@ class UserGroup extends FrontendUserGroup
     /**
      * initializes this object
      *
+     * @param string $title
      * @param array $plzlist
      * @param array $keywordlist
+     * @param array $beratungsarten
      */
-    public function __construct(array $plzlist = array(), array $keywordlist = array(), array $beratungsarten = array()) {
+    public function __construct($title = '', array $plzlist = array(), array $keywordlist = array(), array $beratungsarten = array()) {
+        $this->setTitle($title);
         $this->setPlzlist($plzlist);
         $this->setKeywordlist($keywordlist);
         $this->setBeratungsarten($beratungsarten);
+    }
+    
+    /**
+     * Sets the title value
+     *
+     * @param string $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+    
+    /**
+     * Returns the title value
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
     }
     
     /**

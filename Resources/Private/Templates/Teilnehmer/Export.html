@@ -12,13 +12,13 @@
 Nach Klick auf den Button werden die Daten in eine Excel-Datei zum Download exportiert.<br>
 Das Datum von/bis bezieht sich bei den Optionen Angemeldet und Gelöscht auf das Bestätigungsdatum der Anmeldung und bei der Option Archiviert auf das Datum 'Erstberatung abgeschlossen'.<br>
 <br>
-<f:form class="filterform" id="exportfilterform" method="post" controller="Teilnehmer" action="export" name="export" noCacheHash="true" >
+<f:form class="filterform" id="exportfilterform" method="post" controller="Teilnehmer" action="export" name="export" >
 		<div>von: <f:form.textfield size="10" id="datepickerfiltervon" value="{filtervon}" name="filtervon" />
 		bis: <f:form.textfield size="10" id="datepickerfilterbis" value="{filterbis}" name="filterbis" />				
 		Auswahl Status: <f:form.select id="exportfilterselect" value="{filterberatungsstatus}" name="filterberatungsstatus" options="{settings.filterberatungsstatus}" optionValueField="key" optionLabelField="value" prependOptionValue="1" prependOptionLabel="-" />
 </f:form>
 <br><br>
-<f:form method="post" controller="Teilnehmer" action="export" name="export" enctype="multipart/form-data" noCacheHash="true">
+<f:form method="post" controller="Teilnehmer" action="export" name="export" enctype="multipart/form-data" >
 	<f:form.hidden value="{filterberatungsstatus}" name="filterberatungsstatus" />
 	<f:form.submit name="export" value="{anzgesamt} Ratsuchende exportieren" />
 </f:form>
