@@ -1081,6 +1081,8 @@ public function askconsentAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehme
  */
 public function savedatenblattpdfAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
 {
+    $valArray = $this->request->getArguments();
+    
     // MPDF per composer einbinden - wenn nicht vorhanden, dann s.u.
     $mpdfComposer = \TYPO3\CMS\Core\Core\Environment::getConfigPath() . '/ext/vendor/autoload.php';
     if (file_exists($mpdfComposer)) {
@@ -1138,14 +1140,31 @@ public function savedatenblattpdfAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $te
     $storage = $this->generalhelper->getTP13Storage( $this->storageRepository->findAll());
     
     $niqbid = $this->niqbid;
-    $beratungsstellenfolder = $niqbid == '10143' ? 'Beratene' : $niqbid;
+    $beratungsstellenfolder = $niqbid == '' ? 'Beratene' : $niqbid;
     $fullpath = $storage->getConfiguration()['basePath']. '/' .$beratungsstellenfolder. '/' .$pfad->getName().'/'. $filename;
     
     $mpdf->Output($fullpath, 'F');
     
+  
+    // ******* Als Dokument speichern, damit aus Webapp abrufbar *******
+    $dokument = new \Ud\Iqtp13db\Domain\Model\Dokument();
+    
+    $dokument->setBeschreibung("DATENBLATT");
+    $dokument->setName($filename);
+    $dokument->setPfad($beratungsstellenfolder. '/' .$pfad->getName().'/');
+    $dokument->setTeilnehmer($teilnehmer);
+    
+    $this->dokumentRepository->add($dokument);
+    
+    //Daten sofort in die Datenbank schreiben
+    $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+    $persistenceManager->persistAll();
+    //********************************************************************
+    
+    
     $this->addFlashMessage('Datenblatt wurde in '.$pfad->getIdentifier().' erstellt.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
     
-    $this->redirect('show', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+    $this->redirect('show', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer, 'callerpage' => $valArray['callerpage'], 'showdokumente' => '1'));
 }
 
 /**

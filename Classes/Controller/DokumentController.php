@@ -257,6 +257,10 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      */
     public function savefile($beschreibung, $pfad, $arrfiles)
     {          
+        //DebuggerUtility::var_dump($arrfiles);
+        //die;
+        
+        
         $dokument = new \Ud\Iqtp13db\Domain\Model\Dokument();
         
         $tmpName = $this->generalhelper->sanitizeFileFolderName($arrfiles['name']['file']);

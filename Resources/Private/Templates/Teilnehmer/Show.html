@@ -35,7 +35,7 @@
 </f:if>
 
 <f:link.action class="linkbuttons" action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">Bearbeiten</f:link.action>
-<f:link.action class="linkbuttons" action="savedatenblattpdf" controller="{callercontroller}" arguments="{teilnehmer:teilnehmer}">Datenblatt speichern (PDF)</f:link.action>
+<f:link.action class="linkbuttons" action="savedatenblattpdf" controller="{callercontroller}" arguments="{teilnehmer:teilnehmer, callerpage : callerpage}">Datenblatt speichern (PDF)</f:link.action>
 <f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}" arguments="{callerpage : callerpage}">Zurück zur Liste</f:link.action>
 
 <div class="ankerbuttons">		
