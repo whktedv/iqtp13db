@@ -5,13 +5,17 @@
 <f:layout name="Default" />
 
 <f:section name="main">
-<b>Beratungsstelle:</b> {beratungsstelle}<br>
-<b>Beratungsstellen-ID:</b> {niqbid}<br>
+<div class="uebersicht-beratungsstelle">
+	<div><span class="label-beratungsstelle">Beratungsstelle:</span> <span class="value-beratungsstelle">{beratungsstelle}</span></div>
+	<div><span class="label-beratungsstelle">Beratungsstellen-ID:</span> <span class="value-beratungsstelle">{niqbid}</span></div>
+</div>
+
+
 <h1>Status aktuell</h1>
 
 <f:flashMessages />
 
-<table>
+<table class="uebersicht-status">
 	<tr>
 		<td>Anmeldungen wartend</td>
 		<td>{aktuelleanmeldungen}</td>
@@ -31,7 +35,7 @@
 </table>
 <br>
 <h2>Statistik letzte 12 Monate</h2>
-<table>
+<table class="uebersicht-statistik">
 	<tr>
 		<th></th>
 		<f:for each="{monatsnamen}" as="monat" iteration="iter">

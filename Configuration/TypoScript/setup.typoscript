@@ -29,8 +29,9 @@ plugin.tx_iqtp13db.settings {
 	
 	filterberatungsstatus {
 		11 = Angemeldet
-		12 = Archiviert
-		13 = Gelöscht
+		12 = Beraten
+		13 = Archiviert
+		14 = Gelöscht
 	} 
 }
 
@@ -115,8 +116,9 @@ page {
 		tx_iqtp13dbjquery3 = EXT:iqtp13db/Resources/Public/CSS/jquery-ui.theme.min.css
 	}
 	
+	includeJS.tx_iqtp13dbjquery = EXT:iqtp13db/Resources/Public/JS/jquery-3.6.3.min.js
+	
 	includeJSFooter {
-		tx_iqtp13dbjquery = EXT:iqtp13db/Resources/Public/JS/jquery-3.6.3.min.js
 		tx_iqtp13dbjqueryui = EXT:iqtp13db/Resources/Public/JS/jquery-ui.min.js
 		tx_iqtp13db = EXT:iqtp13db/Resources/Public/JS/customtp13.js
 		tx_iqtp13dbanmeldung = EXT:iqtp13db/Resources/Public/JS/script-teilnehmer.js		

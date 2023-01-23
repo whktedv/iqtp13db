@@ -18,7 +18,14 @@
 			</label>
 			<f:form.select property="beratungsform" options="{settings.beratungsformfolgeberatung}" optionValueField="value" optionLabelField="value" prependOptionValue="-1000" prependOptionLabel="-" />
 		</div>
-			
+		
+		<div class="tp13_formdivwebapp">
+			<label for="beratungsdauer">
+				<f:translate key="tx_iqtp13db_domain_model_folgekontakt.beratungsdauer" />
+			</label>
+				<f:form.textfield class="textfieldsmall" property="beratungsdauer" value="{beratungsdauer}" size="5" />	
+		</div>
+		
 		<div class="tp13_formdivwebapp">
 			<label for="notizen" class="tp13_options">
 				<f:translate key="tx_iqtp13db_domain_model_folgekontakt.notizen" />

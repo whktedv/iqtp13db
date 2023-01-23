@@ -4,14 +4,17 @@
   		<link rel="stylesheet" href="{f:uri.resource(path: 'CSS/customtp13dbadmin.css')}"/>  		
 </f:section>
 <f:section name="main">
-<h1>Abschluss/Beruf bearbeiten</h1>
+<h1>Abschluss bearbeiten</h1>
 
 <f:flashMessages />
 
-<f:render partial="FormErrors" arguments="{object:Beruf}" />
+<f:render partial="FormErrors" arguments="{object:Abschluss}" />
 
-<f:form action="update" name="beruf" object="{beruf}" >
-<f:render partial="Beruf/FormFields" arguments="{beruf:beruf}" />
+<f:form action="update" name="abschluss" object="{abschluss}" arguments="{teilnehmer: teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : thisaction}">
+	<f:render partial="Abschluss/FormFields" arguments="{abschlussjahre:abschlussjahre}" />
 	<f:form.submit class="linkbuttons" value="Speichern" />
+	<f:link.action class="linkbuttons" action="{thisaction}" controller="Teilnehmer" arguments="{teilnehmer: teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, showabschluesse : '1'}">Zurück</f:link.action>
 </f:form>
+
 </f:section>
+

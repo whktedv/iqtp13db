@@ -4,38 +4,44 @@
 </f:section>
 
 <f:section name="main">
-<h1>Filter</h1>
-<f:form class="filterform" method="post" action="listarchiv" name="listarchiv" >
-		<div>Name: <f:form.textfield size="20" value="{filtername}" name="name" /></div>
-		<div>Ort: <f:form.textfield size="20" value="{filterort}" name="ort" /></div>
-		<div>Beruf: <f:form.textfield size="20" value="{filterberuf}" name="beruf" /></div>
-		<div>Geburtsland: <f:form.select value="{filterland}" name="land" options="{wohnsitzstaaten}" optionValueField="value" optionLabelField="value" /></div>
-		<div>Gruppe: <f:form.textfield size="20" value="{filtergruppe}" name="gruppe" /></div>
-		<f:if condition="{filteron}"><f:then><f:form.button name="filteraus" value="1" >Filter löschen</f:form.button></f:then></f:if>
-		<f:form.submit name="filteran" value="Filtern" />			
-</f:form>
-<br>
+
+<div class="filterframe">
+	<h1>Filter</h1>
+	<f:form class="filterform" method="post" action="listarchiv" name="listarchiv" >
+			<div>Name: <f:form.textfield size="20" value="{filtername}" name="name" /></div>
+			<div>Ort: <f:form.textfield size="20" value="{filterort}" name="ort" /></div>
+			<div>Beruf: <f:form.textfield size="20" value="{filterberuf}" name="beruf" /></div>
+			<div>Geburtsland: <f:form.select value="{filterland}" name="land" options="{wohnsitzstaaten}" optionValueField="value" optionLabelField="value" /></div>
+			<div>Gruppe: <f:form.textfield size="20" value="{filtergruppe}" name="gruppe" /></div>
+			<f:if condition="{filteron}"><f:then><f:form.button name="filteraus" value="1" >Filter löschen</f:form.button></f:then></f:if>
+			<f:form.submit name="filteran" value="Filtern" />			
+	</f:form>
+</div>
+
 <f:flashMessages />
+
 <h1>Liste Archiv: {anzgesamt} Einträge </h1>
-<br>
-<table><tr><td>nicht NIQ synchronisiert: &#9888;</td><td>NIQ synchronisiert: &#9989;</td></tr></table>
+
+<!--  <table><tr><td>nicht NIQ synchronisiert: &#9888;</td><td>NIQ synchronisiert: &#9989;</td></tr></table>  -->
 
 <f:render partial="Paginator" arguments="{pagination: pagination, pages: pages, paginator: paginator, action: calleraction, orderby : orderby}" />
  
 	<table  class="tx_iqtp13db" >
 		<tr>
+			<th>UID</th>
 			<th><f:link.action action="listarchiv" arguments="{orderby : 'nachname', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" /></f:link.action></th>
 			<th><f:link.action action="listarchiv" arguments="{orderby : 'vorname', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" /></f:link.action></th>
 			<th><f:link.action action="listarchiv" arguments="{orderby : 'verification_date', changeorder : 1}">Anmeldedatum</f:link.action></th>
 			<th><f:link.action action="listarchiv" arguments="{orderby : 'ort', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.plz" />/<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ort" /></f:link.action></th>
 			<th><f:link.action action="listarchiv" arguments="{orderby : 'geschlecht', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geschlecht" /></f:link.action></th>
-			<th>Leistungsbezug</th>
+			<th>Leistungs-<br>bezug</th>
 			<th>Anerkenn.-<br>zusch.<br>beantragt?</th>
 			<th><f:link.action action="listarchiv" arguments="{orderby : 'berater.username', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.berater" /></f:link.action></th>
 			<th><f:link.action action="listarchiv" arguments="{orderby : 'beratungdatum', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungdatum" /></f:link.action></th>
 			<th id="resizablecol1"><f:translate key="tx_iqtp13db_domain_model_abschluss.deutscher_referenzberuf" /></th>
 			<th id="resizablecol2"><f:translate key="tx_iqtp13db_domain_model_abschluss.referenzberufzugewiesen" /></th>
-			<th><f:link.action action="listarchiv" arguments="{orderby : 'erstberatungabgeschlossen', changeorder : 1}">Fertig</f:link.action></th>
+			<th>vorherige Antragstellung</th>
+			<th><f:link.action action="listarchiv" arguments="{orderby : 'erstberatungabgeschlossen', changeorder : 1}">Erstberatung abgeschlossen</f:link.action></th>
 			<th id="resizablecol3"><f:link.action action="listarchiv" arguments="{orderby : 'kooperationgruppe', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.kooperationgruppe" /></f:link.action></th>
 			<th>Anz. FK</th>
 			<th> </th>
@@ -46,6 +52,7 @@
 	
 		<f:for each="{paginator.paginatedItems}" as="teilnehmer" iteration="it">
 			<tr>
+				<td><f:link.action action="show" controller="Teilnehmer" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">{teilnehmer.uid}</f:link.action></td>
 				<td><f:link.action action="show" controller="Teilnehmer" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">{teilnehmer.nachname}</f:link.action></td>
 				<td>{teilnehmer.vorname}</td>
 				<td><f:format.date format="d.m.Y">@{teilnehmer.verificationDate}</f:format.date></td>
@@ -76,6 +83,13 @@
 							</f:if>
 						</f:for>						
 					</f:for>
+				</td>
+				<td>
+					<f:for each="{abschluesse.{it.index}}" as="abschluss" iteration="iter">
+						{f:if(condition: '{abschluss.antragstellungvorher} == 1', then: '✓')}
+						{f:if(condition: '{abschluss.antragstellungvorher} == 2', then: '✓')}
+						{f:if(condition: '{abschluss.antragstellungvorher} == 3', then: '✓')}					
+					</f:for>					
 				</td>
 				<td>
 				<f:if condition="{teilnehmer.erstberatungabgeschlossen} > 0">

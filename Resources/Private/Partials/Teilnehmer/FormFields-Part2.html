@@ -1,5 +1,6 @@
 {namespace iqtp13db=Ud\Iqtp13db\ViewHelpers}
 <div class="fframeadminonly"><h2>Erstberatung</h2>
+ <h3>(nicht in Anmeldeformular von Ratsuchendem/r ausfüllbar)</h3>
 		<div class="tp13_formdivwebapp">
 			<label for="anerkennendestellen">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.anerkennendestellen" />
@@ -11,7 +12,7 @@
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungdatum" />
 				<span class="niqfield" />
 			</label>
-				<f:form.textfield class="datumtextfieldberatung" name="teilnehmer[beratungdatum]" value="{teilnehmer.beratungdatum}" />			
+				<f:form.textfield class="datumtextfieldberatung" name="teilnehmer[beratungdatum]" value="{teilnehmer.beratungdatum}" />&nbsp;<span class="hintdatumformat">(JJJJ-MM-TT)</span>
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="berater">
@@ -52,7 +53,7 @@
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungsdauer" />
 				<span class="niqfield" />
 			</label>
-				<f:form.textfield property="beratungsdauer"/>				
+				<f:form.textfield class="textfieldsmall" property="beratungsdauer" size="5"/>				
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="anerkennungsberatung">
@@ -130,6 +131,6 @@
 			<label for="erstberatungabgeschlossen">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.erstberatungabgeschlossen" />
 			</label>
-			<f:form.textfield class="datumtextfieldberatung" name="teilnehmer[erstberatungabgeschlossen]" value="{teilnehmer.erstberatungabgeschlossen}" />			
+			<f:form.textfield class="datumtextfieldberatung" name="teilnehmer[erstberatungabgeschlossen]" value="{teilnehmer.erstberatungabgeschlossen}" />&nbsp;<span class="hintdatumformat">(JJJJ-MM-TT)</span>
 		</div>		
 </div>

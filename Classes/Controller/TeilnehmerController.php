@@ -379,6 +379,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function listangemeldetAction(int $currentPage = 1)
     {
+        //DebuggerUtility::var_dump($GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus'));
+        //die;
+        
         $valArray = $this->request->getArguments();
         if(!empty($valArray['callerpage'])) $currentPage = $valArray['callerpage'];
         
@@ -407,10 +410,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $pagination = new SimplePagination($paginator);
         
         $teilnehmerpag = $paginator->getPaginatedItems();
-        
-        //DebuggerUtility::var_dump($GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus'));
-        //die;
-        
+              
         for($j=0; $j < count($teilnehmerpag); $j++) {
             $anz = $this->teilnehmerRepository->findDublette4Angemeldet($teilnehmerpag[$j]->getNachname(), $teilnehmerpag[$j]->getVorname(), $this->niqbid);
             if($anz > 1) $teilnehmerpag[$j]->setDublette(TRUE);
@@ -472,8 +472,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         
         $teilnehmerpag = $paginator->getPaginatedItems();
         
-        $anzfolgekontakte = '';
-        $abschluesse = '';
+        $anzfolgekontakte = array();
+        $abschluesse = array();
         $niqstatusberatung = '';
         $niqwasfehlt = '';
         
@@ -498,6 +498,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             
         }
         $folgekontakte = $this->folgekontaktRepository->findAll4List($this->niqbid);
+        
+        //DebuggerUtility::var_dump($anzfolgekontakte);
+        //die;
         
         $berufeliste = $this->settings['berufe'];
         $wohnsitzstaaten = $this->settings['staaten'];
@@ -564,7 +567,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $teilnehmerpag = $paginator->getPaginatedItems();
         
         $anzfolgekontakte = '';
-        $abschluesse = '';
+        $abschluesse = array();
         $niqstatusberatung = '';
         $niqwasfehlt = '';
         foreach ($teilnehmerpag as $key => $tn) {
@@ -647,7 +650,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         
         $teilnehmerpag = $paginator->getPaginatedItems();
         
-        $abschluesse = '';
+        $abschluesse = array();
         for($j=0; $j < count($teilnehmerpag); $j++) {
             $anz = $this->teilnehmerRepository->findDublette4Deleted($teilnehmerpag[$j]->getNachname(), $teilnehmerpag[$j]->getVorname(), $this->niqbid);
             if($anz > 1) $teilnehmerpag[$j]->setDublette(TRUE);
@@ -699,7 +702,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'callerpage' => $valArray['callerpage'],
                 'historie' => $historie,
                 'teilnehmer' => $teilnehmer,
-                'abschluesse' => $abschluesse
+                'abschluesse' => $abschluesse,
+                'showabschluesse' => $valArray['showabschluesse'],
+                'showdokumente' => $valArray['showdokumente']
             ]
             );
     }
@@ -742,6 +747,13 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $this->view->assign('wieberatenarr', $this->settings['wieberaten']);
         }
         
+        $aktuellesJahr = (int)date("Y");
+        $jahre = array();
+        $jahre[-1] = 'k.A.';
+        for($jahr = $aktuellesJahr; $jahr > $aktuellesJahr-60; $jahr--) {
+            $jahre[$jahr] = (String)$jahr;
+        }
+        
         $this->view->assignMultiple(
             [
                 'altervonbis' => $altervonbis,
@@ -753,7 +765,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'wohnsitzstaaten' => $wohnsitzstaaten,
                 'alleberater' => $alleberater,
                 'berater' => $this->user,
-                'settings' => $this->settings
+                'settings' => $this->settings,
+                'jahre' => $jahre
             ]
             );
     }
@@ -769,40 +782,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $valArray = $this->request->getArguments();
         
         $teilnehmer->setNiqidberatungsstelle($this->niqbid);
-        $abschluss = new \Ud\Iqtp13db\Domain\Model\Abschluss();
-        
-        if(is_array($valArray['abschluss']['abschlussart'])) {
-            $abschluss->setAbschlussart($valArray['abschluss']['abschlussart']);
-        } else {
-            $abschlussart = array($valArray['abschluss']['abschlussart']);
-            $abschluss->setAbschlussart($abschlussart);
-        }
-        
-        $abschluss->setErwerbsland($valArray['abschluss']['erwerbsland']);
-        $abschluss->setDauerBerufsausbildung($valArray['abschluss']['dauerBerufsausbildung']);
-        $abschluss->setAbschlussjahr($valArray['abschluss']['abschlussjahr']);
-        $abschluss->setAusbildungsinstitution($valArray['abschluss']['ausbildungsinstitution']);
-        $abschluss->setAusbildungsort($valArray['abschluss']['ausbildungsort']);
-        $abschluss->setAbschluss($valArray['abschluss']['abschluss']);
-        $abschluss->setBerufserfahrung($valArray['abschluss']['berufserfahrung']);
-        $abschluss->setDeutscherReferenzberuf($valArray['abschluss']['deutscherReferenzberuf']);
-        $abschluss->setReferenzberufzugewiesen($valArray['abschluss']['referenzberufzugewiesen']);
-        $abschluss->setSonstigerberuf($valArray['abschluss']['sonstigerberuf']);
-        $abschluss->setNregberuf($valArray['abschluss']['nregberuf']);
-        $abschluss->setWunschberuf($valArray['abschluss']['wunschberuf']);
-        $abschluss->setAntragstellungvorher($valArray['abschluss']['antragstellungvorher']);
-        $abschluss->setAntragstellunggwpvorher($valArray['abschluss']['antragstellunggwpvorher']);
-        $abschluss->setAntragstellungzabvorher($valArray['abschluss']['antragstellungzabvorher']);
-        $abschluss->setAntragstellungerfolgt($valArray['abschluss']['antragstellungerfolgt']);
-        $abschluss->setAntragstellunggwpdatum($valArray['abschluss']['antragstellunggwpdatum']);
-        $abschluss->setAntragstellunggwpergebnis($valArray['abschluss']['antragstellunggwpergebnis']);
-        $abschluss->setAntragstellungzabdatum($valArray['abschluss']['antragstellungzabdatum']);
-        $abschluss->setAntragstellungzabergebnis($valArray['abschluss']['antragstellungzabergebnis']);
-        $abschluss->setNiquebertragung($valArray['abschluss']['niquebertragung']);
-        $abschluss->setTeilnehmer($teilnehmer);
         
         $this->teilnehmerRepository->add($teilnehmer);
-        $this->abschlussRepository->add($abschluss);
         
         // Daten sofort in die Datenbank schreiben
         $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
@@ -811,7 +792,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $tfolder = $this->generalhelper->createFolder($teilnehmer, $this->settings['standardniqidberatungsstelle'], $this->allusergroups, $this->storageRepository->findAll());
         
         $valArray = $this->request->getArguments();
-        $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('teilnehmer' => $teilnehmer, 'callerpage' => $valArray['callerpage']));
+        $this->redirect('edit', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'showabschluesse' => '1', 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage']));
     }
     
     /**
@@ -827,31 +808,10 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     {
         $valArray = $this->request->getArguments();
         
-        // **** NIQ deaktiviert ****  if($teilnehmer->getNiqchiffre() != '' && $this->niqinterface->check_curl($this->niqapiurl) == FALSE) {
-        // **** NIQ deaktiviert ****     $this->addFlashMessage("Bearbeiten von bereits übertragenen Datensätzen vorübergehend nicht möglich, da NIQ-Datenbank nicht erreichbar.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-        // **** NIQ deaktiviert ****     $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
-        // **** NIQ deaktiviert **** } else {
+        //DebuggerUtility::var_dump($valArray);
         
-        $selectboxsubmit = '';
-        $abschluesse = new \Ud\Iqtp13db\Domain\Model\Abschluss();
         $abschluesse = $this->abschlussRepository->findByTeilnehmer($teilnehmer);
-        
-        if(count($abschluesse) == 0) {
-            $abschluss = new \Ud\Iqtp13db\Domain\Model\Abschluss();
-            $abschluss->setTeilnehmer($teilnehmer);
-            $this->abschlussRepository->add($abschluss);
-            // Daten sofort in die Datenbank schreiben
-            $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
-            $persistenceManager->persistAll();
-        } else {
-            if(isset($valArray['selectboxabschluss'])) {
-                $abschluss=$this->abschlussRepository->findByUid($valArray['selectboxabschluss']);
-                $selectboxsubmit = '1';
-            } elseif($abschluss == NULL) {
-                $abschluss = $this->abschlussRepository->findOneByTeilnehmer($teilnehmer);
-            }
-        }
-        
+                
         $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
         
         $dokumente = $this->dokumentRepository->findByTeilnehmer($teilnehmer);
@@ -879,7 +839,14 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $this->view->assign('wieberatenarr', $this->settings['wieberaten']);
         }
         
-        $weitererabschluss = isset($valArray['weitererabschluss']) ? $valArray['weitererabschluss'] : '';
+        $aktuellesJahr = (int)date("Y");
+        $jahre = array();
+        $jahre[-1] = 'k.A.';
+        for($jahr = $aktuellesJahr; $jahr > $aktuellesJahr-60; $jahr--) {
+            $jahre[$jahr] = (String)$jahr;
+        }
+        
+        $abschlusshinzu = isset($valArray['abschlusshinzu']) ? $valArray['abschlusshinzu'] : '';
         $this->view->assignMultiple(
             [
                 'altervonbis' => $altervonbis,
@@ -895,30 +862,26 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'teilnehmer' => $teilnehmer,
                 'dokumente' => $dokumente,
                 'dokumentpfad' => $dokumentpfad,
-                'selectedabschluss' => $abschluss,
-                'selectboxsubmit' => $selectboxsubmit,
-                'selecteduid' => $abschluss->getUid(),
-                'weitererabschluss' => $weitererabschluss
+                'abschlusshinzu' => $abschlusshinzu,
+                'jahre' => $jahre,
+                'showabschluesse' => $valArray['showabschluesse'],
+                'showdokumente' => $valArray['showdokumente']
             ]
             );
-        // **** NIQ deaktiviert **** }
     }
     
     /**
      * action update
      *
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
-     * @param \Ud\Iqtp13db\Domain\Model\Abschluss $abschluss
      * @return void
      */
-    public function updateAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer, \Ud\Iqtp13db\Domain\Model\Abschluss $abschluss = NULL)
+    public function updateAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
         $valArray = $this->request->getArguments();
         
-        // **** NIQ deaktiviert **** if($teilnehmer->getNiqchiffre() != '' && $this->niqinterface->check_curl($this->niqapiurl) == FALSE) {
-        // **** NIQ deaktiviert ****     $this->addFlashMessage("Datensatz NICHT gespeichert. Bearbeiten von bereits übertragenen Datensätzen vorübergehend nicht möglich, da NIQ-Datenbank nicht erreichbar.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-        // **** NIQ deaktiviert ****     $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
-        // **** NIQ deaktiviert **** } else {
+        //DebuggerUtility::var_dump($valArray);
+        //die;
         
         if(is_numeric($teilnehmer->getLebensalter())) {
             if($teilnehmer->getLebensalter() > 0 && ($teilnehmer->getLebensalter() < 15 || $teilnehmer->getLebensalter() > 80)) {
@@ -930,13 +893,11 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         if($teilnehmer->getVerificationDate() == 0 && ($this->generalhelper->validateDateYmd($teilnehmer->getErstberatungabgeschlossen()) || $this->generalhelper->validateDateYmd($teilnehmer->getBeratungdatum()))) {
             $this->addFlashMessage("Datensatz NICHT gespeichert. Vor Eintragung von -Datum Erstberatung- oder -Erstberatung abgeschlossen- muss die Anmeldung bestätigt werden!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
-            
         }
         
         if($this->generalhelper->validateDateYmd($teilnehmer->getErstberatungabgeschlossen()) && !$this->generalhelper->validateDateYmd($teilnehmer->getBeratungdatum())) {
             $this->addFlashMessage("Datensatz NICHT gespeichert. -Datum Erstberatung– muss eingetragen sein, wenn -Erstberatung abgeschlossen- ausgefüllt ist.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-            $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
-            
+            $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));            
         }
         
         $this->createHistory($teilnehmer, "niqchiffre");
@@ -1000,10 +961,6 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $this->createHistory($teilnehmer, "beratungnotizen");
         $this->createHistory($teilnehmer, "erstberatungabgeschlossen");
         
-        // Daten sofort in die Datenbank schreiben
-        $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
-        $persistenceManager->persistAll();
-        
         $bstatus = $this->checkberatungsstatus($teilnehmer);
         if($bstatus == 999) {
             $this->addFlashMessage("Fehler in Update-Routine -> beratungsstatus = 999. Bitte Admin informieren.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
@@ -1013,83 +970,12 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $teilnehmer->setBeratungsstatus($bstatus);
         $this->teilnehmerRepository->update($teilnehmer);
         
-        if($abschluss != NULL && $valArray['selectboxsubmit'] != '1') {
-            
-            $savedabschluss = $this->abschlussRepository->findByUid($valArray['selectboxabschluss']);
-            $savedabschluss->setAbschlussart($abschluss->getAbschlussart());
-            $savedabschluss->setErwerbsland($abschluss->getErwerbsland());
-            $savedabschluss->setDauerBerufsausbildung($abschluss->getDauerBerufsausbildung());
-            $savedabschluss->setAbschlussjahr($abschluss->getAbschlussjahr());
-            $savedabschluss->setAusbildungsinstitution($abschluss->getAusbildungsinstitution());
-            $savedabschluss->setAusbildungsort($abschluss->getAusbildungsort());
-            $savedabschluss->setAbschluss($abschluss->getAbschluss());
-            $savedabschluss->setBerufserfahrung($abschluss->getBerufserfahrung());
-            $savedabschluss->setDeutscherReferenzberuf($abschluss->getDeutscherReferenzberuf());
-            $savedabschluss->setReferenzberufzugewiesen($abschluss->getReferenzberufzugewiesen());
-            $savedabschluss->setSonstigerberuf($abschluss->getSonstigerberuf());
-            $savedabschluss->setNregberuf($abschluss->getNregberuf());
-            $savedabschluss->setWunschberuf($abschluss->getWunschberuf());
-            $savedabschluss->setAntragstellungvorher($abschluss->getAntragstellungvorher());
-            $savedabschluss->setAntragstellunggwpvorher($abschluss->getAntragstellunggwpvorher());
-            $savedabschluss->setAntragstellungzabvorher($abschluss->getAntragstellungzabvorher());
-            $savedabschluss->setAntragstellungerfolgt($abschluss->getAntragstellungerfolgt());
-            $savedabschluss->setAntragstellunggwpdatum($abschluss->getAntragstellunggwpdatum());
-            $savedabschluss->setAntragstellunggwpergebnis($abschluss->getAntragstellunggwpergebnis());
-            $savedabschluss->setAntragstellungzabdatum($abschluss->getAntragstellungzabdatum());
-            $savedabschluss->setAntragstellungzabergebnis($abschluss->getAntragstellungzabergebnis());
-            $savedabschluss->setNiquebertragung($abschluss->getNiquebertragung());
-            
-            $this->abschlussRepository->update($savedabschluss);
-        }
-        
         // Daten sofort in die Datenbank schreiben
         $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
         
-        if($teilnehmer->getNiqchiffre() != '') {
-            $abschluesse = $this->abschlussRepository->findByTeilnehmer($teilnehmer);
-            $folgekontakte = $this->folgekontaktRepository->findByTeilnehmer($teilnehmer);
-            if($teilnehmer->getNiqidberatungsstelle() != '0') {
-                $niqidbstelle = $teilnehmer->getNiqidberatungsstelle();
-            } else {
-                $niqidbstelle = $this->niqbid;
-            }
-            // **** NIQ deaktiviert **** $returnarray = $this->niqinterface->uploadtoNIQ($teilnehmer, $abschluesse, $folgekontakte, $niqidbstelle, $this->niqapiurl);
-            
-            // **** NIQ deaktiviert **** $retteilnehmer = $returnarray[0];
-            // **** NIQ deaktiviert **** $retstring = $returnarray[1];
-            
-            // **** NIQ deaktiviert **** if($retteilnehmer instanceof \Ud\Iqtp13db\Domain\Model\Teilnehmer) {
-            $this->teilnehmerRepository->update($retteilnehmer);
-            // Daten sofort in die Datenbank schreiben
-            $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
-            $persistenceManager->persistAll();
-            
-            $this->addFlashMessage($retstring, '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
-            // **** NIQ deaktiviert **** } else {
-            // **** NIQ deaktiviert ****     $this->addFlashMessage($retstring, '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-            // **** NIQ deaktiviert ****  }
-            
-    }
-    
-    if (isset($valArray['btnweitererabschluss'])) {
-        $newabschluss = new \Ud\Iqtp13db\Domain\Model\Abschluss();
-        $newabschluss->setTeilnehmer($teilnehmer);
-        $this->abschlussRepository->add($newabschluss);
-        // Daten sofort in die Datenbank schreiben
-        $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
-        $persistenceManager->persistAll();
-        $this->redirect('edit', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'abschluss' => $newabschluss, 'weitererabschluss' => '1', 'callerpage' => $valArray['callerpage']));
-    } elseif(isset($valArray['btndelete'])) {
-        $this->abschlussRepository->remove($savedabschluss);
-        $this->redirect('edit', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'callerpage' => $valArray['callerpage']));
-    } elseif($valArray['selectboxsubmit'] == '1') {
-        $this->redirect('edit', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'selectboxabschluss' => $valArray['selectboxabschluss'], 'callerpage' => $valArray['callerpage']));
-    } else {
         $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
     }
-    // **** NIQ deaktiviert **** }
-}
 
 /**
  * action delete
@@ -1300,10 +1186,12 @@ public function exportAction(int $currentPage = 1)
     
     if($fberatungsstatus == 1 || $fberatungsstatus == NULL) {
         $teilnehmers = array();
-    } elseif($fberatungsstatus == 12) {
+    } elseif($fberatungsstatus == 13) {
         $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer(4, 0, $filtervon, $filterbis, $this->niqbid);
+    } elseif($fberatungsstatus == 12) {
+        $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer(2, 0, $filtervon, $filterbis, $this->niqbid);
     } elseif($fberatungsstatus == 11) {
-        $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer(1, 0, $filtervon, $filterbis, $this->niqbid);
+        $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer(1, 0, $filtervon, $filterbis, $this->niqbid);        
     } else {
         $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer(0, 1, $filtervon, $filterbis, $this->niqbid);
     }
@@ -1366,9 +1254,10 @@ public function exportAction(int $currentPage = 1)
             //$x++;
         }
         
+        $bezbstatus = $this->settings['filterberatungsstatus'][$fberatungsstatus];
         
         // XLSX
-        $filename = 'export_' . date('Y-m-d_H-i', time()) . '.xlsx';
+        $filename = 'export_'.$bezbstatus.'_'.date('Y-m-d_H-i', time()).'.xlsx';
         $header = [
             'Bestätigungsdatum' => 'string',
             'Nachname' => 'string',
@@ -1639,6 +1528,13 @@ public function anmeldseite2Action(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilneh
             if($abschluss == NULL) $abschluss = $this->abschlussRepository->findOneByTeilnehmer($teilnehmer);
         }
         
+        $aktuellesJahr = (int)date("Y");
+        $abschlussjahre = array();
+        $abschlussjahre[-1] = 'k.A.';
+        for($jahr = $aktuellesJahr; $jahr > $aktuellesJahr-60; $jahr--) {
+            $abschlussjahre[$jahr] = (String)$jahr;
+        }
+                
         $this->view->assignMultiple(
             [
                 'settings' => $this->settings,
@@ -1646,7 +1542,8 @@ public function anmeldseite2Action(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilneh
                 'teilnehmer' => $teilnehmer,
                 'selectedabschluss' => $abschluss,
                 'selecteduid' => $abschluss->getUid(),
-                'beratungsstelle' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid')
+                'beratungsstelle' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid'),
+                'abschlussjahre', $abschlussjahre
             ]
             );
     } else {

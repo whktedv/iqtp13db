@@ -60,8 +60,8 @@
 		<div class="tp13_formdivwebapp">
 			<label for="email">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.email" />
-			</label>
-				<span class="propdat">{teilnehmer.email}</span>
+			</label>				
+				<span class="propdat"><a href="mailto:{teilnehmer.email}?subject=IQ%20Webapp%20Anerkennungsberatung%20">{teilnehmer.email}</a></span>
 				<div class="historie">
 				<f:for each="{historie}" as="hist" key="wert">
 					{f:if(condition: '{hist.property} == "email"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
@@ -592,7 +592,7 @@
 	</div>
 </div>
 
-<div class="fframe"><h2>Erstberatung</h2>
+<div id="AnkerBeratung" class="fframe"><h2>Erstberatung</h2>
 		<div class="tp13_formdivwebapp">
 			<label for="datum">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungdatum" />

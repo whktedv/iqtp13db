@@ -2,12 +2,20 @@
 	display: none;
 }
 
+.frame {
+	padding-top: 0.5rem;	
+}
+
 .frame-container-default {
   max-width: 100%;
 }
 
+.filterframe {
+	margin: 1rem 0rem 2rem 0rem;
+}
+
 .body-bg-top {
-  padding-top: 25px;
+  padding-top: 59px;
 }
 
 .navbar-toggle {
@@ -43,9 +51,13 @@
 }
 
 .tx-iqtp13db .fframeadminonly {
-	border: 2px dashed #2f3bf4;
+	border: 2px dashed #7478bf;
 	padding: 15px;
 	margin: 15px 0px;
+}
+
+.tp13_formdivwebapp {
+	padding: 3px;
 }
 
 .tx-iqtp13db table {
@@ -75,10 +87,6 @@
 
 .tx-iqtp13db table .bestaetigt {
     background-color: bisque;
-}
-
-.pretablediv {
-	
 }
 
 .pagination .current {
@@ -145,7 +153,6 @@ td.tdcenter input[type="checkbox"] {
     line-height: 1.42857;
     padding: 2px 4px;
     vertical-align: middle;
-    border-radius: 3px;
     margin: 1px;
     color: #FFF;
     cursor: pointer;
@@ -154,18 +161,20 @@ td.tdcenter input[type="checkbox"] {
     text-decoration: none;
 }
 
-.togglebutton  {
+.ankerbuttons {
+	margin-top: 0.5rem;	
+}
+
+.togglebutton, .abschlussheader  {
     background-color: #cfa6ce;
     border: 1px solid transparent;
     white-space: nowrap;
-    margin-bottom: 0px;
     font-weight: normal;
     text-align: center;
     font-size: 14px;
     line-height: 1.42857;
     padding: 2px 4px;
     vertical-align: middle;
-    border-radius: 3px;
     color: #FFF;
     cursor: pointer;
     display: inline-block;
@@ -173,12 +182,12 @@ td.tdcenter input[type="checkbox"] {
 	text-decoration: none;
 }
 
-.buttontextsmall {
-	font-size: 0.7rem !important;
+.abschlussheader {
+	display: block;
 }
 
-button.weitererabschlussbtn {
-	margin-bottom: 10px;
+.buttontextsmall {
+	font-size: 0.7rem !important;
 }
 
 .tx-iqtp13db .niqstatusgruen {
@@ -209,9 +218,68 @@ button.weitererabschlussbtn {
 	padding-right: 25px;
 }
 
+input[type="text"].textfieldsmall  {
+	width: 5%;
+	min-width: 30px;
+}
+
 #dialog-gelb {
 	display: none;
 }
 #dialog-rot {
 	display: none;
+}
+
+.fframeabschluss-inner {
+	border: 1px solid #cfa6ce;
+	padding: 15px;
+}
+
+.abschlussheader {
+	padding: 6px;
+	min-width: 800px;
+	font-size: 1.2rem;	
+}
+
+.oneabschluss {
+	margin-top: 0.5rem;	
+	width: fit-content;
+	max-width: 800px;
+	overflow: hidden;
+}
+
+.abschluesseliste {
+	margin-top: 1rem;
+}
+
+#AnkerBeratung h2 {
+	color: #7478bf;	
+}
+
+#AnkerAbschluesse h2 {
+	color: #CA99BE;	
+}
+
+#AnkerDokumente h2 {
+	color: #CABE99;	
+}
+
+.tx-iqtp13db .buttonberatung {
+	background-color: #7478bf;	
+}
+
+.tx-iqtp13db .buttonabschluesse, #AnkerAbschluesse input[type="submit"] {
+	background-color: #CA99BE;	
+}
+
+.tx-iqtp13db .buttondokumente, #AnkerDokumente input[type="submit"] {
+	background-color: #CABE99;	
+}
+
+#AnkerDokumente input[type="submit"].updatebutton {
+	background-color: #99CACA;
+}
+
+.inputdokumentbeschreibung {
+	margin-left: 1rem;
 }

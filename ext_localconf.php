@@ -10,8 +10,8 @@ call_user_func(
             'Iqtp13dbadmin',
             [
                 \Ud\Iqtp13db\Controller\TeilnehmerController::class => 'start, listangemeldet, listerstberatung, listarchiv, checkniqconnection, sendtoniq, show, new, create, edit, update, delete, status, export, askconsent, listdeleted, undelete, savedatenblattpdf',
-                \Ud\Iqtp13db\Controller\FolgekontaktController::class => 'list, show, new, create, edit, update, delete',
-                \Ud\Iqtp13db\Controller\DokumentController::class => 'saveFileBackend, deleteFileBackend, openfile',
+                \Ud\Iqtp13db\Controller\FolgekontaktController::class => 'show, new, create, edit, update, delete',
+                \Ud\Iqtp13db\Controller\DokumentController::class => 'saveFileBackend, deleteFileBackend, openfile, updateBackend',
                 \Ud\Iqtp13db\Controller\HistorieController::class => 'list',
                 \Ud\Iqtp13db\Controller\AbschlussController::class => 'show, new, create, edit, update, delete',
                 \Ud\Iqtp13db\Controller\BeraterController::class => 'list, new, create, edit, update, delete'
@@ -20,8 +20,8 @@ call_user_func(
             // non-cacheable actions
             [
                 \Ud\Iqtp13db\Controller\TeilnehmerController::class => 'start, listangemeldet, listerstberatung, listarchiv, checkniqconnection, sendtoniq, show, new, create, edit, update, delete, status, export, askconsent, listdeleted, undelete, savedatenblattpdf',
-                \Ud\Iqtp13db\Controller\FolgekontaktController::class => 'list, show, new, create, edit, update, delete',
-                \Ud\Iqtp13db\Controller\DokumentController::class => 'saveFileBackend, deleteFileBackend, openfile',
+                \Ud\Iqtp13db\Controller\FolgekontaktController::class => 'show, new, create, edit, update, delete',
+                \Ud\Iqtp13db\Controller\DokumentController::class => 'saveFileBackend, deleteFileBackend, openfile, updateBackend',
                 \Ud\Iqtp13db\Controller\HistorieController::class => 'list',
                 \Ud\Iqtp13db\Controller\AbschlussController::class => 'show, new, create, edit, update, delete',
                 \Ud\Iqtp13db\Controller\BeraterController::class => 'list, new, create, edit, update, delete'

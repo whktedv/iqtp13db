@@ -4,6 +4,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 use Psr\Http\Message\ResponseInterface;
 use Ud\Iqtp13db\Domain\Repository\TeilnehmerRepository;
@@ -63,7 +64,16 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      */
     public function showAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss)
     {
+        $valArray = $this->request->getArguments();
+        
+        $teilnehmer = $this->teilnehmerRepository->findByUid($valArray['teilnehmer']);
+        
         $this->view->assign('abschluss', $abschluss);
+        $this->view->assign('teilnehmer', $teilnehmer);
+        $this->view->assign('calleraction', $valArray['calleraction']);
+        $this->view->assign('callercontroller', $valArray['callercontroller']);
+        $this->view->assign('callerpage', $valArray['callerpage']);
+        $this->view->assign('thisaction', $valArray['thisaction']);
     }
 
     /**
@@ -73,20 +83,47 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      */
     public function newAction()
     {
-
+        $valArray = $this->request->getArguments();
+        //DebuggerUtility::var_dump($valArray);
+        //die;
+        $teilnehmer = $this->teilnehmerRepository->findByUid($valArray['teilnehmer']);
+        
+        $aktuellesJahr = (int)date("Y");
+        $abschlussjahre = array();
+        $abschlussjahre[-1] = 'k.A.';
+        for($jahr = $aktuellesJahr; $jahr > $aktuellesJahr-60; $jahr--) {
+            $abschlussjahre[$jahr] = (String)$jahr;
+        }
+        
+        $this->view->assign('abschlussjahre', $abschlussjahre);
+        $this->view->assign('teilnehmer', $teilnehmer);
+        $this->view->assign('calleraction', $valArray['calleraction']);
+        $this->view->assign('callercontroller', $valArray['callercontroller']);
+        $this->view->assign('callerpage', $valArray['callerpage']);
+        $this->view->assign('thisaction', $valArray['thisaction']);
     }
 
     /**
      * action create
-     *
-     * @param \Ud\Iqtp13db\Domain\Model\Abschluss $newAbschluss
+     *     
+     * @param \Ud\Iqtp13db\Domain\Model\Abschluss $abschluss
      * @return void
      */
-    public function createAction(\Ud\Iqtp13db\Domain\Model\Abschluss $newAbschluss)
+    public function createAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss)
     {
-        $this->addFlashMessage('Abschluss erstellt.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
-        $this->abschlussRepository->add($newAbschluss);
-        $this->redirect('list');
+        $valArray = $this->request->getArguments();
+        //DebuggerUtility::var_dump($valArray);
+        //die;
+        
+        $teilnehmer = $this->teilnehmerRepository->findByUid($valArray['teilnehmer']);
+
+        $abschluss->setTeilnehmer($teilnehmer);
+        $this->abschlussRepository->add($abschluss);
+        // Daten sofort in die Datenbank schreiben
+        $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+        $persistenceManager->persistAll();
+        
+        $this->redirect($valArray['thisaction'], 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'showabschluesse' => '1'));
     }
 
     /**
@@ -98,33 +135,60 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      */
     public function editAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss)
     {
+        $valArray = $this->request->getArguments();
+
+        $teilnehmer = $this->teilnehmerRepository->findByUid($valArray['teilnehmer']);
+        
+        $aktuellesJahr = (int)date("Y");
+        $abschlussjahre = array();
+        $abschlussjahre[-1] = 'k.A.';
+        for($jahr = $aktuellesJahr; $jahr > $aktuellesJahr-60; $jahr--) {
+            $abschlussjahre[$jahr] = (String)$jahr;
+        }
+        
+        $this->view->assign('abschlussjahre', $abschlussjahre);
+        $this->view->assign('teilnehmer', $teilnehmer);             
         $this->view->assign('abschluss', $abschluss);
+        $this->view->assign('calleraction', $valArray['calleraction']);
+        $this->view->assign('callercontroller', $valArray['callercontroller']);
+        $this->view->assign('callerpage', $valArray['callerpage']);
+        $this->view->assign('thisaction', $valArray['thisaction']);
     }
 
     /**
      * action update
      *
      * @param \Ud\Iqtp13db\Domain\Model\Abschluss $abschluss
+     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return void
      */
-    public function updateAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss)
+    public function updateAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
-        $this->addFlashMessage('Abschluss aktualisiert.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+        $valArray = $this->request->getArguments();
+
+        //DebuggerUtility::var_dump($valArray);
+        //die;
+        
+        $teilnehmer = $this->teilnehmerRepository->findByUid($valArray['teilnehmer']);
+        
+        //$this->addFlashMessage('Abschluss aktualisiert.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
         $this->abschlussRepository->update($abschluss);
-        $this->redirect('list');
+        $this->redirect($valArray['thisaction'], 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'showabschluesse' => '1'));
     }
 
     /**
      * action delete
-     *
+     *     
      * @param \Ud\Iqtp13db\Domain\Model\Abschluss $abschluss
+     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return void
      */
-    public function deleteAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss)
+    public function deleteAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
-        $this->addFlashMessage('Abschluss gelöscht.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+        $valArray = $this->request->getArguments();
+        
         $this->abschlussRepository->remove($abschluss);
-        $this->redirect('list');
+        $this->redirect($valArray['thisaction'], 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'], 'showabschluesse' => '1'));
     }    
     
     /**

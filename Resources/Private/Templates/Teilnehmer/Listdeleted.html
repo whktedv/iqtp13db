@@ -23,6 +23,7 @@
 
 	<table  class="tx_iqtp13db" >
 		<tr>
+			<th>UID</th>
 			<th><f:link.action action="listdeleted" arguments="{orderby : 'nachname', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" /></f:link.action></th>
 			<th><f:link.action action="listdeleted" arguments="{orderby : 'vorname', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" /></f:link.action></th>
 			<th>Bereits<br>beraten</th>
@@ -44,6 +45,7 @@
 				{f:if(condition: "{teilnehmer.verificationDate} != 0", then: '<tr class="bestaetigt">', else: '<tr>')}
 			</f:else>
 			</f:if>
+				<td>{teilnehmer.uid}</td>
 				<td>{teilnehmer.nachname}</td>
 				<td>{teilnehmer.vorname}</td>
 				<td class="tdcenter">{f:if(condition: '{teilnehmer.schonberaten} == 1', then: '✓', else: '')}</td>

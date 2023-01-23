@@ -23,21 +23,28 @@ class Dokument extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var string
      */
     protected $name = '';
-
+    
+    /**
+     * Beschreibung
+     *
+     * @var string
+     */
+    protected $beschreibung = '';
+    
     /**
      * Pfad
      *
      * @var string
      */
     protected $pfad = '';
-
+    
     /**
      * teilnehmer
      *
      * @var \Ud\Iqtp13db\Domain\Model\Teilnehmer
      */
     protected $teilnehmer = NULL;
-
+    
     /**
      * Returns the name
      *
@@ -47,7 +54,7 @@ class Dokument extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         return $this->name;
     }
-
+    
     /**
      * Sets the name
      *
@@ -58,7 +65,28 @@ class Dokument extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->name = $name;
     }
-
+    
+    /**
+     * Returns the beschreibung
+     *
+     * @return string $beschreibung
+     */
+    public function getBeschreibung()
+    {
+        return $this->beschreibung;
+    }
+    
+    /**
+     * Sets the beschreibung
+     *
+     * @param string $beschreibung
+     * @return void
+     */
+    public function setBeschreibung($beschreibung)
+    {
+        $this->beschreibung = $beschreibung;
+    }
+    
     /**
      * Returns the pfad
      *
@@ -68,7 +96,7 @@ class Dokument extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         return $this->pfad;
     }
-
+    
     /**
      * Sets the pfad
      *
@@ -79,7 +107,7 @@ class Dokument extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->pfad = $pfad;
     }
-
+    
     /**
      * Returns the teilnehmer
      *
@@ -89,7 +117,7 @@ class Dokument extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         return $this->teilnehmer;
     }
-
+    
     /**
      * Sets the teilnehmer
      *
@@ -100,5 +128,5 @@ class Dokument extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->teilnehmer = $teilnehmer;
     }
-
+    
 }

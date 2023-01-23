@@ -2,27 +2,30 @@
 		
 		<div class="tp13_formdivwebapp">
 			<label for="datum">
-				<f:translate key="tx_iqtp13db_domain_model_beratung.datum" />
+				<f:translate key="tx_iqtp13db_domain_model_folgekontakt.datum" />
 			</label>
 				<span class="propdat">{folgekontakt.datum -> f:format.date(format: 'd.m.Y')}</span>
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="berater">
-				<f:translate key="tx_iqtp13db_domain_model_beratung.berater" />
+				<f:translate key="tx_iqtp13db_domain_model_folgekontakt.berater" />
 			</label>
-				<span class="propdat">{folgekontakt.berater.name}</span>
+				<span class="propdat">{folgekontakt.berater.username}</span>
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="beratungsform">
 				<f:translate key="tx_iqtp13db_domain_model_folgekontakt.beratungsform" />
 			</label>
-			<f:for each="{folgekontakt.beratungsform}" as="beratungsform">
-				<f:for each="{settings.beratungsformfolgeberatung}" as="text" key="wert">
-					{f:if(condition: '{beratungsform} == {wert}', then: '<span class="propdat">{text}</span>')}
-				</f:for>
+			<f:for each="{settings.beratungsformfolgeberatung}" as="text" key="wert">
+				{f:if(condition: '{folgekontakt.beratungsform} == {wert}', then: '<span class="propdat">{text}</span>')}
 			</f:for>	
 		</div>
-			
+		<div class="tp13_formdivwebapp">
+			<label for="beratungsdauer">
+				<f:translate key="tx_iqtp13db_domain_model_folgekontakt.beratungsdauer" />
+			</label>
+				<span class="propdat">{folgekontakt.beratungsdauer}</span>
+		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="notizen" class="tp13_options">
 				<f:translate key="tx_iqtp13db_domain_model_folgekontakt.notizen" />

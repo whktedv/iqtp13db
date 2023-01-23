@@ -162,6 +162,7 @@ CREATE TABLE tx_iqtp13db_domain_model_folgekontakt (
 	
 	notizen text NOT NULL,
 	beratungsform int(11) DEFAULT '0' NOT NULL,
+	beratungsdauer varchar(255) DEFAULT '' NOT NULL,
 	
 	teilnehmer int(11) unsigned DEFAULT '0',
 
@@ -187,6 +188,7 @@ CREATE TABLE tx_iqtp13db_domain_model_dokument (
 	pid int(11) DEFAULT '0' NOT NULL,
 
 	name varchar(255) DEFAULT '' NOT NULL,
+	beschreibung varchar(255) DEFAULT '' NOT NULL,
 	pfad varchar(255) DEFAULT '' NOT NULL,
 	teilnehmer int(11) unsigned DEFAULT '0',
 
@@ -214,8 +216,8 @@ CREATE TABLE tx_iqtp13db_domain_model_historie (
 	
 	teilnehmer int(11) unsigned DEFAULT '0',
 	property varchar(255) DEFAULT '' NOT NULL,
-	oldvalue varchar(1023) DEFAULT '' NOT NULL,
-	newvalue varchar(1023) DEFAULT '' NOT NULL,	
+	oldvalue text DEFAULT '' NOT NULL,
+	newvalue text DEFAULT '' NOT NULL,	
 	berater int(11) unsigned DEFAULT '0',
 	
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,

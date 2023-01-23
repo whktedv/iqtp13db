@@ -5,6 +5,7 @@
 				<th>Datum</th>
 				<th>Berater*in</th>
 				<th>Inhalt der Beratung</th>
+				<th>Beratungsdauer (in h)</th>
 				<th>Bearbeiten</th>
 				<th>Löschen</th>
 			</tr>
@@ -13,9 +14,10 @@
 				<f:if condition="{folgekontakt.teilnehmer.uid} == {teilnehmer.uid}">
 					<f:then>
 						<tr>
-							<td class="fklistdatum"><f:link.action action="show" arguments="{folgekontakt:folgekontakt, calleraction: calleraction, callercontroller : callercontroller}" controller="Folgekontakt">{folgekontakt.datum}</f:link.action></td>
+							<td class="fklistdatum"><f:link.action action="show" arguments="{folgekontakt:folgekontakt, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Folgekontakt">{folgekontakt.datum}</f:link.action></td>
 							<td class="fklistberater">{folgekontakt.berater.username}</td>
 							<td class="fklistinhalt"><f:format.crop maxCharacters="200" append="&nbsp;...">{folgekontakt.notizen}</f:format.crop></td>
+							<td>{folgekontakt.beratungsdauer}</td>
 							<td><f:link.action class="linkbuttons" action="edit" arguments="{folgekontakt:folgekontakt, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Folgekontakt">Bearbeiten</f:link.action></td>
 							<td><f:link.action class="linkbuttons" action="delete" arguments="{folgekontakt:folgekontakt, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Folgekontakt" onclick="return confirm('Wirklich löschen?');">Löschen</f:link.action></td>
 						</tr>

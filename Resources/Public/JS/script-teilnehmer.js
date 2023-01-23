@@ -9,6 +9,10 @@
 		toggleeinwperson();
 		toggleselectreferenzberuf();
 		
+		toggleabschluss(0);
+		toggleabschluss(1);
+		toggleabschluss(2);
+		toggleabschluss(3);
 		
 		$('#selectreferenzberuf').change(function() {
 			toggleselectreferenzberuf();
@@ -66,7 +70,7 @@
 			toggleleistungsbezugjanein();
 		}); 
 						
-		// für Backend		
+		// **********+ für Backend *********		
 		for (i = 0; i < 17; i++) {
 			$('#aufenthaltsstatusradio'+i).change(function() {
 				toggleaufenthaltsstatusradio();
@@ -114,6 +118,20 @@
 		$('#selectantragstellungerfolgt').change(function() {
 			toggleantragstellung();
 		});
+		
+		$('#toggleabschluss0').click(function() {
+			toggleabschluss(0);
+		});
+		$('#toggleabschluss1').click(function() {
+			toggleabschluss(1);
+		});
+		$('#toggleabschluss2').click(function() {
+			toggleabschluss(2);
+		});
+		$('#toggleabschluss3').click(function() {
+			toggleabschluss(3);
+		});  
+			
 
    });
     
@@ -313,7 +331,7 @@
     		}
     	} 
 	}
-    
+    			
     // Erstberatung
     function toggleberatungface2face() {
     	if($('#chkberatungsartface2face').is(":checked")) {
@@ -324,6 +342,11 @@
 			$('#textfieldberatungsort').toggle();
 		}
 	} 
+	
+	// Abschluesse
+    function toggleabschluss(i) {
+		$('#abschlussdaten' + i).fadeToggle();	    
+    }
     
     // Anerkennung vorher?
     function toggleantragstellungvorher() {    	
@@ -377,12 +400,13 @@
     		$("#divantragstellungzabergebnis").show();
 		}
 	} 
+	
         
     $("input[name='tx_iqtp13db_iqtp13dbwebapp[file]']").change(function() { 
     	this.form.submit(); 
     	$("#overlay").show();
     });
-    
+
 	$("#linkdeletefile").click(function() {
     	$("#overlay").show();
     });

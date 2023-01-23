@@ -24,7 +24,7 @@
 	      <label for="abschlussjahr">
 	        <f:translate key="tx_iqtp13db_domain_model_abschluss.abschlussjahr" />
 	       </label>
-	        <f:form.textfield property="abschlussjahr" /> 
+	        <f:form.select property="abschlussjahr" value="{abschluss.abschlussjahr}" options="{abschlussjahre}" optionValueField="value" optionLabelField="value" /> 
 	</div>
 	<div class="tp13_formdivwebapp">
 	      <label for="ausbildungsinstitution">

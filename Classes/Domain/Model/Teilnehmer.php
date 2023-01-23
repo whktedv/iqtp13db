@@ -1,6 +1,7 @@
 <?php
 namespace Ud\Iqtp13db\Domain\Model;
 
+use TYPO3\CMS\Extbase\Annotation\Validate;
 /***
  *
  * This file is part of the "IQ Webapp Anerkennungserstberatung" Extension for TYPO3 CMS.
@@ -69,14 +70,14 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     
     /**
      * nachname
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
+     * @Validate("NotEmpty")
      * @var string
      */
     protected $nachname = '';
     
     /**
      * vorname
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
+     * @Validate("NotEmpty")
      * @var string
      */
     protected $vorname = '';
@@ -97,8 +98,8 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     
     /**
      * email
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
-     * @TYPO3\CMS\Extbase\Annotation\Validate("EmailAddress")
+     * @Validate("NotEmpty")
+     * @Validate("EmailAddress")
      * @var string
      */
     protected $email = '';
@@ -106,15 +107,15 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * E-Mail bestätigung
      *
+     * @Validate("NotEmpty")
+     * @Validate("EmailAddress")
      * @var string
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
-     * @TYPO3\CMS\Extbase\Annotation\Validate("EmailAddress")
      */
     protected $confirmemail = '';
     
     /**
      * telefon
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
+     * @Validate("NotEmpty")
      * @var string
      */
     protected $telefon = '';
@@ -366,7 +367,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * Einwilligung Datenübermittlung
      *
      * @var bool
-     * @TYPO3\CMS\Extbase\Annotation\Validate("\Ud\Iqtp13db\Domain\Validator\EinwilligungValidator")
+     * @Validate("\Ud\Iqtp13db\Domain\Validator\EinwilligungValidator")
      */
     protected $einwilligung = NULL;
     
@@ -415,7 +416,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * beratungdatum
      * @var string
-     * @TYPO3\CMS\Extbase\Annotation\Validate("\Ud\Iqtp13db\Domain\Validator\DatumValidator")
+     * @Validate("\Ud\Iqtp13db\Domain\Validator\DatumValidator")
      */
     protected $beratungdatum = '';
     
@@ -444,6 +445,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * beratungsdauer
      *
      * @var string
+     * @Validate("\Ud\Iqtp13db\Domain\Validator\KommazahlValidator")
      */
     protected $beratungsdauer = '';
     
@@ -500,7 +502,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * erstberatungabgeschlossen
      *
      * @var string
-     * @TYPO3\CMS\Extbase\Annotation\Validate("\Ud\Iqtp13db\Domain\Validator\DatumValidator")
+     * @Validate("\Ud\Iqtp13db\Domain\Validator\DatumValidator")
      */
     protected $erstberatungabgeschlossen = '';
     

@@ -1,0 +1,31 @@
+ 
+<div class="fframe" id="AnkerDokumente"><h2><f:translate key="dokumente" /> in '{dokumentpfad}'</h2>
+	<f:if condition="{dokumente}"><f:then>
+		<table>
+			<thead>
+				<th>Dateiname</th>
+				<th>Kurzbeschreibung</th>
+				<th></th>
+				<th></th>
+			</thead>
+			<f:for each="{dokumente}" as="dokument">
+					<tr>
+						<td><f:link.action action="openfile" arguments="{dokument : dokument, teilnehmer : teilnehmer}" controller="Dokument" target="_blank">{dokument.name}</f:link.action></td>
+						<f:form method="post" action="updateBackend" controller="Dokument" arguments="{teilnehmer:teilnehmer, calleraction : calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : thisaction}" name="dokument" object="{dokument}" enctype="multipart/form-data" >
+							<td><f:form.textfield property="beschreibung" value="{dokument.beschreibung}" size="50" /></td>
+							<td><f:form.submit class="updatebutton" value="Aktualisieren" /></td>
+						</f:form>						
+						<td><f:link.action class="iconbuttons" action="deleteFileBackend" controller="Dokument" arguments="{dokument : dokument, teilnehmer : teilnehmer, calleraction : calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : thisaction}" onclick="return confirm('Wirklich löschen?');" ><img src="/typo3conf/ext/iqtp13db/Resources/Public/Icons/delete-640.png" width="32" height="32" alt="Löschen" /></f:link.action></td>
+					</tr>		
+			</f:for>
+		</table>
+	</f:then></f:if>
+	
+	<f:form method="post" action="saveFileBackend" name="dokument" controller="Dokument" arguments="{teilnehmer:teilnehmer, calleraction : calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : thisaction}" object="{dokument}" enctype="multipart/form-data" ><br />
+		<div class="tp13_formdiv100 dokupload">
+				<f:form.upload name="file" />
+				<f:form.textfield class="inputdokumentbeschreibung" property="beschreibung" size="50" placeholder="<f:translate key='tx_iqtp13db_domain_model_dokument.beschreibung' />" />
+				<f:form.submit value="<f:translate key='hochladen' />" />
+  		</div>
+	</f:form>
+</div>

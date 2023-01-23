@@ -68,8 +68,8 @@
 	}
 
 	.tx-iqtp13db button {
-		width: 150px;
-		height: 40px;
+		/*width: 150px;
+		height: 40px;*/
 	}
 
 	.headabschlusslinks, .headabschlussrechts {
@@ -163,7 +163,7 @@
     background-color: bisque;
 }
 
-.headabschlussrechts a, .tx-iqtp13db input[type="submit"], .tx-iqtp13db .linkbuttons  {
+.tx-iqtp13db input[type="submit"], .tx-iqtp13db .linkbuttons  {
     background-color: #99CACA;
     border: 1px solid transparent;
     white-space: nowrap;
@@ -174,7 +174,6 @@
     line-height: 1.42857;
     padding: 2px 4px;
     vertical-align: middle;
-    border-radius: 3px;
     color: #FFF;
     cursor: pointer;
     display: inline-block;

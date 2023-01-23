@@ -12,7 +12,7 @@
 
 <f:render partial="FormErrors" arguments="{object:Folgekontakt}" />
 
-<f:form action="create" name="folgekontakt" object="{folgekontakt}" arguments="{calleraction: calleraction, callercontroller : callercontroller}">
+<f:form action="create" name="folgekontakt" object="{folgekontakt}" arguments="{calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">
 
 	<f:render partial="Folgekontakt/FormFields" arguments="{_all}" />
 	<f:form.hidden property="teilnehmer" value="{teilnehmer.uid}" />

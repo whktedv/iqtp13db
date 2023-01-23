@@ -8,17 +8,17 @@ return [
         'cruser_id' => 'cruser_id',
         'versioningWS' => true,
         'delete' => 'deleted',
-        'hideTable' => true, 
+        'hideTable' => true,
         'enablecolumns' => [
             'disabled' => 'hidden',
             'starttime' => 'starttime',
             'endtime' => 'endtime',
         ],
-        'searchFields' => 'name,pfad,teilnehmer',
+        'searchFields' => 'name,beschreibung,pfad,teilnehmer',
         'iconfile' => 'EXT:iqtp13db/Resources/Public/Icons/tx_iqtp13db_domain_model_dokument.gif'
     ],
     'types' => [
-        '1' => ['showitem' => 'hidden, name, pfad, teilnehmer, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+        '1' => ['showitem' => 'hidden, name, beschreibung, pfad, teilnehmer, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
     'columns' => [
         't3ver_label' => [
@@ -49,11 +49,11 @@ return [
                 'size' => 13,
                 'eval' => 'datetime',
                 'default' => 0,
-            	'renderType' => 'inputDateTime',
-            	'behaviour' => [
-            			'allowLanguageSynchronization' => true,
-            	]
-            		
+                'renderType' => 'inputDateTime',
+                'behaviour' => [
+                    'allowLanguageSynchronization' => true,
+                ]
+                
             ]
         ],
         'endtime' => [
@@ -64,44 +64,53 @@ return [
                 'size' => 13,
                 'eval' => 'datetime',
                 'default' => 0,
-            	'renderType' => 'inputDateTime',
+                'renderType' => 'inputDateTime',
                 'range' => [
                     'upper' => mktime(0, 0, 0, 1, 1, 2038)
                 ],
-            	'behaviour' => [
-            			'allowLanguageSynchronization' => true,
-           		]
-            		
+                'behaviour' => [
+                    'allowLanguageSynchronization' => true,
+                ]
+                
             ],
         ],
         'name' => [
-	        'exclude' => true,
-	        'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_dokument.name',
-	        'config' => [
-			    'type' => 'input',
-			    'size' => 30,
-			    'eval' => 'trim'
-			],
-	    ],
-	    'pfad' => [
-	        'exclude' => true,
-	        'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_dokument.pfad',
-	        'config' => [
-			    'type' => 'input',
-			    'size' => 30,
-			    'eval' => 'trim'
-			],
-	    ],
-	    'teilnehmer' => [
-	        'exclude' => true,
-	        'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_dokument.teilnehmer',
-	        'config' => [
-			    'type' => 'select',
-			    'renderType' => 'selectSingle',
-			    'foreign_table' => 'tx_iqtp13db_domain_model_teilnehmer',
-			    'minitems' => 0,
-			    'maxitems' => 1,
-			],
-	    ],
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_dokument.name',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim'
+            ],
+        ],
+        'beschreibung' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_dokument.beschreibung',
+            'config' => [
+                'type' => 'input',
+                'size' => 50,
+                'eval' => 'trim'
+            ],
+        ],
+        'pfad' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_dokument.pfad',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim'
+            ],
+        ],
+        'teilnehmer' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_dokument.teilnehmer',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'foreign_table' => 'tx_iqtp13db_domain_model_teilnehmer',
+                'minitems' => 0,
+                'maxitems' => 1,
+            ],
+        ],
     ],
 ];

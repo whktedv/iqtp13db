@@ -7,42 +7,50 @@
 
 <f:section name="main">
 
-<h1>Einzelansicht Ratsuchende*r</h1>
+<h1>Daten Ratsuchende*r UID: {teilnehmer.uid}</h1>
 
 <f:flashMessages />
+
+<f:if condition="{showabschluesse} == '1'">
+<f:then>
+	<script>
+		(function($) {
+		    $(document).ready(function() {
+		    	location.href = "#AnkerAbschluesse"; 
+		    });
+		})(jQuery);		
+	</script>
+</f:then>
+</f:if>
+<f:if condition="{showdokumente} == '1'">
+<f:then>
+	<script>
+		(function($) {
+		    $(document).ready(function() {
+		         location.href = "#AnkerDokumente"; 
+		    });
+		})(jQuery);		
+	</script>
+</f:then>
+</f:if>
+
 <f:link.action class="linkbuttons" action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">Bearbeiten</f:link.action>
 <f:link.action class="linkbuttons" action="savedatenblattpdf" controller="{callercontroller}" arguments="{teilnehmer:teilnehmer}">Datenblatt speichern (PDF)</f:link.action>
-<f:if condition="{dokumente}"><f:then><a href="#dokumente" class="linkbuttons">Dokumente anzeigen</a></f:then></f:if>
 <f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}" arguments="{callerpage : callerpage}">Zurück zur Liste</f:link.action>
 
-<f:render partial="Teilnehmer/Properties" arguments="{teilnehmer:teilnehmer, historie : historie}" />
-
-	<div id="divabschluesse" class="fframe">
-		<h2>Abschlüsse</h2>
-		<f:if condition="{abschluesse -> f:count()} > 0">
-		<f:then>			
-			<f:for each="{abschluesse}" as="sabschluss">
-				<div class="fframe"><h2>Daten Beruf <i>{sabschluss.deutscherReferenzberuf}</i></h2>
-					<f:render partial="Abschluss/Properties" arguments="{beruf:sabschluss, historie : historie}" />
-				</div>
-			</f:for>
-		</f:then>
-		</f:if>
+<div class="ankerbuttons">		
+		<a href="#AnkerBeratung" class="linkbuttons buttonberatung" >Beratung anzeigen</a>
+		<a href="#AnkerAbschluesse" class="linkbuttons buttonabschluesse" >Abschlüsse anzeigen</a>
+		<a href="#AnkerDokumente" class="linkbuttons buttondokumente" >Dokumente anzeigen</a>
 	</div>
 
-	<f:if condition="{dokumente}"><f:then>
-		<div id="dokumente" class="frame"><h2><f:translate key="dokumente" /> in '{dokumentpfad}'</h2>
-		<table>
-		<f:for each="{dokumente}" as="dokument">
-			<tr>
-				<td>{dokument.name} - <b><f:link.action action="openfile" arguments="{dokument : dokument, teilnehmer : teilnehmer}" controller="Dokument" target="_blank">Sicherer Link</f:link.action></b></td>
-			</tr>
-		</f:for>
-		</table>
-		</div>
-	</f:then></f:if>
+<f:render partial="Teilnehmer/Properties" arguments="{teilnehmer:teilnehmer, historie : historie}" />
 	
 <f:link.action class="linkbuttons" action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">Bearbeiten</f:link.action>
 <f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}" arguments="{callerpage : callerpage}">Zurück zur Liste</f:link.action>
+
+<f:render partial="Abschluss/Abschluss4Teilnehmer" arguments="{teilnehmer : teilnehmer, abschluesse: abschluesse, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : 'show'}" />
+
+<f:render partial="Dokument/Dokumente4Teilnehmer" arguments="{teilnehmer : teilnehmer, dokumente: dokumente, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : 'show'}" />
 
 </f:section>

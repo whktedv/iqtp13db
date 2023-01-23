@@ -3,7 +3,7 @@
 		  <label><f:translate key="tx_iqtp13db_domain_model_abschluss.abschlussart" />
 		  <span class="niqfield" /></label>
 		  <span class="propdat">
-				<f:for each="{beruf.abschlussart}" as="abschlussart" iteration="iter">
+				<f:for each="{abschluss.abschlussart}" as="abschlussart" iteration="iter">
 					{f:if(condition: '{iter.index} > 0', then: ',', else: '')}
 					<f:if condition="{abschlussart} == -1"><f:then>
 						<f:translate key="ka"/>
@@ -23,70 +23,90 @@
 				<span class="niqfield" />
 			</label>
 			<f:for each="{settings.staaten}" as="text" key="wert">
-				{f:if(condition: '{beruf.erwerbsland} == {wert}', then: '<span class="propdat">{text}</span>')}
+				{f:if(condition: '{abschluss.erwerbsland} == {wert}', then: '<span class="propdat">{text}</span>')}
 			</f:for>		    
 		</div>
 		<div class="tp13_formdivwebapp">
 		  <label><f:translate key="tx_iqtp13db_domain_model_abschluss.dauer_berufsausbildung" /></label>
-		    <span class="propdat">{beruf.dauerBerufsausbildung}</span>
+		    <span class="propdat">{abschluss.dauerBerufsausbildung}</span>
 		</div>
 		<div class="tp13_formdivwebapp">
 		  <label><f:translate key="tx_iqtp13db_domain_model_abschluss.abschlussjahr" /></label>
-		    <span class="propdat">{beruf.abschlussjahr}</span>
+		    <span class="propdat">{abschluss.abschlussjahr}</span>
 		</div>
 		<div class="tp13_formdivwebapp">
 		  <label><f:translate key="tx_iqtp13db_domain_model_abschluss.ausbildungsinstitution" /></label>
-		    <span class="propdat">{beruf.ausbildungsinstitution}</span>
+		    <span class="propdat">{abschluss.ausbildungsinstitution}</span>
 		</div>
 		<div class="tp13_formdivwebapp">
 		  <label><f:translate key="tx_iqtp13db_domain_model_abschluss.ausbildungsort" /></label>
-		    <span class="propdat">{beruf.ausbildungsort}</span>
+		    <span class="propdat">{abschluss.ausbildungsort}</span>
 		</div>
 		<div class="tp13_formdivwebapp">
 		  <label><f:translate key="tx_iqtp13db_domain_model_abschluss.abschluss" /></label>
-		    <span class="propdat">{beruf.abschluss}</span>
+		    <span class="propdat">{abschluss.abschluss}</span>
 		</div>
 		<div class="tp13_formdivwebapp">
 		  <label><f:translate key="tx_iqtp13db_domain_model_abschluss.berufserfahrung" />
 		  <span class="niqfield" /></label>
 		      <f:for each="{settings.berufserfahrung}" as="text" key="wert">
-					{f:if(condition: '{beruf.berufserfahrung} == {wert}', then: '<span class="propdat">{text}&nbsp;</span>')}
+					{f:if(condition: '{abschluss.berufserfahrung} == {wert}', then: '<span class="propdat">{text}&nbsp;</span>')}
 			</f:for>
 		</div>
 
 		<div class="tp13_formdivwebapp">
 		  <label><f:translate key="tx_iqtp13db_domain_model_abschluss.deutscher_referenzberuf" />
 		  <span class="niqfield" /></label>
-		    <span class="propdat">{beruf.deutscherReferenzberuf}</span>
+		    <span class="propdat">{abschluss.deutscherReferenzberuf}</span>
+		</div>
+		
+		<div class="tp13_formdivwebapp">
+	      <label for="referenzberufzugewiesen"><f:translate key="tx_iqtp13db_domain_model_abschluss.referenzberufzugewiesen" />
+	        <span class="niqfield" /></label>
+	        <f:for each="{settings.berufe}" as="text" key="wert">
+					{f:if(condition: '{abschluss.referenzberufzugewiesen} == {wert}', then: '<span class="propdat">{text}&nbsp;</span>')}
+			</f:for>	       		       
+		</div>
+		
+		<div class="tp13_formdivwebapp">
+		      <label for="sonstigerberuf"><f:translate key="tx_iqtp13db_domain_model_abschluss.sonstigerberuf" />
+		        <span class="niqfield" /></label>
+		        <span class="propdat">{abschluss.sonstigerberuf}</span>	         
 		</div>
 		<div class="tp13_formdivwebapp">
+		      <label for="nregberuf"><f:translate key="tx_iqtp13db_domain_model_abschluss.nregberuf" />
+		        <span class="niqfield" /></label>
+		        <span class="propdat">{abschluss.nregberuf}</span>	         
+		</div>
+		
+		<div class="tp13_formdivwebapp">
 		  <label><f:translate key="tx_iqtp13db_domain_model_abschluss.wunschberuf" /></label>
-		    <span class="propdat">{beruf.wunschberuf}</span>
+		    <span class="propdat">{abschluss.wunschberuf}</span>
 		</div>
 		
 		<div class="tp13_formdivwebapp">
 		  <label><f:translate key="tx_iqtp13db_domain_model_abschluss.antragstellungvorher" />
 		  	<span class="niqfield" /></label>
 		    <f:for each="{settings.antragstellungvorher}" as="text" key="wert">
-					{f:if(condition: '{beruf.antragstellungvorher} == {wert}', then: '<span class="propdat">{text}&nbsp;</span>')}
+					{f:if(condition: '{abschluss.antragstellungvorher} == {wert}', then: '<span class="propdat">{text}&nbsp;</span>')}
 			</f:for>
 		</div>
 		<div class="tp13_formdivwebapp">
 		  <label><f:translate key="tx_iqtp13db_domain_model_abschluss.antragstellunggwpvorher" />
 		  	<span class="niqfield" /></label>
 		    <f:for each="{settings.ergebnisgleichwertigkeitvorher}" as="text" key="wert">
-					{f:if(condition: '{beruf.antragstellunggwpvorher} == {wert}', then: '<span class="propdat">{text}&nbsp;</span>')}
+					{f:if(condition: '{abschluss.antragstellunggwpvorher} == {wert}', then: '<span class="propdat">{text}&nbsp;</span>')}
 			</f:for>
 		</div>
 		<div class="tp13_formdivwebapp">
 		  <label><f:translate key="tx_iqtp13db_domain_model_abschluss.antragstellungzabvorher" />
 		  	<span class="niqfield" /></label>
 		    <f:for each="{settings.ergebniszab}" as="text" key="wert">
-					{f:if(condition: '{beruf.antragstellungzabvorher} == {wert}', then: '<span class="propdat">{text}&nbsp;</span>')}
+					{f:if(condition: '{abschluss.antragstellungzabvorher} == {wert}', then: '<span class="propdat">{text}&nbsp;</span>')}
 			</f:for>
 		</div>		
 		<br>
-		<h2>Anerkennungsverfahren zu "{settings.berufe.{beruf.referenzberufzugewiesen}}"</h2>
+		<h2>Anerkennungsverfahren zu "{settings.abschlusse.{abschluss.referenzabschlusszugewiesen}}"</h2>
 		<br>
 		<div class="tp13_formdivwebapp" id="divantragstellungerfolgt">
 				<label for="antragstellungerfolgt">
@@ -94,7 +114,7 @@
 					<span class="niqfield" />
 				</label>
 				<f:for each="{settings.antragstellungerfolgt}" as="text" key="wert">
-						{f:if(condition: '{beruf.antragstellungerfolgt} == {wert}', then: '<span class="propdat">{text}&nbsp;</span>')}
+						{f:if(condition: '{abschluss.antragstellungerfolgt} == {wert}', then: '<span class="propdat">{text}&nbsp;</span>')}
 				</f:for>
 		</div>
 		<div class="tp13_formdivwebapp" id="divantragstellunggwpdatum">
@@ -102,7 +122,7 @@
 		        <f:translate key="tx_iqtp13db_domain_model_abschluss.antragstellunggwpdatum" />
 		        <span class="niqfield" />
 		       </label>
-		       <span class="propdat">{beruf.antragstellunggwpdatum}</span>
+		       <span class="propdat">{abschluss.antragstellunggwpdatum}</span>
 		</div>
 		<div class="tp13_formdivwebapp" id="divantragstellunggwpergebnis">
 				<label for="antragstellunggwpergebnis">
@@ -110,7 +130,7 @@
 					<span class="niqfield" />
 				</label>
 				<f:for each="{settings.ergebnisgleichwertigkeit}" as="text" key="wert">
-						{f:if(condition: '{beruf.antragstellunggwpergebnis} == {wert}', then: '<span class="propdat">{text}&nbsp;</span>')}
+						{f:if(condition: '{abschluss.antragstellunggwpergebnis} == {wert}', then: '<span class="propdat">{text}&nbsp;</span>')}
 				</f:for>
 		</div>
 		<div class="tp13_formdivwebapp" id="divantragstellungzabdatum">
@@ -118,7 +138,7 @@
 		        <f:translate key="tx_iqtp13db_domain_model_abschluss.antragstellungzabdatum" />
 		        <span class="niqfield" />
 		       </label>
-		       <span class="propdat">{beruf.antragstellungzabdatum}</span>
+		       <span class="propdat">{abschluss.antragstellungzabdatum}</span>
 		</div>
 		<div class="tp13_formdivwebapp" id="divantragstellungzabergebnis">
 				<label for="antragstellungzabergebnis">
@@ -126,6 +146,6 @@
 					<span class="niqfield" />
 				</label>
 				<f:for each="{settings.ergebniszab}" as="text" key="wert">
-						{f:if(condition: '{beruf.antragstellungzabergebnis} == {wert}', then: '<span class="propdat">{text}&nbsp;</span>')}
+						{f:if(condition: '{abschluss.antragstellungzabergebnis} == {wert}', then: '<span class="propdat">{text}&nbsp;</span>')}
 				</f:for>				
 		</div>	

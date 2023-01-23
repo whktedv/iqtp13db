@@ -4,36 +4,41 @@
 </f:section>
 
 <f:section name="main">
-<h1>Filter</h1>
-<f:form class="filterform" method="post" action="listerstberatung" name="listerstberatung" >
-		<div>Name: <f:form.textfield size="20" value="{filtername}" name="name" /></div>
-		<div>Ort: <f:form.textfield size="20" value="{filterort}" name="ort" /></div>
-		<div>Beruf: <f:form.textfield size="20" value="{filterberuf}" name="beruf" /></div>
-		<div>Geburtsland: <f:form.select value="{filterland}" name="land" options="{wohnsitzstaaten}" optionValueField="value" optionLabelField="value" /></div>
-		<div>Gruppe: <f:form.textfield size="20" value="{filtergruppe}" name="gruppe" /></div>
-		<f:if condition="{filteron}"><f:then><f:form.button name="filteraus" value="1" >Filter löschen</f:form.button></f:then></f:if>
-		<f:form.submit name="filteran" value="Filtern" />			
-</f:form>
-<br>
+
+<div class="filterframe">
+	<h1>Filter</h1>
+	<f:form class="filterform" method="post" action="listerstberatung" name="listerstberatung" >
+			<div>Name: <f:form.textfield size="20" value="{filtername}" name="name" /></div>
+			<div>Ort: <f:form.textfield size="20" value="{filterort}" name="ort" /></div>
+			<div>Beruf: <f:form.textfield size="20" value="{filterberuf}" name="beruf" /></div>
+			<div>Geburtsland: <f:form.select value="{filterland}" name="land" options="{wohnsitzstaaten}" optionValueField="value" optionLabelField="value" /></div>
+			<div>Gruppe: <f:form.textfield size="20" value="{filtergruppe}" name="gruppe" /></div>
+			<f:if condition="{filteron}"><f:then><f:form.button name="filteraus" value="1" >Filter löschen</f:form.button></f:then></f:if>
+			<f:form.submit name="filteran" value="Filtern" />			
+	</f:form>
+</div>
+
 <f:flashMessages />
+
 <h1>Liste NIQ Erfassung: {anzgesamt} Einträge </h1>
 
 <f:render partial="Paginator" arguments="{pagination: pagination, pages: pages, paginator: paginator, action: calleraction}" />
 	<table  class="tx_iqtp13db" >
 		<tr>
+			<th>UID</th>
 			<th><f:link.action action="listerstberatung" arguments="{orderby : 'nachname', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" /></f:link.action></th>
 			<th><f:link.action action="listerstberatung" arguments="{orderby : 'vorname', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" /></f:link.action></th>
 			<th><f:link.action action="listerstberatung" arguments="{orderby : 'verificationDate', changeorder : 1}">Anmeldedatum</f:link.action></th>
 			<th><f:link.action action="listerstberatung" arguments="{orderby : 'ort', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.plz" />/<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ort" /></f:link.action></th>
-			<th>Leistungsbezug</th>
+			<th>Leistungs-<br>bezug</th>
 			<th>Anerkenn.-<br>zusch.<br>beantragt?</th>
 			<th><f:link.action action="listerstberatung" arguments="{orderby : 'berater.username', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.berater" /></f:link.action></th>
 			<th><f:link.action action="listerstberatung" arguments="{orderby : 'beratungdatum', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungdatum" /></f:link.action></th>
 			<th id="resizablecol1"><f:translate key="tx_iqtp13db_domain_model_abschluss.deutscher_referenzberuf" /></th>
 			<th id="resizablecol2"><f:translate key="tx_iqtp13db_domain_model_abschluss.referenzberufzugewiesen" /></th>
-			<th><f:link.action action="listerstberatung" arguments="{orderby : 'erstberatungabgeschlossen', changeorder : 1}">Fertig</f:link.action></th>
+			<th>vorherige Antragstellung</th>
+			<th><f:link.action action="listerstberatung" arguments="{orderby : 'erstberatungabgeschlossen', changeorder : 1}">Erstberatung abgeschlossen</f:link.action></th>
 			<th id="resizablecol3"><f:link.action action="listerstberatung" arguments="{orderby : 'kooperationgruppe', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.kooperationgruppe" /></f:link.action></th>
-			<th> </th>
 			<th> </th>
 			<th> </th>
 			<th> </th>
@@ -43,6 +48,7 @@
 			{f:variable(name: 'fk', value: '{folgekontakte.{it.index}}')}
 		
 			<tr>
+				<td><f:link.action action="show" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">{teilnehmer.uid}</f:link.action></td>
 				<td><f:link.action action="show" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">{teilnehmer.nachname}</f:link.action></td>
 				<td>{teilnehmer.vorname}</td>
 				<td><f:format.date format="d.m.Y">@{teilnehmer.verificationDate}</f:format.date></td>
@@ -71,6 +77,13 @@
 					</f:for>
 				</td>
 				<td>
+					<f:for each="{abschluesse.{it.index}}" as="abschluss" iteration="iter">
+						{f:if(condition: '{abschluss.antragstellungvorher} == 1', then: '✓')}
+						{f:if(condition: '{abschluss.antragstellungvorher} == 2', then: '✓')}
+						{f:if(condition: '{abschluss.antragstellungvorher} == 3', then: '✓')}					
+					</f:for>					
+				</td>
+				<td>
 				<f:if condition="{teilnehmer.erstberatungabgeschlossen} > 0">
 				<f:then>
 					<f:format.date format="d.m.Y">{teilnehmer.erstberatungabgeschlossen}</f:format.date>			
@@ -79,21 +92,7 @@
 				</td>
 				<td>{teilnehmer.kooperationgruppe}</td>
 				<td><f:link.action class="linkbuttons" action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Teilnehmer">Bearbeiten</f:link.action></td>
-				<td><f:link.action class="linkbuttons" action="new" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Folgekontakt">Folgekontakt</f:link.action></td>
-				<td>
-					<f:if condition="{niqstatuus.{it.index}} == 'gelb' || {niqstatuus.{it.index}} == 'rot'">
-						<f:then>
-							<span class="linkbuttons niqupload niqstatus{niqstatuus.{it.index}}" id="niq{teilnehmer.uid}" onclick="showNiqstatus({teilnehmer.uid});">NIQ Upload</span>							
-							<div class="niqfehltlist" id="dialog-niqstatus{teilnehmer.uid}">
-								NIQ Status ist {niqstatuus.{it.index}}, da folgende Felder fehlen:<br>
-								<f:for each="{niqwasfehlt.{it.index}}" as="feld"><b>- {feld}</b><br></f:for>
-							</div>
-						</f:then>
-						<f:else>
-							<f:link.action class="linkbuttons niqstatus{niqstatuus.{it.index}}" action="sendtoniq" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">NIQ Upload</f:link.action>
-						</f:else>
-					</f:if>
-				</td>
+				<td><f:link.action class="linkbuttons" action="new" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Folgekontakt">Folgekontakt</f:link.action></td>				
 				<td><f:link.action class="iconbuttons" action="delete" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Teilnehmer" onclick="return confirm('Wirklich löschen?');"><img src="/typo3conf/ext/iqtp13db/Resources/Public/Icons/delete-640.png" width="32" height="32" alt="Löschen" /></f:link.action></td>
 			</tr>
 			<f:if condition="{anzfolgekontakte.{it.index}} != 0"><f:then>

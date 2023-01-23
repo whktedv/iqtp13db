@@ -10,7 +10,7 @@ return [
         'languageField' => 'sys_language_uid',
         'transOrigDiffSourceField' => 'l10n_diffsource',
         'delete' => 'deleted',
-        'hideTable' => true, 
+        'hideTable' => true,
         'enablecolumns' => [
             'disabled' => 'hidden',
             'starttime' => 'starttime',
@@ -20,7 +20,7 @@ return [
         'iconfile' => 'EXT:iqtp13db/Resources/Public/Icons/tx_iqtp13db_domain_model_folgekontakt.gif'
     ],
     'types' => [
-        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, datum, notizen, beratungsform, teilnehmer, berater, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, datum, notizen, beratungsform, beratungsdauer, teilnehmer, berater, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
     'columns' => [
         'sys_language_uid' => [
@@ -112,16 +112,16 @@ return [
                 ]
             ],
         ],
-
+        
         'datum' => [
             'exclude' => true,
             'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_folgekontakt.datum',
             'config' => [
-               'type' => 'input',
+                'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim'
             ],
-        ],       
+        ],
         'notizen' => [
             'exclude' => true,
             'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_folgekontakt.notizen',
@@ -139,6 +139,15 @@ return [
                 'type' => 'input',
                 'size' => 4,
                 'eval' => 'int'
+            ]
+        ],
+        'beratungsdauer' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_folgekontakt.beratungsdauer',
+            'config' => [
+                'type' => 'input',
+                'size' => 10,
+                'eval' => 'trim'
             ]
         ],
         'teilnehmer' => [
@@ -178,8 +187,8 @@ return [
                 'minitems' => 0,
                 'maxitems' => 1,
             ],
-
+            
         ],
-    
+        
     ],
 ];

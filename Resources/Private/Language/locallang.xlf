@@ -55,10 +55,12 @@
 		<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.datum"><source></source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.berater"><source></source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.beratungsform"><source></source></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.beratungsdauer"><source></source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.notizen"><source></source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.teilnehmer"><source></source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_dokument"><source></source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_dokument.name"><source></source></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_dokument.beschreibung"><source></source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_dokument.pfad"><source></source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_dokument.teilnehmer"><source></source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungtext1"><source>	<![CDATA[	I agree to my data being used for the purpose of processing my enquiry.	I have taken note of the <a href=" ]]>	</source></trans-unit>

@@ -162,6 +162,9 @@
 			<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.beratungsform">
 				<target>Beratungsform</target>
 			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.beratungsdauer">
+				<target>Beratungsdauer (in Stunden)</target>
+			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.notizen">
 				<target>Notizen</target>
 			</trans-unit>
@@ -173,6 +176,9 @@
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_dokument.name">
 				<target>Name</target>
+			</trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_dokument.beschreibung">
+				<target>Kurzbeschreibung</target>
 			</trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_dokument.pfad">
 				<target>Pfad</target>
@@ -498,8 +504,8 @@
 				Asylbewerberleistungsbezug: Grundsicherung für Asylbewerber, Geduldete und Ausländer, die vollziehbar zur Ausreise verpflichtet sind.
 				Bitte geben Sie eine der Bezugsarten an.]]></target>
 			</trans-unit>
-			<trans-unit id="headabschlussrechts">
-				<target>weiterer Abschluss</target>
+			<trans-unit id="abschlusshinzu">
+				<target>Abschluss hinzufügen</target>
 			</trans-unit>
 			<trans-unit id="anredemail">
 				<target>Guten Tag </target>

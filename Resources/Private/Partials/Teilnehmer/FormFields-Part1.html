@@ -1,5 +1,4 @@
 {namespace iqtp13db=Ud\Iqtp13db\ViewHelpers}
-<div class="fframeadminonly">Blau gestrichelte Linie umrahmt Felder, die nur im Webapp-Backend von Berater*innen ausgefüllt werden können.</div>
 <div class="fframe">
 		<div class="tp13_formdivwebapp">
 			<label for="einwilligung">
@@ -121,9 +120,9 @@
 		<div id="labeleinreisejahr" class="tp13_formdivwebapp">
 			<label for="einreisejahr">
 				<span id="infolab" title="<f:translate key='infoJahrEinreise' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.einreisejahr" />
-				<span class="niqfield" />(Format: JJJJ)
+				<span class="niqfield" />
 			</label>
-				<f:form.textfield id="inputeinreisejahr" size="5" property="einreisejahr" />
+				<f:form.select property="einreisejahr" id="inputeinreisejahr" options="{jahre}" optionValueField="value" optionLabelField="value" /> 
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label id="labelwohnsitzNeinIn" for="wohnsitzNeinIn">

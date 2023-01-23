@@ -4,18 +4,29 @@
 </f:section>
 
 <f:section name="main">
-<h1>Ratsuchende*n bearbeiten</h1>
+<h1>Ratsuchende*n bearbeiten UID: {teilnehmer.uid}</h1>
 
 <f:flashMessages />
 
-
-<f:if condition="{selectboxsubmit} == 1 || {weitererabschluss} == 1">
+<f:if condition="{showabschluesse} == '1'">
 <f:then>
 	<script>
-	$(document).ready(function() {
-		var aTag = $("#divabschluesse");
-		$(document).scrollTop( aTag.offset().top - 2900); 
-	});
+		(function($) {
+		    $(document).ready(function() {
+		    	location.href = "#AnkerAbschluesse"; 
+		    });
+		})(jQuery);		
+	</script>
+</f:then>
+</f:if>
+<f:if condition="{showdokumente} == '1'">
+<f:then>
+	<script>
+		(function($) {
+		    $(document).ready(function() {
+		         location.href = "#AnkerDokumente"; 
+		    });
+		})(jQuery);		
 	</script>
 </f:then>
 </f:if>
@@ -23,57 +34,29 @@
 <f:render partial="FormErrors" arguments="{object:Teilnehmer}" />
 
 <f:form id="teilnehmerform" action="update" name="teilnehmer" object="{teilnehmer}" arguments="{abschluss: abschluss, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" >
+	
 	<f:form.submit value="Speichern" />
 	<f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}" arguments="{callerpage : callerpage}">Zurück zur Liste</f:link.action>
+	
+	<div class="ankerbuttons">		
+		<a href="#AnkerBeratung" class="linkbuttons buttonberatung" >Beratung anzeigen</a>
+		<a href="#AnkerAbschluesse" class="linkbuttons buttonabschluesse" >Abschlüsse anzeigen</a>
+		<a href="#AnkerDokumente" class="linkbuttons buttondokumente" >Dokumente anzeigen</a>
+	</div>
 
 	<f:render partial="Teilnehmer/FormFields-Part1" arguments="{_all}" />
 
-	<f:form.submit value="Speichern" />
-
-	<f:if condition="{dokumente}"><f:then>
-		<div class="frame"><h2><f:translate key="dokumente" /> in '{dokumentpfad}'</h2>
-		<table>
-		<f:for each="{dokumente}" as="dokument">
-			<tr>
-			<td>{dokument.name}</td>
-			</tr>
-		</f:for>
-		</table>
-		</div>
-	</f:then></f:if>
-	
-
-		<f:if condition="{abschluesse -> f:count()} > 1">
-			<f:then>
-				<div id="divabschluesse" class="fframe">
-					<h2>Abschlüsse</h2>		
-					<div class="tp13_formdivwebapp">
-						<label for="selectboxabschluss">
-				        	Auswahl Abschluss:
-				       </label>
-				       <select onChange="form_submit();" name="tx_iqtp13db_iqtp13dbadmin[selectboxabschluss]">
-				       		<option value="">-</option>			       		
-				       		<f:for each="{abschluesse}" as="sabschluss">			       		
-								<option value="{sabschluss.uid}" {f:if(condition: '{sabschluss.uid} == {selectedabschluss.uid}', then: 'selected')}>{f:if(condition:'{sabschluss.deutscherReferenzberuf} == ""', then: '-leer-', else: '{sabschluss.deutscherReferenzberuf}')}</option>
-							</f:for>
-				       </select>
-					</div>
-				</div>	
-			</f:then>
-			<f:else>
-				<input type="hidden" name="tx_iqtp13db_iqtp13dbadmin[selectboxabschluss]" value="{abschluesse.0.uid}">
-			</f:else>
-		</f:if>
- 	
- 	<div class="frameabschluesse">
-		<f:render partial="Abschluss/FormFields" arguments="{abschluss:selectedabschluss, abschluesse: abschluesse}" />
-	</div>
- 	
- 	<f:render partial="Teilnehmer/FormFields-Part2" arguments="{_all}" />
+ 	<div id="AnkerBeratung">
+ 		<f:render partial="Teilnehmer/FormFields-Part2" arguments="{_all}" />
+ 	</div>
  	
 	<f:form.submit value="Speichern" />
-	<f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}" arguments="{callerpage : callerpage}">Zurück zur Liste</f:link.action>	
-
+	<f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}" arguments="{callerpage : callerpage}">Zurück zur Liste</f:link.action>	<br>
+		
 </f:form>
+
+<f:render partial="Abschluss/Abschluss4Teilnehmer" arguments="{teilnehmer : teilnehmer, abschluesse: abschluesse, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : 'edit'}" />
+
+<f:render partial="Dokument/Dokumente4Teilnehmer" arguments="{teilnehmer : teilnehmer, dokumente: dokumente, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : 'edit'}" />
 
 </f:section>
