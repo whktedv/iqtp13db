@@ -23,12 +23,14 @@
 
 <h1>{anzgesamt} angemeldete Ratsuchende <f:if condition="{filteron}"><f:then><span style="color: red;">(gefiltert)</span></f:then></f:if></h1>
 
-<f:link.action class="linkbuttons" action="new" arguments="{calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">Neue*r Ratsuchende*r</f:link.action>
+<f:link.action class="linkbuttons buttonnew" action="new" arguments="{calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">Neue*r Ratsuchende*r</f:link.action>
 
 <div class="pretablediv">
-
-<f:render partial="Paginator" arguments="{pagination: pagination, pages: pages, paginator: paginator, action: calleraction}" />
-
+	
+	<div class="toppaginator">
+		<f:render partial="Paginator" arguments="{pagination: pagination, pages: pages, paginator: paginator, action: calleraction}" />
+	</div>
+	
 	<table  class="tx_iqtp13db" >
 		<tr>
 			<th>UID</th>
@@ -74,14 +76,16 @@
 					</f:for>
 				</td>
 				<td>{teilnehmer.kooperationgruppe}</td>
-				<td><f:link.action class="linkbuttons" action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">Bearbeiten</f:link.action></td>
-				<td><f:if condition="{teilnehmer.verificationDate} == 0"><f:then><f:link.action class="linkbuttons buttontextsmall" action="askconsent" arguments="{teilnehmer : teilnehmer, callerpage : callerpage}" onclick="return confirm('E-Mail senden?');" >Einwilligung<br>anfordern</f:link.action></f:then></f:if></td>
-				<td><f:link.action class="iconbuttons" action="delete" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" onclick="return confirm('Wirklich löschen?');" ><img src="/typo3conf/ext/iqtp13db/Resources/Public/Icons/delete-640.png" width="32" height="32" alt="Löschen" /></f:link.action></td>
+				<td><f:link.action class="tablelinkbuttons buttonedit" action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">Bearbeiten</f:link.action></td>
+				<td><f:if condition="{teilnehmer.verificationDate} == 0"><f:then><f:link.action class="tablelinkbuttons buttoneinwilligung" action="askconsent" arguments="{teilnehmer : teilnehmer, callerpage : callerpage}" onclick="return confirm('E-Mail senden?');" >Einwilligung<br>anfordern</f:link.action></f:then></f:if></td>
+				<td><f:link.action class="iconbuttons buttondelete" action="delete" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" onclick="return confirm('Wirklich löschen?');" ><img src="/typo3conf/ext/iqtp13db/Resources/Public/Icons/delete-640.png" width="32" height="32" alt="Löschen" /></f:link.action></td>
 			</tr>
 		</f:for>
 	</table>
 
-<f:render partial="Paginator" arguments="{pagination: pagination, pages: pages, paginator: paginator, action: calleraction}" />
+	<div class="bottompaginator">
+		<f:render partial="Paginator" arguments="{pagination: pagination, pages: pages, paginator: paginator, action: calleraction}" />
+	</div>
 
 </div>
 

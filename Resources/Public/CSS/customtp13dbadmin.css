@@ -162,6 +162,24 @@ td.tdcenter input[type="checkbox"] {
     text-decoration: none;
 }
 
+.tx-iqtp13db .tablelinkbuttons {
+    background-color: #99CACA;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    margin-bottom: 0px;
+    font-weight: normal;
+    text-align: center;
+    line-height: 1.42857;
+    padding: 2px 4px;
+    vertical-align: middle;
+    margin: 1px;
+    color: #FFF;
+    cursor: pointer;
+    display: inline-block;
+    -moz-user-select: none;
+    text-decoration: none;
+}
+
 .ankerbuttons {
 	margin-top: 0.5rem;	
 }
@@ -187,7 +205,7 @@ td.tdcenter input[type="checkbox"] {
 	display: block;
 }
 
-.buttontextsmall {
+.buttoneinwilligung {
 	font-size: 0.7rem !important;
 }
 

@@ -474,7 +474,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         
         $anzfolgekontakte = array();
         $abschluesse = array();
-        $niqstatusberatung = '';
+        $niqstatusberatung = array();
         $niqwasfehlt = '';
         
         foreach ($teilnehmerpag as $key => $tn) {
@@ -566,9 +566,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         
         $teilnehmerpag = $paginator->getPaginatedItems();
         
-        $anzfolgekontakte = '';
+        $anzfolgekontakte = array();
         $abschluesse = array();
-        $niqstatusberatung = '';
+        $niqstatusberatung = array();
         $niqwasfehlt = '';
         foreach ($teilnehmerpag as $key => $tn) {
             $anzfolgekontakte[$key] = count($this->folgekontaktRepository->findByTeilnehmer($tn->getUid()));

@@ -19,7 +19,9 @@
 <h1>{anzgesamt} gelöschte Ratsuchende</h1>
 <f:flashMessages />
 
-<f:render partial="Paginator" arguments="{pagination: pagination, pages: pages, paginator: paginator, action: calleraction}" />
+	<div class="toppaginator">
+		<f:render partial="Paginator" arguments="{pagination: pagination, pages: pages, paginator: paginator, action: calleraction}" />
+	</div>
 
 	<table  class="tx_iqtp13db" >
 		<tr>
@@ -62,11 +64,14 @@
 					</f:for>
 				</td>
 				<td>{teilnehmer.kooperationgruppe}</td>
-				<td><f:link.action class="linkbuttons" action="undelete" arguments="{tnuid : teilnehmer.uid}" onclick="return confirm('Wirklich wiederherstellen?');" >Wiederherstellen</f:link.action></td>
+				<td><f:link.action class="tablelinkbuttons buttonundelete" action="undelete" arguments="{tnuid : teilnehmer.uid}" onclick="return confirm('Wirklich wiederherstellen?');" >Wiederherstellen</f:link.action></td>
 			</tr>
 		</f:for>
 	</table>
 
+	<div class="bottompaginator">
+		<f:render partial="Paginator" arguments="{pagination: pagination, pages: pages, paginator: paginator, action: calleraction}" />
+	</div>
 <br>
 <span style="font-weight: bold; font-size: 0.7rem; margin-left: 5px;">Legende:</span>
 <table><tr><td>Anmeldung noch nicht bestätigt</td><td class="bestaetigt">Anmeldung bestätigt</td><td class="dublette">mögliche Dublette</td></tr></table>
