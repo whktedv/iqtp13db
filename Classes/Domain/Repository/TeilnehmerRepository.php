@@ -26,12 +26,15 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      *
      *
      */
-    public function searchTeilnehmer($type, $name, $ort, $land, $gruppe, $verstecktundgelöscht, $niqbid, $fberuf, $berufearr, $orderby, $order)
+    public function searchTeilnehmer($type, $filterArray, $verstecktundgelöscht, $niqbid, $berufearr, $orderby, $order)
     {
-        $name = $name == '' ? '%' : $name;
-        $ort = $ort == '' ? '%' : $ort;
-        $land = $land == '' ? '%' : $land;
-        $gruppe = $gruppe == '' ? '%' : $gruppe;
+        $name = $filterArray['name'] == '' ? '%' : $filterArray['name'];
+        $ort = $filterArray['ort'] == '' ? '%' : $filterArray['ort'];
+        $land = $filterArray['land'] == '' ? '%' : $filterArray['land'];
+        $fberuf = $filterArray['beruf'] == '' ? '%' : $filterArray['beruf'];
+        $gruppe = $filterArray['gruppe'] == '' ? '%' : $filterArray['gruppe'];
+        $fbescheid = $filterArray['bescheid'] == '' ? '%' : $filterArray['bescheid'];
+        
         $orderby = $orderby == 'verificationDate' ? 'verification_date' : $orderby;
         
         if($type == 0 || $type == 1) $sqlberatungsstatus = " (beratungsstatus = 0 OR beratungsstatus = 1) ";
@@ -41,7 +44,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         
         // Beruf
         if($type != 0) {
-            if($fberuf != '') {
+            if($valArrayfberuf != '') {
                 
                 foreach ($berufearr as $beruf => $bkey) {
                     if (strpos(strtolower($bkey), strtolower($fberuf)) !== false) { $results[] = $beruf; }
@@ -54,6 +57,12 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             }
         } else {
             $beruf = "a.deutscher_referenzberuf LIKE '%".$fberuf."%'";
+        }
+        
+        if($fbescheid) {
+            $bescheid = "AND (a.antragstellungvorher > 0 AND a.antragstellungvorher < 4) ";
+        } else {
+            $bescheid = '';
         }
         
         $query = $this->createQuery();
@@ -73,6 +82,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 AND t.geburtsland LIKE '$land'
                 AND $beruf
                 AND t.kooperationgruppe LIKE '%$gruppe%'
+                $bescheid
                 AND $sqlberatungsstatus $hidden
                 AND niqidberatungsstelle LIKE $niqbid
                 GROUP BY t.uid ORDER BY $orderby $order";

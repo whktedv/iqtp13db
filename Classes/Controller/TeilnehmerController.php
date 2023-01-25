@@ -1043,7 +1043,11 @@ public function askconsentAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehme
             $this->addFlashMessage('Keine E-Mail-Adresse eingetragen.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             $this->redirect('listangemeldet', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
         }
-        $templateName = 'Mailtoconfirm';
+        if($teilnehmer->getTstamp() < 1672527600) {
+            $templateName = 'Mailtoconfirm2022';
+        } else {
+            $templateName = 'Mailtoconfirm';
+        }
         $confirmmailtext1 = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmmailtext1', 'Iqtp13db');
         $confirmlinktext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmlinktext', 'Iqtp13db');
         $confirmmailtext2 = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmmailtext2', 'Iqtp13db');
@@ -1760,7 +1764,11 @@ public function anmeldungcompleteredirectAction(\Ud\Iqtp13db\Domain\Model\Teilne
 public function confirmAction()
 {
     if($this->request->hasArgument('code')) {
-        $teilnehmer = $this->teilnehmerRepository->findByVerificationCode($this->request->getArgument('code'));
+        if($this->request->getArgument('code') == '') {
+            $this->redirect('validationFailed');
+        } else {
+            $teilnehmer = $this->teilnehmerRepository->findByVerificationCode($this->request->getArgument('code'));
+        }
     }
     
     if($this->request->hasArgument('askconsent')) {
@@ -2056,47 +2064,57 @@ public function checkberatungsstatus(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teiln
  */
 function setfilter(int $type, array $valArray, $orderby, $order, $deleted) {
     // FILTER
+    //DebuggerUtility::var_dump($valArray);
+    
     if (isset($valArray['filteraus'])) {
+        $GLOBALS['TSFE']->fe_user->setKey('ses', 'fuid', NULL);
         $GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', NULL);
         $GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', NULL);
         $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', NULL);
         $GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', NULL);
         $GLOBALS['TSFE']->fe_user->setKey('ses', 'fgruppe', NULL);
+        $GLOBALS['TSFE']->fe_user->setKey('ses', 'fbescheid', NULL);
         $GLOBALS['TSFE']->fe_user->setKey('ses', 'filtermodus', NULL);
     }
     if (isset($valArray['filteran'])) {
+        $GLOBALS['TSFE']->fe_user->setKey('ses', 'fuid', $valArray['uid']);
         $GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', $valArray['name']);
         $GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', $valArray['ort']);
         $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', $valArray['beruf']);
         $GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', $valArray['land']);
         $GLOBALS['TSFE']->fe_user->setKey('ses', 'fgruppe', $valArray['gruppe']);
+        $GLOBALS['TSFE']->fe_user->setKey('ses', 'fbescheid', $valArray['bescheid']);
         $GLOBALS['TSFE']->fe_user->setKey('ses', 'filtermodus', '1');
     }
     
-    $fname = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fname');
-    $fort = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fort');
-    $fberuf = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fberuf');
-    $fland = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fland');
-    $fgruppe = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fgruppe');
+    $filterArray['uid'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fuid');
+    $filterArray['name'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fname');
+    $filterArray['ort'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fort');
+    $filterArray['beruf'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fberuf');
+    $filterArray['land'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fland');
+    $filterArray['gruppe'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fgruppe');
+    $filterArray['bescheid'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fbescheid');
     
-    if($fland == -1000 || $fland == NULL) $fland = '';
+    if($filterArray['land'] == -1000 || $filterArray['land'] == NULL) $filterArray['land'] = '';
     
-    if ($fname == '' && $fort == '' && $fberuf == '' && $fland == '' && $fgruppe == '') {
+    if ($filterArray['uid'] == '' && $filterArray['name'] == '' && $filterArray['ort'] == '' && $filterArray['beruf'] == '' && $filterArray['land'] == '' && $filterArray['gruppe'] == '' && $filterArray['bescheid'] == '') {
         if($deleted == 1) {
             $teilnehmers = $this->teilnehmerRepository->findhidden4list($orderby, $order, $this->niqbid);
         } else {
             $teilnehmers = $this->teilnehmerRepository->findAllOrder4List($type, $orderby, $order, $this->niqbid);
         }
     } else {
-        $teilnehmers = $this->teilnehmerRepository->searchTeilnehmer($type, $fname, $fort, $fland, $fgruppe, $deleted, $this->niqbid, $fberuf, $this->settings['berufe'], $orderby, $order);
+        $teilnehmers = $this->teilnehmerRepository->searchTeilnehmer($type, $filterArray, $deleted, $this->niqbid, $this->settings['berufe'], $orderby, $order);
         
         //DebuggerUtility::var_dump($GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus'));
         
-        $this->view->assign('filtername', $fname);
-        $this->view->assign('filterort', $fort);
-        $this->view->assign('filterberuf', $fberuf);
-        $this->view->assign('filterland', $fland);
-        $this->view->assign('filtergruppe', $fgruppe);
+        $this->view->assign('filteruid', $filterArray['uid']);
+        $this->view->assign('filtername', $filterArray['name']);
+        $this->view->assign('filterort', $filterArray['ort']);
+        $this->view->assign('filterberuf', $filterArray['beruf']);
+        $this->view->assign('filterland', $filterArray['land']);
+        $this->view->assign('filtergruppe', $filterArray['gruppe']);
+        $this->view->assign('filterbescheid', $filterArray['bescheid']);
         $this->view->assign('filteron', $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus'));
     }
     

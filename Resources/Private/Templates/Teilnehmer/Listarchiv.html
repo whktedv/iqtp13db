@@ -8,19 +8,20 @@
 <div class="filterframe">
 	<h1>Filter</h1>
 	<f:form class="filterform" method="post" action="listarchiv" name="listarchiv" >
+		<f:security.ifHasRole role="2"><div>UID:<f:form.textfield size="3" value="{filteruid}" name="uid" /></div></f:security.ifHasRole>
 			<div>Name: <f:form.textfield size="20" value="{filtername}" name="name" /></div>
 			<div>Ort: <f:form.textfield size="20" value="{filterort}" name="ort" /></div>
 			<div>Beruf: <f:form.textfield size="20" value="{filterberuf}" name="beruf" /></div>
 			<div>Geburtsland: <f:form.select value="{filterland}" name="land" options="{wohnsitzstaaten}" optionValueField="value" optionLabelField="value" /></div>
 			<div>Gruppe: <f:form.textfield size="20" value="{filtergruppe}" name="gruppe" /></div>
-			<f:if condition="{filteron}"><f:then><f:form.button name="filteraus" value="1" >Filter löschen</f:form.button></f:then></f:if>
-			<f:form.submit name="filteran" value="Filtern" />			
+			<f:if condition="{filteron} == 1"><f:then><div><f:form.button name="filteraus" value="1" >Filter löschen</f:form.button></div></f:then></f:if>
+			<f:if condition="{filteron} != 1"><f:then><div><f:form.submit name="filteran" value="Filtern" /></div></f:then></f:if>	
 	</f:form>
 </div>
 
 <f:flashMessages />
 
-<h1>Liste Archiv: {anzgesamt} Einträge </h1>
+<h1>Liste Archiv: {anzgesamt} Einträge <f:if condition="{filteron}"><f:then><span style="color: red;">(gefiltert)</span></f:then></f:if></h1>
 
 <!--  <table><tr><td>nicht NIQ synchronisiert: &#9888;</td><td>NIQ synchronisiert: &#9989;</td></tr></table>  -->
 
@@ -28,7 +29,7 @@
 		<f:render partial="Paginator" arguments="{pagination: pagination, pages: pages, paginator: paginator, action: calleraction}" />
 	</div>
  
-	<table  class="tx_iqtp13db" >
+	<table  class="tx_iqtp13db listarchiv" >
 		<tr>
 			<th>UID</th>
 			<th><f:link.action action="listarchiv" arguments="{orderby : 'nachname', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" /></f:link.action></th>
@@ -42,7 +43,7 @@
 			<th><f:link.action action="listarchiv" arguments="{orderby : 'beratungdatum', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungdatum" /></f:link.action></th>
 			<th id="resizablecol1"><f:translate key="tx_iqtp13db_domain_model_abschluss.deutscher_referenzberuf" /></th>
 			<th id="resizablecol2"><f:translate key="tx_iqtp13db_domain_model_abschluss.referenzberufzugewiesen" /></th>
-			<th>vorherige Antragstellung</th>
+			<th>vorherige Antrag-<br>stellung</th>
 			<th><f:link.action action="listarchiv" arguments="{orderby : 'erstberatungabgeschlossen', changeorder : 1}">Erstberatung abgeschlossen</f:link.action></th>
 			<th id="resizablecol3"><f:link.action action="listarchiv" arguments="{orderby : 'kooperationgruppe', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.kooperationgruppe" /></f:link.action></th>
 			<th>Anz. FK</th>
