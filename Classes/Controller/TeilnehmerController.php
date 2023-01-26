@@ -462,7 +462,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         }
         
         $teilnehmer = $this->setfilter(3, $valArray, $orderby, $order, 0);
-        
+        //DebuggerUtility::var_dump($teilnehmer);
         // Wegen Bug in Paginator, der nicht mit Custom SQL Queryresults funktioniert, werden hier alle gefilterten Einträge auf einer Seite dargestellt. Queryresultpaginator hat dann keine Auswahl an Datensätzen, sondern alle.
         $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 250 : 25;
         
@@ -557,6 +557,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         
         $teilnehmer = $this->setfilter(4, $valArray, $orderby, $order, 0);
         
+        //DebuggerUtility::var_dump($teilnehmer);
+        //die;
+        
         // Wegen Bug in Paginator, der nicht mit Custom SQL Queryresults funktioniert, werden hier alle gefilterten Einträge auf einer Seite dargestellt. Queryresultpaginator hat dann keine Auswahl an Datensätzen, sondern alle.
         $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 250 : 25;
         
@@ -575,6 +578,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             
             $abschluesse[$key] = $this->abschlussRepository->findByTeilnehmer($tn);
             // **** NIQ deaktiviert ****  $niqstat = $this->niqinterface->niqstatus($tn, $abschluesse[$key]);
+            $niqstat = '';
+            
             if($niqstat == 0) {
                 $niqstatusberatung[$key] = 'rot';
             } elseif($niqstat == 2) {
@@ -974,7 +979,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
         
-        $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
+        $this->redirect('edit', $valArray['callercontroller'], null, array('teilnehmer'=> $teilnehmer, 'callerpage' => $valArray['callerpage'], 'calleraction' => $valArray['calleraction']));
     }
 
 /**
@@ -1971,6 +1976,28 @@ protected function getTeilnehmerFromSession(\Ud\Iqtp13db\Domain\Model\Teilnehmer
 }
 
 /**
+ * action sendtoarchiv
+ *
+ * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
+ * @return void
+ */
+public function sendtoarchivAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+{
+    $valArray = $this->request->getArguments();
+    
+    $teilnehmer->setBeratungsstatus(4);
+    
+    $this->teilnehmerRepository->update($teilnehmer);
+    // Daten sofort in die Datenbank schreiben
+    $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+    $persistenceManager->persistAll();
+    
+    $this->addFlashMessage('Archiviert.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+    
+    $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']), null);
+}
+
+/**
  * action checkniqconnection
  *
  * @return void
@@ -2064,7 +2091,8 @@ public function checkberatungsstatus(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teiln
  */
 function setfilter(int $type, array $valArray, $orderby, $order, $deleted) {
     // FILTER
-    //DebuggerUtility::var_dump($valArray);
+    //DebuggerUtility::var_dump($this->user);
+    $beraterdiesergruppe = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
     
     if (isset($valArray['filteraus'])) {
         $GLOBALS['TSFE']->fe_user->setKey('ses', 'fuid', NULL);
@@ -2101,10 +2129,10 @@ function setfilter(int $type, array $valArray, $orderby, $order, $deleted) {
         if($deleted == 1) {
             $teilnehmers = $this->teilnehmerRepository->findhidden4list($orderby, $order, $this->niqbid);
         } else {
-            $teilnehmers = $this->teilnehmerRepository->findAllOrder4List($type, $orderby, $order, $this->niqbid);
+            $teilnehmers = $this->teilnehmerRepository->findAllOrder4List($type, $orderby, $order, $this->niqbid, $beraterdiesergruppe, $this->usergroup);
         }
     } else {
-        $teilnehmers = $this->teilnehmerRepository->searchTeilnehmer($type, $filterArray, $deleted, $this->niqbid, $this->settings['berufe'], $orderby, $order);
+        $teilnehmers = $this->teilnehmerRepository->searchTeilnehmer($type, $filterArray, $deleted, $this->niqbid, $this->settings['berufe'], $orderby, $order, $beraterdiesergruppe, $this->usergroup);
         
         //DebuggerUtility::var_dump($GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus'));
         

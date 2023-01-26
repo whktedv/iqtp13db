@@ -9,7 +9,7 @@ call_user_func(
             'Ud.Iqtp13db',
             'Iqtp13dbadmin',
             [
-                \Ud\Iqtp13db\Controller\TeilnehmerController::class => 'start, listangemeldet, listerstberatung, listarchiv, checkniqconnection, sendtoniq, show, new, create, edit, update, delete, status, export, askconsent, listdeleted, undelete, savedatenblattpdf',
+                \Ud\Iqtp13db\Controller\TeilnehmerController::class => 'start, listangemeldet, listerstberatung, listarchiv, checkniqconnection, sendtoniq, sendtoarchiv, show, new, create, edit, update, delete, status, export, askconsent, listdeleted, undelete, savedatenblattpdf',
                 \Ud\Iqtp13db\Controller\FolgekontaktController::class => 'show, new, create, edit, update, delete',
                 \Ud\Iqtp13db\Controller\DokumentController::class => 'saveFileBackend, deleteFileBackend, openfile, updateBackend',
                 \Ud\Iqtp13db\Controller\HistorieController::class => 'list',
@@ -19,7 +19,7 @@ call_user_func(
             
             // non-cacheable actions
             [
-                \Ud\Iqtp13db\Controller\TeilnehmerController::class => 'start, listangemeldet, listerstberatung, listarchiv, checkniqconnection, sendtoniq, show, new, create, edit, update, delete, status, export, askconsent, listdeleted, undelete, savedatenblattpdf',
+                \Ud\Iqtp13db\Controller\TeilnehmerController::class => 'start, listangemeldet, listerstberatung, listarchiv, checkniqconnection, sendtoniq, sendtoarchiv, show, new, create, edit, update, delete, status, export, askconsent, listdeleted, undelete, savedatenblattpdf',
                 \Ud\Iqtp13db\Controller\FolgekontaktController::class => 'show, new, create, edit, update, delete',
                 \Ud\Iqtp13db\Controller\DokumentController::class => 'saveFileBackend, deleteFileBackend, openfile, updateBackend',
                 \Ud\Iqtp13db\Controller\HistorieController::class => 'list',

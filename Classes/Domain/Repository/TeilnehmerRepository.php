@@ -26,8 +26,11 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      *
      *
      */
-    public function searchTeilnehmer($type, $filterArray, $verstecktundgelöscht, $niqbid, $berufearr, $orderby, $order)
+    public function searchTeilnehmer($type, $filterArray, $verstecktundgelöscht, $niqbid, $berufearr, $orderby, $order, $beraterdiesergruppe, $thisusergroup)
     {
+        $berateruidarray = array();        
+        foreach($beraterdiesergruppe as $oneberater) $berateruidarray[] = $oneberater->getUid();
+         
         $name = $filterArray['name'] == '' ? '%' : $filterArray['name'];
         $ort = $filterArray['ort'] == '' ? '%' : $filterArray['ort'];
         $land = $filterArray['land'] == '' ? '%' : $filterArray['land'];
@@ -59,7 +62,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             $beruf = "a.deutscher_referenzberuf LIKE '%".$fberuf."%'";
         }
         
-        if($fbescheid) {
+        if($fbescheid != '%') {
             $bescheid = "AND (a.antragstellungvorher > 0 AND a.antragstellungvorher < 4) ";
         } else {
             $bescheid = '';
@@ -75,7 +78,21 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             $hidden = " AND t.hidden = 0 ";
         }
         
-        $sql = "SELECT t.* FROM tx_iqtp13db_domain_model_teilnehmer t
+        if(substr($thisusergroup->getTitle(),0,2) == 'AA'){
+            $sql = "SELECT t.* FROM tx_iqtp13db_domain_model_teilnehmer t
+    			LEFT JOIN tx_iqtp13db_domain_model_abschluss a ON a.teilnehmer = t.uid
+                WHERE (t.nachname LIKE '%$name%' OR t.vorname LIKE '%$name%')
+                AND t.ort LIKE '%$ort%'
+                AND t.geburtsland LIKE '$land'
+                AND $beruf
+                AND t.kooperationgruppe LIKE '%$gruppe%'
+                $bescheid
+                AND $sqlberatungsstatus $hidden
+                AND niqidberatungsstelle LIKE $niqbid
+                AND (verification_date > '1672527600')
+                GROUP BY t.uid ORDER BY $orderby $order";                
+        } else {
+            $sql = "SELECT t.* FROM tx_iqtp13db_domain_model_teilnehmer t
     			LEFT JOIN tx_iqtp13db_domain_model_abschluss a ON a.teilnehmer = t.uid
                 WHERE (t.nachname LIKE '%$name%' OR t.vorname LIKE '%$name%')
                 AND t.ort LIKE '%$ort%'
@@ -86,8 +103,10 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 AND $sqlberatungsstatus $hidden
                 AND niqidberatungsstelle LIKE $niqbid
                 GROUP BY t.uid ORDER BY $orderby $order";
+                
+        }
         
-        //DebuggerUtility::var_dump($sql);
+              
         $query->statement($sql);
         
         return $query->execute();
@@ -98,13 +117,55 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      * @param $orderby
      * @param $order
      */
-    public function findAllOrder4List($beratungsstatus, $orderby, $order, $niqbid)
+    public function findAllOrder4List($beratungsstatus, $orderby, $order, $niqbid, $beraterdiesergruppe, $thisusergroup)
     {
         $query = $this->createQuery();
         
-        if($beratungsstatus == 0 || $beratungsstatus == 1) $query->matching($query->logicalAnd($query->logicalOr($query->like('beratungsstatus', '0'),$query->like('beratungsstatus', '1')), $query->like('niqidberatungsstelle', $niqbid)));
-        elseif($beratungsstatus == 2 || $beratungsstatus == 3) $query->matching($query->logicalAnd($query->logicalOr($query->like('beratungsstatus', '2'),$query->like('beratungsstatus', '3')),$query->greaterThan('verification_date', '0'), $query->like('niqidberatungsstelle', $niqbid)));
-        else $query->matching($query->logicalAnd($query->like('beratungsstatus', '4'),$query->greaterThan('verification_date', '0'), $query->like('niqidberatungsstelle', $niqbid)));
+        $berateruidarray = array();
+        
+        foreach($beraterdiesergruppe as $oneberater) $berateruidarray[] = $oneberater->getUid();
+        
+        if($beratungsstatus == 0 || $beratungsstatus == 1) {
+            $query->matching(
+                $query->logicalAnd(
+                    $query->logicalOr($query->like('beratungsstatus', '0'),$query->like('beratungsstatus', '1')),
+                    $query->like('niqidberatungsstelle', $niqbid)                    
+                )
+            );
+        }
+        elseif($beratungsstatus == 2 || $beratungsstatus == 3) {
+            // Hier Ausnahme Frau Hollands/AA
+            if(substr($thisusergroup->getTitle(),0,2) == 'AA'){
+                $query->matching(
+                    $query->logicalAnd(
+                        $query->logicalOr($query->like('beratungsstatus', '2'),$query->like('beratungsstatus', '3')),
+                        $query->greaterThan('verification_date', '0'), 
+                        $query->like('niqidberatungsstelle', $niqbid),
+                        $query->logicalOr(
+                            $query->greaterThan('verification_date', '1672527600'),
+                            $query->in('berater', $berateruidarray)
+                        )
+                    )
+                );
+            } else {
+                $query->matching(
+                    $query->logicalAnd(
+                        $query->logicalOr($query->like('beratungsstatus', '2'),$query->like('beratungsstatus', '3')),
+                        $query->greaterThan('verification_date', '0'), 
+                        $query->like('niqidberatungsstelle', $niqbid),                        
+                    )
+                );
+            }
+        }
+        else {
+            $query->matching(
+                $query->logicalAnd(
+                    $query->like('beratungsstatus', '4'),
+                    $query->greaterThan('verification_date', '0'), 
+                    $query->like('niqidberatungsstelle', $niqbid)
+                )
+            );
+        }
         
         if($order == 'DESC') $order = \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING;
         else $order = \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING;

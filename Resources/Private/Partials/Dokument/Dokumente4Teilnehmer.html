@@ -13,7 +13,7 @@
 						<td><f:link.action action="openfile" arguments="{dokument : dokument, teilnehmer : teilnehmer}" controller="Dokument" target="_blank">{dokument.name}</f:link.action></td>
 						<f:form method="post" action="updateBackend" controller="Dokument" arguments="{teilnehmer:teilnehmer, calleraction : calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : thisaction}" name="dokument" object="{dokument}" enctype="multipart/form-data" >
 							<td><f:form.textfield property="beschreibung" value="{dokument.beschreibung}" size="50" /></td>
-							<td><f:form.submit class="updatebutton" value="Aktualisieren" /></td>
+							<td><f:form.submit class="updatebutton" value="Kurzbeschreibung speichern" /></td>
 						</f:form>						
 						<td><f:link.action class="iconbuttons" action="deleteFileBackend" controller="Dokument" arguments="{dokument : dokument, teilnehmer : teilnehmer, calleraction : calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : thisaction}" onclick="return confirm('Wirklich löschen?');" ><img src="/typo3conf/ext/iqtp13db/Resources/Public/Icons/delete-640.png" width="32" height="32" alt="Löschen" /></f:link.action></td>
 					</tr>		

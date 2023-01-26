@@ -49,8 +49,7 @@
 			<th>Anz. FK</th>
 			<th> </th>
 			<th> </th>
-			<th> </th>
-			<th> </th>
+			
 		</tr>
 	
 		<f:for each="{paginator.paginatedItems}" as="teilnehmer" iteration="it">
@@ -105,21 +104,6 @@
 				<td>{anzfolgekontakte.{it.index}}</td>
 				<td><f:link.action class="tablelinkbuttons buttonedit" action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Teilnehmer">Bearbeiten</f:link.action></td>
 				<td><f:link.action class="tablelinkbuttons buttonnew" action="new" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Folgekontakt">Folgekontakt</f:link.action></td>
-				<td>
-					<f:if condition="{niqstatuus.{it.index}} == 'gelb' || {niqstatuus.{it.index}} == 'rot'">
-						<f:then>
-							<span class="tablelinkbuttons niqupload niqstatus{niqstatuus.{it.index}}" id="niq{teilnehmer.uid}" onclick="showNiqstatus({teilnehmer.uid});">NIQ Upload</span>							
-							<div class="niqfehltlist" id="dialog-niqstatus{teilnehmer.uid}">
-								NIQ Status ist {niqstatuus.{it.index}}, da folgende Felder fehlen:<br>
-								<f:for each="{niqwasfehlt.{it.index}}" as="feld"><b>- {feld}</b><br></f:for>
-							</div>
-						</f:then>
-						<f:else>
-							<f:link.action class="tablelinkbuttons niqstatus{niqstatuus.{it.index}}" action="sendtoniq" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">NIQ Update</f:link.action>
-						</f:else>
-					</f:if>
-				</td>
-				<td><f:link.action class="iconbuttons buttondelete" action="listarchiv" onclick="return alert('Löschen wegen EU-DSGVO nur über IT-Abteilung und mit gleichzeitigem Hinweis an NIQ-Datenbank-Betreiber!');" ><img src="/typo3conf/ext/iqtp13db/Resources/Public/Icons/delete-640.png" width="32" height="32" alt="Löschen" /></f:link.action></td>
 				
 			</tr>
 			<f:if condition="{anzfolgekontakte.{it.index}} != 0"><f:then>

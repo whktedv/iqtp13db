@@ -35,6 +35,7 @@
 
 <f:form id="teilnehmerform" action="update" name="teilnehmer" object="{teilnehmer}" arguments="{abschluss: abschluss, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" >
 	
+	
 	<f:form.submit value="Speichern" />
 	<f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}" arguments="{callerpage : callerpage}">Zurück zur Liste</f:link.action>
 	
@@ -45,7 +46,10 @@
 	</div>
 
 	<f:render partial="Teilnehmer/FormFields-Part1" arguments="{_all}" />
-
+	
+	<f:form.submit value="Speichern" />
+	<f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}" arguments="{callerpage : callerpage}">Zurück zur Liste</f:link.action>	
+	
  	<div id="AnkerBeratung">
  		<f:render partial="Teilnehmer/FormFields-Part2" arguments="{_all}" />
  	</div>
@@ -57,6 +61,6 @@
 
 <f:render partial="Abschluss/Abschluss4Teilnehmer" arguments="{teilnehmer : teilnehmer, abschluesse: abschluesse, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : 'edit'}" />
 
-<f:render partial="Dokument/Dokumente4Teilnehmer" arguments="{teilnehmer : teilnehmer, dokumente: dokumente, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : 'edit'}" />
+<f:render partial="Dokument/Dokumente4Teilnehmer" arguments="{teilnehmer : teilnehmer, dokumente: dokumente, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, dokumentepfad : dokumentepfad, thisaction : 'edit'}" />
 
 </f:section>
