@@ -72,7 +72,14 @@
 				<td>{iqtp13db:isint(field:'{teilnehmer.geburtsland}',then:'{settings.staaten.{teilnehmer.geburtsland}}',else:'{teilnehmer.geburtsland}')}</td>
 				<td class="tdcenter">{f:if(condition: '{teilnehmer.leistungsbezugjanein} == 1', then: '✓', else: '')}</td>
 				<td class="tdcenter">{f:if(condition: '{teilnehmer.schonberaten} == 1', then: '✓', else: '')}</td>
-				<td>{teilnehmer.berater.username}</td>
+				<td><f:if condition="{teilnehmer.berater.username} == ''"><f:then>
+						<f:link.action class="tablelinkbuttons buttonedit" action="takeover" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">Fall übernehmen</f:link.action>
+					</f:then>
+					<f:else>
+						{teilnehmer.berater.username}
+					</f:else>
+					</f:if>
+				</td>
 				<td>
 					<f:for each="{abschluesse.{it.index}}" as="abschluss" iteration="iter">
 						{f:if(condition: '{abschluesse.{it.index} -> f:count()} > 1', then: '{iter.index + 1}.', else: '')} {abschluss.deutscherReferenzberuf}<br>
