@@ -169,6 +169,9 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         //DebuggerUtility::var_dump($valArray);
         //die;
         
+        // TODO: ggf. hier Daten in History einfügen
+        //$this->createHistory($teilnehmer, "erwerbsstatus");
+        
         $teilnehmer = $this->teilnehmerRepository->findByUid($valArray['teilnehmer']);
         
         //$this->addFlashMessage('Abschluss aktualisiert.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);

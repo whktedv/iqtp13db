@@ -913,6 +913,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $this->createHistory($teilnehmer, "plz");
         $this->createHistory($teilnehmer, "ort");
         $this->createHistory($teilnehmer, "email");
+        $this->createHistory($teilnehmer, "confirmemail");
         $this->createHistory($teilnehmer, "telefon");
         $this->createHistory($teilnehmer, "lebensalter");
         $this->createHistory($teilnehmer, "geburtsland");
@@ -927,7 +928,6 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $this->createHistory($teilnehmer, "zertifikatdeutsch");
         $this->createHistory($teilnehmer, "zertifikatSprachniveau");
         
-        // TODO: ggf. hier Daten aus der Tabelle Abschluss einfügen
         $this->createHistory($teilnehmer, "erwerbsstatus");
         $this->createHistory($teilnehmer, "leistungsbezugjanein");
         $this->createHistory($teilnehmer, "leistungsbezug");
@@ -946,10 +946,11 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $this->createHistory($teilnehmer, "einwPersonkontakt");
         $this->createHistory($teilnehmer, "aufenthaltsstatus");
         $this->createHistory($teilnehmer, "aufenthaltsstatusfreitext");
+        
         $this->createHistory($teilnehmer, "nameBeratungsstelle");
-        $this->createHistory($teilnehmer, "wieberaten");
         $this->createHistory($teilnehmer, "notizen");
         $this->createHistory($teilnehmer, "anerkennungszuschussbeantragt");
+        $this->createHistory($teilnehmer, "wieberaten");
         $this->createHistory($teilnehmer, "kooperationgruppe");
         $this->createHistory($teilnehmer, "beratungdatum");
         $this->createHistory($teilnehmer, "berater");
@@ -1411,20 +1412,16 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     {
         if($teilnehmer->_isDirty($property)) {
             $history = new \Ud\Iqtp13db\Domain\Model\Historie();
-            //$berater = new \Ud\Iqtp13db\Domain\Model\Berater($this->user['username']);
             $berater = $this->beraterRepository->findAllBerater($this->settings['beraterstoragepid']);
             foreach($berater as $thisberater) {
                 if($this->user['username'] == $thisberater->getUsername()) $history->setBerater($thisberater);
             }
-            //DebuggerUtility::var_dump($berater);
-            //die;
             
             $history->setTeilnehmer($teilnehmer);
             $history->setProperty($property);
             $history->setOldvalue($teilnehmer->_getCleanProperty($property));
             $history->setNewvalue($teilnehmer->_getProperty($property));
-            
-            
+                        
             $this->historieRepository->add($history);
         }
     }

@@ -1,3 +1,43 @@
+// ********************************************************************************
+// Prüfe auf noch nicht gespeicherte Form-Elemente und warne den Benutzer entsprechend
+// *** Quellcode von ChatGPT ****
+
+var formChanged = false;
+
+function markFormChanged() {
+    formChanged = true;
+}
+
+window.onbeforeunload = function() {
+    if (formChanged) {
+        return "Warnung: Sie haben das Formular geändert, aber nicht gespeichert. Wenn Sie diese Seite verlassen, gehen Ihre Änderungen verloren.";
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    var form = document.querySelector("form");
+    var formElements = form.elements;
+    for(var i = 0; i < formElements.length; i++) {
+        formElements[i].addEventListener("change", markFormChanged);
+    }
+
+    var submitButton1 = document.getElementById("savebutton1");
+	var submitButton2 = document.getElementById("savebutton2");
+	var submitButton3 = document.getElementById("savebutton3");
+    submitButton1.addEventListener("click", function() {
+        window.onbeforeunload = null;
+    });
+	submitButton2.addEventListener("click", function() {
+	        window.onbeforeunload = null;
+	    });
+	submitButton3.addEventListener("click", function() {
+	        window.onbeforeunload = null;
+	    });
+});
+
+// ********************************************************************************
+
+
 $(document).ready(function() {
 			
 	$('.datumtextfield').each(function(){
@@ -78,8 +118,7 @@ $(document).ready(function() {
 	$('#datepickerfilterbis').change(function() {
 	  $("#exportfilterform").submit(); 
 	});
-
-
+	
 
 });
 
@@ -150,4 +189,5 @@ function btncancel_Click(link) {
 function showFolgekontakt(uid) {
     $('table#fkt' + uid).toggle();
 }
+
 
