@@ -15,7 +15,7 @@ window.onbeforeunload = function() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-    var form = document.querySelector("form");
+    var form = document.getElementById("teilnehmerform");
     var formElements = form.elements;
     for(var i = 0; i < formElements.length; i++) {
         formElements[i].addEventListener("change", markFormChanged);

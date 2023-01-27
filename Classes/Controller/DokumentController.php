@@ -333,10 +333,9 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     public function openfileAction(\Ud\Iqtp13db\Domain\Model\Dokument $dokument, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
         $storage = $this->generalhelper->getTP13Storage($this->storageRepository->findAll());
-        $pfad = $this->generalhelper->createFolder($teilnehmer, $this->settings['standardniqidberatungsstelle'], $this->allusergroups, $this->storageRepository->findAll());
-        $beratenepath = ltrim($pfad->getIdentifier(), '/');
+        $beratenepath = $dokument->getPfad();        
         $tmpName = $dokument->getName();
-    
+        
         if($storage->getConfiguration()['pathType'] == 'relative') {
             $folder = $storage->getFolder($beratenepath);
             $targetfile = $folder->getStorage()->getFileInFolder($tmpName, $folder);
