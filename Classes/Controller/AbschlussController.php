@@ -70,9 +70,9 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         
         $this->view->assign('abschluss', $abschluss);
         $this->view->assign('teilnehmer', $teilnehmer);
-        $this->view->assign('calleraction', $valArray['calleraction']);
-        $this->view->assign('callercontroller', $valArray['callercontroller']);
-        $this->view->assign('callerpage', $valArray['callerpage']);
+        $this->view->assign('calleraction', $valArray['calleraction'] ?? 'edit');
+        $this->view->assign('callercontroller', $valArray['callercontroller'] ?? 'Teilnehmer');
+        $this->view->assign('callerpage', $valArray['callerpage'] ?? '1');
         $this->view->assign('thisaction', $valArray['thisaction']);
     }
 
@@ -97,9 +97,9 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         
         $this->view->assign('abschlussjahre', $abschlussjahre);
         $this->view->assign('teilnehmer', $teilnehmer);
-        $this->view->assign('calleraction', $valArray['calleraction']);
-        $this->view->assign('callercontroller', $valArray['callercontroller']);
-        $this->view->assign('callerpage', $valArray['callerpage']);
+        $this->view->assign('calleraction', $valArray['calleraction'] ?? 'edit');
+        $this->view->assign('callercontroller', $valArray['callercontroller'] ?? 'Teilnehmer');
+        $this->view->assign('callerpage', $valArray['callerpage'] ?? '1');
         $this->view->assign('thisaction', $valArray['thisaction']);
     }
 
@@ -149,9 +149,9 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $this->view->assign('abschlussjahre', $abschlussjahre);
         $this->view->assign('teilnehmer', $teilnehmer);             
         $this->view->assign('abschluss', $abschluss);
-        $this->view->assign('calleraction', $valArray['calleraction']);
-        $this->view->assign('callercontroller', $valArray['callercontroller']);
-        $this->view->assign('callerpage', $valArray['callerpage']);
+        $this->view->assign('calleraction', $valArray['calleraction'] ?? 'edit');
+        $this->view->assign('callercontroller', $valArray['callercontroller'] ?? 'Teilnehmer');
+        $this->view->assign('callerpage', $valArray['callerpage'] ?? '1');
         $this->view->assign('thisaction', $valArray['thisaction']);
     }
 

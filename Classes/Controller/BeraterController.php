@@ -122,7 +122,7 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $valArray = $this->request->getArguments();
         
-        $usergroup = $this->userGroupRepository->findByIdentifier($valArray['berater']['usergroup']);        
+        $usergroup = $this->userGroupRepository->findByIdentifier($valArray['berater']['usergroup'] ?? '');        
         $berater->addUsergroup($usergroup);        
         $berater->setPassword(password_hash($berater->getPassword(), PASSWORD_ARGON2I));
                 

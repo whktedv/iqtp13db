@@ -410,7 +410,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $pagination = new SimplePagination($paginator);
         
         $teilnehmerpag = $paginator->getPaginatedItems();
-              
+        
+        $abschluesse = array();
         for($j=0; $j < count($teilnehmerpag); $j++) {
             $anz = $this->teilnehmerRepository->findDublette4Angemeldet($teilnehmerpag[$j]->getNachname(), $teilnehmerpag[$j]->getVorname(), $this->niqbid);
             if($anz > 1) $teilnehmerpag[$j]->setDublette(TRUE);
@@ -708,8 +709,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'historie' => $historie,
                 'teilnehmer' => $teilnehmer,
                 'abschluesse' => $abschluesse,
-                'showabschluesse' => $valArray['showabschluesse'],
-                'showdokumente' => $valArray['showdokumente']
+                'showabschluesse' => $valArray['showabschluesse'] ?? '0',
+                'showdokumente' => $valArray['showdokumente'] ?? '0'
             ]
             );
     }
@@ -855,9 +856,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $this->view->assignMultiple(
             [
                 'altervonbis' => $altervonbis,
-                'calleraction' => $valArray['calleraction'],
-                'callercontroller' => $valArray['callercontroller'],
-                'callerpage' => $valArray['callerpage'],
+                'calleraction' => $valArray['calleraction'] ?? 'listangemeldet',
+                'callercontroller' => $valArray['callercontroller'] ?? 'Teilnehmer',
+                'callerpage' => $valArray['callerpage'] ?? '1',
                 'staatsangehoerigkeitstaaten' => $staatsangehoerigkeitstaaten,
                 'abschluesse' => $abschluesse,
                 'alleberater' => $alleberater,
@@ -869,8 +870,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'dokumentpfad' => $dokumentpfad,
                 'abschlusshinzu' => $abschlusshinzu,
                 'jahre' => $jahre,
-                'showabschluesse' => $valArray['showabschluesse'],
-                'showdokumente' => $valArray['showdokumente']
+                'showabschluesse' => $valArray['showabschluesse'] ?? '0',
+                'showdokumente' => $valArray['showdokumente'] ?? '0'
             ]
             );
     }
@@ -887,22 +888,22 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         
         //DebuggerUtility::var_dump($valArray);
         //die;
-        
+         
         if(is_numeric($teilnehmer->getLebensalter())) {
             if($teilnehmer->getLebensalter() > 0 && ($teilnehmer->getLebensalter() < 15 || $teilnehmer->getLebensalter() > 80)) {
                 $this->addFlashMessage("Datensatz NICHT gespeichert. Lebensalter muss zwischen 15 und 80 oder k.A. sein.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-                $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
+                $this->redirect($valArray['calleraction'] ?? 'edit', $valArray['callercontroller'] ?? 'Teilnehmer', null, array('callerpage' => $valArray['callerpage'] ?? '1'));
             }
         }
         
         if($teilnehmer->getVerificationDate() == 0 && ($this->generalhelper->validateDateYmd($teilnehmer->getErstberatungabgeschlossen()) || $this->generalhelper->validateDateYmd($teilnehmer->getBeratungdatum()))) {
             $this->addFlashMessage("Datensatz NICHT gespeichert. Vor Eintragung von -Datum Erstberatung- oder -Erstberatung abgeschlossen- muss die Anmeldung bestätigt werden!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-            $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
+            $this->redirect($valArray['calleraction'] ?? 'edit', $valArray['callercontroller'] ?? 'Teilnehmer', null, array('callerpage' => $valArray['callerpage'] ?? '1'));
         }
         
         if($this->generalhelper->validateDateYmd($teilnehmer->getErstberatungabgeschlossen()) && !$this->generalhelper->validateDateYmd($teilnehmer->getBeratungdatum())) {
             $this->addFlashMessage("Datensatz NICHT gespeichert. -Datum Erstberatung– muss eingetragen sein, wenn -Erstberatung abgeschlossen- ausgefüllt ist.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-            $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));            
+            $this->redirect($valArray['calleraction'] ?? 'edit', $valArray['callercontroller'] ?? 'Teilnehmer', null, array('callerpage' => $valArray['callerpage'] ?? '1'));            
         }
         
         $this->createHistory($teilnehmer, "niqchiffre");
@@ -931,8 +932,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $this->createHistory($teilnehmer, "erwerbsstatus");
         $this->createHistory($teilnehmer, "leistungsbezugjanein");
         $this->createHistory($teilnehmer, "leistungsbezug");
-        $this->createHistory($teilnehmer, "name_beraterAA");
-        $this->createHistory($teilnehmer, "kontakt_beraterAA");
+        $this->createHistory($teilnehmer, "nameBeraterAA");
+        $this->createHistory($teilnehmer, "kontaktBeraterAA");
         $this->createHistory($teilnehmer, "kundennummerAA");
         $this->createHistory($teilnehmer, "einwAnerkstelle");
         $this->createHistory($teilnehmer, "einwAnerkstelledatum");
@@ -980,7 +981,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
         
-        $this->redirect('edit', $valArray['callercontroller'], null, array('teilnehmer'=> $teilnehmer, 'callerpage' => $valArray['callerpage'], 'calleraction' => $valArray['calleraction']));
+        $this->redirect('edit', $valArray['callercontroller'] ?? 'Teilnehmer', null, array('teilnehmer'=> $teilnehmer, 'callerpage' => $valArray['callerpage'] ?? '1', 'calleraction' => $valArray['calleraction'] ?? 'listangemeldet'));
     }
     
     /**
@@ -2125,7 +2126,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'filtermodus', NULL);
         }
         if (isset($valArray['filteran'])) {
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fuid', $valArray['uid']);
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fuid', $valArray['uid'] ?? '');
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', $valArray['name']);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', $valArray['ort']);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', $valArray['beruf']);
@@ -2154,9 +2155,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         } else {
             $teilnehmers = $this->teilnehmerRepository->searchTeilnehmer($type, $filterArray, $deleted, $this->niqbid, $this->settings['berufe'], $orderby, $order, $beraterdiesergruppe, $this->usergroup);
             
-            //DebuggerUtility::var_dump($GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus'));
+        //   DebuggerUtility::var_dump($GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus'));
             
-            $this->view->assign('filteruid', $filterArray['uid']);
+            $this->view->assign('filteruid', $filterArray['uid'] ?? '');
             $this->view->assign('filtername', $filterArray['name']);
             $this->view->assign('filterort', $filterArray['ort']);
             $this->view->assign('filterberuf', $filterArray['beruf']);

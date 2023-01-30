@@ -100,7 +100,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
             $this->saveFileTeilnehmer($dokument, $teilnehmer, $_FILES['tx_iqtp13db_iqtp13dbadmin']);
         }
         
-        $this->redirect($valArray['thisaction'], 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'], 'showdokumente' => '1'));
+        $this->redirect($valArray['thisaction'], 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'] ?? 'edit', 'callercontroller' => $valArray['callercontroller'] ?? 'Teilnehmer', 'callerpage' => $valArray['callerpage'] ?? '1', 'showdokumente' => '1'));
     }
     
     /**
@@ -121,7 +121,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         
         //DebuggerUtility::var_dump($dokument);
         //die;
-        $this->redirect($valArray['thisaction'], 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'], 'showdokumente' => '1'));
+        $this->redirect($valArray['thisaction'], 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'] ?? 'edit', 'callercontroller' => $valArray['callercontroller'] ?? 'Teilnehmer', 'callerpage' => $valArray['callerpage'] ?? '1', 'showdokumente' => '1'));
     }
         
     /**
@@ -136,7 +136,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $valArray = $this->request->getArguments();
         
         $this->deleteFileTeilnehmer($dokument, $teilnehmer);
-        return (new ForwardResponse($valArray['thisaction']))->withControllerName('Teilnehmer')->withArguments(['teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'], 'showdokumente' => '1']) ;
+        return (new ForwardResponse($valArray['thisaction']))->withControllerName('Teilnehmer')->withArguments(['teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'] ?? 'edit', 'callercontroller' => $valArray['callercontroller'] ?? 'Teilnehmer', 'callerpage' => $valArray['callerpage'] ?? '1', 'showdokumente' => '1']) ;
     }
     
     /**
@@ -418,7 +418,9 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
                     return $new_file_name;
                     break;
                     
-                //case 'application/pdf':                    
+                //case 'application/pdf':
+                    // MPDF per composer einbinden - wenn nicht vorhanden, dann s.u.
+                   
                   
                 default:                    
                     break;

@@ -30,7 +30,9 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     {
         $berateruidarray = array();        
         foreach($beraterdiesergruppe as $oneberater) $berateruidarray[] = $oneberater->getUid();
-         
+        
+        
+        $uid = $filterArray['uid'] == '' ? '%' : $filterArray['uid'];
         $name = $filterArray['name'] == '' ? '%' : $filterArray['name'];
         $ort = $filterArray['ort'] == '' ? '%' : $filterArray['ort'];
         $land = $filterArray['land'] == '' ? '%' : $filterArray['land'];
@@ -47,7 +49,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         
         // Beruf
         if($type != 0) {
-            if($valArrayfberuf != '') {
+            if($filterArray['beruf'] != '') {
                 
                 foreach ($berufearr as $beruf => $bkey) {
                     if (strpos(strtolower($bkey), strtolower($fberuf)) !== false) { $results[] = $beruf; }
@@ -56,10 +58,10 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                     $beruf = " a.referenzberufzugewiesen IN ('".implode("','", $results)."') ";
                 }
             } else {
-                $beruf = "a.deutscher_referenzberuf LIKE '%".$fberuf."%'";
+                $beruf = "(a.deutscher_referenzberuf LIKE '%".$fberuf."%' OR a.deutscher_referenzberuf IS NULL)";
             }
         } else {
-            $beruf = "a.deutscher_referenzberuf LIKE '%".$fberuf."%'";
+            $beruf = "(a.deutscher_referenzberuf LIKE '%".$fberuf."%' OR a.deutscher_referenzberuf IS NULL)";
         }
         
         if($fbescheid != '%') {
@@ -90,6 +92,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 AND $sqlberatungsstatus $hidden
                 AND niqidberatungsstelle LIKE $niqbid
                 AND (verification_date > '1672527600')
+                AND t.uid like '$uid' 
                 GROUP BY t.uid ORDER BY $orderby $order";                
         } else {
             $sql = "SELECT t.* FROM tx_iqtp13db_domain_model_teilnehmer t
@@ -102,10 +105,11 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 $bescheid
                 AND $sqlberatungsstatus $hidden
                 AND niqidberatungsstelle LIKE $niqbid
+                AND t.uid like '$uid' 
                 GROUP BY t.uid ORDER BY $orderby $order";
                 
         }
-        
+        //DebuggerUtility::var_dump($sql);
               
         $query->statement($sql);
         
@@ -396,7 +400,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 AND $sqlberatungsstatus $hidden
                 AND niqidberatungsstelle LIKE $niqbid
                 GROUP BY t.uid ORDER BY $orderby ASC";
-        
+         
         //DebuggerUtility::var_dump($sql);
         $query->statement($sql);
         
