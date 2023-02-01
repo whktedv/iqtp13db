@@ -87,6 +87,8 @@ CREATE TABLE tx_iqtp13db_domain_model_teilnehmer (
 	beratungnotizen text NOT NULL,
 	erstberatungabgeschlossen varchar(255) DEFAULT '' NOT NULL,
         
+    edittstamp int(11) unsigned DEFAULT '0' NOT NULL,
+    edituser int(11) unsigned DEFAULT '0',	
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,
 	cruser_id int(11) unsigned DEFAULT '0' NOT NULL,
@@ -97,7 +99,6 @@ CREATE TABLE tx_iqtp13db_domain_model_teilnehmer (
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),
-
 );
 
 

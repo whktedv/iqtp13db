@@ -2,6 +2,15 @@
 	display: none;
 }
 
+.tx-iqtp13db ul .alert {
+  background: #def1de;
+  text-align: center;
+  display: block;
+  height: 55px;
+  border: 1px solid;
+}
+
+
 .frame {
 	padding-top: 0.5rem;	
 }
@@ -28,6 +37,10 @@
 
 .footernavi {
 	display: none;
+}
+
+.farbbalken_outer {
+	margin-top: 2rem;
 }
 
 .navbar-mainnavigation .navbar-brand {
@@ -144,50 +157,11 @@ td.tdcenter input[type="checkbox"] {
 	font-size: 0.9rem;	
 }
 
-.tx-iqtp13db .linkbuttons {
-    background-color: #99CACA;
-    border: 1px solid transparent;
-    white-space: nowrap;
-    margin-bottom: 0px;
-    font-weight: normal;
-    text-align: center;
-    line-height: 1.42857;
-    padding: 2px 4px;
-    vertical-align: middle;
-    margin: 1px;
-    color: #FFF;
-    cursor: pointer;
-    display: inline-block;
-    -moz-user-select: none;
-    text-decoration: none;
+.edit-eingabefelder, .show-eingabefelder {
+	padding-top: 5rem;
 }
 
-.ankerbuttons {
-	margin-top: 0.5rem;	
-}
-
-.togglebutton, .abschlussheader  {
-    background-color: #cfa6ce;
-    border: 1px solid transparent;
-    white-space: nowrap;
-    font-weight: normal;
-    text-align: center;
-    font-size: 14px;
-    line-height: 1.42857;
-    padding: 2px 4px;
-    vertical-align: middle;
-    color: #FFF;
-    cursor: pointer;
-    display: inline-block;
-    -moz-user-select: none;
-	text-decoration: none;
-}
-
-.abschlussheader {
-	display: block;
-}
-
-.buttontextsmall {
+.buttoneinwilligung {
 	font-size: 0.7rem !important;
 }
 
@@ -242,6 +216,23 @@ input[type="text"].textfieldsmall  {
 	font-size: 1.2rem;	
 }
 
+.togglebutton, .abschlussheader  {
+    background-color: #cfa6ce;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    font-weight: normal;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.42857;
+    padding: 2px 4px;
+    vertical-align: middle;
+    color: #FFF;
+    cursor: pointer;
+    display: inline-block;
+    -moz-user-select: none;
+	text-decoration: none;
+}
+
 .oneabschluss {
 	margin-top: 0.5rem;	
 	width: fit-content;
@@ -253,8 +244,12 @@ input[type="text"].textfieldsmall  {
 	margin-top: 1rem;
 }
 
+#AnkerBeratung, #AnkerAbschluesse, #AnkerDokumente {
+	
+}
+
 #AnkerBeratung h2 {
-	color: #7478bf;	
+	color: #7478bf;
 }
 
 #AnkerAbschluesse h2 {

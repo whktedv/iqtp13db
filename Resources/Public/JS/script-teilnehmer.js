@@ -198,8 +198,7 @@
 			return;
 		} else if($('#optleistungsbezugjanein2').is(":checked")) {
 			 $('#divleistungsbezug').fadeOut();
-			 $('#datenAA').fadeOut();
-			 toggleeinwdatenaa();
+			 $('#datenAA').fadeOut();			 
 			return;
 		} else {
 			$('#divleistungsbezug').fadeOut();

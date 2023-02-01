@@ -173,7 +173,6 @@
     font-size: 14px;
     line-height: 1.42857;
     padding: 2px 4px;
-    vertical-align: middle;
     color: #FFF;
     cursor: pointer;
     display: inline-block;
@@ -453,6 +452,10 @@ form.filterform div {
 
 .iq-standardcontainer-weiss {
 	padding-top: 1rem;
+}
+
+.farbbalken_outer {
+  margin-top: 0rem;
 }
 
 

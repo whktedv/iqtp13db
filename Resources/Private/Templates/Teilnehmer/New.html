@@ -12,15 +12,18 @@
 
 <f:render partial="FormErrors" arguments="{object:Teilnehmer}" />
 
-<f:form action="create" name="teilnehmer" object="{teilnehmer}" arguments="{calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">
-	<f:form.submit value="Speichern und weiter" />
+<f:form id="teilnehmerform" action="create" name="teilnehmer" object="{teilnehmer}" arguments="{calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">
+	<f:form.submit value="Speichern und weiter" id="savebutton1" />
 	<f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}" arguments="{callerpage : callerpage}">Zurück zur Liste</f:link.action>
 	
 	<f:render partial="Teilnehmer/FormFields-Part1" arguments="{_all}" />
 	
+	<f:form.submit value="Speichern und weiter" id="savebutton2" />
+	<f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}" arguments="{callerpage : callerpage}">Zurück zur Liste</f:link.action>	
+	
 	<f:render partial="Teilnehmer/FormFields-Part2" arguments="{_all}" />
 	
-	<f:form.submit value="Speichern und weiter" />
+	<f:form.submit value="Speichern und weiter" id="savebutton3" />
 	<f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}" arguments="{callerpage : callerpage}">Zurück zur Liste</f:link.action>
 </f:form>
 

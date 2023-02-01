@@ -4,7 +4,8 @@
 </f:section>
 
 <f:section name="main">
-<h1>Ratsuchende*n bearbeiten UID: {teilnehmer.uid}</h1>
+
+<div class="edituserfield">{edituserfield}</div>
 
 <f:flashMessages />
 
@@ -13,7 +14,7 @@
 	<script>
 		(function($) {
 		    $(document).ready(function() {
-		    	location.href = "#AnkerAbschluesse"; 
+		    	location.href = "#AnkerAbschluesse";
 		    });
 		})(jQuery);		
 	</script>
@@ -24,7 +25,7 @@
 	<script>
 		(function($) {
 		    $(document).ready(function() {
-		         location.href = "#AnkerDokumente"; 
+		         location.href = "#AnkerDokumente";
 		    });
 		})(jQuery);		
 	</script>
@@ -35,28 +36,32 @@
 
 <f:form id="teilnehmerform" action="update" name="teilnehmer" object="{teilnehmer}" arguments="{abschluss: abschluss, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" >
 	
-	<f:form.submit value="Speichern" />
-	<f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}" arguments="{callerpage : callerpage}">Zurück zur Liste</f:link.action>
-	
-	<div class="ankerbuttons">		
-		<a href="#AnkerBeratung" class="linkbuttons buttonberatung" >Beratung anzeigen</a>
-		<a href="#AnkerAbschluesse" class="linkbuttons buttonabschluesse" >Abschlüsse anzeigen</a>
-		<a href="#AnkerDokumente" class="linkbuttons buttondokumente" >Dokumente anzeigen</a>
+	<div class="buttonmenu">
+		<div class="toplinkbuttons">
+			<f:form.submit value="Speichern" id="savebutton1" />
+			<f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}" arguments="{callerpage : callerpage, tn : teilnehmer}">Zurück zur Liste</f:link.action>
+		</div>		
+		<div class="ankerbuttons">		
+			<a href="#AnkerBeratung" class="linkbuttons buttonberatung" >Beratung anzeigen</a>
+			<a href="#AnkerAbschluesse" class="linkbuttons buttonabschluesse" >Abschlüsse anzeigen</a>
+			<a href="#AnkerDokumente" class="linkbuttons buttondokumente" >Dokumente anzeigen</a>
+		</div>
 	</div>
-
-	<f:render partial="Teilnehmer/FormFields-Part1" arguments="{_all}" />
-
- 	<div id="AnkerBeratung">
- 		<f:render partial="Teilnehmer/FormFields-Part2" arguments="{_all}" />
+	
+	<div class="edit-eingabefelder">
+	<h1>Ratsuchende*n bearbeiten UID: {teilnehmer.uid}</h1>
+	
+		<f:render partial="Teilnehmer/FormFields-Part1" arguments="{_all}" />
+		
+	 	<div id="AnkerBeratung">
+	 		<f:render partial="Teilnehmer/FormFields-Part2" arguments="{_all}" />
+	 	</div>
  	</div>
  	
-	<f:form.submit value="Speichern" />
-	<f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}" arguments="{callerpage : callerpage}">Zurück zur Liste</f:link.action>	<br>
-		
 </f:form>
 
 <f:render partial="Abschluss/Abschluss4Teilnehmer" arguments="{teilnehmer : teilnehmer, abschluesse: abschluesse, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : 'edit'}" />
 
-<f:render partial="Dokument/Dokumente4Teilnehmer" arguments="{teilnehmer : teilnehmer, dokumente: dokumente, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : 'edit'}" />
+<f:render partial="Dokument/Dokumente4Teilnehmer" arguments="{teilnehmer : teilnehmer, dokumente: dokumente, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, dokumentpfad : dokumentpfad, thisaction : 'edit'}" />
 
 </f:section>

@@ -13,6 +13,7 @@ use Ud\Iqtp13db\Domain\Repository\UserGroupRepository;
 use Ud\Iqtp13db\Domain\Repository\TeilnehmerRepository;
 use Ud\Iqtp13db\Domain\Repository\DokumentRepository;
 use TYPO3\CMS\Core\Resource\StorageRepository;
+
 /***
  *
  * This file is part of the "IQ Webapp Anerkennungserstberatung" Extension for TYPO3 CMS.
@@ -91,13 +92,16 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     {
         $valArray = $this->request->getArguments();
         
+        //DebuggerUtility::var_dump($_FILES);
+        //die;
+        
         if ($_FILES['tx_iqtp13db_iqtp13dbadmin']['tmp_name']['file'] == '') {
             $this->addFlashMessage('Error in saveFileWebapp: maximum filesize exceeded or permission error', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
         } else {            
             $this->saveFileTeilnehmer($dokument, $teilnehmer, $_FILES['tx_iqtp13db_iqtp13dbadmin']);
         }
         
-        $this->redirect($valArray['thisaction'], 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'], 'showdokumente' => '1'));
+        $this->redirect($valArray['thisaction'], 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'] ?? 'edit', 'callercontroller' => $valArray['callercontroller'] ?? 'Teilnehmer', 'callerpage' => $valArray['callerpage'] ?? '1', 'showdokumente' => '1'));
     }
     
     /**
@@ -116,9 +120,9 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
         
-        //DebuggerUtility::var_dump($dokument);
+        //DebuggerUtility::var_dump($valArray);
         //die;
-        $this->redirect($valArray['thisaction'], 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'], 'showdokumente' => '1'));
+        $this->redirect($valArray['thisaction'], 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'] ?? 'edit', 'callercontroller' => $valArray['callercontroller'] ?? 'Teilnehmer', 'callerpage' => $valArray['callerpage'] ?? '1', 'showdokumente' => '1'));
     }
         
     /**
@@ -133,7 +137,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $valArray = $this->request->getArguments();
         
         $this->deleteFileTeilnehmer($dokument, $teilnehmer);
-        return (new ForwardResponse($valArray['thisaction']))->withControllerName('Teilnehmer')->withArguments(['teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'], 'showdokumente' => '1']) ;
+        return (new ForwardResponse($valArray['thisaction']))->withControllerName('Teilnehmer')->withArguments(['teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'] ?? 'edit', 'callercontroller' => $valArray['callercontroller'] ?? 'Teilnehmer', 'callerpage' => $valArray['callerpage'] ?? '1', 'showdokumente' => '1']) ;
     }
     
     /**
@@ -193,10 +197,13 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $storage = $this->generalhelper->getTP13Storage( $this->storageRepository->findAll());
         $pfad = $this->generalhelper->createFolder($teilnehmer, $this->settings['standardniqidberatungsstelle'], $this->allusergroups, $this->storageRepository->findAll());
         $beratenepath = ltrim($pfad->getIdentifier(), '/');
-
+        
         $tmpName = $this->generalhelper->sanitizeFileFolderName($files['name']['file']);
         $fullpath = $storage->getConfiguration()['basePath'] . $beratenepath . $tmpName;
-    	
+        
+        //DebuggerUtility::var_dump($files);
+        //die;
+        
         if($this->generalhelper->getFolderSize($storage->getConfiguration()['basePath'] . $beratenepath) > 20000) {
     	    $this->addFlashMessage('Maximum total filesize of 20 MB exceeded, please reduce filesize. Maximale Dateigröße aller Dateien zusammen ist 20 MB. Bitte Dateigröße verringern.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
     	} else {
@@ -257,14 +264,12 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      */
     public function savefile($beschreibung, $pfad, $arrfiles)
     {          
-        //DebuggerUtility::var_dump($arrfiles);
-        //die;
-        
-        
+
         $dokument = new \Ud\Iqtp13db\Domain\Model\Dokument();
         
         $tmpName = $this->generalhelper->sanitizeFileFolderName($arrfiles['name']['file']);
         $tmpFile = $arrfiles['tmp_name']['file'];
+        
         
         $storage = $this->generalhelper->getTP13Storage( $this->storageRepository->findAll());
       
@@ -273,11 +278,19 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         } else {
             $targetFolder = $storage->getFolder($pfad);            
         }
-	
+        
         $movedNewFile = $storage->addFile($tmpFile, $targetFolder, $tmpName);
 
+        $reducedfile = $this->reduce_filesize($arrfiles, $tmpName, $storage->getConfiguration()['basePath'] . "/" .$pfad);
+        
         $dokument->setBeschreibung($beschreibung);
-        $dokument->setName($movedNewFile->getName());
+        if($reducedfile) {            
+            $movedNewFile->delete();
+            $dokument->setName($reducedfile);
+        } else {
+            $dokument->setName($movedNewFile->getName());
+        }
+        
         $dokument->setPfad($pfad);
         
         $this->dokumentRepository->add($dokument);
@@ -321,10 +334,9 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     public function openfileAction(\Ud\Iqtp13db\Domain\Model\Dokument $dokument, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
         $storage = $this->generalhelper->getTP13Storage($this->storageRepository->findAll());
-        $pfad = $this->generalhelper->createFolder($teilnehmer, $this->settings['standardniqidberatungsstelle'], $this->allusergroups, $this->storageRepository->findAll());
-        $beratenepath = ltrim($pfad->getIdentifier(), '/');
+        $beratenepath = $dokument->getPfad();        
         $tmpName = $dokument->getName();
-    
+        
         if($storage->getConfiguration()['pathType'] == 'relative') {
             $folder = $storage->getFolder($beratenepath);
             $targetfile = $folder->getStorage()->getFileInFolder($tmpName, $folder);
@@ -340,4 +352,82 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
                 
         $this->redirectToURI($publicUrl, $delay=0, $statusCode=303);
     }
+    
+    /**
+     * 
+     * Reduce file size on upload of file
+     *
+     **/    
+    function reduce_filesize($filearr, $filename, $pfad) {
+        
+        if (is_array($filearr) && $filearr['size']['file'] > 1000000) // bei Dateigrößen über 1 MB 
+        {
+            $fileName = $filearr['tmp_name']['file'];
+            $fileExt = pathinfo($filearr['name']['file'], PATHINFO_EXTENSION);
+            $fileNamewoExt = pathinfo($filearr['name']['file'], PATHINFO_FILENAME); 
+            $percent = 50;
+            
+            $new_file_name = $fileNamewoExt . '_r.' . $fileExt;
+            
+            //DebuggerUtility::var_dump($pfad);
+            //die;
+            
+            switch ($filearr['type']['file'])
+            {
+                case 'image/jpeg':
+                    $image = imagecreatefromjpeg($pfad.$filename);
+
+                    $original_width = imagesx($image);
+                    $original_height = imagesy($image);
+                    $newwidth = $original_width * ($percent / 100);
+                    $newheight = $original_height * ($percent / 100);
+                    $new_image = imagecreatetruecolor($newwidth, $newheight);
+                    imagecopyresampled($new_image, $image, 0, 0, 0, 0, $newwidth, $newheight, $original_width, $original_height);
+                    
+                    imagejpeg($new_image, $pfad . $new_file_name, 90);
+                    imagedestroy($image);
+                    imagedestroy($new_image);
+                    return $new_file_name;
+                    break;
+                    
+                case 'image/gif':
+                    $image = imagecreatefromgif($pfad.$filename);
+                    
+                    $original_width = imagesx($image);
+                    $original_height = imagesy($image);
+                    $newwidth = $original_width * ($percent / 100);
+                    $newheight = $original_height * ($percent / 100);
+                    $new_image = imagecreatetruecolor($newwidth, $newheight);
+                    imagecopyresampled($new_image, $image, 0, 0, 0, 0, $newwidth, $newheight, $original_width, $original_height);
+                    
+                    imagegif($new_image, $fileName);
+                    imagedestroy($image);
+                    imagedestroy($new_image);   
+                    return $new_file_name;
+                    break;
+                    
+                case 'image/png':
+                    $image = imagecreatefrompng($pfad.$filename);
+                    
+                    $original_width = imagesx($image);
+                    $original_height = imagesy($image);
+                    $newwidth = $original_width * ($percent / 100);
+                    $newheight = $original_height * ($percent / 100);
+                    $new_image = imagecreatetruecolor($newwidth, $newheight);
+                    imagecopyresampled($new_image, $image, 0, 0, 0, 0, $newwidth, $newheight, $original_width, $original_height);
+                    
+                    imagepng($new_image, $fileName);
+                    imagedestroy($image);
+                    imagedestroy($new_image);
+                    return $new_file_name;
+                    break;
+                //case 'application/pdf':
+                default:                    
+                    break;
+            }
+            
+        }
+        return FALSE;
+    }
+        
 }

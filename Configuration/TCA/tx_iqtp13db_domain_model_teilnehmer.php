@@ -730,6 +730,26 @@ return [
             ],
             
         ],
+        'edittstamp' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.edittstamp',
+            'config' => [
+                'type' => 'input',
+                'renderType' => 'inputDateTime',
+                'eval' => 'datetime,int',
+                'default' => 0
+            ],
+        ],
+        'edituser' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.tstamp',
+            'config' => [
+                'type' => 'input',
+                'size' => 5,
+                'eval' => 'int',
+                'default' => 0
+            ],
+        ],
     
     ],
 ];

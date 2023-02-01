@@ -101,9 +101,11 @@
 <hr>
 
 <h2>Historie Änderung Daten Ratsuchende im Backend</h2>
-<f:render partial="Paginator" arguments="{pagination: pagination, pages: pages, paginator: paginator, action: calleraction}" />
 
-	<table  class="tx_iqtp13db" >
+<div class="toppaginator">
+	<f:render partial="Paginator" arguments="{pagination: pagination, pages: pages, paginator: paginator, action: calleraction}" />
+</div>
+	<table class="uebersicht-historie" >
 		<tr>
 			<th>Datum/Zeit</th>
 			<th>Kürzel</th>
