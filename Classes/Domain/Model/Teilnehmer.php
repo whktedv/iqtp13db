@@ -514,6 +514,20 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $berater = null;
     
     /**
+     * edittstamp
+     *
+     * @var int
+     */
+    protected $edittstamp = 0;
+    
+    /**
+     * edituser
+     *
+     * @var int
+     */
+    protected $edituser = null;
+    
+    /**
      * dublette
      *
      * @var boolean
@@ -2048,6 +2062,47 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->berater = $berater;
     }
     
+    /**
+     * Returns the edittstamp
+     *
+     * @return int $edittstamp
+     */
+    public function getEdittstamp()
+    {
+        return $this->edittstamp;
+    }
+    
+    /**
+     * Sets the edittstamp
+     *
+     * @param int $edittstamp
+     * @return void
+     */
+    public function setEdittstamp($edittstamp)
+    {
+        $this->edittstamp = $edittstamp;
+    }
+    
+    /**
+     * Returns the edituser
+     *
+     * @return int $edituser
+     */
+    public function getEdituser()
+    {
+        return $this->edituser;
+    }
+    
+    /**
+     * Sets the edituser
+     *
+     * @param int $edituser
+     * @return void
+     */
+    public function setEdituser($edituser)
+    {
+        $this->edituser = $edituser;
+    }
     
     /**
      * Initializes the verificationCode

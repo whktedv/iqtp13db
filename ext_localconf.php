@@ -43,8 +43,7 @@ call_user_func(
                 \Ud\Iqtp13db\Controller\AbschlussController::class => 'addupdateWebapp, deleteWebapp, selectWebapp'
             ]
             );
-        
-       
+               
         // wizards
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
             'mod {

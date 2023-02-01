@@ -91,7 +91,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 $bescheid
                 AND $sqlberatungsstatus $hidden
                 AND niqidberatungsstelle LIKE $niqbid
-                AND (verification_date > '1672527600')
+                AND (verification_date > '1672527600' OR verification_date = '0')
                 AND t.uid like '$uid' 
                 GROUP BY t.uid ORDER BY $orderby $order";                
         } else {
@@ -146,7 +146,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                         $query->greaterThan('verification_date', '0'), 
                         $query->like('niqidberatungsstelle', $niqbid),
                         $query->logicalOr(
-                            $query->greaterThan('verification_date', '1672527600'),
+                            $query->logicalOr($query->greaterThan('verification_date', '1672527600'), $query->equals('verification_date', '0')),
                             $query->in('berater', $berateruidarray)
                         )
                     )

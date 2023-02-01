@@ -454,6 +454,10 @@ form.filterform div {
 	padding-top: 1rem;
 }
 
+.farbbalken_outer {
+  margin-top: 0rem;
+}
+
 
 @media print {
   body {

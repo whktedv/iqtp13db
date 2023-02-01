@@ -20,7 +20,7 @@ use Ud\Iqtp13db\Domain\Repository\BeraterRepository;
 use Ud\Iqtp13db\Domain\Repository\AbschlussRepository;
 use TYPO3\CMS\Core\Resource\StorageRepository;
 
-require_once(Environment::getPublicPath() . '/' . 'typo3conf/ext/iqtp13db/Resources/Public/PHP/xlsxwriter.class.php');
+require_once(Environment::getPublicPath() . '/' . 'typo3conf/ext/iqtp13db/Resources/Private/Libraries/xlsxwriter.class.php');
 
 /***
  *
@@ -193,7 +193,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     }
     
     /*************************************************************************/
-    /******************************* Backend *******************************/
+    /******************************* BACKEND Actions *************************/
     /*************************************************************************/
     
     /**
@@ -697,15 +697,15 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $dokumente = $this->dokumentRepository->findByTeilnehmer($teilnehmer);
         $dokumentpfad = $this->generalhelper->sanitizeFileFolderName($teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid(). '/');
         
-        //DebuggerUtility::var_dump($teilnehmer->getBeratungdatum());
+        //DebuggerUtility::var_dump($valArray);
         
         $this->view->assignMultiple(
             [
                 'dokumente' => $dokumente,
                 'dokumentpfad' => $dokumentpfad,
-                'calleraction' => $valArray['calleraction'],
-                'callercontroller' => $valArray['callercontroller'],
-                'callerpage' => $valArray['callerpage'],
+                'calleraction' => $valArray['calleraction'] ?? 'listangemeldet',
+                'callercontroller' => $valArray['callercontroller'] ?? 'Teilnehmer',
+                'callerpage' => $valArray['callerpage'] ?? '1',
                 'historie' => $historie,
                 'teilnehmer' => $teilnehmer,
                 'abschluesse' => $abschluesse,
@@ -763,9 +763,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $this->view->assignMultiple(
             [
                 'altervonbis' => $altervonbis,
-                'calleraction' => $valArray['calleraction'],
-                'callercontroller' => $valArray['callercontroller'],
-                'callerpage' => $valArray['callerpage'],
+                'calleraction' => $valArray['calleraction'] ?? 'listangemeldet',
+                'callercontroller' => $valArray['callercontroller'] ?? 'Teilnehmer',
+                'callerpage' => $valArray['callerpage'] ?? '1',
                 'staatsangehoerigkeitstaaten' => $staatsangehoerigkeitstaaten,
                 'abschluss' => $abschluss,
                 'wohnsitzstaaten' => $wohnsitzstaaten,
@@ -813,6 +813,21 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function editAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer, \Ud\Iqtp13db\Domain\Model\Abschluss $abschluss = NULL)
     {
         $valArray = $this->request->getArguments();
+        
+//         $edituserfield = '';
+        
+//         if($teilnehmer->getEdittstamp() == 0 || $teilnehmer->getEdituser() == $this->user['uid'] || (time() - $teilnehmer->getEdittstamp()) > 28800) {
+//             $teilnehmer->setEdittstamp(time());
+//             $teilnehmer->setEdituser($this->user['uid']);
+//             $this->teilnehmerRepository->update($teilnehmer);
+            
+//             //DebuggerUtility::var_dump($teilnehmer);
+//             // Daten sofort in die Datenbank schreiben
+//             $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+//             $persistenceManager->persistAll();
+//         } else {
+//             $edituserfield = $this->user['username'];
+//         }
         
         //DebuggerUtility::var_dump($valArray);
         
@@ -862,7 +877,6 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'staatsangehoerigkeitstaaten' => $staatsangehoerigkeitstaaten,
                 'abschluesse' => $abschluesse,
                 'alleberater' => $alleberater,
-                'berater' => $this->user,
                 'settings' => $this->settings,
                 'wohnsitzstaaten' => $wohnsitzstaaten,
                 'teilnehmer' => $teilnehmer,
@@ -871,7 +885,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'abschlusshinzu' => $abschlusshinzu,
                 'jahre' => $jahre,
                 'showabschluesse' => $valArray['showabschluesse'] ?? '0',
-                'showdokumente' => $valArray['showdokumente'] ?? '0'
+                'showdokumente' => $valArray['showdokumente'] ?? '0',
+                'edituserfield' => $edituserfield
             ]
             );
     }
@@ -1393,42 +1408,92 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     }
     
     /**
-     * action wartung
+     * action sendtoarchiv
      *
+     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return void
      */
-    public function wartungAction()
+    public function sendtoarchivAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
-        $this->view->assign('settings', $this->settings);
+        $valArray = $this->request->getArguments();
+        
+        $teilnehmer->setBeratungsstatus(4);
+        
+        $this->teilnehmerRepository->update($teilnehmer);
+        // Daten sofort in die Datenbank schreiben
+        $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+        $persistenceManager->persistAll();
+        
+        $this->addFlashMessage('Archiviert.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+        
+        $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']), null);
     }
     
     /**
-     * createHistory
+     * action checkniqconnection
      *
-     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
-     * @param string $property
      * @return void
      */
-    public function createHistory(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer, $property)
+    public function checkniqconnectionAction()
     {
-        if($teilnehmer->_isDirty($property)) {
-            $history = new \Ud\Iqtp13db\Domain\Model\Historie();
-            $berater = $this->beraterRepository->findAllBerater($this->settings['beraterstoragepid']);
-            foreach($berater as $thisberater) {
-                if($this->user['username'] == $thisberater->getUsername()) $history->setBerater($thisberater);
+        // **** NIQ deaktiviert **** $retval = $this->niqinterface->check_curl($this->niqapiurl);
+        
+        if($retval) {
+            $this->addFlashMessage('NIQ Verbindung verfügbar.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+        } else {
+            $this->addFlashMessage('NIQ Verbindung nicht erreichbar!', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+        }
+        $this->redirect('listerstberatung');
+    }
+    
+    /**
+     * action sendtoniq
+     *
+     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
+     * @return void
+     */
+    public function sendtoniqAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    {
+        $valArray = $this->request->getArguments();
+        
+        // NIQ verfügbar?
+        $retval = $this->niqinterface->check_curl($this->niqapiurl);
+        if(!$retval) {
+            $this->addFlashMessage('NIQ Verbindung nicht erreichbar!', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']), null);
+        } else {
+            $abschluesse = $this->abschlussRepository->findByTeilnehmer($teilnehmer);
+            $folgekontakte = $this->folgekontaktRepository->findByTeilnehmer($teilnehmer);
+            
+            if($teilnehmer->getNiqidberatungsstelle() != '0') {
+                $niqidbstelle = $teilnehmer->getNiqidberatungsstelle();
+            } else {
+                $niqidbstelle = $this->niqbid;
+            }
+            $returnarray = $this->niqinterface->uploadtoNIQ($teilnehmer, $abschluesse, $folgekontakte, $niqidbstelle, $this->niqapiurl);
+            
+            $retteilnehmer = $returnarray[0];
+            $retstring = $returnarray[1];
+            
+            if($retteilnehmer instanceof \Ud\Iqtp13db\Domain\Model\Teilnehmer) {
+                $this->teilnehmerRepository->update($retteilnehmer);
+                // Daten sofort in die Datenbank schreiben
+                $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+                $persistenceManager->persistAll();
+                
+                $this->addFlashMessage($retstring, '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+            } else {
+                $this->addFlashMessage($retstring, '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             }
             
-            $history->setTeilnehmer($teilnehmer);
-            $history->setProperty($property);
-            $history->setOldvalue($teilnehmer->_getCleanProperty($property));
-            $history->setNewvalue($teilnehmer->_getProperty($property));
-                        
-            $this->historieRepository->add($history);
+            $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']), null);
         }
     }
     
     /*************************************************************************/
-    /******************************* ANMELDUNG *******************************/
+    /*************************************************************************/
+    /******************************* FRONTEND Actions ************************/
+    /*************************************************************************/
     /*************************************************************************/
     
     /**
@@ -1450,6 +1515,16 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         } else {
             $this->view->assign('beratungsstelle', $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid'));
         }
+    }
+    
+    /**
+     * action wartung
+     *
+     * @return void
+     */
+    public function wartungAction()
+    {
+        $this->view->assign('settings', $this->settings);
     }
     
     /**
@@ -1834,6 +1909,101 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $this->redirect(null, null, null, null, $this->settings['redirectValidationFailed']);
     }
     
+    
+    /*************************************************************************/
+    /********** NO ACTION FUNCTIONS - TODO: in Hilfsklasse auslagern **********/
+    /*************************************************************************/
+    
+    /**
+     * Set Filter
+     *
+     */
+    function setfilter(int $type, array $valArray, $orderby, $order, $deleted) {
+        // FILTER
+        //DebuggerUtility::var_dump($this->user);
+        $beraterdiesergruppe = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
+        
+        if (isset($valArray['filteraus'])) {
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fuid', NULL);
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', NULL);
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', NULL);
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', NULL);
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', NULL);
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fgruppe', NULL);
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fbescheid', NULL);
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'filtermodus', NULL);
+        }
+        if (isset($valArray['filteran'])) {
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fuid', $valArray['uid'] ?? '');
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', $valArray['name']);
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', $valArray['ort']);
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', $valArray['beruf']);
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', $valArray['land']);
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fgruppe', $valArray['gruppe']);
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fbescheid', $valArray['bescheid']);
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'filtermodus', '1');
+        }
+        
+        $filterArray['uid'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fuid');
+        $filterArray['name'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fname');
+        $filterArray['ort'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fort');
+        $filterArray['beruf'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fberuf');
+        $filterArray['land'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fland');
+        $filterArray['gruppe'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fgruppe');
+        $filterArray['bescheid'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fbescheid');
+        
+        if($filterArray['land'] == -1000 || $filterArray['land'] == NULL) $filterArray['land'] = '';
+        
+        if ($filterArray['uid'] == '' && $filterArray['name'] == '' && $filterArray['ort'] == '' && $filterArray['beruf'] == '' && $filterArray['land'] == '' && $filterArray['gruppe'] == '' && $filterArray['bescheid'] == '') {
+            if($deleted == 1) {
+                $teilnehmers = $this->teilnehmerRepository->findhidden4list($orderby, $order, $this->niqbid);
+            } else {
+                $teilnehmers = $this->teilnehmerRepository->findAllOrder4List($type, $orderby, $order, $this->niqbid, $beraterdiesergruppe, $this->usergroup);
+            }
+        } else {
+            $teilnehmers = $this->teilnehmerRepository->searchTeilnehmer($type, $filterArray, $deleted, $this->niqbid, $this->settings['berufe'], $orderby, $order, $beraterdiesergruppe, $this->usergroup);
+            
+            //   DebuggerUtility::var_dump($GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus'));
+            
+            $this->view->assign('filteruid', $filterArray['uid'] ?? '');
+            $this->view->assign('filtername', $filterArray['name']);
+            $this->view->assign('filterort', $filterArray['ort']);
+            $this->view->assign('filterberuf', $filterArray['beruf']);
+            $this->view->assign('filterland', $filterArray['land']);
+            $this->view->assign('filtergruppe', $filterArray['gruppe']);
+            $this->view->assign('filterbescheid', $filterArray['bescheid']);
+            $this->view->assign('filteron', $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus'));
+        }
+        
+        // FILTER bis hier
+        return $teilnehmers;
+    }
+    
+    /**
+     * createHistory
+     *
+     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
+     * @param string $property
+     * @return void
+     */
+    public function createHistory(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer, $property)
+    {
+        if($teilnehmer->_isDirty($property)) {
+            $history = new \Ud\Iqtp13db\Domain\Model\Historie();
+            $berater = $this->beraterRepository->findAllBerater($this->settings['beraterstoragepid']);
+            foreach($berater as $thisberater) {
+                if($this->user['username'] == $thisberater->getUsername()) $history->setBerater($thisberater);
+            }
+            
+            $history->setTeilnehmer($teilnehmer);
+            $history->setProperty($property);
+            $history->setOldvalue($teilnehmer->_getCleanProperty($property) ?? '');
+            $history->setNewvalue($teilnehmer->_getProperty($property) ?? '');
+            
+            $this->historieRepository->add($history);
+        }
+    }
+    
     /**
      * cancelregistration
      *
@@ -1997,92 +2167,6 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     }
     
     /**
-     * action sendtoarchiv
-     *
-     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
-     * @return void
-     */
-    public function sendtoarchivAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
-    {
-        $valArray = $this->request->getArguments();
-        
-        $teilnehmer->setBeratungsstatus(4);
-        
-        $this->teilnehmerRepository->update($teilnehmer);
-        // Daten sofort in die Datenbank schreiben
-        $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
-        $persistenceManager->persistAll();
-        
-        $this->addFlashMessage('Archiviert.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
-        
-        $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']), null);
-    }
-    
-    /**
-     * action checkniqconnection
-     *
-     * @return void
-     */
-    public function checkniqconnectionAction()
-    {
-        // **** NIQ deaktiviert **** $retval = $this->niqinterface->check_curl($this->niqapiurl);
-        
-        if($retval) {
-            $this->addFlashMessage('NIQ Verbindung verfügbar.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
-        } else {
-            $this->addFlashMessage('NIQ Verbindung nicht erreichbar!', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-        }
-        $this->redirect('listerstberatung');
-    }
-    
-    /**
-     * action sendtoniq
-     *
-     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
-     * @return void
-     */
-    public function sendtoniqAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
-    {
-        $valArray = $this->request->getArguments();
-        
-        // NIQ verfügbar?
-        $retval = $this->niqinterface->check_curl($this->niqapiurl);
-        if(!$retval) {
-            $this->addFlashMessage('NIQ Verbindung nicht erreichbar!', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-            $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']), null);
-        } else {
-            $abschluesse = $this->abschlussRepository->findByTeilnehmer($teilnehmer);
-            $folgekontakte = $this->folgekontaktRepository->findByTeilnehmer($teilnehmer);
-            
-            if($teilnehmer->getNiqidberatungsstelle() != '0') {
-                $niqidbstelle = $teilnehmer->getNiqidberatungsstelle();
-            } else {
-                $niqidbstelle = $this->niqbid;
-            }
-            $returnarray = $this->niqinterface->uploadtoNIQ($teilnehmer, $abschluesse, $folgekontakte, $niqidbstelle, $this->niqapiurl);
-            
-            $retteilnehmer = $returnarray[0];
-            $retstring = $returnarray[1];
-            
-            if($retteilnehmer instanceof \Ud\Iqtp13db\Domain\Model\Teilnehmer) {
-                $this->teilnehmerRepository->update($retteilnehmer);
-                // Daten sofort in die Datenbank schreiben
-                $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
-                $persistenceManager->persistAll();
-                
-                $this->addFlashMessage($retstring, '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
-            } else {
-                $this->addFlashMessage($retstring, '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-            }
-            
-            $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']), null);
-        }
-    }
-    
-    
-    /********** HILFSFUNKTIONEN **********/
-    
-    /**
      * Check Beratungsstatus
      *
      * Beratungsstatus: 0 = angemeldet, 1 = Anmeldung bestätigt, 2 = Erstberatung Start, 3 = Erstberatung abgeschlossen, 4 = NIQ erfasst
@@ -2105,73 +2189,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         }
         return 999;
     }
-    
-    /**
-     * Set Filter
-     *
-     */
-    function setfilter(int $type, array $valArray, $orderby, $order, $deleted) {
-        // FILTER
-        //DebuggerUtility::var_dump($this->user);
-        $beraterdiesergruppe = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
         
-        if (isset($valArray['filteraus'])) {
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fuid', NULL);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', NULL);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', NULL);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', NULL);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', NULL);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fgruppe', NULL);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fbescheid', NULL);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'filtermodus', NULL);
-        }
-        if (isset($valArray['filteran'])) {
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fuid', $valArray['uid'] ?? '');
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', $valArray['name']);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', $valArray['ort']);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', $valArray['beruf']);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', $valArray['land']);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fgruppe', $valArray['gruppe']);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fbescheid', $valArray['bescheid']);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'filtermodus', '1');
-        }
-        
-        $filterArray['uid'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fuid');
-        $filterArray['name'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fname');
-        $filterArray['ort'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fort');
-        $filterArray['beruf'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fberuf');
-        $filterArray['land'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fland');
-        $filterArray['gruppe'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fgruppe');
-        $filterArray['bescheid'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fbescheid');
-        
-        if($filterArray['land'] == -1000 || $filterArray['land'] == NULL) $filterArray['land'] = '';
-        
-        if ($filterArray['uid'] == '' && $filterArray['name'] == '' && $filterArray['ort'] == '' && $filterArray['beruf'] == '' && $filterArray['land'] == '' && $filterArray['gruppe'] == '' && $filterArray['bescheid'] == '') {
-            if($deleted == 1) {
-                $teilnehmers = $this->teilnehmerRepository->findhidden4list($orderby, $order, $this->niqbid);
-            } else {
-                $teilnehmers = $this->teilnehmerRepository->findAllOrder4List($type, $orderby, $order, $this->niqbid, $beraterdiesergruppe, $this->usergroup);
-            }
-        } else {
-            $teilnehmers = $this->teilnehmerRepository->searchTeilnehmer($type, $filterArray, $deleted, $this->niqbid, $this->settings['berufe'], $orderby, $order, $beraterdiesergruppe, $this->usergroup);
-            
-        //   DebuggerUtility::var_dump($GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus'));
-            
-            $this->view->assign('filteruid', $filterArray['uid'] ?? '');
-            $this->view->assign('filtername', $filterArray['name']);
-            $this->view->assign('filterort', $filterArray['ort']);
-            $this->view->assign('filterberuf', $filterArray['beruf']);
-            $this->view->assign('filterland', $filterArray['land']);
-            $this->view->assign('filtergruppe', $filterArray['gruppe']);
-            $this->view->assign('filterbescheid', $filterArray['bescheid']);
-            $this->view->assign('filteron', $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus'));
-        }
-        
-        // FILTER bis hier
-        return $teilnehmers;
-    }
-    
-    
     /**
      * A template method for displaying custom error flash messages, or to
      * display no flash message at all on errors.

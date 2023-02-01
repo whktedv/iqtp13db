@@ -13,6 +13,7 @@ use Ud\Iqtp13db\Domain\Repository\UserGroupRepository;
 use Ud\Iqtp13db\Domain\Repository\TeilnehmerRepository;
 use Ud\Iqtp13db\Domain\Repository\DokumentRepository;
 use TYPO3\CMS\Core\Resource\StorageRepository;
+
 /***
  *
  * This file is part of the "IQ Webapp Anerkennungserstberatung" Extension for TYPO3 CMS.
@@ -119,7 +120,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
         
-        //DebuggerUtility::var_dump($dokument);
+        //DebuggerUtility::var_dump($valArray);
         //die;
         $this->redirect($valArray['thisaction'], 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'] ?? 'edit', 'callercontroller' => $valArray['callercontroller'] ?? 'Teilnehmer', 'callerpage' => $valArray['callerpage'] ?? '1', 'showdokumente' => '1'));
     }
@@ -368,6 +369,9 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
             
             $new_file_name = $fileNamewoExt . '_r.' . $fileExt;
             
+            //DebuggerUtility::var_dump($pfad);
+            //die;
+            
             switch ($filearr['type']['file'])
             {
                 case 'image/jpeg':
@@ -387,7 +391,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
                     break;
                     
                 case 'image/gif':
-                    $image = imagecreatefromgif($fileName);
+                    $image = imagecreatefromgif($pfad.$filename);
                     
                     $original_width = imagesx($image);
                     $original_height = imagesy($image);
@@ -403,7 +407,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
                     break;
                     
                 case 'image/png':
-                    $image = imagecreatefrompng($fileName);
+                    $image = imagecreatefrompng($pfad.$filename);
                     
                     $original_width = imagesx($image);
                     $original_height = imagesy($image);
@@ -417,11 +421,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
                     imagedestroy($new_image);
                     return $new_file_name;
                     break;
-                    
                 //case 'application/pdf':
-                    // MPDF per composer einbinden - wenn nicht vorhanden, dann s.u.
-                   
-                  
                 default:                    
                     break;
             }
