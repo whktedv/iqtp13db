@@ -119,8 +119,9 @@ $(document).ready(function() {
 	  $("#exportfilterform").submit(); 
 	});
 	
-
+	
 });
+
 
 $(function ($) {
     $.datepicker.setDefaults($.datepicker.regional["de"]);

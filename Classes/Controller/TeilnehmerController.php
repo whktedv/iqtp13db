@@ -886,7 +886,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'jahre' => $jahre,
                 'showabschluesse' => $valArray['showabschluesse'] ?? '0',
                 'showdokumente' => $valArray['showdokumente'] ?? '0',
-                'edituserfield' => $edituserfield
+                'edituserfield' => $edituserfield ?? ''
             ]
             );
     }
@@ -1259,7 +1259,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         } elseif($fberatungsstatus == 12) {
             $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer(2, 0, $filtervon, $filterbis, $this->niqbid);
         } elseif($fberatungsstatus == 11) {
-            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer(1, 0, $filtervon, $filterbis, $this->niqbid);        
+            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer(1, 0, $filtervon, $filterbis, $this->niqbid);
         } else {
             $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer(0, 1, $filtervon, $filterbis, $this->niqbid);
         }
@@ -1277,8 +1277,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 $props = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getGettablePropertyNames($tn);
                 
                 $berater = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'berater');
-                
+                $rows = array();
                 foreach ($props as $prop) {
+                    $rows[$x] = array();
                     $rows[$x]['verificationDate'] = date('d.m.Y H:i:s', \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'verificationDate'));
                     $rows[$x]['Nachname'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'nachname');
                     $rows[$x]['Vorname'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'vorname');
@@ -1286,11 +1287,23 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     $rows[$x]['Ort'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'ort');
                     $rows[$x]['Email'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'email');
                     $rows[$x]['Telefon'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'telefon');
-                    $rows[$x]['erwerbsstatus'] = $arrerwerbsstatus[\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'erwerbsstatus')];
-                    $rows[$x]['Leistungsbezugjanein'] = $arrjanein[\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'leistungsbezugjanein')];
-                    $rows[$x]['Leistungsbezug'] = $arrleistungsbezug[\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'leistungsbezug')];
-                    $rows[$x]['Geburtsland'] = $arrstaaten[\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'geburtsland')];
-                    $rows[$x]['aufenthaltsstatus'] = $arraufenthaltsstatus[\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'aufenthaltsstatus')];
+                    
+                    $tnerwerbsstatus = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'erwerbsstatus');
+                    $rows[$x]['erwerbsstatus'] = $tnerwerbsstatus == 0 ? '' : $arrerwerbsstatus[$tnerwerbsstatus];
+                    
+                    $tnleistungsbezugjanein = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'leistungsbezugjanein');
+                    $rows[$x]['Leistungsbezugjanein'] = $tnleistungsbezugjanein == 0 ? '' : $arrjanein[$tnleistungsbezugjanein];
+                    
+                    $tnleistungsbezug = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'leistungsbezug');
+                    $rows[$x]['Leistungsbezug'] = $tnleistungsbezug == '' ? '' : $arrleistungsbezug[$tnleistungsbezug];
+                    
+                    $tngeburtsland = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'geburtsland');
+                    $rows[$x]['Geburtsland'] = $tngeburtsland == '' ? '' : $arrstaaten[$tngeburtsland];
+                    
+                    $tnaufenthaltsstatus = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'aufenthaltsstatus');
+                    //DebuggerUtility::var_dump($tnaufenthaltsstatus);
+                    $rows[$x]['aufenthaltsstatus'] = $tnaufenthaltsstatus == 0 ? '' : $arraufenthaltsstatus[$tnaufenthaltsstatus];
+                    
                     $geschlecht = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'geschlecht');
                     if($geschlecht == 1) $geschlecht = 'w';
                     if($geschlecht == 2) $geschlecht = 'm';
@@ -1302,10 +1315,16 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     $rows[$x]['Beraterin'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($berater, 'username');
                 }
                 
-                foreach (\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungsart') as $atn) $rows[$x]['beratungsart'] .= $arrberatungsart[$atn]." ";
-                foreach (\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'anerkennungsberatung') as $atn) $rows[$x]['anerkennungsberatung'] .= $arranerkennungsberatung[$atn]." ";
-                foreach (\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'qualifizierungsberatung') as $atn) $rows[$x]['qualifizierungsberatung'] .= $arrqualifizierungsberatung[$atn]." ";
-                $rows[$x]['nameberatungsstelle'] = $arrberatungsstelle[\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'name_beratungsstelle')];
+                $rows[$x]['beratungsart'] = '';
+                foreach (\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungsart') as $atn) $rows[$x]['beratungsart'] .= $atn == '' ? '' : $arrberatungsart[$atn]." ";
+                $rows[$x]['anerkennungsberatung'] = '';
+                foreach (\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'anerkennungsberatung') as $atn) $rows[$x]['anerkennungsberatung'] .= $atn == '' ? '' : $arranerkennungsberatung[$atn]." ";
+                $rows[$x]['qualifizierungsberatung'] = '';
+                foreach (\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'qualifizierungsberatung') as $atn) $rows[$x]['qualifizierungsberatung'] .= $atn == '' ? '' : $arrqualifizierungsberatung[$atn]." ";
+                
+                $tnnameberatungsstelle = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'name_beratungsstelle');
+                $rows[$x]['nameberatungsstelle'] = $tnnameberatungsstelle == '' ? '' : $arrberatungsstelle[$tnnameberatungsstelle];
+                
                 $rows[$x]['beratungzuschulabschluss'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungzu');
                 
                 $rows[$x]['AnzFolgekontakte'] = $anzfolgekontakte[$x];
@@ -1313,10 +1332,17 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 foreach($abschluesse[$x] as $y => $abschluss) {
                     $aprops = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getGettablePropertyNames($abschluss);
                     
-                    $rows[$x]['Abschluss'.$y.' Referenzberufzugewiesen'] = $arrberufe[\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'referenzberufzugewiesen')];
-                    foreach (\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'abschlussart') as $atn) $rows[$x]['Abschluss'.$y.' Abschlussart'] .= $arrabschlussart[$atn]." ";
-                    $rows[$x]['Abschluss'.$y.' Erwerbsland'] = $arrstaaten[\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'erwerbsland')];
-                    $rows[$x]['Abschluss'.$y.' Antragstellungerfolgt'] = $arrantragstellungerfolgt[\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'antragstellungerfolgt')];
+                    $abreferenzberufzugewiesen = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'referenzberufzugewiesen');
+                    $rows[$x]['Abschluss'.$y.' Referenzberufzugewiesen'] = $abreferenzberufzugewiesen == '' ? '' : $arrberufe[$abreferenzberufzugewiesen];
+                    
+                    $rows[$x]['Abschluss'.$y.' Abschlussart'] = '';
+                    foreach (\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'abschlussart') as $atn) $rows[$x]['Abschluss'.$y.' Abschlussart'] .= $atn == '' ? '' : $arrabschlussart[$atn]." ";
+                    
+                    $aberwerbsland = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'erwerbsland');
+                    $rows[$x]['Abschluss'.$y.' Erwerbsland'] = $aberwerbsland == '' ? '' : $arrstaaten[$aberwerbsland];
+                    
+                    $abantragstellungerfolgt = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'antragstellungerfolgt');
+                    $rows[$x]['Abschluss'.$y.' Antragstellungerfolgt'] = $abantragstellungerfolgt == 0 ? '' : $arrantragstellungerfolgt[$abantragstellungerfolgt];
                     
                 }
                 //$x++;

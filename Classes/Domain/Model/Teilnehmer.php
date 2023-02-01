@@ -2057,7 +2057,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param \Ud\Iqtp13db\Domain\Model\Berater $berater
      * @return void
      */
-    public function setBerater(\Ud\Iqtp13db\Domain\Model\Berater $berater)
+    public function setBerater(\Ud\Iqtp13db\Domain\Model\Berater $berater = NULL)
     {
         $this->berater = $berater;
     }

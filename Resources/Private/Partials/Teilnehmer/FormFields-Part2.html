@@ -10,7 +10,7 @@
 		<div class="tp13_formdivwebapp">
 			<label for="datum">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungdatum" />
-				<span class="niqfield" />
+				<span class="niqfield" /> 
 			</label>
 				<f:form.textfield class="datumtextfieldberatung" name="teilnehmer[beratungdatum]" value="{teilnehmer.beratungdatum}" />&nbsp;<span class="hintdatumformat">(JJJJ-MM-TT)</span>
 		</div>
@@ -18,7 +18,7 @@
 			<label for="berater">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.berater" />
 			</label>
-				<f:form.select property="berater" options="{alleberater}" optionLabelField="username" optionValueField="uid" prependOptionLabel="{berater.username}" prependOptionValue="{berater.uid}" sortByOptionLabel="1" />	
+				<f:form.select property="berater" options="{alleberater}" optionLabelField="username" optionValueField="uid" prependOptionLabel="-" prependOptionValue="0" sortByOptionLabel="1" />	
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="beratungsart">
