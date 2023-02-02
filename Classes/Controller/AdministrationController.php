@@ -197,8 +197,15 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         $alleberatungsstellen = $this->userGroupRepository->findAllBeratungsstellen($this->settings['beraterstoragepid']);
         
         $anzberater = array();
+        $anzratsuchendeanmeld = array();
+        $anzratsuchendeerstb = array();
+        $anzratsuchendearch = array();
         foreach ($alleberatungsstellen as $bst) {
             $anzberater[$bst->getUid()] = 0;
+            $anzratsuchendeanmeld[$bst->getUid()] = count($this->teilnehmerRepository->findAllOrder4Status(0, $bst->getNiqbid())) + count($this->teilnehmerRepository->findAllOrder4Status(1, $bst->getNiqbid()));
+            $anzratsuchendeerstb[$bst->getUid()] = count($this->teilnehmerRepository->findAllOrder4Status(2, $bst->getNiqbid())) + count($this->teilnehmerRepository->findAllOrder4Status(3, $bst->getNiqbid()));
+            $anzratsuchendearch[$bst->getUid()] = count($this->teilnehmerRepository->findAllOrder4Status(4, $bst->getNiqbid()));
+            
             foreach ($alleberater as $brtr) {
                 foreach ($brtr->getUsergroup() as $onegrp) {
                     if($onegrp->getUid() == $bst->getUid()) {
@@ -235,7 +242,10 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 'anzberatungsstellen' => count($alleberatungsstellen),
                 'alleberatungsstellen' => $alleberatungsstellen,
                 'anzalleberater' => count($alleberater),
-                'anzberater' => $anzberater
+                'anzberater' => $anzberater,
+                'anzratsuchendeanmeld' => $anzratsuchendeanmeld,
+                'anzratsuchendeerstb' => $anzratsuchendeerstb,
+                'anzratsuchendearch' => $anzratsuchendearch
             ]
             );
     }

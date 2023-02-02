@@ -17,11 +17,17 @@
 	<th>Name Beratungsstelle</th>
 	<th>NIQBID</th>
 	<th>Anzahl Berater:innen</th>
+	<th>Anzahl Angemeldet</th>
+	<th>Anzahl in Beratung</th>
+	<th>Anzahl im Archiv</th>
 	<f:for each="{alleberatungsstellen}" as="beratungsstelle" iteration="iter">
 		<tr>
 			<td>{beratungsstelle.title}</td>
 			<td>{beratungsstelle.niqbid}</td>
 			<td>{anzberater.{beratungsstelle.uid}}</td>
+			<td>{anzratsuchendeanmeld.{beratungsstelle.uid}}</td>
+			<td>{anzratsuchendeerstb.{beratungsstelle.uid}}</td>
+			<td>{anzratsuchendearch.{beratungsstelle.uid}}</td>
 		</tr>
 	</f:for>
 	

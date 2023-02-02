@@ -1534,10 +1534,10 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function startseiteAction()
     {
         $valArray = $this->request->getArguments();
-        $beratungsstellenname = $valArray['beratung'] ?? '';
-        if($beratungsstellenname != '') {
+        $beratungsstellenid = $valArray['beratung'] ?? '';
+        if($beratungsstellenid != '') {
             foreach ($this->allusergroups as $group) {
-                if(strtolower($group->getTitle()) == $beratungsstellenname) {
+                if($group->getNiqbid() == $beratungsstellenid) {
                     $this->view->assign('beratungsstelle', $group->getNiqbid());
                     $GLOBALS['TSFE']->fe_user->setKey('ses', 'beratungsstellenid', $group->getNiqbid());
                 }
@@ -1566,31 +1566,44 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function anmeldseite1Action(\Ud\Iqtp13db\Domain\Model\TNSeite1 $tnseite1 = NULL)
     {
         $valArray = $this->request->getArguments();
+        //DebuggerUtility::var_dump($valArray);
+          
+        //$iswebappplz = $this->isWebappPLZ($valArray['wohnsitzDeutschland']);
+        $iswebappplz = false;
         
-        if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnseite1') && $tnseite1 == NULL) {
-            $tnseite1 = unserialize($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnseite1'));
+        if($valArray['wohnsitzDeutschland'] == 2) {
+            $this->redirectToURI('https://staging.iq-webapp.de/frontend-iq-webapp/anmeldung/anmeldung-zsba', $delay=0, $statusCode=303);
+            
+        } elseif($valArray['wohnsitzDeutschland'] == 1 && !$iswebappplz) {
+            $this->redirectToURI('https://staging.iq-webapp.de/frontend-iq-webapp/anmeldung/anmeldung-nicht-webapp', $delay=0, $statusCode=303);            
+        
+        } else {
+        
+            if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnseite1') && $tnseite1 == NULL) {
+                $tnseite1 = unserialize($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnseite1'));
+            }
+            
+            $staatsangehoerigkeitstaaten = $this->settings['staaten'];
+            $wohnsitzstaaten = $this->settings['staaten'];
+            unset($wohnsitzstaaten[201]);
+            
+            $altervonbis[-1000] = '-';
+            $altervonbis[-1] = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('ka', 'iqtp13db');
+            for ($i = 15; $i <= 80; $i++) {
+                $altervonbis[$i] = $i;
+            }
+            
+            $this->view->assignMultiple(
+                [
+                    'altervonbis' => $altervonbis,
+                    'staatsangehoerigkeitstaaten' => $staatsangehoerigkeitstaaten,
+                    'wohnsitzstaaten' => $wohnsitzstaaten,
+                    'tnseite1' => $tnseite1,
+                    'settings' => $this->settings,
+                    'beratungsstelle' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid')
+                ]
+                );
         }
-        
-        $staatsangehoerigkeitstaaten = $this->settings['staaten'];
-        $wohnsitzstaaten = $this->settings['staaten'];
-        unset($wohnsitzstaaten[201]);
-        
-        $altervonbis[-1000] = '-';
-        $altervonbis[-1] = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('ka', 'iqtp13db');
-        for ($i = 15; $i <= 80; $i++) {
-            $altervonbis[$i] = $i;
-        }
-        
-        $this->view->assignMultiple(
-            [
-                'altervonbis' => $altervonbis,
-                'staatsangehoerigkeitstaaten' => $staatsangehoerigkeitstaaten,
-                'wohnsitzstaaten' => $wohnsitzstaaten,
-                'tnseite1' => $tnseite1,
-                'settings' => $this->settings,
-                'beratungsstelle' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid')
-            ]
-            );
     }
     
     /**

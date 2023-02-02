@@ -14,7 +14,29 @@
 	<div class="defaultframe">
 		<div class="frame-inner">
 			<f:format.html><f:translate key="tx_iqtp13db_domain_model_teilnehmer.startseitetext" /></f:format.html>
-			<f:link.action class="linkbuttons" action="anmeldseite1">&gt;&gt; <f:translate key="tx_iqtp13db_domain_model_teilnehmer.linkanmeldeseitetext" /></f:link.action>		
+			
+			<f:form id="anmeldform" method="post" controller="Teilnehmer" action="anmeldseite1" >
+			
+			
+				<div id="divanmeldwohnsitz">
+					<label class="tp13_options" for="wohnsitzDeutschland">
+						<f:translate key="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_deutschland" />				
+					</label>
+					<div class="tp13_formdivwebappradio"><f:form.radio id="checkwohnsitzDeutschland1" name="wohnsitzDeutschland" value="1" /><span class="abschlussradiotext"><f:translate key="ja" /></span></div>
+					<div class="tp13_formdivwebappradio"><f:form.radio id="checkwohnsitzDeutschland2" name="wohnsitzDeutschland" value="2" /><span class="abschlussradiotext"><f:translate key="nein" /></span></div>				
+				</div>
+				
+				<div id="divanmeldplz">
+					<label for="plz">
+							<f:translate key="tx_iqtp13db_domain_model_teilnehmer.plz" />
+					</label>
+					<f:form.textfield size="8" class="anmeldplztextfield" id="anmeldplz" name="plz"/>
+				</div>
+				
+				<f:form.submit class="linkbuttons" name="anmeld" value=">> {f:translate(key: 'tx_iqtp13db_domain_model_teilnehmer.linkanmeldeseitetext')}" />
+			</f:form> 
+		
+			<!-- <f:link.action class="linkbuttons" action="anmeldseite1">&gt;&gt; <f:translate key="tx_iqtp13db_domain_model_teilnehmer.linkanmeldeseitetext" /></f:link.action> -->		
 		</div>
 	</div>
 </div>
