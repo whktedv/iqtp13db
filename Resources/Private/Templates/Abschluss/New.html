@@ -12,12 +12,12 @@
 
 <f:form action="create" name="abschluss" object="{abschluss}" arguments="{teilnehmer: teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : thisaction}">
 	<f:form.submit class="linkbuttons" value="Speichern" id="savebutton1"/>
-	<f:link.action class="linkbuttons" action="{thisaction}" controller="Teilnehmer" arguments="{teilnehmer: teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, showabschluesse : 1}">Zurück</f:link.action>
+	<f:link.action id="linkloadoverlay-back" class="linkbuttons" action="{thisaction}" controller="Teilnehmer" arguments="{teilnehmer: teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, showabschluesse : 1}">Zurück</f:link.action>
 	
 	<f:render partial="Abschluss/FormFields" arguments="{abschlussjahre:abschlussjahre}" />
 	
 	<f:form.submit class="linkbuttons" value="Speichern" id="savebutton2"/>
-	<f:link.action class="linkbuttons" action="{thisaction}" controller="Teilnehmer" arguments="{teilnehmer: teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, showabschluesse : 1}">Zurück</f:link.action>
+	<f:link.action id="linkloadoverlay-edit" class="linkbuttons" action="{thisaction}" controller="Teilnehmer" arguments="{teilnehmer: teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, showabschluesse : 1}">Zurück</f:link.action>
 </f:form>
 
 </f:section>

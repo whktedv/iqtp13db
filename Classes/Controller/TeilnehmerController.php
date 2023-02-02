@@ -180,6 +180,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         if ($this->settings['modtyp'] == 'deleted') {
             $this->forward('listdeleted', 'Teilnehmer', 'Iqtp13db');
         }
+        if ($this->settings['modtyp'] == 'adminuebersicht') {
+            $this->forward('adminuebersicht', 'Administration', 'Iqtp13db');
+        }
         if ($this->settings['modtyp'] == 'anmeldung') {
             if($datum >= $wartungvon->getTimestamp() AND $datum <= $wartungbis->getTimestamp())
             {
@@ -1054,7 +1057,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     {
         $valArray = $this->request->getArguments();
         
-        $berater = $this->beraterRepository->findByUid($this->user);
+        $berater = $this->beraterRepository->findByUid($this->user['uid']);
         
         $teilnehmer->setBerater($berater);
         $this->teilnehmerRepository->update($teilnehmer);
@@ -1153,6 +1156,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         
         $thisdate = new DateTime();
         $zeitstempel = $thisdate->format('d.m.Y - H:i:s');
+        $zeitstempel4filename = $thisdate->format('dmY-Hi');
         
         $this->view->assign('teilnehmer', $teilnehmer);
         $this->view->assign('abschluesse', $abschluesse);
@@ -1185,7 +1189,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $mpdf->WriteHTML($htmlcode,\Mpdf\HTMLParserMode::HTML_BODY);
         
         $pfad = $this->generalhelper->createFolder($teilnehmer, $this->settings['standardniqidberatungsstelle'], $this->allusergroups, $this->storageRepository->findAll());
-        $filename = 'DB-' .$this->generalhelper->sanitizeFileFolderName($teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid()). '.pdf';
+        $filename = 'DB-' .$this->generalhelper->sanitizeFileFolderName($teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid()). '_' . $zeitstempel4filename. '.pdf';
         $storage = $this->generalhelper->getTP13Storage( $this->storageRepository->findAll());
         
         $niqbid = $this->niqbid;
@@ -1198,7 +1202,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         // ******* Als Dokument speichern, damit aus Webapp abrufbar *******
         $dokument = new \Ud\Iqtp13db\Domain\Model\Dokument();
         
-        $dokument->setBeschreibung("DATENBLATT");
+        $dokument->setBeschreibung("DATENBLATT vom ".$zeitstempel);
         $dokument->setName($filename);
         $dokument->setPfad($beratungsstellenfolder. '/' .$pfad->getName().'/');
         $dokument->setTeilnehmer($teilnehmer);

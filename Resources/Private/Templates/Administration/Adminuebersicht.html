@@ -1,0 +1,112 @@
+<f:section name="HeaderAssets">
+  		<link rel="stylesheet" href="{f:uri.resource(path: 'CSS/customtp13dbadmin.css')}"/>  		
+</f:section>
+
+<f:layout name="Default" />
+
+<f:section name="main">
+
+<div class="uebersicht-beratungsstelle">
+	<div><span class="label-beratungsstelle">Anzahl Beratungsstellen gesamt:</span> <span class="value-beratungsstelle">{anzberatungsstellen}</span></div>
+	<div><span class="label-beratungsstelle">Anzahl Berater:innen gesamt:</span> <span class="value-beratungsstelle">{anzalleberater}</span></div>
+</div>
+
+<h1>Beratungsstellen</h1>
+
+<table class="beratungsstellen">
+	<th>Name Beratungsstelle</th>
+	<th>NIQBID</th>
+	<th>Anzahl Berater:innen</th>
+	<f:for each="{alleberatungsstellen}" as="beratungsstelle" iteration="iter">
+		<tr>
+			<td>{beratungsstelle.title}</td>
+			<td>{beratungsstelle.niqbid}</td>
+			<td>{anzberater.{beratungsstelle.uid}}</td>
+		</tr>
+	</f:for>
+	
+</table>
+
+<h1>Ratsuchende aktuell</h1>
+
+<table class="uebersicht-status">
+	<tr>
+		<td>Anmeldungen wartend</td>
+		<td>{aktuelleanmeldungen}</td>
+	</tr>
+	<tr>
+		<td>Erstberatungen laufend</td>
+		<td>{aktuellerstberatungen}</td>
+	</tr>
+	<tr>
+		<td>Erstberatungen abgeschlossen</td>
+		<td>{aktuellberatungenfertig}</td>
+	</tr>
+	<tr>
+		<td>Total archiviert</td>
+		<td>{archivierttotal}</td>
+	</tr>
+</table>
+<br>
+<h2>Statistik letzte 12 Monate alle Beratungsstellen</h2>
+<table class="uebersicht-statistik">
+	<tr>
+		<th></th>
+		<f:for each="{monatsnamen}" as="monat" iteration="iter">
+			<th {f:if(condition: '{iter.index} == {aktmonat}', then: 'style="background-color: #ffcaf2;"')}> {monat}</th>
+		</f:for>
+		<th>Summe</th>
+	</tr>
+	<tr>
+		<th>Anmeldungen<br>(wartend)</th>
+		<f:for each="{angemeldeteTN}" as="tn" iteration="iter">
+			<td {f:if(condition: '{iter.index} == {aktmonat}', then: 'style="background-color: #ffcaf2;"')}>{tn}</td>
+		</f:for>
+		<td>{SUMangemeldeteTN}</td>
+	</tr>
+	<tr>
+		<th>Erstberatungen</th>
+		<f:for each="{erstberatung}" as="eb" iteration="iter">
+			<td {f:if(condition: '{iter.index} == {aktmonat}', then: 'style="background-color: #ffcaf2;"')}>{eb}</td>
+		</f:for>
+		<td>{SUMerstberatung}</td>
+	</tr>
+	<tr>
+		<th>Folgekontakte</th>
+		<f:for each="{qfolgekontakte}" as="qf" iteration="iter">
+			<td {f:if(condition: '{iter.index} == {aktmonat}', then: 'style="background-color: #ffcaf2;"')}>{qf}</td>
+		</f:for>
+		<td>{SUMqfolgekontakte}</td>
+	</tr>
+	<tr>
+		<th>Beratungen fertig</th>
+		<f:for each="{beratungfertig}" as="bf" iteration="iter">
+			<td {f:if(condition: '{iter.index} == {aktmonat}', then: 'style="background-color: #ffcaf2;"')}>{bf}</td>
+		</f:for>
+		<td>{SUMberatungfertig}</td>
+	</tr>
+	<tr>
+		<th>davon NIQ erfasst</th>
+		<f:for each="{niqerfasst}" as="ni" iteration="iter">
+			<td {f:if(condition: '{iter.index} == {aktmonat}', then: 'style="background-color: #ffcaf2;"')}>{ni}</td>
+		</f:for>
+		<td>{SUMniqerfasst}</td>
+	</tr>
+		<tr>
+		<th>&Oslash; Tage Wartezeit</th>
+		<f:for each="{totalavgmonthw}" as="avgw" iteration="iter">
+			<td {f:if(condition: '{iter.index} == {aktmonat}', then: 'style="background-color: #ffcaf2;"')}><f:format.number>{avgw}</f:format.number></td>
+		</f:for>
+		<td><f:format.number>{SUMtotalavgmonthw}</f:format.number></td>
+	</tr>
+	</tr>
+		<tr>
+		<th>&Oslash; Tage Beratungsdauer</th>
+		<f:for each="{totalavgmonthb}" as="avgb" iteration="iter">
+			<td {f:if(condition: '{iter.index} == {aktmonat}', then: 'style="background-color: #ffcaf2;"')}><f:format.number>{avgb}</f:format.number></td>
+		</f:for>
+		<td><f:format.number>{SUMtotalavgmonthb}</f:format.number></td>
+	</tr>
+</table>
+
+</f:section>

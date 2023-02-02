@@ -458,6 +458,18 @@ form.filterform div {
   margin-top: 0rem;
 }
 
+#overlay {
+  background: #2d2d2d;
+  opacity: .4;
+}
+
+.overlay-inner {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -100px;
+	margin-top: -100px;
+}
 
 @media print {
   body {

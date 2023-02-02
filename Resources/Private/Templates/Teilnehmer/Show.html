@@ -7,8 +7,6 @@
 
 <f:section name="main">
 
-<f:flashMessages />
-
 <f:if condition="{showabschluesse} == '1'">
 <f:then>
 	<script>
@@ -34,9 +32,9 @@
 
 <div class="buttonmenu">
 	<div class="toplinkbuttons">
-		<f:link.action class="linkbuttons" action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">Bearbeiten</f:link.action>
-		<f:link.action class="linkbuttons" action="savedatenblattpdf" controller="{callercontroller}" arguments="{teilnehmer:teilnehmer, callerpage : callerpage}">Datenblatt speichern (PDF)</f:link.action>
-		<f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}" arguments="{callerpage : callerpage}">Zurück zur Liste</f:link.action>
+		<f:link.action id="linkloadoverlay-edit" class="linkbuttons" action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">Bearbeiten</f:link.action>
+		<f:link.action id="linkloadoverlay-savedb" class="linkbuttons" action="savedatenblattpdf" controller="{callercontroller}" arguments="{teilnehmer:teilnehmer, callerpage : callerpage}">Datenblatt speichern (PDF)</f:link.action>
+		<f:link.action id="linkloadoverlay-back" class="linkbuttons" action="{calleraction}" controller="{callercontroller}" arguments="{callerpage : callerpage}">Zurück zur Liste</f:link.action>
 	</div>
 	<div class="ankerbuttons">		
 			<a href="#AnkerBeratung" class="linkbuttons buttonberatung" >Beratung anzeigen</a>
@@ -47,11 +45,16 @@
 
 <div class="show-eingabefelder">
 <h1>Daten Ratsuchende*r UID: {teilnehmer.uid}</h1>
+
+<f:flashMessages />
+
 	<f:render partial="Teilnehmer/Properties" arguments="{teilnehmer:teilnehmer, historie : historie}" />
 </div>
 
 <f:render partial="Abschluss/Abschluss4Teilnehmer" arguments="{teilnehmer : teilnehmer, abschluesse: abschluesse, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : 'show'}" />
 
 <f:render partial="Dokument/Dokumente4Teilnehmer" arguments="{teilnehmer : teilnehmer, dokumente: dokumente, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, dokumentpfad : dokumentpfad, thisaction : 'show'}" />
+
+<f:flashMessages />
 
 </f:section>

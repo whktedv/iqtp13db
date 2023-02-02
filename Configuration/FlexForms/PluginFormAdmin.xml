@@ -41,6 +41,10 @@
    				<numIndex index="7" type="array">
       				<numIndex index="0">Gelöscht</numIndex>
      				<numIndex index="1">deleted</numIndex>
+   				</numIndex>
+   				<numIndex index="8" type="array">
+      				<numIndex index="0">Admin-Übersicht</numIndex>
+     				<numIndex index="1">adminuebersicht</numIndex>
    				</numIndex>		  
    						  	  
    				</items>

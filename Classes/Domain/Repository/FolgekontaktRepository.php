@@ -36,7 +36,7 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 		$query->statement("SELECT * FROM tx_iqtp13db_domain_model_folgekontakt as a LEFT JOIN tx_iqtp13db_domain_model_teilnehmer as b ON a.teilnehmer = b.uid WHERE 
 				DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),STR_TO_DATE(a.datum, '%d.%m.%Y')) <= 0 AND
 				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),STR_TO_DATE(a.datum, '%d.%m.%Y')) >= 0
-                AND a.deleted = 0 AND b.niqidberatungsstelle LIKE $niqbid"); 
+                AND a.deleted = 0 AND b.niqidberatungsstelle LIKE '$niqbid'"); 
 		$query = $query->execute();
 		
 		return count($query);

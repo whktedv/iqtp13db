@@ -57,31 +57,6 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     }
     
     /**
-     * action saveFileTeilnehmer
-     *
-     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
-     * @return void
-     */
-    public function saveFileTeilnehmerAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
-    {        
-        $this->saveFileTeilnehmer($teilnehmer, $_FILES['tx_iqtp13db_iqtp13dbadmin']);
-        $this->redirect('show', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
-    }
-
-    /**
-     * action deleteFileTeilnehmer
-     *
-     * @param \Ud\Iqtp13db\Domain\Model\Dokument $dokument
-     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
-     * @return void
-     */
-    public function deleteFileAction(\Ud\Iqtp13db\Domain\Model\Dokument $dokument, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
-    {
-        $this->deleteFile($dokument, $teilnehmer);
-        $this->redirect('show', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
-    }
-    
-    /**
      * action saveFileBackend
      *
      * @param \Ud\Iqtp13db\Domain\Model\Dokument $dokument
@@ -136,9 +111,39 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     {
         $valArray = $this->request->getArguments();
         
-        $this->deleteFileTeilnehmer($dokument, $teilnehmer);
-        return (new ForwardResponse($valArray['thisaction']))->withControllerName('Teilnehmer')->withArguments(['teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'] ?? 'edit', 'callercontroller' => $valArray['callercontroller'] ?? 'Teilnehmer', 'callerpage' => $valArray['callerpage'] ?? '1', 'showdokumente' => '1']) ;
+        $retval = $this->deleteFileTeilnehmer($dokument, $teilnehmer);
+        return (new ForwardResponse($valArray['thisaction']))->withControllerName('Teilnehmer')->withArguments(['teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'] ?? 'edit', 'callercontroller' => $valArray['callercontroller'] ?? 'Teilnehmer', 'callerpage' => $valArray['callerpage'] ?? '1', 'showdokumente' => $retval]) ;
     }
+    
+    /**
+     * action openfile
+     *
+     * @param \Ud\Iqtp13db\Domain\Model\Dokument $dokument
+     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
+     * @return void
+     */
+    public function openfileAction(\Ud\Iqtp13db\Domain\Model\Dokument $dokument, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    {
+        $storage = $this->generalhelper->getTP13Storage($this->storageRepository->findAll());
+        $beratenepath = $dokument->getPfad();
+        $tmpName = $dokument->getName();
+        
+        if($storage->getConfiguration()['pathType'] == 'relative') {
+            $folder = $storage->getFolder($beratenepath);
+            $targetfile = $folder->getStorage()->getFileInFolder($tmpName, $folder);
+        } else {
+            $targetfile = $storage->getFile($beratenepath . $tmpName);
+        }
+        
+        $queryParameterArray = ['eID' => 'dumpFile', 't' => 'f'];
+        $queryParameterArray['f'] = $targetfile->getUid();
+        $queryParameterArray['token'] = GeneralUtility::hmac(implode('|', $queryParameterArray), 'resourceStorageDumpFile');
+        $publicUrl = GeneralUtility::locationHeaderUrl(PathUtility::getAbsoluteWebPath(Environment::getPublicPath() . '/index.php'));
+        $publicUrl .= '?' . http_build_query($queryParameterArray, '', '&', PHP_QUERY_RFC3986);
+        
+        $this->redirectToURI($publicUrl, $delay=0, $statusCode=303);
+    }
+    
     
     /**
      * action initdeleteFileWebapp
@@ -180,7 +185,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      */
     public function deleteFileWebappAction(\Ud\Iqtp13db\Domain\Model\Dokument $dokument, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
-        $this->deleteFileTeilnehmer($dokument, $teilnehmer);
+        $retval = $this->deleteFileTeilnehmer($dokument, $teilnehmer);
         return (new ForwardResponse('anmeldungcomplete'))->withControllerName('Teilnehmer');
     }
 
@@ -228,29 +233,34 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      *
      * @param \Ud\Iqtp13db\Domain\Model\Dokument $dokument
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
-     * @return void
+     * @return boolean
      */
     public function deleteFileTeilnehmer(\Ud\Iqtp13db\Domain\Model\Dokument $dokument, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     { 
         $storage = $this->generalhelper->getTP13Storage($this->storageRepository->findAll());
-        $pfad = $this->generalhelper->createFolder($teilnehmer, $this->settings['standardniqidberatungsstelle'], $this->allusergroups, $this->storageRepository->findAll());
-        $beratenepath = $pfad->getIdentifier();
         
-    	$tmpName = $dokument->getName();
-        $fullpath = $storage->getConfiguration()['basePath'] .$beratenepath . $tmpName;
+//         $pfad = $this->generalhelper->createFolder($teilnehmer, $this->settings['standardniqidberatungsstelle'], $this->allusergroups, $this->storageRepository->findAll());
+//         $beratenepath = $pfad->getIdentifier();
+//     	$tmpName = $dokument->getName();
+//         $fullpath = $storage->getConfiguration()['basePath'] .$beratenepath . $tmpName;
+        
+        $fullpath = $storage->getConfiguration()['basePath'].'/'.$dokument->getPfad().$dokument->getName();
         
         if (file_exists($fullpath)) {
-            if ($this->deletefile($dokument, $beratenepath . $tmpName)) {   
+            if ($this->deletefile($dokument)) {   
                 
                 $anzdokumente = count($this->dokumentRepository->findByTeilnehmer($teilnehmer->getUid()));
                 $this->teilnehmerRepository->update($teilnehmer);
                 
                 $this->addFlashMessage('Dokument wurde gelöscht.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+                return true;
             } else {
                 $this->addFlashMessage('Dokument konnte nicht gelöscht werden!', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                return false;
             }
         } else {
-            $this->addFlashMessage('Datei nicht gefunden. Pfad: '.$fullpath, '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->addFlashMessage('Datei mit ID '.$dokument->getUid().' nicht gefunden. Pfad: '.$fullpath, '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            return false;
         }
     }
 
@@ -306,10 +316,9 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      * delete file
      *
      * @param \Ud\Iqtp13db\Domain\Model\Dokument $dokument
-     * @param string $delfilepath
      * @return boolean
      */
-    public function deletefile(\Ud\Iqtp13db\Domain\Model\Dokument $dokument, $delfilepath)
+    public function deletefile(\Ud\Iqtp13db\Domain\Model\Dokument $dokument)
     {                
         $this->dokumentRepository->remove($dokument);
         
@@ -318,41 +327,13 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $persistenceManager->persistAll();
         
         $storage = $this->generalhelper->getTP13Storage( $this->storageRepository->findAll());
-        $delfile = $storage->getFile($delfilepath);
+        $delfile = $storage->getFile('/'.$dokument->getPfad().$dokument->getName());
         $erg = $storage->deleteFile($delfile);
         
         return $erg;
     }
 
-    /**
-     * action openfile
-     *
-     * @param \Ud\Iqtp13db\Domain\Model\Dokument $dokument
-     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
-     * @return void
-     */
-    public function openfileAction(\Ud\Iqtp13db\Domain\Model\Dokument $dokument, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
-    {
-        $storage = $this->generalhelper->getTP13Storage($this->storageRepository->findAll());
-        $beratenepath = $dokument->getPfad();        
-        $tmpName = $dokument->getName();
-        
-        if($storage->getConfiguration()['pathType'] == 'relative') {
-            $folder = $storage->getFolder($beratenepath);
-            $targetfile = $folder->getStorage()->getFileInFolder($tmpName, $folder);
-        } else {
-            $targetfile = $storage->getFile($beratenepath . $tmpName);
-        }
-        
-        $queryParameterArray = ['eID' => 'dumpFile', 't' => 'f'];
-        $queryParameterArray['f'] = $targetfile->getUid();
-        $queryParameterArray['token'] = GeneralUtility::hmac(implode('|', $queryParameterArray), 'resourceStorageDumpFile');
-        $publicUrl = GeneralUtility::locationHeaderUrl(PathUtility::getAbsoluteWebPath(Environment::getPublicPath() . '/index.php'));
-        $publicUrl .= '?' . http_build_query($queryParameterArray, '', '&', PHP_QUERY_RFC3986);
-                
-        $this->redirectToURI($publicUrl, $delay=0, $statusCode=303);
-    }
-    
+   
     /**
      * 
      * Reduce file size on upload of file
@@ -376,50 +357,62 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
             {
                 case 'image/jpeg':
                     $image = imagecreatefromjpeg($pfad.$filename);
-
-                    $original_width = imagesx($image);
-                    $original_height = imagesy($image);
-                    $newwidth = $original_width * ($percent / 100);
-                    $newheight = $original_height * ($percent / 100);
-                    $new_image = imagecreatetruecolor($newwidth, $newheight);
-                    imagecopyresampled($new_image, $image, 0, 0, 0, 0, $newwidth, $newheight, $original_width, $original_height);
                     
-                    imagejpeg($new_image, $pfad . $new_file_name, 90);
-                    imagedestroy($image);
-                    imagedestroy($new_image);
-                    return $new_file_name;
+                    if($image) {
+                        $original_width = imagesx($image);
+                        $original_height = imagesy($image);
+                        $newwidth = $original_width * ($percent / 100);
+                        $newheight = $original_height * ($percent / 100);
+                        $new_image = imagecreatetruecolor($newwidth, $newheight);
+                        imagecopyresampled($new_image, $image, 0, 0, 0, 0, $newwidth, $newheight, $original_width, $original_height);
+                        
+                        $retval = imagejpeg($new_image, $pfad . $new_file_name, 90);
+                        imagedestroy($image);
+                        imagedestroy($new_image);
+                        return $new_file_name;
+                    } else {
+                        return false;                        
+                    }
                     break;
                     
                 case 'image/gif':
                     $image = imagecreatefromgif($pfad.$filename);
                     
-                    $original_width = imagesx($image);
-                    $original_height = imagesy($image);
-                    $newwidth = $original_width * ($percent / 100);
-                    $newheight = $original_height * ($percent / 100);
-                    $new_image = imagecreatetruecolor($newwidth, $newheight);
-                    imagecopyresampled($new_image, $image, 0, 0, 0, 0, $newwidth, $newheight, $original_width, $original_height);
-                    
-                    imagegif($new_image, $fileName);
-                    imagedestroy($image);
-                    imagedestroy($new_image);   
-                    return $new_file_name;
+                    if($image) {
+                        $original_width = imagesx($image);
+                        $original_height = imagesy($image);
+                        $newwidth = $original_width * ($percent / 100);
+                        $newheight = $original_height * ($percent / 100);
+                        $new_image = imagecreatetruecolor($newwidth, $newheight);
+                        imagecopyresampled($new_image, $image, 0, 0, 0, 0, $newwidth, $newheight, $original_width, $original_height);
+                        
+                        $retval = imagegif($new_image, $pfad . $new_file_name);
+                        imagedestroy($image);
+                        imagedestroy($new_image);
+                        return $new_file_name;
+                    } else {
+                        return false;
+                    }                    
                     break;
                     
                 case 'image/png':
                     $image = imagecreatefrompng($pfad.$filename);
                     
-                    $original_width = imagesx($image);
-                    $original_height = imagesy($image);
-                    $newwidth = $original_width * ($percent / 100);
-                    $newheight = $original_height * ($percent / 100);
-                    $new_image = imagecreatetruecolor($newwidth, $newheight);
-                    imagecopyresampled($new_image, $image, 0, 0, 0, 0, $newwidth, $newheight, $original_width, $original_height);
-                    
-                    imagepng($new_image, $fileName);
-                    imagedestroy($image);
-                    imagedestroy($new_image);
-                    return $new_file_name;
+                    if($image) {
+                        $original_width = imagesx($image);
+                        $original_height = imagesy($image);
+                        $newwidth = $original_width * ($percent / 100);
+                        $newheight = $original_height * ($percent / 100);
+                        $new_image = imagecreatetruecolor($newwidth, $newheight);
+                        imagecopyresampled($new_image, $image, 0, 0, 0, 0, $newwidth, $newheight, $original_width, $original_height);
+                        
+                        $retval = imagepng($new_image, $pfad . $new_file_name);
+                        imagedestroy($image);
+                        imagedestroy($new_image);
+                        return $new_file_name;
+                    } else {
+                        return false;
+                    }                    
                     break;
                 //case 'application/pdf':
                 default:                    

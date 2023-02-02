@@ -25,4 +25,20 @@ class UserGroupRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         return $queryResult;
     }
     
+    public function findAllBeratungsstellen($customStoragePid)
+    {
+        $querySettings = GeneralUtility::makeInstance(Typo3QuerySettings::class);
+        $querySettings->setRespectStoragePage(TRUE);
+        $querySettings->setStoragePageIds(array($customStoragePid));
+        $this->setDefaultQuerySettings($querySettings);
+        
+        $query = $this->createQuery();
+        $query->matching($query->logicalAnd(
+            $query->logicalNot($query->like('niqbid', '12345')),
+            $query->logicalNot($query->like('niqbid', ''))
+            ));
+        $query = $query->execute();
+        return $query;
+    }
+    
 }

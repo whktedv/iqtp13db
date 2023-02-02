@@ -22,20 +22,26 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     var submitButton1 = document.getElementById("savebutton1");
-	var submitButton2 = document.getElementById("savebutton2");
-	var submitButton3 = document.getElementById("savebutton3");
     submitButton1.addEventListener("click", function() {
         window.onbeforeunload = null;
     });
-	submitButton2.addEventListener("click", function() {
-	        window.onbeforeunload = null;
-	    });
-	submitButton3.addEventListener("click", function() {
-	        window.onbeforeunload = null;
-	    });
 });
 
 // ********************************************************************************
+
+// Prevent Double Submits
+document.querySelectorAll('form').forEach(form => {
+	form.addEventListener('submit', (e) => {
+		// Prevent if already submitting
+		if (form.classList.contains('is-submitting')) {
+			e.preventDefault();
+		}
+		
+		$("#overlay").show();
+	});
+});
+
+// ###########
 
 		
 $(document).ready(function() {
@@ -111,14 +117,35 @@ $(document).ready(function() {
 	  $("#exportfilterform").submit(); 
 	});
 	
-	$('#datepickerfiltervon').change(function() {
-	  $("#exportfilterform").submit(); 
-	});
+		
 	
-	$('#datepickerfilterbis').change(function() {
-	  $("#exportfilterform").submit(); 
-	});
+	// ############ Loading Overlay u.a. bei Submit-Click #############
 	
+	$("input[name='tx_iqtp13db_iqtp13dbwebapp[file]']").change(function() { 
+    	this.form.submit(); 
+    	$("#overlay").show();
+    });
+
+	$("#linkdeletefile").click(function() {
+    	$("#overlay").show();
+    });
+    
+    $("#linkloadoverlay-new").click(function() {
+    	$("#overlay").show();
+    });
+    $("#linkloadoverlay-edit").click(function() {
+    	$("#overlay").show();
+    });
+    $("#linkloadoverlay-back").click(function() {
+    	$("#overlay").show();
+    });
+    $("#linkloadoverlay-savedb").click(function() {
+    	$("#overlay").show();
+    });
+    
+    
+    $("body").prepend('<div id="overlay" class="ui-widget-overlay" style="z-index: 10001; display: none;"><div class="overlay-inner"><img width="200" height="200" src="/typo3conf/ext/iqtp13db/Resources/Public/Icons/giphy.gif"/></div></div>');
+  
 	
 });
 

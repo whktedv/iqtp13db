@@ -7,8 +7,6 @@
 
 <div class="edituserfield">{edituserfield}</div>
 
-<f:flashMessages />
-
 <f:if condition="{showabschluesse} == '1'">
 <f:then>
 	<script>
@@ -39,7 +37,7 @@
 	<div class="buttonmenu">
 		<div class="toplinkbuttons">
 			<f:form.submit value="Speichern" id="savebutton1" />
-			<f:link.action class="linkbuttons" action="{calleraction}" controller="{callercontroller}" arguments="{callerpage : callerpage, tn : teilnehmer}">Zurück zur Liste</f:link.action>
+			<f:link.action id="linkloadoverlay-back" class="linkbuttons" action="{calleraction}" controller="{callercontroller}" arguments="{callerpage : callerpage, tn : teilnehmer}">Zurück zur Liste</f:link.action>
 		</div>		
 		<div class="ankerbuttons">		
 			<a href="#AnkerBeratung" class="linkbuttons buttonberatung" >Beratung anzeigen</a>
@@ -50,6 +48,8 @@
 	
 	<div class="edit-eingabefelder">
 	<h1>Ratsuchende*n bearbeiten UID: {teilnehmer.uid}</h1>
+	
+	<f:flashMessages />
 	
 		<f:render partial="Teilnehmer/FormFields-Part1" arguments="{_all}" />
 		
@@ -63,5 +63,7 @@
 <f:render partial="Abschluss/Abschluss4Teilnehmer" arguments="{teilnehmer : teilnehmer, abschluesse: abschluesse, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : 'edit'}" />
 
 <f:render partial="Dokument/Dokumente4Teilnehmer" arguments="{teilnehmer : teilnehmer, dokumente: dokumente, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, dokumentpfad : dokumentpfad, thisaction : 'edit'}" />
+
+<f:flashMessages />
 
 </f:section>
