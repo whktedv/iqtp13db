@@ -14,12 +14,12 @@
 	<div class="frame-type-text frame-layout-0 frame-no-backgroundimage frame-space-before-none frame-space-after-none">
 		<div class="defaultframe">
 			<div class="frame-inner">
-				<div class="anmeldstart-einftext"><f:format.html>Um Sie an die richtige Ansprechperson weiterzuleiten, geben Sie bitte zunächst Ihren Wohnsitz an:</f:format.html></div>
+				<div class="anmeldstart-einftext"><f:translate key='tx_iqtp13db_domain_model_teilnehmer.start0intro' /></div>
 				
 				<f:form id="anmeldform" method="post" controller="Teilnehmer" action="anmeldseite0" >
 					<div id="divanmeldwohnsitz">
 						<label for="wohnsitzDeutschland">
-							Befindet sich Ihr aktueller Wohnsitz in Deutschland?			
+							<f:translate key='tx_iqtp13db_domain_model_teilnehmer.start0wohnsitz' />			
 						</label>
 						<div class="divanmeldung-radiooptionsframe">
 							<div class="divwebappradio-anmeldung"><f:form.radio id="anmeld-checkwohnsitzDeutschland1" name="wohnsitzDeutschland" value="1" /><span class="abschlussradiotext"><f:translate key="ja" /></span></div>
@@ -29,7 +29,7 @@
 					
 					<div id="divanmeldplz">
 						<label for="plz">
-							Wie lautet die Postleitzahl Ihres Wohnortes in Deutschland?
+							<f:translate key='tx_iqtp13db_domain_model_teilnehmer.start0plz' />
 						</label>
 						<div class="divtext-anmeldung"><f:form.textfield size="8" class="anmeldplztextfield" id="anmeldplz" name="plz"/></div>
 					</div>

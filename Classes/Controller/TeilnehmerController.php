@@ -1238,7 +1238,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $filtervon = isset($valArray['filtervon']) ? $valArray['filtervon'] : '01.01.1970';
         $filterbis = isset($valArray['filtervon']) ? $valArray['filterbis'] : '31.12.2099';
         
-        $arrjanein = array(0 => 'keine Angabe', 1 => 'ja', 2 => 'nein');
+        $arrjanein = array(0 => '', 1 => 'ja', 2 => 'nein', 3 => 'keine Angabe');
         $arrerwerbsstatus = $this->settings['erwerbsstatus'];
         $arrleistungsbezug = $this->settings['leistungsbezug'];
         $arrstaaten = $this->settings['staaten'];
@@ -1565,19 +1565,23 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function anmeldseite0Action()
     {
         $valArray = $this->request->getArguments();
-        
+        //DebuggerUtility::var_dump($valArray); die; 
         if($valArray['wohnsitzDeutschland'] == 2) {
             $this->redirectToURI('https://staging.iq-webapp.de/frontend-iq-webapp/anmeldung/anmeldung-zsba', $delay=0, $statusCode=303);
             
-        } elseif($valArray['wohnsitzDeutschland'] == 1 && $valArray['anmeldplz'] == '') {
+        } elseif($valArray['wohnsitzDeutschland'] == 1 && $valArray['plz'] == '') {
             $this->redirectToURI('https://staging.iq-webapp.de/frontend-iq-webapp/anmeldung/anmeldung-nicht-webapp', $delay=0, $statusCode=303);
             
         } else {
-            $plzberatungsstelle = $this->userGroupRepository->getBeratungsstelle4PLZ($valArray['anmeldplz'], $this->settings['beraterstoragepid']);
+            $plzberatungsstelle = $this->userGroupRepository->getBeratungsstelle4PLZ($valArray['plz'], $this->settings['beraterstoragepid']);
             
-            $bstid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid') == '' ? $plzberatungsstelle->getNiqbid() : $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid');
-            
-            $this->view->assign('beratungsstelle', $bstid);        
+            if(count($plzberatungsstelle) == 0) {
+                $this->redirectToURI('https://staging.iq-webapp.de/frontend-iq-webapp/anmeldung/anmeldung-nicht-webapp', $delay=0, $statusCode=303);
+            } else {
+                $bstid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid') == '' ? $plzberatungsstelle[0]->getNiqbid() : $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid');
+                
+                $this->view->assign('beratungsstelle', $plzberatungsstelle[0]->getTitle());
+            }
         }        
     }
     

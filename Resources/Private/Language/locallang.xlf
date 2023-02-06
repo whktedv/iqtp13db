@@ -8,6 +8,15 @@
 		<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbwebapp"><source></source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_iqtp13dbwebapp.description"><source></source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer"><source></source></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.start0intro">
+			<source>In order to forward your request to the right advice center, please first state your place of residence</source>
+		</trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.start0wohnsitz">
+			<source>Is your current place of residence in Germany?</source>
+		</trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.start0plz">
+			<source>What is the postal code of your place of residence in Germany?</source>
+		</trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.startseitetext"><source> <![CDATA[ <p>Dear guidance seekers, &nbsp;</p><p>we advise, accompany and support people seeking advice with foreign professional qualifications and are going through the recognition process. &nbsp;</p><p>To be able to advise you in a proper way, it will be very helpful if we get some information about you and your professional qualifications and experiences.</p><p>Therefore, we would like to ask you to complete the following questionnaire as far as possible. You can view the questions in different languages. Please select a language at the beginning. Answer the questions only in German or English. Otherwise, your request cannot be processed.</p><p>Your data can only be edited when you fill and submit the entire form.</p><p>You receive counselling on the recognition usually via email. If we have any questions, we will contact you by telephone.</p><p>Kind regards,</p><p>Your IQ recognition and qualification counselling</p> ]]> </source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.linkanmeldeseitetext"><source>Registration for professional recognition consulting</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligung"><source></source></trans-unit>
