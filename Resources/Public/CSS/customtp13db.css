@@ -471,6 +471,62 @@ form.filterform div {
 	margin-top: -100px;
 }
 
+
+/* Anmeldung */
+
+.anmeldstart-frame {
+	background-color: rgba(175, 208, 202, 0.26);
+	display: flex;
+	flex-direction: column;		
+    align-items: center;
+}
+
+.iq-teaser-logo-ohne-rand {
+	width: 100%;
+}
+
+.iq-teaser-logo-ohne-rand .frame-inner {
+	margin: auto;
+	width: 24rem;
+}
+
+.anmeldstart-einftext {
+	margin: 2rem 0 0 0;
+}
+
+#anmeldform {
+	margin: 0 0 3rem 0;
+	display: flex;
+	flex-direction: column;
+}
+
+#divanmeldwohnsitz {	
+	margin: 2rem 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.divwebappradio-anmeldung {
+	width: 5rem;
+	margin: 1rem 0;
+}
+
+.divanmeldung-radiooptionsframe {
+	display: flex;
+}
+
+#divanmeldplz {
+	display: none;
+	margin: 0 0 2rem 0;
+	text-align: center;
+}
+
+.divtext-anmeldung {
+	margin: 1rem 0;
+}
+
+
 @media print {
   body {
   	font-size: 0.6em;

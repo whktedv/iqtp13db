@@ -25,7 +25,7 @@
 
 <h1>{anzgesamt} angemeldete Ratsuchende <f:if condition="{filteron}"><f:then><span style="color: red;">(gefiltert)</span></f:then></f:if></h1>
 
-<f:link.action id="linkloadoverlay-new" class="linkbuttons buttonnew" action="new" arguments="{calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">&nbsp;</f:link.action>
+<f:link.action id="linkloadoverlay-new" class="linkbuttons buttonnew" action="new" arguments="{calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}"></f:link.action>
 
 <div class="pretablediv">
 	
@@ -70,10 +70,10 @@
 				{f:if(condition: '{teilnehmer.geschlecht} == 1', then: '<span style="color: #fe7a84;">W</span>')}
 				{f:if(condition: '{teilnehmer.geschlecht} == 3', then: '<span>D</span>')}</td>
 				<td>{iqtp13db:isint(field:'{teilnehmer.geburtsland}',then:'{settings.staaten.{teilnehmer.geburtsland}}',else:'{teilnehmer.geburtsland}')}</td>
-				<td class="tdcenter">{f:if(condition: '{teilnehmer.leistungsbezugjanein} == 1', then: '✓', else: '')}</td>
-				<td class="tdcenter">{f:if(condition: '{teilnehmer.schonberaten} == 1', then: '✓', else: '')}</td>
+				<td class="tdcenter">{f:if(condition: '{teilnehmer.leistungsbezugjanein} == 1', then: '<img src="/fileadmin/template/images/iq-webapp_vollstaendig-ok.svg" alt="✓" width="16" height="16"/>', else: '')}</td>
+				<td class="tdcenter">{f:if(condition: '{teilnehmer.schonberaten} == 1', then: '<img src="/fileadmin/template/images/iq-webapp_vollstaendig-ok.svg" alt="✓" width="16" height="16"/>', else: '')}</td>
 				<td><f:if condition="{teilnehmer.berater.username} == ''"><f:then>
-						<f:link.action class="tablelinkbuttons buttonedit" action="takeover" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">Fall übernehmen</f:link.action>
+						<f:link.action action="takeover" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" title="Fall übernehmen"><img src="/fileadmin/template/images/iq-webapp_fall-uebernehmen.svg" alt="Fall übernehmen" width="30" height="30"/></f:link.action>
 					</f:then>
 					<f:else>
 						{teilnehmer.berater.username}
@@ -87,15 +87,15 @@
 				</td>
 				<td>
 					<f:for each="{abschluesse.{it.index}}" as="abschluss" iteration="iter">
-						{f:if(condition: '{abschluss.antragstellungvorher} == 1', then: '✓')}
-						{f:if(condition: '{abschluss.antragstellungvorher} == 2', then: '✓')}
-						{f:if(condition: '{abschluss.antragstellungvorher} == 3', then: '✓')}					
+						{f:if(condition: '{abschluss.antragstellungvorher} == 1', then: '<img src="/fileadmin/template/images/iq-webapp_vollstaendig-ok.svg" alt="✓" width="16" height="16"/>')}
+						{f:if(condition: '{abschluss.antragstellungvorher} == 2', then: '<img src="/fileadmin/template/images/iq-webapp_vollstaendig-ok.svg" alt="✓" width="16" height="16"/>')}
+						{f:if(condition: '{abschluss.antragstellungvorher} == 3', then: '<img src="/fileadmin/template/images/iq-webapp_vollstaendig-ok.svg" alt="✓" width="16" height="16"/>')}					
 					</f:for>					
 				</td>
 				<td>{teilnehmer.kooperationgruppe}</td>
-				<td><f:link.action class="tablelinkbuttons buttonedit" action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">Bearbeiten</f:link.action></td>
-				<td><f:if condition="{teilnehmer.verificationDate} == 0"><f:then><f:link.action class="tablelinkbuttons buttoneinwilligung" action="askconsent" arguments="{teilnehmer : teilnehmer, callerpage : callerpage}" onclick="return confirm('E-Mail senden?');" >Einwilligung<br>anfordern</f:link.action></f:then></f:if></td>
-				<td><f:link.action class="iconbuttons buttondelete" action="delete" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" onclick="return confirm('Wirklich löschen?');" ><img src="/typo3conf/ext/iqtp13db/Resources/Public/Icons/delete-640.png" width="32" height="32" alt="Löschen" /></f:link.action></td>
+				<td><f:link.action action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" title="Bearbeiten"><img src="/fileadmin/template/images/iq-webapp_bearbeiten.svg" alt="Bearbeiten" width="30" height="30"/></f:link.action></td>
+				<td><f:if condition="{teilnehmer.verificationDate} == 0"><f:then><f:link.action action="askconsent" arguments="{teilnehmer : teilnehmer, callerpage : callerpage}" onclick="return confirm('E-Mail senden?');" title="Einwilligung anfordern"><img src="/fileadmin/template/images/iq-webapp_einwilligung-anfordern.svg" alt="Einwilligung anfordern" width="30" height="30"/></f:link.action></f:then></f:if></td>
+				<td><f:link.action action="delete" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" onclick="return confirm('Wirklich löschen?');" title="Löschen"><img src="/fileadmin/template/images/iq-webapp_loeschen.svg" width="30" height="30" alt="Löschen" /></f:link.action></td>
 			</tr>
 		</f:for>
 	</table>
@@ -108,7 +108,19 @@
 
 <br>
 <span style="font-weight: bold; font-size: 0.7rem; margin-left: 5px;">Legende:</span>
-<table><tr><td>Anmeldung noch nicht bestätigt</td><td class="bestaetigt">Anmeldung bestätigt</td><td class="dublette">mögliche Dublette</td></tr></table>
+<table>
+	<tr><td>Anmeldung noch nicht bestätigt</td><td class="bestaetigt">Anmeldung bestätigt</td><td class="dublette">mögliche Dublette</td></tr>
+	<tr>
+		<td><span class="linkbuttons buttonnew"></span> = Neuen Fall hinzufügen</td>
+		<td><img src="/fileadmin/template/images/iq-webapp_fall-uebernehmen.svg" alt="Fall übernehmen" width="30" height="30"/> = Fall übernehmen</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td><img src="/fileadmin/template/images/iq-webapp_bearbeiten.svg" alt="Bearbeiten" width="30" height="30"/> = Bearbeiten</td>
+		<td><img src="/fileadmin/template/images/iq-webapp_einwilligung-anfordern.svg" alt="Einwilligung anfordern" width="30" height="30"/> = Einwilligung anfordern</td>
+		<td><img src="/fileadmin/template/images/iq-webapp_loeschen.svg" width="30" height="30" alt="Löschen" /> = Löschen</td>
+	</tr>
+</table>
 
 </f:section>
 

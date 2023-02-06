@@ -35,9 +35,27 @@ class UserGroupRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $query = $this->createQuery();
         $query->matching($query->logicalAnd(
             $query->logicalNot($query->like('niqbid', '12345')),
-            $query->logicalNot($query->like('niqbid', ''))
+            $query->logicalNot($query->like('niqbid', '')),
+            $query->logicalNot($query->like('title', 'AA%')) 
             ));
         $query = $query->execute();
+        return $query;
+    }
+    
+    public function getBeratungsstelle4PLZ($plz, $customStoragePid) {
+        $querySettings = GeneralUtility::makeInstance(Typo3QuerySettings::class);
+        $querySettings->setRespectStoragePage(TRUE);
+        $querySettings->setStoragePageIds(array($customStoragePid));
+        $this->setDefaultQuerySettings($querySettings);
+        
+        $query = $this->createQuery();
+        $query->matching($query->logicalOr(
+            $query->like('plzlist', '%,' . $plz . ',%'),
+            $query->like('plzlist',  $plz . ',%'),
+            $query->like('plzlist', '%,' . $plz),
+            ));
+        $query = $query->execute();
+        
         return $query;
     }
     

@@ -1,8 +1,10 @@
 ( function($) {
     $(document).ready(function() {
     	
-    	toggleschonberaten();
-    	togglecheckwohnsitz();
+    	toggle_anmeld_checkwohnsitz();
+		
+		toggleschonberaten();
+    	togglecheckwohnsitz();		
     	togglecheckdeutschkenntnisse();
     	
 		toggleeinwanerkennendestelle();
@@ -13,6 +15,14 @@
 		toggleabschluss(1);
 		toggleabschluss(2);
 		toggleabschluss(3);
+		
+		
+		$('#anmeld-checkwohnsitzDeutschland1').change(function() {
+			toggle_anmeld_checkwohnsitz();
+		}); 
+		$('#anmeld-checkwohnsitzDeutschland2').change(function() {
+			toggle_anmeld_checkwohnsitz();
+		});
 		
 		$('#selectreferenzberuf').change(function() {
 			toggleselectreferenzberuf();
@@ -135,6 +145,17 @@
 
    });
     
+	function toggle_anmeld_checkwohnsitz() {
+    	if($('#anmeld-checkwohnsitzDeutschland1').is(":checked")) {
+			$('#divanmeldplz').fadeIn();
+			return;
+		} else {
+			 $('#divanmeldplz').fadeOut();
+			 $('#anmeldplz').val('');
+			return;
+		}
+	}
+	
     function toggleschonberaten() {
     	if($('#schonberaten1').is(":checked")) {
 			$('#divschonberatenvon').fadeIn(); 
