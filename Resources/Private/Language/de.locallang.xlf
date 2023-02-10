@@ -404,7 +404,7 @@
 			<trans-unit id="abschlussloeschen">
 				<target>Abschluss löschen</target>
 			</trans-unit>
-			<trans-unit id="dialogaabschlussloeschen">
+			<trans-unit id="dialogabschlussloeschen">
 				<target>Abschluss löschen?</target>
 			</trans-unit>			
 			<trans-unit id="fragebogen">
@@ -518,12 +518,15 @@
 			<trans-unit id="abschlusshinzu">
 				<target>Abschluss hinzufügen</target>
 			</trans-unit>
+			<trans-unit id="weitererabschluss">
+				<target>weiterer Abschluss</target>
+			</trans-unit>			
 			<trans-unit id="anredemail">
 				<target>Guten Tag </target>
 			</trans-unit>
 			<trans-unit id="mailtext">
 				<target> <![CDATA[
-					 <p>vielen Dank für Ihre Informationen.</p> <p>&nbsp;</p> <p>Sie sind jetzt zur Beratung angemeldet. Wir setzen uns mit Ihnen in Verbindung, sobald Sie an der Reihe sind. <br><br>Die Beratung erfolgt nach Wunsch über E-Mail, Telefon oder Videochat.</p> <p>Wir bemühen uns, Ihre Anfrage innerhalb von ca. WARTEZEITWOCHEN Wochen zu bearbeiten. Wir bitten um Ihr Verständnis und Ihre Geduld.</p><p>&nbsp;</p> <p>Mit freundlichen Grüßen</p>Ihre IQ Anerkennungs- und Qualifizierungsberatung 
+					 <p>vielen Dank für Ihre Informationen.</p> <p>&nbsp;</p> <p>Sie sind jetzt zur Beratung angemeldet. Wir setzen uns mit Ihnen in Verbindung, sobald Sie an der Reihe sind.</p> <p>Wir bitten um Ihr Verständnis und Ihre Geduld.</p><p>&nbsp;</p> <p>Mit freundlichen Grüßen</p>Ihre IQ Anerkennungs- und Qualifizierungsberatung 
 					 ]]></target>
 			</trans-unit>
 			<trans-unit id="subject">
@@ -536,7 +539,7 @@
 			</trans-unit>
 			<trans-unit id="confirmmailtext1">
 				<target> <![CDATA[
-					 <p>Liebe*r Ratsuchende*r,</p> <p>&nbsp;</p> <p>bestätigen Sie Ihre Anmeldung zur Anerkennungsberatung bitte hier:</p>
+					 <p>Liebe*r Ratsuchende*r,</p> <p>bestätigen Sie Ihre Anmeldung zur Anerkennungsberatung bitte hier:</p>
 					 ]]></target>
 			</trans-unit>			
 			<trans-unit id="confirmmailtext2">
@@ -547,7 +550,18 @@
 			<trans-unit id="confirmsubject">
 				<target>Bitte bestätigen Sie Ihre Anmeldung zur Anerkennungsberatung beim IQ Netzwerk</target>
 			</trans-unit>	
-			
+			<trans-unit id="lebenslauf">
+				<target>Lebenslauf</target>
+			</trans-unit>
+			<trans-unit id="abschlussdokumente">
+				<target>Abschlussdokumente</target>
+			</trans-unit>
+			<trans-unit id="aufenthaltsdokumente">
+				<target>Aufenthaltsdokumente</target>
+			</trans-unit>	
+			<trans-unit id="sonstigedokumente">
+				<target>Sonstige Dokumente</target>
+			</trans-unit>	
 		</body>
 	</file>
 </xliff>

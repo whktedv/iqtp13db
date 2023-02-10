@@ -17,11 +17,11 @@
 </f:form.validationResults>
 
 <f:flashMessages />
-<f:form action="anmeldseite3redirect" name="teilnehmer" object="{teilnehmer}">
+<f:form id="teilnehmerform" action="anmeldseite3redirect" name="teilnehmer" object="{teilnehmer}">
 		<f:render partial="Teilnehmer/FormFieldsAnmeldung3" arguments="{_all}" />
-		<f:form.button name="btnzurueck"><f:translate key="zurueck" /></f:form.button>
-		<f:form.button name="btnweiter"><f:translate key="weiter" /></f:form.button>
-		<f:form.button type="button" name="btncancel" class="abbruchbtn" onclick="return btncancel_Click(0);"><f:translate key="abbruch" /></f:form.button>
+		<f:form.button id="zurueckbutton" name="btnzurueck"><f:translate key="zurueck" /></f:form.button>
+		<f:form.button id="weiterbutton" name="btnweiter"><f:translate key="weiter" /></f:form.button>
+		<f:form.button name="btncancel" class="abbruchbtn" onclick="return btncancel_Click(0);"><f:translate key="abbruch" /></f:form.button>
 </f:form>
 
 </f:section>

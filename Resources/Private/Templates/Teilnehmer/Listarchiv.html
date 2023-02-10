@@ -14,6 +14,7 @@
 			<div>Beruf: <f:form.textfield size="20" value="{filterberuf}" name="beruf" /></div>
 			<div>Geburtsland: <f:form.select value="{filterland}" name="land" options="{wohnsitzstaaten}" optionValueField="value" optionLabelField="value" /></div>
 			<div>Gruppe: <f:form.textfield size="20" value="{filtergruppe}" name="gruppe" /></div>
+			<div>Bescheid: <f:form.checkbox value="1" name="bescheid" checked="{filterbescheid} == 1" /></div>
 			<f:if condition="{filteron} == 1"><f:then><div><f:form.button name="filteraus" value="1" >Filter löschen</f:form.button></div></f:then></f:if>
 			<f:if condition="{filteron} != 1"><f:then><div><f:form.submit name="filteran" value="Filtern" /></div></f:then></f:if>	
 	</f:form>

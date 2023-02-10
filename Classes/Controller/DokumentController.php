@@ -167,10 +167,13 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      */
     public function saveFileWebappAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
+        $valArray = $this->request->getArguments();
+
         if ($_FILES['tx_iqtp13db_iqtp13dbwebapp']['tmp_name']['file'] == '') {
             $this->addFlashMessage('Error in saveFileWebapp: maximum filesize exceeded or permission error', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
         } else {
             $dokument = new \Ud\Iqtp13db\Domain\Model\Dokument();
+            $dokument->setBeschreibung($valArray['beschreibung']);
             $this->saveFileTeilnehmer($dokument, $teilnehmer, $_FILES['tx_iqtp13db_iqtp13dbwebapp']);
         }
         $this->redirect('anmeldungcomplete', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
@@ -208,13 +211,13 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         
         //DebuggerUtility::var_dump($files);
         //die;
-        
         if($this->generalhelper->getFolderSize($storage->getConfiguration()['basePath'] . $beratenepath) > 20000) {
     	    $this->addFlashMessage('Maximum total filesize of 20 MB exceeded, please reduce filesize. Maximale Dateigröße aller Dateien zusammen ist 20 MB. Bitte Dateigröße verringern.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
     	} else {
     	    if ($files['name']['file'] && !file_exists($fullpath)) {
     	        
     	        $dokument = $this->savefile($dokument->getBeschreibung(), $beratenepath, $files);
+    	        
     	        $dokument->setTeilnehmer($teilnehmer);
     	        $this->dokumentRepository->update($dokument);
     	        //Daten sofort in die Datenbank schreiben

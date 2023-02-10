@@ -16,20 +16,39 @@ window.onbeforeunload = function() {
 
 document.addEventListener("DOMContentLoaded", function() {
     var form = document.getElementById("teilnehmerform");
-    var formElements = form.elements;
-    for(var i = 0; i < formElements.length; i++) {
-        formElements[i].addEventListener("change", markFormChanged);
-    }
-
-    var submitButton1 = document.getElementById("savebutton1");
-    submitButton1.addEventListener("click", function() {
-        window.onbeforeunload = null;
-    });
+	if(form) {
+	    var formElements = form.elements;
+	    for(var i = 0; i < formElements.length; i++) {
+	        formElements[i].addEventListener("change", markFormChanged);
+	    }
+		
+		if (document.getElementById("savebutton1")) {
+			var submitButton1 = document.getElementById("savebutton1");
+		    submitButton1.addEventListener("click", function() {
+				$("#overlay").hide();
+		        window.onbeforeunload = null;			
+		    });	
+		}
+		if (document.getElementById("weiterbutton")) {
+			var weiterbutton = document.getElementById("weiterbutton");
+		    weiterbutton.addEventListener("click", function() {
+				$("#overlay").hide();
+		        window.onbeforeunload = null;			
+		    });	
+		}
+		if (document.getElementById("zurueckbutton")) {
+			var zurueckbutton = document.getElementById("zurueckbutton");
+		    zurueckbutton.addEventListener("click", function() {
+				$("#overlay").hide();
+		        window.onbeforeunload = null;			
+		    });	
+		}		
+	}	
 });
 
 // ********************************************************************************
+// Prevent Double Submits by showing Overlay with rotating circle after submit-click
 
-// Prevent Double Submits
 document.querySelectorAll('form').forEach(form => {
 	form.addEventListener('submit', (e) => {
 		// Prevent if already submitting
@@ -37,11 +56,23 @@ document.querySelectorAll('form').forEach(form => {
 			e.preventDefault();
 		}
 		
-		$("#overlay").show();
+		if(form.attributes.id) {
+			var formid = form.attributes.id.value;
+			if(formid != 'exportfilterform' && !document.getElementById('newabschlusszurueckbutton')) {
+				$("#overlay").show();
+			}
+		}
 	});
 });
 
-// ###########
+if (document.getElementById("abschlusshinzubutton")) {
+	var abschlusshinzubutton = document.getElementById("abschlusshinzubutton");
+    abschlusshinzubutton.addEventListener("click", function() {
+		$("#overlay").show();
+    });	
+}
+
+// *********************************************************************************
 
 		
 $(document).ready(function() {
@@ -137,7 +168,7 @@ $(document).ready(function() {
     	$("#overlay").show();
     });
     $("#linkloadoverlay-back").click(function() {
-    	$("#overlay").show();
+    	if(formChanged != true) $("#overlay").show();
     });
     $("#linkloadoverlay-savedb").click(function() {
     	$("#overlay").show();

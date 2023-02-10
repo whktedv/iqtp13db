@@ -44,7 +44,7 @@
 						<td>{f:if(condition: '{abschluss.abschlussjahr} == "-1"', then: 'k.A.', else: '{abschluss.abschlussjahr}')}</td>
 						<td>{settings.antragstellungvorher.{abschluss.antragstellungvorher}}</td>
 						<td><f:link.action action="edit" controller="Abschluss" arguments="{abschluss : abschluss, teilnehmer : teilnehmer, calleraction : calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : thisaction}" title="Bearbeiten"><img src="/fileadmin/template/images/iq-webapp_bearbeiten.svg" alt="Bearbeiten" width="30" height="30"/></f:link.action></td>
-						<td><f:link.action action="delete" controller="Abschluss" arguments="{abschluss : abschluss, teilnehmer : teilnehmer, calleraction : calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : thisaction}" onclick="return confirm('Wirklich löschen?');" title="Löschen"><img src="/fileadmin/template/images/iq-webapp_loeschen.svg" alt="Bearbeiten" width="30" height="30"/></f:link.action></td>
+						<td><f:link.action action="delete" controller="Abschluss" arguments="{abschluss : abschluss, teilnehmer : teilnehmer, calleraction : calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : thisaction}" onclick="return confirm('Wirklich löschen?');" title="Löschen"><img src="/fileadmin/template/images/iq-webapp_loeschen.svg" alt="Löschen" width="30" height="30"/></f:link.action></td>
 					</tr>
 			</f:for>
 		</table>

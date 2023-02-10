@@ -138,7 +138,7 @@
 		<trans-unit id="abbruch"><source>Abort</source></trans-unit>
 		<trans-unit id="dialoganmeldungabbrechen"><source>Cancel registration</source></trans-unit>
 		<trans-unit id="abschlussloeschen"><source>Delete this qualification</source></trans-unit>
-		<trans-unit id="dialogaabschlussloeschen"><source>Delete this qualification?</source></trans-unit>
+		<trans-unit id="dialogabschlussloeschen"><source>Delete this qualification?</source></trans-unit>
 		<trans-unit id="fragebogen"><source>Questionnaire page</source></trans-unit>
 		<trans-unit id="persdaten"><source>Personal data</source></trans-unit>
 		<trans-unit id="deutschkenntnisse"><source>German as a native language?</source></trans-unit>
@@ -172,14 +172,19 @@
 		<trans-unit id="infoBerufserfahrung"><source>Please indicate how long you have worked in the profession of education/study (months/years).</source></trans-unit>
 		<trans-unit id="infoBezug"><source>From which institution/authority/office do you currently receive money for your living expenses? Please indicate this institution/authority/office here.</source></trans-unit>
 		<trans-unit id="infoBezugsart"><source> <![CDATA[ What type of benefit (money for living expenses) do you currently receive?<br>SGB II: Basic income support for job-seekers (Hartz IV)<br>SGB III: Unemployment insurance benefits and employment promotion benefits	<br>Asylbewerberleistungsbezug: Basic benefits for asylum seekers, tolerated persons and foreigners who are under an enforceable obligation to leave the country.<br>Please enter one of the reference types ]]></source></trans-unit>
-		<trans-unit id="headabschlussrechts"><source>Further graduation</source></trans-unit>
+		<trans-unit id="abschlusshinzu"><source>Add foreign educational qualification</source></trans-unit>
+		<trans-unit id="weitererabschluss"><source>Further graduation</source></trans-unit>
 		<trans-unit id="anredemail"><source>Hello </source></trans-unit>
-		<trans-unit id="mailtext"><source> <![CDATA[ <p>Thank you for your information.</p> <p>&nbsp;</p> <p>You are now registered for counselling. We will contact you as soon as it is your turn. <br><br>Consultation will be via email, phone or video chat as requested.</p> <p>We will endeavour to process your request within about 12 weeks. We ask for your understanding and patience.</p><p>&nbsp;</p> <p>Regards</p>Your recognition counselling ]]></source></trans-unit>
+		<trans-unit id="mailtext"><source> <![CDATA[ <p>Thank you for your information.</p> <p>You are now registered for counselling. We will contact you as soon as it is your turn. <p>We ask for your understanding and patience.</p><p>Regards</p>Your recognition counselling ]]></source></trans-unit>
 		<trans-unit id="subject"><source>Your registration for the initial recognition counselling</source></trans-unit>
 		<trans-unit id="confirmlinktext"><source>Bestätigung der Anmeldung - Confirm registration</source></trans-unit>
 		<trans-unit id="confirmmailtext1"><source><![CDATA[ <p>Dear advice seeker,</p> <p>&nbsp;</p> <p>Please confirm your registration for the initial recognition counselling here:</p>]]></source></trans-unit>
 		<trans-unit id="confirmmailtext2"><source>Yours recognition counselling</source></trans-unit>
 		<trans-unit id="confirmsubject"><source>Please confirm your registration for the initial recognition counselling</source></trans-unit>	
+		<trans-unit id="lebenslauf"><source>CV</source></trans-unit>
+		<trans-unit id="abschlussdokumente"><source>Qualification documents</source></trans-unit>
+		<trans-unit id="aufenthaltsdokumente"><source>Residence documents</source></trans-unit>	
+		<trans-unit id="sonstigedokumente"><source>Other documents</source></trans-unit>	
 	</body>
   </file>
 </xliff>

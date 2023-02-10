@@ -154,7 +154,7 @@
 	      لطفا نام یک نوع کمک را وارد کنید:]]></target></trans-unit>
 	<trans-unit id="infofruehererAntrag"><target>	لطفا اعلام کنید آیا در گذشته یکبار برای تایید گواهینامه‌های خود درخواست ارائه کرده‌اید یا نه.</target></trans-unit>
 	<trans-unit id="infoInstitution"><target>	اگر قبلا یک درخواست برای تایید گواهینامه‌های خود ارائه کرده‌اید، لطفا در این قسمت نام موسسه/اداره‌ و در صورت امکان نام کشوری را که در آن این کار را انجام داده‌اید وارد کنید.</target></trans-unit>
-	<trans-unit id="headabschlussrechts"><target>	گواهینامه دیگر</target></trans-unit>
+	<trans-unit id="weitererabschluss"><target>	گواهینامه دیگر</target></trans-unit>
 	<trans-unit id="headabschlussrechtsausblenden"><target>	پنهان کردن گواهینامه</target></trans-unit>
 	<trans-unit id="anredemail"><target>	روز به خیر</target></trans-unit>
 	<trans-unit id="mailtext"><target><![CDATA[

@@ -211,11 +211,6 @@ input[type="text"].textfieldsmall  {
 	display: none;
 }
 
-.fframeabschluss-inner {
-	border: 1px solid #cfa6ce;
-	padding: 15px;
-}
-
 .abschlussheader {
 	padding: 6px;
 	min-width: 800px;

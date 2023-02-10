@@ -124,7 +124,7 @@
 	<trans-unit id="infofruehererAntrag"><target>	يرجى توضيح ما إذا كنت قد قدمت بالفعل طلبًا للاعتراف بشهادتك في الماضي.	</target></trans-unit>
 	<trans-unit id="infoInstitution"><target>	إذا كنت قد قدمت بالفعل طلبًا للاعتراف بشهادتك، فيرجى الإشارة هنا إلى المؤسسة / الدائرة، وإذا كان ذلك ممكنًا، في أي بلد قمت بذلك.	</target></trans-unit>
 	<trans-unit id="headabschlusslinks"><target><![CDATA[ &nbsp; ]]></target></trans-unit>
-	<trans-unit id="headabschlussrechts"><target>	درجة أخرى	</target></trans-unit>
+	<trans-unit id="weitererabschluss"><target>	درجة أخرى	</target></trans-unit>
 	<trans-unit id="headabschlussrechtsausblenden"><target>	إخفاء الدرجة 	</target></trans-unit>
 	<trans-unit id="anredemail"><target>	مرحباً	</target></trans-unit>
 	<trans-unit id="mailtext"><target><![CDATA[<p>

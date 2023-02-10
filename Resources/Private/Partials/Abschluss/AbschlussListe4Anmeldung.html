@@ -1,0 +1,45 @@
+
+<f:if condition="{abschluesse}"><f:then>
+<table class="abschluesseliste">
+		<thead>
+			<th>#</th>
+			<th><f:translate key="tx_iqtp13db_domain_model_abschluss.abschlussart" /></th>
+			<th><f:translate key="tx_iqtp13db_domain_model_abschluss.abschlussjahr" /></th>
+			<th><f:translate key="tx_iqtp13db_domain_model_abschluss.ausbildungsort" /></th>			
+			<th><f:translate key="tx_iqtp13db_domain_model_abschluss.abschluss" /></th>
+			<th><f:translate key="tx_iqtp13db_domain_model_abschluss.deutscher_referenzberuf" /></th>
+			<th></th>
+			<th></th>
+		</thead>
+		
+		<f:for each="{abschluesse}" as="abschluss" iteration="iter">
+			<f:if condition="{thisabschluss.uid} != {abschluesse.{iter.index}.uid}">
+				<tr>
+					<td><f:link.action action="editWebapp" controller="Abschluss" arguments="{abschluss : abschluss, teilnehmer : teilnehmer}">#{iter.index + 1}</f:link.action></td>
+					<td>
+						<f:link.action action="editWebapp" controller="Abschluss" arguments="{abschluss : abschluss, teilnehmer : teilnehmer}">
+							<f:for each="{abschluss.abschlussart}" as="abschlussart" iteration="iter">
+								{f:if(condition: '{iter.index} > 0', then: ',', else: '')}
+								<f:if condition="{abschlussart} == -1"><f:then>
+									<f:translate key="ka"/>
+								</f:then></f:if>
+								<f:if condition="{abschlussart} == 1"><f:then>
+									<f:translate key="abschlussart.1"/>
+								</f:then></f:if>
+								<f:if condition="{abschlussart} == 2"><f:then>
+									<f:translate key="abschlussart.2"/>
+								</f:then></f:if>										
+							</f:for>
+						</f:link.action>
+					</td>
+					<td><f:link.action action="editWebapp" controller="Abschluss" arguments="{abschluss : abschluss, teilnehmer : teilnehmer}">{f:if(condition: '{abschluss.abschlussjahr} == "-1"', then: 'k.A.', else: '{abschluss.abschlussjahr}')}</f:link.action></td>
+					<td><f:link.action action="editWebapp" controller="Abschluss" arguments="{abschluss : abschluss, teilnehmer : teilnehmer}">{abschluss.ausbildungsort}</f:link.action></td>
+					<td><f:link.action action="editWebapp" controller="Abschluss" arguments="{abschluss : abschluss, teilnehmer : teilnehmer}">{abschluss.abschluss}</f:link.action></td>
+					<td><f:link.action action="editWebapp" controller="Abschluss" arguments="{abschluss : abschluss, teilnehmer : teilnehmer}">{abschluss.deutscherReferenzberuf}</f:link.action></td>
+					<td><f:link.action action="editWebapp" controller="Abschluss" arguments="{abschluss : abschluss, teilnehmer : teilnehmer}" title="Edit"><img src="/fileadmin/template/images/iq-webapp_bearbeiten.svg" alt="Edit" width="30" height="30"/></f:link.action></td>
+					<td><f:link.action action="deleteWebapp" controller="Abschluss" arguments="{abschluss : abschluss, teilnehmer : teilnehmer}" onclick="return confirm('{f:translate(key='dialogabschlussloeschen')}');" title="Löschen"><img src="/fileadmin/template/images/iq-webapp_loeschen.svg" alt="Delete" width="30" height="30"/></f:link.action></td>
+				</tr>
+			</f:if>
+		</f:for>
+	</table>
+</f:then></f:if>

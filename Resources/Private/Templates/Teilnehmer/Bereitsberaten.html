@@ -1,0 +1,39 @@
+
+<f:layout name="Default" />
+
+<f:section name="main">
+
+<div class="iq-teaser-logo-ohne-rand frame-type-text frame-layout-0 frame-no-backgroundimage frame-space-before-none frame-space-after-none">
+	<div class="defaultframe">
+		<div class="frame-inner">
+			<h1 class="text-center">Webapp - IQ Anerkennungsberatung</h1>
+		</div>
+	</div>
+</div>
+<div class="iq-teaser-weiss-integrationsbetriebe frame-type-text frame-layout-0 frame-no-backgroundimage frame-space-before-none frame-space-after-none">
+	<div class="defaultframe">
+		<div class="frame-inner">
+			<f:format.html>
+				<f:translate key="anredemail" /> {teilnehmer.vorname} {teilnehmer.nachname},<br>
+				<f:if condition="{teilnehmer.beratungsstatus} == 0">
+					<f:then>
+						Sie sind bereits angemeldet, haben Ihre Registrierung jedoch noch nicht bestätigt. Bitte bestätigen Sie Ihre Registrierung, indem Sie den Bestätigungslink in der E-Mail anklicken, die Ihnen zugesandt wurde.<br><br>
+						Prüfen Sie bitte auch den Spam-Ordner, ob die E-Mail dort gelandet ist.<br>
+					</f:then>
+					<f:else>
+						<f:if condition="{teilnehmer.beratungsstatus} == 1">
+							<f:then>Sie sind bereits zur Beratung angemeldet. Wir setzen uns mit Ihnen in Verbindung, sobald Sie an der Reihe sind.<br></f:then>
+							<f:else>Sie sind bereits zur Beratung angemeldet.<br></f:else>
+						</f:if>
+					</f:else>				
+				</f:if>
+				Möchten Sie uns etwas mitteilen?
+				Kontaktieren Sie uns bitte unter <a href="mailto:{berateremail}" target="_blank">{berateremail}</a>. 					
+			</f:format.html>
+		</div>
+	</div>
+</div>
+
+
+<span style="color: #efefef; font-size: 0.8rem; float: right;">{beratungsstelle}</span>
+</f:section>

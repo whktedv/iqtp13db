@@ -10,6 +10,8 @@ plugin.tx_iqtp13db.settings {
 	standardberatungort =
 	beraterstoragepid = 0
 	wartezeitwochen = 6
+	anmeldungzsbapageuid =
+	anmeldungnichtwebapppageuid = 
 	
 	# für Wartungsmodus
 	wartungvon = 01.01.2021 08:00

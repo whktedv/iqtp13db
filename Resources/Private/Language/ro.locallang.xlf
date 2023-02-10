@@ -149,7 +149,7 @@
 	]]></target></trans-unit>
 	<trans-unit id="infofruehererAntrag"><target>Vă rugăm să indicați dacă ați solicitat deja recunoașterea diplomei dumneavoastră în trecut.</target></trans-unit>
 	<trans-unit id="infoInstitution"><target>În cazul în care ați depus deja o cerere de recunoaștere a diplomei dumneavoastră, vă rugăm să indicați aici instituția/autoritatea și, dacă este cazul, țara în care ați făcut acest demers.</target></trans-unit>
-	<trans-unit id="headabschlussrechts"><target>Alt tip de calificare</target></trans-unit>
+	<trans-unit id="weitererabschluss"><target>Alt tip de calificare</target></trans-unit>
 	<trans-unit id="anredemail"><target>Bună ziua</target></trans-unit>
 	<trans-unit id="mailtext"><target><![CDATA[<p>Vă mulțumim pentru informații.</p><p>&nbsp;</p><p>Sunteți acum înregistrat pentru consultare. Vă vom contacta de îndată ce vă va veni rândul. <br><br>Consultanța este oferită prin e-mail, telefon sau videochat, la cerere. </p> Ne propunem să procesăm cererea dumneavoastră în termen de WARTEZEITWOCHEN săptămâni. Vă rugăm să aveți înțelegere și răbdare. </p><p>&nbsp;</p><p>Cu stimă</p>Serviciul dumneavoastră de consultanță pentru recunoaștere și calificare IQ]]></target></trans-unit>
 	<trans-unit id="subject"><target>Înregistrarea dvs. pentru consultarea inițială de recunoaștere</target></trans-unit>

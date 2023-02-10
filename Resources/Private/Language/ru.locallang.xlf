@@ -137,7 +137,7 @@
 	<trans-unit id="infofruehererAntrag"><target>Пожалуйста, укажите, подавали ли вы в прошлом заявление о признании вашей степени.</target></trans-unit>
 	<trans-unit id="infoInstitution"><target></target></trans-unit>
 	<trans-unit id="headabschlusslinks"><target><![CDATA[	 &nbsp; 	]]></target></trans-unit>
-	<trans-unit id="headabschlussrechts"><target>дальнейшая степень</target></trans-unit>
+	<trans-unit id="weitererabschluss"><target>дальнейшая степень</target></trans-unit>
 	<trans-unit id="headabschlussrechtsausblenden"><target>Скрыть завершение</target></trans-unit>
 	<trans-unit id="anredemail"><target>Добрый день</target></trans-unit>
 	<trans-unit id="mailtext"><target><![CDATA[<p>Спасибо за информацию.</p><p>&nbsp;</p><p>Вы зарегистрированы на консультацию. Мы свяжемся с вами, как только подойдет ваша очередь.<br><br>Консультации могут быть предоставлены по электронной почте, телефону или в видеочате, если вы хотите.</p><p>Мы стремимся обработать ваш запрос в течение WARTEZEITWOCHEN недель. Мы просим вашего понимания и терпения.</p> <p>&nbsp;</p><p>С уважением </p>Ваш совет по признанию IQ и квалификации]]></target></trans-unit>

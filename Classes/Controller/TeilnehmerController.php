@@ -1080,9 +1080,10 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     {
         $valArray = $this->request->getArguments();
         
-        $bcc = $this->groupbccmail;
+        //$bcc = $this->groupbccmail;
+        $bcc = '';
         $sender = $this->settings['sender'];
-        if($bcc == '' || $sender == '') {
+        if($sender == '') {
             $this->addFlashMessage('Fehler 101 in askconsent.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             $this->redirect('listangemeldet', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
         } else {
@@ -1276,12 +1277,12 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         // ******************** EXPORT ****************************
         if (isset($valArray['export']) && $fberatungsstatus != '') {
             
-            //$x = 0;
+            $rows = array();
             foreach($teilnehmers as $x => $tn) {
                 $props = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getGettablePropertyNames($tn);
                 
                 $berater = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'berater');
-                $rows = array();
+                
                 foreach ($props as $prop) {
                     $rows[$x] = array();
                     $rows[$x]['verificationDate'] = date('d.m.Y H:i:s', \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'verificationDate'));
@@ -1291,22 +1292,28 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     $rows[$x]['Ort'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'ort');
                     $rows[$x]['Email'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'email');
                     $rows[$x]['Telefon'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'telefon');
+                    $rows[$x]['Lebensalter'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'lebensalter');
+                    
+                    $tn1staatsangehoerigkeit = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'erste_staatsangehoerigkeit');
+                    $rows[$x]['ErsteStaatsangehoerigkeit'] = $tn1staatsangehoerigkeit == '' ? '-' : $arrstaaten[$tn1staatsangehoerigkeit];
+                    
+                    $tn2staatsangehoerigkeit = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'zweite_staatsangehoerigkeit');
+                    $rows[$x]['ZweiteStaatsangehoerigkeit'] = $tn2staatsangehoerigkeit == '' ? '-' : $arrstaaten[$tn2staatsangehoerigkeit];
                     
                     $tnerwerbsstatus = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'erwerbsstatus');
-                    $rows[$x]['erwerbsstatus'] = $tnerwerbsstatus == 0 ? '' : $arrerwerbsstatus[$tnerwerbsstatus];
+                    $rows[$x]['erwerbsstatus'] = $tnerwerbsstatus == 0 ? '-' : $arrerwerbsstatus[$tnerwerbsstatus];
                     
                     $tnleistungsbezugjanein = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'leistungsbezugjanein');
-                    $rows[$x]['Leistungsbezugjanein'] = $tnleistungsbezugjanein == 0 ? '' : $arrjanein[$tnleistungsbezugjanein];
+                    $rows[$x]['Leistungsbezugjanein'] = $tnleistungsbezugjanein == 0 ? '-' : $arrjanein[$tnleistungsbezugjanein];
                     
                     $tnleistungsbezug = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'leistungsbezug');
-                    $rows[$x]['Leistungsbezug'] = $tnleistungsbezug == '' ? '' : $arrleistungsbezug[$tnleistungsbezug];
+                    $rows[$x]['Leistungsbezug'] = $tnleistungsbezug == '' ? '-' : $arrleistungsbezug[$tnleistungsbezug];
                     
                     $tngeburtsland = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'geburtsland');
-                    $rows[$x]['Geburtsland'] = $tngeburtsland == '' ? '' : $arrstaaten[$tngeburtsland];
+                    $rows[$x]['Geburtsland'] = $tngeburtsland == '' ? '-' : $arrstaaten[$tngeburtsland];
                     
                     $tnaufenthaltsstatus = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'aufenthaltsstatus');
-                    //DebuggerUtility::var_dump($tnaufenthaltsstatus);
-                    $rows[$x]['aufenthaltsstatus'] = $tnaufenthaltsstatus == 0 ? '' : $arraufenthaltsstatus[$tnaufenthaltsstatus];
+                    $rows[$x]['aufenthaltsstatus'] = $tnaufenthaltsstatus == 0 ? '-' : $arraufenthaltsstatus[$tnaufenthaltsstatus];
                     
                     $geschlecht = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'geschlecht');
                     if($geschlecht == 1) $geschlecht = 'w';
@@ -1317,17 +1324,24 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 
                 if($berater != NULL) {
                     $rows[$x]['Beraterin'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($berater, 'username');
+                } else {
+                    $rows[$x]['Beraterin'] = '-';
                 }
                 
-                $rows[$x]['beratungsart'] = '';
-                foreach (\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungsart') as $atn) $rows[$x]['beratungsart'] .= $atn == '' ? '' : $arrberatungsart[$atn]." ";
-                $rows[$x]['anerkennungsberatung'] = '';
-                foreach (\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'anerkennungsberatung') as $atn) $rows[$x]['anerkennungsberatung'] .= $atn == '' ? '' : $arranerkennungsberatung[$atn]." ";
-                $rows[$x]['qualifizierungsberatung'] = '';
-                foreach (\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'qualifizierungsberatung') as $atn) $rows[$x]['qualifizierungsberatung'] .= $atn == '' ? '' : $arrqualifizierungsberatung[$atn]." ";
+                $stringberatungsart = '';
+                foreach (\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungsart') as $atn) $stringberatungsart .= $atn == '' ? '-;' : $arrberatungsart[$atn].";";
+                $rows[$x]['beratungsart'] = $stringberatungsart;
+                
+                $stringanerkennungsberatung = '';
+                foreach (\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'anerkennungsberatung') as $atn) $stringanerkennungsberatung .= $atn == '' ? '-;' : $arranerkennungsberatung[$atn].";";
+                $rows[$x]['anerkennungsberatung'] = $stringanerkennungsberatung;
+                
+                $stringqualifizierungsberatung = '';
+                foreach (\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'qualifizierungsberatung') as $atn) $stringqualifizierungsberatung .= $atn == '' ? '-;' : $arrqualifizierungsberatung[$atn].";";
+                $rows[$x]['qualifizierungsberatung'] = $stringqualifizierungsberatung;
                 
                 $tnnameberatungsstelle = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'name_beratungsstelle');
-                $rows[$x]['nameberatungsstelle'] = $tnnameberatungsstelle == '' ? '' : $arrberatungsstelle[$tnnameberatungsstelle];
+                $rows[$x]['nameberatungsstelle'] = $tnnameberatungsstelle == '' ? '-' : $arrberatungsstelle[$tnnameberatungsstelle];
                 
                 $rows[$x]['beratungzuschulabschluss'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungzu');
                 
@@ -1337,19 +1351,18 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     $aprops = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getGettablePropertyNames($abschluss);
                     
                     $abreferenzberufzugewiesen = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'referenzberufzugewiesen');
-                    $rows[$x]['Abschluss'.$y.' Referenzberufzugewiesen'] = $abreferenzberufzugewiesen == '' ? '' : $arrberufe[$abreferenzberufzugewiesen];
+                    $rows[$x]['Abschluss'.$y.' Referenzberufzugewiesen'] = $abreferenzberufzugewiesen == '' ? '-' : $arrberufe[$abreferenzberufzugewiesen];
                     
                     $rows[$x]['Abschluss'.$y.' Abschlussart'] = '';
                     foreach (\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'abschlussart') as $atn) $rows[$x]['Abschluss'.$y.' Abschlussart'] .= $atn == '' ? '' : $arrabschlussart[$atn]." ";
                     
                     $aberwerbsland = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'erwerbsland');
-                    $rows[$x]['Abschluss'.$y.' Erwerbsland'] = $aberwerbsland == '' ? '' : $arrstaaten[$aberwerbsland];
+                    $rows[$x]['Abschluss'.$y.' Erwerbsland'] = $aberwerbsland == '' ? '-' : $arrstaaten[$aberwerbsland];
                     
                     $abantragstellungerfolgt = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'antragstellungerfolgt');
-                    $rows[$x]['Abschluss'.$y.' Antragstellungerfolgt'] = $abantragstellungerfolgt == 0 ? '' : $arrantragstellungerfolgt[$abantragstellungerfolgt];
+                    $rows[$x]['Abschluss'.$y.' Antragstellungerfolgt'] = $abantragstellungerfolgt == 0 ? '-' : $arrantragstellungerfolgt[$abantragstellungerfolgt];
                     
                 }
-                //$x++;
             }
             
             $bezbstatus = $this->settings['filterberatungsstatus'][$fberatungsstatus];
@@ -1364,6 +1377,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'Ort' => 'string',
                 'E-Mail' => 'string',
                 'Telefon' => 'string',
+                'Lebensalter' => 'string',
+                'Erste Staatsangehoerigkeit' => 'string',
+                'Zweite Staatsangehoerigkeit' => 'string',
                 'Erwerbsstatus' => 'string',
                 'Leistungsbezug ja/nein' => 'string',
                 'Leistungsbezug' => 'string',
@@ -1565,27 +1581,32 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function anmeldseite0Action()
     {
         $valArray = $this->request->getArguments();
-        //DebuggerUtility::var_dump($valArray); die; 
+        //DebuggerUtility::var_dump($valArray);  
+        $uriBuilder = $this->uriBuilder;
+        
         if($valArray['wohnsitzDeutschland'] == 2) {
-            $this->redirectToURI('https://staging.iq-webapp.de/frontend-iq-webapp/anmeldung/anmeldung-zsba', $delay=0, $statusCode=303);
-            
+            $uri = $uriBuilder->setTargetPageUid($this->settings['anmeldungzsbapageuid'])->build();
+            $this->redirectToUri($uri, 0, 303);
         } elseif($valArray['wohnsitzDeutschland'] == 1 && $valArray['plz'] == '') {
-            $this->redirectToURI('https://staging.iq-webapp.de/frontend-iq-webapp/anmeldung/anmeldung-nicht-webapp', $delay=0, $statusCode=303);
-            
+            $uri = $uriBuilder->setTargetPageUid($this->settings['anmeldungnichtwebapppageuid'])->build();
+            $this->redirectToUri($uri, 0, 303);
         } else {
             $plzberatungsstelle = $this->userGroupRepository->getBeratungsstelle4PLZ($valArray['plz'], $this->settings['beraterstoragepid']);
             
             if(count($plzberatungsstelle) == 0) {
-                $this->redirectToURI('https://staging.iq-webapp.de/frontend-iq-webapp/anmeldung/anmeldung-nicht-webapp', $delay=0, $statusCode=303);
+                $uri = $uriBuilder->setTargetPageUid($this->settings['anmeldungnichtwebapppageuid'])->build();
+                $this->redirectToUri($uri, 0, 303);
             } else {
-                $bstid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid') == '' ? $plzberatungsstelle[0]->getNiqbid() : $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid');
+                $GLOBALS['TSFE']->fe_user->setKey('ses', 'beratungsstellenid', $plzberatungsstelle[0]->getNiqbid());
                 
                 $this->view->assign('beratungsstelle', $plzberatungsstelle[0]->getTitle());
+                $this->view->assign('wohnsitzDeutschland', $valArray['wohnsitzDeutschland'] );
+                $this->view->assign('plz', $valArray['plz'] );
+                
             }
         }        
     }
-    
-    
+        
     
     /**
      * action anmeldseite1
@@ -1596,7 +1617,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function anmeldseite1Action(\Ud\Iqtp13db\Domain\Model\TNSeite1 $tnseite1 = NULL)
     {
         $valArray = $this->request->getArguments();
-        //DebuggerUtility::var_dump($valArray);
+//        DebuggerUtility::var_dump($valArray);
           
         if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnseite1') && $tnseite1 == NULL) {
             $tnseite1 = unserialize($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnseite1'));
@@ -1612,6 +1633,13 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $altervonbis[$i] = $i;
         }
         
+        $aktuellesJahr = (int)date("Y");
+        $jahre = array();
+        $jahre[-1] = 'k.A.';
+        for($jahr = $aktuellesJahr; $jahr > $aktuellesJahr-60; $jahr--) {
+            $jahre[$jahr] = (String)$jahr;
+        }
+        
         $this->view->assignMultiple(
             [
                 'altervonbis' => $altervonbis,
@@ -1619,7 +1647,10 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'wohnsitzstaaten' => $wohnsitzstaaten,
                 'tnseite1' => $tnseite1,
                 'settings' => $this->settings,
-                'beratungsstelle' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid')
+                'beratungsstelle' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid'),
+                'wohnsitzdeutschland' => $valArray['wohnsitzDeutschland'],
+                'plz' => $valArray['plz'],
+                'jahre' => $jahre
             ]
             );
         
@@ -1638,38 +1669,46 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $this->redirect('anmeldseite1', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
         } else {
             $valArray = $this->request->getArguments();
+            
             if(isset($valArray['btnweiter'])) {
                 $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite1', serialize($tnseite1));
                 
                 if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid') == NULL) {
                     $teilnehmer = $this->getTeilnehmerFromSession();
-                    $teilnehmer->setBeratungsstatus(99);
-                    $this->teilnehmerRepository->add($teilnehmer);
                     
-                    // Daten sofort in die Datenbank schreiben
-                    $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
-                    $persistenceManager->persistAll();
-                    $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnuid', $teilnehmer->getUid());
-                } else {
-                    $teilnehmer = $this->teilnehmerRepository->findByUid($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid'));
-                    $teilnehmer = $this->getTeilnehmerFromSession($teilnehmer);
+                    // **** Doppelanmeldungen vermeiden *****
+                    if(strtolower($teilnehmer->getNachname()) != 'anonym') {
+                        $teilnehmerarr = $this->teilnehmerRepository->findDublette4Anmeldung($teilnehmer->getNachname(), $teilnehmer->getVorname(), $teilnehmer->getEmail());
+                        if(count($teilnehmerarr) > 0) {
+                            $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnuid', null);
+                            $this->redirect('bereitsberaten', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmerarr[0]));
+                        }
+                    }                    
+                    // **************************************
+                    
                     $teilnehmer->setBeratungsstatus(99);
-                }
-                
-                // Hier entscheidet sich, welcher Beratungsstelle der Ratsuchende zugewiesen wird.
-                // Wenn durch Link angegeben, dann nimm diese, sonst ermittel aus Generalhelper
-                if($GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid') != '') {
-                    $niqbid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid');
+                    $teilnehmer->setNiqidberatungsstelle($GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid'));
+                    $this->teilnehmerRepository->add($teilnehmer);
                 } else {
-                    $niqbid = $this->generalhelper->getNiqberatungsstellenid($teilnehmer, $this->allusergroups, $this->settings['standardniqidberatungsstelle']);
-                    $GLOBALS['TSFE']->fe_user->setKey('ses', 'beratungsstellenid', $niqbid);
-                }
-                $teilnehmer->setNiqidberatungsstelle($niqbid);
-                $this->teilnehmerRepository->update($teilnehmer);
+                    
+                    $teilnehmer = $this->teilnehmerRepository->findByUid($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid'));
+                    
+                    if($teilnehmer != NULL) {
+                        $teilnehmer = $this->getTeilnehmerFromSession($teilnehmer);
+                        $teilnehmer->setBeratungsstatus(99);
+                        $this->teilnehmerRepository->update($teilnehmer);
+                    } else {
+                        $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnuid', null);
+                        $this->addFlashMessage("Fehler 103.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                        $this->redirect('anmeldseite1', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+                    }
+                }                
                 
                 // Daten sofort in die Datenbank schreiben
                 $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
                 $persistenceManager->persistAll();
+                
+                $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnuid', $teilnehmer->getUid());
                 
                 $this->redirect('anmeldseite2', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
             } else {
@@ -1677,64 +1716,40 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             }
         }
     }
-    
-    /**
-     * action initdeleteFileWebapp
-     *
-     * @param void
-     */
-    public function initializeanmeldseite2Action()
-    {
-        $arguments = $this->request->getArguments();
-        if($this->teilnehmerRepository->countByUid($arguments['teilnehmer']) == 0) {
-            $this->forward('anmeldseite2', 'Teilnehmer', null, null);
-            die;
-        }
-    }
+
     /**
      * action anmeldseite2
      *
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
-     * @param \Ud\Iqtp13db\Domain\Model\Abschluss $abschluss
      * @return void
      */
-    public function anmeldseite2Action(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer, \Ud\Iqtp13db\Domain\Model\Abschluss $abschluss = NULL)
+    public function anmeldseite2Action(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
-        if($this->teilnehmerRepository->countByUid($teilnehmer) != 0) {
+        //die;
+        $tnarr = $this->teilnehmerRepository->findByUid($teilnehmer);
+        if(count($tnarr) != 0) {
             $abschluesse = new \Ud\Iqtp13db\Domain\Model\Abschluss();
-            $abschluesse = $this->abschlussRepository->findByTeilnehmer($teilnehmer);
-            if(count($abschluesse) == 0) {
-                $abschluss = new \Ud\Iqtp13db\Domain\Model\Abschluss();
-                $abschluss->setTeilnehmer($teilnehmer);
-                $this->abschlussRepository->add($abschluss);
-                // Daten sofort in die Datenbank schreiben
-                $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
-                $persistenceManager->persistAll();
-            } else {
-                if($abschluss == NULL) $abschluss = $this->abschlussRepository->findOneByTeilnehmer($teilnehmer);
-            }
-            
-            $aktuellesJahr = (int)date("Y");
-            $abschlussjahre = array();
-            $abschlussjahre[-1] = 'k.A.';
-            for($jahr = $aktuellesJahr; $jahr > $aktuellesJahr-60; $jahr--) {
-                $abschlussjahre[$jahr] = (String)$jahr;
-            }
-                    
-            $this->view->assignMultiple(
-                [
-                    'settings' => $this->settings,
-                    'abschluesse' => $abschluesse,
-                    'teilnehmer' => $teilnehmer,
-                    'selectedabschluss' => $abschluss,
-                    'selecteduid' => $abschluss->getUid(),
-                    'beratungsstelle' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid'),
-                    'abschlussjahre', $abschlussjahre
-                ]
-                );
-        } else {
-            $this->forward('startseite', 'Teilnehmer', 'Iqtp13db');
+            $abschluesse = $this->abschlussRepository->findByTeilnehmer($teilnehmer->getUid());
         }
+
+        $aktuellesJahr = (int)date("Y");
+        $abschlussjahre = array();
+        $abschlussjahre[-1] = 'k.A.';
+        for($jahr = $aktuellesJahr; $jahr > $aktuellesJahr-60; $jahr--) {
+            $abschlussjahre[$jahr] = (String)$jahr;
+        }
+        //DebuggerUtility::var_dump($abschluss);
+        //die;
+        
+        $this->view->assignMultiple(
+            [
+                'settings' => $this->settings,
+                'abschluesse' => $abschluesse,
+                'teilnehmer' => $teilnehmer,
+                'beratungsstelle' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid'),
+                'abschlussjahre' => $abschlussjahre
+            ]
+        );
     }
     
     /**
@@ -1745,7 +1760,16 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function anmeldseite2redirectAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
-        $this->cancelregistration(null);
+        $valArray = $this->request->getArguments();
+        if (isset($valArray['btnabschlusshinzu'])) {
+            $this->redirect('newWebapp', 'Abschluss', null, array('teilnehmer' => $teilnehmer));
+        } elseif (isset($valArray['btnzurueck'])) {
+            $this->redirect('anmeldseite1', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+        } elseif(isset($valArray['btnweiter'])) {
+            $this->redirect('anmeldseite3', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
+        } else {
+            $this->cancelregistration(null);
+        }             
     }
     
     /**
@@ -1756,6 +1780,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function anmeldseite3Action(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
+        $valArray = $this->request->getArguments();
+                
         foreach ($this->allusergroups as $group) {
             if($group->getNiqbid() == $teilnehmer->getNiqidberatungsstelle()) {
                 $beratungsartenarray = $group->getBeratungsarten();
@@ -1771,7 +1797,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             }
         }
         
-        if($this->teilnehmerRepository->countByUid($teilnehmer) != 0) {
+        $tnarr = $this->teilnehmerRepository->findByUid($teilnehmer);
+                
+        if(count($tnarr) != 0) {
             $this->view->assign('settings', $this->settings);
             $this->view->assign('teilnehmer', $teilnehmer);
         } else {
@@ -1826,10 +1854,10 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function anmeldungcompleteAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
         $valArray = $this->request->getArguments();
-        
-        if($this->teilnehmerRepository->countByUid($teilnehmer) != 0) {
+        $tnarr = $this->teilnehmerRepository->findByUid($teilnehmer);
+        if(count($tnarr) != 0) {
             $niqbid = $teilnehmer->getNiqidberatungsstelle();
-            $beratungsstellenfolder = $niqbid == '10143' ? 'Beratene' : $niqbid;
+            $beratungsstellenfolder = $niqbid;
             $newFilePath = $beratungsstellenfolder.'/' . $teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid(). '/';
             $storage = $this->generalhelper->getTP13Storage($this->storageRepository->findAll());
             $foldersize = $this->generalhelper->getFolderSize($storage->getConfiguration()['basePath'].$newFilePath);
@@ -1881,9 +1909,10 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
                 $persistenceManager->persistAll();
                 
-                $bcc = $this->generalhelper->getGeneralmailBeratungsstelle($teilnehmer->getNiqidberatungsstelle(), $this->allusergroups, $this->settings['standardbccmail']);
+                $bcc = '';
+                //$bcc = $this->generalhelper->getGeneralmailBeratungsstelle($teilnehmer->getNiqidberatungsstelle(), $this->allusergroups, $this->settings['standardbccmail']);
                 $sender = $this->settings['sender'];
-                if($bcc == '' || $sender == '') {
+                if($sender == '') {
                     $this->addFlashMessage('Fehler 101.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
                     $this->redirect('anmeldungcomplete', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
                 } else {
@@ -1971,6 +2000,29 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $this->redirect(null, null, null, null, $this->settings['redirectValidationFailed']);
     }
     
+    /**
+     * action bereitsberaten
+     *
+     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
+     * @return void
+     */
+    public function bereitsberatenAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    {
+        if($teilnehmer->getBerater() != 0) {
+            //$berater = $this->beraterRepository->findOneByUid($teilnehmer->getBerater());
+            $berater = new \Ud\Iqtp13db\Domain\Model\Berater();
+            $berater = $teilnehmer->getBerater();
+            $berateremail = $berater->getEmail();
+        } else {
+            $beratungsstelle = $this->userGroupRepository->findOneByNiqbid($teilnehmer->getNiqidberatungsstelle());
+            $berateremail = $beratungsstelle->getGeneralmail();
+        }
+        
+        $this->view->assign('berateremail', $berateremail);
+        $this->view->assign('teilnehmer', $teilnehmer);
+    }
+    
+    
     
     /*************************************************************************/
     /********** NO ACTION FUNCTIONS - TODO: in Hilfsklasse auslagern **********/
@@ -1992,7 +2044,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', NULL);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', NULL);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fgruppe', NULL);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fbescheid', NULL);
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fbescheid', NULL); // antragstellungvorher
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'filtermodus', NULL);
         }
         if (isset($valArray['filteran'])) {
@@ -2002,7 +2054,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', $valArray['beruf']);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', $valArray['land']);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fgruppe', $valArray['gruppe']);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fbescheid', $valArray['bescheid']);
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fbescheid', $valArray['bescheid']); // antragstellungvorher
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'filtermodus', '1');
         }
         
@@ -2012,7 +2064,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $filterArray['beruf'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fberuf');
         $filterArray['land'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fland');
         $filterArray['gruppe'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fgruppe');
-        $filterArray['bescheid'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fbescheid');
+        $filterArray['bescheid'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fbescheid'); // antragstellungvorher
         
         if($filterArray['land'] == -1000 || $filterArray['land'] == NULL) $filterArray['land'] = '';
         
@@ -2078,7 +2130,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $teilnehmer = $this->teilnehmerRepository->findByUid($tnuid);
             
             $niqbid = $teilnehmer->getNiqidberatungsstelle();
-            $beratungsstellenfolder = $niqbid == '10143' ? 'Beratene' : $niqbid;
+            $beratungsstellenfolder = $niqbid;
             $filePath = $beratungsstellenfolder.'/' . $teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid(). '/';
             $storage = $this->generalhelper->getTP13Storage( $this->storageRepository->findAll());
             $dokumente = $this->dokumentRepository->findByTeilnehmer($teilnehmer);
@@ -2106,12 +2158,6 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnuid', null);
         $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('ses', null);
         
-        /*
-         $uriBuilder = $this->controllerContext->getUriBuilder();
-         $uriBuilder->reset();
-         $uriBuilder->setTargetPageUid($this->settings['startseite']);
-         $this->redirectToUri($uriBuilder->build());
-         */
         $this->forward('startseite', 'Teilnehmer', 'Iqtp13db');
     }
     
@@ -2126,7 +2172,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $GLOBALS['TSFE']->fe_user->setKey('ses', 'tn', '');
         $recipient = $teilnehmer->getEmail();
         $niqbid = $teilnehmer->getNiqidberatungsstelle();
-        $bcc = $this->generalhelper->getGeneralmailBeratungsstelle($niqbid, $this->allusergroups, $this->settings['standardbccmail']);
+        //$bcc = $this->generalhelper->getGeneralmailBeratungsstelle($niqbid, $this->allusergroups, $this->settings['standardbccmail']);
+        $bcc = '';
         $sender = $this->settings['sender'];
         $subject = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('subject', 'Iqtp13db');
         $templateName = 'Mail';
@@ -2168,7 +2215,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $message = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Mail\MailMessage::class);
         $message->to(new \Symfony\Component\Mime\Address($recipient[0]))->from(new \Symfony\Component\Mime\Address($sender[0]));
         $message->subject($subject);
-        if($templateName != 'Mailtoconfirm') $message->bcc(new \Symfony\Component\Mime\Address($bcc[0]));
+        if($templateName != 'Mailtoconfirm' && $bcc[0] != '') $message->bcc(new \Symfony\Component\Mime\Address($bcc[0]));
         
         if($this->settings['mailattacheinwilligung'] != '') {
             $publicRootPath = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($this->settings['mailattacheinwilligung']);

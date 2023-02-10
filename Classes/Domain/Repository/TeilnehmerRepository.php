@@ -233,7 +233,23 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         return $query;
     }
     
-    
+    /**
+     * @param $nachname
+     * @param $vorname
+     * @param $email
+     */
+    public function findDublette4Anmeldung($nachname, $vorname, $email)
+    {
+        $query = $this->createQuery();
+        $query->matching($query->logicalAnd(
+            $query->like('nachname', '%'.$nachname.'%'),
+            $query->like('vorname', '%'.$vorname.'%'),
+            $query->like('email', $email)
+            ));
+        $query = $query->execute();
+        return $query;
+    }
+        
     /**
      * @param $nachname
      * @param $vorname

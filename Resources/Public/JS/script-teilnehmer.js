@@ -148,9 +148,11 @@
 	function toggle_anmeld_checkwohnsitz() {
     	if($('#anmeld-checkwohnsitzDeutschland1').is(":checked")) {
 			$('#divanmeldplz').fadeIn();
+			$('#anmeldplz').attr("required", true);
 			return;
 		} else {
 			 $('#divanmeldplz').fadeOut();
+			 $('#anmeldplz').attr("required", false);
 			 $('#anmeldplz').val('');
 			return;
 		}

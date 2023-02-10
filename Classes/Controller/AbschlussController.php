@@ -194,48 +194,114 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $this->redirect($valArray['thisaction'], 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'], 'showabschluesse' => '1'));
     }    
     
+    
     /**
-     * action addupdateWebapp
+     * action newWebapp
+     * 
+     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
+     * @return void
+     */
+    public function newWebappAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    {
+        $valArray = $this->request->getArguments();
+        //DebuggerUtility::var_dump($valArray);
+        //die;
+        $abschluesse = new \Ud\Iqtp13db\Domain\Model\Abschluss();
+        $abschluesse = $this->abschlussRepository->findByTeilnehmer($teilnehmer);
+        
+        $aktuellesJahr = (int)date("Y");
+        $abschlussjahre = array();
+        $abschlussjahre[-1] = 'k.A.';
+        for($jahr = $aktuellesJahr; $jahr > $aktuellesJahr-60; $jahr--) {
+            $abschlussjahre[$jahr] = (String)$jahr;
+        }
+        
+        $this->view->assignMultiple(
+            [
+                'settings' => $this->settings,
+                'abschluesse' => $abschluesse,
+                'teilnehmer' => $teilnehmer,
+                'beratungsstelle' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid'),
+                'abschlussjahre' => $abschlussjahre
+            ]
+        );
+    }
+    
+    /**
+     * action createWebapp
      *
      * @param \Ud\Iqtp13db\Domain\Model\Abschluss $abschluss
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return void
      */
-    public function addupdateWebappAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss = NULL, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    public function createWebappAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
-        if($abschluss == NULL) {
-            $this->redirect('anmeldseite2', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
-        } else {
-            $valArray = $this->request->getArguments();
-            //DebuggerUtility::var_dump($valArray);
-            //die;
+        $valArray = $this->request->getArguments();
+        
+        if (!isset($valArray['btnzurueck'])) {
+            $abschluss->setTeilnehmer($teilnehmer);
+
+            $abschluesse = new \Ud\Iqtp13db\Domain\Model\Abschluss();
+            $abschluesse = $this->abschlussRepository->findByTeilnehmer($teilnehmer);
+            if(count($abschluesse) == 0) $abschluss->setNiquebertragung(1);
+            $this->abschlussRepository->add($abschluss);
             
-            $abschluss->setNiquebertragung(1);
-            $this->abschlussRepository->update($abschluss);
-            
-            // Daten sofort in die Datenbank schreiben
-            $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
-            $persistenceManager->persistAll();
-            
-            if (isset($valArray['btnweitererabschluss'])) {
-                $newabschluss = new \Ud\Iqtp13db\Domain\Model\Abschluss();
-                $newabschluss->setTeilnehmer($teilnehmer);
-                $this->abschlussRepository->add($newabschluss);
-                // Daten sofort in die Datenbank schreiben
-                $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
-                $persistenceManager->persistAll();
-                $this->redirect('anmeldseite2', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'abschluss' => $newabschluss));
-            } elseif(isset($valArray['btndelete'])) {
-                $this->abschlussRepository->remove($abschluss);
-                $this->redirect('anmeldseite2', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
-            } elseif (isset($valArray['btnzurueck'])) {
-                $this->redirect('anmeldseite1', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
-            } elseif(isset($valArray['btnweiter'])) {
-                $this->redirect('anmeldseite3', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
-            } else {
-                $this->redirect('anmeldseite2redirect', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
-            }            
         }
+        $this->redirect('anmeldseite2', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
+    }
+    
+    /**
+     * action editWebapp
+     *
+     * @param \Ud\Iqtp13db\Domain\Model\Abschluss $abschluss
+     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
+     * @return void
+     */
+    public function editWebappAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    {
+        $abschluesse = new \Ud\Iqtp13db\Domain\Model\Abschluss();
+        $abschluesse = $this->abschlussRepository->findByTeilnehmer($teilnehmer);
+        
+       /* foreach($abschluesse as $abkey => $ab) {
+            if($ab->getUid() == $abschluss->getUid()) {
+                unset($abschluesse[$abkey]);
+            }
+        }
+        */
+        $aktuellesJahr = (int)date("Y");
+        $abschlussjahre = array();
+        $abschlussjahre[-1] = 'k.A.';
+        for($jahr = $aktuellesJahr; $jahr > $aktuellesJahr-60; $jahr--) {
+            $abschlussjahre[$jahr] = (String)$jahr;
+        }
+        
+        $this->view->assignMultiple(
+            [
+                'settings' => $this->settings,
+                'abschluesse' => $abschluesse,
+                'abschluss' => $abschluss,
+                'teilnehmer' => $teilnehmer,
+                'beratungsstelle' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid'),
+                'abschlussjahre' => $abschlussjahre
+            ]
+            );
+    }
+    
+    /**
+     * action updateWebapp
+     *
+     * @param \Ud\Iqtp13db\Domain\Model\Abschluss $abschluss
+     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
+     * @return void
+     */
+    public function updateWebappAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    {
+        $valArray = $this->request->getArguments();
+        
+        if (!isset($valArray['btnzurueck'])) {
+            $this->abschlussRepository->update($abschluss);
+        }
+        $this->redirect('anmeldseite2', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
     }
       
     /**
@@ -251,30 +317,6 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         
         $this->redirect('anmeldseite2', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
     }
-       
-    /**
-     * action selectWebapp
-     *
-     * @param \Ud\Iqtp13db\Domain\Model\Abschluss $abschluss
-     * @return void
-     */
-    public function selectWebappAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss = NULL)
-    {
-        $valArray = $this->request->getArguments();
-        if($valArray['selectboxabschluss'] != -1) {
-            $abschluss=$this->abschlussRepository->findByUid($valArray['selectboxabschluss']);
-            if($abschluss != NULL) {
-                $teilnehmer = $abschluss->getTeilnehmer();
-            } else {
-                $teilnehmer = $this->teilnehmerRepository->findbyUid($valArray['teilnehmer']);
-            }
-            $this->redirect('anmeldseite2', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'abschluss' => $abschluss));
-        } else {
-            $teilnehmer = $this->teilnehmerRepository->findbyUid($valArray['teilnehmer']);
-            $this->redirect('anmeldseite2', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));  
-        }
         
-    }
-    
     
 }

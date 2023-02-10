@@ -1,0 +1,67 @@
+ <h2><f:translate key="dokumenthochladen" /></h2>
+	<table class="dokumenteupload">
+		<tr>
+			<td>
+				<label for="lebenslauf">{f:translate(key='lebenslauf')}</label>
+			</td>
+			<td class="dokumenteuploadform">
+				<f:form method="post" action="saveFileWebapp" name="dokument" controller="Dokument" arguments="{teilnehmer:teilnehmer}" object="{dokument}" enctype="multipart/form-data" >
+					<f:form.upload name="file" />
+					<f:form.hidden name="beschreibung" value="Lebenslauf" />
+				</f:form>					
+			</td>				
+		</tr>
+		<tr>
+			<td>
+				<label for="abschlussdokumente">{f:translate(key='abschlussdokumente')}</label>
+			</td>
+			<td class="dokumenteuploadform">
+				<f:form method="post" action="saveFileWebapp" name="dokument" controller="Dokument" arguments="{teilnehmer:teilnehmer}" object="{dokument}" enctype="multipart/form-data" >
+					<f:form.upload name="file" />
+					<f:form.hidden name="beschreibung" value="Abschlussdokumente" />
+				</f:form>
+			</td>				
+		</tr>
+		<tr>	
+			<td>
+				<label for="aufenthaltsdokumente">{f:translate(key='aufenthaltsdokumente')}</label>
+			</td>
+			<td class="dokumenteuploadform">
+				<f:form method="post" action="saveFileWebapp" name="dokument" controller="Dokument" arguments="{teilnehmer:teilnehmer}" object="{dokument}" enctype="multipart/form-data" >
+					<f:form.upload name="file" />
+					<f:form.hidden name="beschreibung" value="Aufenthaltsdokumente" />
+				</f:form>		
+			</td>				
+		</tr>
+		<tr>
+			<td>
+				<label for="sonstigedokumente">{f:translate(key='sonstigedokumente')}</label>
+			</td>
+			<td class="dokumenteuploadform">
+				<f:form method="post" action="saveFileWebapp" name="dokument" controller="Dokument" arguments="{teilnehmer:teilnehmer}" object="{dokument}" enctype="multipart/form-data" >
+					<f:form.upload name="file" />
+					<f:form.hidden name="beschreibung" value="Sonstige Dokumente" />
+				</f:form>		
+			</td>				
+		</tr>
+	</table>
+	<br>
+	
+	
+	<f:if condition="{dokumente}"><f:then>
+	<h2><f:translate key="dokumente" /></h2>
+		<table>
+			<f:for each="{dokumente}" as="dokument">
+					<tr>
+						<td>{dokument.name}</td>
+						<td>
+							<f:if condition="{dokument.beschreibung} == 'Lebenslauf'"><f:then>{f:translate(key='lebenslauf')}</f:then></f:if>
+							<f:if condition="{dokument.beschreibung} == 'Abschlussdokumente'"><f:then>{f:translate(key='abschlussdokumente')}</f:then></f:if>
+							<f:if condition="{dokument.beschreibung} == 'Aufenthaltsdokumente'"><f:then>{f:translate(key='aufenthaltsdokumente')}</f:then></f:if>
+							<f:if condition="{dokument.beschreibung} == 'Sonstige Dokumente'"><f:then>{f:translate(key='sonstigedokumente')}</f:then></f:if>
+						</td>
+						<td><f:link.action class="iconbuttons" action="deleteFileWebapp" controller="Dokument" arguments="{dokument : dokument, teilnehmer : teilnehmer}"><img src="/typo3conf/ext/iqtp13db/Resources/Public/Icons/delete-640.png" width="32" height="32" alt="{f:translate(key='loeschen')}" /></f:link.action></td>
+					</tr>		
+			</f:for>
+		</table>
+	</f:then></f:if>

@@ -125,7 +125,7 @@
 	<trans-unit id="infofruehererAntrag"><target>Proszę podać, czy w przeszłości składał/a już Pan/Pani wniosek o uznanie kwalifikacji zawodowych.</target></trans-unit>
 	<trans-unit id="infoInstitution"><target>Jeżeli złożył/a Pan/Pani już wniosek o uznanie kwalifikacji zawodowych, prosimy o wskazanie w tym miejscu instytucji/organu oraz kraju, w którym to nastąpiło.</target></trans-unit>
 	<trans-unit id="headabschlusslinks"><target><![CDATA[	 &nbsp; ]]></target></trans-unit>
-	<trans-unit id="headabschlussrechts"><target>Inne dyplomy </target></trans-unit>
+	<trans-unit id="weitererabschluss"><target>Inne dyplomy </target></trans-unit>
 	<trans-unit id="headabschlussrechtsausblenden"><target>Ukryj dyplom </target></trans-unit>
 	<trans-unit id="anredemail"><target>Dzień dobry</target></trans-unit>
 	<trans-unit id="mailtext"><target><![CDATA[<p>Dziękujemy za informacje.</p> <p>&nbsp;</p> <p>Jest Pan/Pani teraz zarejestrowany/a do konsultacji. Skontaktujemy się z Panem/Panią jak tylko nadejdzie Pana/Pani kolej. <br><br>Konsultacje będą odbywać się za pośrednictwem poczty elektronicznej, telefonu lub czatu wideo zgodnie z życzeniem.</p> <p>Dążymy do rozpatrzenia wniosku w ciągu WARTEZEITWOCHEN tygodni. Prosimy o wyrozumiałość i cierpliwość.</p><p>&nbsp;</p> <p>Pozdrawiamy</p>Państwa Serwis doradztwa z zakresu uznawania kwalifikacji zawodowych oraz dokształcania IQ.]]></target></trans-unit>
