@@ -389,7 +389,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $valArray = $this->request->getArguments();
         
         // zuletzt bearbeiteten User zurücksetzen
-        if($valArray['tn']) {
+        if(isset($valArray['tn'])) {
             $editedteilnehmer = $this->teilnehmerRepository->findByUid($valArray['tn']);
             $tnedituser = $editedteilnehmer->getEdituser();
             if($this->user['uid'] == $tnedituser) {
@@ -466,7 +466,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $valArray = $this->request->getArguments();
         
         // zuletzt bearbeiteten User zurücksetzen
-        if($valArray['tn']) {
+        if(isset($valArray['tn'])) {
             $editedteilnehmer = $this->teilnehmerRepository->findByUid($valArray['tn']);
             $tnedituser = $editedteilnehmer->getEdituser();
             if($this->user['uid'] == $tnedituser) {
@@ -572,7 +572,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $valArray = $this->request->getArguments();
         
         // zuletzt bearbeiteten User zurücksetzen
-        if($valArray['tn']) {
+        if(isset($valArray['tn'])) {
             $editedteilnehmer = $this->teilnehmerRepository->findByUid($valArray['tn']);
             $tnedituser = $editedteilnehmer->getEdituser();
             if($this->user['uid'] == $tnedituser) {
@@ -1784,24 +1784,18 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function anmeldseite2Action(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
-        //die;
-        $tnarr = $this->teilnehmerRepository->findByUid($teilnehmer);
-        if(count($tnarr) != 0) {
+        $tnarr = $this->teilnehmerRepository->findByUid($teilnehmer->getUid());
+        if($tnarr != NULL) {
             $abschluesse = new \Ud\Iqtp13db\Domain\Model\Abschluss();
-            
-            //DebuggerUtility::var_dump($tnarr);
-            //die;
-            
             $abschluesse = $this->abschlussRepository->findByTeilnehmer($teilnehmer->getUid());
         }
-
+ 
         $aktuellesJahr = (int)date("Y");
         $abschlussjahre = array();
         $abschlussjahre[-1] = 'k.A.';
         for($jahr = $aktuellesJahr; $jahr > $aktuellesJahr-60; $jahr--) {
             $abschlussjahre[$jahr] = (String)$jahr;
         }
-
         
         $this->view->assignMultiple(
             [
@@ -1859,9 +1853,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             }
         }
         
-        $tnarr = $this->teilnehmerRepository->findByUid($teilnehmer);
+        $tnarr = $this->teilnehmerRepository->findByUid($teilnehmer->getUid());
                 
-        if(count($tnarr) != 0) {
+        if($tnarr != NULL) {
             $this->view->assign('settings', $this->settings);
             $this->view->assign('teilnehmer', $teilnehmer);
         } else {
@@ -1916,8 +1910,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function anmeldungcompleteAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
         $valArray = $this->request->getArguments();
-        $tnarr = $this->teilnehmerRepository->findByUid($teilnehmer);
-        if(count($tnarr) != 0) {
+        $tnarr = $this->teilnehmerRepository->findByUid($teilnehmer->getUid());
+        if($tnarr != NULL) {
             $niqbid = $teilnehmer->getNiqidberatungsstelle();
             $beratungsstellenfolder = $niqbid;
             $newFilePath = $beratungsstellenfolder.'/' . $teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid(). '/';
@@ -2190,7 +2184,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     {
         if($tnuid != null) {
             
-            $teilnehmer = $this->teilnehmerRepository->findByUid($tnuid);
+            $teilnehmer = $this->teilnehmerRepository->findByUid($tnuid->getUid());
             
             $niqbid = $teilnehmer->getNiqidberatungsstelle();
             $beratungsstellenfolder = $niqbid;

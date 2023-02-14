@@ -80,6 +80,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             $hidden = " AND t.hidden = 0 ";
         }
         
+        // Hier Ausnahme Frau Hollands/AA Ddorf
         if(substr($thisusergroup->getTitle(),0,2) == 'AA'){
             $sql = "SELECT t.* FROM tx_iqtp13db_domain_model_teilnehmer t
     			LEFT JOIN tx_iqtp13db_domain_model_abschluss a ON a.teilnehmer = t.uid
@@ -138,7 +139,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             );
         }
         elseif($beratungsstatus == 2 || $beratungsstatus == 3) {
-            // Hier Ausnahme Frau Hollands/AA
+            // Hier Ausnahme Frau Hollands/AA Ddorf
             if(substr($thisusergroup->getTitle(),0,2) == 'AA'){
                 $query->matching(
                     $query->logicalAnd(
@@ -409,8 +410,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         } else {
             $hidden = " AND t.hidden = 0 ";
         }
-        
-        
+                
         $sql = "SELECT t.* FROM tx_iqtp13db_domain_model_teilnehmer t
     			LEFT JOIN tx_iqtp13db_domain_model_abschluss a ON a.teilnehmer = t.uid
                 WHERE
