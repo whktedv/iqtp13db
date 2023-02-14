@@ -414,6 +414,15 @@ button.abbruchbtn {
 	margin-left: 10px;
 }
 
+.tx-iqtp13db table td.dokumentliste {
+	font-size: 1.1rem;
+	color: #556bb9;
+}
+
+table tr.dokcattr td {
+	border-top: 2px dotted #9F9168;
+}
+
 .speicherplatz {
 	font-size: 0.8rem;	
 }

@@ -5,8 +5,6 @@
 
 <f:section name="main">
 
-<div class="edituserfield">{edituserfield}</div>
-
 <f:if condition="{showabschluesse} == '1'">
 <f:then>
 	<script>
@@ -47,6 +45,7 @@
 	</div>
 	
 	<div class="edit-eingabefelder">
+	<f:if condition="{edituserfield} != ''"><div class="edituserfield">Datensatz wird seit <strong>{edittstampfield} Uhr</strong> von {edituserfield} bearbeitet</div></f:if>
 	<h1>Ratsuchende*n bearbeiten UID: {teilnehmer.uid}</h1>
 	
 	<f:flashMessages />

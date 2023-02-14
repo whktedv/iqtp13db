@@ -369,7 +369,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'historie' => $historie,
                 'beratungsstelle' => $this->usergroup->getTitle(),
                 'niqbid' => $this->niqbid,
-                'niqdbstatus' => $niqdbstatus
+                'niqdbstatus' => $niqdbstatus,
+                'username' => $this->user['username']
             ]
             );
     }
@@ -386,10 +387,24 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         //die;
         
         $valArray = $this->request->getArguments();
+        
+        // zuletzt bearbeiteten User zurücksetzen
+        if($valArray['tn']) {
+            $editedteilnehmer = $this->teilnehmerRepository->findByUid($valArray['tn']);
+            $tnedituser = $editedteilnehmer->getEdituser();
+            if($this->user['uid'] == $tnedituser) {
+                $editedteilnehmer->setEdituser(0);
+                $editedteilnehmer->setEdittstamp(0);
+                $this->teilnehmerRepository->update($editedteilnehmer);
+                // Daten sofort in die Datenbank schreiben
+                $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+                $persistenceManager->persistAll();
+            }
+        }
+        
         if(!empty($valArray['callerpage'])) $currentPage = $valArray['callerpage'];
         
         if(empty($valArray['orderby'])) {
-            // ANMERKUNG: Nach Telefonat mit T. Schiller Standardsortierung per Bestätigungsdatum (verificationDate)
             $orderby = 'verification_date';
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'listangemeldetorder', 'DESC');
             $order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listangemeldetorder');
@@ -449,6 +464,21 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function listerstberatungAction(int $currentPage = 1)
     {
         $valArray = $this->request->getArguments();
+        
+        // zuletzt bearbeiteten User zurücksetzen
+        if($valArray['tn']) {
+            $editedteilnehmer = $this->teilnehmerRepository->findByUid($valArray['tn']);
+            $tnedituser = $editedteilnehmer->getEdituser();
+            if($this->user['uid'] == $tnedituser) {
+                $editedteilnehmer->setEdituser(0);
+                $editedteilnehmer->setEdittstamp(0);
+                $this->teilnehmerRepository->update($editedteilnehmer);
+                // Daten sofort in die Datenbank schreiben
+                $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+                $persistenceManager->persistAll();
+            }
+        }
+        
         if(!empty($valArray['callerpage'])) $currentPage = $valArray['callerpage'];
         
         if(empty($valArray['orderby'])) {
@@ -541,6 +571,19 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     {
         $valArray = $this->request->getArguments();
         
+        // zuletzt bearbeiteten User zurücksetzen
+        if($valArray['tn']) {
+            $editedteilnehmer = $this->teilnehmerRepository->findByUid($valArray['tn']);
+            $tnedituser = $editedteilnehmer->getEdituser();
+            if($this->user['uid'] == $tnedituser) {
+                $editedteilnehmer->setEdituser(0);
+                $editedteilnehmer->setEdittstamp(0);
+                $this->teilnehmerRepository->update($editedteilnehmer);
+                // Daten sofort in die Datenbank schreiben
+                $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+                $persistenceManager->persistAll();
+            }
+        }
         
         if(!empty($valArray['callerpage'])) $currentPage = $valArray['callerpage'];
         
@@ -817,22 +860,25 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     {
         $valArray = $this->request->getArguments();
         
-//         $edituserfield = '';
+        $edituserfield = '';
         
-//         if($teilnehmer->getEdittstamp() == 0 || $teilnehmer->getEdituser() == $this->user['uid'] || (time() - $teilnehmer->getEdittstamp()) > 28800) {
-//             $teilnehmer->setEdittstamp(time());
-//             $teilnehmer->setEdituser($this->user['uid']);
-//             $this->teilnehmerRepository->update($teilnehmer);
-            
-//             //DebuggerUtility::var_dump($teilnehmer);
-//             // Daten sofort in die Datenbank schreiben
-//             $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
-//             $persistenceManager->persistAll();
-//         } else {
-//             $edituserfield = $this->user['username'];
-//         }
+        if($teilnehmer->getEdittstamp() == 0 || $teilnehmer->getEdituser() == $this->user['uid'] || (time() - $teilnehmer->getEdittstamp()) > 10) {
+            $teilnehmer->setEdittstamp(time());
+            $teilnehmer->setEdituser($this->user['uid']);
+            $this->teilnehmerRepository->update($teilnehmer);
+          
+            //DebuggerUtility::var_dump($teilnehmer);
+            // Daten sofort in die Datenbank schreiben
+            $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+            $persistenceManager->persistAll();
+        } else {
+            //DebuggerUtility::var_dump($teilnehmer);
+            $editberater = $this->beraterRepository->findByUid($teilnehmer->getEdituser());
+            $edituserfield = $editberater->getUsername();
+            $edittstampfield = date("G:i:s", $teilnehmer->getEdittstamp());
+        }
         
-        //DebuggerUtility::var_dump($valArray);
+        //DebuggerUtility::var_dump($edituserfield);
         
         $abschluesse = $this->abschlussRepository->findByTeilnehmer($teilnehmer);
                 
@@ -871,8 +917,12 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         }
         
         $abschlusshinzu = isset($valArray['abschlusshinzu']) ? $valArray['abschlusshinzu'] : '';
+        
+        $alleberatungsstellen = $this->userGroupRepository->findAllBeratungsstellen($this->settings['beraterstoragepid']);
+        
         $this->view->assignMultiple(
             [
+                'alleberatungsstellen' => $alleberatungsstellen,
                 'altervonbis' => $altervonbis,
                 'calleraction' => $valArray['calleraction'] ?? 'listangemeldet',
                 'callercontroller' => $valArray['callercontroller'] ?? 'Teilnehmer',
@@ -889,7 +939,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'jahre' => $jahre,
                 'showabschluesse' => $valArray['showabschluesse'] ?? '0',
                 'showdokumente' => $valArray['showdokumente'] ?? '0',
-                'edituserfield' => $edituserfield ?? ''
+                'edituserfield' => $edituserfield,
+                'edittstampfield' => $edittstampfield
             ]
             );
     }
@@ -904,7 +955,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     {
         $valArray = $this->request->getArguments();
         
-        //DebuggerUtility::var_dump($valArray);
+        //DebuggerUtility::var_dump($teilnehmer);
         //die;
          
         if(is_numeric($teilnehmer->getLebensalter())) {
@@ -924,6 +975,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $this->redirect($valArray['calleraction'] ?? 'edit', $valArray['callercontroller'] ?? 'Teilnehmer', null, array('callerpage' => $valArray['callerpage'] ?? '1'));            
         }
         
+        $this->createHistory($teilnehmer, "niqidberatungsstelle");
         $this->createHistory($teilnehmer, "niqchiffre");
         $this->createHistory($teilnehmer, "schonberaten");
         $this->createHistory($teilnehmer, "schonberatenvon");
@@ -991,8 +1043,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $this->addFlashMessage("Fehler in Update-Routine -> beratungsstatus = 999. Bitte Admin informieren.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
         }
         
-        $teilnehmer->setNiqidberatungsstelle($this->niqbid);
-        $teilnehmer->setBeratungsstatus($bstatus);
+        $teilnehmer->setBeratungsstatus($bstatus);        
         $this->teilnehmerRepository->update($teilnehmer);
         
         // Daten sofort in die Datenbank schreiben
@@ -1098,6 +1149,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 $templateName = 'Mailtoconfirm';
             }
             $confirmmailtext1 = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmmailtext1', 'Iqtp13db');
+            $confirmmailtext1 = str_replace("VORNAMENACHNAME", $teilnehmer->getVorname().' '.$teilnehmer->getNachname(), $confirmmailtext1);
             $confirmlinktext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmlinktext', 'Iqtp13db');
             $confirmmailtext2 = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmmailtext2', 'Iqtp13db');
             $subject = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmsubject', 'Iqtp13db');
@@ -1157,7 +1209,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         
         $thisdate = new DateTime();
         $zeitstempel = $thisdate->format('d.m.Y - H:i:s');
-        $zeitstempel4filename = $thisdate->format('dmY-Hi');
+        $zeitstempel4filename = $thisdate->format('dmY-His');
         
         $this->view->assign('teilnehmer', $teilnehmer);
         $this->view->assign('abschluesse', $abschluesse);
@@ -1199,24 +1251,31 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         
         $mpdf->Output($fullpath, 'F');
         
-      
+        
         // ******* Als Dokument speichern, damit aus Webapp abrufbar *******
-        $dokument = new \Ud\Iqtp13db\Domain\Model\Dokument();
+        $dbexists = $this->dokumentRepository->findByName($filename);
         
-        $dokument->setBeschreibung("DATENBLATT vom ".$zeitstempel);
-        $dokument->setName($filename);
-        $dokument->setPfad($beratungsstellenfolder. '/' .$pfad->getName().'/');
-        $dokument->setTeilnehmer($teilnehmer);
-        
-        $this->dokumentRepository->add($dokument);
-        
-        //Daten sofort in die Datenbank schreiben
-        $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
-        $persistenceManager->persistAll();
+        if(count($dbexists) == 0) {
+            $dokument = new \Ud\Iqtp13db\Domain\Model\Dokument();
+            
+            $dokument->setBeschreibung("DATENBLATT vom ".$zeitstempel);
+            $dokument->setName($filename);
+            $dokument->setPfad($beratungsstellenfolder. '/' .$pfad->getName().'/');
+            $dokument->setTeilnehmer($teilnehmer);
+            
+            $this->dokumentRepository->add($dokument);
+             
+            //Daten sofort in die Datenbank schreiben
+            $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+            $persistenceManager->persistAll();
+            
+            $this->addFlashMessage('Datenblatt wurde in '.$pfad->getIdentifier().' erstellt.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+            
+        } else {
+            $this->addFlashMessage('Datenblatt mit diesem Zeitstempel schon vorhanden.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+        }
         //********************************************************************
         
-        
-        $this->addFlashMessage('Datenblatt wurde in '.$pfad->getIdentifier().' erstellt.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
         
         $this->redirect('show', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer, 'callerpage' => $valArray['callerpage'], 'showdokumente' => '1'));
     }
@@ -1729,6 +1788,10 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $tnarr = $this->teilnehmerRepository->findByUid($teilnehmer);
         if(count($tnarr) != 0) {
             $abschluesse = new \Ud\Iqtp13db\Domain\Model\Abschluss();
+            
+            //DebuggerUtility::var_dump($tnarr);
+            //die;
+            
             $abschluesse = $this->abschlussRepository->findByTeilnehmer($teilnehmer->getUid());
         }
 
@@ -1738,8 +1801,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         for($jahr = $aktuellesJahr; $jahr > $aktuellesJahr-60; $jahr--) {
             $abschlussjahre[$jahr] = (String)$jahr;
         }
-        //DebuggerUtility::var_dump($abschluss);
-        //die;
+
         
         $this->view->assignMultiple(
             [
@@ -1922,6 +1984,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     $recipient = $teilnehmer->getEmail();
                     $templateName = 'Mailtoconfirm';
                     $confirmmailtext1 = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmmailtext1', 'Iqtp13db');
+                    $confirmmailtext1 = str_replace("VORNAMENACHNAME", $teilnehmer->getVorname().' '.$teilnehmer->getNachname(), $confirmmailtext1);
                     $confirmlinktext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmlinktext', 'Iqtp13db');
                     $confirmmailtext2 = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmmailtext2', 'Iqtp13db');
                     $subject = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmsubject', 'Iqtp13db');

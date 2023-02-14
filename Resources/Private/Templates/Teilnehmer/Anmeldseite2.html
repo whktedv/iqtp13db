@@ -22,7 +22,7 @@
 	<div id="AnkerAbschluesse" class="fframe formabschluss">
 		<h2><f:translate key="datenabschluss" /></h2>
 		<f:if condition="{abschluesse -> f:count()} == 0">
-			<div class="keinabschlussbisher">Noch keinen Berufsabschluss angegeben.<br>Bitte tragen Sie hier Informationen zu Ihrem Berufsabschluss (Universität oder Ausbildung) ein. Sie können auch mehrere Abschlüsse (Diplome, Zeugnisse) angeben.</div>
+			<div class="keinabschlussbisher"><f:translate key="keinabschlussbisher" /></div>
 		</f:if>
 		<f:render partial="Abschluss/AbschlussListe4Anmeldung" arguments="{teilnehmer : teilnehmer, abschluesse: abschluesse}" />
 		<f:if condition="{abschluesse -> f:count()} < 4">

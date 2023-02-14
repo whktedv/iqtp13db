@@ -105,9 +105,31 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         $datum = strtotime("now");
         
         // Seite "Admin-Übersicht"
-        //DebuggerUtility::var_dump($this->settings);
-        
         $valArray = $this->request->getArguments();
+        
+        $buser = $this->beraterRepository->findByUid($this->user['uid']);
+        $userusergroups = $buser->getUsergroup();
+        
+        if($valArray['switch'] && $valArray['bstellen'] != 0) {
+            $selectedgroup = $this->userGroupRepository->findByNiqbid($valArray['bstellen']);                        
+            $buser->addUserGroup($selectedgroup[0]);
+            
+            $userusergroupssortedOS = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+            for($i = count($userusergroups)-1; $i >= 0; $i--) {
+                $userusergroupssortedOS->attach($userusergroups[$i]);  
+            }
+            $buser->setUsergroup($userusergroupssortedOS);
+            $this->beraterRepository->update($buser);
+            //DebuggerUtility::var_dump($userusergroupssortedOS);
+        } elseif($valArray['remove']) {            
+            for($i = count($userusergroups); $i >= 1; $i--) {
+                $userusergroups->detach($userusergroups[$i]);
+            }
+            $buser->setUsergroup($userusergroups);
+            $this->beraterRepository->update($buser);            
+            //DebuggerUtility::var_dump($buser);           
+        }
+        
         
         $heute = date('Y-m-d');
         $diesesjahr = date('Y');
@@ -245,7 +267,8 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 'anzberater' => $anzberater,
                 'anzratsuchendeanmeld' => $anzratsuchendeanmeld,
                 'anzratsuchendeerstb' => $anzratsuchendeerstb,
-                'anzratsuchendearch' => $anzratsuchendearch
+                'anzratsuchendearch' => $anzratsuchendearch,
+                'anzuserberatungsstellen' => count($userusergroups)
             ]
             );
     }

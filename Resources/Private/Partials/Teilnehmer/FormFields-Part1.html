@@ -1,4 +1,15 @@
 {namespace iqtp13db=Ud\Iqtp13db\ViewHelpers}
+<f:security.ifHasRole role="Webapp Admin">
+<div class="fframeadminonly">
+	<div class="tp13_formdivwebapp">
+		<label for="beratungsstellenauswahl">
+			Beratungsstelle
+		</label>
+		<f:form.select property="niqidberatungsstelle" options="{alleberatungsstellen}" optionValueField="niqbid" optionLabelField="title" />
+	</div>
+</div>	
+</f:security.ifHasRole>
+
 <div class="fframe">
 		<div class="tp13_formdivwebapp">
 			<label for="einwilligung">

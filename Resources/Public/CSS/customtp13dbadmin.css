@@ -287,3 +287,12 @@ input[type="text"].textfieldsmall  {
 .inputdokumentbeschreibung {
 	margin-left: 1rem;
 }
+
+.edituserfield {
+	padding: 1rem 1rem;
+	background-color: #ec7b7b;
+	border: 1px solid #646464;
+	border-radius: 6px;
+	font-size: 1.2rem;
+	color: #eee;
+}

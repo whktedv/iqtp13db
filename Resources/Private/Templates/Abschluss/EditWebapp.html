@@ -26,11 +26,11 @@
 		<f:render partial="Abschluss/AbschlussListe4Anmeldung" arguments="{teilnehmer : teilnehmer, abschluesse: abschluesse, thisabschluss: abschluss}" />
 	
 		<f:form id="teilnehmerform" action="createWebapp" name="abschluss" object="{abschluss}" arguments="{teilnehmer: teilnehmer}">
-			<div class="fframeabschluss-inner"><h2>Abschluss bearbeiten</h2>
+			<div class="fframeabschluss-inner"><h2><f:translate key="abschlussbearbeiten" /></h2>
 				<f:render partial="Abschluss/FormFieldsAnmeldung" arguments="{abschlussjahre:abschlussjahre}" />
 			</div>
 			<f:form.button id="newabschlusszurueckbutton" name="btnzurueck"><f:translate key="zurueck" /></f:form.button>
-			<f:form.submit class="linkbuttons" value="Speichern" id="savebutton1"/>			
+			<f:form.submit class="linkbuttons" value="{f:translate(key:'speichern')}" id="savebutton1"/>			
 		</f:form>
 	</div>
 

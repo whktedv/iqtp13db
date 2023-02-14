@@ -1,6 +1,5 @@
 <?php
 namespace Ud\Iqtp13db\Controller;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3\CMS\Core\Pagination\SimplePagination;
 use Ud\Iqtp13db\Domain\Repository\UserGroupRepository;
@@ -20,7 +19,6 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $this->userGroupRepository = $userGroupRepository;
         $this->beraterRepository = $beraterRepository;
     }
-    
     
     /**
      * action init

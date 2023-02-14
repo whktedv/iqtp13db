@@ -7,8 +7,6 @@ return [
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
         'versioningWS' => true,
-        'languageField' => 'sys_language_uid',
-        'transOrigDiffSourceField' => 'l10n_diffsource',
         'delete' => 'deleted',
         'hideTable' => true, 
         'enablecolumns' => [
@@ -20,45 +18,9 @@ return [
         'iconfile' => 'EXT:iqtp13db/Resources/Public/Icons/tx_iqtp13db_domain_model_abschluss.gif'
     ],
     'types' => [
-        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, abschlussart, erwerbsland, dauer_berufsausbildung, abschlussjahr, ausbildungsinstitution, ausbildungsort, abschluss, berufserfahrung, deutscher_referenzberuf, beraterreferenzberuf, wunschberuf, antragstellungvorher, antragstellunggwpvorher, antragstellungzabvorher, antragstellungerfolgt, antragstellunggwpdatum, antragstellunggwpergebnis, antragstellungzabdatum, antragstellungzabergebnis, niquebertragung, sonstigerberuf, nregberuf, teilnehmer, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+        '1' => ['showitem' => 'hidden, abschlussart, erwerbsland, dauer_berufsausbildung, abschlussjahr, ausbildungsinstitution, ausbildungsort, abschluss, berufserfahrung, deutscher_referenzberuf, beraterreferenzberuf, wunschberuf, antragstellungvorher, antragstellunggwpvorher, antragstellungzabvorher, antragstellungerfolgt, antragstellunggwpdatum, antragstellunggwpergebnis, antragstellungzabdatum, antragstellungzabergebnis, niquebertragung, sonstigerberuf, nregberuf, teilnehmer, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
     'columns' => [
-        'sys_language_uid' => [
-            'exclude' => true,
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.language',
-            'config' => [
-                'type' => 'language',
-                'renderType' => 'selectSingle',
-                'special' => 'languages',
-                'items' => [
-                    [
-                        'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.allLanguages',
-                        -1,
-                        'flags-multiple'
-                    ]
-                ],
-                'default' => 0,
-            ],
-        ],
-        'l10n_parent' => [
-            'displayCond' => 'FIELD:sys_language_uid:>:0',
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.l18n_parent',
-            'config' => [
-                'type' => 'select',
-                'renderType' => 'selectSingle',
-                'default' => 0,
-                'items' => [
-                    ['', 0],
-                ],
-                'foreign_table' => 'tx_iqtp13db_domain_model_abschluss',
-                'foreign_table_where' => 'AND {#tx_iqtp13db_domain_model_abschluss}.{#pid}=###CURRENT_PID### AND {#tx_iqtp13db_domain_model_abschluss}.{#sys_language_uid} IN (-1,0)',
-            ],
-        ],
-        'l10n_diffsource' => [
-            'config' => [
-                'type' => 'passthrough',
-            ],
-        ],
         'hidden' => [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.visible',

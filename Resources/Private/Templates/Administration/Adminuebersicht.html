@@ -11,6 +11,20 @@
 	<div><span class="label-beratungsstelle">Anzahl Berater:innen gesamt:</span> <span class="value-beratungsstelle">{anzalleberater}</span></div>
 </div>
 
+<h1>Beratungsstellen-Ansicht wechseln</h1>
+
+<div class="beratungsstellenwechsel">
+	<f:form method="post" controller="Administration" action="adminuebersicht" name="switchberatungsstelle" enctype="multipart/form-data" >
+		<label for="beratungsstellenauswahl">
+			Auswahl Beratungsstelle
+		</label>
+		<f:form.select name="bstellen" options="{alleberatungsstellen}" optionValueField="niqbid" optionLabelField="title" prependOptionValue="0" prependOptionLabel="-"/>
+		<f:form.submit name="switch" value="Wechseln" />	
+		<f:if condition="{anzuserberatungsstellen} > 1"><f:form.button class="linkbuttons abbruchbtn" type="submit" name="remove" value="Wechselmodus aus">Wechselmodus aus</f:form.button></f:if>	
+	</f:form>
+</div>
+
+
 <h1>Beratungsstellen</h1>
 
 <table class="beratungsstellen">
