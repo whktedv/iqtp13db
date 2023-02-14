@@ -3,6 +3,11 @@
   <file source-language="de" datatype="plaintext" original="messages" date="2016-09-01T11:23:16Z" product-name="iqtp13db" target-language="fr">
     <header/>
     <body>
+    <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.start0intro"><source>Afin de pouvoir transmettre votre demande au bon centre de conseil, veuillez d'abord indiquer votre lieu de résidence.</source></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.start0wohnsitz"><source>Votre lieu de résidence actuel se trouve-t-il en Allemagne ?</source></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.start0plz"><source>Quel est le code postal de votre lieu de résidence en Allemagne ?</source></trans-unit>
+		
+    
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer"><target>Participant*e</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.startseitetext">
 		<target> <![CDATA[ <p>Chère demandeuse,<br> cher demandeur, &nbsp;</p><p>nous conseillons, accompagnons et soutenons les personnes qui cherchent conseil ayant des qualifications professionnelles étrangère dans leurs démarches visant à en obtenir la reconnaissance. &nbsp;</p><p>Pour pouvoir bien vous conseiller, il est très utile pour nous d'obtenir de votre part quelques informations sur vous et vos qualifications ainsi vos expériences professionnelles.</p><p>Ainsi, nous vous prions de remplir le questionnaire suivant de la manière la plus complète possible. Vous pouvez obtenir l'affichage des questions dans diverses langues. Veuillez choisir au début une langue à cet effet. Veuillez ne répondre aux questions qu'en allemand ou en anglais. Faute de quoi votre demande ne peut pas être traitée.</p><p>Vos données ne peuvent être traitées que si tout le questionnaire est envoyé rempli.</p><p>Les conseils concernant la reconnaissance a lieu généralement par E-mail. Veuillez nous contacter par téléphone en cas de questions complémentaires.</p><p>Sincères salutations</p><p>Votre conseil à la reconnaissance et à la qualification IQ.</p> ]]> </target>
@@ -32,6 +37,9 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><target>L'allemand comme langue maternelle ?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikatdeutsch"><target>Certificat allemand</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Si un certificat est disponible, à quel niveau de langue ?</target></trans-unit>
+	<trans-unit id="keinabschlussbisher"><source><![CDATA[ Aucun diplôme étranger n'est indiqué. Veuillez saisir ici les informations relatives à votre diplôme (université ou formation). Vous pouvez également saisir plusieurs qualifications (diplômes, certificats).]]></source></trans-unit>
+		
+		
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Type de diplôme</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.erwerbsland"><target>Pays de formation </target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.dauer_berufsausbildung"><target>Durée de la formation professionnelle</target></trans-unit>

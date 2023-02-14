@@ -33,7 +33,7 @@
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><target>Deutsch als Muttersprache?</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikatdeutsch"><target>Zertifikatdeutsch</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Wenn Zertifikat vorhanden, auf welchem Sprachniveau?</target></trans-unit>
-			<trans-unit id="keinabschlussbisher"><target><![CDATA[ Noch keinen Berufsabschluss angegeben.<br>Bitte tragen Sie hier Informationen zu Ihrem Berufsabschluss (Universität oder Ausbildung) ein. Sie können auch mehrere Abschlüsse (Diplome, Zeugnisse) angeben.]]></target>
+			<trans-unit id="keinabschlussbisher"><target><![CDATA[ Noch keinen Berufsabschluss angegeben. Bitte tragen Sie hier Informationen zu Ihrem Berufsabschluss (Universität oder Ausbildung) ein. Sie können auch mehrere Abschlüsse (Diplome, Zeugnisse) angeben.]]></target></trans-unit>
 			
 			<trans-unit id="tx_iqtp13db_domain_model_abschluss"><target>Abschluss</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Abschlussart</target></trans-unit>
