@@ -12,6 +12,6 @@
 
 <f:form action="update" name="berater" object="{berater}" >
 	<f:render partial="Berater/FormFields" arguments="{_all}" />
-	<f:form.submit class="linkbuttons" value="Speichern" />
+	<f:form.button type="submit" class="linkbuttons" id="savebutton1">{f:translate(key:'speichern')}</f:form.button>
 </f:form>
 </f:section>

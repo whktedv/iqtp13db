@@ -19,7 +19,7 @@
 			Auswahl Beratungsstelle
 		</label>
 		<f:form.select name="bstellen" options="{alleberatungsstellen}" optionValueField="niqbid" optionLabelField="title" prependOptionValue="0" prependOptionLabel="-"/>
-		<f:form.submit name="switch" value="Wechseln" />	
+		<f:form.button type="submit" name="switch" class="linkbuttons" id="savebutton1">Wechseln</f:form.button>
 		<f:if condition="{anzuserberatungsstellen} > 1"><f:form.button class="linkbuttons abbruchbtn" type="submit" name="remove" value="Wechselmodus aus">Wechselmodus aus</f:form.button></f:if>	
 	</f:form>
 </div>

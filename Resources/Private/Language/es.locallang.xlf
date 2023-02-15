@@ -136,11 +136,11 @@
 	<trans-unit id="weitererabschluss"><target>Otro diploma </target></trans-unit>
 	<trans-unit id="headabschlussrechtsausblenden"><target>Ocultar diploma</target></trans-unit>
 	<trans-unit id="anredemail"><target></target></trans-unit>
-	<trans-unit id="mailtext"><target><![CDATA[ <p>Gracias por su información.</p> <p>&nbsp;</p> <p>Ya está inscrito en la consulta. Nos pondremos en contacto con usted en cuanto le toque. <br><br> El asesoramiento se realizará por correo electrónico, teléfono o videochat según se solicite.</p> <p>Intentaremos tramitar su solicitud en un plazo de WARTEZEITWOCHEN semanas. Le pedimos su comprensión y paciencia.</p><p>&nbsp;</p> <p>Saludos</p> <p>Su Servicio de Asesoramiento en Reconocimiento y Calificación de IQ Móvil.
+	<trans-unit id="mailtext"><target><![CDATA[ <p>Gracias por su información.</p>  <p>Ya está inscrito en la consulta. Nos pondremos en contacto con usted en cuanto le toque. <br><br> El asesoramiento se realizará por correo electrónico, teléfono o videochat según se solicite.</p> <p>Intentaremos tramitar su solicitud en un plazo de WARTEZEITWOCHEN semanas. Le pedimos su comprensión y paciencia.</p> <p>Saludos</p> <p>Su Servicio de Asesoramiento en Reconocimiento y Calificación de IQ Móvil.
 	]]></target></trans-unit>
 	<trans-unit id="subject"><target>Su registro para el asesoramiento de reconocimiento inicial</target></trans-unit>
 	<trans-unit id="confirmlinktext"><target><![CDATA[Confirmar la inscripción - Confirmar la inscripción]]></target></trans-unit>
-	<trans-unit id="confirmmailtext1"><target><![CDATA[ <p>Querida buscadores de asesoramiento ,</p> <p>&nbsp;</p> <p>Por favor, confirme aquí su inscripción en el asesoramiento de reconocimiento inicial:</p> <p>]]></target></trans-unit>
+	<trans-unit id="confirmmailtext1"><target><![CDATA[ <p>Querida buscadores de asesoramiento ,</p>  <p>Por favor, confirme aquí su inscripción en el asesoramiento de reconocimiento inicial:</p> <p>]]></target></trans-unit>
 	<trans-unit id="confirmmailtext2"><target><![CDATA[<p>Sinceramente </p> <p>Su Servicio de Asesoramiento de Reconocimiento y Calificación de IQ Móvil</p> <p>.]]></target></trans-unit>
 	<trans-unit id="confirmsubject"><target>Por favor, confirme su inscripción para la asesoramiento de reconocimiento inicial</target></trans-unit>
 	<trans-unit id="wurdebereitsberaten"><target>sido aconsejado, sí</target></trans-unit>

@@ -3,7 +3,7 @@
 	<f:if condition="{abschluesse -> f:count()} < 4">
 			<f:then>
 				<f:form action="new" controller="Abschluss" arguments="{teilnehmer : teilnehmer, thisaction : thisaction, calleraction : calleraction, callercontroller : callercontroller, callerpage : callerpage}" >
-					<f:form.submit value="<f:translate key='abschlusshinzu' />" />
+					<f:form.button type="submit" class="linkbuttons" id="savebutton1"><f:translate key='abschlusshinzu' /></f:form.button>
 				</f:form>
 			</f:then>
 	</f:if>	

@@ -162,14 +162,14 @@
 	<trans-unit id="headabschlussrechtsausblenden"><target>Masquer la qualification </target></trans-unit>
 	<trans-unit id="anredemail"><target>Bonjour </target></trans-unit>
 	<trans-unit id="mailtext"><target> <![CDATA[
-						 <p>Merci pour votre information.</p> <p>&nbsp;</p> <p>Vous êtes désormais inscrit à la consultation. Nous vous contacterons dès que ce sera votre tour. <br><br>La consultation se fera par courriel, téléphone ou chat vidéo selon la demande.</p> <p>Nous nous efforcerons de traiter votre demande dans un délai de WARTEZEITWOCHEN semaines. Nous vous demandons de bien vouloir faire preuve de compréhension et de patience.</p><p>&nbsp;</p> <p>Meilleures salutations</p>Votre IQ service-conseil en reconnaissance et qualification.
+						 <p>Merci pour votre information.</p>  <p>Vous êtes désormais inscrit à la consultation. Nous vous contacterons dès que ce sera votre tour. <br><br>La consultation se fera par courriel, téléphone ou chat vidéo selon la demande.</p> <p>Nous nous efforcerons de traiter votre demande dans un délai de WARTEZEITWOCHEN semaines. Nous vous demandons de bien vouloir faire preuve de compréhension et de patience.</p> <p>Meilleures salutations</p>Votre IQ service-conseil en reconnaissance et qualification.
 						  ]]></target></trans-unit>
 	<trans-unit id="subject"><target>Votre inscription au conseil en reconnaissance NRW</target></trans-unit>
 	<trans-unit id="confirmlinktext"><target>
 						 Confirmer l'inscription - Confirmer l'inscription
 						 </target></trans-unit>
 	<trans-unit id="confirmmailtext1"><target> <![CDATA[
-						 </p> <p>Chère chercheuse/cher chercheur de conseils,</p> <p>&nbsp;</p> <p>Veuillez confirmer votre inscription au conseil en reconnaissance  ici :</p> <p>.
+						 </p> <p>Chère chercheuse/cher chercheur de conseils,</p>  <p>Veuillez confirmer votre inscription au conseil en reconnaissance  ici :</p> <p>.
 						  ]]></target></trans-unit>
 	<trans-unit id="confirmmailtext2"><target> <![CDATA[
 						 <p>Avec les meilleures salutations</p> <p>Votre IQ service-conseil en reconnaissance et qualification </p>.

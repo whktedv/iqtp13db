@@ -26,14 +26,14 @@
 		</f:if>
 		<f:render partial="Abschluss/AbschlussListe4Anmeldung" arguments="{teilnehmer : teilnehmer, abschluesse: abschluesse}" />
 		<f:if condition="{abschluesse -> f:count()} < 4">
-			<f:link.action id="abschlusshinzubutton" class="linkbuttons" name="btnabschlusshinzu"  action="newWebapp" controller="Abschluss" arguments="{teilnehmer : teilnehmer}"><f:translate key='abschlusshinzu' /></f:link.action>
+			<f:link.action id="abschlusshinzubutton" class="linkbuttons frontend" name="btnabschlusshinzu" action="newWebapp" controller="Abschluss" arguments="{teilnehmer : teilnehmer}"><f:translate key='abschlusshinzu' /></f:link.action>
 		</f:if>	
 	</div>
 
 	<f:form id="teilnehmerform" action="anmeldseite2redirect" name="teilnehmer" object="{teilnehmer}">
-			<f:form.button id="zurueckbutton" name="btnzurueck"><f:translate key="zurueck" /></f:form.button>
-			<f:form.button id="weiterbutton" name="btnweiter"><f:translate key="weiter" /></f:form.button> 
-			<f:form.button type="button" class="abbruchbtn" onclick="return btncancel_Click(0);"><f:translate key="abbruch" /></f:form.button>			
+			<f:form.button type="submit" id="zurueckbutton" name="btnzurueck"><f:translate key="zurueck" /></f:form.button>
+			<f:form.button type="submit" id="weiterbutton" name="btnweiter"><f:translate key="weiter" /></f:form.button> 
+			<f:form.button type="submit" class="abbruchbtn frontend" onclick="return btncancel_Click(0);"><f:translate key="abbruch" /></f:form.button>			
 	</f:form>
 			
 </div>

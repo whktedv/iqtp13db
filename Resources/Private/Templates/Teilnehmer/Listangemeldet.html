@@ -17,7 +17,7 @@
 			<div>Gruppe: <f:form.textfield size="20" value="{filtergruppe}" name="gruppe" /></div>
 			<div>Bescheid: <f:form.checkbox value="1" name="bescheid" checked="{filterbescheid} == 1" /></div>
 			<f:if condition="{filteron} == 1"><f:then><div><f:form.button name="filteraus" value="1" >Filter löschen</f:form.button></div></f:then></f:if>
-			<f:if condition="{filteron} != 1"><f:then><div><f:form.submit name="filteran" value="Filtern" /></div></f:then></f:if>		
+			<f:if condition="{filteron} != 1"><f:then><div><f:form.button type="submit" name="filteran" >Filtern</f:form.button></div></f:then></f:if>		
 	</f:form>
 </div>
 
@@ -106,21 +106,21 @@
 
 </div>
 
-<br>
-<span style="font-weight: bold; font-size: 0.7rem; margin-left: 5px;">Legende:</span>
-<table>
-	<tr><td>Anmeldung noch nicht bestätigt</td><td class="bestaetigt">Anmeldung bestätigt</td><td class="dublette">mögliche Dublette</td></tr>
-	<tr>
-		<td><span class="linkbuttons buttonnew"></span> = Neuen Fall hinzufügen</td>
-		<td><img src="/fileadmin/template/images/iq-webapp_fall-uebernehmen.svg" alt="Fall übernehmen" width="30" height="30"/> = Fall übernehmen</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td><img src="/fileadmin/template/images/iq-webapp_bearbeiten.svg" alt="Bearbeiten" width="30" height="30"/> = Bearbeiten</td>
-		<td><img src="/fileadmin/template/images/iq-webapp_einwilligung-anfordern.svg" alt="Einwilligung anfordern" width="30" height="30"/> = Einwilligung anfordern</td>
-		<td><img src="/fileadmin/template/images/iq-webapp_loeschen.svg" width="30" height="30" alt="Löschen" /> = Löschen</td>
-	</tr>
-</table>
-
+<div class="legende">
+	<span style="font-weight: bold; font-size: 0.7rem; margin-left: 5px;">Legende:</span>
+	<table>
+		<tr><td>Anmeldung noch nicht bestätigt</td><td class="bestaetigt">Anmeldung bestätigt</td><td class="dublette">mögliche Dublette</td></tr>
+		<tr>
+			<td><span class="linkbuttons buttonnew"></span> = Neuen Fall hinzufügen</td>
+			<td><img src="/fileadmin/template/images/iq-webapp_fall-uebernehmen.svg" alt="Fall übernehmen" width="30" height="30"/> = Fall übernehmen</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td><img src="/fileadmin/template/images/iq-webapp_bearbeiten.svg" alt="Bearbeiten" width="30" height="30"/> = Bearbeiten</td>
+			<td><img src="/fileadmin/template/images/iq-webapp_einwilligung-anfordern.svg" alt="Einwilligung anfordern" width="30" height="30"/> = Einwilligung anfordern</td>
+			<td><img src="/fileadmin/template/images/iq-webapp_loeschen.svg" width="30" height="30" alt="Löschen" /> = Löschen</td>
+		</tr>
+	</table>
+</div>
 </f:section>
 

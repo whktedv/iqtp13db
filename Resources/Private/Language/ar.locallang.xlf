@@ -129,7 +129,7 @@
 	<trans-unit id="anredemail"><target>	مرحباً	</target></trans-unit>
 	<trans-unit id="mailtext"><target><![CDATA[<p>
 	شكرا جزيلا على المعلومات الخاصة بك. 
-	</p> <p>&nbsp;</p> <p>
+	</p>  <p>
 	
 	أنت الآن مسجل للاستشارة. سوف نتصل بك بمجرد أن يحين دورك.
 	<br><br>
@@ -137,7 +137,7 @@
 	</p> <p>
 	
 	نحن نسعى جاهدين لمعالجة طلبك في غضون WARTEZEITWOCHEN أسابيع. نطلب تفهمك وصبرك. 
-	</p><p>&nbsp;</p> <p>
+	</p> <p>
 	تفضلوا بقبول فائق الاحترام
 	</p>
 	
@@ -148,7 +148,7 @@
 	<trans-unit id="confirmlinktext"><target>	تأكيد التسجيل	</target></trans-unit>
 	<trans-unit id="confirmmailtext1"><target><![CDATA[<p>
 	عزيزي طالب النصيحة
-	</p> <p>&nbsp;</p> <p>
+	</p>  <p>
 	يرجى تأكيد تسجيلك للاعتراف بالاستشارة الأولية هنا:
 	:</p>]]></target></trans-unit>
 	<trans-unit id="confirmmailtext2"><target><![CDATA[<p>

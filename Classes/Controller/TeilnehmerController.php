@@ -324,7 +324,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $rows[7] = $totalavgmonthb;
         array_unshift($rows[7], "durchschn. Tage Beratungsdauer");
         
-        if (isset($valArray['statsexport']) && $valArray['statsexport'] == 'Statistik exportieren') {
+        
+        if (isset($valArray['statsexport'])) {
             
             $filename = 'stats_' . date('Y-m-d_H-i', time()) . '.csv';
             header('Content-Encoding: UTF-8');
@@ -843,7 +844,6 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         
         $tfolder = $this->generalhelper->createFolder($teilnehmer, $this->settings['standardniqidberatungsstelle'], $this->allusergroups, $this->storageRepository->findAll());
         
-        $valArray = $this->request->getArguments();
         $this->redirect('edit', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'showabschluesse' => '1', 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage']));
     }
     
@@ -1728,7 +1728,6 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $this->redirect('anmeldseite1', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
         } else {
             $valArray = $this->request->getArguments();
-            
             if(isset($valArray['btnweiter'])) {
                 $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite1', serialize($tnseite1));
                 
@@ -1771,7 +1770,13 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 
                 $this->redirect('anmeldseite2', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
             } else {
-                $this->cancelregistration(null);
+                //DebuggerUtility::var_dump($valArray);
+                //die;
+                if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid') != NULL) {
+                    $this->cancelregistration($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid'));
+                } else {
+                    $this->cancelregistration(null);
+                }
             }
         }
     }
@@ -1824,7 +1829,11 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         } elseif(isset($valArray['btnweiter'])) {
             $this->redirect('anmeldseite3', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
         } else {
-            $this->cancelregistration(null);
+            if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid') != NULL) {
+                $this->cancelregistration($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid'));
+            } else {
+                $this->cancelregistration(null);
+            }
         }             
     }
     
@@ -1982,7 +1991,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     $confirmlinktext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmlinktext', 'Iqtp13db');
                     $confirmmailtext2 = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmmailtext2', 'Iqtp13db');
                     $subject = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmsubject', 'Iqtp13db');
-                    
+                     
                     $variables = array(
                         'teilnehmer' => $teilnehmer,
                         'confirmmailtext1' => $confirmmailtext1,
@@ -1999,7 +2008,11 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     $this->redirect(null, null, null, null, $this->settings['redirectValidationInitiated']);
                 }
             } else {
-                $this->cancelregistration($teilnehmer->getUid());
+                if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid') != NULL) {
+                    $this->cancelregistration($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid'));
+                } else {
+                    $this->cancelregistration(null);
+                }
             }
         }
         
@@ -2184,7 +2197,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     {
         if($tnuid != null) {
             
-            $teilnehmer = $this->teilnehmerRepository->findByUid($tnuid->getUid());
+            $teilnehmer = $this->teilnehmerRepository->findByUid($tnuid);
             
             $niqbid = $teilnehmer->getNiqidberatungsstelle();
             $beratungsstellenfolder = $niqbid;

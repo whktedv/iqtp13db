@@ -17,7 +17,7 @@
 			<div>Gruppe: <f:form.textfield size="20" value="{filtergruppe}" name="gruppe" /></div>
 			<div>Bescheid: <f:form.checkbox value="1" name="bescheid" checked="{filterbescheid} == 1" /></div>
 			<f:if condition="{filteron} == 1"><f:then><div><f:form.button name="filteraus" value="1" >Filter löschen</f:form.button></div></f:then></f:if>
-			<f:if condition="{filteron} != 1"><f:then><div><f:form.submit name="filteran" value="Filtern" /></div></f:then></f:if>		
+			<f:if condition="{filteron} != 1"><f:then><div><f:form.button type="submit" name="filteran" >Filtern</f:form.button></div></f:then></f:if>		
 	</f:form>
 </div>
 
@@ -25,60 +25,61 @@
 
 <h1>{anzgesamt} gelöschte Ratsuchende <f:if condition="{filteron}"><f:then><span style="color: red;">(gefiltert)</span></f:then></f:if></h1>
 
-	<div class="toppaginator">
-		<f:render partial="Paginator" arguments="{pagination: pagination, pages: pages, paginator: paginator, action: calleraction}" />
-	</div>
+<div class="toppaginator">
+	<f:render partial="Paginator" arguments="{pagination: pagination, pages: pages, paginator: paginator, action: calleraction}" />
+</div>
 
-	<table  class="tx_iqtp13db listdeleted" >
-		<tr>
-			<th>UID</th>
-			<th><f:link.action action="listdeleted" arguments="{orderby : 'nachname', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" /></f:link.action></th>
-			<th><f:link.action action="listdeleted" arguments="{orderby : 'vorname', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" /></f:link.action></th>
-			<th>Bereits<br>beraten</th>
-			<th><f:link.action action="listdeleted" arguments="{orderby : 'verificationDate', changeorder : 1}">Anmeldedatum</f:link.action></th>
-			<th><f:link.action action="listdeleted" arguments="{orderby : 'ort', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.plz" />/<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ort" /></f:link.action></th>
-			<th><f:link.action action="listdeleted" arguments="{orderby : 'geburtsland', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geburtsland" />/-ort</f:link.action></th>
-			<th><f:link.action action="listdeleted" arguments="{orderby : 'geschlecht', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geschlecht" /></f:link.action></th>
-			<th>Möglicher deutscher Beruf</th>
-			<th>Gruppe</th>
-			<th> </th>
+<table  class="tx_iqtp13db listdeleted" >
+	<tr>
+		<th>UID</th>
+		<th><f:link.action action="listdeleted" arguments="{orderby : 'nachname', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" /></f:link.action></th>
+		<th><f:link.action action="listdeleted" arguments="{orderby : 'vorname', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" /></f:link.action></th>
+		<th>Bereits<br>beraten</th>
+		<th><f:link.action action="listdeleted" arguments="{orderby : 'verificationDate', changeorder : 1}">Anmeldedatum</f:link.action></th>
+		<th><f:link.action action="listdeleted" arguments="{orderby : 'ort', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.plz" />/<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ort" /></f:link.action></th>
+		<th><f:link.action action="listdeleted" arguments="{orderby : 'geburtsland', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geburtsland" />/-ort</f:link.action></th>
+		<th><f:link.action action="listdeleted" arguments="{orderby : 'geschlecht', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geschlecht" /></f:link.action></th>
+		<th>Möglicher deutscher Beruf</th>
+		<th>Gruppe</th>
+		<th> </th>
+	</tr>
+
+	<f:for each="{paginator.paginatedItems}" as="teilnehmer" iteration="it">
+		<f:if condition="{teilnehmer.dublette}"><f:then>
+			<tr class="dublette">
+		</f:then>
+		<f:else>
+			{f:if(condition: "{teilnehmer.verificationDate} != 0", then: '<tr class="bestaetigt">', else: '<tr>')}
+		</f:else>
+		</f:if>
+			<td>{teilnehmer.uid}</td>
+			<td>{teilnehmer.nachname}</td>
+			<td>{teilnehmer.vorname}</td>
+			<td class="tdcenter">{f:if(condition: '{teilnehmer.schonberaten} == 1', then: '<img src="/fileadmin/template/images/iq-webapp_vollstaendig-ok.svg" alt="✓" width="16" height="16"/>', else: '')}</td>
+			<td class="tdcenter">{f:if(condition: '{teilnehmer.verificationDate} == 0', then: 'unbestätigt', else: '{f:format.date(date: teilnehmer.verificationDate, format:"d.m.Y")}')}</td>
+			<td>{teilnehmer.plz} {teilnehmer.ort}</td>
+			<td>{iqtp13db:isint(field:'{teilnehmer.geburtsland}',then:'{settings.staaten.{teilnehmer.geburtsland}}',else:'{teilnehmer.geburtsland}')}</td>
+			<td class="tdcenter">{f:if(condition: '{teilnehmer.geschlecht} == 2', then: '<span style="color: #84a0ff;">M</span>')}
+			{f:if(condition: '{teilnehmer.geschlecht} == 1', then: '<span style="color: #fe7a84;">W</span>')}
+			{f:if(condition: '{teilnehmer.geschlecht} == 3', then: '<span>D</span>')}</td>
+			<td>
+				<f:for each="{abschluesse.{it.index}}" as="abschluss" iteration="iter">
+					{f:if(condition: '{abschluesse.{it.index} -> f:count()} > 1', then: '{iter.index + 1}.', else: '')} {abschluss.deutscherReferenzberuf}<br>
+				</f:for>
+			</td>
+			<td>{teilnehmer.kooperationgruppe}</td>
+			<td><f:link.action action="undelete" arguments="{tnuid : teilnehmer.uid}" onclick="return confirm('Wirklich wiederherstellen?');" title="Wiederherstellen"><img src="/fileadmin/template/images/iq-webapp_wiederherstellen.svg" alt="Wiederherstellen" width="30" height="30"/></f:link.action></td>
 		</tr>
-	
-		<f:for each="{paginator.paginatedItems}" as="teilnehmer" iteration="it">
-			<f:if condition="{teilnehmer.dublette}"><f:then>
-				<tr class="dublette">
-			</f:then>
-			<f:else>
-				{f:if(condition: "{teilnehmer.verificationDate} != 0", then: '<tr class="bestaetigt">', else: '<tr>')}
-			</f:else>
-			</f:if>
-				<td>{teilnehmer.uid}</td>
-				<td>{teilnehmer.nachname}</td>
-				<td>{teilnehmer.vorname}</td>
-				<td class="tdcenter">{f:if(condition: '{teilnehmer.schonberaten} == 1', then: '<img src="/fileadmin/template/images/iq-webapp_vollstaendig-ok.svg" alt="✓" width="16" height="16"/>', else: '')}</td>
-				<td class="tdcenter">{f:if(condition: '{teilnehmer.verificationDate} == 0', then: 'unbestätigt', else: '{f:format.date(date: teilnehmer.verificationDate, format:"d.m.Y")}')}</td>
-				<td>{teilnehmer.plz} {teilnehmer.ort}</td>
-				<td>{iqtp13db:isint(field:'{teilnehmer.geburtsland}',then:'{settings.staaten.{teilnehmer.geburtsland}}',else:'{teilnehmer.geburtsland}')}</td>
-				<td class="tdcenter">{f:if(condition: '{teilnehmer.geschlecht} == 2', then: '<span style="color: #84a0ff;">M</span>')}
-				{f:if(condition: '{teilnehmer.geschlecht} == 1', then: '<span style="color: #fe7a84;">W</span>')}
-				{f:if(condition: '{teilnehmer.geschlecht} == 3', then: '<span>D</span>')}</td>
-				<td>
-					<f:for each="{abschluesse.{it.index}}" as="abschluss" iteration="iter">
-						{f:if(condition: '{abschluesse.{it.index} -> f:count()} > 1', then: '{iter.index + 1}.', else: '')} {abschluss.deutscherReferenzberuf}<br>
-					</f:for>
-				</td>
-				<td>{teilnehmer.kooperationgruppe}</td>
-				<td><f:link.action action="undelete" arguments="{tnuid : teilnehmer.uid}" onclick="return confirm('Wirklich wiederherstellen?');" title="Wiederherstellen"><img src="/fileadmin/template/images/iq-webapp_wiederherstellen.svg" alt="Wiederherstellen" width="30" height="30"/></f:link.action></td>
-			</tr>
-		</f:for>
-	</table>
+	</f:for>
+</table>
 
-	<div class="bottompaginator">
-		<f:render partial="Paginator" arguments="{pagination: pagination, pages: pages, paginator: paginator, action: calleraction}" />
-	</div>
-<br>
-<span style="font-weight: bold; font-size: 0.7rem; margin-left: 5px;">Legende:</span>
-<table><tr><td>Anmeldung noch nicht bestätigt</td><td class="bestaetigt">Anmeldung bestätigt</td><td class="dublette">mögliche Dublette</td></tr></table>
+<div class="bottompaginator">
+	<f:render partial="Paginator" arguments="{pagination: pagination, pages: pages, paginator: paginator, action: calleraction}" />
+</div>
 
+<div class="legende">
+	<span style="font-weight: bold; font-size: 0.7rem; margin-left: 5px;">Legende:</span>
+	<table><tr><td>Anmeldung noch nicht bestätigt</td><td class="bestaetigt">Anmeldung bestätigt</td><td class="dublette">mögliche Dublette</td></tr></table>
+</div>
 </f:section>
 

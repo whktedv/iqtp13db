@@ -5,7 +5,7 @@
 <h1><f:translate key="fragebogen" /> 4 / 4</h1>
 
 <div id="dialog-confirm" title="Webapp - IQ Anerkennungsberatung">
-  <p><span class="ui-icon ui-icon-alert"></span>Anmeldung abbrechen / Cancel registration?</p>
+  <p><span class="ui-icon ui-icon-alert"></span><f:translate key="dialoganmeldungabbrechen" /></p>
 </div>
 
 <f:flashMessages />
@@ -25,11 +25,11 @@
 </div>
 
 <hr>
-<f:form id="teilinehmerform" action="anmeldungcompleteredirect" name="teilnehmer" object="{teilnehmer}">
+<f:form id="teilnehmerform" action="anmeldungcompleteredirect" name="teilnehmer" object="{teilnehmer}">
 	
-	<f:form.button name="btnzurueck"><f:translate key="zurueck" /></f:form.button>
-	<f:form.button type="button" name="btncancel" class="abbruchbtn" onclick="return btncancel_Click(0);"><f:translate key="abbruch" /></f:form.button>
-	<f:form.button id="savebutton1" name="btnAbsenden"><f:translate key="absenden" /></f:form.button>
+	<f:form.button type="submit" id="zurueckbutton" name="btnzurueck"><f:translate key="zurueck" /></f:form.button>
+	<f:form.button type="submit" name="btncancel" class="abbruchbtn frontend" onclick="return btncancel_Click(0);"><f:translate key="abbruch" /></f:form.button>
+	<f:form.button type="submit" id="savebutton1" name="btnAbsenden"><f:translate key="absenden" /></f:form.button>
 	
 	<f:translate key="hinweisdatenueberpruefen" /> 
 	<f:render partial="Teilnehmer/PropertiesAnmeldung" arguments="{teilnehmer:teilnehmer}" />
@@ -38,9 +38,9 @@
 		<f:render partial="Abschluss/PropertiesAnmeldung" arguments="{abschluss:abschluss, iter: iter}" />
 	</f:for>
 	
-	<f:form.button name="btnzurueck"><f:translate key="zurueck" /></f:form.button>
-	<f:form.button type="button" name="btncancel" class="abbruchbtn" onclick="return btncancel_Click(0);"><f:translate key="abbruch" /></f:form.button>
-	<f:form.button name="btnAbsenden"><f:translate key="absenden" /></f:form.button>
+	<f:form.button type="submit" id="zurueckbutton" name="btnzurueck"><f:translate key="zurueck" /></f:form.button>
+	<f:form.button type="submit" name="btncancel" class="abbruchbtn frontend" onclick="return btncancel_Click(0);"><f:translate key="abbruch" /></f:form.button>
+	<f:form.button type="submit" name="btnAbsenden"><f:translate key="absenden" /></f:form.button>
 </f:form>
 
 </f:section>

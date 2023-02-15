@@ -69,30 +69,6 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     }
     
     /**
-     * action new
-     *
-     * @return void
-     */
-    public function newAction()
-    {
-        $usergroups = $this->userGroupRepository->findAll();
-        $this->view->assign('usergroups', $usergroups);
-    }
-    
-    /**
-     * action create
-     *
-     * @param \Ud\Iqtp13db\Domain\Model\Berater $berater
-     * @return void
-     */
-    public function createAction(\Ud\Iqtp13db\Domain\Model\Berater $berater)
-    {
-        $this->addFlashMessage('Berater erstellt.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
-        $this->beraterRepository->add($berater);
-        $this->redirect('list');
-    }
-    
-    /**
      * action edit
      *
      * @param \Ud\Iqtp13db\Domain\Model\Berater $berater

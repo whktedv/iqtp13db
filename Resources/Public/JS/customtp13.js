@@ -220,7 +220,7 @@ function showDetail(num) {
 }
  
 function btncancel_Click(link) {
-	dialog = $("#dialog-confirm").dialog({
+		dialog = $("#dialog-confirm").dialog({
 	      autoOpen: false,
 	      resizable: false,
 	      height: "auto",
@@ -229,10 +229,10 @@ function btncancel_Click(link) {
 	      buttons: {
 	        'Ja / Yes': function() {
 	          $( this ).dialog( "close" );
-	          if(link != '') {
-	        	  window.location.href = link;
+	          if(link != 0) {
+	        	window.location.href = link;
 	          } else {
-	        	  $( "form" ).submit();  
+				document.getElementById("teilnehmerform").submit(); 
 	          }
 	        },
 	        'Nein / No': function() {

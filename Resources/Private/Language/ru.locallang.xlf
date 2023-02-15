@@ -140,10 +140,10 @@
 	<trans-unit id="weitererabschluss"><target>дальнейшая степень</target></trans-unit>
 	<trans-unit id="headabschlussrechtsausblenden"><target>Скрыть завершение</target></trans-unit>
 	<trans-unit id="anredemail"><target>Добрый день</target></trans-unit>
-	<trans-unit id="mailtext"><target><![CDATA[<p>Спасибо за информацию.</p><p>&nbsp;</p><p>Вы зарегистрированы на консультацию. Мы свяжемся с вами, как только подойдет ваша очередь.<br><br>Консультации могут быть предоставлены по электронной почте, телефону или в видеочате, если вы хотите.</p><p>Мы стремимся обработать ваш запрос в течение WARTEZEITWOCHEN недель. Мы просим вашего понимания и терпения.</p> <p>&nbsp;</p><p>С уважением </p>Ваш совет по признанию IQ и квалификации]]></target></trans-unit>
+	<trans-unit id="mailtext"><target><![CDATA[<p>Спасибо за информацию.</p><p>Вы зарегистрированы на консультацию. Мы свяжемся с вами, как только подойдет ваша очередь.<br><br>Консультации могут быть предоставлены по электронной почте, телефону или в видеочате, если вы хотите.</p><p>Мы стремимся обработать ваш запрос в течение WARTEZEITWOCHEN недель. Мы просим вашего понимания и терпения.</p> <p>С уважением </p>Ваш совет по признанию IQ и квалификации]]></target></trans-unit>
 	<trans-unit id="subject"><target>Ваша регистрация на консультацию по первичному признанию в NRW</target></trans-unit>
 	<trans-unit id="confirmlinktext"><target>	Подтверждение регистрации - Confirm registration</target></trans-unit>
-	<trans-unit id="confirmmailtext1"><target><![CDATA[<p>Уважаемые соискатели совета,</p><p>&nbsp;</p><p>пожалуйста, подтвердите свою регистрацию для первичной консультации по признанию здесь:</p>	]]></target></trans-unit>
+	<trans-unit id="confirmmailtext1"><target><![CDATA[<p>Уважаемые соискатели совета,</p><p>пожалуйста, подтвердите свою регистрацию для первичной консультации по признанию здесь:</p>	]]></target></trans-unit>
 	<trans-unit id="confirmmailtext2"><target><![CDATA[<p>С уважением</p><p>Ваш совет по признанию и квалификации IQ</p>]]></target></trans-unit>
 	<trans-unit id="confirmsubject"><target>Пожалуйста, подтвердите свою регистрацию для первичной консультации по признанию NRW</target></trans-unit>
 	<trans-unit id="wurdebereitsberaten"><target>Получили вы уже консультацю, да</target></trans-unit>

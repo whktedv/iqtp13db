@@ -16,7 +16,7 @@
 
 	<f:render partial="Folgekontakt/FormFields" arguments="{_all}" />
 
-	<f:form.submit value="Speichern" id="savebutton1" />
+	<f:form.button type="submit" class="linkbuttons" id="savebutton1">{f:translate(key:'speichern')}</f:form.button>
 	<f:link.action id="linkloadoverlay-back" class="linkbuttons" action="{calleraction}" controller="{callercontroller}" arguments="{callerpage : callerpage}">Zurück zur Liste</f:link.action>
 </f:form>
 

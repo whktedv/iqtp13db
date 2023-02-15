@@ -14,7 +14,7 @@ call_user_func(
                 \Ud\Iqtp13db\Controller\DokumentController::class => 'saveFileBackend, deleteFileBackend, openfile, updateBackend',
                 \Ud\Iqtp13db\Controller\HistorieController::class => 'list',
                 \Ud\Iqtp13db\Controller\AbschlussController::class => 'show, new, create, edit, update, delete',
-                \Ud\Iqtp13db\Controller\BeraterController::class => 'list, new, create, edit, update, delete',
+                \Ud\Iqtp13db\Controller\BeraterController::class => 'list, edit, update, delete',
                 \Ud\Iqtp13db\Controller\AdministrationController::class => 'adminuebersicht'
             ],
             
@@ -25,7 +25,7 @@ call_user_func(
                 \Ud\Iqtp13db\Controller\DokumentController::class => 'saveFileBackend, deleteFileBackend, openfile, updateBackend',
                 \Ud\Iqtp13db\Controller\HistorieController::class => 'list',
                 \Ud\Iqtp13db\Controller\AbschlussController::class => 'show, new, create, edit, update, delete',
-                \Ud\Iqtp13db\Controller\BeraterController::class => 'list, new, create, edit, update, delete',
+                \Ud\Iqtp13db\Controller\BeraterController::class => 'list, edit, update, delete',
                 \Ud\Iqtp13db\Controller\AdministrationController::class => 'adminuebersicht'
             ]
             );

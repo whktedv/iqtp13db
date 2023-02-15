@@ -114,7 +114,7 @@
 			<trans-unit id="infoBezugsart"><target><![CDATA[Welche Art des Bezugs (Geld für den Lebensunterhalt) erhalten Sie aktuell?<br>SGB II: Grundsicherung für Arbeitssuchende (Hartz IV)<br>SGB III: Leistungen aus der Arbeitslosenversicherung und Arbeitsförderung<br>Asylbewerberleistungsbezug: Grundsicherung für Asylbewerber, Geduldete und Ausländer, die vollziehbar zur Ausreise verpflichtet sind.<br>Bitte geben Sie eine der Bezugsarten an.]]></target></trans-unit>
 	
 			<trans-unit id="anredemail"><target>Guten Tag </target></trans-unit>
-			<trans-unit id="mailtext"><target> <![CDATA[ <p>vielen Dank für Ihre Informationen.</p> <p>&nbsp;</p> <p>Sie sind jetzt zur Beratung angemeldet. Wir setzen uns mit Ihnen in Verbindung, sobald Sie an der Reihe sind.</p> <p>Wir bitten um Ihr Verständnis und Ihre Geduld.</p><p>&nbsp;</p> <p>Mit freundlichen Grüßen</p>Ihre IQ Anerkennungs- und Qualifizierungsberatung ]]></target></trans-unit>
+			<trans-unit id="mailtext"><target> <![CDATA[ <p>vielen Dank für Ihre Informationen.</p> <p>Sie sind jetzt zur Beratung angemeldet. Wir setzen uns mit Ihnen in Verbindung, sobald Sie an der Reihe sind.</p> <p>Wir bitten um Ihr Verständnis und Ihre Geduld.</p> <p>Mit freundlichen Grüßen</p>Ihre IQ Anerkennungs- und Qualifizierungsberatung ]]></target></trans-unit>
 			<trans-unit id="subject"><target>Ihre Anmeldung zur Anerkennungsberatung beim IQ Netzwerk</target></trans-unit>
 			<trans-unit id="confirmlinktext"><target> <![CDATA[ Bestätigung der Anmeldung ]]></target>
 			</trans-unit><trans-unit id="confirmmailtext1"><target> <![CDATA[ <p>Liebe*r VORNAMENACHNAME,</p> <p>bestätigen Sie Ihre Anmeldung zur Anerkennungsberatung bitte hier:</p> ]]></target></trans-unit>			

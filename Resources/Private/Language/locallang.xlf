@@ -117,7 +117,7 @@
 		<trans-unit id="mailtext"><source> <![CDATA[ <p>Thank you for your information.</p> <p>You are now registered for counselling. We will contact you as soon as it is your turn. <p>We ask for your understanding and patience.</p><p>Regards</p>Your recognition counselling ]]></source></trans-unit>
 		<trans-unit id="subject"><source>Your registration for the initial recognition counselling</source></trans-unit>
 		<trans-unit id="confirmlinktext"><source>Confirm registration</source></trans-unit>
-		<trans-unit id="confirmmailtext1"><source><![CDATA[ <p>Dear VORNAMENACHNAME,</p> <p>&nbsp;</p> <p>Please confirm your registration for the initial recognition counselling here:</p>]]></source></trans-unit>
+		<trans-unit id="confirmmailtext1"><source><![CDATA[ <p>Dear VORNAMENACHNAME,</p> <p>Please confirm your registration for the initial recognition counselling here:</p>]]></source></trans-unit>
 		<trans-unit id="confirmmailtext2"><source>Yours recognition counselling</source></trans-unit>
 		<trans-unit id="confirmsubject"><source>Please confirm your registration for the initial recognition counselling</source></trans-unit>	
 	</body>

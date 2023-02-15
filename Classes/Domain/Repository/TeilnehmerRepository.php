@@ -388,8 +388,11 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     {
         $orderby = 'verification_date';
         
-        if($type == 0 || $type == 1) {
-            $sqlberatungsstatus = " (beratungsstatus = 0 OR beratungsstatus = 1) ";
+        if($type == 0) {
+            $sqlberatungsstatus = " beratungsstatus >= 0 ";
+            $filternach = "FROM_UNIXTIME(verification_date)";
+        } elseif($type == 1) {
+            $sqlberatungsstatus = " beratungsstatus = 1 ";
             $filternach = "FROM_UNIXTIME(verification_date)";
         } elseif($type == 2) {
             $sqlberatungsstatus = " (beratungsstatus = 2 OR beratungsstatus = 3) ";
