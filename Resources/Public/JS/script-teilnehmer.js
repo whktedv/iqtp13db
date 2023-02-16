@@ -15,7 +15,10 @@
 		toggleabschluss(1);
 		toggleabschluss(2);
 		toggleabschluss(3);
-		
+				
+		$('#chooselang').click(function() {
+			togglelangmenu();
+		}); 
 		
 		$('#anmeld-checkwohnsitzDeutschland1').change(function() {
 			toggle_anmeld_checkwohnsitz();
@@ -422,5 +425,9 @@
     		$("#divantragstellungzabergebnis").show();
 		}
 	} 
+	
+	function togglelangmenu() {
+		$('#language_menu').fadeToggle();
+	}
     
 } ) ( jQuery );

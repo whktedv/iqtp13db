@@ -15,7 +15,7 @@
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.nachname"><target>Nachname</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.vorname"><target>Vorname</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.plz"><target>PLZ</target></trans-unit>
-			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ort"><target>Ort</target></trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ort"><target>Wohnort</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.email"><target>E-Mail</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.confirmemail"><target>E-Mail bestätigen</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.telefon"><target>Telefon</target></trans-unit>

@@ -939,8 +939,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'jahre' => $jahre,
                 'showabschluesse' => $valArray['showabschluesse'] ?? '0',
                 'showdokumente' => $valArray['showdokumente'] ?? '0',
-                'edituserfield' => $edituserfield,
-                'edittstampfield' => $edittstampfield
+                'edituserfield' => $edituserfield ?? '0',
+                'edittstampfield' => $edittstampfield ?? '0'
             ]
             );
     }
@@ -1707,7 +1707,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'tnseite1' => $tnseite1,
                 'settings' => $this->settings,
                 'beratungsstelle' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid'),
-                'wohnsitzdeutschland' => $valArray['wohnsitzDeutschland'],
+                'wohnsitzdeutschland' => $valArray['wohnsitzDeutschland'] ?? '',
                 'plz' => $valArray['plz'],
                 'jahre' => $jahre
             ]
@@ -1825,7 +1825,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         if (isset($valArray['btnabschlusshinzu'])) {
             $this->redirect('newWebapp', 'Abschluss', null, array('teilnehmer' => $teilnehmer));
         } elseif (isset($valArray['btnzurueck'])) {
-            $this->redirect('anmeldseite1', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+            $this->redirect('anmeldseite1', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'plz' => $teilnehmer->getPlz(), 'wohnsitzDeutschland' => $teilnehmer->getWohnsitzdeutschland()));
         } elseif(isset($valArray['btnweiter'])) {
             $this->redirect('anmeldseite3', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
         } else {
@@ -1859,6 +1859,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 } else {
                     $this->view->assign('wieberatenarr', $this->settings['wieberaten']);
                 }
+                break;
             }
         }
         
@@ -2100,7 +2101,6 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     
     /**
      * Set Filter
-     *
      */
     function setfilter(int $type, array $valArray, $orderby, $order, $deleted) {
         // FILTER

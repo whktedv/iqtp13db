@@ -134,22 +134,26 @@
 					</f:for>
 			</div>
 		</f:if>
-		<div class="tp13_formdivwebapp">
-			<label for="sonstigerstatus">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.sonstigerstatus" />
-			</label>
-			<span class="propdat">
-				<f:for each="{teilnehmer.sonstigerstatus}" as="sonstigerstatus">
-					{f:if(condition: '{iter.index} > 0', then: ',', else: '')}
-					<f:if condition="{sonstigerstatus} == 1"><f:then>
-						<f:translate key="sonstigerstatus.1"/>
-					</f:then></f:if>
-					<f:if condition="{sonstigerstatus} == 2"><f:then>
-						<f:translate key="sonstigerstatus.2"/>
-					</f:then></f:if>
-				</f:for>
-			</span>			
-		</div>
+		
+		<f:if condition="{teilnehmer.sonstigerstatus.0} != ''">
+			<div class="tp13_formdivwebapp">
+				<label for="sonstigerstatus">
+					<f:translate key="tx_iqtp13db_domain_model_teilnehmer.sonstigerstatus" />
+				</label>
+				<span class="propdat">
+					<f:for each="{teilnehmer.sonstigerstatus}" as="sonstigerstatus">
+						{f:if(condition: '{iter.index} > 0', then: ',', else: '')}
+						<f:if condition="{sonstigerstatus} == 1"><f:then>
+							<f:translate key="sonstigerstatus.1"/>
+						</f:then></f:if>
+						<f:if condition="{sonstigerstatus} == 2"><f:then>
+							<f:translate key="sonstigerstatus.2"/>
+						</f:then></f:if>
+					</f:for>
+				</span>			
+			</div>
+		</f:if>
+		
 		<div class="tp13_formdivwebapp">
 			<label for="aufenthaltsstatus">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus" />
