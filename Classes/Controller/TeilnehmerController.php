@@ -190,6 +190,24 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             }
             else
             {
+                $valArray = $this->request->getArguments();
+                $beratungsstellenid = $valArray['beratung'] ?? '';
+                $direkt = $valArray['direkt'] ?? '';
+                if($beratungsstellenid != '') {
+                    foreach ($this->allusergroups as $group) {
+                        if($group->getNiqbid() == $beratungsstellenid) {
+                            $this->view->assign('beratungsstelle', $group->getNiqbid());
+                            $GLOBALS['TSFE']->fe_user->setKey('ses', 'beratungsstellenid', $group->getNiqbid());
+                            
+                            if($direkt == '1'){
+                                $this->forward('anmeldseite0', 'Teilnehmer', 'Iqtp13db');
+                            } else {
+                                $this->forward('startseite', 'Teilnehmer', 'Iqtp13db');
+                            }                            
+                            break;
+                        }
+                    }
+                }
                 $this->forward('startseite', 'Teilnehmer', 'Iqtp13db');
             }
         }
@@ -1639,29 +1657,32 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function anmeldseite0Action()
     {
-        $valArray = $this->request->getArguments();
-        //DebuggerUtility::var_dump($valArray);  
+        $valArray = $this->request->getArguments();  
         $uriBuilder = $this->uriBuilder;
+        $bstid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid');
         
         if($valArray['wohnsitzDeutschland'] == 2) {
             $uri = $uriBuilder->setTargetPageUid($this->settings['anmeldungzsbapageuid'])->build();
             $this->redirectToUri($uri, 0, 303);
-        } elseif($valArray['wohnsitzDeutschland'] == 1 && $valArray['plz'] == '') {
+        } elseif($valArray['wohnsitzDeutschland'] == 1 && $valArray['plz'] == '' && $bstid == '') {
             $uri = $uriBuilder->setTargetPageUid($this->settings['anmeldungnichtwebapppageuid'])->build();
             $this->redirectToUri($uri, 0, 303);
         } else {
-            $plzberatungsstelle = $this->userGroupRepository->getBeratungsstelle4PLZ($valArray['plz'], $this->settings['beraterstoragepid']);
+            $plzberatungsstelle = array();
+            if(isset($valArray['plz'])) {
+                $plzberatungsstelle = $this->userGroupRepository->getBeratungsstelle4PLZ($valArray['plz'], $this->settings['beraterstoragepid']);
+                $bstid = count($plzberatungsstelle) > 0 ? $plzberatungsstelle[0]->getNiqbid() : $bstid;
+            }
             
-            if(count($plzberatungsstelle) == 0) {
+            if($bstid != '') {
+                $GLOBALS['TSFE']->fe_user->setKey('ses', 'beratungsstellenid', $bstid);
+                
+                $this->view->assign('beratungsstelle', $bstid);
+                $this->view->assign('wohnsitzDeutschland', $valArray['wohnsitzDeutschland'] ?? '');
+                $this->view->assign('plz', $valArray['plz'] ?? '');
+            } else {
                 $uri = $uriBuilder->setTargetPageUid($this->settings['anmeldungnichtwebapppageuid'])->build();
                 $this->redirectToUri($uri, 0, 303);
-            } else {
-                $GLOBALS['TSFE']->fe_user->setKey('ses', 'beratungsstellenid', $plzberatungsstelle[0]->getNiqbid());
-                
-                $this->view->assign('beratungsstelle', $plzberatungsstelle[0]->getTitle());
-                $this->view->assign('wohnsitzDeutschland', $valArray['wohnsitzDeutschland'] );
-                $this->view->assign('plz', $valArray['plz'] );
-                
             }
         }        
     }

@@ -121,9 +121,8 @@
 						<f:form.select property="einreisejahr" options="{jahre}" optionValueField="value" optionLabelField="value" /> 
 				</div>
 			</f:then>
-			<f:else>
+			<f:else>				
 				<div class="tp13_formdivwebapp">
-					<f:form.hidden name="tnseite1[einreisejahr]" value="-1" />
 					<label class="tp13_options" for="wohnsitzDeutschland">
 						<f:translate key="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_deutschland" />
 					</label>
@@ -132,8 +131,13 @@
 						<div class="tp13_formdivwebappradio"><f:form.radio id="checkwohnsitzDeutschland2" property="wohnsitzDeutschland" value="2" /><span class="abschlussradiotext"><f:translate key="nein" /></span></div>
 						<div class="tp13_formdivwebappradio"><f:form.radio id="checkwohnsitzDeutschland0" property="wohnsitzDeutschland" value="-1" /><span class="abschlussradiotext"><f:translate key="ka" /></span></div>				
 					</div>
-				</div>		
+				</div>
 				<div class="tp13_formdivwebapp">
+					<label id="labeleinreisejahr" for="einreisejahr">
+						<span id="infolab" title="<f:translate key='infoJahrEinreise' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.einreisejahr" />
+					</label>
+						<f:form.select id="inputeinreisejahr" property="einreisejahr" options="{jahre}" optionValueField="value" optionLabelField="value" /> 
+
 					<label id="labelwohnsitzNeinIn" for="wohnsitzNeinIn">
 						<span id="infolab" title="<f:translate key='infoWohnsitzinDeutschlandNein' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_nein_in" />
 					</label>
