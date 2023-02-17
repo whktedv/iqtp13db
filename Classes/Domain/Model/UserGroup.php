@@ -48,6 +48,13 @@ class UserGroup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $beratungsarten = '';
     
     /**
+     * description
+     * 
+     * @var string
+     */
+    protected $description = '';
+    
+    /**
      * initializes this object
      *
      * @param string $title
@@ -55,11 +62,12 @@ class UserGroup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param array $keywordlist
      * @param array $beratungsarten
      */
-    public function __construct($title = '', array $plzlist = array(), array $keywordlist = array(), array $beratungsarten = array()) {
+    public function __construct($title = '', array $plzlist = array(), array $keywordlist = array(), array $beratungsarten = array(), $description = '') {
         $this->setTitle($title);
         $this->setPlzlist($plzlist);
         $this->setKeywordlist($keywordlist);
         $this->setBeratungsarten($beratungsarten);
+        $this->setDescription($description);
     }
     
     /**
@@ -186,4 +194,25 @@ class UserGroup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->beratungsarten = implode(',', $beratungsarten);
     }
+    
+    /**
+     * Sets the description value
+     *
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+    
+    /**
+     * Returns the description value
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+    
 }

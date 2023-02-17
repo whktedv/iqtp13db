@@ -3,15 +3,17 @@
   <file source-language="de" datatype="plaintext" original="messages" date="2016-09-01T11:23:16Z" product-name="iqtp13db" target-language="ru">
     <header/>
     <body>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer"><target>Участники</target></trans-unit>
+    <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.start0intro"><target>In order to forward your request to the right advice center, please first state your place of residence</target></trans-unit>
+    <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.start0wohnsitz"><target>Is your current place of residence in Germany?</target></trans-unit>
+    <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.start0plz"><target>What is the postal code of your place of residence in Germany?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.startseitetext">
 		<target> <![CDATA[ <p>Уважаемые клиенты, &nbsp;</p><p>мы проводим консультации, оказываем сопровождение и поддержку клиентам с квалификацией, присвоенной за рубежом, на их пути к признанию и во время процедуры признания документов. &nbsp;</p><p>Для проведения качественной консультации нам очень поможет полученная от вас информация относительно вас лично и вашей профессиональной квалификации и опыта.</p><p>Поэтому мы просим вас заполнить следующую анкету как можно подробнее. Вы можете настроить отображение вопросов на разных языках. Для этого сначала выберите язык. Пожалуйста, отвечайте на вопросы только на немецком или английском языке. В противном случае ваш запрос может остаться необработанным.</p><p>Ваши данные могут быть обработаны только после отправления полностью заполненного формуляра.</p><p>Консультирование по вопросам признания, как правило, осуществляется по электронной почте. При наличии встречных вопросов мы свяжемся с вами по телефону.</p><p>С наилучшими пожеланиями,</p><p>Ваша IQ-консультация по вопросам признания и квалификации</p> ]]> </target>
 	</trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.linkanmeldeseitetext">
 		<target>заявление на консультацию по вопросам признания иностранных дипломов и квалификации </target>
 	</trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.beratungsstatus"><target>Консультативный статус</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.niqchiffre"><target>NIQ лицо</target></trans-unit>
+  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungtext1"><target>	<![CDATA[Немецкий Я согласен с тем, что мои данные будут использованы для обработки моего запроса.<a href="]]></target></trans-unit>
+  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungtext2"><target>	<![CDATA["target="_blank"> Я ознакомился с информацией об обработке данных </a>.]]></target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.schonberaten"><target>Получали ли вы когда-нибудь консультацию по признанию вашей зарубежной профессиональной квалификации?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.schonberatenvon"><target>Кто вам посоветовал?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.nachname"><target>Фамилия</target></trans-unit>
@@ -35,6 +37,8 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><target>Немецкий как родной язык?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikatdeutsch"><target>Немецкий сертификат</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Если есть сертификат, на каком уровне языка?</target></trans-unit>
+  <trans-unit id="keinabschlussbisher"><target><![CDATA[ No foreign educational qualification specified. Please enter information about your educational qualification (university or training) here. You can also enter several qualifications (diplomas, certificates).]]></target></trans-unit>
+
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>тип степени</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.erwerbsland"><target>Страна приобретения</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.dauer_berufsausbildung"><target>Продолжительность профессионального обучения </target></trans-unit>
@@ -45,79 +49,65 @@
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.berufserfahrung"><target>Опыт работы</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.deutscher_referenzberuf"><target>Немецкая справочная профессия</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.wunschberuf"><target>Желаемая профессия </target></trans-unit>
+  <trans-unit id="tx_iqtp13db_domain_model_abschluss.antragstellungvorher"><target>Заявление о признании профессиональной квалификации уже подано?</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.antragstellunggwpvorher"><target>Результат предыдущего теста эквивалентности</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.antragstellungzabvorher"><target>Результат предыдущей оценки ZAB</target></trans-unit>
+	
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsstatus"><target>Статус занятости</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezug"><target>Получение пособия</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus"><target>жилой статус</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatusfreitext"><target>Примечание о статусе проживания</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag"><target>Подано ли заявление о признании профессиональной квалификации?</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag_referenzberuf"><target>Для какой работы?</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag_institution"><target>В каком учреждении или органе?</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.anz_beratungen"><target>Количество консультаций</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.bescheidfrueherer_anerkennungsantrag"><target>Вы уже получили решение признающего органа (уведомление)?</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_beratungsstelle"><target>Как ты нашел нас?</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligung"><target>Согласие</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezugjanein"><target>Получаете ли вы деньги от центра занятости или агентства по трудоустройству?</target></trans-unit>
+  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezugjanein"><target>Получаете ли вы деньги от центра занятости или агентства по трудоустройству?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezug"><target>Получение пособия</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_berater_a_a"><target>Имя консультанта</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kontakt_berater_a_a"><target>Контакты (электронная почта и телефон)</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kundennummer_a_a"><target>Ваш клиентский номер</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstelle"><target>Согласие на передачу данных подтверждающему органу</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstelledatum"><target>Дата согласия на раскрытие</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstellemedium"><target>Средство согласия</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstellename"><target>ФИО контактного лица и организации</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstellekontakt"><target>Контакты (электронная почта и телефон)</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_person"><target>Согласие на передачу данных другому лицу</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_persondatum"><target>Дата согласия на раскрытие</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personmedium"><target>Средство согласия</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personname"><target>Имя человека и, если применимо, организация</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personkontakt"><target>Контакты (электронная почта и телефон)</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus"><target>жилой статус</target></trans-unit>
+  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_beratungsstelle"><target>Как ты нашел нас?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wieberaten"><target>Какая консультация необхоидимо Вaм?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.notizen"><target>Что еще вы хотели бы нам сказать или у вас уже есть конкретный вопрос?</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_dokument"><target>документ</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_dokument.name"><target>Имя</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_dokument.pfad"><target>дорожка</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_dokument.teilnehmer"><target>Участник</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungtext1"><target>	<![CDATA[Немецкий Я согласен с тем, что мои данные будут использованы для обработки моего запроса.<a href="]]></target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungtext2"><target>	<![CDATA["target="_blank"> Я ознакомился с информацией об обработке данных </a>.]]></target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdaten"><target>Согласие на передачу данных</target></trans-unit>
-	<trans-unit id="ja"><target>Да  (Согласен/а)</target></trans-unit>
+
+  <trans-unit id="ja"><target>Да  (Согласен/а)</target></trans-unit>
 	<trans-unit id="nein"><target>Нет</target></trans-unit>
-	<trans-unit id="maennlich"><target>мужской</target></trans-unit>
+  <trans-unit id="ka"><target>Информация отсутствет</target></trans-unit>
+  <trans-unit id="maennlich"><target>мужской</target></trans-unit>
 	<trans-unit id="weiblich"><target>женский</target></trans-unit>
 	<trans-unit id="divers"><target>различный</target></trans-unit>
 	<trans-unit id="weiter"><target>Следующий</target></trans-unit>
 	<trans-unit id="zurueck"><target>Назад</target></trans-unit>
-	<trans-unit id="abbruch"><target>аннулирование</target></trans-unit>
-	<trans-unit id="fragebogen"><target>Страница анкеты</target></trans-unit>
+  <trans-unit id="speichern"><target>Save</target></trans-unit>
+  <trans-unit id="abbruch"><target>аннулирование</target></trans-unit>
+  <trans-unit id="absenden"><target>Отправить сейчас</target></trans-unit>
+  <trans-unit id="dialoganmeldungabbrechen"><target>Cancel registration</target></trans-unit>
+  <trans-unit id="dialogabschlussloeschen"><target>Delete this qualification?</target></trans-unit>
+  <trans-unit id="fragebogen"><target>Страница анкеты</target></trans-unit>
 	<trans-unit id="persdaten"><target>личные данные</target></trans-unit>
 	<trans-unit id="deutschkenntnisse"><target>Немецкий как Родной язык?</target></trans-unit>
-	<trans-unit id="abschlussartoption1"><target>Квалификация обучения</target></trans-unit>
-	<trans-unit id="abschlussartoption2"><target>Высшее образование</target></trans-unit>
-	<trans-unit id="auslaendischerabschluss"><target>Иностранная степень</target></trans-unit>
+  <trans-unit id="sonstigerstatus.1"><target>Местные силы Афганистана</target></trans-unit>
+  <trans-unit id="sonstigerstatus.2"><target>Беженцы из Украины</target></trans-unit>
+
+  <trans-unit id="abschlusshinzu"><target>Add foreign educational qualification</target></trans-unit>
+  <trans-unit id="weitererabschlusshinzu"><target>Add further foreign educational qualification</target></trans-unit>
+  <trans-unit id="abschlussloeschen"><target>Delete this qualification</target></trans-unit>		
+  <trans-unit id="abschlussart.1"><target>Степень подготовки</target></trans-unit>
+  <trans-unit id="abschlussart.2"><target>Высшее образование, Диплом ВУЗа</target></trans-unit>
+  <trans-unit id="abschluesse"><target>Foreign educational qualification</target></trans-unit>
+  <trans-unit id="datenabschluss"><target>Данные о Степени образования</target></trans-unit>
+  <trans-unit id="neuerabschluss"><target>New foreign educational qualification</target></trans-unit>
+  <trans-unit id="abschlussbearbeiten"><target>Edit foreign educational qualification</target></trans-unit>
 	<trans-unit id="beruflichesituation"><target>Ситуация, связанная с работой (Профессий)</target></trans-unit>
 	<trans-unit id="datenjobcenterarbeitsagentur"><target>Дaнныe-центр занятости / агентство по трудоустройству</target></trans-unit>
-	<trans-unit id="fruehereantraege"><target>Предыдущие запросы</target></trans-unit>
-	<trans-unit id="angabenzurberatungsstelle"><target>Информация о консультационном центре</target></trans-unit>
-	<trans-unit id="beratungsprozess"><target>Процесс Консультирования</target></trans-unit>
-	<trans-unit id="ergebnisderberatung"><target>Результат консультации</target></trans-unit>
-	<trans-unit id="falldokumentation"><target>Документация по делу</target></trans-unit>
-	<trans-unit id="qualifizierungsberatung"><target>Квалификационный совет</target></trans-unit>
-	<trans-unit id="berater"><target>Советник, Консультант</target></trans-unit>
-	<trans-unit id="dokumente"><target>Документы</target></trans-unit>
-	<trans-unit id="dokumenteintro"><target><![CDATA[Загрузите следующие документы в виде файлов PDF (всего не более 30 МБ): <br>
-	- Ваши оригинальные дипломы и переводы <br>
-	- ваш вид на жительство; Биография \ Резюме; Уведомление
-	<br> <h3> Загруженные документы: </h3>]]></target></trans-unit>
+  <trans-unit id="datenweitereperson"><target>Передача данных другому лицу</target></trans-unit>
+  <trans-unit id="beratung"><target>Консультация</target></trans-unit>
+
+  <trans-unit id="dokumente"><target>Документы</target></trans-unit>
 	<trans-unit id="dokumentauswaehlen"><target>Выбрать документ</target></trans-unit>
 	<trans-unit id="dokumenthochladen"><target>Загрузить документ</target></trans-unit>
-	<trans-unit id="speicherplatzhinweis"><target>Имеется в наличии место для сохранения документов</target></trans-unit>
-	<trans-unit id="loeschen"><target>Удалять</target></trans-unit>
-	<trans-unit id="hochladen"><target>Загрузить сейчас</target></trans-unit>
-	<trans-unit id="absenden"><target>Отправить сейчас</target></trans-unit>
-	<trans-unit id="hinweisdatenpruefen"><target>Пожалуйста, проверьте Ваши данные. Если все данные верны, нажмите кнопку «Отправить».</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.geschlecht"><target>Пол</target></trans-unit>
-	<trans-unit id="infoNachname"><target>Фамилия соответствует вашей семейной положении. Пожалуйста, введите его здесь.</target></trans-unit>
+  <trans-unit id="lebenslauf"><target>Curriculum vitae</target></trans-unit>
+  <trans-unit id="abschlussdokumente"><target>Qualification documents</target></trans-unit>
+  <trans-unit id="aufenthaltsdokumente"><target>Residence documents</target></trans-unit>	
+  <trans-unit id="sonstigedokumente"><target>Other documents</target></trans-unit>	
+   
+  <trans-unit id="infoNachname"><target>Фамилия соответствует вашей семейной положении. Пожалуйста, введите его здесь.</target></trans-unit>
 	<trans-unit id="infoVorname"><target>Имя - это ваше имя перед фамилией и обычно соответствует вашему имени. Пожалуйста, введите его здесь.</target></trans-unit>
 	<trans-unit id="infoGeburtsland"><target>Страна рождения соответствует стране, в которой вы родились. Пожалуйста, введите это здесь.</target></trans-unit>
 	<trans-unit id="infoStaatsangehoerigkeit"><target>Если у вас два разных гражданства / национальности, укажите оба.</target></trans-unit>
@@ -136,55 +126,16 @@
 	Лица, ищущие убежища, получают следующие преимущества: базовая страховка для искателей убежища, терпимых лиц и иностранцев, которые принудительно вынуждены покинуть страну.]]></target></trans-unit>
 	<trans-unit id="infofruehererAntrag"><target>Пожалуйста, укажите, подавали ли вы в прошлом заявление о признании вашей степени.</target></trans-unit>
 	<trans-unit id="infoInstitution"><target></target></trans-unit>
-	<trans-unit id="headabschlusslinks"><target><![CDATA[	 &nbsp; 	]]></target></trans-unit>
-	<trans-unit id="weitererabschluss"><target>дальнейшая степень</target></trans-unit>
-	<trans-unit id="headabschlussrechtsausblenden"><target>Скрыть завершение</target></trans-unit>
-	<trans-unit id="anredemail"><target>Добрый день</target></trans-unit>
+
+  <trans-unit id="anredemail"><target>Добрый день</target></trans-unit>
 	<trans-unit id="mailtext"><target><![CDATA[<p>Спасибо за информацию.</p><p>Вы зарегистрированы на консультацию. Мы свяжемся с вами, как только подойдет ваша очередь.<br><br>Консультации могут быть предоставлены по электронной почте, телефону или в видеочате, если вы хотите.</p><p>Мы стремимся обработать ваш запрос в течение WARTEZEITWOCHEN недель. Мы просим вашего понимания и терпения.</p> <p>С уважением </p>Ваш совет по признанию IQ и квалификации]]></target></trans-unit>
 	<trans-unit id="subject"><target>Ваша регистрация на консультацию по первичному признанию в NRW</target></trans-unit>
 	<trans-unit id="confirmlinktext"><target>	Подтверждение регистрации - Confirm registration</target></trans-unit>
 	<trans-unit id="confirmmailtext1"><target><![CDATA[<p>Уважаемые соискатели совета,</p><p>пожалуйста, подтвердите свою регистрацию для первичной консультации по признанию здесь:</p>	]]></target></trans-unit>
 	<trans-unit id="confirmmailtext2"><target><![CDATA[<p>С уважением</p><p>Ваш совет по признанию и квалификации IQ</p>]]></target></trans-unit>
 	<trans-unit id="confirmsubject"><target>Пожалуйста, подтвердите свою регистрацию для первичной консультации по признанию NRW</target></trans-unit>
-	<trans-unit id="wurdebereitsberaten"><target>Получили вы уже консультацю, да</target></trans-unit>
-	<trans-unit id="erstberatungfertig"><target>Первичная консультация окончена</target></trans-unit>
-	<trans-unit id="anmeldedatum"><target>Дата регистрации</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_abschluss.antragstellungvorher">
-	  <target>Заявление о признании профессиональной квалификации уже подано?</target>
-	</trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_abschluss.antragstellunggwpvorher">
-	  <target>Результат предыдущего теста эквивалентности</target>
-	</trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_abschluss.antragstellungzabvorher">
-	  <target>Результат предыдущей оценки ZAB</target>
-	</trans-unit>
-	<trans-unit id="ka">
-		<target>Информация отсутствет</target>
-	</trans-unit>
-	<trans-unit id="sonstigerstatus.1">
-		<target>Местные силы Афганистана</target>
-	</trans-unit>
-	<trans-unit id="sonstigerstatus.2">
-		<target>Беженцы из Украины</target>
-	</trans-unit>
-	 <trans-unit id="abschlussart.1">
-	   <target>Степень подготовки</target>
-	 </trans-unit>
-	 <trans-unit id="abschlussart.2">
-	   <target>Высшее образование, Диплом ВУЗа</target>
-	 </trans-unit>
-	 <trans-unit id="datenabschluss">
-	   <target>Данные о Степени образования</target>
-	 </trans-unit>
-	 <trans-unit id="datenjobcenterarbeitsagentur">
-	   <target>Данные Центра занятости /агентство по трудоустройству</target>
-	 </trans-unit>
-	 <trans-unit id="datenweitereperson">
-	   <target>Передача данных другому лицу</target>
-	 </trans-unit>
-	 <trans-unit id="beratung">
-	   <target>Консультация</target>
-	 </trans-unit>
+<trans-unit id="kontaktberatungsstelle"><target>This is your counselling center:</target></trans-unit>
+  
     </body>
   </file>
 </xliff>

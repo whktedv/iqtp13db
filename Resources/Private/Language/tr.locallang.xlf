@@ -3,16 +3,18 @@
   <file source-language="de" datatype="plaintext" original="messages" date="2016-09-01T11:23:16Z" product-name="iqtp13db" target-language="tr">
     <header/>
     <body>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer"><target>Katılımcı</target></trans-unit>
+    <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.start0intro"><target>In order to forward your request to the right advice center, please first state your place of residence</target></trans-unit>
+    <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.start0wohnsitz"><target>Is your current place of residence in Germany?</target></trans-unit>
+    <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.start0plz"><target>What is the postal code of your place of residence in Germany?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.startseitetext">
 		<target> <![CDATA[ <p>Sevgili Tavsiye arayan, &nbsp;</p><p>Biz yurtdışında edinilen mesleki niteliklerin tanınma sürecinde tavsiye arayanlara danışmanlık yapıyor, eşlik ediyor ve destek veriyoruz.</p><p>Size iyi bir danışmanlık hizmeti verebilmek için, sizin hakkınızda ve mesleki yeterlilik ve deneyimleriniz hakkında bazı bilgileri almamız çok yararlı olacaktır.</p><p>Bu nedenle, bizler mümkün olduğu kadar aşağıdaki anketi tamamen doldurmanızı rica ediyoruz. Farklı dillerde görüntülenen soruları görüntüleyebilirsiniz. En başta dili seçiniz. Soruları sadece Almanca veya İngilizce yanıtlayabilirsiniz. Aksi takdirde talebiniz işleme alınmaz. Eğer bu form tamamen doldurulursa verileriniz işleme alınır.</p><p>Diploma tanınması ile ilgili tavsiyeler genellikle. e-posta yoluyla gerçekleşir.</p><p>Bunun dışındaki sorularınız için bizimle telefonla irtibata geçebilirsiniz.</p><p>Saygılarımızla</p><p>IQ Diploma tanınması ve yeterlilik danışmanlığı</p> ]]> </target>
 	</trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.linkanmeldeseitetext">
 		<target>Diploma kabuletme danışmanlık kayıtı</target>
 	</trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.beratungsstatus"><target>Danışmanlıkstatüsü</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.niqchiffre"><target>NIQ Şifresi</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.schonberaten"><target>Meslek eğitiminizin denkliği için şimdiye kadar bir danışmanlık hizmeti aldınız mı?</target></trans-unit>
+  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungtext1"><target><![CDATA[Verilerimin talebimin işlenmesi amacıyla kullanılacağını kabul ediyorum <a href="]]></target></trans-unit>
+  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungtext2"><target><![CDATA[" target="_blank">Veri işleme hakkında bilgi sahibi oldum</a>. ]]></target></trans-unit>
+  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.schonberaten"><target>Meslek eğitiminizin denkliği için şimdiye kadar bir danışmanlık hizmeti aldınız mı?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.schonberatenvon"><target>Kimden danışmanlık hizmeti aldınız?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.nachname"><target>Soyad</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.vorname"><target>İsim</target></trans-unit>
@@ -29,9 +31,14 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einreisejahr"><target>Almanyaya giriş yaptığınız yıl</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_deutschland"><target>Almanya'daki ikametgâhıniz</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_nein_in"><target>(şimdiki) İkametgâhınız</target></trans-unit>
+  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.sonstigerstatus"><target>Diğer durum</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus"><target>Yerleşim durumu</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatusfreitext"><target>İkamet durumu</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><target>Almanca ana dilinizmi?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikatdeutsch"><target>Almanca zertifikası varmı?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Almanca zertifikası varsa, hangi  seviyede?</target></trans-unit>
+  <trans-unit id="keinabschlussbisher"><target><![CDATA[ No foreign educational qualification specified. Please enter information about your educational qualification (university or training) here. You can also enter several qualifications (diplomas, certificates).]]></target></trans-unit>
+
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Mezuniyet olduğunuz Bölüm (yada akademik derece)</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.erwerbsland"><target>Mezuniyet diplomasının alındığı ülke</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.dauer_berufsausbildung"><target>Meslek eğitiminin süresi</target></trans-unit>
@@ -42,69 +49,64 @@
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.berufserfahrung"><target>Mesleki tecrübesi</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.deutscher_referenzberuf"><target>Öğrenilen mesleğin Almanca karşılığı olan meslek</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.wunschberuf"><target>Arzu edilen meslek denklik</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsstatus"><target>İş/çalışma durumu </target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezug"><target>(Devletten) Maddi yardım durumu?</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus"><target>Oturma/İkamet müsadesi statüsü</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatusfreitext"><target>Oturma müsadesi statüsüne yazılmış dipnot</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag"><target>Meslek eğitim dıplomasının denkliği için şimdiye kadar başvuru yapıldı mı?</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag_referenzberuf"><target>Yapıldıysa, hangi meslek eğitim dıplomasının denkliği için</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.frueherer_antrag_institution"><target>Hangi kurum yada resmi dairede yapıldı?</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.anz_beratungen"><target>Alınan danışmanlık hizmet sayısı </target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.bescheidfrueherer_anerkennungsantrag"><target>Denklik makamından sonuçlanmış bir cevap aldınız mı?</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_beratungsstelle"><target>Bizi bulmanız ne yolla oldu?</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligung"><target>Veri bilgilerinizin onayı</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezugjanein"><target>Jobcenter'den yada iş ve işçi bulma kurumundan para alıyormusunuz?</target></trans-unit>
+  <trans-unit id="tx_iqtp13db_domain_model_abschluss.antragstellungvorher"><target>Mesleki yeterliliğin tanınması için bir başvuru yapıldı mı?</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.antragstellunggwpvorher"><target>Önceki denklik sınavının sonucu</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.antragstellungzabvorher"><target>Önceki ZAB-Diploma değerlendirmesinin sonucu</target></trans-unit>
+
+  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erwerbsstatus"><target>İş/çalışma durumu </target></trans-unit>
+  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezugjanein"><target>Jobcenter'den yada iş ve işçi bulma kurumundan para alıyormusunuz?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.leistungsbezug"><target>(Devletten) Maddi yardım durumu?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_berater_a_a"><target>Danışmanın adı</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kontakt_berater_a_a"><target>İletişim (E-Mail ve Telefon)</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kundennummer_a_a"><target>Müşteri numaranız</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstelle"><target>Bilgilerin denklik makamına verilmesinin onayı</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstelledatum"><target>Onayı tarihi</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstellemedium"><target>Onayın verilme yolu (Online yada yazılı)</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstellename"><target>Yetkili kişi ve organizasyon</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstellekontakt"><target>İletişim (E-Mail ve Telefon)</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_person"><target>Bilgilerin başka kişi/makamlara verilmesinin onayı</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_persondatum"><target>Onayı tarihi</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personmedium"><target>Onayın verilme yolu (Online yada yazılı)</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personname"><target>Kişinin yada organizasyonun adı</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personkontakt"><target>İletişim (E-Mail ve Telefon)</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus"><target>Oturma müsadesi statüsü</target></trans-unit>
+  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_beratungsstelle"><target>Bizi bulmanız ne yolla oldu?</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wieberaten"><target>Nasıl bilgilendirilmek  istersiniz?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.notizen"><target>Bize bildirmek istediğiniz birşey yada sorunuz var mı?</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_dokument"><target>Belge</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_dokument.name"><target>İsim</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_dokument.pfad"><target>Yol/Metot</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_dokument.teilnehmer"><target>Katılımcı</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungdaten"><target>Verilerin aktarılması için onay</target></trans-unit>
-	<trans-unit id="ja"><target>Evet</target></trans-unit>
+
+  <trans-unit id="ja"><target>Evet</target></trans-unit>
 	<trans-unit id="nein"><target>Hayır</target></trans-unit>
+  <trans-unit id="ka"><target>Bilgi yok</target></trans-unit>
 	<trans-unit id="maennlich"><target>Erkek</target></trans-unit>
 	<trans-unit id="weiblich"><target>Kadın</target></trans-unit>
 	<trans-unit id="divers"><target>Diğer</target></trans-unit>
 	<trans-unit id="weiter"><target>Devam</target></trans-unit>
 	<trans-unit id="zurueck"><target>Geri</target></trans-unit>
-	<trans-unit id="abbruch"><target>İptal</target></trans-unit>
-	<trans-unit id="fragebogen"><target>Soru kağıdı/kataloğu sayfası</target></trans-unit>
+  <trans-unit id="speichern"><target>Save</target></trans-unit>
+  <trans-unit id="abbruch"><target>İptal</target></trans-unit>
+  <trans-unit id="absenden"><target>Şimdi gönderin</target></trans-unit>
+  <trans-unit id="dialoganmeldungabbrechen"><target>Cancel registration</target></trans-unit>
+  <trans-unit id="dialogabschlussloeschen"><target>Delete this qualification?</target></trans-unit>
+  <trans-unit id="fragebogen"><target>Soru kağıdı/kataloğu sayfası</target></trans-unit>
 	<trans-unit id="persdaten"><target>Şahsi Bilgiler</target></trans-unit>
 	<trans-unit id="deutschkenntnisse"><target>Ana dil Almaca mı?</target></trans-unit>
-	<trans-unit id="auslaendischerabschluss"><target>Ülkenizdeki dililnden yapılan mezuniyetin ismi</target></trans-unit>
+  <trans-unit id="sonstigerstatus.1"><target>Afganistan’da ki Yerel Kuvvetler</target></trans-unit>
+	<trans-unit id="sonstigerstatus.2"><target>Ukraynalı sığınmacı</target></trans-unit>
+
+  <trans-unit id="abschlusshinzu"><target>Add foreign educational qualification</target></trans-unit>
+  <trans-unit id="weitererabschlusshinzu"><target>Add further foreign educational qualification</target></trans-unit>
+  <trans-unit id="abschlussloeschen"><target>Delete this qualification</target></trans-unit>		
+  <trans-unit id="abschlussart.1"><target>Mesleki eğitim derecesi</target></trans-unit>
+  <trans-unit id="abschlussart.2"><target>Üniversite derecesi</target></trans-unit>
+  <trans-unit id="abschluesse"><target>Foreign educational qualification</target></trans-unit>
+  <trans-unit id="datenabschluss"><target>Derece bilgilerin verisi</target></trans-unit>
+  <trans-unit id="neuerabschluss"><target>New foreign educational qualification</target></trans-unit>
+  <trans-unit id="abschlussbearbeiten"><target>Edit foreign educational qualification</target></trans-unit>
 	<trans-unit id="beruflichesituation"><target>Mesleki durum</target></trans-unit>
-	<trans-unit id="fruehereantraege"><target>Daha önceki başvurular</target></trans-unit>
-	<trans-unit id="angabenzurberatungsstelle"><target>Danışmanlık bürosuyla ilgili bilgiler</target></trans-unit>
-	<trans-unit id="beratungsprozess"><target>Danışmanlık süreci </target></trans-unit>
-	<trans-unit id="ergebnisderberatung"><target>Danışmanlık işleminin sonucu</target></trans-unit>
-	<trans-unit id="falldokumentation"><target>İşlemin belgelenmesi/dokümantasyon</target></trans-unit>
-	<trans-unit id="qualifizierungsberatung"><target>Yeterlilik ve denklik için danışmanlık</target></trans-unit>
-	<trans-unit id="berater"><target>Danışman</target></trans-unit>
+  <trans-unit id="datenjobcenterarbeitsagentur"><target>Veri iş merkezi/işkur </target></trans-unit>
+  <trans-unit id="datenweitereperson"><target>Başka bir kişiye veri paylaşımı</target></trans-unit>
+  <trans-unit id="beratung"><target>Danışmanlık hizmeti</target></trans-unit>
+  
 	<trans-unit id="dokumente"><target>Belgeler</target></trans-unit>
-	<trans-unit id="dokumenteintro"><target><![CDATA[Aşağıdaki belgeleri lütfen PDF-boyutu olarak yükleyiniz/kaydediniz (toplam en fazla 30 MB) <br> -Orijinal mezuniyet belgeniz ve tercümeler  -Oturma müsadeniz/belgeniz; öz geçmişiniz; size <br><h3>gelen cevap kağıdı:</h3>]]></target></trans-unit>
 	<trans-unit id="dokumentauswaehlen"><target>Belgeleri seçiniz</target></trans-unit>
 	<trans-unit id="dokumenthochladen"><target>Belgeleri yükleyiniz</target></trans-unit>
-	<trans-unit id="speicherplatzhinweis"><target>Bellekte kayıt için yer mevcuttur</target></trans-unit>
-	<trans-unit id="loeschen"><target>Silin</target></trans-unit>
-	<trans-unit id="hochladen"><target>Şimdi yükleyin</target></trans-unit>
-	<trans-unit id="absenden"><target>Şimdi gönderin</target></trans-unit>
-	<trans-unit id="hinweisdatenpruefen"><target>Lütfen bilgi ve belgelerinizi şu an kotrol ediniz. Eğer herşey doğruysa, 'Gönder'-düğmesine basıp işlemi tamamlayınız.</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.geschlecht"><target>Cinsiyet</target></trans-unit>
+  <trans-unit id="lebenslauf"><target>Curriculum vitae</target></trans-unit>
+  <trans-unit id="abschlussdokumente"><target>Qualification documents</target></trans-unit>
+  <trans-unit id="aufenthaltsdokumente"><target>Residence documents</target></trans-unit>	
+  <trans-unit id="sonstigedokumente"><target>Other documents</target></trans-unit>	
+  
 	<trans-unit id="infoNachname"><target>İkinci isminiz soyadınıza denk geliyorsa, buraya yazınız. </target></trans-unit>
 	<trans-unit id="infoVorname"><target>Adınız ikinci addan önce gelen isimdir ve genellikle çağırıldığınız isme denk gelir. Onu buraya yazınız.</target></trans-unit>
 	<trans-unit id="infoGeburtsland"><target>Doğduğunuz ülkeyi buraya yazınız.</target></trans-unit>
@@ -125,10 +127,8 @@
 	Bu Kurumlardan hangisinden faydalanıyorsanız lütfen burada bildirin.]]></target></trans-unit>
 	<trans-unit id="infofruehererAntrag"><target>Daha önce mezun olduğunuz mesleğin tanınması/denkliği için başvurduysanız, lütfen burada bildirin.</target></trans-unit>
 	<trans-unit id="infoInstitution"><target>Daha önce mezun olduğunuz mesleğin tanınması/denkliği için, hangi kurumda yada hangi eyalette ve kuruluşa başvurduysanız, lütfen burada bildirin.</target></trans-unit>
-	<trans-unit id="headabschlusslinks"><target><![CDATA[ &nbsp; ]]></target></trans-unit>
-	<trans-unit id="weitererabschluss"><target>Diğer Mezuniyetler</target></trans-unit>
-	<trans-unit id="headabschlussrechtsausblenden"><target>Mezuniyetleri atlayın/kapatın</target></trans-unit>
-	<trans-unit id="anredemail"><target>İyi günler</target></trans-unit>
+
+  <trans-unit id="anredemail"><target>İyi günler</target></trans-unit>
 	<trans-unit id="mailtext"><target><![CDATA[<p>Verdiğiniz bilgiler için çok teşekkürler.</p><p<&nbsp;</p><p> Danışmanlık hizmeti almak için kaydedildiniz. Sıranız geldiğinde Sizinle irtibata geçeceğiz.<br><br> Danışmanlık hizmeti isteğe bağlı olarak E-Mail, Telefon yada Video üzerinden online’da verilir.</p><p> Başvurunuzu WARTEZEITWOCHEN hafta içerisinde işleme koymak için çaba sarfedeceğiz. Sizden anlayış ve sabır bekliyoruz. </p><p<&nbsp;</p><p> En içten selamlarımızla</p> Sizin Mobil IQ Yeterlilik ve denklik için Danışmanlığınız
 	]]></target></trans-unit>
 	<trans-unit id="subject"><target>Yeterlilik ve denklik için danışmanlık (Kuzey Ren Vestfalya Eyaleti) başvurunuz</target></trans-unit>
@@ -137,29 +137,8 @@
 	yeterlilik ve denklik için danışmanlık başvurunuzu lütfen burda onaylayınız:</p>]]></target></trans-unit>
 	<trans-unit id="confirmmailtext2"><target><p>İçten selamlar</p><p>Sizin Mobil IQ Yeterlilik ve denklik için Danışmanlığınız</p></target></trans-unit>
 	<trans-unit id="confirmsubject"><target>Yeterlilik ve denklik için danışmanlık (Kuzey Ren Vestfalya Eyaleti) başvurunuzu onaylayınız</target></trans-unit>
-	<trans-unit id="wurdebereitsberaten"><target>Danışmanlık hizmeti henüz/şimdi verildi, evet</target></trans-unit>
-	<trans-unit id="erstberatungfertig"><target>İlk Danışmanlık hizmeti sona erdi</target></trans-unit>
-	<trans-unit id="anmeldedatum"><target>Kayıt tarihi</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungtext1"><target><![CDATA[Verilerimin talebimin işlenmesi amacıyla kullanılacağını kabul ediyorum <a href="]]></target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungtext2"><target><![CDATA[" target="_blank">Veri işleme hakkında bilgi sahibi oldum</a>. ]]></target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.sonstigerstatus"><target>Diğer durum</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus"><target>Yerleşim durumu</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatusfreitext"><target>İkamet durumu</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wieberaten"><target>Nasıl bilgilendirilmek  istersiniz?</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_abschluss"><target>Mezuniyet durumu</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Mezuniyet yada akademik derecesi</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_abschluss.antragstellungvorher"><target>Mesleki yeterliliğin tanınması için bir başvuru yapıldı mı?</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_abschluss.antragstellunggwpvorher"><target>Önceki denklik sınavının sonucu</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_abschluss.antragstellungzabvorher"><target>Önceki ZAB-Diploma değerlendirmesinin sonucu</target></trans-unit>
-	<trans-unit id="ka"><target>Bilgi yok</target></trans-unit>
-	<trans-unit id="sonstigerstatus.1"><target>Afganistan’da ki Yerel Kuvvetler</target></trans-unit>
-	<trans-unit id="sonstigerstatus.2"><target>Ukraynalı sığınmacı</target></trans-unit>
-	<trans-unit id="abschlussart.1"><target>Mesleki eğitim derecesi</target></trans-unit>
-	<trans-unit id="abschlussart.2"><target>Üniversite derecesi</target></trans-unit>
-	<trans-unit id="datenabschluss"><target>Derece bilgilerin verisi</target></trans-unit>
-	<trans-unit id="datenjobcenterarbeitsagentur"><target>Veri iş merkezi/işkur </target></trans-unit>
-	<trans-unit id="datenweitereperson"><target>Başka bir kişiye veri paylaşımı</target></trans-unit>
-	<trans-unit id="beratung"><target>Danışmanlık hizmeti</target></trans-unit>
+<trans-unit id="kontaktberatungsstelle"><target>This is your counselling center:</target></trans-unit>
+
     </body>
   </file>
 </xliff>

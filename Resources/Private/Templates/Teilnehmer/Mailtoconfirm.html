@@ -210,7 +210,7 @@
         }
         .headerContainer .textContent,
         .headerContainer .textContent p {
-            color:#808080;
+            color: #404040;
             font-family:'Helvetica Neue', Helvetica, Arial, Verdana, sans-serif;
             font-size:16px;
             line-height:150%;
@@ -218,7 +218,7 @@
         }
         .headerContainer .textContent a,
         .headerContainer .textContent p a {
-            color:#538bb3;
+            color: #538bb3;
             font-weight:normal;
             text-decoration:underline;
         }
@@ -246,7 +246,7 @@
         }
         .bodyContainer .textContent,
         .bodyContainer .textContent p {
-            color:#808080;
+            color:#404040;
             font-family:'Helvetica Neue', Helvetica, Arial, Verdana, sans-serif;
             font-size:16px;
             line-height:150%;
@@ -415,7 +415,14 @@
 							        pageUid="{registrationpageuid}"
 							        >{confirmlinktext}</f:link.action>        
 							          <f:format.html>{confirmmailtext2}</f:format.html>
-
+         							
+         							<div style="background-color: #dedede; padding: 10px; border: 1px solid #222; margin-top: 20px;">
+										<div style="font-size: 14px; color:#222222;">
+											<b>{kontaktlabel}</b><br>
+											<f:format.raw>{datenberatungsstelle}</f:format.raw>
+										</div>
+									</div>
+                                </td>
                                 </td>
                             </tr> 
                             </tbody>

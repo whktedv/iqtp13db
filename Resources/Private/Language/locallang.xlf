@@ -35,7 +35,6 @@
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><source>If German certificate, what language level</source></trans-unit>
 		<trans-unit id="keinabschlussbisher"><source><![CDATA[ No foreign educational qualification specified. Please enter information about your educational qualification (university or training) here. You can also enter several qualifications (diplomas, certificates).]]></source></trans-unit>
 		
-		<trans-unit id="tx_iqtp13db_domain_model_abschluss"><source>Foreign educational qualification</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><source>Type of educational qualification</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_abschluss.erwerbsland"><source>Country of acquisition of the educational qualification</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_abschluss.dauer_berufsausbildung"><source>Duration of vocational training/studies</source></trans-unit>
@@ -69,23 +68,24 @@
 		<trans-unit id="maennlich"><source>Male</source></trans-unit>
 		<trans-unit id="weiblich"><source>Female</source></trans-unit>
 		<trans-unit id="divers"><source>Diverse</source></trans-unit>
-		<trans-unit id="sonstigerstatus.1"><source>Local force from Afghanistan</source></trans-unit>
-		<trans-unit id="sonstigerstatus.2"><source>Fugitive from Ukraine</source></trans-unit>
-		<trans-unit id="abschlussart.1"><source>vocational education</source></trans-unit>
-		<trans-unit id="abschlussart.2"><source>university degree</source></trans-unit>
 		<trans-unit id="weiter"><source>Forward</source></trans-unit>
 		<trans-unit id="zurueck"><source>Back</source></trans-unit>
 		<trans-unit id="speichern"><source>Save</source></trans-unit>
 		<trans-unit id="abbruch"><source>Abort</source></trans-unit>
 		<trans-unit id="absenden"><source>Send now</source></trans-unit>
 		<trans-unit id="dialoganmeldungabbrechen"><source>Cancel registration</source></trans-unit>
-		<trans-unit id="dialogabschlussloeschen"><source>Delete this qualification?</source></trans-unit>
-		<trans-unit id="abschlusshinzu"><source>Add foreign educational qualification</source></trans-unit>
-		<trans-unit id="abschlussloeschen"><source>Delete this qualification</source></trans-unit>
-		
+		<trans-unit id="dialogabschlussloeschen"><source>Delete this qualification?</source></trans-unit>		
 		<trans-unit id="fragebogen"><source>Questionnaire page</source></trans-unit>
 		<trans-unit id="persdaten"><source>Personal data</source></trans-unit>
 		<trans-unit id="deutschkenntnisse"><source>German as a native language?</source></trans-unit>
+		<trans-unit id="sonstigerstatus.1"><source>Local force from Afghanistan</source></trans-unit>
+		<trans-unit id="sonstigerstatus.2"><source>Fugitive from Ukraine</source></trans-unit>
+		
+		<trans-unit id="abschlusshinzu"><source>Add foreign educational qualification</source></trans-unit>
+		<trans-unit id="weitererabschlusshinzu"><source>Add further foreign educational qualification</source></trans-unit>
+		<trans-unit id="abschlussloeschen"><source>Delete this qualification</source></trans-unit>
+		<trans-unit id="abschlussart.1"><source>vocational education</source></trans-unit>
+		<trans-unit id="abschlussart.2"><source>university degree</source></trans-unit>
 		<trans-unit id="abschluesse"><source>Foreign educational qualification</source></trans-unit>
 		<trans-unit id="datenabschluss"><source>Data for foreign educational qualification</source></trans-unit>
 		<trans-unit id="neuerabschluss"><source>New foreign educational qualification</source></trans-unit>
@@ -94,8 +94,10 @@
 		<trans-unit id="datenjobcenterarbeitsagentur"><source>Data Job Centre/Agency for Employment</source></trans-unit>
 		<trans-unit id="datenweitereperson"><source>Data transfer further person</source></trans-unit>
 		<trans-unit id="beratung"><source>Advisory</source></trans-unit>
+		
 		<trans-unit id="dokumente"><source>Documents</source></trans-unit>
-		<trans-unit id="dokumenthochladen"><source>Upload document</source></trans-unit>
+		<trans-unit id="dokumentauswaehlen"><source>Select document</source></trans-unit>
+		<trans-unit id="dokumenthochladen"><source>Upload documents</source></trans-unit>
 		<trans-unit id="lebenslauf"><source>Curriculum vitae</source></trans-unit>
 		<trans-unit id="abschlussdokumente"><source>Qualification documents</source></trans-unit>
 		<trans-unit id="aufenthaltsdokumente"><source>Residence documents</source></trans-unit>	
@@ -119,7 +121,8 @@
 		<trans-unit id="confirmlinktext"><source>Confirm registration</source></trans-unit>
 		<trans-unit id="confirmmailtext1"><source><![CDATA[ <p>Dear VORNAMENACHNAME,</p> <p>Please confirm your registration for the initial recognition counselling here:</p>]]></source></trans-unit>
 		<trans-unit id="confirmmailtext2"><source>Yours recognition counselling</source></trans-unit>
-		<trans-unit id="confirmsubject"><source>Please confirm your registration for the initial recognition counselling</source></trans-unit>	
+		<trans-unit id="confirmsubject"><source>Please confirm your registration for the initial recognition counselling</source></trans-unit>
+		<trans-unit id="kontaktberatungsstelle"><source>This is your counselling center:</source></trans-unit>
 	</body>
   </file>
 </xliff>

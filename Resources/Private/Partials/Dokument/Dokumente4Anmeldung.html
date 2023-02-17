@@ -6,8 +6,9 @@
 			</td>
 			<td class="dokumenteuploadform">
 				<f:form method="post" action="saveFileWebapp" name="dokument" controller="Dokument" arguments="{teilnehmer:teilnehmer}" object="{dokument}" enctype="multipart/form-data" >
-					<f:form.upload name="file" />
-					<f:form.hidden name="beschreibung" value="Lebenslauf" />
+					<f:form.button class="linkbuttons" type="button" onclick="document.getElementById('lebenslaufuploadbutton').click()"><f:translate key="dokumentauswaehlen" /></f:form.button>
+					<f:form.upload id="lebenslaufuploadbutton" name="file" style="display:none" />
+  					<f:form.hidden name="beschreibung" value="Lebenslauf" />
 				</f:form>					
 			</td>
 			<td></td>			
@@ -30,7 +31,8 @@
 			</td>
 			<td class="dokumenteuploadform">
 				<f:form method="post" action="saveFileWebapp" name="dokument" controller="Dokument" arguments="{teilnehmer:teilnehmer}" object="{dokument}" enctype="multipart/form-data" >
-					<f:form.upload name="file" />
+					<f:form.button class="linkbuttons" type="button" onclick="document.getElementById('abschlussdokuploadbutton').click()"><f:translate key="dokumentauswaehlen" /></f:form.button>
+					<f:form.upload id="abschlussdokuploadbutton" name="file" style="display:none" />
 					<f:form.hidden name="beschreibung" value="Abschlussdokumente" />
 				</f:form>
 			</td>
@@ -53,7 +55,8 @@
 			</td>
 			<td class="dokumenteuploadform">
 				<f:form method="post" action="saveFileWebapp" name="dokument" controller="Dokument" arguments="{teilnehmer:teilnehmer}" object="{dokument}" enctype="multipart/form-data" >
-					<f:form.upload name="file" />
+					<f:form.button class="linkbuttons" type="button" onclick="document.getElementById('aufenthaltdokuploadbutton').click()"><f:translate key="dokumentauswaehlen" /></f:form.button>
+					<f:form.upload id="aufenthaltdokuploadbutton" name="file" style="display:none" />
 					<f:form.hidden name="beschreibung" value="Aufenthaltsdokumente" />
 				</f:form>		
 			</td>
@@ -76,7 +79,8 @@
 			</td>
 			<td class="dokumenteuploadform">
 				<f:form method="post" action="saveFileWebapp" name="dokument" controller="Dokument" arguments="{teilnehmer:teilnehmer}" object="{dokument}" enctype="multipart/form-data" >
-					<f:form.upload name="file" />
+					<f:form.button class="linkbuttons" type="button" onclick="document.getElementById('sonstigedokuploadbutton').click()"><f:translate key="dokumentauswaehlen" /></f:form.button>
+					<f:form.upload id="sonstigedokuploadbutton" name="file" style="display:none" />
 					<f:form.hidden name="beschreibung" value="Sonstige Dokumente" />
 				</f:form>		
 			</td>

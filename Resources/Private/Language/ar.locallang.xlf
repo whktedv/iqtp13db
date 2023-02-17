@@ -3,6 +3,9 @@
   <file source-language="de" datatype="plaintext" original="messages" date="2016-09-01T11:23:16Z" product-name="iqtp13db" target-language="ar">
     <header/>
     <body>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.start0intro"><target>In order to forward your request to the right advice center, please first state your place of residence</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.start0wohnsitz"><target>Is your current place of residence in Germany?</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.start0plz"><target>What is the postal code of your place of residence in Germany?</target></trans-unit>
 	
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.startseitetext">
 		<target> <![CDATA[ <p><br> عزيزي طالب الاستشارة<br> ،  عزيزتي طالبة الاستشارة،<br><br> يسرنا تقديم الاستشارة لطالبي الاستشارة كما نقوم بمرافقتهم وتقديم الدعم لهم خلال إجراءات الاعتراف بالشهادات المهنية الأجنبية.<br><br> وكي تحصل على استشارة صحيحة، من المفيد بشكل كبير أن تقوم بإمدادنا ببعض البيانات والشهادات المهنية وشهادة الخبرة الخاصة بك.<br><br> ولذلك نرجو أن تقوم بملء النماذج التالية بشكل متكامل قدر الإمكان. يمكنك إظهار الأسئلة بلغات مختلفة. ولذلك نرجو منك اختيار لغة في البداية. برجاء الإجابة على الأسئلة فقط بالإنجليزية أو الألمانية. وإلا فلن نتمكن من معالجة طلبك.<br><br> ولن نتمكن من معالجة بياناتك إلا في حالة إرسال الاستمارة مملوءة بالكامل.<br><br> وفي العادة تتم استشارة الاعتراف بالشهادات الأجنبية عبر البريد الإلكتروني. وفي حالة وجود استفسارات سنتواصل معك هاتفيًا.<br><br> مع أطيب الأمنيات<br><br> مركز استشارة الاعتراف بالشهادات الأجنبية والتأهيل المتنقل</p><p>IQ Anerkennungs- und Qualifizierungsberatung</p> ]]> </target>
@@ -36,13 +39,14 @@
   <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><target>	اللغة الألمانية كلغة الأم؟	</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikatdeutsch"><target>	شهادة اللغة الألمانية	</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>	في حالة وجود شهادة لغة ألمانية، في أي مستوى؟	</target></trans-unit>
-
+	<trans-unit id="keinabschlussbisher"><target><![CDATA[ No foreign educational qualification specified. Please enter information about your educational qualification (university or training) here. You can also enter several qualifications (diplomas, certificates).]]></target></trans-unit>
+	
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss"><target> الشهادة المحصل عليها</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>نوع الشهادة المحصل عليها</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.erwerbsland"><target>	بلد التخرج 	</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.dauer_berufsausbildung"><target>	مدة التحصيل المهني / العلمي	</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussjahr"><target>	سنة التخرح 1	</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_abschluss.ausbildungsinstitution"><target>	المؤسسة التعليمية التي تم التخرج منها 1	</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussjahr"><target>	سنة التخرح 	</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.ausbildungsinstitution"><target>	المؤسسة التعليمية التي تم التخرج منها 	</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.ausbildungsort"><target>	مكان التحصيل المهني / العلمي 	</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschluss"><target>	درجة التخرج 	</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.berufserfahrung"><target>	الخبرة المهنية 	</target></trans-unit>
@@ -71,33 +75,36 @@
 	<trans-unit id="maennlich"><target>	ذكر	</target></trans-unit>
 	<trans-unit id="weiblich"><target>	أنثى	</target></trans-unit>
 	<trans-unit id="divers"><target>	متنوع 	</target></trans-unit>
-  <trans-unit id="sonstigerstatus.1"><target>اليد العاملة المحلية بأفغانستان</target></trans-unit>
-	<trans-unit id="sonstigerstatus.2"><target>الاجئين من أوكرانيا</target></trans-unit>
-  <trans-unit id="abschlussart.1"><target>شهادة التكوين المهني</target></trans-unit>
-	<trans-unit id="abschlussart.2"><target>الشهادة الجامعية</target></trans-unit>
-	<trans-unit id="weiter"><target>	الخ	</target></trans-unit>
+  <trans-unit id="weiter"><target>	الخ	</target></trans-unit>
 	<trans-unit id="zurueck"><target>	الرجوع للخلف	</target></trans-unit>
-	<trans-unit id="abbruch"><target>	إلغاء	</target></trans-unit>
+  <trans-unit id="speichern"><target>Save</target></trans-unit>
+  <trans-unit id="abbruch"><target>	إلغاء	</target></trans-unit>
   <trans-unit id="absenden"><target>	أرسل الآن 	</target></trans-unit>
   <trans-unit id="dialoganmeldungabbrechen"><target>Cancel registration</target></trans-unit>
   <trans-unit id="dialogabschlussloeschen"><target>Delete this qualification?</target></trans-unit>
+  <trans-unit id="fragebogen"><target>	صفحة الاستبيان 	</target></trans-unit>
+  <trans-unit id="persdaten"><target>	المعلومات الشخصية	</target></trans-unit>
+  <trans-unit id="deutschkenntnisse"><target>	الألمانية كلغة أجنبية؟	</target></trans-unit>
+  <trans-unit id="sonstigerstatus.1"><target>اليد العاملة المحلية بأفغانستان</target></trans-unit>
+  <trans-unit id="sonstigerstatus.2"><target>الاجئين من أوكرانيا</target></trans-unit>
+
   <trans-unit id="abschlusshinzu"><target>Add foreign educational qualification</target></trans-unit>
+  <trans-unit id="weitererabschlusshinzu"><target>Add further foreign educational qualification</target></trans-unit>
 	<trans-unit id="abschlussloeschen"><target>Delete this qualification</target></trans-unit>
-    
-	<trans-unit id="fragebogen"><target>	صفحة الاستبيان 	</target></trans-unit>
-	<trans-unit id="persdaten"><target>	المعلومات الشخصية	</target></trans-unit>
-	<trans-unit id="deutschkenntnisse"><target>	الألمانية كلغة أجنبية؟	</target></trans-unit>
-  <trans-unit id="abschluesse"><target>Foreign educational qualification</target></trans-unit>
+  <trans-unit id="abschlussart.1"><target>شهادة التكوين المهني</target></trans-unit>
+	<trans-unit id="abschlussart.2"><target>الشهادة الجامعية</target></trans-unit>  
+	<trans-unit id="abschluesse"><target>Foreign educational qualification</target></trans-unit>
   <trans-unit id="datenabschluss"><target>بيانات الشهادة</target></trans-unit>
   <trans-unit id="neuerabschluss"><target>New foreign educational qualification</target></trans-unit>
   <trans-unit id="abschlussbearbeiten"><target>Edit foreign educational qualification</target></trans-unit>
-	<trans-unit id="auslaendischerabschluss"><target>	شهادة التخرج الأجنبية	</target></trans-unit>
 	<trans-unit id="beruflichesituation"><target>	الوضع المتعلق بالوظيفة 	</target></trans-unit>
   <trans-unit id="datenjobcenterarbeitsagentur"><target> بيانات وكالة التوظيف و العمل  Jobcenter/Agentur für Arbeit</target></trans-unit>
   <trans-unit id="datenweitereperson"><target>تحويل البيانات لشخص آخر</target></trans-unit>
   <trans-unit id="beratung"><target>الإستشارة</target></trans-unit>
+
   <trans-unit id="dokumente"><target>	الوثائق	</target></trans-unit>
 	<trans-unit id="dokumenthochladen"><target>	تحميل وثيقة	</target></trans-unit>
+	<trans-unit id="dokumentauswaehlen"><target>Select document</target></trans-unit>
   <trans-unit id="lebenslauf"><target>Curriculum vitae</target></trans-unit>
 	<trans-unit id="abschlussdokumente"><target>Qualification documents</target></trans-unit>
 	<trans-unit id="aufenthaltsdokumente"><target>Residence documents</target></trans-unit>	
@@ -157,7 +164,7 @@
 	
 	</p>]]></target></trans-unit>
 	<trans-unit id="confirmsubject"><target>	يرجى تأكيد تسجيلك للاستشارة الأولية للاعتراف في 	</target></trans-unit>
-	
+	<trans-unit id="kontaktberatungsstelle"><target>This is your counselling center:</target></trans-unit>
     </body>
   </file>
 </xliff>

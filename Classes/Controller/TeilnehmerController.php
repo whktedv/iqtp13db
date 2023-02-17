@@ -1172,11 +1172,17 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $confirmmailtext2 = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmmailtext2', 'Iqtp13db');
             $subject = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmsubject', 'Iqtp13db');
             
+            $zugewieseneberatungsstelle = $this->userGroupRepository->findOneByNiqbid($teilnehmer->getNiqidberatungsstelle());
+            $datenberatungsstelle = $zugewieseneberatungsstelle != NULL ? $zugewieseneberatungsstelle->getDescription() : '';
+            $kontaktlabel = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('kontaktberatungsstelle', 'Iqtp13db');
+            
             $variables = array(
                 'teilnehmer' => $teilnehmer,
                 'confirmmailtext1' => $confirmmailtext1,
                 'confirmlinktext' => $confirmlinktext,
                 'confirmmailtext2' => $confirmmailtext2,
+                'datenberatungsstelle' => $datenberatungsstelle,
+                'kontaktlabel' => $kontaktlabel,
                 'startseitelink' => $this->settings['startseitelink'],
                 'logolink' => $this->settings['logolink'],
                 'registrationpageuid' => $this->settings['registrationpageuid'],
@@ -1657,19 +1663,21 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function anmeldseite0Action()
     {
-        $valArray = $this->request->getArguments();  
+        $valArray = $this->request->getArguments();
         $uriBuilder = $this->uriBuilder;
         $bstid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid');
         
-        if($valArray['wohnsitzDeutschland'] == 2) {
+        $valarrwohnsitzdeutschland = $valArray['wohnsitzDeutschland'] ?? '';
+        
+        if($valarrwohnsitzdeutschland == 2) {
             $uri = $uriBuilder->setTargetPageUid($this->settings['anmeldungzsbapageuid'])->build();
             $this->redirectToUri($uri, 0, 303);
-        } elseif($valArray['wohnsitzDeutschland'] == 1 && $valArray['plz'] == '' && $bstid == '') {
+        } elseif($valarrwohnsitzdeutschland == 1 && $valArray['plz'] == '' && $bstid == '') {
             $uri = $uriBuilder->setTargetPageUid($this->settings['anmeldungnichtwebapppageuid'])->build();
             $this->redirectToUri($uri, 0, 303);
         } else {
             $plzberatungsstelle = array();
-            if(isset($valArray['plz'])) {
+            if($bstid == '' && isset($valArray['plz'])) {
                 $plzberatungsstelle = $this->userGroupRepository->getBeratungsstelle4PLZ($valArray['plz'], $this->settings['beraterstoragepid']);
                 $bstid = count($plzberatungsstelle) > 0 ? $plzberatungsstelle[0]->getNiqbid() : $bstid;
             }
@@ -1678,14 +1686,16 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 $GLOBALS['TSFE']->fe_user->setKey('ses', 'beratungsstellenid', $bstid);
                 
                 $this->view->assign('beratungsstelle', $bstid);
-                $this->view->assign('wohnsitzDeutschland', $valArray['wohnsitzDeutschland'] ?? '');
+                $this->view->assign('wohnsitzDeutschland', $valarrwohnsitzdeutschland);
                 $this->view->assign('plz', $valArray['plz'] ?? '');
             } else {
                 $uri = $uriBuilder->setTargetPageUid($this->settings['anmeldungnichtwebapppageuid'])->build();
                 $this->redirectToUri($uri, 0, 303);
             }
-        }        
+        }
     }
+    
+    
         
     
     /**
@@ -2013,12 +2023,18 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     $confirmlinktext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmlinktext', 'Iqtp13db');
                     $confirmmailtext2 = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmmailtext2', 'Iqtp13db');
                     $subject = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmsubject', 'Iqtp13db');
-                     
+                    
+                    $zugewieseneberatungsstelle = $this->userGroupRepository->findOneByNiqbid($teilnehmer->getNiqidberatungsstelle());
+                    $datenberatungsstelle = $zugewieseneberatungsstelle != NULL ? $zugewieseneberatungsstelle->getDescription() : '';
+                    $kontaktlabel = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('kontaktberatungsstelle', 'Iqtp13db');
+                    
                     $variables = array(
                         'teilnehmer' => $teilnehmer,
                         'confirmmailtext1' => $confirmmailtext1,
                         'confirmlinktext' => $confirmlinktext,
                         'confirmmailtext2' => $confirmmailtext2,
+                        'datenberatungsstelle' => $datenberatungsstelle,
+                        'kontaktlabel' => $kontaktlabel,
                         'startseitelink' => $this->settings['startseitelink'],
                         'logolink' => $this->settings['logolink'],
                         'registrationpageuid' => $this->settings['registrationpageuid'],
@@ -2271,9 +2287,15 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $anrede = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('anredemail', 'Iqtp13db');
         $mailtext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtext', 'Iqtp13db');
         $mailtext = str_replace("WARTEZEITWOCHEN", $this->settings['wartezeitwochen'], $mailtext);
+        $zugewieseneberatungsstelle = $this->userGroupRepository->findOneByNiqbid($teilnehmer->getNiqidberatungsstelle());
+        $datenberatungsstelle = $zugewieseneberatungsstelle != NULL ? $zugewieseneberatungsstelle->getDescription() : '';
+        $kontaktlabel = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('kontaktberatungsstelle', 'Iqtp13db');
+        
         $variables = array(
             'anrede' => $anrede . $teilnehmer->getVorname(). ' ' . $teilnehmer->getNachname() . ',',
             'mailtext' => $mailtext,
+            'datenberatungsstelle' => $datenberatungsstelle,
+            'kontaktlabel' => $kontaktlabel,
             'startseitelink' => $this->settings['startseitelink'],
             'logolink' => $this->settings['logolink'],
             'baseurl' => $this->request->getBaseUri()
@@ -2378,7 +2400,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             if($teilnehmer->getVerificationDate() == 0) {
                 return 0;
             } else {
-                if($teilnehmer->getNiqchiffre() != '') return 4;
+                //if($teilnehmer->getNiqchiffre() != '') return 4;
+                if($teilnehmer->getBeratungsstatus() == 4) return 4;
                 
                 if($teilnehmer->getVerificationDate() > 0 && !$this->generalhelper->validateDateYmd($teilnehmer->getBeratungdatum()) && !$this->generalhelper->validateDateYmd($teilnehmer->getErstberatungabgeschlossen())) return 1;
                 

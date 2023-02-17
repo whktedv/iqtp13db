@@ -69,10 +69,6 @@
 			<trans-unit id="maennlich"><target>männlich</target></trans-unit>
 			<trans-unit id="weiblich"><target>weiblich</target></trans-unit>
 			<trans-unit id="divers"><target>divers</target></trans-unit>
-			<trans-unit id="sonstigerstatus.1"><target>Ortskraft Afghanistan</target></trans-unit>
-			<trans-unit id="sonstigerstatus.2"><target>Geflüchtet aus der Ukraine</target></trans-unit>
-		    <trans-unit id="abschlussart.1"><target>Ausbildungsabschluss</target></trans-unit>
-		    <trans-unit id="abschlussart.2"><target>Universitätsabschluss</target></trans-unit>
 			<trans-unit id="weiter"><target>Weiter</target></trans-unit>
 			<trans-unit id="zurueck"><target>Zurück</target></trans-unit>
 			<trans-unit id="speichern"><target>Speichern</target></trans-unit>
@@ -80,12 +76,17 @@
 			<trans-unit id="absenden"><target>Jetzt absenden</target></trans-unit>			
 			<trans-unit id="dialoganmeldungabbrechen"><target>Anmeldung abbrechen?</target></trans-unit>			
 			<trans-unit id="dialogabschlussloeschen"><target>Abschluss löschen?</target></trans-unit>
-			<trans-unit id="abschlusshinzu"><target>Abschluss hinzufügen</target></trans-unit>
-			<trans-unit id="abschlussloeschen"><target>Abschluss löschen</target></trans-unit>
-						
 			<trans-unit id="fragebogen"><target>Fragebogen Seite</target></trans-unit>
 			<trans-unit id="persdaten"><target>Persönliche Daten</target></trans-unit>
 			<trans-unit id="deutschkenntnisse"><target>Deutschkenntnisse</target></trans-unit>
+			<trans-unit id="sonstigerstatus.1"><target>Ortskraft Afghanistan</target></trans-unit>
+			<trans-unit id="sonstigerstatus.2"><target>Geflüchtet aus der Ukraine</target></trans-unit>
+
+			<trans-unit id="abschlusshinzu"><target>Abschluss hinzufügen</target></trans-unit>
+			<trans-unit id="weitererabschlusshinzu"><target>Weiteren Abschluss hinzufügen</target></trans-unit>
+			<trans-unit id="abschlussloeschen"><target>Abschluss löschen</target></trans-unit>
+		    <trans-unit id="abschlussart.1"><target>Ausbildungsabschluss</target></trans-unit>
+		    <trans-unit id="abschlussart.2"><target>Universitätsabschluss</target></trans-unit>
 			<trans-unit id="abschluesse"><target>Abschlüsse</target></trans-unit>			
 			<trans-unit id="datenabschluss"><target>Daten Abschluss</target></trans-unit>
 			<trans-unit id="neuerabschluss"><target>Neuer Berufsabschluss</target></trans-unit>
@@ -95,7 +96,8 @@
 			<trans-unit id="datenweitereperson"><target>Datenweitergabe weitere Person</target></trans-unit>
 			<trans-unit id="beratung"><target>Beratung</target></trans-unit>
 			<trans-unit id="dokumente"><target>Dokumente</target></trans-unit>
-			<trans-unit id="dokumenthochladen"><target>Dokument hochladen</target></trans-unit>
+			<trans-unit id="dokumenthochladen"><target>Dokumente hochladen</target></trans-unit>
+			<trans-unit id="dokumentauswaehlen"><target>Dokument auswählen</target></trans-unit>
 			<trans-unit id="lebenslauf"><target>Lebenslauf</target></trans-unit>
 			<trans-unit id="abschlussdokumente"><target>Abschlussdokumente</target></trans-unit>
 			<trans-unit id="aufenthaltsdokumente"><target>Aufenthaltsdokumente</target></trans-unit>	
@@ -116,11 +118,11 @@
 			<trans-unit id="anredemail"><target>Guten Tag </target></trans-unit>
 			<trans-unit id="mailtext"><target> <![CDATA[ <p>vielen Dank für Ihre Informationen.</p> <p>Sie sind jetzt zur Beratung angemeldet. Wir setzen uns mit Ihnen in Verbindung, sobald Sie an der Reihe sind.</p> <p>Wir bitten um Ihr Verständnis und Ihre Geduld.</p> <p>Mit freundlichen Grüßen</p>Ihre IQ Anerkennungs- und Qualifizierungsberatung ]]></target></trans-unit>
 			<trans-unit id="subject"><target>Ihre Anmeldung zur Anerkennungsberatung beim IQ Netzwerk</target></trans-unit>
-			<trans-unit id="confirmlinktext"><target> <![CDATA[ Bestätigung der Anmeldung ]]></target>
-			</trans-unit><trans-unit id="confirmmailtext1"><target> <![CDATA[ <p>Liebe*r VORNAMENACHNAME,</p> <p>bestätigen Sie Ihre Anmeldung zur Anerkennungsberatung bitte hier:</p> ]]></target></trans-unit>			
+			<trans-unit id="confirmlinktext"><target> <![CDATA[ Bestätigung der Anmeldung ]]></target></trans-unit>
+			<trans-unit id="confirmmailtext1"><target> <![CDATA[ <p>Guten Tag VORNAMENACHNAME,</p> <p>bestätigen Sie Ihre Anmeldung zur Anerkennungsberatung bitte hier:</p> ]]></target></trans-unit>			
 			<trans-unit id="confirmmailtext2"><target> <![CDATA[ <p>Mit freundlichem Gruß</p> <p>Ihre Anerkennungs- und Qualifizierungsberatung beim IQ Netzwerk</p>]]></target></trans-unit>
 			<trans-unit id="confirmsubject"><target>Bitte bestätigen Sie Ihre Anmeldung zur Anerkennungsberatung beim IQ Netzwerk</target></trans-unit>	
-						
+			<trans-unit id="kontaktberatungsstelle"><target>Das ist Ihre Beratungsstelle:</target></trans-unit>
 			
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligung"><target>Einwilligung</target></trans-unit>			
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.niqidberatungsstelle"><target>NIQ Beratungsstelle ID</target></trans-unit>

@@ -26,8 +26,17 @@
 		</f:if>
 		<f:render partial="Abschluss/AbschlussListe4Anmeldung" arguments="{teilnehmer : teilnehmer, abschluesse: abschluesse}" />
 		<f:if condition="{abschluesse -> f:count()} < 4">
-			<f:link.action id="abschlusshinzubutton" class="linkbuttons frontend" name="btnabschlusshinzu" action="newWebapp" controller="Abschluss" arguments="{teilnehmer : teilnehmer}"><f:translate key='abschlusshinzu' /></f:link.action>
-		</f:if>	
+			<f:if condition="{abschluesse -> f:count()} > 0">
+				<f:then>
+					<f:link.action id="abschlusshinzubutton" class="linkbuttons frontend" name="btnabschlusshinzu" action="newWebapp" controller="Abschluss" arguments="{teilnehmer : teilnehmer}"><f:translate key='abschlusshinzu' /></f:link.action>
+				</f:then>
+				<f:else>
+					<f:link.action id="abschlusshinzubutton" class="linkbuttons frontend" name="btnabschlusshinzu" action="newWebapp" controller="Abschluss" arguments="{teilnehmer : teilnehmer}"><f:translate key='weitererabschlusshinzu' /></f:link.action>
+				</f:else>
+			</f:if>
+			
+		</f:if>
+			
 	</div>
 
 	<f:form id="teilnehmerform" action="anmeldseite2redirect" name="teilnehmer" object="{teilnehmer}">
