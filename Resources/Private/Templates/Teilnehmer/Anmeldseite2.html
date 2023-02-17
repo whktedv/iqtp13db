@@ -28,10 +28,10 @@
 		<f:if condition="{abschluesse -> f:count()} < 4">
 			<f:if condition="{abschluesse -> f:count()} > 0">
 				<f:then>
-					<f:link.action id="abschlusshinzubutton" class="linkbuttons frontend" name="btnabschlusshinzu" action="newWebapp" controller="Abschluss" arguments="{teilnehmer : teilnehmer}"><f:translate key='abschlusshinzu' /></f:link.action>
+					<f:link.action id="abschlusshinzubutton" class="linkbuttons frontend" name="btnabschlusshinzu" action="newWebapp" controller="Abschluss" arguments="{teilnehmer : teilnehmer}"><f:translate key='weitererabschlusshinzu' /></f:link.action>
 				</f:then>
 				<f:else>
-					<f:link.action id="abschlusshinzubutton" class="linkbuttons frontend" name="btnabschlusshinzu" action="newWebapp" controller="Abschluss" arguments="{teilnehmer : teilnehmer}"><f:translate key='weitererabschlusshinzu' /></f:link.action>
+					<f:link.action id="abschlusshinzubutton" class="linkbuttons frontend" name="btnabschlusshinzu" action="newWebapp" controller="Abschluss" arguments="{teilnehmer : teilnehmer}"><f:translate key='abschlusshinzu' /></f:link.action>
 				</f:else>
 			</f:if>
 			
