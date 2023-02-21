@@ -208,8 +208,8 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         
         $aktuelleanmeldungen = count($this->teilnehmerRepository->findAllOrder4Status(0, '%')) + count($this->teilnehmerRepository->findAllOrder4Status(1, '%'));
         $aktuellerstberatungen = count($this->teilnehmerRepository->findAllOrder4Status(2, '%'));
-        $aktuellberatungenfertig = count($teilnehmers = $this->teilnehmerRepository->findAllOrder4Status(3, '%'));
-        $archivierttotal = count($this->teilnehmerRepository->findAllOrder4Status(4, $this->niqbid));
+        $aktuellberatungenfertig = count($this->teilnehmerRepository->findAllOrder4Status(3, '%'));
+        $archivierttotal = count($this->teilnehmerRepository->findAllOrder4Status(4, '%'));
         
         // keine Berater vorhanden?
         $alleberater = $this->beraterRepository->findAllBerater($this->settings['beraterstoragepid']);

@@ -20,7 +20,9 @@ Das Datum von/bis bezieht sich bei den Optionen Angemeldet und Gelöscht auf das
 	</f:form>
 	
 	<f:form method="post" controller="Teilnehmer" action="export" name="export" enctype="multipart/form-data" >
-		<f:form.hidden value="{filterberatungsstatus}" name="filterberatungsstatus" />	
+		<f:form.hidden value="{filterberatungsstatus}" name="filterberatungsstatus" />
+		<f:form.hidden value="{filtervon}" name="filtervon" />
+		<f:form.hidden value="{filterbis}" name="filterbis" />
 		<f:form.button type="submit" name="export">{anzgesamt} Ratsuchende exportieren</f:form.button>	
 	</f:form>
 </div>

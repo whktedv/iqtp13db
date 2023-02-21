@@ -45,19 +45,6 @@ class Generalhelper
         return $standardniqbid;
     }
     
-    
-    /**
-     *  Aus den eingegebenen Parametern des Ratsuchenden die zugeordnete Beratungsstellenmail zuweisen
-     */
-    function getGeneralmailBeratungsstelle($niqbid, $usergroups, $standardbccmail) {
-        foreach ($usergroups as $group) {
-            if($group->getNiqbid() == $niqbid) {
-                return $group->getGeneralmail() == '' ? $standardbccmail : $group->getGeneralmail();                        
-            }
-        }        
-        return $standardbccmail;
-    }
-    
     public function sanitizeFileFolderName($name)
     {
         /*
@@ -98,12 +85,11 @@ class Generalhelper
         return $storage;
     }
     
-    public function createFolder($teilnehmer, $standardniqidberatungsstelle, $allusergroups, $storages)
+    public function createFolder($teilnehmer, $storages)
     {
         $pfadname = $teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid(). '/';
         $niqbid = $teilnehmer->getNiqidberatungsstelle();
-        $beratungsstellenfolder = $niqbid == '10143' ? 'Beratene' : $niqbid;
-        $clean_path = $beratungsstellenfolder. '/' . $this->sanitizeFileFolderName($pfadname);
+        $clean_path = $niqbid. '/' . $this->sanitizeFileFolderName($pfadname);
         $storage = $this->getTP13Storage($storages);
         
         if (!$storage->hasFolder($clean_path)) {

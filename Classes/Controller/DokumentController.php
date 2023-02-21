@@ -67,9 +67,6 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     {
         $valArray = $this->request->getArguments();
         
-        //DebuggerUtility::var_dump($_FILES);
-        //die;
-        
         if ($_FILES['tx_iqtp13db_iqtp13dbadmin']['tmp_name']['file'] == '') {
             $this->addFlashMessage('Error in saveFileWebapp: maximum filesize exceeded or permission error', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
         } else {            
@@ -95,8 +92,6 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
         
-        //DebuggerUtility::var_dump($valArray);
-        //die;
         $this->redirect($valArray['thisaction'], 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'] ?? 'edit', 'callercontroller' => $valArray['callercontroller'] ?? 'Teilnehmer', 'callerpage' => $valArray['callerpage'] ?? '1', 'showdokumente' => '1'));
     }
         
@@ -154,7 +149,6 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     {
         $arguments = $this->request->getArguments();
         if($this->dokumentRepository->countByUid($arguments['dokument']) == 0) {
-            //DebuggerUtility::var_dump($arguments);
             return (new ForwardResponse('anmeldungcomplete'))->withControllerName('Teilnehmer');
         }
     }
@@ -208,8 +202,6 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $tmpName = $this->generalhelper->sanitizeFileFolderName($files['name']['file']);
         $fullpath = $storage->getConfiguration()['basePath'] . $beratenepath . $tmpName;
         
-        //DebuggerUtility::var_dump($files);
-        //die;
         if($this->generalhelper->getFolderSize($storage->getConfiguration()['basePath'] . $beratenepath) > 20000) {
     	    $this->addFlashMessage('Maximum total filesize of 20 MB exceeded, please reduce filesize. Maximale Dateigröße aller Dateien zusammen ist 20 MB. Bitte Dateigröße verringern.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
     	} else {
@@ -240,11 +232,6 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     public function deleteFileTeilnehmer(\Ud\Iqtp13db\Domain\Model\Dokument $dokument, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     { 
         $storage = $this->generalhelper->getTP13Storage($this->storageRepository->findAll());
-        
-//         $pfad = $this->generalhelper->createFolder($teilnehmer, $this->settings['standardniqidberatungsstelle'], $this->allusergroups, $this->storageRepository->findAll());
-//         $beratenepath = $pfad->getIdentifier();
-//     	$tmpName = $dokument->getName();
-//         $fullpath = $storage->getConfiguration()['basePath'] .$beratenepath . $tmpName;
         
         $fullpath = $storage->getConfiguration()['basePath'].'/'.$dokument->getPfad().$dokument->getName();
         
@@ -351,9 +338,6 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
             $percent = 50;
             
             $new_file_name = $fileNamewoExt . '_r.' . $fileExt;
-            
-            //DebuggerUtility::var_dump($pfad);
-            //die;
             
             switch ($filearr['type']['file'])
             {

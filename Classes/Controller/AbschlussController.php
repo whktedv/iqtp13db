@@ -84,8 +84,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     public function newAction()
     {
         $valArray = $this->request->getArguments();
-        //DebuggerUtility::var_dump($valArray);
-        //die;
+
         $teilnehmer = $this->teilnehmerRepository->findByUid($valArray['teilnehmer']);
         
         $aktuellesJahr = (int)date("Y");
@@ -112,8 +111,6 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     public function createAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss)
     {
         $valArray = $this->request->getArguments();
-        //DebuggerUtility::var_dump($valArray);
-        //die;
         
         $teilnehmer = $this->teilnehmerRepository->findByUid($valArray['teilnehmer']);
 
@@ -166,15 +163,11 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     {
         $valArray = $this->request->getArguments();
 
-        //DebuggerUtility::var_dump($valArray);
-        //die;
-        
         // TODO: ggf. hier Daten in History einfügen
         //$this->createHistory($teilnehmer, "erwerbsstatus");
         
         $teilnehmer = $this->teilnehmerRepository->findByUid($valArray['teilnehmer']);
         
-        //$this->addFlashMessage('Abschluss aktualisiert.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
         $this->abschlussRepository->update($abschluss);
         $this->redirect($valArray['thisaction'], 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'showabschluesse' => '1'));
     }
@@ -204,8 +197,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     public function newWebappAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
         $valArray = $this->request->getArguments();
-        //DebuggerUtility::var_dump($valArray);
-        //die;
+
         $abschluesse = new \Ud\Iqtp13db\Domain\Model\Abschluss();
         $abschluesse = $this->abschlussRepository->findByTeilnehmer($teilnehmer);
         
@@ -262,12 +254,6 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $abschluesse = new \Ud\Iqtp13db\Domain\Model\Abschluss();
         $abschluesse = $this->abschlussRepository->findByTeilnehmer($teilnehmer);
         
-       /* foreach($abschluesse as $abkey => $ab) {
-            if($ab->getUid() == $abschluss->getUid()) {
-                unset($abschluesse[$abkey]);
-            }
-        }
-        */
         $aktuellesJahr = (int)date("Y");
         $abschlussjahre = array();
         $abschlussjahre[-1] = 'k.A.';
