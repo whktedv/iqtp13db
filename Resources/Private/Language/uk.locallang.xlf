@@ -35,7 +35,7 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><target>Німецька мова як рідна?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikatdeutsch"><target>Сертифікат про знання німецької мови</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Якщо є сертифікат, то на якому рівні володіння мовою?</target></trans-unit>
-  <trans-unit id="keinabschlussbisher"><target><![CDATA[ No foreign educational qualification specified. Please enter information about your educational qualification (university or training) here. You can also enter several qualifications (diplomas, certificates).]]></target></trans-unit>
+  <trans-unit id="keinabschlussbisher"><target><![CDATA[ No foreign educational qualification specified yet. Please enter information about your educational qualification (university or training) here. You can also enter several qualifications (diplomas, certificates).]]></target></trans-unit>
 
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Вид/ступінь закінченої професійної або вищої освіти</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.erwerbsland"><target>Країна здобуття освітньої кваліфікації</target></trans-unit>

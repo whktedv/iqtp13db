@@ -1522,7 +1522,7 @@ plugin.tx_iqtp13db.settings {
 		-1 = no specification
 		1 = yes, abroad
 		2 = yes, in germany
-		3 = ja, abroad and in germany
+		3 = yes, abroad and in germany
 		4 = no
    }
 

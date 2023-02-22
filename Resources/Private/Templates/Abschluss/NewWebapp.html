@@ -22,7 +22,9 @@
 	<f:render partial="FormErrors" arguments="{object:Abschluss}" />
 	
 	<div id="AnkerAbschluesse" class="fframe formabschluss">
-		<h2><f:translate key="datenabschluss" /></h2>
+		<f:if condition="{abschluesse-> f:count()} > 0">
+			<h2><f:translate key="datenabschluss" /></h2>
+		</f:if>
 		<f:render partial="Abschluss/AbschlussListe4Anmeldung" arguments="{teilnehmer : teilnehmer, abschluesse: abschluesse}" />
 	
 		<f:form id="teilnehmerform" action="createWebapp" name="abschluss" object="{abschluss}" arguments="{teilnehmer: teilnehmer}">

@@ -37,6 +37,7 @@ class UserGroupRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             $query->logicalNot($query->like('niqbid', '')),
             $query->logicalNot($query->like('title', 'AA%')) 
             ));
+        $query->setOrderings(array('title' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING));
         $query = $query->execute();
         return $query;
     }

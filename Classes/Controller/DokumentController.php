@@ -196,7 +196,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     public function saveFileTeilnehmer(\Ud\Iqtp13db\Domain\Model\Dokument $dokument, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer, $files)
     {        
         $storage = $this->generalhelper->getTP13Storage( $this->storageRepository->findAll());
-        $pfad = $this->generalhelper->createFolder($teilnehmer, $this->settings['standardniqidberatungsstelle'], $this->allusergroups, $this->storageRepository->findAll());
+        $pfad = $this->generalhelper->createFolder($teilnehmer, $this->storageRepository->findAll());
         $beratenepath = ltrim($pfad->getIdentifier(), '/');
         
         $tmpName = $this->generalhelper->sanitizeFileFolderName($files['name']['file']);

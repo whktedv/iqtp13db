@@ -35,7 +35,7 @@
   <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><target>Niemiecki jako jezyk ojczysty?  </target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikatdeutsch"><target>Znajomość języka niemieckiego potwierdzona certyfikatem </target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Jeśli tak, to na jakim poziomie językowym?</target></trans-unit>
-    <trans-unit id="keinabschlussbisher"><target><![CDATA[ No foreign educational qualification specified. Please enter information about your educational qualification (university or training) here. You can also enter several qualifications (diplomas, certificates).]]></target></trans-unit>
+    <trans-unit id="keinabschlussbisher"><target><![CDATA[ No foreign educational qualification specified yet. Please enter information about your educational qualification (university or training) here. You can also enter several qualifications (diplomas, certificates).]]></target></trans-unit>
   
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Rodzaj dyplomu</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.erwerbsland"><target>Kraj uzyskania kwalifikacji zawodowych</target></trans-unit>

@@ -25,17 +25,5 @@
 	      <label for="email">E-Mail</label>
 	      <f:form.textfield type="email" property="email" />  
 	</div>
-	
- 
-	<div class="tp13_formdivwebapp">
-	      <label for="usergroup">Benutzergruppe</label>
-	      
-	      <f:form.hidden name="tx_iqtp13db_iqtp13dbadmin[berater][usergroup]" value="{thisuser.usergroup}"></f:form.hidden>
-	      
-	      <f:for each="{usergroups}" as="thisgroup">
-	      	{f:if(condition: '{thisgroup.uid} == {thisuser.usergroup}', then: '{thisgroup.title}')}
-	      </f:for> 
-	      
-	</div>
-	
+		
 </div>

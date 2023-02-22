@@ -33,7 +33,7 @@
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><source>German as a native language?</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikatdeutsch"><source>German language certificate</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><source>If German certificate, what language level</source></trans-unit>
-		<trans-unit id="keinabschlussbisher"><source><![CDATA[ No foreign educational qualification specified. Please enter information about your educational qualification (university or training) here. You can also enter several qualifications (diplomas, certificates).]]></source></trans-unit>
+		<trans-unit id="keinabschlussbisher"><source><![CDATA[ No foreign educational qualification specified yet. Please enter information about your educational qualification (university or training) here. You can also enter several qualifications (diplomas, certificates).]]></source></trans-unit>
 		
 		<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><source>Type of educational qualification</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_abschluss.erwerbsland"><source>Country of acquisition of the educational qualification</source></trans-unit>

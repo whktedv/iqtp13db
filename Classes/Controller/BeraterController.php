@@ -92,12 +92,10 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      */
     public function updateAction(\Ud\Iqtp13db\Domain\Model\Berater $berater)
     {
-        $this->addFlashMessage('Berater aktualisiert.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+        $this->addFlashMessage('Berater*in aktualisiert.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
         
         $valArray = $this->request->getArguments();
         
-        $usergroup = $this->userGroupRepository->findByIdentifier($valArray['berater']['usergroup'] ?? '');        
-        $berater->addUsergroup($usergroup);        
         $berater->setPassword(password_hash($berater->getPassword(), PASSWORD_ARGON2I));
                 
         $this->beraterRepository->update($berater);
@@ -112,7 +110,7 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      */
     public function deleteAction(\Ud\Iqtp13db\Domain\Model\Berater $berater)
     {
-        $this->addFlashMessage('Berater gelöscht.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+        $this->addFlashMessage('Berater*in gelöscht.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
         $this->beraterRepository->remove($berater);
         $this->redirect('list');
     }   

@@ -18,8 +18,8 @@
 							<td class="fklistberater">{folgekontakt.berater.username}</td>
 							<td class="fklistinhalt"><f:format.crop maxCharacters="200" append="&nbsp;...">{folgekontakt.notizen}</f:format.crop></td>
 							<td>{folgekontakt.beratungsdauer}</td>
-							<td><f:link.action class="linkbuttons" action="edit" arguments="{folgekontakt:folgekontakt, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Folgekontakt">Bearbeiten</f:link.action></td>
-							<td><f:link.action class="linkbuttons" action="delete" arguments="{folgekontakt:folgekontakt, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Folgekontakt" onclick="return confirm('Wirklich löschen?');">Löschen</f:link.action></td>
+							<td><f:link.action action="edit" arguments="{folgekontakt:folgekontakt, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Folgekontakt" title="Bearbeiten"><img src="/fileadmin/template/images/iq-webapp_bearbeiten.svg" alt="Bearbeiten" width="30" height="30"/></f:link.action></td>
+							<td><f:link.action action="delete" arguments="{folgekontakt:folgekontakt, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Folgekontakt" onclick="return confirm('Wirklich löschen?');" title="Löschen"><img src="/fileadmin/template/images/iq-webapp_loeschen.svg" width="30" height="30" alt="Löschen" /></f:link.action></td>
 						</tr>
 					</f:then>
 				</f:if>

@@ -139,8 +139,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             }
             $this->niqbid = $userniqidbstelle == '' ? $standardniqidberatungsstelle : $userniqidbstelle;   
         } else {
-            // FEHLER
-            die;
+            // FEHLER oder Frontend für Ratsuchende
         }
     }
     
