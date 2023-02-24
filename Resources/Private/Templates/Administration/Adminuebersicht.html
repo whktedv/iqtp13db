@@ -47,27 +47,40 @@
 	
 </table>
 
-<h1>Ratsuchende aktuell</h1>
-
-<table class="uebersicht-status">
+<h1>Statistik aktuell</h1>
+<table>
+	<tbody>
 	<tr>
-		<td>Anmeldungen wartend</td>
+		<th>Anmeldungen wartend (auch unbestätigt)</th>
+		<th>Erstberatungen laufend</th>
+		<th>Erstberatungen abgeschlossen</th>
+		<th>Total archiviert</th>
+	</tr>
+	<tr>
 		<td>{aktuelleanmeldungen}</td>
-	</tr>
-	<tr>
-		<td>Erstberatungen laufend</td>
 		<td>{aktuellerstberatungen}</td>
-	</tr>
-	<tr>
-		<td>Erstberatungen abgeschlossen</td>
 		<td>{aktuellberatungenfertig}</td>
-	</tr>
-	<tr>
-		<td>Total archiviert</td>
 		<td>{archivierttotal}</td>
 	</tr>
+	</tbody>
 </table>
-<br>
+
+<h1>Statistik gesamt</h1>
+<table>
+	<tbody>
+	<tr>
+		<th>Ratsuchende (nur bestätigt)</th>
+		<th>davon fertig beraten</th>
+		<th>davon fertig beraten und archiviert</th>
+	</tr>
+	<tr>
+		<td>{statsgesamtratsuchende}</td>
+		<td>{statsgesamtfertigberaten}</td>
+		<td>{statsgesamtarchiviert}</td>
+	</tr>
+	</tbody>
+</table>
+
 <h2>Statistik letzte 12 Monate alle Beratungsstellen</h2>
 <table class="uebersicht-statistik">
 	<tr>
@@ -78,7 +91,7 @@
 		<th>Summe</th>
 	</tr>
 	<tr>
-		<th>Anmeldungen<br>(wartend)</th>
+		<th>Anmeldungen</th>
 		<f:for each="{angemeldeteTN}" as="tn" iteration="iter">
 			<td {f:if(condition: '{iter.index} == {aktmonat}', then: 'style="background-color: #ffcaf2;"')}>{tn}</td>
 		</f:for>
@@ -128,5 +141,6 @@
 		<td><f:format.number>{SUMtotalavgmonthb}</f:format.number></td>
 	</tr>
 </table>
+
 
 </f:section>

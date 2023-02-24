@@ -36,7 +36,7 @@ use TYPO3\CMS\Core\Resource\StorageRepository;
 class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
     
-    protected $generalhelper, $niqinterface, $niqapiurl, $allusergroups, $usergroup, $niqbid, $groupbccmail;
+    protected $generalhelper, $niqinterface, $niqapiurl, $usergroup, $niqbid, $groupbccmail;
     
     protected $userGroupRepository;
     protected $teilnehmerRepository;
@@ -64,8 +64,6 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
      */
     public function initializeAction()
     {
-        
-        $this->allusergroups = $this->userGroupRepository->findAllGroups($this->settings['beraterstoragepid']);
         
         $this->generalhelper = new \Ud\Iqtp13db\Helper\Generalhelper();
         
@@ -111,7 +109,10 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         $userusergroups = $buser->getUsergroup();
         
         if(isset($valArray['switch']) && $valArray['bstellen'] != 0) {
-            $selectedgroup = $this->userGroupRepository->findByNiqbid($valArray['bstellen']);                        
+            $allusergroups = $this->userGroupRepository->findAllGroups($this->settings['beraterstoragepid']);
+            $selectedgroup = $this->userGroupRepository->findByNiqbid($valArray['bstellen']);    
+            
+            
             $buser->addUserGroup($selectedgroup[0]);
             
             $userusergroupssortedOS = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
@@ -150,6 +151,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
             $days4beratung[$m] =  $this->teilnehmerRepository->days4Beratungfertig("01.".$m.".".$letztesjahr, date("t", mktime(0, 0, 0, $m, 1, $letztesjahr)).".".$m.".".$letztesjahr, '%');
             $days4wartezeit[$m] =  $this->teilnehmerRepository->days4Wartezeit("01.".$m.".".$letztesjahr, date("t", mktime(0, 0, 0, $m, 1, $letztesjahr)).".".$m.".".$letztesjahr, '%');
         }
+        
         for($m = 1; $m <= $diesermonat; $m++) {
             $angemeldeteTN[$m] = $this->teilnehmerRepository->count4Status("01.".$m.".".$diesesjahr, date("t", mktime(0, 0, 0, $m, 1, $diesesjahr)).".".$m.".".$diesesjahr, '%');
             $qfolgekontakte[$m] = $this->folgekontaktRepository->count4Status("01.".$m.".".$diesesjahr, date("t", mktime(0, 0, 0, $m, 1, $diesesjahr)).".".$m.".".$diesesjahr, '%');
@@ -210,6 +212,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         $aktuellerstberatungen = count($this->teilnehmerRepository->findAllOrder4Status(2, '%'));
         $aktuellberatungenfertig = count($this->teilnehmerRepository->findAllOrder4Status(3, '%'));
         $archivierttotal = count($this->teilnehmerRepository->findAllOrder4Status(4, '%'));
+        $sumalleaktuell = $aktuelleanmeldungen + $aktuellerstberatungen + $aktuellberatungenfertig + $archivierttotal;
         
         // keine Berater vorhanden?
         $alleberater = $this->beraterRepository->findAllBerater($this->settings['beraterstoragepid']);
@@ -237,6 +240,14 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
             }
         }
         
+        $sumangemeldet = array_sum($angemeldeteTN);
+        $sumerstberatung = array_sum($erstberatung);
+        $sumerstberatungfertig = array_sum($beratungfertig);
+        $sumarchiv = array_sum($niqerfasst);
+        
+        $statsgesamtratsuchende = $this->teilnehmerRepository->count4Status("01.1.1970", "31.12.".$diesesjahr, '%');
+        $statsgesamtfertigberaten = $this->teilnehmerRepository->count4StatusBeratungfertig("01.1.1970", "31.12.".$diesesjahr, '%');
+        $statsgesamtarchiviert = $this->teilnehmerRepository->count4StatusArchiviert("01.1.1970", "31.12.".$diesesjahr, '%');
         //DebuggerUtility::var_dump($anzberater);
         
         $this->view->assignMultiple(
@@ -244,15 +255,15 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 'monatsnamen'=> $monatsnamen,
                 'aktmonat'=> $diesermonat-1,
                 'angemeldeteTN'=> $angemeldeteTN,
-                'SUMangemeldeteTN'=> array_sum($angemeldeteTN),
+                'SUMangemeldeteTN'=> $sumangemeldet,
                 'qfolgekontakte'=> $qfolgekontakte,
-                'SUMqfolgekontakte'=>  array_sum($qfolgekontakte),
+                'SUMqfolgekontakte'=> array_sum($qfolgekontakte),
                 'erstberatung'=> $erstberatung,
-                'SUMerstberatung'=>  array_sum($erstberatung),
+                'SUMerstberatung'=> $sumerstberatung,
                 'beratungfertig'=> $beratungfertig,
-                'SUMberatungfertig'=>  array_sum($beratungfertig),
+                'SUMberatungfertig'=> $sumerstberatungfertig,
                 'niqerfasst'=> $niqerfasst,
-                'SUMniqerfasst'=>  array_sum($niqerfasst),
+                'SUMniqerfasst'=> $sumarchiv,
                 'totalavgmonthb'=> $totalavgmonthb,
                 'SUMtotalavgmonthb'=>  $anz4avgmonthb > 0 ? array_sum($totalavgmonthb)/$anz4avgmonthb : 0,
                 'totalavgmonthw'=> $totalavgmonthw,
@@ -268,7 +279,11 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 'anzratsuchendeanmeld' => $anzratsuchendeanmeld,
                 'anzratsuchendeerstb' => $anzratsuchendeerstb,
                 'anzratsuchendearch' => $anzratsuchendearch,
-                'anzuserberatungsstellen' => count($userusergroups)
+                'anzuserberatungsstellen' => count($userusergroups),
+                'alleRatsuchendentotal' => $sumalleaktuell,
+                'statsgesamtratsuchende' => $statsgesamtratsuchende,
+                'statsgesamtfertigberaten' => $statsgesamtfertigberaten,
+                'statsgesamtarchiviert' => $statsgesamtarchiviert
             ]
             );
     }

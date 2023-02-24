@@ -39,7 +39,7 @@ require_once(Environment::getPublicPath() . '/' . 'typo3conf/ext/iqtp13db/Resour
 class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
     
-    protected $generalhelper, $niqinterface, $niqapiurl, $allusergroups, $usergroup, $niqbid;
+    protected $generalhelper, $niqinterface, $niqapiurl, $usergroup, $niqbid;
     
     protected $userGroupRepository;
     protected $teilnehmerRepository;
@@ -114,9 +114,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         }
         
         /* Propertymapping bis hier */
-        
-        $this->allusergroups = $this->userGroupRepository->findAllGroups($this->settings['beraterstoragepid']);
-        
+                
         $this->generalhelper = new \Ud\Iqtp13db\Helper\Generalhelper();
         // **** NIQ deaktiviert **** $this->niqinterface = new \Ud\Iqtp13db\Helper\NiqInterface();
         // **** NIQ deaktiviert **** $this->niqapiurl = $this->settings['niqapiurl'];
@@ -190,7 +188,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 $beratungsstellenid = $valArray['beratung'] ?? '';
                 $direkt = $valArray['direkt'] ?? '';
                 if($beratungsstellenid != '') {
-                    foreach ($this->allusergroups as $group) {
+                    $allusergroups = $this->userGroupRepository->findAllGroups($this->settings['beraterstoragepid']);
+                    foreach ($allusergroups as $group) {
                         if($group->getNiqbid() == $beratungsstellenid) {
                             $this->view->assign('beratungsstelle', $group->getNiqbid());
                             $GLOBALS['TSFE']->fe_user->setKey('ses', 'beratungsstellenid', $group->getNiqbid());
@@ -1629,7 +1628,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $valArray = $this->request->getArguments();
         $beratungsstellenid = $valArray['beratung'] ?? '';
         if($beratungsstellenid != '') {
-            foreach ($this->allusergroups as $group) {
+            $allusergroups = $this->userGroupRepository->findAllGroups($this->settings['beraterstoragepid']);
+            foreach ($allusergroups as $group) {
                 if($group->getNiqbid() == $beratungsstellenid) {
                     $this->view->assign('beratungsstelle', $group->getNiqbid());
                     $GLOBALS['TSFE']->fe_user->setKey('ses', 'beratungsstellenid', $group->getNiqbid());
@@ -1732,7 +1732,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'settings' => $this->settings,
                 'beratungsstelle' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid'),
                 'wohnsitzdeutschland' => $valArray['wohnsitzDeutschland'] ?? '',
-                'plz' => $valArray['plz'],
+                'plz' => $valArray['plz'] ?? '',
                 'jahre' => $jahre
             ]
             );
@@ -1749,7 +1749,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function anmeldseite1redirectAction(\Ud\Iqtp13db\Domain\Model\TNSeite1 $tnseite1 = NULL)
     {
         if($tnseite1 == NULL) {
-            $this->redirect('anmeldseite1', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
+            $this->redirect('anmeldseite1', 'Teilnehmer', null, null);
         } else {
             $valArray = $this->request->getArguments();
             if(isset($valArray['btnweiter'])) {
@@ -1868,8 +1868,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function anmeldseite3Action(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
         $valArray = $this->request->getArguments();
-                
-        foreach ($this->allusergroups as $group) {
+        
+        $allusergroups = $this->userGroupRepository->findAllGroups($this->settings['beraterstoragepid']);
+        foreach ($allusergroups as $group) {
             if($group->getNiqbid() == $teilnehmer->getNiqidberatungsstelle()) {
                 $beratungsartenarray = $group->getBeratungsarten();
                 $newwieberatenarray = array();
