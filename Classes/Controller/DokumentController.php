@@ -162,12 +162,17 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     public function saveFileWebappAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
         $valArray = $this->request->getArguments();
-        if ($_FILES['tx_iqtp13db_iqtp13dbwebapp']['tmp_name']['file'] == '') {
-            $this->addFlashMessage('Error in saveFileWebapp: maximum filesize exceeded or permission error', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+        if($_FILES == NULL) {
+            $this->addFlashMessage('Error in saveFileWebapp: File does not meet policy.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
         } else {
-            $dokument = new \Ud\Iqtp13db\Domain\Model\Dokument();
-            $dokument->setBeschreibung($valArray['beschreibung']);
-            $this->saveFileTeilnehmer($dokument, $teilnehmer, $_FILES['tx_iqtp13db_iqtp13dbwebapp']);
+            if ($_FILES['tx_iqtp13db_iqtp13dbwebapp']['tmp_name']['file'] == '') {
+                $this->addFlashMessage('Error in saveFileWebapp: maximum filesize exceeded or permission error', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            } else {
+                $dokument = new \Ud\Iqtp13db\Domain\Model\Dokument();
+                $dokument->setBeschreibung($valArray['beschreibung']);
+                $this->saveFileTeilnehmer($dokument, $teilnehmer, $_FILES['tx_iqtp13db_iqtp13dbwebapp']);
+            }
+            
         }
         $this->redirect('anmeldungcomplete', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
     }
@@ -330,7 +335,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      **/    
     function reduce_filesize($filearr, $filename, $pfad) {
         
-        if (is_array($filearr) && $filearr['size']['file'] > 1000000) // bei Dateigrößen über 1 MB 
+        if (is_array($filearr) && $filearr['size']['file'] > 1000000 && file_exists($pfad.$filename)) // bei Dateigrößen über 1 MB 
         {
             $fileName = $filearr['tmp_name']['file'];
             $fileExt = pathinfo($filearr['name']['file'], PATHINFO_EXTENSION);
