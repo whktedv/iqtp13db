@@ -941,6 +941,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      * action update
      *
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
+     * @TYPO3\CMS\Extbase\Annotation\Validate("Ud\Iqtp13db\Domain\Validator\TeilnehmerValidator", param="teilnehmer")
      * @return void
      */
     public function updateAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
@@ -1357,6 +1358,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         if (isset($valArray['export']) && $fberatungsstatus != '') {
             
             $rows = array();
+            
             foreach($teilnehmers as $x => $tn) {
                 $props = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getGettablePropertyNames($tn);
                 
@@ -1435,6 +1437,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 $tnnameberatungsstelle = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'name_beratungsstelle');
                 $rows[$x]['nameberatungsstelle'] = $tnnameberatungsstelle == '' ? '-' : $arrberatungsstelle[$tnnameberatungsstelle];
                 
+                $rows[$x]['beratungnotizen'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungnotizen');
+                
                 $rows[$x]['beratungzuschulabschluss'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungzu');
                 
                 $rows[$x]['AnzFolgekontakte'] = $anzfolgekontakte[$x];
@@ -1491,6 +1495,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'Anerkennungsberatung' => 'string',
                 'Qualifizierungsberatung' => 'string',
                 'Beratungsstelle' => 'string',
+                'Beratung Notizen' => 'string',
                 'Beratung zu Schulabschluss' => 'string',
                 'Anz. Folgekontakte' => 'string',
                 'Abschluss1 Referenzberuf zugewiesen' => 'string',

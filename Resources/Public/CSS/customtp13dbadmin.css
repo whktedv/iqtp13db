@@ -2,6 +2,14 @@
 	display: none;
 }
 
+.error {
+	margin-top: 8rem;
+	padding: 1rem;
+	border: 1px solid #ef2323;
+	background-color: #fdb0b0;
+	font-size: 1.5rem;
+}
+
 .tx-iqtp13db ul .alert {  
 	text-align: center;
 	display: block;
