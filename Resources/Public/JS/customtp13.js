@@ -219,7 +219,7 @@ function showDetail(num) {
      $('#mlink').toggle();
 }
  
-function btncancel_Click(link) {
+function btncancel_Click() {
 		dialog = $("#dialog-confirm").dialog({
 	      autoOpen: false,
 	      resizable: false,
@@ -228,12 +228,7 @@ function btncancel_Click(link) {
 	      modal: true,
 	      buttons: {
 	        'Ja / Yes': function() {
-	          $( this ).dialog( "close" );
-	          if(link != 0) {
-	        	window.location.href = link;
-	          } else {
-				document.getElementById("teilnehmerform").submit(); 
-	          }
+			  document.getElementById("teilnehmerform").submit();
 	        },
 	        'Nein / No': function() {
 	          $( this ).dialog( "close" );

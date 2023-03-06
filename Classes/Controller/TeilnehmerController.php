@@ -964,9 +964,10 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $this->addFlashMessage("Datensatz NICHT gespeichert. -Datum Erstberatung– muss eingetragen sein, wenn -Erstberatung abgeschlossen- ausgefüllt ist.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             $this->redirect($valArray['calleraction'] ?? 'edit', $valArray['callercontroller'] ?? 'Teilnehmer', null, array('callerpage' => $valArray['callerpage'] ?? '1'));
         }
-        
+
+        // Stammdaten (im Fragebogen Seite 1)
         $this->createHistory($teilnehmer, "niqidberatungsstelle");
-        $this->createHistory($teilnehmer, "niqchiffre");
+        $this->createHistory($teilnehmer, "einwilligung");
         $this->createHistory($teilnehmer, "schonberaten");
         $this->createHistory($teilnehmer, "schonberatenvon");
         $this->createHistory($teilnehmer, "nachname");
@@ -984,11 +985,13 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $this->createHistory($teilnehmer, "einreisejahr");
         $this->createHistory($teilnehmer, "wohnsitzDeutschland");
         $this->createHistory($teilnehmer, "wohnsitzNeinIn");
+        $this->createHistory($teilnehmer, "aufenthaltsstatus");
+        $this->createHistory($teilnehmer, "aufenthaltsstatusfreitext");
         $this->createHistory($teilnehmer, "sonstigerstatus");
         $this->createHistory($teilnehmer, "deutschkenntnisse");
-        $this->createHistory($teilnehmer, "zertifikatdeutsch");
         $this->createHistory($teilnehmer, "zertifikatSprachniveau");
-        
+
+        // Stammdaten (im Fragebogen Seite 3)
         $this->createHistory($teilnehmer, "erwerbsstatus");
         $this->createHistory($teilnehmer, "leistungsbezugjanein");
         $this->createHistory($teilnehmer, "leistungsbezug");
@@ -1005,26 +1008,25 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $this->createHistory($teilnehmer, "einwPersonmedium");
         $this->createHistory($teilnehmer, "einwPersonname");
         $this->createHistory($teilnehmer, "einwPersonkontakt");
-        $this->createHistory($teilnehmer, "aufenthaltsstatus");
-        $this->createHistory($teilnehmer, "aufenthaltsstatusfreitext");
-        
         $this->createHistory($teilnehmer, "nameBeratungsstelle");
-        $this->createHistory($teilnehmer, "notizen");
-        $this->createHistory($teilnehmer, "anerkennungszuschussbeantragt");
         $this->createHistory($teilnehmer, "wieberaten");
-        $this->createHistory($teilnehmer, "kooperationgruppe");
+        $this->createHistory($teilnehmer, "notizen");
+
+        // Beratungsdaten (nur Backend!)
+        $this->createHistory($teilnehmer, "anerkennendestellen");
         $this->createHistory($teilnehmer, "beratungdatum");
         $this->createHistory($teilnehmer, "berater");
         $this->createHistory($teilnehmer, "beratungsart");
         $this->createHistory($teilnehmer, "beratungsartfreitext");
         $this->createHistory($teilnehmer, "beratungsort");
         $this->createHistory($teilnehmer, "beratungsdauer");
-        $this->createHistory($teilnehmer, "beratungzu");
-        $this->createHistory($teilnehmer, "anerkennendestellen");
         $this->createHistory($teilnehmer, "anerkennungsberatung");
         $this->createHistory($teilnehmer, "anerkennungsberatungfreitext");
         $this->createHistory($teilnehmer, "qualifizierungsberatung");
         $this->createHistory($teilnehmer, "qualifizierungsberatungfreitext");
+        $this->createHistory($teilnehmer, "beratungzu");
+        $this->createHistory($teilnehmer, "anerkennungszuschussbeantragt");
+        $this->createHistory($teilnehmer, "kooperationgruppe");
         $this->createHistory($teilnehmer, "beratungnotizen");
         $this->createHistory($teilnehmer, "erstberatungabgeschlossen");
         
@@ -2067,7 +2069,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     $subject = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmsubject', 'Iqtp13db');
                     
                     $zugewieseneberatungsstelle = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $teilnehmer->getNiqidberatungsstelle());
-                    $datenberatungsstelle = $zugewieseneberatungsstelle != NULL ? $zugewieseneberatungsstelle[0]->getDescription() : '';
+                    $datenberatungsstelle = $zugewieseneberatungsstelle != NULL ? $zugewieseneberatungsstelle[0]->getDescription() ?? '' : '';
                     $kontaktlabel = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('kontaktberatungsstelle', 'Iqtp13db');
                     
                     $variables = array(
@@ -2256,8 +2258,46 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             
             $history->setTeilnehmer($teilnehmer);
             $history->setProperty($property);
-            $history->setOldvalue($teilnehmer->_getCleanProperty($property) ?? '');
-            $history->setNewvalue($teilnehmer->_getProperty($property) ?? '');
+            
+            $oldvalue = $teilnehmer->_getCleanProperty($property) ?? '';
+            $newvalue = $teilnehmer->_getProperty($property) ?? '';
+            
+            if($property == 'geburtsland' || $property == 'ersteStaatsangehoerigkeit' || $property == 'zweiteStaatsangehoerigkeit' || $property == 'wohnsitzNeinIn') $newvalue = $this->settings['staaten'][$newvalue];
+            if($property == 'geschlecht') {
+                if($newvalue == 2) $newvalue = 'männlich';
+                if($newvalue == 1) $newvalue = 'weiblich';
+                if($newvalue == 3) $newvalue = 'divers';
+            }
+            if($property == 'wohnsitzDeutschland' || $property == 'deutschkenntnisse' || $property == 'leistungsbezugjanein' || $property == 'einwAnerkstelle' || $property == 'einwPerson') {
+                if($newvalue == 1) $newvalue = 'ja';
+                if($newvalue == 2) $newvalue = 'nein';
+            }
+            if($property == 'aufenthaltsstatus') $newvalue = $this->settings['aufenthaltsstatus'][$newvalue];
+            if($property == 'zertifikatSprachniveau') $newvalue = $this->settings['zertifikatlevel'][$newvalue];
+            if($property == 'erwerbsstatus') $newvalue = $this->settings['erwerbsstatus'][$newvalue];
+            if($property == 'leistungsbezug') $newvalue = $this->settings['leistungsbezug'][$newvalue];
+            
+            if($property == 'nameBeratungsstelle') $newvalue = $this->settings['beratungsstelle'][$newvalue];
+            if($property == 'wieberaten') $newvalue = $this->settings['wieberaten'][$newvalue];
+            if($property == 'berater') {
+                if($newvalue == 0) {
+                    $newvalue = '-';
+                } else {
+                    $berater = $this->beraterRepository->findOneByUid($newvalue);
+                    $newvalue = $berater->getUsername();
+                }
+            }            
+            if($property == 'anerkennungsberatung') $newvalue = $this->settings['anerkennungsberatung'][$newvalue];
+            if($property == 'qualifizierungsberatung') $newvalue = $this->settings['qualifizierungsberatung'][$newvalue];
+            
+            if($oldvalue == '-1000') $oldvalue = '-';
+            if($oldvalue == '-1') $oldvalue = 'k.A.';
+            
+            if($newvalue == '-1000') $newvalue = '-';
+            if($newvalue == '-1') $newvalue = 'k.A.';
+                            
+            $history->setOldvalue($oldvalue);
+            $history->setNewvalue($newvalue);
             
             $this->historieRepository->add($history);
         }
@@ -2302,7 +2342,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnseite1', null);
         $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnuid', null);
         $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('ses', null);
-        
+         
         $this->forward('startseite', 'Teilnehmer', 'Iqtp13db');
     }
     

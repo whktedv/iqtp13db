@@ -29,7 +29,13 @@
 				<f:for each="{settings.beratungsart}" as="option" key="key">
 					<f:variable name="varstring">{value -> f:for(each: '{teilnehmer.beratungsart}', as: 'value')}</f:variable>
 					<div class="tp13_formdivwebappradio">
-						<f:form.checkbox name="teilnehmer[beratungsart]" checked="{iqtp13db:instring(haystack:'{varstring}',needle:'{key}',then:'TRUE',else:'FALSE')}" multiple="1" value="{key}" />{option}
+						<f:if condition="{key} == 1">
+							<f:then>
+								<f:form.checkbox id="chkberatungsartface2face" name="teilnehmer[beratungsart]" checked="{iqtp13db:instring(haystack:'{varstring}',needle:'{key}',then:'TRUE',else:'FALSE')}" multiple="1" value="{key}" />{option}
+							</f:then><f:else>
+								<f:form.checkbox  name="teilnehmer[beratungsart]" checked="{iqtp13db:instring(haystack:'{varstring}',needle:'{key}',then:'TRUE',else:'FALSE')}" multiple="1" value="{key}" />{option}
+							</f:else>
+						</f:if>
 					</div>
 				</f:for>
 			</div>

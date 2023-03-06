@@ -248,7 +248,8 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $query->matching($query->logicalAnd(
             $query->like('nachname', '%'.$nachname.'%'),
             $query->like('vorname', '%'.$vorname.'%'),
-            $query->like('email', $email)
+            $query->like('email', $email),
+            $query->logicalNot($query->like('beratungsstatus', '99'))
             ));
         $query = $query->execute();
         return $query;
