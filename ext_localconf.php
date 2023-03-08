@@ -98,6 +98,14 @@ call_user_func(
             \Ud\Iqtp13db\Domain\Model\Berater::class
             );
         
+        /****************
+         * Scheduler TASK to delete old/deleted entries
+         ****************/
+        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks']['Ud\Iqtp13db\Task\Task'] = array(
+            'extension' => 'iqtp13db',
+            'title' => 'Recycler Task für IQ Webapp',
+            'description' => 'Lösche gelöschte Datensätze nach 180 Tagen und lösche nicht abgeschlossen Anmeldungen nach 24 Stunden (beratungsstatus = 99)',
+        );
 },
 'iqtp13db'
 );

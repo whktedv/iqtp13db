@@ -6,6 +6,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+use TYPO3\CMS\Extbase\Annotation\Validate;
 
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3\CMS\Core\Pagination\SimplePagination;
@@ -941,12 +942,35 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      * action update
      *
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
-     * @TYPO3\CMS\Extbase\Annotation\Validate("Ud\Iqtp13db\Domain\Validator\TeilnehmerValidator", param="teilnehmer")
+     * @return void
+     */
+    public function initializeUpdateAction() {
+        
+        $valArray = $this->request->getArguments();
+        $beratungdatum = $valArray['teilnehmer']['beratungdatum'];
+        $erstberatungabgeschlossen = $valArray['teilnehmer']['erstberatungabgeschlossen'];
+        
+        if(!$this->generalhelper->validateDateYmd($beratungdatum)) {
+            $this->addFlashMessage("FEHLER: Datensatz NICHT gespeichert. -Beratung Datum- ungültige Eingabe. Datum im Format JJJJ-MM-TT eintragen!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->redirect($valArray['calleraction'] ?? 'edit', $valArray['callercontroller'] ?? 'Teilnehmer', null, array('callerpage' => $valArray['callerpage'] ?? '1'));
+        }
+        if(!$this->generalhelper->validateDateYmd($erstberatungabgeschlossen)) {
+            $this->addFlashMessage("FEHLER: Datensatz NICHT gespeichert. -Erstberatung abgeschlossen- ungültige Eingabe. Datum im Format JJJJ-MM-TT eintragen!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->redirect($valArray['calleraction'] ?? 'edit', $valArray['callercontroller'] ?? 'Teilnehmer', null, array('callerpage' => $valArray['callerpage'] ?? '1'));
+        }
+    }
+    
+    /**
+     * action update
+     *
+     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
+     * @Validate("Ud\Iqtp13db\Domain\Validator\TeilnehmerValidator", param="teilnehmer")
      * @return void
      */
     public function updateAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
         $valArray = $this->request->getArguments();
+        
         
         if(is_numeric($teilnehmer->getLebensalter())) {
             if($teilnehmer->getLebensalter() > 0 && ($teilnehmer->getLebensalter() < 15 || $teilnehmer->getLebensalter() > 80)) {
@@ -1786,7 +1810,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      * action anmeldseite1redirect
      *
      * @param \Ud\Iqtp13db\Domain\Model\TNSeite1 $tnseite1
-     * @TYPO3\CMS\Extbase\Annotation\Validate("Ud\Iqtp13db\Domain\Validator\TNSeite1Validator", param="tnseite1")
+     * @Validate("Ud\Iqtp13db\Domain\Validator\TNSeite1Validator", param="tnseite1")
      * @return void
      */
     public function anmeldseite1redirectAction(\Ud\Iqtp13db\Domain\Model\TNSeite1 $tnseite1 = NULL)
@@ -2068,8 +2092,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     $confirmmailtext2 = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmmailtext2', 'Iqtp13db');
                     $subject = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmsubject', 'Iqtp13db');
                     
-                    $zugewieseneberatungsstelle = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $teilnehmer->getNiqidberatungsstelle());
-                    $datenberatungsstelle = $zugewieseneberatungsstelle != NULL ? $zugewieseneberatungsstelle[0]->getDescription() ?? '' : '';
+                    $datenberatungsstelle = $tnberatungsstelle[0]->getDescription() ?? '';
                     $kontaktlabel = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('kontaktberatungsstelle', 'Iqtp13db');
                     
                     $variables = array(
@@ -2158,17 +2181,11 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      * @return void
      */
     public function bereitsberatenAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
-    {
-        
-        if($teilnehmer->getBerater() != 0) {
-            $berater = new \Ud\Iqtp13db\Domain\Model\Berater();
-            $berater = $teilnehmer->getBerater();
-            $berateremail = $berater->getEmail();
-        } else {
-            $beratungsstelle = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $teilnehmer->getNiqidberatungsstelle());
-            $beratungsstellendaten = $beratungsstelle[0]->getDescription();
-            
-        }
+    {        
+        $bstid = $teilnehmer->getNiqidberatungsstelle() == 0 ? $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid') : $teilnehmer->getNiqidberatungsstelle();
+
+        $beratungsstelle = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $bstid);
+        $beratungsstellendaten = $beratungsstelle[0]->getDescription();            
         
         $this->view->assign('beratungsstellendaten', $beratungsstellendaten);
         $this->view->assign('teilnehmer', $teilnehmer);
@@ -2278,18 +2295,16 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             if($property == 'leistungsbezug') $newvalue = $this->settings['leistungsbezug'][$newvalue];
             
             if($property == 'nameBeratungsstelle') $newvalue = $this->settings['beratungsstelle'][$newvalue];
-            if($property == 'wieberaten') $newvalue = $this->settings['wieberaten'][$newvalue];
+            
             if($property == 'berater') {
                 if($newvalue == 0) {
                     $newvalue = '-';
                 } else {
-                    $berater = $this->beraterRepository->findOneByUid($newvalue);
+                    $berater = $this->beraterRepository->findOneByUid($newvalue);                    
                     $newvalue = $berater->getUsername();
                 }
             }            
-            if($property == 'anerkennungsberatung') $newvalue = $this->settings['anerkennungsberatung'][$newvalue];
-            if($property == 'qualifizierungsberatung') $newvalue = $this->settings['qualifizierungsberatung'][$newvalue];
-            
+                 
             if($oldvalue == '-1000') $oldvalue = '-';
             if($oldvalue == '-1') $oldvalue = 'k.A.';
             
@@ -2477,7 +2492,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      * Check Beratungsstatus
      *
      * Beratungsstatus: 0 = angemeldet, 1 = Anmeldung bestätigt, 2 = Erstberatung Start, 3 = Erstberatung abgeschlossen, 4 = Archiviert (NIQ erfasst), 99 = Anmeldung nicht abgesendet
-     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
+     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer     
      * @return int
      */
     public function checkberatungsstatus(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer) {

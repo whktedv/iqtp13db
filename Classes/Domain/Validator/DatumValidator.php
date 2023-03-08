@@ -7,11 +7,9 @@ class DatumValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractVal
 	public function isValid($value)
 	{
 	    if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/",$value)) {
-	        return true;
-	    } else {
-	        $this->addError('Das Datum muss im Format JJJJ-MM-TT eingegeben werden.', 40213131);
-	        return false;
-	    }		
+	        return;
+	    }
+	    $this->addError('Das Datum muss im Format JJJJ-MM-TT eingegeben werden.', 40213131);
 	}
 }
 

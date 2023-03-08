@@ -23,6 +23,7 @@ class Folgekontakt extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * datum
      *
      * @var string
+     * @Validate("NotEmpty")     
      */
     protected $datum = '';
     
