@@ -5,7 +5,7 @@
     <body>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.start0intro"><target>In order to forward your request to the right advice center, please first state your place of residence</target></trans-unit>
 <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.start0wohnsitz"><target>Is your current place of residence in Germany?</target></trans-unit>
-<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.start0plz"><target>What is the postal code of your place of residence in Germany?</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.start0plz"><target>What is the postal code of your place of residence in Germany? (5 digits)</target></trans-unit>
 	
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.startseitetext">
 		<target> <![CDATA[ <p><br> عزيزي طالب الاستشارة<br> ،  عزيزتي طالبة الاستشارة،<br><br> يسرنا تقديم الاستشارة لطالبي الاستشارة كما نقوم بمرافقتهم وتقديم الدعم لهم خلال إجراءات الاعتراف بالشهادات المهنية الأجنبية.<br><br> وكي تحصل على استشارة صحيحة، من المفيد بشكل كبير أن تقوم بإمدادنا ببعض البيانات والشهادات المهنية وشهادة الخبرة الخاصة بك.<br><br> ولذلك نرجو أن تقوم بملء النماذج التالية بشكل متكامل قدر الإمكان. يمكنك إظهار الأسئلة بلغات مختلفة. ولذلك نرجو منك اختيار لغة في البداية. برجاء الإجابة على الأسئلة فقط بالإنجليزية أو الألمانية. وإلا فلن نتمكن من معالجة طلبك.<br><br> ولن نتمكن من معالجة بياناتك إلا في حالة إرسال الاستمارة مملوءة بالكامل.<br><br> وفي العادة تتم استشارة الاعتراف بالشهادات الأجنبية عبر البريد الإلكتروني. وفي حالة وجود استفسارات سنتواصل معك هاتفيًا.<br><br> مع أطيب الأمنيات<br><br> مركز استشارة الاعتراف بالشهادات الأجنبية والتأهيل المتنقل</p><p>IQ Anerkennungs- und Qualifizierungsberatung</p> ]]> </target>

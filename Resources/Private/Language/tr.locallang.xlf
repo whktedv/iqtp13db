@@ -5,7 +5,7 @@
     <body>
     <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.start0intro"><target>In order to forward your request to the right advice center, please first state your place of residence</target></trans-unit>
     <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.start0wohnsitz"><target>Is your current place of residence in Germany?</target></trans-unit>
-    <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.start0plz"><target>What is the postal code of your place of residence in Germany?</target></trans-unit>
+    <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.start0plz"><target>What is the postal code of your place of residence in Germany? (5 digits)</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.startseitetext">
 		<target> <![CDATA[ <p>Sevgili Tavsiye arayan, &nbsp;</p><p>Biz yurtdışında edinilen mesleki niteliklerin tanınma sürecinde tavsiye arayanlara danışmanlık yapıyor, eşlik ediyor ve destek veriyoruz.</p><p>Size iyi bir danışmanlık hizmeti verebilmek için, sizin hakkınızda ve mesleki yeterlilik ve deneyimleriniz hakkında bazı bilgileri almamız çok yararlı olacaktır.</p><p>Bu nedenle, bizler mümkün olduğu kadar aşağıdaki anketi tamamen doldurmanızı rica ediyoruz. Farklı dillerde görüntülenen soruları görüntüleyebilirsiniz. En başta dili seçiniz. Soruları sadece Almanca veya İngilizce yanıtlayabilirsiniz. Aksi takdirde talebiniz işleme alınmaz. Eğer bu form tamamen doldurulursa verileriniz işleme alınır.</p><p>Diploma tanınması ile ilgili tavsiyeler genellikle. e-posta yoluyla gerçekleşir.</p><p>Bunun dışındaki sorularınız için bizimle telefonla irtibata geçebilirsiniz.</p><p>Saygılarımızla</p><p>IQ Diploma tanınması ve yeterlilik danışmanlığı</p> ]]> </target>
 	</trans-unit>

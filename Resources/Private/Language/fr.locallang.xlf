@@ -4,8 +4,8 @@
     <header/>
     <body>
     <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.start0intro"><source>Afin de pouvoir transmettre votre demande au bon centre de conseil, veuillez d'abord indiquer votre lieu de résidence.</source></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.start0wohnsitz"><source>Votre lieu de résidence actuel se trouve-t-il en Allemagne ?</source></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.start0plz"><source>Quel est le code postal de votre lieu de résidence en Allemagne ?</source></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.start0wohnsitz"><source>Votre lieu de résidence actuel se trouve-t-il en Allemagne?</source></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.start0plz"><source>Quel est le code postal de votre lieu de résidence en Allemagne? (cinq chiffres)</source></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.startseitetext">
 		<target> <![CDATA[ <p>Chère demandeuse,<br> cher demandeur, &nbsp;</p><p>nous conseillons, accompagnons et soutenons les personnes qui cherchent conseil ayant des qualifications professionnelles étrangère dans leurs démarches visant à en obtenir la reconnaissance. &nbsp;</p><p>Pour pouvoir bien vous conseiller, il est très utile pour nous d'obtenir de votre part quelques informations sur vous et vos qualifications ainsi vos expériences professionnelles.</p><p>Ainsi, nous vous prions de remplir le questionnaire suivant de la manière la plus complète possible. Vous pouvez obtenir l'affichage des questions dans diverses langues. Veuillez choisir au début une langue à cet effet. Veuillez ne répondre aux questions qu'en allemand ou en anglais. Faute de quoi votre demande ne peut pas être traitée.</p><p>Vos données ne peuvent être traitées que si tout le questionnaire est envoyé rempli.</p><p>Les conseils concernant la reconnaissance a lieu généralement par E-mail. Veuillez nous contacter par téléphone en cas de questions complémentaires.</p><p>Sincères salutations</p><p>Votre conseil à la reconnaissance et à la qualification IQ.</p> ]]> </target>
 	</trans-unit>

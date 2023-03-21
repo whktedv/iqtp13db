@@ -439,14 +439,21 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $teilnehmerpag = $paginator->getPaginatedItems();
         
         $abschluesse = array();
+        $plzberatungsstelle4tn = array();
         for($j=0; $j < count($teilnehmerpag); $j++) {
             $anz = $this->teilnehmerRepository->findDublette4Angemeldet($teilnehmerpag[$j]->getNachname(), $teilnehmerpag[$j]->getVorname(), $this->niqbid);
             if($anz > 1) $teilnehmerpag[$j]->setDublette(TRUE);
             $abschluesse[$j] = $this->abschlussRepository->findByTeilnehmer($teilnehmerpag[$j]);
+            
+            $plzberatungsstelle = array();
+            $plzberatungsstelle = $this->userGroupRepository->getBeratungsstelle4PLZ($teilnehmerpag[$j]->getPlz(), $this->settings['beraterstoragepid']);
+            $plzberatungsstelle4tn[$j] = count($plzberatungsstelle) > 0 ? $plzberatungsstelle[0]->getNiqbid() : '';
+            
         }
         
         $wohnsitzstaaten = $this->settings['staaten'];
         unset($wohnsitzstaaten[201]);
+        
         
         $this->view->assignMultiple(
             [
@@ -459,7 +466,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'pagination' => $pagination,
                 'pages' => range(1, $pagination->getLastPageNumber()),
                 'orderby' => $orderby,
-                'wohnsitzstaaten' => $wohnsitzstaaten
+                'wohnsitzstaaten' => $wohnsitzstaaten,
+                'plzberatungsstelle4tn' => $plzberatungsstelle4tn
             ]
             );
     }
@@ -950,11 +958,11 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $beratungdatum = $valArray['teilnehmer']['beratungdatum'];
         $erstberatungabgeschlossen = $valArray['teilnehmer']['erstberatungabgeschlossen'];
         
-        if(!$this->generalhelper->validateDateYmd($beratungdatum)) {
+        if($beratungdatum != '' && !$this->generalhelper->validateDateYmd($beratungdatum)) {
             $this->addFlashMessage("FEHLER: Datensatz NICHT gespeichert. -Beratung Datum- ungültige Eingabe. Datum im Format JJJJ-MM-TT eintragen!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             $this->redirect($valArray['calleraction'] ?? 'edit', $valArray['callercontroller'] ?? 'Teilnehmer', null, array('callerpage' => $valArray['callerpage'] ?? '1'));
         }
-        if(!$this->generalhelper->validateDateYmd($erstberatungabgeschlossen)) {
+        if($erstberatungabgeschlossen != '' && !$this->generalhelper->validateDateYmd($erstberatungabgeschlossen)) {
             $this->addFlashMessage("FEHLER: Datensatz NICHT gespeichert. -Erstberatung abgeschlossen- ungültige Eingabe. Datum im Format JJJJ-MM-TT eintragen!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             $this->redirect($valArray['calleraction'] ?? 'edit', $valArray['callercontroller'] ?? 'Teilnehmer', null, array('callerpage' => $valArray['callerpage'] ?? '1'));
         }
@@ -2301,7 +2309,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     $newvalue = '-';
                 } else {
                     $berater = $this->beraterRepository->findOneByUid($newvalue);                    
-                    $newvalue = $berater->getUsername();
+                    $newvalue = $berater ? $berater->getUsername() : '?';
                 }
             }            
                  

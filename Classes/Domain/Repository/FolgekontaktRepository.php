@@ -23,11 +23,13 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     public function findAll4List($niqbid)
     {
         $query = $this->createQuery();
-        $query->matching($query->like('teilnehmer.niqidberatungsstelle', $niqbid));
+        $query->statement("SELECT a.* FROM tx_iqtp13db_domain_model_folgekontakt as a LEFT JOIN tx_iqtp13db_domain_model_teilnehmer as b ON a.teilnehmer = b.uid WHERE
+                a.deleted = 0 AND b.niqidberatungsstelle LIKE '$niqbid' ORDER BY STR_TO_DATE(a.datum, '%d.%m.%Y') ");
         $query = $query->execute();
+        
         return $query;
     }
-    
+        
     
 	public function count4Status($datum1, $datum2, $niqbid)
 	{

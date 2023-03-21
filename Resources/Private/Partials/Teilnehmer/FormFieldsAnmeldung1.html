@@ -37,7 +37,7 @@
 			<label for="plz">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.plz" />/<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ort" />
 			</label>
-				<f:form.textfield class="plztextfield" property="plz" value="{f:if(condition:'{plz}', then: '{plz}', else: '')}" placeholder="00000"/><f:form.textfield class="orttextfield" property="ort" placeholder="<f:translate key='tx_iqtp13db_domain_model_teilnehmer.ort'/>"/>
+				<f:form.textfield class="plztextfield" pattern="[0-9][0-9][0-9][0-9][0-9]" property="plz" value="{f:if(condition:'{plz}', then: '{plz}', else: '')}" placeholder="00000"/><f:form.textfield class="orttextfield" property="ort" placeholder="<f:translate key='tx_iqtp13db_domain_model_teilnehmer.ort'/>"/>
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="email">

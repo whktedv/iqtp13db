@@ -120,14 +120,15 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $teilnehmer = $this->teilnehmerRepository->findByUid($valArray['folgekontakt']['teilnehmer']);
         
         $letzterfolgekontakt = $this->folgekontaktRepository->findLastByTNuid($teilnehmer->getUid());
-        
         $beratungtimestamp = DateTime::createFromFormat("Y-m-d", $teilnehmer->getBeratungdatum());
         $folgekontakttimestamp = DateTime::createFromFormat("d.m.Y", $folgekontakt->getDatum());
         $letzterfolgekontakttimestamp = $letzterfolgekontakt != NULL ? DateTime::createFromFormat("d.m.Y", $letzterfolgekontakt->getDatum()) : DateTime::createFromFormat("d.m.Y", '01.01.1970');
         
-        if($folgekontakttimestamp->getTimestamp() < $beratungtimestamp->getTimestamp() || $folgekontakttimestamp->getTimestamp() < $letzterfolgekontakttimestamp->getTimestamp()) {
-            $this->addFlashMessage('Datum Folgekontakt muss nach letztem Folgekontakt und Datum Erstberatung sein.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-            
+        if($folgekontakttimestamp->getTimestamp() < $beratungtimestamp->getTimestamp()) {
+            $this->addFlashMessage('Datum Folgekontakt muss nach Datum Erstberatung sein.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->redirect('new', 'Folgekontakt', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'],'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage']));
+        } elseif($folgekontakttimestamp->getTimestamp() < $letzterfolgekontakttimestamp->getTimestamp()) {
+            $this->addFlashMessage('Datum Folgekontakt muss nach letztem Folgekontakt sein.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             $this->redirect('new', 'Folgekontakt', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'],'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage']));
         } else {
             $this->folgekontaktRepository->add($folgekontakt);
