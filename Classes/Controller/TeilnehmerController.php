@@ -196,7 +196,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                             $GLOBALS['TSFE']->fe_user->setKey('ses', 'beratungsstellenid', $group->getNiqbid());
                             
                             if($direkt == '1'){
-                                $this->forward('anmeldseite0', 'Teilnehmer', 'Iqtp13db');
+                                $this->forward('anmeldseite0', 'Teilnehmer', 'Iqtp13db', array('direkt' => $direkt));
                             } else {
                                 $this->forward('startseite', 'Teilnehmer', 'Iqtp13db');
                             }
@@ -1757,6 +1757,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 $this->view->assign('beratungsstelle', $bstid);
                 $this->view->assign('wohnsitzDeutschland', $valarrwohnsitzdeutschland);
                 $this->view->assign('plz', $valArray['plz'] ?? '');
+                $this->view->assign('direkt', $valArray['direkt'] ?? '');
             } else {
                 $uri = $uriBuilder->setTargetPageUid($this->settings['anmeldungnichtwebapppageuid'])->build();
                 $this->redirectToUri($uri, 0, 303);
@@ -1779,6 +1780,11 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         
         if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnseite1') && $tnseite1 == NULL) {
             $tnseite1 = unserialize($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnseite1'));
+        }
+        
+        if(!isset($valArray['plz']) && $tnseite1 == NULL && !isset($valArray['direkt'])){
+            // Link Anmeldeseite1 ohne vorherigen Aufruf der Anmeldseite0 geöffnet -> das ist nicht erlaubt!
+            $this->redirect('startseite', 'Teilnehmer', 'Iqtp13db', null);
         }
         
         $staatsangehoerigkeitstaaten = $this->settings['staaten'];
