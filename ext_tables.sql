@@ -32,7 +32,6 @@ CREATE TABLE tx_iqtp13db_domain_model_teilnehmer (
 	sonstigerstatus varchar(255) DEFAULT '' NOT NULL,
 	
 	deutschkenntnisse int(11) DEFAULT '0' NOT NULL,
-	zertifikatdeutsch int(11) DEFAULT '0' NOT NULL,
 	zertifikat_sprachniveau varchar(255) DEFAULT '' NOT NULL,
 	
 	erwerbsstatus int(11) DEFAULT '0' NOT NULL,

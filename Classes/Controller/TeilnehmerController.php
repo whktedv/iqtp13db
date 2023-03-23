@@ -227,7 +227,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $heute = date('Y-m-d');
         $diesesjahr = date('Y');
         $diesermonat = idate('m');
-        $letztesjahr = idate('Y') - 1;
+        $letztesjahr = idate('Y') - 1 == 2022 ? date('Y') : idate('Y') - 1;
         
         for($i=1;$i<13;$i++) {
             $monatsnamen[$i] = date("M", mktime(0, 0, 0, $i, 1, $diesesjahr));
@@ -237,6 +237,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $angemeldeteTN[$m] = $this->teilnehmerRepository->count4Status("01.".$m.".".$letztesjahr, date("t", mktime(0, 0, 0, $m, 1, $letztesjahr)).".".$m.".".$letztesjahr, $this->niqbid);
             $qfolgekontakte[$m] = $this->folgekontaktRepository->count4Status("01.".$m.".".$letztesjahr, date("t", mktime(0, 0, 0, $m, 1, $letztesjahr)).".".$m.".".$letztesjahr, $this->niqbid);
             $erstberatung[$m] = $this->teilnehmerRepository->count4StatusErstberatung("01.".$m.".".$letztesjahr, date("t", mktime(0, 0, 0, $m, 1, $letztesjahr)).".".$m.".".$letztesjahr, $this->niqbid);
+            $beratungfk22[$m] = $this->teilnehmerRepository->count4StatusFK2022("01.".$m.".".$letztesjahr, date("t", mktime(0, 0, 0, $m, 1, $letztesjahr)).".".$m.".".$letztesjahr, $this->niqbid);
             $beratungfertig[$m] = $this->teilnehmerRepository->count4StatusBeratungfertig("01.".$m.".".$letztesjahr, date("t", mktime(0, 0, 0, $m, 1, $letztesjahr)).".".$m.".".$letztesjahr, $this->niqbid);
             $niqerfasst[$m] =  $this->teilnehmerRepository->count4Statusniqerfasst("01.".$m.".".$letztesjahr, date("t", mktime(0, 0, 0, $m, 1, $letztesjahr)).".".$m.".".$letztesjahr, $this->niqbid);
             
@@ -247,6 +248,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $angemeldeteTN[$m] = $this->teilnehmerRepository->count4Status("01.".$m.".".$diesesjahr, date("t", mktime(0, 0, 0, $m, 1, $diesesjahr)).".".$m.".".$diesesjahr, $this->niqbid);
             $qfolgekontakte[$m] = $this->folgekontaktRepository->count4Status("01.".$m.".".$diesesjahr, date("t", mktime(0, 0, 0, $m, 1, $diesesjahr)).".".$m.".".$diesesjahr, $this->niqbid);
             $erstberatung[$m] = $this->teilnehmerRepository->count4StatusErstberatung("01.".$m.".".$diesesjahr, date("t", mktime(0, 0, 0, $m, 1, $diesesjahr)).".".$m.".".$diesesjahr, $this->niqbid);
+            $beratungfk22[$m] = $this->teilnehmerRepository->count4StatusFK2022("01.".$m.".".$diesesjahr, date("t", mktime(0, 0, 0, $m, 1, $diesesjahr)).".".$m.".".$diesesjahr, $this->niqbid);
             $beratungfertig[$m] = $this->teilnehmerRepository->count4StatusBeratungfertig("01.".$m.".".$diesesjahr, date("t", mktime(0, 0, 0, $m, 1, $diesesjahr)).".".$m.".".$diesesjahr, $this->niqbid);
             $niqerfasst[$m] = $this->teilnehmerRepository->count4Statusniqerfasst("01.".$m.".".$diesesjahr, date("t", mktime(0, 0, 0, $m, 1, $diesesjahr)).".".$m.".".$diesesjahr, $this->niqbid);
             
@@ -294,6 +296,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         ksort($angemeldeteTN);
         ksort($qfolgekontakte);
         ksort($erstberatung);
+        ksort($beratungfk22);
         ksort($beratungfertig);
         ksort($niqerfasst);
         ksort($days4beratung);
@@ -318,6 +321,13 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         // **** NIQ deaktiviert **** $niqdbstatus = $this->niqinterface->check_curl($this->niqapiurl) ? "<span style='color: green;'>erreichbar</span>" : "<span style='color: red;'>nicht erreichbar!</span>";
         $niqdbstatus = '';
         
+        $neuanmeldungen7tage = array();
+        for($i = 7; $i >= 0; $i--) {
+            $reftag = date("d.m.Y", strtotime( '-'.$i.' days' ));
+            $neuanmeldungen7tage[$i]["tag"] = date("l, d.m.Y", strtotime( '-'.$i.' days' ));
+            $neuanmeldungen7tage[$i]["wert"] = $this->teilnehmerRepository->count4Status($reftag, $reftag, $this->niqbid);
+        }
+        
         // ******************** EXPORT Statistik ****************************
         $rows[0] = $monatsnamen;
         array_unshift($rows[0], " ");
@@ -335,6 +345,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         array_unshift($rows[6], "durchschn. Tage Wartezeit");
         $rows[7] = $totalavgmonthb;
         array_unshift($rows[7], "durchschn. Tage Beratungsdauer");
+        $rows[8] = $beratungfk22;
+        array_unshift($rows[8], "Beratungen/Folgekontakte von Ratsuchenden alte Föpha.");
         
         if (isset($valArray['statsexport'])) {
             
@@ -363,6 +375,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'SUMqfolgekontakte'=>  array_sum($qfolgekontakte),
                 'erstberatung'=> $erstberatung,
                 'SUMerstberatung'=>  array_sum($erstberatung),
+                'beratungfk22'=> $beratungfk22,
+                'SUMberatungfk22'=>  array_sum($beratungfk22),
                 'beratungfertig'=> $beratungfertig,
                 'SUMberatungfertig'=>  array_sum($beratungfertig),
                 'niqerfasst'=> $niqerfasst,
@@ -382,7 +396,10 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'beratungsstelle' => $this->usergroup->getTitle(),
                 'niqbid' => $this->niqbid,
                 'niqdbstatus' => $niqdbstatus,
-                'username' => $this->user['username']
+                'username' => $this->user['username'],
+                'neuanmeldungen7tage' => $neuanmeldungen7tage,
+                'diesesjahr' => date('y'),
+                'letztesjahr' => idate('y') - 1                
             ]
             );
     }
@@ -1426,6 +1443,15 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     $wohnsitzneinin = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'wohnsitz_nein_in ');
                     $rows[$x]['WohnsitzNeinIn'] = $wohnsitzneinin == '' ? '-' : $arrstaaten[$wohnsitzneinin];
                     
+                    $deutschkenntnisse = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'deutschkenntnisse ');
+                    if($deutschkenntnisse == 1) $deutschkenntnisse = 'ja';
+                    if($deutschkenntnisse == 2) $deutschkenntnisse = 'nein';
+                    if($deutschkenntnisse == -1) $deutschkenntnisse = 'k.a.';
+                    $rows[$x]['Deutschkenntnisse'] = $deutschkenntnisse ?? '';
+                    
+                    $zertifikatsprachniveau = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'zertifikat_sprachniveau ');
+                    $rows[$x]['ZertifikatSprachniveau'] = $zertifikatsprachniveau == '' ? '-' : $arrzertifikatlevel[$zertifikatsprachniveau];
+                    
                     $rows[$x]['Sonstigerstatus'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'sonstigerstatus');
                     
                     $tnerwerbsstatus = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'erwerbsstatus');
@@ -1477,6 +1503,11 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 
                 $rows[$x]['AnzFolgekontakte'] = $anzfolgekontakte[$x];
                 
+                $rows[$x]['kooperationgruppe'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'kooperationgruppe');
+                $rows[$x]['beratungsdauer'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungsdauer');
+                $rows[$x]['beratungdatum'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungdatum');
+                $rows[$x]['erstberatungabgeschlossen'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'erstberatungabgeschlossen');
+                
                 foreach($abschluesse[$x] as $y => $abschluss) {
                     $aprops = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getGettablePropertyNames($abschluss);
                     
@@ -1489,9 +1520,14 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     $aberwerbsland = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'erwerbsland');
                     $rows[$x]['Abschluss'.$y.' Erwerbsland'] = $aberwerbsland == '' ? '-' : $arrstaaten[$aberwerbsland];
                     
-                    $rows[$x]['Abschluss'.$y.' Abschlussjahr'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'abschlussjahr ');
-                    $rows[$x]['Abschluss'.$y.' Ausbildungsort'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'ausbildungsort ');
-                    $rows[$x]['Abschluss'.$y.' Abschluss'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'abschluss ');
+                    $rows[$x]['Abschluss'.$y.' Abschlussjahr'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'abschlussjahr');
+                    $rows[$x]['Abschluss'.$y.' Ausbildungsort'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'ausbildungsort');
+                    $rows[$x]['Abschluss'.$y.' Abschluss'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'abschluss');
+                    
+                    $rows[$x]['Abschluss'.$y.' DauerBerufsausbildung'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'dauer_berufsausbildung');
+                    $rows[$x]['Abschluss'.$y.' Ausbildungsinstitution'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'ausbildungsinstitution');
+                    $rows[$x]['Abschluss'.$y.' Berufserfahrung'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'berufserfahrung');
+                    $rows[$x]['Abschluss'.$y.' Wunschberuf'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'wunschberuf');
                     
                     $abantragstellungerfolgt = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'antragstellungerfolgt');
                     $rows[$x]['Abschluss'.$y.' Antragstellungerfolgt'] = $abantragstellungerfolgt == 0 ? '-' : $arrantragstellungerfolgt[$abantragstellungerfolgt];
@@ -1517,6 +1553,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'WohnsitzDeutschland' => 'string',
                 'Einreisejahr' => 'string',
                 'WohnsitzNeinIn' => 'string',
+                'Deutschkenntnisse' => 'string',
+                'ZertifikatSprachniveau' => 'string',
                 'SonstigerStatus' => 'string',
                 'Erwerbsstatus' => 'string',
                 'Leistungsbezug ja/nein' => 'string',
@@ -1532,12 +1570,20 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'Beratung Notizen' => 'string',
                 'Beratung zu Schulabschluss' => 'string',
                 'Anz. Folgekontakte' => 'string',
+                'Kooperationgruppe' => 'string',
+                'Beratungsdauer' => 'string',
+                'Beratungdatum' => 'string',
+                'Erstberatungabgeschlossen' => 'string',
                 'Abschluss1 Referenzberuf zugewiesen' => 'string',
                 'Abschluss1 Abschlussart' => 'string',
                 'Abschluss1 Erwerbsland' => 'string',
                 'Abschluss1 Abschlussjahr' => 'string',
                 'Abschluss1 Ausbildungsort' => 'string',
                 'Abschluss1 Abschluss' => 'string',
+                'Abschluss1 DauerBerufsausbildung' => 'string',
+                'Abschluss1 Ausbildungsinstitution' => 'string',    
+                'Abschluss1 Berufserfahrung' => 'string',
+                'Abschluss1 Wunschberuf' => 'string',
                 'Abschluss1 Antragstellung erfolgt' => 'string',
                 'Abschluss2 Referenzberuf zugewiesen' => 'string',
                 'Abschluss2 Abschlussart' => 'string',
@@ -1545,6 +1591,10 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'Abschluss2 Abschlussjahr' => 'string',
                 'Abschluss2 Ausbildungsort' => 'string',
                 'Abschluss2 Abschluss' => 'string',
+                'Abschluss2 DauerBerufsausbildung' => 'string',
+                'Abschluss2 Ausbildungsinstitution' => 'string',
+                'Abschluss2 Berufserfahrung' => 'string',
+                'Abschluss2 Wunschberuf' => 'string',
                 'Abschluss2 Antragstellung erfolgt' => 'string',
                 'Abschluss3 Referenzberuf zugewiesen' => 'string',
                 'Abschluss3 Abschlussart' => 'string',
@@ -1552,6 +1602,10 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'Abschluss3 Abschlussjahr' => 'string',
                 'Abschluss3 Ausbildungsort' => 'string',
                 'Abschluss3 Abschluss' => 'string',
+                'Abschluss3 DauerBerufsausbildung' => 'string',
+                'Abschluss3 Ausbildungsinstitution' => 'string',
+                'Abschluss3 Berufserfahrung' => 'string',
+                'Abschluss3 Wunschberuf' => 'string',
                 'Abschluss3 Antragstellung erfolgt' => 'string',
                 'Abschluss4 Referenzberuf zugewiesen' => 'string',
                 'Abschluss4 Abschlussart' => 'string',
@@ -1559,8 +1613,11 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'Abschluss4 Abschlussjahr' => 'string',
                 'Abschluss4 Ausbildungsort' => 'string',
                 'Abschluss4 Abschluss' => 'string',
-                'Abschluss4 Antragstellung erfolgt' => 'string'
-                
+                'Abschluss4 DauerBerufsausbildung' => 'string',
+                'Abschluss4 Ausbildungsinstitution' => 'string',
+                'Abschluss4 Berufserfahrung' => 'string',
+                'Abschluss4 Wunschberuf' => 'string',
+                'Abschluss4 Antragstellung erfolgt' => 'string'                
             ];
             
             $writer = new \XLSXWriter();
@@ -1700,6 +1757,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function startseiteAction()
     {
+        // Beratungsstellen-ID aus Session-Cache löschen
+        $GLOBALS['TSFE']->fe_user->setKey('ses', 'beratungsstellenid', null);
+        
         $valArray = $this->request->getArguments();
         $beratungsstellenid = $valArray['beratung'] ?? '';
         if($beratungsstellenid != '') {
@@ -1745,12 +1805,17 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $uri = $uriBuilder->setTargetPageUid($this->settings['anmeldungnichtwebapppageuid'])->build();
             $this->redirectToUri($uri, 0, 303);
         } else {
+            
+            if($valarrwohnsitzdeutschland == '') {
+                $this->redirect('startseite', 'Teilnehmer', 'Iqtp13db', null);
+            }
+            
             $plzberatungsstelle = array();
             if($bstid == '' && isset($valArray['plz'])) {
                 $plzberatungsstelle = $this->userGroupRepository->getBeratungsstelle4PLZ($valArray['plz'], $this->settings['beraterstoragepid']);
                 $bstid = count($plzberatungsstelle) > 0 ? $plzberatungsstelle[0]->getNiqbid() : $bstid;
             }
-            
+                       
             if($bstid != '') {
                 $GLOBALS['TSFE']->fe_user->setKey('ses', 'beratungsstellenid', $bstid);
                 

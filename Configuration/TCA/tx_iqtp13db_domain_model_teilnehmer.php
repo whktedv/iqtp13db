@@ -295,15 +295,6 @@ return [
                 'eval' => 'int'
             ]
         ],
-        'zertifikatdeutsch' => [
-            'exclude' => true,
-            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.zertifikatdeutsch',
-            'config' => [
-                'type' => 'input',
-                'size' => 4,
-                'eval' => 'int'
-            ]
-        ],
         'zertifikat_sprachniveau' => [
             'exclude' => true,
             'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau',

@@ -250,6 +250,13 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         $statsgesamtarchiviert = $this->teilnehmerRepository->count4StatusArchiviert("01.1.1970", "31.12.".$diesesjahr, '%');
         //DebuggerUtility::var_dump($anzberater);
         
+        $neuanmeldungen7tage = array();
+        for($i = 7; $i >= 0; $i--) {
+            $reftag = date("d.m.Y", strtotime( '-'.$i.' days' ));
+            $neuanmeldungen7tage[$i]["tag"] = date("l, d.m.Y", strtotime( '-'.$i.' days' ));
+            $neuanmeldungen7tage[$i]["wert"] = $this->teilnehmerRepository->count4Status($reftag, $reftag, '%');
+        }
+        
         $this->view->assignMultiple(
             [
                 'monatsnamen'=> $monatsnamen,
@@ -283,7 +290,10 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 'alleRatsuchendentotal' => $sumalleaktuell,
                 'statsgesamtratsuchende' => $statsgesamtratsuchende,
                 'statsgesamtfertigberaten' => $statsgesamtfertigberaten,
-                'statsgesamtarchiviert' => $statsgesamtarchiviert
+                'statsgesamtarchiviert' => $statsgesamtarchiviert,
+                'neuanmeldungen7tage' => $neuanmeldungen7tage,
+                'diesesjahr' => date('y'),
+                'letztesjahr' => idate('y') - 1
             ]
             );
     }

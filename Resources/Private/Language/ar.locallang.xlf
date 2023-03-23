@@ -37,7 +37,6 @@
   <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus"><target>نوعية الإقامة</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatusfreitext"><target>ملحوظة بخصوص نوعية الإقامة</target></trans-unit>
   <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><target>	اللغة الألمانية كلغة الأم؟	</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikatdeutsch"><target>	شهادة اللغة الألمانية	</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>	في حالة وجود شهادة لغة ألمانية، في أي مستوى؟	</target></trans-unit>
 	<trans-unit id="keinabschlussbisher"><target><![CDATA[ No foreign educational qualification specified. Please enter information about your educational qualification (university or training) here. You can also enter several qualifications (diplomas, certificates).]]></target></trans-unit>
 	

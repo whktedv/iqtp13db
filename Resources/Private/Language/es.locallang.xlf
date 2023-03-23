@@ -33,7 +33,6 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus"><target>Titulo de residencia</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatusfreitext"><target>Nota a titulo de residencia</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><target>¿Alemán como lengua materna?</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikatdeutsch"><target>Certificado alemán</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Si el certificado está disponible, ¿en qué nivel de idioma?</target></trans-unit>
   <trans-unit id="keinabschlussbisher"><target><![CDATA[ Aún no se ha especificado ningún título educativo extranjero. Por favor, introduzca aquí información sobre su titulación educativa (universidad o formación). También puede introducir varias titulaciones (diplomas, certificados). ]]></target></trans-unit>
 

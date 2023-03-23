@@ -372,6 +372,20 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         return count($query);
     }
     
+    public function count4StatusFK2022($datum1, $datum2, $niqbid)
+    {
+        $query = $this->createQuery();
+        $query->statement("SELECT * FROM tx_iqtp13db_domain_model_teilnehmer as b
+                LEFT JOIN tx_iqtp13db_domain_model_folgekontakt as c ON c.teilnehmer = b.uid
+                WHERE DATEDIFF(STR_TO_DATE(datum, '%d.%m.%Y'), '2022-12-31') > 0 AND
+                DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),STR_TO_DATE(datum, '%d.%m.%Y')) <= 0 AND
+				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),STR_TO_DATE(datum, '%d.%m.%Y')) >= 0 AND
+        		b.deleted = 0 AND b.hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND b.verification_date < 1672522400 GROUP BY teilnehmer");
+        
+        $query = $query->execute();
+        return count($query);
+    }
+    
     public function days4Beratungfertig($datum1, $datum2, $niqbid)
     {
         $query = $this->createQuery();

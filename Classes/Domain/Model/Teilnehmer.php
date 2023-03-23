@@ -189,13 +189,6 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $deutschkenntnisse = 0;
     
     /**
-     * zertifikatdeutsch
-     *
-     * @var int
-     */
-    protected $zertifikatdeutsch = 0;
-    
-    /**
      * zertifikatSprachniveau
      *
      * @var string
@@ -1063,27 +1056,6 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setDeutschkenntnisse($deutschkenntnisse)
     {
         $this->deutschkenntnisse = $deutschkenntnisse;
-    }
-    
-    /**
-     * Returns the zertifikatdeutsch
-     *
-     * @return int $zertifikatdeutsch
-     */
-    public function getZertifikatdeutsch()
-    {
-        return $this->zertifikatdeutsch;
-    }
-    
-    /**
-     * Sets the zertifikatdeutsch
-     *
-     * @param int $zertifikatdeutsch
-     * @return void
-     */
-    public function setZertifikatdeutsch($zertifikatdeutsch)
-    {
-        $this->zertifikatdeutsch = $zertifikatdeutsch;
     }
     
     /**

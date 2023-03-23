@@ -33,7 +33,6 @@
   <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus"><target>Status uprawnienia do pobytu w kraju</target></trans-unit>
   <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatusfreitext"><target>Uwagi odnośnie statusu uprawnienia do pobytu w kraju</target></trans-unit>
   <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><target>Niemiecki jako jezyk ojczysty?  </target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikatdeutsch"><target>Znajomość języka niemieckiego potwierdzona certyfikatem </target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Jeśli tak, to na jakim poziomie językowym?</target></trans-unit>
     <trans-unit id="keinabschlussbisher"><target><![CDATA[ No foreign educational qualification specified yet. Please enter information about your educational qualification (university or training) here. You can also enter several qualifications (diplomas, certificates).]]></target></trans-unit>
   

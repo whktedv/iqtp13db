@@ -47,6 +47,22 @@
 	
 </table>
 
+<h1>Anmeldungen (nur bestätigte) letzte 7 Tage</h1>
+<table>
+	<tbody>
+	<tr>
+		<f:for each="{neuanmeldungen7tage}" as="neuanmeld" iteration="iter">
+			<th>{neuanmeld.tag}</th>
+		</f:for>
+	</tr>
+	<tr>
+		<f:for each="{neuanmeldungen7tage}" as="neuanmeld" iteration="iter">
+			<td>{neuanmeld.wert}</td>
+		</f:for>
+	</tr>
+	</tbody>
+</table>
+
 <h1>Statistik aktuell</h1>
 <table>
 	<tbody>
@@ -86,7 +102,7 @@
 	<tr>
 		<th></th>
 		<f:for each="{monatsnamen}" as="monat" iteration="iter">
-			<th {f:if(condition: '{iter.index} == {aktmonat}', then: 'style="background-color: #ffcaf2;"')}> {monat}</th>
+			<th {f:if(condition: '{iter.index} == {aktmonat}', then: 'style="background-color: #ffcaf2;"')}> {monat} {f:if(condition: '{iter.index} > {aktmonat}', then: '{letztesjahr}', else: '{diesesjahr}')}</th>
 		</f:for>
 		<th>Summe</th>
 	</tr>

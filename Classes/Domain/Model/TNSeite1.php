@@ -163,13 +163,6 @@ class TNSeite1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	protected $deutschkenntnisse = 0;
 	
 	/**
-	 * Zertifikat Deutschkenntnisse vorhanden?
-	 *
-	 * @var int
-	 */
-	protected $zertifikatdeutsch = 0;
-	
-	/**
 	 * Welches Sprachniveau?
 	 *
 	 * @var string
@@ -634,26 +627,7 @@ class TNSeite1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	public function setDeutschkenntnisse($deutschkenntnisse) {
 	    $this->deutschkenntnisse = $deutschkenntnisse;
 	}
-	
-	/**
-	 * Returns the zertifikatdeutsch
-	 *
-	 * @return int $zertifikatdeutsch
-	 */
-	public function getZertifikatdeutsch() {
-	    return $this->zertifikatdeutsch;
-	}
-	
-	/**
-	 * Sets the zertifikatdeutsch
-	 *
-	 * @param int $zertifikatdeutsch
-	 * @return void
-	 */
-	public function setZertifikatdeutsch($zertifikatdeutsch) {
-	    $this->zertifikatdeutsch = $zertifikatdeutsch;
-	}
-	
+		
 	/**
 	 * Returns the zertifikatSprachniveau
 	 *

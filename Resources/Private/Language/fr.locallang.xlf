@@ -40,7 +40,6 @@
   <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus"><target>Statut de séjour</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatusfreitext"><target>Commentaire sur le statut de séjour</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><target>L'allemand comme langue maternelle ?</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikatdeutsch"><target>Certificat allemand</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Si un certificat est disponible, à quel niveau de langue ?</target></trans-unit>
 	<trans-unit id="keinabschlussbisher"><source><![CDATA[ Aucun diplôme étranger n'est indiqué. Veuillez saisir ici les informations relatives à votre diplôme (université ou formation). Vous pouvez également saisir plusieurs qualifications (diplômes, certificats).]]></source></trans-unit>
 		

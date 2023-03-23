@@ -40,7 +40,6 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus"><target>وضعیت اقامت</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatusfreitext"><target>توضیح مربوط به مجوز اقامت</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><target>	آلمانی به عنوان زبان مادری؟</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikatdeutsch"><target>	گواهینامه آلمانی</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>	اگر گواهینامه زبان وجود دارد، در چه سطح است؟</target></trans-unit>
   
   <trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>نوع گواهینامه‌</target></trans-unit>
