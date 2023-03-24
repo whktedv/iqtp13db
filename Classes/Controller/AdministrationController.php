@@ -106,13 +106,14 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         $valArray = $this->request->getArguments();
         
         $buser = $this->beraterRepository->findByUid($this->user['uid']);
-        $userusergroups = $buser->getUsergroup();
+        
+        if($buser != NULL) $userusergroups = $buser->getUsergroup();
+        else $userusergroups = 1;
         
         if(isset($valArray['switch']) && $valArray['bstellen'] != 0) {
             $allusergroups = $this->userGroupRepository->findAllGroups($this->settings['beraterstoragepid']);
             $selectedgroup = $this->userGroupRepository->findByNiqbid($valArray['bstellen']);    
-            
-            
+                        
             $buser->addUserGroup($selectedgroup[0]);
             
             $userusergroupssortedOS = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();

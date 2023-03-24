@@ -1380,6 +1380,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $arrqualifizierungsberatung = $this->settings['qualifizierungsberatung'];
         $arrberatungsstelle = $this->settings['beratungsstelle'];
         //$arrberatungzu = $this->settings['beratungzu'];
+        $arrzertifikatlevel = $this->settings['zertifikatlevel'];
         $arrberufe = $this->settings['berufe'];
         $arrabschlussart =  array('-1' => 'keine Angabe', '1' => 'Ausbildungsabschluss', '2' => 'Universitätsabschluss');
         $arrantragstellungerfolgt = $this->settings['antragstellungerfolgt'];
@@ -2560,8 +2561,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $teilnehmer->setAufenthaltsstatus($tnseite1->getAufenthaltsstatus());
             $teilnehmer->setAufenthaltsstatusfreitext($tnseite1->getAufenthaltsstatusfreitext());
             $teilnehmer->setDeutschkenntnisse($tnseite1->getDeutschkenntnisse());
-            $teilnehmer->setZertifikatSprachniveau($tnseite1->getZertifikatSprachniveau());
-            $teilnehmer->setZertifikatdeutsch($tnseite1->getZertifikatdeutsch());
+            $teilnehmer->setZertifikatSprachniveau($tnseite1->getZertifikatSprachniveau());            
         }
         
         return $teilnehmer;

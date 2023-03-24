@@ -4,8 +4,7 @@ plugin.tx_iqtp13db.settings {
 	standardbccmail = 
 	mailattacheinwilligung = 
 	startseitelink = 
-	logolink = 
-	datenschutzeinwilligungurl = 
+	logolink = 	 
 	registrationpageuid = 
 	standardberatungort =
 	beraterstoragepid = 0
@@ -1365,6 +1364,8 @@ plugin.tx_iqtp13db.settings {
 		201 = staatenlos
    }
    
+   datenschutzeinwilligungurl = https://www.iq-webapp.de/frontend-iq-webapp/datenschutz-und-einwilligung
+   
    aufenthaltsstatus {
 		1 = keine Angabe
 		6 = Aufenthaltserlaubnis zur Arbeitsplatzsuche (§18c AufenthG)
@@ -1475,7 +1476,7 @@ plugin.tx_iqtp13db.settings {
 	   	3 = Video
 	   	4 = face-to-face
    }
-  
+   
 }
 [global]
 
@@ -1485,6 +1486,8 @@ plugin.tx_iqtp13db.settings {
 
 [siteLanguage("twoLetterIsoCode") == 'en']
 plugin.tx_iqtp13db.settings {
+   
+   datenschutzeinwilligungurl = https://www.iq-webapp.de/en/frontend-iq-webapp/privacy-consent
    
    aufenthaltsstatus {
 		 1 = no specification
@@ -1610,6 +1613,8 @@ page.includeCSS.customtp13rtl = EXT:iqtp13db/Resources/Public/CSS/customtp13db_r
 
 plugin.tx_iqtp13db.settings {
 	
+	datenschutzeinwilligungurl = https://www.iq-webapp.de/en/frontend-iq-webapp/privacy-consent
+	
 	aufenthaltsstatus {
 	    1 = لا توجد معلومات
 		6 = (§18c AufenthG) رخصة الإقامة لأجل البحث عن العمل
@@ -1733,6 +1738,8 @@ page.includeCSS.customtp13rtl = EXT:iqtp13db/Resources/Public/CSS/customtp13db_r
 
 plugin.tx_iqtp13db.settings {
 
+	datenschutzeinwilligungurl = https://www.iq-webapp.de/en/frontend-iq-webapp/privacy-consent
+
 	aufenthaltsstatus {
 	    1 = اعلام نمی‌کنم
 	    6 = مجوز اقامت برای جستجوی موقعیت شغلی (ماده 18c از AufenthG)
@@ -1854,6 +1861,8 @@ plugin.tx_iqtp13db.settings {
 [siteLanguage("twoLetterIsoCode") == 'fr']
 plugin.tx_iqtp13db.settings {
 
+	datenschutzeinwilligungurl = https://www.iq-webapp.de/en/frontend-iq-webapp/privacy-consent
+	
 	aufenthaltsstatus {
 	    1 = pas d'indication
 	    6 = titre de séjour pour recherche d'emploi (§18c AufenthG)
@@ -1973,6 +1982,8 @@ plugin.tx_iqtp13db.settings {
 
 [siteLanguage("twoLetterIsoCode") == 'pl']
 plugin.tx_iqtp13db.settings {
+	
+	datenschutzeinwilligungurl = https://www.iq-webapp.de/en/frontend-iq-webapp/privacy-consent
 	
 	aufenthaltsstatus {
 	    1 = brak informacji
@@ -2095,6 +2106,8 @@ plugin.tx_iqtp13db.settings {
 [siteLanguage("twoLetterIsoCode") == 'ro']
 plugin.tx_iqtp13db.settings {
 	
+	datenschutzeinwilligungurl = https://www.iq-webapp.de/en/frontend-iq-webapp/privacy-consent
+	
 	aufenthaltsstatus {
 	    1 = Lipsă date
 	    6 = Permis de ședere pentru căutarea unui loc de muncă (§18c AufenthG* = *Legea germană privind rezidența)
@@ -2216,6 +2229,8 @@ plugin.tx_iqtp13db.settings {
 [siteLanguage("twoLetterIsoCode") == 'ru']
 plugin.tx_iqtp13db.settings {
 	
+	datenschutzeinwilligungurl = https://www.iq-webapp.de/en/frontend-iq-webapp/privacy-consent
+	
 	aufenthaltsstatus {
 	    1 = Информация отсутствует
 	    6 = Вид на жительство для поиска работы (§18c AufenthG)
@@ -2336,6 +2351,8 @@ plugin.tx_iqtp13db.settings {
 
 [siteLanguage("twoLetterIsoCode") == 'es']
 plugin.tx_iqtp13db.settings {
+	
+	datenschutzeinwilligungurl = https://www.iq-webapp.de/en/frontend-iq-webapp/privacy-consent
 	
 	aufenthaltsstatus {
 	    1 = No se especifica
@@ -2459,6 +2476,8 @@ plugin.tx_iqtp13db.settings {
 [siteLanguage("twoLetterIsoCode") == 'tr']
 plugin.tx_iqtp13db.settings {
 	
+	datenschutzeinwilligungurl = https://www.iq-webapp.de/en/frontend-iq-webapp/privacy-consent
+	
 	aufenthaltsstatus {
 	    1 = Bilgi yok (B.y.)
 	    6 = İş aramak için oturma izni
@@ -2580,6 +2599,8 @@ plugin.tx_iqtp13db.settings {
 # ukrainisch
 [siteLanguage("twoLetterIsoCode") == 'uk']
 plugin.tx_iqtp13db.settings {
+	
+	datenschutzeinwilligungurl = https://www.iq-webapp.de/en/frontend-iq-webapp/privacy-consent
 	
 	aufenthaltsstatus { 
 	    1 = без відповіді
