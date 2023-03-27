@@ -1807,7 +1807,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $this->redirectToUri($uri, 0, 303);
         } else {
             
-            if($valarrwohnsitzdeutschland == '') {
+            if($valarrwohnsitzdeutschland == '' && $valArray['direkt'] != '1') {
                 $this->redirect('startseite', 'Teilnehmer', 'Iqtp13db', null);
             }
             
