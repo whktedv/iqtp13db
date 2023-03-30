@@ -24,7 +24,7 @@
 <h1>Liste Erstberatung: {anzgesamt} Einträge <f:if condition="{filteron}"><f:then><span style="color: red;">(gefiltert)</span></f:then></f:if></h1>
 	
 <div class="toppaginator">
-	<f:render partial="Paginator" arguments="{pagination: pagination, pages: pages, paginator: paginator, action: calleraction}" />
+	<f:render partial="Paginator" arguments="{pagination: pagination, pages: pages, paginator: paginator, action: calleraction, orderby : orderby}" />
 </div>
 
 <table  class="tx_iqtp13db listerstberatung" >
@@ -110,7 +110,7 @@
 </table>
 
 <div class="bottompaginator">
-	<f:render partial="Paginator" arguments="{pagination: pagination, pages: pages, paginator: paginator, action: calleraction}" />
+	<f:render partial="Paginator" arguments="{pagination: pagination, pages: pages, paginator: paginator, action: calleraction, orderby : orderby}" />
 </div>
 
 <div class="legende">

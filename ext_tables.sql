@@ -235,9 +235,12 @@ CREATE TABLE tx_iqtp13db_domain_model_historie (
 #
 CREATE TABLE fe_groups (
         niqbid varchar(255) DEFAULT '' NOT NULL,
+        nichtiq int(11) unsigned DEFAULT '0',
+        bundesland varchar(255) DEFAULT '' NOT NULL,
         generalmail varchar(255) DEFAULT '' NOT NULL,
         plzlist text NOT NULL,
         keywordlist text NOT NULL,
         beratungsarten varchar(255) DEFAULT '' NOT NULL,
+        einwilligungserklaerungsseite int(11) DEFAULT '0' NOT NULL
 );
 

@@ -209,7 +209,9 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         ksort($days4beratung);
         ksort($days4wartezeit);
         
-        $aktuelleanmeldungen = count($this->teilnehmerRepository->findAllOrder4Status(0, '%')) + count($this->teilnehmerRepository->findAllOrder4Status(1, '%'));
+        $aktuelleanmeldungenunbestaetigt = count($this->teilnehmerRepository->findAllOrder4Status(0, '%'));        
+        $aktuelleanmeldungenbestaetigt = count($this->teilnehmerRepository->findAllOrder4Status(1, '%'));
+        $aktuelleanmeldungen = $aktuelleanmeldungenbestaetigt + $aktuelleanmeldungenunbestaetigt;
         $aktuellerstberatungen = count($this->teilnehmerRepository->findAllOrder4Status(2, '%'));
         $aktuellberatungenfertig = count($this->teilnehmerRepository->findAllOrder4Status(3, '%'));
         $archivierttotal = count($this->teilnehmerRepository->findAllOrder4Status(4, '%'));
@@ -249,7 +251,6 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         $statsgesamtratsuchende = $this->teilnehmerRepository->count4Status("01.1.1970", "31.12.".$diesesjahr, '%');
         $statsgesamtfertigberaten = $this->teilnehmerRepository->count4StatusBeratungfertig("01.1.1970", "31.12.".$diesesjahr, '%');
         $statsgesamtarchiviert = $this->teilnehmerRepository->count4StatusArchiviert("01.1.1970", "31.12.".$diesesjahr, '%');
-        //DebuggerUtility::var_dump($anzberater);
         
         $neuanmeldungen7tage = array();
         for($i = 7; $i >= 0; $i--) {
@@ -277,6 +278,8 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 'totalavgmonthw'=> $totalavgmonthw,
                 'SUMtotalavgmonthw'=>  $anz4avgmonthw > 0 ? array_sum($totalavgmonthw)/$anz4avgmonthw : 0,
                 'aktuelleanmeldungen'=> $aktuelleanmeldungen,
+                'aktuelleanmeldungenunbestaetigt' => $aktuelleanmeldungenunbestaetigt,
+                'aktuelleanmeldungenbestaetigt' => $aktuelleanmeldungenbestaetigt,
                 'aktuellerstberatungen'=> $aktuellerstberatungen,
                 'aktuellberatungenfertig'=> $aktuellberatungenfertig,
                 'archivierttotal'=> $archivierttotal,                

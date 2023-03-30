@@ -33,11 +33,13 @@ class UserGroupRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         
         $query = $this->createQuery();
         $query->matching($query->logicalAnd(
-            //$query->logicalNot($query->like('niqbid', '12345')),
             $query->logicalNot($query->like('niqbid', '')),
             $query->logicalNot($query->like('title', 'AA%')) 
             ));
-        $query->setOrderings(array('title' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING));
+        $query->setOrderings(
+            array('bundesland' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING), 
+            array('title' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING)
+        );
         $query = $query->execute();
         return $query;
     }

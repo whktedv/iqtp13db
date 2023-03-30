@@ -29,6 +29,7 @@
 
 <table class="beratungsstellen">
 	<th>Name Beratungsstelle</th>
+	<th>Bundesland</th>
 	<th>NIQBID</th>
 	<th>Anzahl Berater:innen</th>
 	<th>Anzahl Angemeldet</th>
@@ -37,6 +38,7 @@
 	<f:for each="{alleberatungsstellen}" as="beratungsstelle" iteration="iter">
 		<tr>
 			<td>{beratungsstelle.title}</td>
+			<td>{beratungsstelle.bundesland}</td>
 			<td>{beratungsstelle.niqbid}</td>
 			<td>{anzberater.{beratungsstelle.uid}}</td>
 			<td>{anzratsuchendeanmeld.{beratungsstelle.uid}}</td>
@@ -67,13 +69,13 @@
 <table>
 	<tbody>
 	<tr>
-		<th>Anmeldungen wartend (auch unbestätigt)</th>
+		<th>Anmeldungen wartend (davon bestätigt/unbestätigt)</th>
 		<th>Erstberatungen laufend</th>
 		<th>Erstberatungen abgeschlossen</th>
 		<th>Total archiviert</th>
 	</tr>
 	<tr>
-		<td>{aktuelleanmeldungen}</td>
+		<td>{aktuelleanmeldungen} ({aktuelleanmeldungenbestaetigt}/{aktuelleanmeldungenunbestaetigt})</td>
 		<td>{aktuellerstberatungen}</td>
 		<td>{aktuellberatungenfertig}</td>
 		<td>{archivierttotal}</td>

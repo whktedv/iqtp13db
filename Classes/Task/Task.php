@@ -33,6 +33,7 @@ class Task extends AbstractTask {
      
      /**
       * Executes the delete-query for beratungsstatus = 99 (abgebrochene Anmeldung)
+      * Nicht abgeschlossene Anmeldungen werden nach einem Tag als deleted markiert
       *
       * @return bool
       */
@@ -53,6 +54,7 @@ class Task extends AbstractTask {
      
      /**
       * Executes the delete-query for the deleted table
+      * Markiere in der Teilnehmer-Tabelle alle Einträge, die in der Webapp gelöscht wurden (hidden = 1) und markiere diese als deleted
       *
       * @return bool
       */
@@ -61,7 +63,6 @@ class Task extends AbstractTask {
          $queryBuilder->getRestrictions()->removeAll();
          
          $date90 = strtotime('-90 day');
-         //$date90 = strtotime('now');
          
          $queryBuilder->update('tx_iqtp13db_domain_model_teilnehmer')
          ->where($queryBuilder->expr()->eq('hidden',$queryBuilder->createNamedParameter(1, \PDO::PARAM_INT)))
@@ -74,7 +75,8 @@ class Task extends AbstractTask {
      
      /**
       * Executes the delete-query for the deleted table
-      *
+      * Markiere in der Abschlüsse-Tabelle alle Einträge, bei denen in der Webapp die zugehörigen Teilnehmer gelöscht wurden (hidden = 1) und markiere diese als deleted
+      * 
       * @return bool
       */
      protected function deleteDeletedAbschluesse() {
@@ -104,6 +106,7 @@ class Task extends AbstractTask {
      
      /**
       * Executes the delete-query for the deleted table
+      * Markiere in der Folgekontakt-Tabelle alle Einträge, bei denen in der Webapp die zugehörigen Teilnehmer gelöscht wurden (hidden = 1) und markiere diese als deleted
       *
       * @return bool
       */
@@ -134,6 +137,8 @@ class Task extends AbstractTask {
      
      /**
       * Executes the delete-query for the deleted table
+      * Markiere in der Dokumente-Tabelle alle Einträge, bei denen in der Webapp die zugehörigen Teilnehmer gelöscht wurden (hidden = 1) und markiere diese als deleted
+      * Lösche dann die Ordner der Teilnehmer rekursiv, deren Dateien als deleted markiert wurden
       *
       * @return bool
       */
@@ -170,24 +175,15 @@ class Task extends AbstractTask {
              ->set('deleted', 1)
              ->executeStatement();
              
-             $fullpath = '/'.$row['pfad'].$row['name'];
-             if($storage->hasFile($fullpath)) {
-                $delfile = $storage->getFile($fullpath);
-                $ergfi = $storage->deleteFile($delfile);
-             }
-                          
              if($row['pfad'] != '') {
-                 $folderpath = '/'.$row['pfad'];
+                 $folderpath = $row['pfad'];
                  if($storage->hasFolder($folderpath)) {
                      $delfolder = $storage->getFolder($folderpath);
-                     $filesinfolder = $storage->countFilesInFolder($delfolder);
-                     if($filesinfolder == 0) $ergfo = $storage->deleteFolder($delfolder);                 
-                 }
+                     $ergfo = $storage->deleteFolder($delfolder, TRUE);                 
+                 }                 
              }
          }
          
          return true;
-     }
-     
-     
+     }    
 }

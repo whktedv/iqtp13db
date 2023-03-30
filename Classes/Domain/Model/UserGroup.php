@@ -18,6 +18,20 @@ class UserGroup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var string
      */
     protected $niqbid = '';
+        
+    /**
+     * nichtiq
+     * 
+     * @var int
+     */
+    protected $nichtiq = 0;
+        
+    /**
+     * bundesland 
+     * 
+     * @var string
+     */
+    protected $bundesland = '';
     
     /**
      * generalmail
@@ -54,6 +68,14 @@ class UserGroup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $description = '';
     
+    
+    /**
+     * einwilligungserklaerungsseite
+     * 
+     *  @var int
+     */
+    protected $einwilligungserklaerungsseite = 0;
+    
     /**
      * initializes this object
      *
@@ -61,6 +83,7 @@ class UserGroup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param array $plzlist
      * @param array $keywordlist
      * @param array $beratungsarten
+     * @param array $description
      */
     public function __construct($title = '', array $plzlist = array(), array $keywordlist = array(), array $beratungsarten = array(), $description = '') {
         $this->setTitle($title);
@@ -109,6 +132,47 @@ class UserGroup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setNiqbid($niqbid)
     {
         $this->niqbid = $niqbid;
+    }
+    
+    /**
+     * Returns the nichtiq
+     *
+     * @return int $nichtiq
+     */
+    public function getNichtiq()
+    {
+        return $this->nichtiq;
+    }
+    
+    /**
+     * Sets the nichtiq
+     *
+     * @param int $nichtiq
+     * @return void
+     */
+    public function setNichtiq($nichtiq)
+    {
+        $this->nichtiq = $nichtiq;
+    }
+    
+    /**
+     * Sets the bundesland value
+     *
+     * @param string $bundesland
+     */
+    public function setBundesland($bundesland)
+    {
+        $this->title = $bundesland;
+    }
+    
+    /**
+     * Returns the bundesland value
+     *
+     * @return string
+     */
+    public function getBundesland()
+    {
+        return $this->bundesland;
     }
     
     /**
@@ -213,6 +277,27 @@ class UserGroup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function getDescription()
     {
         return $this->description;
+    }
+    
+    /**
+     * Returns the einwilligungserklaerungsseite
+     *
+     * @return int $einwilligungserklaerungsseite
+     */
+    public function getEinwilligungserklaerungsseite()
+    {
+        return $this->einwilligungserklaerungsseite;
+    }
+    
+    /**
+     * Sets the einwilligungserklaerungsseite
+     *
+     * @param int $einwilligungserklaerungsseite
+     * @return void
+     */
+    public function setEinwilligungserklaerungsseite($einwilligungserklaerungsseite)
+    {
+        $this->einwilligungserklaerungsseite = $einwilligungserklaerungsseite;
     }
     
 }

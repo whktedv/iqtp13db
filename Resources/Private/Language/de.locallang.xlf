@@ -123,7 +123,8 @@
 			<trans-unit id="confirmsubject"><target>Bitte bestätigen Sie Ihre Anmeldung zur Anerkennungsberatung beim IQ Netzwerk</target></trans-unit>	
 			<trans-unit id="kontaktberatungsstelle"><target>Das ist Ihre Beratungsstelle:</target></trans-unit>
 			
-			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligung"><target>Einwilligung</target></trans-unit>			
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer"><target>Teilnehmer</target></trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligung"><target>Einwilligung</target></trans-unit>	
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.niqidberatungsstelle"><target>NIQ Beratungsstelle ID</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.beratungsstatus"><target>Beratungsstatus</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.niqchiffre"><target>NIQ Chiffre</target></trans-unit>
@@ -175,7 +176,8 @@
 			<trans-unit id="tx_iqtp13db_domain_model_dokument.name"><target>Name</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_dokument.beschreibung"><target>Kurzbeschreibung</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_dokument.pfad"><target>Pfad</target></trans-unit>
-			<trans-unit id="tx_iqtp13db_domain_model_dokument.teilnehmer"><target>Ratsuchende*r</target></trans-unit>	
+			<trans-unit id="tx_iqtp13db_domain_model_dokument.teilnehmer"><target>Ratsuchende*r</target></trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_historie"><target>Historie</target></trans-unit>
 		</body>
 	</file>
 </xliff>

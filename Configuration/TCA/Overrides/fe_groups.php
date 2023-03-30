@@ -11,6 +11,28 @@ $fields = array(
             'eval' => 'trim'
         ),
     ),
+    'nichtiq' => array(
+        'exclude' => 1,
+        'label' => 'Ist keine IQ-Beratungsstelle',
+        'config' => array(
+            'type' => 'check',
+            'items' => array(
+                [
+                    'Nicht-IQ',
+                    1,
+                ],
+            ),
+        ),
+    ),
+    'bundesland' => array(
+        'exclude' => 1,
+        'label' => 'Bundesland',
+        'config' => array(
+            'type' => 'input',
+            'size' => 30,
+            'eval' => 'trim'
+        ),
+    ),
     'generalmail' => array(
         'exclude' => 1,
         'label' => 'Allgemeine Mailadresse (u.a. f. Anmeldekopien)',
@@ -66,6 +88,21 @@ $fields = array(
             ),
         ),
     ),
+    'einwilligungserklaerungsseite' => array(
+        'label' => 'Seite mit eigener Einwilligungserklärung',
+        'config' => array(
+            'type' => 'group',
+            'allowed' => 'pages',
+            'maxitems' => 1,
+            'minitems' => 0,
+            'size' => 1,
+            'suggestOptions' => array(
+                'default' => array(
+                    'additionalSearchFields' => 'nav_title, url',                    
+                ),
+            ),
+        ),
+    ),
     
 );
 
@@ -74,7 +111,7 @@ $fields = array(
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
     'fe_groups',
-    'niqbid, generalmail, plzlist, keywordlist, beratungsarten',
+    'niqbid, nichtiq, bundesland, generalmail, plzlist, keywordlist, beratungsarten, einwilligungserklaerungsseite',
     '',
     ''
     );

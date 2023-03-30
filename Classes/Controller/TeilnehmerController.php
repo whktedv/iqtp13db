@@ -233,11 +233,17 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $monatsnamen[$i] = date("M", mktime(0, 0, 0, $i, 1, $diesesjahr));
         }
         
+        $tnberatungenfk22 = $this->folgekontaktRepository->fk4StatusFK2022("01.01.2023", date("t", mktime(0, 0, 0, $diesermonat, 1, $diesesjahr)).".".$diesermonat.".".$diesesjahr, $this->niqbid);
+        for($m = 1; $m < 13; $m++) $beratungfk22[$m] = 0;
+        foreach($tnberatungenfk22 as $fk22) {
+            $fkmonat = DateTime::createFromFormat('d.m.Y', $fk22->getDatum())->format('n');
+            $beratungfk22[$fkmonat]++;
+        }
+        
         for($m = $diesermonat + 1; $m < 13; $m++) {
             $angemeldeteTN[$m] = $this->teilnehmerRepository->count4Status("01.".$m.".".$letztesjahr, date("t", mktime(0, 0, 0, $m, 1, $letztesjahr)).".".$m.".".$letztesjahr, $this->niqbid);
             $qfolgekontakte[$m] = $this->folgekontaktRepository->count4Status("01.".$m.".".$letztesjahr, date("t", mktime(0, 0, 0, $m, 1, $letztesjahr)).".".$m.".".$letztesjahr, $this->niqbid);
             $erstberatung[$m] = $this->teilnehmerRepository->count4StatusErstberatung("01.".$m.".".$letztesjahr, date("t", mktime(0, 0, 0, $m, 1, $letztesjahr)).".".$m.".".$letztesjahr, $this->niqbid);
-            $beratungfk22[$m] = $this->teilnehmerRepository->count4StatusFK2022("01.".$m.".".$letztesjahr, date("t", mktime(0, 0, 0, $m, 1, $letztesjahr)).".".$m.".".$letztesjahr, $this->niqbid);
             $beratungfertig[$m] = $this->teilnehmerRepository->count4StatusBeratungfertig("01.".$m.".".$letztesjahr, date("t", mktime(0, 0, 0, $m, 1, $letztesjahr)).".".$m.".".$letztesjahr, $this->niqbid);
             $niqerfasst[$m] =  $this->teilnehmerRepository->count4Statusniqerfasst("01.".$m.".".$letztesjahr, date("t", mktime(0, 0, 0, $m, 1, $letztesjahr)).".".$m.".".$letztesjahr, $this->niqbid);
             
@@ -248,7 +254,6 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $angemeldeteTN[$m] = $this->teilnehmerRepository->count4Status("01.".$m.".".$diesesjahr, date("t", mktime(0, 0, 0, $m, 1, $diesesjahr)).".".$m.".".$diesesjahr, $this->niqbid);
             $qfolgekontakte[$m] = $this->folgekontaktRepository->count4Status("01.".$m.".".$diesesjahr, date("t", mktime(0, 0, 0, $m, 1, $diesesjahr)).".".$m.".".$diesesjahr, $this->niqbid);
             $erstberatung[$m] = $this->teilnehmerRepository->count4StatusErstberatung("01.".$m.".".$diesesjahr, date("t", mktime(0, 0, 0, $m, 1, $diesesjahr)).".".$m.".".$diesesjahr, $this->niqbid);
-            $beratungfk22[$m] = $this->teilnehmerRepository->count4StatusFK2022("01.".$m.".".$diesesjahr, date("t", mktime(0, 0, 0, $m, 1, $diesesjahr)).".".$m.".".$diesesjahr, $this->niqbid);
             $beratungfertig[$m] = $this->teilnehmerRepository->count4StatusBeratungfertig("01.".$m.".".$diesesjahr, date("t", mktime(0, 0, 0, $m, 1, $diesesjahr)).".".$m.".".$diesesjahr, $this->niqbid);
             $niqerfasst[$m] = $this->teilnehmerRepository->count4Statusniqerfasst("01.".$m.".".$diesesjahr, date("t", mktime(0, 0, 0, $m, 1, $diesesjahr)).".".$m.".".$diesesjahr, $this->niqbid);
             
@@ -376,7 +381,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'erstberatung'=> $erstberatung,
                 'SUMerstberatung'=>  array_sum($erstberatung),
                 'beratungfk22'=> $beratungfk22,
-                'SUMberatungfk22'=>  array_sum($beratungfk22),
+                'SUMberatungfk22'=> count($tnberatungenfk22),
                 'beratungfertig'=> $beratungfertig,
                 'SUMberatungfertig'=>  array_sum($beratungfertig),
                 'niqerfasst'=> $niqerfasst,
@@ -972,8 +977,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function initializeUpdateAction() {
         
         $valArray = $this->request->getArguments();
-        $beratungdatum = $valArray['teilnehmer']['beratungdatum'];
-        $erstberatungabgeschlossen = $valArray['teilnehmer']['erstberatungabgeschlossen'];
+        $beratungdatum = $valArray['teilnehmer']['beratungdatum'] ?? '';
+        $erstberatungabgeschlossen = $valArray['teilnehmer']['erstberatungabgeschlossen'] ?? '';
         
         if($beratungdatum != '' && !$this->generalhelper->validateDateYmd($beratungdatum)) {
             $this->addFlashMessage("FEHLER: Datensatz NICHT gespeichert. -Beratung Datum- ungültige Eingabe. Datum im Format JJJJ-MM-TT eintragen!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
@@ -1798,6 +1803,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $bstid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid');
         
         $valarrwohnsitzdeutschland = $valArray['wohnsitzDeutschland'] ?? '';
+        $direkt = $valArray['direkt'] ?? '0';
         
         if($valarrwohnsitzdeutschland == 2) {
             $uri = $uriBuilder->setTargetPageUid($this->settings['anmeldungzsbapageuid'])->build();
@@ -1807,7 +1813,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $this->redirectToUri($uri, 0, 303);
         } else {
             
-            if($valarrwohnsitzdeutschland == '' && $valArray['direkt'] != '1') {
+            if($valarrwohnsitzdeutschland == '' && $direkt != '1') {
                 $this->redirect('startseite', 'Teilnehmer', 'Iqtp13db', null);
             }
             
@@ -1870,6 +1876,18 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $jahre[$jahr] = (String)$jahr;
         }
         
+        $zugewieseneberatungsstelle = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid'));
+        $zugewieseneberatungsstelle = $zugewieseneberatungsstelle[0];
+        
+        if($zugewieseneberatungsstelle->getNichtiq() == 1 && $zugewieseneberatungsstelle->getEinwilligungserklaerungsseite() != '') {
+            $uriBuilder = $this->controllerContext->getUriBuilder();
+            $uriBuilder->reset();
+            $uriBuilder->setTargetPageUid($zugewieseneberatungsstelle->getEinwilligungserklaerungsseite());
+            $urleinwilligung = $uriBuilder->build();                
+        } else {
+            $urleinwilligung = $this->settings['datenschutzeinwilligungurl'];
+        }
+        
         $this->view->assignMultiple(
             [
                 'altervonbis' => $altervonbis,
@@ -1880,7 +1898,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'beratungsstelle' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid'),
                 'wohnsitzdeutschland' => $valArray['wohnsitzDeutschland'] ?? '',
                 'plz' => $valArray['plz'] ?? '',
-                'jahre' => $jahre
+                'jahre' => $jahre,
+                'urleinwilligung' => $urleinwilligung
             ]
             );
         
@@ -2454,8 +2473,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         
         $tnniqid = $teilnehmer->getNiqidberatungsstelle() == 0 ? '12345' : $teilnehmer->getNiqidberatungsstelle();
         $zugewieseneberatungsstelle = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $tnniqid);
-        //DebuggerUtility::var_dump($zugewieseneberatungsstelle);
-        //die;
+       
         if($zugewieseneberatungsstelle == NULL) {
             $bcc = "edv@whkt.de";
         } else {
