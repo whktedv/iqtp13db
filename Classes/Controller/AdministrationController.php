@@ -223,6 +223,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
             $this->addFlashMessage('Es sind noch keine Berater:innen vorhanden. Bitte im Menü Berater*innen anlegen.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
         }
         $alleberatungsstellen = $this->userGroupRepository->findAllBeratungsstellen($this->settings['beraterstoragepid']);
+        $alleberatungsstellensortiert = $this->userGroupRepository->findAllBeratungsstellenABC($this->settings['beraterstoragepid']);
         
         $anzberater = array();
         $anzratsuchendeanmeld = array();
@@ -285,6 +286,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 'archivierttotal'=> $archivierttotal,                
                 'anzberatungsstellen' => count($alleberatungsstellen),
                 'alleberatungsstellen' => $alleberatungsstellen,
+                'alleberatungsstellensortiert' => $alleberatungsstellensortiert,
                 'anzalleberater' => count($alleberater),
                 'anzberater' => $anzberater,
                 'anzratsuchendeanmeld' => $anzratsuchendeanmeld,
@@ -301,5 +303,6 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
             ]
             );
     }
+   
 }
     

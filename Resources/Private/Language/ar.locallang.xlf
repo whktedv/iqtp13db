@@ -164,6 +164,13 @@
 	</p>]]></target></trans-unit>
 	<trans-unit id="confirmsubject"><target>	يرجى تأكيد تسجيلك للاستشارة الأولية للاعتراف في 	</target></trans-unit>
 	<trans-unit id="kontaktberatungsstelle"><target>This is your counselling center:</target></trans-unit>
+	
+	<trans-unit id="errormessage"><source>يرجى التحقق من الحقول المميزة باللون الأحمر.</source></trans-unit>
+	<trans-unit id="errorconsent"><source>للمتابعة، يجب أن توافق على نقل بياناتك.</source></trans-unit>
+	<trans-unit id="errormailnotmatch"><source>عناوين البريد الإلكتروني غير متطابقة، يرجى التحقق.</source></trans-unit>
+	<trans-unit id="errormailnotvalid"><source>عنوان بريد إلكتروني غير صالح، يرجى التحقق.</source></trans-unit>
+	<trans-unit id="errordomainnotvalid"><source>النطاق غير موجود، يرجى التحقق.</source></trans-unit>
+	<trans-unit id="errortndatanotvalid"><source>البيانات غير صالحة، يرجى التحقق من البيانات المدخلة.</source></trans-unit>
     </body>
   </file>
 </xliff>

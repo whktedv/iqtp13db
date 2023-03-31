@@ -124,6 +124,13 @@
 	<trans-unit id="confirmmailtext2"><target><![CDATA[<p>З повагою</p> <p> Ваша консультаційна установа по визнанню професійних дипломів та кваліфікацій мережі IQ</p>]]></target></trans-unit>
 	<trans-unit id="confirmsubject"><target>Будь ласка, підтвердьте Вашу реєстрацію в консультаційній установі по визнанню професійної кваліфікації мережі IQ</target></trans-unit>
   <trans-unit id="kontaktberatungsstelle"><target>This is your counselling center:</target></trans-unit>
+ 
+	<trans-unit id="errormessage"><target>Будь ласка, перевірте червоні підсвічені поля.</target></trans-unit>
+	<trans-unit id="errorconsent"><target>Щоб продовжити, ви повинні дати згоду на передачу ваших даних.</target></trans-unit>
+	<trans-unit id="errormailnotmatch"><target>Адреси електронної пошти не співпадають, будь ласка, перевірте.</target></trans-unit>
+	<trans-unit id="errormailnotvalid"><target>Недійсна адреса електронної пошти, будь ласка, перевірте.</target></trans-unit>
+	<trans-unit id="errordomainnotvalid"><target>Домен не знайдено, будь ласка, перевірте.</target></trans-unit>
+	<trans-unit id="errortndatanotvalid"><target>Неправильні дані, будь ласка, перевірте введені дані.</target></trans-unit>
     </body>
   </file>
 </xliff>

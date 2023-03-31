@@ -156,6 +156,13 @@
 	         ]]></target></trans-unit>
 	<trans-unit id="confirmsubject"><target>	لطفا نام‌نویسی خود را برای مشاوره تایید نورد-راین‌ وست‌فالن تایید کنید</target></trans-unit>
 	<trans-unit id="kontaktberatungsstelle"><target>This is your counselling center:</target></trans-unit>
+	
+	<trans-unit id="errormessage"><source>لطفا فیلدهای مشخص شده با رنگ قرمز را بررسی کنید.</source></trans-unit>
+	<trans-unit id="errorconsent"><source>برای ادامه، شما باید به انتقال داده های خود موافقت دهید.</source></trans-unit>
+	<trans-unit id="errormailnotmatch"><source>آدرس های ایمیل مطابقت ندارند، لطفا بررسی کنید.</source></trans-unit>
+	<trans-unit id="errormailnotvalid"><source>آدرس ایمیل معتبر نیست، لطفا بررسی کنید.</source></trans-unit>
+	<trans-unit id="errordomainnotvalid"><source>دامنه یافت نشد، لطفا بررسی کنید.</source></trans-unit>
+	<trans-unit id="errortndatanotvalid"><source>داده ها معتبر نیستند، لطفا داده های وارد شده را بررسی کنید.</source></trans-unit>
     </body>
   </file>
 </xliff>

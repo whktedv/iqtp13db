@@ -178,6 +178,13 @@
 			<trans-unit id="tx_iqtp13db_domain_model_dokument.pfad"><target>Pfad</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_dokument.teilnehmer"><target>Ratsuchende*r</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_historie"><target>Historie</target></trans-unit>
+			
+			<trans-unit id="errormessage"><target>Bitte prüfen Sie die rot markierten Felder.</target></trans-unit>
+			<trans-unit id="errorconsent"><target>Um fortzufahren, müssen Sie in die Übermittlung Ihrer Daten einwilligen.</target></trans-unit>
+			<trans-unit id="errormailnotmatch"><target>Die E-Mail-Bestätigung ist nicht korrekt. Bitte E-Mail-Adresse prüfen.</target></trans-unit>
+			<trans-unit id="errormailnotvalid"><target>Dies ist keine gültige E-Mail-Adresse, bitte prüfen.</target></trans-unit>
+			<trans-unit id="errordomainnotvalid"><target>Domain nicht gefunden, bitte E-Mail-Adresse prüfen.</target></trans-unit>
+			<trans-unit id="errortndatanotvalid"><target>Die eingebenen Daten sind ungültig. Bitte prüfen Sie die eingebenenen Daten.</target></trans-unit>
 		</body>
 	</file>
 </xliff>

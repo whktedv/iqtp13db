@@ -7,7 +7,8 @@ class TeilnehmerValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstra
     public function isValid($teilnehmer)
 	{
 	    if (! $teilnehmer instanceof \Ud\Iqtp13db\Domain\Model\Teilnehmer) {
-	        $this->addError('Die eingebenen Daten sind ungültig. Bitte prüfen Sie die eingebenenen Daten.', 1262341470);
+	        $errormsg = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('errortndatanotvalid', 'iqtp13db');
+	        $this->addError($errormsg, 1262341470);
 	    } 	    
 	}
 }

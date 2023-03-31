@@ -109,10 +109,6 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $this->arguments->getArgument('tnseite1')->getPropertyMappingConfiguration()->allowProperties('sonstigerstatus');
             $this->arguments->getArgument('tnseite1')->getPropertyMappingConfiguration()->setTargetTypeForSubProperty('sonstigerstatus', 'array');
         }
-        if ($this->arguments->hasArgument('tnseite3')) {
-            $this->arguments->getArgument('tnseite3')->getPropertyMappingConfiguration()->allowProperties('wieberaten');
-            $this->arguments->getArgument('tnseite3')->getPropertyMappingConfiguration()->setTargetTypeForSubProperty('wieberaten', 'array');
-        }
         
         /* Propertymapping bis hier */
         
@@ -833,6 +829,15 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         for($jahr = $aktuellesJahr; $jahr > $aktuellesJahr-60; $jahr--) {
             $jahre[$jahr] = (String)$jahr;
         }
+     
+        if($group->getNichtiq() == 1 && $group->getEinwilligungserklaerungsseite() != '') {
+            $uriBuilder = $this->controllerContext->getUriBuilder();
+            $uriBuilder->reset();
+            $uriBuilder->setTargetPageUid($group->getEinwilligungserklaerungsseite());
+            $urleinwilligung = $uriBuilder->build();
+        } else {
+            $urleinwilligung = $this->settings['datenschutzeinwilligungurl'];
+        }
         
         $this->view->assignMultiple(
             [
@@ -846,7 +851,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'alleberater' => $alleberater,
                 'berater' => $this->user,
                 'settings' => $this->settings,
-                'jahre' => $jahre
+                'jahre' => $jahre,
+                'urleinwilligung' => $urleinwilligung
             ]
             );
     }
@@ -943,6 +949,15 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         
         $alleberatungsstellen = $this->userGroupRepository->findAllBeratungsstellen($this->settings['beraterstoragepid']);
         
+        if($group->getNichtiq() == 1 && $group->getEinwilligungserklaerungsseite() != '') {
+            $uriBuilder = $this->controllerContext->getUriBuilder();
+            $uriBuilder->reset();
+            $uriBuilder->setTargetPageUid($group->getEinwilligungserklaerungsseite());
+            $urleinwilligung = $uriBuilder->build();
+        } else {
+            $urleinwilligung = $this->settings['datenschutzeinwilligungurl'];
+        }
+        
         $this->view->assignMultiple(
             [
                 'alleberatungsstellen' => $alleberatungsstellen,
@@ -963,7 +978,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'showabschluesse' => $valArray['showabschluesse'] ?? '0',
                 'showdokumente' => $valArray['showdokumente'] ?? '0',
                 'edituserfield' => $edituserfield ?? '0',
-                'edittstampfield' => $edittstampfield ?? '0'
+                'edittstampfield' => $edittstampfield ?? '0',
+                'urleinwilligung' => $urleinwilligung
             ]
             );
     }
@@ -1879,7 +1895,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $zugewieseneberatungsstelle = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid'));
         $zugewieseneberatungsstelle = $zugewieseneberatungsstelle[0];
         
-        if($zugewieseneberatungsstelle->getNichtiq() == 1 && $zugewieseneberatungsstelle->getEinwilligungserklaerungsseite() != '') {
+        $nichtiq = $zugewieseneberatungsstelle != NULL ? $zugewieseneberatungsstelle->getNichtiq() : 0;  
+        if($nichtiq  == 1 && $zugewieseneberatungsstelle->getEinwilligungserklaerungsseite() != '') {
             $uriBuilder = $this->controllerContext->getUriBuilder();
             $uriBuilder->reset();
             $uriBuilder->setTargetPageUid($zugewieseneberatungsstelle->getEinwilligungserklaerungsseite());

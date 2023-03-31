@@ -134,6 +134,12 @@
 	<trans-unit id="confirmsubject"><target>Proszę potwierdzić rejestrację na konsultację w dotyczącą uznania kwalifikacji </target></trans-unit>
 	<trans-unit id="kontaktberatungsstelle"><target>This is your counselling center:</target></trans-unit>
   
+	<trans-unit id="errormessage"><target>Proszę sprawdzić pola oznaczone na czerwono.</target></trans-unit>
+	<trans-unit id="errorconsent"><target>Aby kontynuować, musisz zgodzić się na przesłanie swoich danych.</target></trans-unit>
+	<trans-unit id="errormailnotmatch"><target>Adresy e-mail nie pasują, proszę sprawdzić.</target></trans-unit>
+	<trans-unit id="errormailnotvalid"><target>Nieprawidłowy adres e-mail, proszę sprawdzić.</target></trans-unit>
+	<trans-unit id="errordomainnotvalid"><target>Domena nie znaleziona, proszę sprawdzić.</target></trans-unit>
+	<trans-unit id="errortndatanotvalid"><target>Dane nieprawidłowe, proszę sprawdzić wprowadzone dane.</target></trans-unit>
     </body>
   </file>
 </xliff>

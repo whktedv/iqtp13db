@@ -122,6 +122,14 @@
 		<trans-unit id="confirmmailtext2"><source>Yours recognition counselling</source></trans-unit>
 		<trans-unit id="confirmsubject"><source>Please confirm your registration for the initial recognition counselling</source></trans-unit>
 		<trans-unit id="kontaktberatungsstelle"><source>This is your counselling center:</source></trans-unit>
+		
+		<trans-unit id="errormessage"><source>Please check the red highlighted fields.</source></trans-unit>
+		<trans-unit id="errorconsent"><source>To proceed, you have to agree to transfer your data.</source></trans-unit>
+		<trans-unit id="errormailnotmatch"><source>E-Mail addresses do not match, please check.</source></trans-unit>
+		<trans-unit id="errormailnotvalid"><source>Not a valid E-Mail address, please check.</source></trans-unit>
+		<trans-unit id="errordomainnotvalid"><source>Domain not found, please check.</source></trans-unit>
+		<trans-unit id="errortndatanotvalid"><source>Data not valid, please check the entered data.</source></trans-unit>
+		
 	</body>
   </file>
 </xliff>

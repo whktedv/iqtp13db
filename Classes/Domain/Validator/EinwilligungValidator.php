@@ -19,8 +19,9 @@ class EinwilligungValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abst
 	{
 		if($value != true)
 		{
-			$this->addError('Um fortzufahren, müssen Sie in die Übermittlung Ihrer Daten einwilligen. / <i>To proceed, you have to agree to transfer your data.</i>', 40213131);
-			return false;
+		    $errormsg = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('errorconsent', 'iqtp13db');
+		    $this->addError($errormsg, 40213131);
+		    return FALSE;
 		}
 		return true;
 	}

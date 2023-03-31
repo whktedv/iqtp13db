@@ -149,6 +149,13 @@
 	<trans-unit id="confirmsubject"><target>Veuillez confirmer votre inscription au conseil en reconnaissance</target></trans-unit>
 	<trans-unit id="kontaktberatungsstelle"><target>This is your counselling center:</target></trans-unit>
   
+ 	<trans-unit id="errormessage"><target>Veuillez vérifier les champs surlignés en rouge.</target></trans-unit>
+	<trans-unit id="errorconsent"><target>Pour continuer, vous devez accepter le transfert de vos données.</target></trans-unit>
+	<trans-unit id="errormailnotmatch"><target>Les adresses e-mail ne correspondent pas, veuillez vérifier.</target></trans-unit>
+	<trans-unit id="errormailnotvalid"><target>Adresse e-mail invalide, veuillez vérifier.</target></trans-unit>
+	<trans-unit id="errordomainnotvalid"><target>Domaine introuvable, veuillez vérifier.</target></trans-unit>
+	<trans-unit id="errortndatanotvalid"><target>Données non valides, veuillez vérifier les données saisies.</target></trans-unit>
+
     </body>
   </file>
 </xliff>

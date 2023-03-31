@@ -136,8 +136,14 @@
 	yeterlilik ve denklik için danışmanlık başvurunuzu lütfen burda onaylayınız:</p>]]></target></trans-unit>
 	<trans-unit id="confirmmailtext2"><target><p>İçten selamlar</p><p>Sizin Mobil IQ Yeterlilik ve denklik için Danışmanlığınız</p></target></trans-unit>
 	<trans-unit id="confirmsubject"><target>Yeterlilik ve denklik için danışmanlık (Kuzey Ren Vestfalya Eyaleti) başvurunuzu onaylayınız</target></trans-unit>
-<trans-unit id="kontaktberatungsstelle"><target>This is your counselling center:</target></trans-unit>
+	<trans-unit id="kontaktberatungsstelle"><target>This is your counselling center:</target></trans-unit>
 
+	<trans-unit id="errormessage"><target>Lütfen kırmızı renkte vurgulanan alanları kontrol edin.</target></trans-unit>
+	<trans-unit id="errorconsent"><target>Devam etmek için verilerinizin transferine onay vermeniz gerekiyor.</target></trans-unit>
+	<trans-unit id="errormailnotmatch"><target>E-posta adresleri uyuşmuyor, lütfen kontrol edin.</target></trans-unit>
+	<trans-unit id="errormailnotvalid"><target>Geçersiz bir E-posta adresi, lütfen kontrol edin.</target></trans-unit>
+	<trans-unit id="errordomainnotvalid"><target>Alan adı bulunamadı, lütfen kontrol edin.</target></trans-unit>
+	<trans-unit id="errortndatanotvalid"><target>Geçersiz veriler, lütfen girilen verileri kontrol edin.</target></trans-unit>
     </body>
   </file>
 </xliff>

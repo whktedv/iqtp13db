@@ -490,6 +490,11 @@ form.filterform div {
     align-items: center;
 }
 
+.anmeldstart-frame .frame-inner h1.text-center {
+	margin: auto;
+	background: #468787;
+}
+	
 .iq-teaser-logo-ohne-rand {
 	width: 100%;
 }

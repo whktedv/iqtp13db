@@ -106,7 +106,7 @@
   <trans-unit id="aufenthaltsdokumente"><target>Residence documents</target></trans-unit>	
   <trans-unit id="sonstigedokumente"><target>Other documents</target></trans-unit>	
    
-  <trans-unit id="infoNachname"><target>Фамилия соответствует вашей семейной положении. Пожалуйста, введите его здесь.</target></trans-unit>
+  	<trans-unit id="infoNachname"><target>Фамилия соответствует вашей семейной положении. Пожалуйста, введите его здесь.</target></trans-unit>
 	<trans-unit id="infoVorname"><target>Имя - это ваше имя перед фамилией и обычно соответствует вашему имени. Пожалуйста, введите его здесь.</target></trans-unit>
 	<trans-unit id="infoGeburtsland"><target>Страна рождения соответствует стране, в которой вы родились. Пожалуйста, введите это здесь.</target></trans-unit>
 	<trans-unit id="infoStaatsangehoerigkeit"><target>Если у вас два разных гражданства / национальности, укажите оба.</target></trans-unit>
@@ -126,15 +126,21 @@
 	<trans-unit id="infofruehererAntrag"><target>Пожалуйста, укажите, подавали ли вы в прошлом заявление о признании вашей степени.</target></trans-unit>
 	<trans-unit id="infoInstitution"><target></target></trans-unit>
 
-  <trans-unit id="anredemail"><target>Добрый день</target></trans-unit>
+  	<trans-unit id="anredemail"><target>Добрый день</target></trans-unit>
 	<trans-unit id="mailtext"><target><![CDATA[<p>Спасибо за информацию.</p><p>Вы зарегистрированы на консультацию. Мы свяжемся с вами, как только подойдет ваша очередь.<br><br>Консультации могут быть предоставлены по электронной почте, телефону или в видеочате, если вы хотите.</p><p>Мы стремимся обработать ваш запрос в течение WARTEZEITWOCHEN недель. Мы просим вашего понимания и терпения.</p> <p>С уважением </p>Ваш совет по признанию IQ и квалификации]]></target></trans-unit>
 	<trans-unit id="subject"><target>Ваша регистрация на консультацию по первичному признанию в NRW</target></trans-unit>
 	<trans-unit id="confirmlinktext"><target>	Подтверждение регистрации - Confirm registration</target></trans-unit>
 	<trans-unit id="confirmmailtext1"><target><![CDATA[<p>Уважаемые соискатели совета,</p><p>пожалуйста, подтвердите свою регистрацию для первичной консультации по признанию здесь:</p>	]]></target></trans-unit>
 	<trans-unit id="confirmmailtext2"><target><![CDATA[<p>С уважением</p><p>Ваш совет по признанию и квалификации IQ</p>]]></target></trans-unit>
 	<trans-unit id="confirmsubject"><target>Пожалуйста, подтвердите свою регистрацию для первичной консультации по признанию NRW</target></trans-unit>
-<trans-unit id="kontaktberatungsstelle"><target>This is your counselling center:</target></trans-unit>
+	<trans-unit id="kontaktberatungsstelle"><target>This is your counselling center:</target></trans-unit>
   
+ 	<trans-unit id="errormessage"><target>Пожалуйста, проверьте красным выделенные поля.</target></trans-unit>
+	<trans-unit id="errorconsent"><target>Чтобы продолжить, вы должны согласиться на передачу ваших данных.</target></trans-unit>
+	<trans-unit id="errormailnotmatch"><target>Адреса электронной почты не совпадают, пожалуйста, проверьте.</target></trans-unit>
+	<trans-unit id="errormailnotvalid"><target>Неправильный адрес электронной почты, пожалуйста, проверьте.</target></trans-unit>
+	<trans-unit id="errordomainnotvalid"><target>Домен не найден, пожалуйста, проверьте.</target></trans-unit>
+	<trans-unit id="errortndatanotvalid"><target>Неверные данные, пожалуйста, проверьте введенные данные.</target></trans-unit>
     </body>
   </file>
 </xliff>

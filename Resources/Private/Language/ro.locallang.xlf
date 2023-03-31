@@ -141,6 +141,13 @@
 	<trans-unit id="confirmmailtext2"><target><![CDATA[<p>Cu stimă</p><p>Consiliere calificare şi recunoaştere IQ</p>]]></target></trans-unit>
 	<trans-unit id="confirmsubject"><target>Vă rugăm să confirmați înregistrarea dumneavoastră pentru consilierea de recunoaștere</target></trans-unit>
 	<trans-unit id="kontaktberatungsstelle"><target>This is your counselling center:</target></trans-unit>
+	
+	<trans-unit id="errormessage"><target>Vă rugăm să verificați câmpurile marcate cu roșu.</target></trans-unit>
+	<trans-unit id="errorconsent"><target>Pentru a continua, trebuie să fiți de acord cu transferul datelor dvs.</target></trans-unit>
+	<trans-unit id="errormailnotmatch"><target>Adresele de e-mail nu se potrivesc, vă rugăm să verificați.</target></trans-unit>
+	<trans-unit id="errormailnotvalid"><target>Adresă de e-mail invalidă, vă rugăm să verificați.</target></trans-unit>
+	<trans-unit id="errordomainnotvalid"><target>Domeniul nu a fost găsit, vă rugăm să verificați.</target></trans-unit>
+	<trans-unit id="errortndatanotvalid"><target>Date nevalide, vă rugăm să verificați datele introduse.</target></trans-unit>
     </body>
   </file>
 </xliff>

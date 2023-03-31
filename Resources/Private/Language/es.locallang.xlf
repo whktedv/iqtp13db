@@ -136,7 +136,13 @@
 	<trans-unit id="confirmmailtext2"><target><![CDATA[<p>Sinceramente </p> <p>Su Servicio de Asesoramiento de Reconocimiento y Calificación de IQ Móvil</p> <p>.]]></target></trans-unit>
 	<trans-unit id="confirmsubject"><target>Por favor, confirme su inscripción para la asesoramiento de reconocimiento inicial</target></trans-unit>
 	<trans-unit id="kontaktberatungsstelle"><target>Este es tu centro de asesoramiento:</target></trans-unit>	 
-	 
+	
+	<trans-unit id="errormessage"><target>Por favor, compruebe los campos resaltados en rojo.</target></trans-unit>
+	<trans-unit id="errorconsent"><target>Para continuar, debe aceptar la transferencia de sus datos.</target></trans-unit>
+	<trans-unit id="errormailnotmatch"><target>Las direcciones de correo electrónico no coinciden, por favor, compruebe.</target></trans-unit>
+	<trans-unit id="errormailnotvalid"><target>Dirección de correo electrónico no válida, por favor, compruebe.</target></trans-unit>
+	<trans-unit id="errordomainnotvalid"><target>Dominio no encontrado, por favor, compruebe.</target></trans-unit>
+	<trans-unit id="errortndatanotvalid"><target>Datos no válidos, por favor, compruebe los datos introducidos.</target></trans-unit>
     </body>
   </file>
 </xliff>
