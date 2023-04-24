@@ -32,7 +32,8 @@
 	<th>Bundesland</th>
 	<th>NIQBID</th>
 	<th>Anzahl Berater:innen</th>
-	<th>Anzahl Angemeldet</th>
+	<th>Anzahl Angemeldet (unbestätigt)</th>
+	<th class="bestaetigt">Anzahl Angemeldet (bestätigt)</th>
 	<th>Anzahl in Beratung</th>
 	<th>Anzahl im Archiv</th>
 	<f:for each="{alleberatungsstellen}" as="beratungsstelle" iteration="iter">
@@ -41,7 +42,8 @@
 			<td>{beratungsstelle.bundesland}</td>
 			<td>{beratungsstelle.niqbid}</td>
 			<td>{anzberater.{beratungsstelle.uid}}</td>
-			<td>{anzratsuchendeanmeld.{beratungsstelle.uid}}</td>
+			<td>{anzratsuchendeanmeld0.{beratungsstelle.uid}}</td>
+			<td class="bestaetigt">{anzratsuchendeanmeld1.{beratungsstelle.uid}}</td>
 			<td>{anzratsuchendeerstb.{beratungsstelle.uid}}</td>
 			<td>{anzratsuchendearch.{beratungsstelle.uid}}</td>
 		</tr>

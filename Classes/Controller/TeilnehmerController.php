@@ -1217,7 +1217,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             
             $zugewieseneberatungsstelle = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $teilnehmer->getNiqidberatungsstelle());
             $datenberatungsstelle = $zugewieseneberatungsstelle != NULL ? $zugewieseneberatungsstelle[0]->getDescription() : '';
-            $kontaktlabel = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('kontaktberatungsstelle', 'Iqtp13db');
+            if($datenberatungsstelle != '') $kontaktlabel = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('kontaktberatungsstelle', 'Iqtp13db');
+            else $kontaktlabel = '';
             
             $variables = array(
                 'teilnehmer' => $teilnehmer,
@@ -1916,7 +1917,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'wohnsitzdeutschland' => $valArray['wohnsitzDeutschland'] ?? '',
                 'plz' => $valArray['plz'] ?? '',
                 'jahre' => $jahre,
-                'urleinwilligung' => $urleinwilligung
+                'urleinwilligung' => $urleinwilligung,
+                'direkt' => $valArray['direkt'] ?? ''
             ]
             );
         
@@ -1935,6 +1937,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $this->redirect('anmeldseite1', 'Teilnehmer', null, null);
         } else {
             $valArray = $this->request->getArguments();
+            $direkt = $valArray['direkt'] ?? '0';
             if(isset($valArray['btnweiter'])) {
                 $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite1', serialize($tnseite1));
                 
@@ -1968,6 +1971,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                         $this->redirect('anmeldseite1', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
                     }
                 }
+                
+                if($direkt == '1') $teilnehmer->setKooperationgruppe('Direktlink: '.$GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid'));
                 
                 // Daten sofort in die Datenbank schreiben
                 $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
@@ -2209,8 +2214,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     $subject = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmsubject', 'Iqtp13db');
                     
                     $datenberatungsstelle = $tnberatungsstelle[0]->getDescription() ?? '';
-                    $kontaktlabel = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('kontaktberatungsstelle', 'Iqtp13db');
-                    
+                    if($datenberatungsstelle != '') $kontaktlabel = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('kontaktberatungsstelle', 'Iqtp13db');
+                    else $kontaktlabel = '';
+                        
                     $variables = array(
                         'teilnehmer' => $teilnehmer,
                         'confirmmailtext1' => $confirmmailtext1,
@@ -2504,7 +2510,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $mailtext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtext', 'Iqtp13db');
         $mailtext = str_replace("WARTEZEITWOCHEN", $this->settings['wartezeitwochen'], $mailtext);
         $datenberatungsstelle = $zugewieseneberatungsstelle != NULL ? $zugewieseneberatungsstelle[0]->getDescription() : '';
-        $kontaktlabel = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('kontaktberatungsstelle', 'Iqtp13db');
+        if($datenberatungsstelle != '') $kontaktlabel = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('kontaktberatungsstelle', 'Iqtp13db');
+        else $kontaktlabel = '';
         
         $variables = array(
             'anrede' => $anrede . $teilnehmer->getVorname(). ' ' . $teilnehmer->getNachname() . ',',

@@ -226,12 +226,14 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         $alleberatungsstellensortiert = $this->userGroupRepository->findAllBeratungsstellenABC($this->settings['beraterstoragepid']);
         
         $anzberater = array();
-        $anzratsuchendeanmeld = array();
+        $anzratsuchendeanmeld0 = array();
+        $anzratsuchendeanmeld1 = array();
         $anzratsuchendeerstb = array();
         $anzratsuchendearch = array();
         foreach ($alleberatungsstellen as $bst) {
             $anzberater[$bst->getUid()] = 0;
-            $anzratsuchendeanmeld[$bst->getUid()] = count($this->teilnehmerRepository->findAllOrder4Status(0, $bst->getNiqbid())) + count($this->teilnehmerRepository->findAllOrder4Status(1, $bst->getNiqbid()));
+            $anzratsuchendeanmeld0[$bst->getUid()] = count($this->teilnehmerRepository->findAllOrder4Status(0, $bst->getNiqbid()));
+            $anzratsuchendeanmeld1[$bst->getUid()] = count($this->teilnehmerRepository->findAllOrder4Status(1, $bst->getNiqbid()));
             $anzratsuchendeerstb[$bst->getUid()] = count($this->teilnehmerRepository->findAllOrder4Status(2, $bst->getNiqbid())) + count($this->teilnehmerRepository->findAllOrder4Status(3, $bst->getNiqbid()));
             $anzratsuchendearch[$bst->getUid()] = count($this->teilnehmerRepository->findAllOrder4Status(4, $bst->getNiqbid()));
             
@@ -289,7 +291,8 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 'alleberatungsstellensortiert' => $alleberatungsstellensortiert,
                 'anzalleberater' => count($alleberater),
                 'anzberater' => $anzberater,
-                'anzratsuchendeanmeld' => $anzratsuchendeanmeld,
+                'anzratsuchendeanmeld0' => $anzratsuchendeanmeld0,
+                'anzratsuchendeanmeld1' => $anzratsuchendeanmeld1,
                 'anzratsuchendeerstb' => $anzratsuchendeerstb,
                 'anzratsuchendearch' => $anzratsuchendearch,
                 'anzuserberatungsstellen' => count($userusergroups),

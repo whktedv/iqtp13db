@@ -6,7 +6,7 @@ CREATE TABLE tx_iqtp13db_domain_model_teilnehmer (
 	uid int(11) NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,
 		
-	niqidberatungsstelle int(11) DEFAULT '0' NOT NULL,
+	niqidberatungsstelle int(11) DEFAULT '12345' NOT NULL,
 
 	beratungsstatus int(11) DEFAULT '0' NOT NULL,
 	niqchiffre varchar(255) DEFAULT '0' NOT NULL,
@@ -241,6 +241,9 @@ CREATE TABLE fe_groups (
         plzlist text NOT NULL,
         keywordlist text NOT NULL,
         beratungsarten varchar(255) DEFAULT '' NOT NULL,
-        einwilligungserklaerungsseite int(11) DEFAULT '0' NOT NULL
+        einwilligungserklaerungsseite int(11) DEFAULT '0'
 );
 
+CREATE TABLE fe_users (
+    company varchar(255) DEFAULT '' NOT NULL
+);
