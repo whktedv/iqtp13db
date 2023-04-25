@@ -466,12 +466,13 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $plzberatungsstelle = array();
             $plzberatungsstelle = $this->userGroupRepository->getBeratungsstelle4PLZ($teilnehmerpag[$j]->getPlz(), $this->settings['beraterstoragepid']);
             $plzberatungsstelle4tn[$j] = count($plzberatungsstelle) > 0 ? $plzberatungsstelle[0]->getNiqbid() : '';
-            
         }
+        
         
         $wohnsitzstaaten = $this->settings['staaten'];
         unset($wohnsitzstaaten[201]);
         
+        //if($this->user['username'] == 'adminwebapp') DebuggerUtility::var_dump($plzberatungsstelle4tn);
         
         $this->view->assignMultiple(
             [
@@ -485,7 +486,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'pages' => range(1, $pagination->getLastPageNumber()),
                 'orderby' => $orderby,
                 'wohnsitzstaaten' => $wohnsitzstaaten,
-                'plzberatungsstelle4tn' => $plzberatungsstelle4tn
+                'plzberatungsstelle4tn' => $plzberatungsstelle4tn,
+                'beratungsstelle' => $this->usergroup->getTitle(),
+                'niqbid' => $this->niqbid
             ]
             );
     }
@@ -542,12 +545,20 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $teilnehmerpag = $paginator->getPaginatedItems();
         
         $anzfolgekontakte = array();
+        $summeberatungsdauer = array();
         $abschluesse = array();
         $niqstatusberatung = array();
         $niqwasfehlt = '';
         
+        $folgekontakte = $this->folgekontaktRepository->findAll4List($this->niqbid);
+        
         foreach ($teilnehmerpag as $key => $tn) {
-            $anzfolgekontakte[$key] = count($this->folgekontaktRepository->findByTeilnehmer($tn->getUid()));
+            $fk4tn = $this->folgekontaktRepository->findByTeilnehmer($tn->getUid());
+            $anzfolgekontakte[$key] = count($fk4tn);
+
+            $summebdauerfk = 0;
+            foreach($fk4tn as $singlefk) $summebdauerfk = $summebdauerfk + floatval(str_replace(',','.',$singlefk->getBeratungsdauer()));
+            $summeberatungsdauer[$key] = str_replace('.',',',floatval(str_replace(',','.',$tn->getBeratungsdauer())) + $summebdauerfk);
             
             $abschluesse[$key] = $this->abschlussRepository->findByTeilnehmer($tn);
             // **** NIQ deaktiviert **** $niqstat = $this->niqinterface->niqstatus($tn, $abschluesse[$key]);
@@ -563,10 +574,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 $niqstatusberatung[$key] = '';
             }
             
-            // **** NIQ deaktiviert **** if($niqstat == 0 || $niqstat == 2) $niqwasfehlt[$key] = $this->niqinterface->niqwasfehlt($tn, $abschluesse[$key]);
-            
+            // **** NIQ deaktiviert **** if($niqstat == 0 || $niqstat == 2) $niqwasfehlt[$key] = $this->niqinterface->niqwasfehlt($tn, $abschluesse[$key]);            
         }
-        $folgekontakte = $this->folgekontaktRepository->findAll4List($this->niqbid);
+        
         
         $berufeliste = $this->settings['berufe'];
         $wohnsitzstaaten = $this->settings['staaten'];
@@ -579,6 +589,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'niqstatuus' => $niqstatusberatung,
                 'niqwasfehlt' => $niqwasfehlt,
                 'folgekontakte' => $folgekontakte,
+                'summeberatungsdauer' => $summeberatungsdauer,
                 'abschluesse' => $abschluesse,
                 'calleraction' => 'listerstberatung',
                 'callercontroller' => 'Teilnehmer',
@@ -588,7 +599,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'pages' => range(1, $pagination->getLastPageNumber()),
                 'orderby' => $orderby,
                 'wohnsitzstaaten' => $wohnsitzstaaten,
-                'berufe' => $berufeliste
+                'berufe' => $berufeliste,
+                'beratungsstelle' => $this->usergroup->getTitle(),
+                'niqbid' => $this->niqbid                
             ]
             );
     }
@@ -646,11 +659,17 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $teilnehmerpag = $paginator->getPaginatedItems();
         
         $anzfolgekontakte = array();
+        $summeberatungsdauer = array();
         $abschluesse = array();
         $niqstatusberatung = array();
         $niqwasfehlt = '';
         foreach ($teilnehmerpag as $key => $tn) {
-            $anzfolgekontakte[$key] = count($this->folgekontaktRepository->findByTeilnehmer($tn->getUid()));
+            $fk4tn = $this->folgekontaktRepository->findByTeilnehmer($tn->getUid());
+            $anzfolgekontakte[$key] = count($fk4tn);
+            
+            $summebdauerfk = 0;
+            foreach($fk4tn as $singlefk) $summebdauerfk = $summebdauerfk + floatval(str_replace(',','.',$singlefk->getBeratungsdauer()));
+            $summeberatungsdauer[$key] = str_replace('.',',',floatval(str_replace(',','.',$tn->getBeratungsdauer())) + $summebdauerfk);
             
             $abschluesse[$key] = $this->abschlussRepository->findByTeilnehmer($tn);
             // **** NIQ deaktiviert ****  $niqstat = $this->niqinterface->niqstatus($tn, $abschluesse[$key]);
@@ -681,6 +700,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'niqstatuus' => $niqstatusberatung,
                 'niqwasfehlt' => $niqwasfehlt,
                 'folgekontakte' => $folgekontakte,
+                'summeberatungsdauer' => $summeberatungsdauer,
                 'abschluesse' => $abschluesse,
                 'calleraction' => 'listarchiv',
                 'callercontroller' => 'Teilnehmer',
@@ -690,7 +710,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'pages' => range(1, $pagination->getLastPageNumber()),
                 'orderby' => $orderby,
                 'wohnsitzstaaten' => $wohnsitzstaaten,
-                'berufe' => $berufeliste
+                'berufe' => $berufeliste,
+                'beratungsstelle' => $this->usergroup->getTitle(),
+                'niqbid' => $this->niqbid
             ]
             );
     }
@@ -752,7 +774,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'pagination' => $pagination,
                 'pages' => range(1, $pagination->getLastPageNumber()),
                 'orderby' => $orderby,
-                'wohnsitzstaaten' => $wohnsitzstaaten
+                'wohnsitzstaaten' => $wohnsitzstaaten,
+                'beratungsstelle' => $this->usergroup->getTitle(),
+                'niqbid' => $this->niqbid
             ]
             );
     }
@@ -1081,6 +1105,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $this->createHistory($teilnehmer, "nameBeratungsstelle");
         $this->createHistory($teilnehmer, "wieberaten");
         $this->createHistory($teilnehmer, "notizen");
+        $this->createHistory($teilnehmer, "einwilligunginfo");
 
         // Beratungsdaten (nur Backend!)
         $this->createHistory($teilnehmer, "anerkennendestellen");
@@ -1678,7 +1703,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     'filterberatungsstatus' => $fberatungsstatus,
                     'filteron' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus'),
                     'filtervon' => $filtervon,
-                    'filterbis' => $filterbis
+                    'filterbis' => $filterbis,
+                    'beratungsstelle' => $this->usergroup->getTitle(),
+                    'niqbid' => $this->niqbid
                 ]
                 );
         }
@@ -1893,7 +1920,13 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $jahre[$jahr] = (String)$jahr;
         }
         
-        $zugewieseneberatungsstelle = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid'));
+        if($GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid') == '') {
+            $bstid = $valArray['beratungsstelle'];
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'beratungsstellenid', $bstid);
+        } else {
+            $bstid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid');
+        }
+        $zugewieseneberatungsstelle = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $bstid);
         $zugewieseneberatungsstelle = $zugewieseneberatungsstelle[0];
         
         $nichtiq = $zugewieseneberatungsstelle != NULL ? $zugewieseneberatungsstelle->getNichtiq() : 0;  
@@ -1913,7 +1946,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'wohnsitzstaaten' => $wohnsitzstaaten,
                 'tnseite1' => $tnseite1,
                 'settings' => $this->settings,
-                'beratungsstelle' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid'),
+                'beratungsstelle' => $bstid,
                 'wohnsitzdeutschland' => $valArray['wohnsitzDeutschland'] ?? '',
                 'plz' => $valArray['plz'] ?? '',
                 'jahre' => $jahre,
@@ -1941,6 +1974,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             if(isset($valArray['btnweiter'])) {
                 $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite1', serialize($tnseite1));
                 
+                $bstid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid');
+                
                 if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid') == NULL) {
                     $teilnehmer = $this->getTeilnehmerFromSession();
                     
@@ -1955,7 +1990,12 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     // **************************************
                     
                     $teilnehmer->setBeratungsstatus(99);
-                    $teilnehmer->setNiqidberatungsstelle($GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid'));
+                    if($direkt != '1' && ($bstid == '' || $bstid == '12345')) {
+                        $plzberatungsstelle = array();
+                        $plzberatungsstelle = $this->userGroupRepository->getBeratungsstelle4PLZ($teilnehmer->getPlz(), $this->settings['beraterstoragepid']);
+                        $bstid = count($plzberatungsstelle) > 0 ? $plzberatungsstelle[0]->getNiqbid() : '';                            
+                    }  
+                    $teilnehmer->setNiqidberatungsstelle($bstid);
                     $this->teilnehmerRepository->add($teilnehmer);
                 } else {
                     
@@ -1972,7 +2012,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     }
                 }
                 
-                if($direkt == '1') $teilnehmer->setKooperationgruppe('Direktlink: '.$GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid'));
+                if($direkt == '1') $teilnehmer->setKooperationgruppe('Direktlink: '. $bstid);
                 
                 // Daten sofort in die Datenbank schreiben
                 $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');

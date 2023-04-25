@@ -104,15 +104,16 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         
         // Seite "Admin-Übersicht"
         $valArray = $this->request->getArguments();
-        
+        $niqbidselected = $valArray['bstellen'];
+
         $buser = $this->beraterRepository->findByUid($this->user['uid']);
         
         if($buser != NULL) $userusergroups = $buser->getUsergroup();
         else $userusergroups = 1;
         
-        if(isset($valArray['switch']) && $valArray['bstellen'] != 0) {
+        if(isset($valArray['switch']) && $niqbidselected != 0) {
             $allusergroups = $this->userGroupRepository->findAllGroups($this->settings['beraterstoragepid']);
-            $selectedgroup = $this->userGroupRepository->findByNiqbid($valArray['bstellen']);    
+            $selectedgroup = $this->userGroupRepository->findByNiqbid($niqbidselected);    
                         
             $buser->addUserGroup($selectedgroup[0]);
             
@@ -122,13 +123,15 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
             }
             $buser->setUsergroup($userusergroupssortedOS);
             $this->beraterRepository->update($buser);
+            
             //DebuggerUtility::var_dump($userusergroupssortedOS);
         } elseif(isset($valArray['remove'])) {  
             for($i = count($userusergroups)-1; $i >= 1; $i--) {
                 $userusergroups->detach($userusergroups[$i]);
             }
             $buser->setUsergroup($userusergroups);
-            $this->beraterRepository->update($buser);            
+            $this->beraterRepository->update($buser);
+            $niqbidselected = '0';
             //DebuggerUtility::var_dump($buser);           
         }
         
@@ -302,7 +305,10 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 'statsgesamtarchiviert' => $statsgesamtarchiviert,
                 'neuanmeldungen7tage' => $neuanmeldungen7tage,
                 'diesesjahr' => date('y'),
-                'letztesjahr' => idate('y') - 1
+                'letztesjahr' => idate('y') - 1,
+                'niqbidselected' => $niqbidselected,
+                'beratungsstelle' => $this->usergroup->getTitle(),
+                'niqbid' => $this->niqbid,
             ]
             );
     }

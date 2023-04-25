@@ -1,4 +1,4 @@
-<f:layout name="Default" />
+<f:layout name="DefaultBackend" />
 <f:section name="HeaderAssets">
   		<link rel="stylesheet" href="{f:uri.resource(path: 'CSS/customtp13dbadmin.css')}"/>  		
 </f:section>
@@ -48,13 +48,14 @@
 		<th><f:link.action action="listarchiv" arguments="{orderby : 'erstberatungabgeschlossen', changeorder : 1}">Erstberatung abgeschlossen</f:link.action></th>
 		<th id="resizablecol3"><f:link.action action="listarchiv" arguments="{orderby : 'kooperationgruppe', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.kooperationgruppe" /></f:link.action></th>
 		<th>Anz. FK</th>
-		<th style="hyphens: auto;">Beratungsdauer (in h)</th>
+		<th style="hyphens: auto;">Summe<br>Beratungsd.<br>(in h)</th>
 		<th> </th>
 		<th> </th>
 		
 	</tr>
 
 	<f:for each="{paginator.paginatedItems}" as="teilnehmer" iteration="it">
+		{f:variable(name: 'summebdauer', value: '{summeberatungsdauer.{it.index}}')}
 		<tr>
 			<td><f:link.action action="show" controller="Teilnehmer" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">{teilnehmer.uid}</f:link.action></td>
 			<td><f:link.action action="show" controller="Teilnehmer" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">{teilnehmer.nachname}</f:link.action></td>
@@ -104,7 +105,7 @@
 			</td>
 			<td>{teilnehmer.kooperationgruppe}</td>
 			<td>{anzfolgekontakte.{it.index}}</td>
-			<td>{teilnehmer.beratungsdauer}</td>
+			<td>{summebdauer}</td>
 			<td><f:link.action action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" title="Bearbeiten"><img src="/fileadmin/template/images/iq-webapp_bearbeiten.svg" alt="Bearbeiten" width="30" height="30"/></f:link.action></td>
 			<td><f:link.action action="new" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Folgekontakt" title="Folgekontakt anlegen"><img src="/fileadmin/template/images/iq-webapp_folgekontakt.svg" width="30" height="30" alt="Folgekontakt" /></f:link.action></td>				
 		</tr>

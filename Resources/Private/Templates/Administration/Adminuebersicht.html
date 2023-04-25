@@ -2,13 +2,13 @@
   		<link rel="stylesheet" href="{f:uri.resource(path: 'CSS/customtp13dbadmin.css')}"/>  		
 </f:section>
 
-<f:layout name="Default" />
+<f:layout name="DefaultBackend" />
 
 <f:section name="main">
 
 <div class="uebersicht-beratungsstelle">
 	<div><span class="label-beratungsstelle">Anzahl Beratungsstellen gesamt:</span> <span class="value-beratungsstelle">{anzberatungsstellen}</span></div>
-	<div><span class="label-beratungsstelle">Anzahl Berater:innen gesamt:</span> <span class="value-beratungsstelle">{anzalleberater}</span></div>
+	<div><span class="label-beratungsstelle">Anzahl Berater:innen gesamt:</span> <span class="value-beratungsstelle">{anzalleberater}</span></div>	
 </div>
 
 <h1>Beratungsstellen-Ansicht wechseln</h1>
@@ -18,7 +18,7 @@
 		<label for="beratungsstellenauswahl">
 			Auswahl Beratungsstelle
 		</label>
-		<f:form.select name="bstellen" options="{alleberatungsstellensortiert}" optionValueField="niqbid" optionLabelField="title" prependOptionValue="0" prependOptionLabel="-"/>
+		<f:form.select name="bstellen" options="{alleberatungsstellensortiert}" optionValueField="niqbid" optionLabelField="title" prependOptionValue="0" prependOptionLabel="-" value="{niqbidselected}"/>
 		<f:form.button type="submit" name="switch" class="linkbuttons" id="savebutton1">Wechseln</f:form.button>
 		<f:if condition="{anzuserberatungsstellen} > 1"><f:form.button class="linkbuttons abbruchbtn" type="submit" name="remove" value="Wechselmodus aus">Wechselmodus aus</f:form.button></f:if>	
 	</f:form>
@@ -33,17 +33,17 @@
 	<th>NIQBID</th>
 	<th>Anzahl Berater:innen</th>
 	<th>Anzahl Angemeldet (unbestätigt)</th>
-	<th class="bestaetigt">Anzahl Angemeldet (bestätigt)</th>
+	<th>Anzahl Angemeldet (bestätigt)</th>
 	<th>Anzahl in Beratung</th>
 	<th>Anzahl im Archiv</th>
 	<f:for each="{alleberatungsstellen}" as="beratungsstelle" iteration="iter">
 		<tr>
-			<td>{beratungsstelle.title}</td>
+			<td>{beratungsstelle.title} {f:if(condition:'{beratungsstelle.nichtiq} == 1',then: '<b>(Nicht IQ)</b>')}</td>
 			<td>{beratungsstelle.bundesland}</td>
 			<td>{beratungsstelle.niqbid}</td>
 			<td>{anzberater.{beratungsstelle.uid}}</td>
 			<td>{anzratsuchendeanmeld0.{beratungsstelle.uid}}</td>
-			<td class="bestaetigt">{anzratsuchendeanmeld1.{beratungsstelle.uid}}</td>
+			<td style="background-color: #7a970133;">{anzratsuchendeanmeld1.{beratungsstelle.uid}}</td>
 			<td>{anzratsuchendeerstb.{beratungsstelle.uid}}</td>
 			<td>{anzratsuchendearch.{beratungsstelle.uid}}</td>
 		</tr>

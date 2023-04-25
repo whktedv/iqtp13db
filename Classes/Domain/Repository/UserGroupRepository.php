@@ -83,6 +83,8 @@ class UserGroupRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $querySettings->setStoragePageIds(array($customStoragePid));
         $this->setDefaultQuerySettings($querySettings);
  
+        if($plz == '' || $plz == 0) $plz = '12345';
+        
         $query = $this->createQuery();
         $query->matching($query->logicalOr(
             $query->like('plzlist', '%,' . $plz . ',%'),

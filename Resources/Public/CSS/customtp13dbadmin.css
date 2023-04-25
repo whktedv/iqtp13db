@@ -304,3 +304,12 @@ input[type="text"].textfieldsmall  {
 	font-size: 1.2rem;
 	color: #eee;
 }
+
+.uebersicht-beratungsstelle-admin {
+  background: #9844444f;
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 3px;
+  display: flex;
+  justify-content: center;
+}

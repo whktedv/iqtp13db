@@ -1,9 +1,10 @@
-<f:layout name="Default" />
+<f:layout name="DefaultBackend" />
 <f:section name="HeaderAssets">
   		<link rel="stylesheet" href="{f:uri.resource(path: 'CSS/customtp13dbadmin.css')}"/>
 </f:section>
 
 <f:section name="main">
+
 <div class="filterframe">
 	<h1>Filter</h1>
 	<f:form class="filterform" method="post" action="listerstberatung" name="listerstberatung" >
@@ -43,7 +44,7 @@
 		<th>vorherige Antrag-<br>stellung</th>
 		<th><f:link.action action="listerstberatung" arguments="{orderby : 'erstberatungabgeschlossen', changeorder : 1}">Erstberatung abgeschlossen</f:link.action></th>
 		<th id="resizablecol3"><f:link.action action="listerstberatung" arguments="{orderby : 'kooperationgruppe', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.kooperationgruppe" /></f:link.action></th>
-		<th style="hyphens: auto;">Beratungsdauer (in h)</th>
+		<th style="hyphens: auto;">Summe<br>Beratungsd.<br>(in h)</th>
 		<th> </th>
 		<th> </th>
 		<th> </th>
@@ -51,8 +52,7 @@
 	</tr>
 
 	<f:for each="{paginator.paginatedItems}" as="teilnehmer" iteration="it">
-		{f:variable(name: 'fk', value: '{folgekontakte.{it.index}}')}
-	
+		{f:variable(name: 'summebdauer', value: '{summeberatungsdauer.{it.index}}')}
 		<tr>
 			<td><f:link.action action="show" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">{teilnehmer.uid}</f:link.action></td>
 			<td><f:link.action action="show" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">{teilnehmer.nachname}</f:link.action></td>
@@ -97,15 +97,15 @@
 			</f:if>				
 			</td>
 			<td>{teilnehmer.kooperationgruppe}</td>
-			<td>{teilnehmer.beratungsdauer}</td>
+			<td>{summebdauer}</td>
 			<td><f:link.action action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" title="Bearbeiten"><img src="/fileadmin/template/images/iq-webapp_bearbeiten.svg" alt="Bearbeiten" width="30" height="30"/></f:link.action></td>
 			<td><f:link.action action="new" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Folgekontakt" title="Folgekontakt anlegen"><img src="/fileadmin/template/images/iq-webapp_folgekontakt.svg" width="30" height="30" alt="Folgekontakt" /></f:link.action></td>
 			<td><f:link.action action="sendtoarchiv" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Teilnehmer" onclick="return confirm('Wirklich archivieren?');" title="Archivieren"><img src="/fileadmin/template/images/iq-webapp_archivieren.svg" width="30" height="30" alt="Archivieren" /></f:link.action></td>				
 			<td><f:link.action action="delete" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" onclick="return confirm('Wirklich löschen?');" title="Löschen"><img src="/fileadmin/template/images/iq-webapp_loeschen.svg" width="30" height="30" alt="Löschen" /></f:link.action></td>
-		</tr>
+		</tr>		
 		<f:if condition="{anzfolgekontakte.{it.index}} != 0"><f:then>
 			<f:render partial="Folgekontakt/Folgekontakte4List" arguments="{folgekontakte : folgekontakte, teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" />
-		</f:then></f:if>
+		</f:then></f:if>		
 	</f:for>
 </table>
 

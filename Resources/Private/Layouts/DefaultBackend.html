@@ -4,8 +4,12 @@
       </div>
 </noscript>
 
-
 <div class="tx-iqtp13db">
-	
+	<f:security.ifHasRole role="2">
+		<div class="uebersicht-beratungsstelle-admin">
+			<div><span class="label-beratungsstelle">Beratungsstelle:</span> <span class="value-beratungsstelle">{beratungsstelle}</span></div>
+			<div><span class="label-beratungsstelle">Beratungsstellen-ID:</span> <span class="value-beratungsstelle">{niqbid}</span></div>
+		</div>
+	</f:security.ifHasRole>
 	<f:render section="main" />
 </div>

@@ -60,6 +60,7 @@
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_beratungsstelle"><source>How did you find us?</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wieberaten"><source>How would you like to be advised?</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.notizen"><source>What else would you like to tell us or do you already have a specific question?</source></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligunginfotext"><source>I would like to receive further information and references to qualification offers in my occupational field.</source></trans-unit>
 
 		<trans-unit id="ja"><source>Yes</source></trans-unit>
 		<trans-unit id="nein"><source>No</source></trans-unit>

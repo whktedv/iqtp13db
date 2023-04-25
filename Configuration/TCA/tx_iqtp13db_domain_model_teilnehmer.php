@@ -702,6 +702,15 @@ return [
                 'default' => 0
             ],
         ],
+        'einwilligunginfo' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.einwilligunginfo',
+            'config' => [
+                'type' => 'input',
+                'size' => 4,
+                'eval' => 'int'
+            ]
+        ],
     
     ],
 ];

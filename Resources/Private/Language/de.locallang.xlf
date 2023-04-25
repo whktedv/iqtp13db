@@ -61,6 +61,7 @@
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_beratungsstelle"><target>Wie haben Sie uns gefunden?</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wieberaten"><target>Wie möchten Sie beraten werden?</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.notizen"><target>Was möchten Sie uns noch mitteilen oder haben Sie schon eine konkrete Frage?</target></trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligunginfotext"><target>Ich bin einverstanden, dass mir weitere Informationen und Hinweise zu Qualifizierungsangeboten in meinem Beruf zugesendet werden.</target></trans-unit>
 
 			<trans-unit id="ja"><target>Ja</target></trans-unit>
 			<trans-unit id="nein"><target>Nein</target></trans-unit>
@@ -156,6 +157,7 @@
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kooperationgruppe"><target>Gruppe</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.beratungnotizen"><target>Notizen</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erstberatungabgeschlossen"><target>Erstberatung abgeschlossen</target></trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligunginfo"><target>Einwilligung Info Qualiangebote (optional)</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_abschluss.referenzberufzugewiesen"><target>Zugewiesener Referenzberuf</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_abschluss.sonstigerberuf"><target>Sonstiger Beruf</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_abschluss.nregberuf"><target>Nicht reglementierter Beruf</target></trans-unit>			

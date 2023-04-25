@@ -320,5 +320,17 @@
 		</label>
 			<span class="propdat"><f:format.html>{teilnehmer.notizen}</f:format.html></span>
 	</div>
+	<div class="tp13_formdivwebapp">
+			<label for="einwilligunginfo">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einwilligunginfo" />
+			</label>
+			<span class="propdat"><f:if condition="{teilnehmer.einwilligunginfo} == 1"><f:then>
+				<f:translate key="ja" />
+			</f:then>
+			<f:else>
+				<f:translate key="nein" />
+			</f:else>
+			</f:if></span>		
+	</div>
 </div>
 

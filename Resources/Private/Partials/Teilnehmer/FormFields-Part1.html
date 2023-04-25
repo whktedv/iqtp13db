@@ -15,8 +15,8 @@
 			<label for="einwilligung">
 				Einwilligung&nbsp;<f:form.checkbox id="ein1" property="einwilligung" value="1" />
 			</label>				
-				<span class="einwilligungtext">Dem Ratsuchenden ggf. die <a href="{urleinwilligung}" target="_blank">Informationen zur Datenverarbeitung</a> vorlesen.</span>			
-		</div>		
+				<span class="einwilligungtext">Dem/der Ratsuchenden ggf. die <a href="{urleinwilligung}" target="_blank">Informationen zur Datenverarbeitung</a> vorlesen.</span>			
+		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="schonberaten">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.schonberaten" />
@@ -360,5 +360,11 @@
 			</label>
 				<f:form.textarea property="notizen" rows="10" cols="100" />
 		</div>
-		
+		<div class="tp13_formdivwebapp">
+			<label for="einwilligunginfo">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einwilligunginfo" />&nbsp;
+			</label>				
+				<f:form.checkbox id="ein1" property="einwilligunginfo" value="1" />
+				<span class="einwilligungtext">Zustimmung zur Zusendung von Informationen und Hinweisen zu Qualifizierungsangeboten im Berufsfeld des/der Ratsuchenden.</span>			
+		</div>	
 </div>

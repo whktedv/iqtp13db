@@ -521,6 +521,13 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $edituser = null;
     
     /**
+     * einwilligunginfo
+     *
+     * @var int
+     */
+    protected $einwilligunginfo = 0;
+    
+    /**
      * dublette
      *
      * @var boolean
@@ -2074,6 +2081,34 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setEdituser($edituser)
     {
         $this->edituser = $edituser;
+    }
+    
+    /**
+     * Returns the einwilligunginfo
+     *
+     * @return int $einwilligunginfo
+     */
+    public function getEinwilligunginfo()
+    {
+        return $this->einwilligunginfo;
+    }
+    
+    /**
+     * Sets the einwilligunginfo
+     *
+     * @param int $einwilligunginfo
+     * @return void
+     */
+    public function setEinwilligunginfo($einwilligunginfo)
+    {
+        $this->einwilligunginfo = $einwilligunginfo;
+    }
+    
+    /**
+     * @return boolean $einwilligunginfo
+     */
+    public function isEinwilligunginfo() {
+        return $this->getEinwilligunginfo();
     }
     
     /**

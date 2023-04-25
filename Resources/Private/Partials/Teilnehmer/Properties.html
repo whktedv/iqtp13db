@@ -388,7 +388,7 @@
 
 
 <div class="fframe"><h2>Datenweitergabe anerkennende Stelle</h2>
-  <div class="tp13_formdivwebapp">
+  		<div class="tp13_formdivwebapp">
 				<label for="einwAnerkstelle">
 					<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_anerkstelle" />
 				</label>
@@ -404,7 +404,7 @@
 					{f:if(condition: '{hist.property} == "einwAnerkstelle"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
 				</f:for>
 				</div>
-			</div>
+		</div>
       
       <div class="tp13_formdivwebapp">
   			<label for="einwAnerkstelledatum">
@@ -589,6 +589,23 @@
 			</f:for>
 			</div>
 
+	</div>
+	<div class="tp13_formdivwebapp">
+			<label for="einwilligunginfo">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einwilligunginfo" />
+			</label>
+			<span class="propdat"><f:if condition="{teilnehmer.einwilligunginfo} == 1"><f:then>
+				<f:translate key="ja" />
+			</f:then>
+			<f:else>
+				<f:translate key="nein" />
+			</f:else>
+			</f:if></span>
+			<div class="historie">
+			<f:for each="{historie}" as="hist" key="wert">
+				{f:if(condition: '{hist.property} == "einwilligunginfo"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+			</f:for>
+			</div>
 	</div>
 </div>
 
