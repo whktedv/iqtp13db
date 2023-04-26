@@ -1921,7 +1921,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         }
         
         if($GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid') == '') {
-            $bstid = $valArray['beratungsstelle'];
+            $bstid = $valArray['beratungsstelle'] ?? '';
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'beratungsstellenid', $bstid);
         } else {
             $bstid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid');
@@ -2601,6 +2601,40 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         
         // HTML Email
         $message->html($emailBody);
+        
+        // Text Part
+        // Mail mit Bestätigungslink
+        if($templateName == 'Mailtoconfirm') {
+            $teilnehmer = $variables['teilnehmer'];
+
+            $uriBuilder = $this->controllerContext->getUriBuilder();
+            $uriBuilder->reset();
+            $uriBuilder->uriFor('confirm', array('code' => $teilnehmer->getVerificationcode(), 'askconsent' => $variables['askconsent']), 'Teilnehmer', 'iqtp13db', 'Iqtp13dbwebapp');
+            $uriBuilder->setTargetPageUid($this->settings['registrationpageuid']);
+            $uriBuilder->setCreateAbsoluteUri(TRUE);
+            $link = $uriBuilder->build();
+            
+            $mailtext = $variables['confirmmailtext1']."\r\n".
+                $link."\r\n\r\n".
+                $variables['confirmmailtext2'] .
+                "\r\n------------------------------\r\n\r\n".
+                $variables['kontaktlabel'] ."\r\n\r\n".
+                $variables['datenberatungsstelle'].
+                "\r\n------------------------------";
+            
+            $message->text(str_replace("</p>", "\r\n",(str_replace(["<p>", "<br>"], "", $mailtext))));
+        }
+        // Mail nach Bestätigung
+        if($templateName == 'Mail') {
+            $mailtext = $variables['anrede'] ."\r\n".
+                $variables['mailtext'] .
+                "\r\n------------------------------\r\n\r\n".
+                $variables['kontaktlabel'] ."\r\n\r\n".
+                $variables['datenberatungsstelle'].
+                "\r\n------------------------------";
+                
+            $message->text(str_replace("</p>", "\r\n",(str_replace(["<p>", "<br>"], "", $mailtext))));                
+        }                        
         $message->send();
         
         return $message->isSent();

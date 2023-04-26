@@ -104,7 +104,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         
         // Seite "Admin-Übersicht"
         $valArray = $this->request->getArguments();
-        $niqbidselected = $valArray['bstellen'];
+        $niqbidselected = $valArray['bstellen'] ?? 0;
 
         $buser = $this->beraterRepository->findByUid($this->user['uid']);
         
