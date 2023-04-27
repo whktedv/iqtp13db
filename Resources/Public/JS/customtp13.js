@@ -177,7 +177,10 @@ $(document).ready(function() {
     
     $("body").prepend('<div id="overlay" class="ui-widget-overlay" style="z-index: 10001; display: none;"><div class="overlay-inner"><img width="200" height="200" src="/typo3conf/ext/iqtp13db/Resources/Public/Icons/giphy.gif"/></div></div>');
   
-	
+	$("#selectbstelle").change(function() { 
+    	this.form.submit();
+    	$("#overlay").show();
+    });
 });
 
 

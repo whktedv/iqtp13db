@@ -123,12 +123,14 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         } else {
             $this->user = NULL;
         }
-        
+                
         if($this->user != NULL) {
             $standardniqidberatungsstelle = $this->settings['standardniqidberatungsstelle'];
             $standardbccmail = $this->settings['standardbccmail'];
             
-            $this->usergroup = $this->userGroupRepository->findByIdentifier($this->user['usergroup']);
+            $ugroupsarray = explode(",",$this->user['usergroup']);
+            $this->usergroup = $this->userGroupRepository->findByIdentifier(array_pop($ugroupsarray));
+            
             if($this->usergroup != NULL) {
                 $userniqidbstelle = $this->usergroup->getNiqbid();
             }

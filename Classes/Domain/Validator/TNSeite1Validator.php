@@ -25,11 +25,12 @@ class TNSeite1Validator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstract
 	    /* Check the domain. */
 	    $atPos = mb_strpos($tnseite1->getEmail(), '@');
 	    $domain = mb_substr($tnseite1->getEmail(), $atPos + 1);
-	    if (!checkdnsrr($domain . '.', 'MX')) {
+	    if (!checkdnsrr($domain . '.', 'MX') || $domain == 'gmial.com' || $domain == 'gamil.com' || $domain == 'gmail.co' ) {
 	        $errormsg = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('errordomainnotvalid', 'iqtp13db');
 	        $this->addError('@'.$domain.': '.$errormsg, 1262341707);
 	        return FALSE;
 	    }
+	    
 	}
 }
 

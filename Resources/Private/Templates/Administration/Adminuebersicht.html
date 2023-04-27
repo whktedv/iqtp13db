@@ -18,9 +18,8 @@
 		<label for="beratungsstellenauswahl">
 			Auswahl Beratungsstelle
 		</label>
-		<f:form.select name="bstellen" options="{alleberatungsstellensortiert}" optionValueField="niqbid" optionLabelField="title" prependOptionValue="0" prependOptionLabel="-" value="{niqbidselected}"/>
-		<f:form.button type="submit" name="switch" class="linkbuttons" id="savebutton1">Wechseln</f:form.button>
-		<f:if condition="{anzuserberatungsstellen} > 1"><f:form.button class="linkbuttons abbruchbtn" type="submit" name="remove" value="Wechselmodus aus">Wechselmodus aus</f:form.button></f:if>	
+		<f:form.select name="bstellen" id="selectbstelle" options="{alleberatungsstellensortiert}" optionValueField="niqbid" optionLabelField="title" value="{niqbidselected}"/>
+		<f:if condition="{anzuserberatungsstellen} > 1"><f:form.button class="linkbuttons abbruchbtn" type="submit" name="remove" value="Wechselmodus aus" id="removebs" >Wechselmodus aus</f:form.button></f:if>	
 	</f:form>
 </div>
 
