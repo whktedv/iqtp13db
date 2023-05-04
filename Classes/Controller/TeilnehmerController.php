@@ -1223,7 +1223,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $bcc = '';
         $sender = $this->settings['sender'];
         if($sender == '') {
-            $this->addFlashMessage('Fehler 101 in askconsent.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->addFlashMessage('Error 101 in askconsent.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             $this->redirect('listangemeldet', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
         } else {
             $recipient = $teilnehmer->getEmail();
@@ -1433,7 +1433,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $arrberufe = $this->settings['berufe'];
         $arrabschlussart =  array('-1' => 'keine Angabe', '1' => 'Ausbildungsabschluss', '2' => 'Universitätsabschluss');
         $arrantragstellungerfolgt = $this->settings['antragstellungerfolgt'];
-        
+         
         $orderby = 'crdate';
         $order = 'ASC';
         $fberatungsstatus = isset($valArray['filterberatungsstatus']) ? $valArray['filterberatungsstatus'] : '';
@@ -1991,6 +1991,12 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     }
                     // **************************************
                     
+                    if($teilnehmer->getPlz() == '') {
+                        // keine PLZ eingegeben
+                        $this->addFlashMessage("Error 102, PLZ missing / ZIP missing.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                        $this->redirect('anmeldseite1', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+                    } 
+                    
                     $teilnehmer->setBeratungsstatus(99);
                     if($direkt != '1' && ($bstid == '' || $bstid == '12345')) {
                         $plzberatungsstelle = array();
@@ -2009,7 +2015,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                         $this->teilnehmerRepository->update($teilnehmer);
                     } else {
                         $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnuid', null);
-                        $this->addFlashMessage("Fehler 103.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                        $this->addFlashMessage("Error 103.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
                         $this->redirect('anmeldseite1', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
                     }
                 }
@@ -2218,21 +2224,39 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             } elseif(isset($valArray['btnAbsenden'])) {
                 $tfolder = $this->generalhelper->createFolder($teilnehmer, $this->storageRepository->findAll());
                 if($teilnehmer->getVerificationDate() == 0) $teilnehmer->setBeratungsstatus(0);
+                    
+                if($teilnehmer->getNiqidberatungsstelle() == 0) {
+                    // keine PLZ eingegeben
+                    if($teilnehmer->getPlz() == '') {
+                        $this->addFlashMessage("Error 401: PLZ fehlt / ZIP missing.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                        $this->redirect('anmeldseite1', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+                    } else {
+                        $plzberatungsstelle = $this->userGroupRepository->getBeratungsstelle4PLZ($teilnehmer->getPlz(), $this->settings['beraterstoragepid']);
+                        if(count($plzberatungsstelle) > 0) {
+                            $tnniqid = $plzberatungsstelle[0]->getNiqbid();
+                            $teilnehmer->setNiqidberatungsstelle($tnniqid);
+                        } else {
+                            $this->addFlashMessage("Error 402, PLZ unbekannt / ZIP unknown.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                            $this->redirect('anmeldseite1', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+                        }                        
+                    }                    
+                } else {
+                    $tnniqid = $teilnehmer->getNiqidberatungsstelle();
+                }                
                 
-                // Sonstiger Status in Feld "Gruppe" eintragen
-                $sonst = $teilnehmer->getSonstigerstatus()[0] == '1' ? 'Ortskraft Afghanistan' : '';
-                $sonst = $teilnehmer->getSonstigerstatus()[0] == '2' ? 'Geflüchtet aus der Ukraine' : '';
-                $tnniqid = $teilnehmer->getNiqidberatungsstelle() == 0 ? '12345' : $teilnehmer->getNiqidberatungsstelle();
                 $tnberatungsstelle = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $tnniqid);
                 
+                // Sonstiger Status in Feld "Gruppe" eintragen
+                if($teilnehmer->getSonstigerstatus()[0] == '1') $teilnehmer->setKooperationgruppe('Ortskraft Afghanistan');
+                if($teilnehmer->getSonstigerstatus()[0] == '2') $teilnehmer->setKooperationgruppe('Geflüchtet aus der Ukraine');
+                
                 if($tnberatungsstelle == NULL) {
-                    $sonst = '';
+                    $teilnehmer->setKooperationgruppe('keine Beratungsstelle zugeordnet');
                 } else {
                     if(strstr($tnberatungsstelle[0]->getTitle(), 'ZSBA') != FALSE){
-                        $sonst = $tnberatungsstelle[0]->getTitle() ?? '';
+                        $teilnehmer->setKooperationgruppe($tnberatungsstelle[0]->getTitle() ?? 'Error 403');
                     }
-                }
-                $teilnehmer->setKooperationgruppe($sonst);
+                }          
                 
                 $this->teilnehmerRepository->update($teilnehmer);
                 $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
@@ -2241,7 +2265,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 $bcc = '';
                 $sender = $this->settings['sender'];
                 if($sender == '') {
-                    $this->addFlashMessage('Fehler 101.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                    $this->addFlashMessage('Error 403.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
                     $this->redirect('anmeldungcomplete', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
                 } else {
                     $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnseite1', null);
@@ -2300,6 +2324,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             } else {
                 $teilnehmer = $this->teilnehmerRepository->findByVerificationCode($this->request->getArgument('code'));
             }
+        } else {
+            $this->redirect('validationFailed');
         }
         
         if($this->request->hasArgument('askconsent')) {

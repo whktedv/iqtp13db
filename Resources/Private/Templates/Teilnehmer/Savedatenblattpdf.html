@@ -10,7 +10,7 @@
 <f:then>			
 	<f:for each="{abschluesse}" as="sabschluss">
 		<div class="fframe"><h2>Daten Abschluss/Beruf <i>{sabschluss.deutscherReferenzberuf}</i></h2>
-			<f:render partial="Abschluss/Properties" arguments="{beruf:sabschluss}" />
+			<f:render partial="Abschluss/Properties" arguments="{abschluss:sabschluss}" />
 		</div>
 	</f:for>
 </f:then>
