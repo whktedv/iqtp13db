@@ -23,15 +23,12 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     
     /**
      * Finds Teilnehmer by the specified name, ort and/or geburtsland
-     *
-     *
      */
     public function searchTeilnehmer($type, $filterArray, $verstecktundgelöscht, $niqbid, $berufearr, $orderby, $order, $beraterdiesergruppe, $thisusergroup)
     {
         $berateruidarray = array();        
         foreach($beraterdiesergruppe as $oneberater) $berateruidarray[] = $oneberater->getUid();
-        
-        
+                
         $uid = $filterArray['uid'] == '' ? '%' : $filterArray['uid'];
         $name = $filterArray['name'] == '' ? '%' : $filterArray['name'];
         $ort = $filterArray['ort'] == '' ? '%' : $filterArray['ort'];
@@ -110,10 +107,8 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 GROUP BY t.uid ORDER BY $orderby $order";
                 
         }
-        //DebuggerUtility::var_dump($sql);
               
         $query->statement($sql);
-        
         return $query->execute();
     }
     
@@ -197,9 +192,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     public function findAllOrder4Status($beratungsstatus, $niqbid)
     {
         $query = $this->createQuery();
-        //$query->getQuerySettings()->setIgnoreEnableFields(TRUE);
-        //$query->getQuerySettings()->setEnableFieldsToBeIgnored(array('disabled', 'hidden'));
-        
+       
         if($niqbid == '%') $query->matching($query->like('beratungsstatus', $beratungsstatus));
         else $query->matching($query->logicalAnd($query->like('beratungsstatus', $beratungsstatus), $query->like('niqidberatungsstelle', $niqbid)));
         
@@ -289,27 +282,119 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     }
     
     
-    public function count4Status($datum1, $datum2, $niqbid)
+    public function count4Status($datum1, $datum2, $niqbid, $bstatus)
     {
+        $addfield = '';
+        if($bstatus == 1) $field = 'FROM_UNIXTIME(verification_date)';
+        if($bstatus == 2) $field = 'beratungdatum';
+        if($bstatus == 3) $field = 'erstberatungabgeschlossen';
+        if($bstatus == 4) {
+            $field = 'erstberatungabgeschlossen';
+            $addfield = " AND niqchiffre != '' ";
+        }
+        if($bstatus == 5) {
+            $field = 'erstberatungabgeschlossen';
+            $addfield = " AND beratungsstatus = 4 ";
+        }
+        
         $query = $this->createQuery();        
-        $query->statement("SELECT * FROM tx_iqtp13db_domain_model_teilnehmer WHERE
-				DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),FROM_UNIXTIME(verification_date)) <= 0 AND
-				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),FROM_UNIXTIME(verification_date)) >= 0 AND
-				verification_date > 0 AND deleted = 0 AND hidden = 0 AND niqidberatungsstelle LIKE '$niqbid'");
+        $query->statement("SELECT count(*) as anzahl FROM tx_iqtp13db_domain_model_teilnehmer WHERE
+				DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),$field) <= 0 AND
+				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),$field) >= 0 $addfield
+				AND deleted = 0 AND hidden = 0 AND niqidberatungsstelle LIKE '$niqbid'");
               
-        $query = $query->execute();
-        return count($query);
+        $query = $query->execute(true);
+        return $query;
     }
     
-    public function count4Statusniqerfasst($datum1, $datum2, $niqbid)
+    /**
+     * Counts Teilnehmer by Status for last 12 month
+     *
+     * @param $niqbid
+     * @param $bstatus
+     *  
+     */
+    public function countTNbyBID($niqbid, $bstatus)
     {
+        $addfield = '';
+        if($bstatus == 1) $field = 'FROM_UNIXTIME(verification_date)';
+        if($bstatus == 2) $field = 'beratungdatum';
+        if($bstatus == 3) $field = 'erstberatungabgeschlossen';
+        if($bstatus == 4) {
+            $field = 'erstberatungabgeschlossen';
+            $addfield = " AND niqchiffre != '' ";
+        }
+        if($bstatus == 5) {
+            $field = 'erstberatungabgeschlossen';
+            $addfield = " AND beratungsstatus = 4 ";
+        }
+
         $query = $this->createQuery();
-        $query->statement("SELECT * FROM tx_iqtp13db_domain_model_teilnehmer WHERE
-				DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),erstberatungabgeschlossen) <= 0 AND
-				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),erstberatungabgeschlossen) >= 0 AND
-        		niqchiffre != '' AND deleted = 0 AND hidden = 0 AND niqidberatungsstelle LIKE '$niqbid'");
-        $query = $query->execute();
-        return count($query);
+        if(date('y') > 2023) {
+            $query->statement("SELECT MONTH($field) as monat, count(*) as anzahl
+                FROM tx_iqtp13db_domain_model_teilnehmer
+                WHERE YEAR($field) = YEAR(CURRENT_DATE())
+                AND deleted = 0 AND hidden = 0 AND niqidberatungsstelle LIKE '$niqbid'
+                $addfield
+                GROUP BY MONTH($field)
+                UNION
+                SELECT MONTH($field) as monat, count(*) as anzahl
+                FROM tx_iqtp13db_domain_model_teilnehmer
+                WHERE YEAR($field) = YEAR(CURRENT_DATE())-1 AND MONTH($field) > MONTH(CURRENT_DATE())
+                AND deleted = 0 AND hidden = 0 AND niqidberatungsstelle LIKE '$niqbid'
+                $addfield
+                GROUP BY MONTH($field)");
+        } else {
+            $query->statement("SELECT MONTH($field) as monat, count(*) as anzahl
+                FROM tx_iqtp13db_domain_model_teilnehmer
+                WHERE YEAR($field) = YEAR(CURRENT_DATE())
+                AND deleted = 0 AND hidden = 0 AND niqidberatungsstelle LIKE '$niqbid'
+                $addfield
+                GROUP BY MONTH($field)");
+        }
+        
+        $query = $query->execute(true);        
+        return $query;
+    }
+    
+    /**
+     * Calculates average waiting days for last 12 month
+     *
+     * @param $niqbid
+     * @param $status
+     *
+     */
+    public function calcwaitingdays($niqbid, $status)
+    {
+        if($status == 'anmeldung') {
+            $von = "FROM_UNIXTIME(verification_date)";
+            $bis = "beratungdatum";
+        }
+        if($status == 'beratung') {
+            $von = "beratungdatum";
+            $bis = "erstberatungabgeschlossen";
+        }
+        
+        $query = $this->createQuery();
+        if(date('y') > 2023) {
+            $query->statement("SELECT MONTH($bis) as monat, SUM(DATEDIFF($bis,$von)) / count(*) as wert
+                        FROM tx_iqtp13db_domain_model_teilnehmer 
+                        WHERE $bis != '' AND deleted = 0 AND hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND YEAR($von) = YEAR(CURRENT_DATE())
+                        GROUP BY MONTH($bis)
+                        UNION
+                        SELECT MONTH($bis) as monat, SUM(DATEDIFF($bis,beratungdatum)) / count(*) as wert
+                        FROM tx_iqtp13db_domain_model_teilnehmer 
+                        WHERE $bis != '' AND deleted = 0 AND hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND YEAR($von) = YEAR(CURRENT_DATE())-1 AND MONTH($von) > MONTH(CURRENT_DATE())
+                        GROUP BY MONTH($bis)");
+        } else {
+            $query->statement("SELECT MONTH($bis) as monat, SUM(DATEDIFF($bis,$von)) / count(*) as wert
+                        FROM tx_iqtp13db_domain_model_teilnehmer
+                        WHERE $bis != '' AND deleted = 0 AND hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND YEAR($von) = YEAR(CURRENT_DATE())
+                        GROUP BY MONTH($bis)");
+        }
+        
+        $query = $query->execute(true);        
+        return $query;
     }
     
     /**
@@ -338,65 +423,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             return NULL;
         }
     }
-    
-    public function count4StatusErstberatung($datum1, $datum2, $niqbid)
-    {
-        $query = $this->createQuery();
-        $query->statement("SELECT * FROM tx_iqtp13db_domain_model_teilnehmer WHERE
-				DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),beratungdatum) <= 0 AND
-				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),beratungdatum) >= 0
-                AND deleted = 0 AND hidden = 0 AND niqidberatungsstelle LIKE '$niqbid'");
-        $query = $query->execute();
-        return count($query);
-    }
-    
-    public function count4StatusBeratungfertig($datum1, $datum2, $niqbid)
-    {
-        $query = $this->createQuery();
-        $query->statement("SELECT * FROM tx_iqtp13db_domain_model_teilnehmer WHERE
-				DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),erstberatungabgeschlossen) <= 0 AND
-				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),erstberatungabgeschlossen) >= 0
-                AND deleted = 0 AND hidden = 0 AND niqidberatungsstelle LIKE '$niqbid'");
-        $query = $query->execute();
-        return count($query);
-    }
-    
-    public function count4StatusArchiviert($datum1, $datum2, $niqbid)
-    {
-        $query = $this->createQuery();
-        $query->statement("SELECT * FROM tx_iqtp13db_domain_model_teilnehmer WHERE
-				DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),erstberatungabgeschlossen) <= 0 AND
-				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),erstberatungabgeschlossen) >= 0 AND
-        		beratungsstatus = 4 AND deleted = 0 AND hidden = 0 AND niqidberatungsstelle LIKE '$niqbid'");
-        $query = $query->execute();
-        return count($query);
-    }
-    
-    public function days4Beratungfertig($datum1, $datum2, $niqbid)
-    {
-        $query = $this->createQuery();
-        $query->statement("SELECT * FROM tx_iqtp13db_domain_model_teilnehmer WHERE
-				DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),erstberatungabgeschlossen) <= 0 AND
-				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),erstberatungabgeschlossen) >= 0
-                AND deleted = 0 AND hidden = 0 AND niqidberatungsstelle LIKE '$niqbid'");
-        $query = $query->execute();
-        
-        return $query;
-    }
-    
-    public function days4Wartezeit($datum1, $datum2, $niqbid)
-    {
-        $query = $this->createQuery();
-        $query->statement("SELECT * FROM tx_iqtp13db_domain_model_teilnehmer WHERE
-				DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),beratungdatum) <= 0 AND
-				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),beratungdatum) >= 0
-                AND deleted = 0 AND hidden = 0 AND niqidberatungsstelle LIKE '$niqbid'");
-        $query = $query->execute();
-        
-        return $query;
-    }
-    
-    
+
     /**
      *
      */
@@ -439,7 +466,6 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 AND niqidberatungsstelle LIKE $niqbid
                 GROUP BY t.uid ORDER BY $orderby ASC";
          
-        //DebuggerUtility::var_dump($sql);
         $query->statement($sql);
         
         return $query->execute();

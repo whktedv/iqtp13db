@@ -29,19 +29,37 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         
         return $query;
     }
-        
     
-	public function count4Status($datum1, $datum2, $niqbid)
+    /**
+     * @param $niqbid
+     */
+	public function countFKbyBID($niqbid)
 	{
-		 
-		$query = $this->createQuery();	
-		$query->statement("SELECT * FROM tx_iqtp13db_domain_model_folgekontakt as a LEFT JOIN tx_iqtp13db_domain_model_teilnehmer as b ON a.teilnehmer = b.uid WHERE 
-				DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),STR_TO_DATE(a.datum, '%d.%m.%Y')) <= 0 AND
-				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),STR_TO_DATE(a.datum, '%d.%m.%Y')) >= 0
-                AND a.deleted = 0 AND b.niqidberatungsstelle LIKE '$niqbid'"); 
-		$query = $query->execute();
-		
-		return count($query);
+	    $query = $this->createQuery();
+	    if(date('y') > 2023) {
+	        $query->statement("SELECT MONTH(STR_TO_DATE(a.datum, '%d.%m.%Y')) as monat, count(*) as anzahl
+                FROM tx_iqtp13db_domain_model_folgekontakt as a
+                LEFT JOIN tx_iqtp13db_domain_model_teilnehmer as b ON a.teilnehmer = b.uid 
+                WHERE YEAR(STR_TO_DATE(a.datum, '%d.%m.%Y')) = YEAR(CURRENT_DATE())
+                AND a.deleted = 0 AND niqidberatungsstelle LIKE '$niqbid'
+                GROUP BY MONTH(STR_TO_DATE(a.datum, '%d.%m.%Y'))
+                UNION
+                SELECT MONTH(STR_TO_DATE(a.datum, '%d.%m.%Y')) as monat, count(*) as anzahl
+                FROM tx_iqtp13db_domain_model_folgekontakt as a
+                LEFT JOIN tx_iqtp13db_domain_model_teilnehmer as b ON a.teilnehmer = b.uid 
+                WHERE YEAR(STR_TO_DATE(a.datum, '%d.%m.%Y')) = YEAR(CURRENT_DATE())-1 AND MONTH(STR_TO_DATE(a.datum, '%d.%m.%Y')) > MONTH(CURRENT_DATE())
+                AND a.deleted = 0 AND niqidberatungsstelle LIKE '$niqbid'
+                GROUP BY MONTH(STR_TO_DATE(a.datum, '%d.%m.%Y'))");
+	    } else {
+	        $query->statement("SELECT MONTH(STR_TO_DATE(a.datum, '%d.%m.%Y')) as monat, count(*) as anzahl
+                FROM tx_iqtp13db_domain_model_folgekontakt as a
+                LEFT JOIN tx_iqtp13db_domain_model_teilnehmer as b ON a.teilnehmer = b.uid
+                WHERE YEAR(STR_TO_DATE(a.datum, '%d.%m.%Y')) = YEAR(CURRENT_DATE())
+                AND a.deleted = 0 AND niqidberatungsstelle LIKE '$niqbid'
+                GROUP BY MONTH(STR_TO_DATE(a.datum, '%d.%m.%Y'))");
+	    }
+        $query = $query->execute(true);
+        return $query;
 	}
 	
 	/**

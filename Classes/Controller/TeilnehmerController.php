@@ -219,83 +219,49 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function statusAction(int $currentPage = 1)
     {
-        // Seite "Übersicht"
         $valArray = $this->request->getArguments();
         
-        $heute = date('Y-m-d');
-        $diesesjahr = date('Y');
-        $diesermonat = idate('m');
-        $letztesjahr = idate('Y') - 1 == 2022 ? date('Y') : idate('Y') - 1;
-        
         for($i=1;$i<13;$i++) {
-            $monatsnamen[$i] = date("M", mktime(0, 0, 0, $i, 1, $diesesjahr));
+            $monatsnamen[$i] = date("M", mktime(0, 0, 0, $i, 1, date('Y')));
         }
         
-        $tnberatungenfk22 = $this->folgekontaktRepository->fk4StatusFK2022("01.01.2023", date("t", mktime(0, 0, 0, $diesermonat, 1, $diesesjahr)).".".$diesermonat.".".$diesesjahr, $this->niqbid);
+        $tnberatungenfk22 = $this->folgekontaktRepository->fk4StatusFK2022("01.01.2023", date("t", strtotime('now')), $this->niqbid);
         for($m = 1; $m < 13; $m++) $beratungfk22[$m] = 0;
         foreach($tnberatungenfk22 as $fk22) {
             $fkmonat = DateTime::createFromFormat('d.m.Y', $fk22->getDatum())->format('n');
             $beratungfk22[$fkmonat]++;
         }
         
-        for($m = $diesermonat + 1; $m < 13; $m++) {
-            $angemeldeteTN[$m] = $this->teilnehmerRepository->count4Status("01.".$m.".".$letztesjahr, date("t", mktime(0, 0, 0, $m, 1, $letztesjahr)).".".$m.".".$letztesjahr, $this->niqbid);
-            $qfolgekontakte[$m] = $this->folgekontaktRepository->count4Status("01.".$m.".".$letztesjahr, date("t", mktime(0, 0, 0, $m, 1, $letztesjahr)).".".$m.".".$letztesjahr, $this->niqbid);
-            $erstberatung[$m] = $this->teilnehmerRepository->count4StatusErstberatung("01.".$m.".".$letztesjahr, date("t", mktime(0, 0, 0, $m, 1, $letztesjahr)).".".$m.".".$letztesjahr, $this->niqbid);
-            $beratungfertig[$m] = $this->teilnehmerRepository->count4StatusBeratungfertig("01.".$m.".".$letztesjahr, date("t", mktime(0, 0, 0, $m, 1, $letztesjahr)).".".$m.".".$letztesjahr, $this->niqbid);
-            $niqerfasst[$m] =  $this->teilnehmerRepository->count4Statusniqerfasst("01.".$m.".".$letztesjahr, date("t", mktime(0, 0, 0, $m, 1, $letztesjahr)).".".$m.".".$letztesjahr, $this->niqbid);
-            
-            $days4beratung[$m] =  $this->teilnehmerRepository->days4Beratungfertig("01.".$m.".".$letztesjahr, date("t", mktime(0, 0, 0, $m, 1, $letztesjahr)).".".$m.".".$letztesjahr, $this->niqbid);
-            $days4wartezeit[$m] =  $this->teilnehmerRepository->days4Wartezeit("01.".$m.".".$letztesjahr, date("t", mktime(0, 0, 0, $m, 1, $letztesjahr)).".".$m.".".$letztesjahr, $this->niqbid);
-        }
-        for($m = 1; $m <= $diesermonat; $m++) {
-            $angemeldeteTN[$m] = $this->teilnehmerRepository->count4Status("01.".$m.".".$diesesjahr, date("t", mktime(0, 0, 0, $m, 1, $diesesjahr)).".".$m.".".$diesesjahr, $this->niqbid);
-            $qfolgekontakte[$m] = $this->folgekontaktRepository->count4Status("01.".$m.".".$diesesjahr, date("t", mktime(0, 0, 0, $m, 1, $diesesjahr)).".".$m.".".$diesesjahr, $this->niqbid);
-            $erstberatung[$m] = $this->teilnehmerRepository->count4StatusErstberatung("01.".$m.".".$diesesjahr, date("t", mktime(0, 0, 0, $m, 1, $diesesjahr)).".".$m.".".$diesesjahr, $this->niqbid);
-            $beratungfertig[$m] = $this->teilnehmerRepository->count4StatusBeratungfertig("01.".$m.".".$diesesjahr, date("t", mktime(0, 0, 0, $m, 1, $diesesjahr)).".".$m.".".$diesesjahr, $this->niqbid);
-            $niqerfasst[$m] = $this->teilnehmerRepository->count4Statusniqerfasst("01.".$m.".".$diesesjahr, date("t", mktime(0, 0, 0, $m, 1, $diesesjahr)).".".$m.".".$diesesjahr, $this->niqbid);
-            
-            $days4beratung[$m] =  $this->teilnehmerRepository->days4Beratungfertig("01.".$m.".".$diesesjahr, date("t", mktime(0, 0, 0, $m, 1, $diesesjahr)).".".$m.".".$diesesjahr, $this->niqbid);
-            $days4wartezeit[$m] = $this->teilnehmerRepository->days4Wartezeit("01.".$m.".".$diesesjahr, date("t", mktime(0, 0, 0, $m, 1, $diesesjahr)).".".$m.".".$diesesjahr, $this->niqbid);
-        }
-        /*
-         * durchschnittl. Tage Beratung abgeschl. und durchschnittl. Tage Wartezeit	berechnen
-         */
-        $anz4avgmonthb = 0;
-        $anz4avgmonthw = 0;
-        for($n = 1; $n <= 12; $n++) {
-            $diffdaysb = 0;
-            for($k = 0; $k < count($days4beratung[$n]); $k++) {
-                $dat1 = new Datetime($days4beratung[$n][$k]->getBeratungdatum());
-                $dat2 = new Datetime($days4beratung[$n][$k]->getErstberatungabgeschlossen());
-                $diffdaysb += date_diff($dat1, $dat2)->format('%a');
-            }
-            
-            if(count($days4beratung[$n]) > 0) {
-                $totalavgmonthb[$n] = floatval($diffdaysb)/floatval(count($days4beratung[$n]));
-                $anz4avgmonthb++;
-            } else {
-                $totalavgmonthb[$n] = '-';
-            }
-            
-            $diffdaysw = 0;
-            for($k = 0; $k < count($days4wartezeit[$n]); $k++) {
-                if($days4wartezeit[$n][$k] != null) {
-                    $dat1 = new DateTime();
-                    $dat1->setTimestamp($days4wartezeit[$n][$k]->getVerificationDate());
-                    $dat2 = new Datetime($days4wartezeit[$n][$k]->getBeratungdatum());
-                    $diffdaysw += date_diff($dat1, $dat2)->format('%a');
-                }
-            }
-            
-            if(count($days4wartezeit[$n]) > 0) {
-                $totalavgmonthw[$n] = floatval($diffdaysw)/floatval(count($days4wartezeit[$n]));
-                $anz4avgmonthw++;
-            } else {
-                $totalavgmonthw[$n] = '-';
-            }
-        }
+        $emptystatusarray = array(1 => 0,2 => 0,3 => 0,4 => 0,5 => 0,6 => 0,7 => 0,8 => 0,9 => 0,10 => 0,11 => 0, 12 => 0);
+        $angemeldeteTN = $emptystatusarray;
+        $erstberatung = $emptystatusarray;
+        $beratungfertig = $emptystatusarray;
+        $niqerfasst = $emptystatusarray;
+        $qfolgekontakte =  $emptystatusarray;
+        $days4beratung = $emptystatusarray;
+        $days4wartezeit = $emptystatusarray;
         
+        $ergarrayangemeldete = $this->teilnehmerRepository->countTNbyBID($this->niqbid, 1);
+        foreach($ergarrayangemeldete as $erg) $angemeldeteTN[$erg['monat']] = $erg['anzahl'];
+        
+        $ergarrayerstberatung = $this->teilnehmerRepository->countTNbyBID($this->niqbid, 2);
+        foreach($ergarrayerstberatung as $erg) $erstberatung[$erg['monat']] = $erg['anzahl'];
+        
+        $ergarrayberatungfertig = $this->teilnehmerRepository->countTNbyBID($this->niqbid, 3);
+        foreach($ergarrayberatungfertig as $erg) $beratungfertig[$erg['monat']] = $erg['anzahl'];
+        
+        $ergarrayniqerfasst = $this->teilnehmerRepository->countTNbyBID($this->niqbid, 4);
+        foreach($ergarrayniqerfasst as $erg) $niqerfasst[$erg['monat']] = $erg['anzahl'];
+        
+        $ergarrayfolgekontakte = $this->folgekontaktRepository->countFKbyBID($this->niqbid);
+        foreach($ergarrayfolgekontakte as $erg) $qfolgekontakte[$erg['monat']] = $erg['anzahl'];
+        
+        $ergarraywartezeitanmeldung = $this->teilnehmerRepository->calcwaitingdays($this->niqbid,'anmeldung');
+        foreach($ergarraywartezeitanmeldung as $erg) $days4wartezeit[$erg['monat']] = $erg['wert'];
+        
+        $ergarraywartezeitberatung = $this->teilnehmerRepository->calcwaitingdays($this->niqbid,'beratung');
+        foreach($ergarraywartezeitberatung as $erg) $days4beratung[$erg['monat']] = $erg['wert'];
+      
         ksort($angemeldeteTN);
         ksort($qfolgekontakte);
         ksort($erstberatung);
@@ -328,7 +294,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         for($i = 7; $i >= 0; $i--) {
             $reftag = date("d.m.Y", strtotime( '-'.$i.' days' ));
             $neuanmeldungen7tage[$i]["tag"] = date("l, d.m.Y", strtotime( '-'.$i.' days' ));
-            $neuanmeldungen7tage[$i]["wert"] = $this->teilnehmerRepository->count4Status($reftag, $reftag, $this->niqbid);
+            $neuanmeldungen7tage[$i]["wert"] = $this->teilnehmerRepository->count4Status($reftag, $reftag, $this->niqbid, 1)[0]['anzahl'];
         }
         
         // ******************** EXPORT Statistik ****************************
@@ -370,24 +336,24 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         
         $this->view->assignMultiple(
             [
+                'beratungfk22'=> $beratungfk22,
+                'SUMberatungfk22'=> count($tnberatungenfk22),
                 'monatsnamen'=> $monatsnamen,
-                'aktmonat'=> $diesermonat-1,
+                'aktmonat'=> idate('m')-1,
                 'angemeldeteTN'=> $angemeldeteTN,
                 'SUMangemeldeteTN'=> array_sum($angemeldeteTN),
                 'qfolgekontakte'=> $qfolgekontakte,
-                'SUMqfolgekontakte'=>  array_sum($qfolgekontakte),
+                'SUMqfolgekontakte'=> array_sum($qfolgekontakte),
                 'erstberatung'=> $erstberatung,
-                'SUMerstberatung'=>  array_sum($erstberatung),
-                'beratungfk22'=> $beratungfk22,
-                'SUMberatungfk22'=> count($tnberatungenfk22),
+                'SUMerstberatung'=> array_sum($erstberatung),
                 'beratungfertig'=> $beratungfertig,
-                'SUMberatungfertig'=>  array_sum($beratungfertig),
+                'SUMberatungfertig'=> array_sum($beratungfertig),
                 'niqerfasst'=> $niqerfasst,
-                'SUMniqerfasst'=>  array_sum($niqerfasst),
-                'totalavgmonthb'=> $totalavgmonthb,
-                'SUMtotalavgmonthb'=>  $anz4avgmonthb > 0 ? array_sum($totalavgmonthb)/$anz4avgmonthb : 0,
-                'totalavgmonthw'=> $totalavgmonthw,
-                'SUMtotalavgmonthw'=>  $anz4avgmonthw > 0 ? array_sum($totalavgmonthw)/$anz4avgmonthw : 0,
+                'SUMniqerfasst'=> array_sum($niqerfasst),
+                'totalavgmonthb'=> $days4beratung,
+                'SUMtotalavgmonthb'=> array_sum($days4beratung)/(date('Y') == 2023 ? idate('m') : count($days4beratung)),
+                'totalavgmonthw'=> $days4wartezeit,
+                'SUMtotalavgmonthw'=> array_sum($days4wartezeit)/(date('Y') == 2023 ? idate('m') : count($days4beratung)),
                 'aktuelleanmeldungen'=> $aktuelleanmeldungen,
                 'aktuellerstberatungen'=> $aktuellerstberatungen,
                 'aktuellberatungenfertig'=> $aktuellberatungenfertig,

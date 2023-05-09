@@ -1,0 +1,103 @@
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<style type="text/css">
+.csc-header h1,h1 {
+  font: 14px/ 16px arial;
+  color: #003359;
+  font-weight: bold
+}
+
+body,p {
+  padding: 0px;
+  margin: 0px;
+  border: 0px;
+}
+
+img {
+  width: 50%;
+}
+
+a:focus,a:hover,a:active {
+  text-decoration: underline;
+}
+
+a {
+  color: #c43c5d;
+  font-size: 100%;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.farbbalken {
+    background-repeat: no-repeat;
+    background-color: #99CACA;
+    height: 12px;
+    margin: 0px auto;
+    width: 580px;
+    background-image: url("{baseurl}typo3conf/ext/iqtp13db/Resources/Public/mark-2019.png");
+}
+
+</style></head>
+<body>
+<table width="100%" align="center" border="0" cellpadding="0" cellspacing="0" bgcolor="#ECECEC">
+<tbody><tr><td><table align="center" cellpadding="0" cellspacing="0" width="580px" bgcolor="#FFFFFF">
+<tbody><tr><td>
+<table cellpadding="0" cellspacing="0" width="100%"><tbody>
+<tr><td class="header" align="left" valign="middle"><table cellpadding="0" cellspacing="0" width="100%"><tbody><tr>
+<td><a target="_new" href="{startseitelink}"><img src="{logolink}" border="0"></a></td></tr>
+</tbody></table></td></tr></tbody></table>
+  <table border="0" cellpadding="20" cellspacing="0" width="100%">
+    <tbody><tr><td><div id="newsletter_content"><table border="0" cellpadding="6" cellspacing="0" width="100%"><tbody><tr><td>
+	<table class="tx-iqpraktikumsdb" >
+        <tr><td colspan="2">
+          <f:format.html><b>- English version below -</b><br><br>Guten Tag {tnname}<br><br>
+          Sie haben sich bei uns zur Beratung angemeldet. Leider konnten wir Ihre Anfrage bisher noch nicht bearbeiten, weil wir sehr viele Anmeldungen erhalten haben. Gerne beraten wir Sie in 2023.<br><br>
+          Unsere digitale Anmeldung wurde überarbeitet. Auch die Datenschutzvereinbarung wurde erneuert (<a href="https://www.iq-webapp.de/frontend-iq-webapp/datenschutz-und-einwilligung" target="_blank">Link zur neue Datenschutzvereinbarung</a>). Damit wir Sie beraten können, benötigen wir deshalb eine Bestätigung Ihrer Anmeldung.<br><br>
+          Bitte bestätigen Sie hier:
+        </f:format.html>
+        <f:link.action
+        extensionName="iqtp13db"
+        pluginName="Iqtp13dbwebapp"
+        controller="Teilnehmer"
+        action="confirm"
+        arguments="{code:teilnehmer.verificationCode, askconsent:askconsent}"
+        absolute="1"
+        pageUid="{registrationpageuid}"
+        >{confirmlinktext}</f:link.action>
+
+          <f:format.html><br>Wir werden Sie so schnell wie möglich beraten.<br><br>
+        Mit freundlichem Gruß<br>
+        Ihre Digitale Anerkennungsberatung<br><br><br>
+        </f:format.html>
+          <f:format.html><b>*** ENGLISH VERSION ***</b><br><br>
+        Dear {tnname}<br><br>
+        You have registered with us for counselling. Unfortunately, we have not yet been able to process your request because we have received a lot of registrations. We will be happy to advise you in 2023.<br><br>
+        Our digital registration has been revised. The data protection agreement was also renewed (<a href="https://www.iq-webapp.de/frontend-iq-webapp/datenschutz-und-einwilligung" target="_blank">Link to data protection agreement</a>). In order for us to be able to advise you, we therefore need a confirmation of your registration.<br><br>
+        Please confirm here:
+      </f:format.html>
+      <f:link.action
+      extensionName="iqtp13db"
+      pluginName="Iqtp13dbwebapp"
+      controller="Teilnehmer"
+      action="confirm"
+      arguments="{code:teilnehmer.verificationCode, askconsent:askconsent}"
+      absolute="1"
+      pageUid="{registrationpageuid}"
+      >{confirmlinktext}</f:link.action>
+
+        <f:format.html><br><br>
+      With kind regards<br>
+      Your Digitale Anerkennungsberatung<br>
+      </f:format.html>
+<div style="background-color: #dedede; padding: 10px; border: 1px solid #222; margin-top: 20px;">
+										<div style="font-size: 14px; color:#222222;">
+											<b>{kontaktlabel}</b><br>
+											<f:format.raw>{datenberatungsstelle}</f:format.raw>
+										</div>
+									</div>
+		</td></tr>
+    </table>
+</td></tr><tr><td><br><hr size="1"></td></tr></tbody></table></div></td></tr></tbody></table>
+</td></tr><tr><div class="farbbalken"></div><td bgcolor="#99CACA" height="10" valign="top"></td></tr>
+</tbody></table></td></tr></tbody></table></body></html>
