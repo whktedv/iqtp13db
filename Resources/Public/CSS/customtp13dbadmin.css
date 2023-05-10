@@ -108,13 +108,65 @@
      text-align: center; 
 }
 
+
 .tx-iqtp13db table .dublette {
-    background-color: #ffc1c1;
+    background-color: #997a3b54;
+     width: 25%;
 }
 
 .tx-iqtp13db table .bestaetigt {
-    background-color: bisque;
+    background-color: #7a970133;
+     width: 25%;
 }
+
+.tx-iqtp13db table .unbestaetigt-beraten {
+    background-color: #ffbe6ac4;
+     width: 25%;
+}
+
+.tx-iqtp13db table .unbestaetigt-beraten img.anfordernbtnimg {
+    border: 2px solid #f00;
+}
+
+.tx-iqtp13db .tablelinkbuttons {
+  background-color: #4E638D;
+  color: #fff;
+  border: 0px solid transparent;
+  white-space: nowrap;
+  font-weight: 500;
+  text-align: center;
+  font-family: Roboto Condensed;
+  padding: 2px 4px;
+  margin-left: -4px;
+  margin-right: -4px;
+  cursor: pointer;
+  display: inline-block;
+  -moz-user-select: none;
+  text-decoration: none;
+  text-transform: uppercase;
+  border-bottom-right-radius: 7px;
+  display: block;
+
+}
+
+.tablelinkbuttons.buttonedit,.tablelinkbuttons.buttonnew {
+  text-transform: uppercase;
+  line-height: 1.0 !important;
+  font-size: 0.7rem !important;
+}
+
+
+.tablelinkbuttons.buttoneinwilligung {
+  text-transform: uppercase;
+  line-height: 1.0 !important;
+  font-size: 0.7rem !important;
+}
+
+.iconbuttons.buttondelete img {
+  width: 25px;
+  height: 25px;
+}
+
 
 .pagination .current {
 	font-weight: bold;

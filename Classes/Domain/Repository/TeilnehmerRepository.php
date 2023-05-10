@@ -330,7 +330,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         }
 
         $query = $this->createQuery();
-        if(date('y') > 2023) {
+        if(date('Y') > 2023) {
             $query->statement("SELECT MONTH($field) as monat, count(*) as anzahl
                 FROM tx_iqtp13db_domain_model_teilnehmer
                 WHERE YEAR($field) = YEAR(CURRENT_DATE())
@@ -376,8 +376,8 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         }
         
         $query = $this->createQuery();
-        if(date('y') > 2023) {
-            $query->statement("SELECT MONTH($bis) as monat, SUM(DATEDIFF($bis,$von)) / count(*) as wert
+        if(date('Y') > 2023) {
+            $query->statement("SELECT MONTH($bis) as monat, SUM(IF(DATEDIFF($bis,$von) < 0, 0, DATEDIFF($bis,$von))) / count(*) as wert
                         FROM tx_iqtp13db_domain_model_teilnehmer 
                         WHERE $bis != '' AND deleted = 0 AND hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND YEAR($von) = YEAR(CURRENT_DATE())
                         GROUP BY MONTH($bis)
@@ -387,7 +387,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                         WHERE $bis != '' AND deleted = 0 AND hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND YEAR($von) = YEAR(CURRENT_DATE())-1 AND MONTH($von) > MONTH(CURRENT_DATE())
                         GROUP BY MONTH($bis)");
         } else {
-            $query->statement("SELECT MONTH($bis) as monat, SUM(DATEDIFF($bis,$von)) / count(*) as wert
+            $query->statement("SELECT MONTH($bis) as monat, SUM(IF(DATEDIFF($bis,$von) < 0, 0, DATEDIFF($bis,$von))) / count(*) as wert
                         FROM tx_iqtp13db_domain_model_teilnehmer
                         WHERE $bis != '' AND deleted = 0 AND hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND YEAR($von) = YEAR(CURRENT_DATE())
                         GROUP BY MONTH($bis)");

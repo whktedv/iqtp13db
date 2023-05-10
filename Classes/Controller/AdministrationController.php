@@ -143,8 +143,8 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         $beratungfertig = $emptystatusarray;
         $niqerfasst = $emptystatusarray;
         $qfolgekontakte =  $emptystatusarray;
-        $days4beratung = $emptystatusarray;
         $days4wartezeit = $emptystatusarray;
+        $days4beratung = $emptystatusarray;
         
         $ergarrayangemeldete = $this->teilnehmerRepository->countTNbyBID('%', 1);
         foreach($ergarrayangemeldete as $erg) $angemeldeteTN[$erg['monat']] = $erg['anzahl'];
@@ -166,15 +166,14 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         
         $ergarraywartezeitberatung = $this->teilnehmerRepository->calcwaitingdays('%','beratung');
         foreach($ergarraywartezeitberatung as $erg) $days4beratung[$erg['monat']] = $erg['wert'];
-        
-       
+               
         ksort($angemeldeteTN);
         ksort($qfolgekontakte);
         ksort($erstberatung);
         ksort($beratungfertig);
         ksort($niqerfasst);
-        ksort($days4beratung);
         ksort($days4wartezeit);
+        ksort($days4beratung);
         
         $aktuelleanmeldungenunbestaetigt = count($this->teilnehmerRepository->findAllOrder4Status(0, '%'));        
         $aktuelleanmeldungenbestaetigt = count($this->teilnehmerRepository->findAllOrder4Status(1, '%'));

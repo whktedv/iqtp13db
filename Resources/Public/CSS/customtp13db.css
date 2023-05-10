@@ -155,14 +155,6 @@
      text-align: center; 
 }
 
-.tx-iqtp13db table .dublette {
-    background-color: #ffc1c1;
-}
-
-.tx-iqtp13db table .bestaetigt {
-    background-color: bisque;
-}
-
 .tx-iqtp13db input[type="submit"], .tx-iqtp13db .linkbuttons  {
     background-color: #99CACA;
     border: 1px solid transparent;

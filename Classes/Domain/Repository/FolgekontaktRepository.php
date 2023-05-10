@@ -36,7 +36,7 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 	public function countFKbyBID($niqbid)
 	{
 	    $query = $this->createQuery();
-	    if(date('y') > 2023) {
+	    if(date('Y') > 2023) {
 	        $query->statement("SELECT MONTH(STR_TO_DATE(a.datum, '%d.%m.%Y')) as monat, count(*) as anzahl
                 FROM tx_iqtp13db_domain_model_folgekontakt as a
                 LEFT JOIN tx_iqtp13db_domain_model_teilnehmer as b ON a.teilnehmer = b.uid 

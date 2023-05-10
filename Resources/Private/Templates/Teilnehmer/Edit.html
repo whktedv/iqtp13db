@@ -15,18 +15,36 @@
 		})(jQuery);		
 	</script>
 </f:then>
+<f:else>
+	<f:if condition="{showdokumente} == '1'">
+	<f:then>
+		<script>
+			(function($) {
+			    $(document).ready(function() {
+			         location.href = "#AnkerDokumente";
+			    });
+			})(jQuery);		
+		</script>
+	</f:then>
+	<f:else>
+		<script type="text/javascript">
+			$(document).ready(function () {
+		
+			    if (localStorage.getItem("iqtp13-{teilnehmer.uid}-quote-scroll") != null) {
+			        $(window).scrollTop(localStorage.getItem("iqtp13-{teilnehmer.uid}-quote-scroll"));
+			    }
+			
+			    $(window).on("scroll", function() {
+			        localStorage.setItem("iqtp13-{teilnehmer.uid}-quote-scroll", $(window).scrollTop());
+			    });
+		
+		  	});
+		</script>
+	</f:else>
+	</f:if>
+</f:else>
 </f:if>
-<f:if condition="{showdokumente} == '1'">
-<f:then>
-	<script>
-		(function($) {
-		    $(document).ready(function() {
-		         location.href = "#AnkerDokumente";
-		    });
-		})(jQuery);		
-	</script>
-</f:then>
-</f:if>
+
 
 <f:render partial="FormErrors" arguments="{object:Teilnehmer}" />
 

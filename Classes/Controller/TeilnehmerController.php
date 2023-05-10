@@ -298,7 +298,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         }
         
         // ******************** EXPORT Statistik ****************************
-        $rows[0] = $monatsnamen;
+        /*$rows[0] = $monatsnamen;
         array_unshift($rows[0], " ");
         $rows[1] = $angemeldeteTN;
         array_unshift($rows[1], "Anmeldungen");
@@ -332,6 +332,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             fclose($fp);
             exit;
         }
+        */
         // ******************** EXPORT Statistik bis hier ****************************
         
         $this->view->assignMultiple(
@@ -849,6 +850,27 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             );
     }
     
+    
+    /**
+     * action initcreate
+     *
+     * @return void
+     */
+    public function initializeCreateAction() {        
+        $valArray = $this->request->getArguments();
+        $beratungdatum = $valArray['teilnehmer']['beratungdatum'] ?? '';
+        $erstberatungabgeschlossen = $valArray['teilnehmer']['erstberatungabgeschlossen'] ?? '';
+        
+        if($beratungdatum != '' && !$this->generalhelper->validateDateYmd($beratungdatum)) {
+            $this->addFlashMessage("FEHLER: Datensatz NICHT gespeichert. -Beratung Datum- ungültige Eingabe. Datum im Format JJJJ-MM-TT eintragen!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->redirect($valArray['calleraction'] ?? 'new', $valArray['callercontroller'] ?? 'Teilnehmer', null, array('callerpage' => $valArray['callerpage'] ?? '1'));
+        }
+        if($erstberatungabgeschlossen != '' && !$this->generalhelper->validateDateYmd($erstberatungabgeschlossen)) {
+            $this->addFlashMessage("FEHLER: Datensatz NICHT gespeichert. -Erstberatung abgeschlossen- ungültige Eingabe. Datum im Format JJJJ-MM-TT eintragen!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->redirect($valArray['calleraction'] ?? 'new', $valArray['callercontroller'] ?? 'Teilnehmer', null, array('callerpage' => $valArray['callerpage'] ?? '1'));
+        }
+    }
+    
     /**
      * action create
      *
@@ -859,17 +881,26 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     {
         $valArray = $this->request->getArguments();
         
-        $teilnehmer->setNiqidberatungsstelle($this->niqbid);
+        if($teilnehmer->getVerificationDate() == 0 && ($this->generalhelper->validateDateYmd($teilnehmer->getErstberatungabgeschlossen()) || $this->generalhelper->validateDateYmd($teilnehmer->getBeratungdatum()))) {
+            $this->addFlashMessage("HINWEIS: Bitte unmittelbar nach Eintragung Einwilligung anfordern!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+        }
         
-        $this->teilnehmerRepository->add($teilnehmer);
+        if($this->generalhelper->validateDateYmd($teilnehmer->getErstberatungabgeschlossen()) && !$this->generalhelper->validateDateYmd($teilnehmer->getBeratungdatum())) {
+            $this->addFlashMessage("Datensatz NICHT gespeichert. -Datum Erstberatung– muss eingetragen sein, wenn -Erstberatung abgeschlossen- ausgefüllt ist.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+        } else {
+            $teilnehmer->setNiqidberatungsstelle($this->niqbid);
+            if($teilnehmer->getBerater() == 0) $teilnehmer->setBerater($this->beraterRepository->findByUid($this->user['uid']));
+            
+            $this->teilnehmerRepository->add($teilnehmer);
+            
+            // Daten sofort in die Datenbank schreiben
+            $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+            $persistenceManager->persistAll();
+            
+            $tfolder = $this->generalhelper->createFolder($teilnehmer, $this->storageRepository->findAll());
+        }
         
-        // Daten sofort in die Datenbank schreiben
-        $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
-        $persistenceManager->persistAll();
-        
-        $tfolder = $this->generalhelper->createFolder($teilnehmer, $this->storageRepository->findAll());
-        
-        $this->redirect('edit', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'showabschluesse' => '1', 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage']));
+        $this->redirect('edit', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage']));
     }
     
     /**
@@ -977,9 +1008,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     }
     
     /**
-     * action update
+     * action initupdate
      *
-     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return void
      */
     public function initializeUpdateAction() {
@@ -1008,8 +1038,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function updateAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
         $valArray = $this->request->getArguments();
-        
-        
+                
         if(is_numeric($teilnehmer->getLebensalter())) {
             if($teilnehmer->getLebensalter() > 0 && ($teilnehmer->getLebensalter() < 15 || $teilnehmer->getLebensalter() > 80)) {
                 $this->addFlashMessage("Datensatz NICHT gespeichert. Lebensalter muss zwischen 15 und 80 oder k.A. sein.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
@@ -1019,7 +1048,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         
         if($teilnehmer->getVerificationDate() == 0 && ($this->generalhelper->validateDateYmd($teilnehmer->getErstberatungabgeschlossen()) || $this->generalhelper->validateDateYmd($teilnehmer->getBeratungdatum()))) {
             $this->addFlashMessage("Datensatz NICHT gespeichert. Vor Eintragung von -Datum Erstberatung- oder -Erstberatung abgeschlossen- muss die Anmeldung bestätigt werden!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-            $this->redirect($valArray['calleraction'] ?? 'edit', $valArray['callercontroller'] ?? 'Teilnehmer', null, array('callerpage' => $valArray['callerpage'] ?? '1'));
+            $this->redirect('edit', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'] ?? '1'));
         }
         
         if($this->generalhelper->validateDateYmd($teilnehmer->getErstberatungabgeschlossen()) && !$this->generalhelper->validateDateYmd($teilnehmer->getBeratungdatum())) {
@@ -1689,14 +1718,18 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     {
         $valArray = $this->request->getArguments();
         
-        $teilnehmer->setBeratungsstatus(4);
-        
-        $this->teilnehmerRepository->update($teilnehmer);
-        // Daten sofort in die Datenbank schreiben
-        $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
-        $persistenceManager->persistAll();
-        
-        $this->addFlashMessage('Archiviert.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+        if($teilnehmer->getVerificationDate() == 0) {
+            $this->addFlashMessage('FEHLER: Einwilligung noch nicht eingeholt.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);            
+        } else {
+            $teilnehmer->setBeratungsstatus(4);
+            
+            $this->teilnehmerRepository->update($teilnehmer);
+            // Daten sofort in die Datenbank schreiben
+            $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+            $persistenceManager->persistAll();
+            
+            $this->addFlashMessage('Archiviert.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+        }
         
         $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']), null);
     }
@@ -2299,7 +2332,15 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         }
         
         if($teilnehmer) {
-            $teilnehmer->setBeratungsstatus(1);
+            
+            if($teilnehmer->getBeratungdatum() != '' && $teilnehmer->getErstberatungabgeschlossen() != ''){
+                $teilnehmer->setBeratungsstatus(3);
+            } elseif($teilnehmer->getBeratungdatum() != ''){
+                $teilnehmer->setBeratungsstatus(2);
+            } else {
+                $teilnehmer->setBeratungsstatus(1);
+            }
+            
             $teilnehmer->setVerificationDate(new \DateTime);
             $teilnehmer->setVerificationIp($_SERVER['REMOTE_ADDR']);
             $this->teilnehmerRepository->update($teilnehmer);
