@@ -1,0 +1,25 @@
+ mod.wizards.newContentElement.wizardItems {
+	plugins {
+		elements {
+			iqtp13db_iqtp13dbadmin {
+				iconIdentifier = iqtp13dbadminicon
+				title = IQ Webapp Backend
+	 			description = Admin Backend der IQ Webapp zur Anerkennungserstberatung
+				tt_content_defValues {
+					CType = list
+					list_type =  = iqtp13db_iqtp13dbadmin
+				}
+			}
+			iqtp13db_iqtp13dbwebapp {
+				iconIdentifier = iqtp13dbwebappicon
+				title = IQ Webapp Frontend
+	 			description = Frontend für Ratsuchende der IQ Webapp zur Anerkennungserstberatung
+				tt_content_defValues {
+					CType = list
+					list_type =  = iqtp13db_iqtp13dbwebapp
+				}
+			}
+		}
+		show := addToList(iqtp13db_iqtp13dbadmin,iqtp13db_iqtp13dbwebapp)
+	}
+}

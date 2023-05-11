@@ -176,7 +176,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         if ($this->settings['modtyp'] == 'adminuebersicht') {
             $this->forward('adminuebersicht', 'Administration', 'Iqtp13db');
         }
-        if ($this->settings['modtyp'] == 'anmeldung') {
+        if ($this->settings['modtyp'] == 'anmeldung' || $this->settings['modtyp'] == 'anmeldungplz') {
             if($datum >= $wartungvon->getTimestamp() AND $datum <= $wartungbis->getTimestamp())
             {
                 $this->forward('wartung', 'Teilnehmer', 'Iqtp13db');
@@ -196,15 +196,23 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                             if($direkt == '1'){
                                 $this->forward('anmeldseite0', 'Teilnehmer', 'Iqtp13db', array('direkt' => $direkt));
                             } else {
-                                $this->forward('startseite', 'Teilnehmer', 'Iqtp13db');
+                                if($this->settings['modtyp'] == 'anmeldungplz') {
+                                    $this->forward('startseiteplz', 'Teilnehmer', 'Iqtp13db');
+                                } else {
+                                    $this->forward('startseite', 'Teilnehmer', 'Iqtp13db');
+                                }                                
                             }
                             break;
                         }
                     }
                 }
-                $this->forward('startseite', 'Teilnehmer', 'Iqtp13db');
+                if($this->settings['modtyp'] == 'anmeldungplz') {
+                    $this->forward('startseiteplz', 'Teilnehmer', 'Iqtp13db');
+                } else {
+                    $this->forward('startseite', 'Teilnehmer', 'Iqtp13db');
+                }
             }
-        }
+        }       
     }
     
     /*************************************************************************/
@@ -1827,6 +1835,19 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     }
     
     /**
+     * action startseiteplz
+     *
+     * @return void
+     */
+    public function startseiteplzAction()
+    {
+        // Beratungsstellen-ID aus Session-Cache löschen
+        $GLOBALS['TSFE']->fe_user->setKey('ses', 'beratungsstellenid', null);
+        
+        $this->view->assign('anmeldungseiteuid', $this->settings['registrationpageuid']);        
+    }
+    
+    /**
      * action wartung
      *
      * @return void
@@ -1842,8 +1863,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      * @return void
      */
     public function anmeldseite0Action()
-    {
+    {       
         $valArray = $this->request->getArguments();
+        
         $uriBuilder = $this->uriBuilder;
         $bstid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid');
         
@@ -1867,7 +1889,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 $plzberatungsstelle = $this->userGroupRepository->getBeratungsstelle4PLZ($valArray['plz'], $this->settings['beraterstoragepid']);
                 $bstid = count($plzberatungsstelle) > 0 ? $plzberatungsstelle[0]->getNiqbid() : $bstid;
             }
-                       
+            
             if($bstid != '') {
                 $GLOBALS['TSFE']->fe_user->setKey('ses', 'beratungsstellenid', $bstid);
                 

@@ -1,0 +1,28 @@
+
+<f:layout name="Default" />
+
+<f:section name="main">
+
+<f:flashMessages />
+
+<div class="anmeldstart-frame">
+	<div class="frame-type-text frame-layout-0 frame-no-backgroundimage frame-space-before-none frame-space-after-none">
+		<div class="defaultframe">
+			<div class="frame-inner">
+				<f:form id="anmeldform" method="post" controller="Teilnehmer" action="anmeldseite0" pageUid="{anmeldungseiteuid}" >
+					<f:form.hidden name="wohnsitzDeutschland" value="1" />
+					<div>
+						<label for="plz">
+							<f:translate key='tx_iqtp13db_domain_model_teilnehmer.start0plz' />
+						</label>
+						<div class="divtext-anmeldung"><f:form.textfield size="8" pattern="[0-9][0-9][0-9][0-9][0-9]" class="anmeldplztextfield" id="anmeldplz" name="plz" /></div>
+					</div>
+					<f:form.button type="submit" class="linkbuttons anmeldstart"><f:translate key='weiter' /></f:form.button>					
+				</f:form> 
+			</div>
+		</div>
+	</div>
+</div>
+
+<span style="color: #efefef; font-size: 0.8rem; float: right;">{beratungsstelle}</span>
+</f:section>

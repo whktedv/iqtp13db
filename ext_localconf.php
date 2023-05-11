@@ -1,12 +1,18 @@
 <?php
+
+use TYPO3\CMS\Core\Information\Typo3Version;
+use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 defined('TYPO3_MODE') || die('Access denied.');
 
 call_user_func(
     function($extKey)
     {
         
-        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-            'Ud.Iqtp13db',
+        ExtensionUtility::configurePlugin(
+            'Iqtp13db',
             'Iqtp13dbadmin',
             [
                 \Ud\Iqtp13db\Controller\TeilnehmerController::class => 'start, listangemeldet, listerstberatung, listarchiv, checkniqconnection, sendtoniq, sendtoarchiv, show, new, create, edit, update, delete, status, export, askconsent, listdeleted, undelete, savedatenblattpdf, takeover, setBeratungsstellebyPLZ',
@@ -30,50 +36,30 @@ call_user_func(
             ]
             );
         
-        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-            'Ud.Iqtp13db',
+        ExtensionUtility::configurePlugin(
+            'Iqtp13db',
             'Iqtp13dbwebapp',
             [
-                \Ud\Iqtp13db\Controller\TeilnehmerController::class => 'start, startseite, anmeldseite0, anmeldseite1, anmeldseite1redirect, anmeldseite2, anmeldseite2redirect, anmeldseite3, anmeldseite3redirect, anmeldseite4, anmeldseite4redirect, anmeldungcomplete, anmeldungcompleteredirect, confirm, validationFailed, wartung, bereitsberaten',
+                \Ud\Iqtp13db\Controller\TeilnehmerController::class => 'start, startseite, startseiteplz, anmeldseite0, anmeldseite1, anmeldseite1redirect, anmeldseite2, anmeldseite2redirect, anmeldseite3, anmeldseite3redirect, anmeldseite4, anmeldseite4redirect, anmeldungcomplete, anmeldungcompleteredirect, confirm, validationFailed, wartung, bereitsberaten',
                 \Ud\Iqtp13db\Controller\DokumentController::class => 'saveFileWebapp, deleteFileWebapp',
                 \Ud\Iqtp13db\Controller\AbschlussController::class => 'newWebapp, createWebapp, editWebapp, updateWebapp, deleteWebapp'
             ],
             // non-cacheable actions
             [
-                \Ud\Iqtp13db\Controller\TeilnehmerController::class => 'start, startseite, anmeldseite0, anmeldseite1, anmeldseite1redirect, anmeldseite2, anmeldseite2redirect, anmeldseite3, anmeldseite3redirect, anmeldseite4, anmeldseite4redirect, anmeldungcomplete, anmeldungcompleteredirect, confirm, validationFailed, wartung, bereitsberaten',
+                \Ud\Iqtp13db\Controller\TeilnehmerController::class => 'start, startseite, startseiteplz, anmeldseite0, anmeldseite1, anmeldseite1redirect, anmeldseite2, anmeldseite2redirect, anmeldseite3, anmeldseite3redirect, anmeldseite4, anmeldseite4redirect, anmeldungcomplete, anmeldungcompleteredirect, confirm, validationFailed, wartung, bereitsberaten',
                 \Ud\Iqtp13db\Controller\DokumentController::class => 'saveFileWebapp, deleteFileWebapp',
                 \Ud\Iqtp13db\Controller\AbschlussController::class => 'newWebapp, createWebapp, editWebapp, updateWebapp, deleteWebapp'
             ]
             );
-               
-        // wizards
-        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
-            'mod {
-			wizards.newContentElement.wizardItems.plugins {
-				elements {
-					iqtp13dbadmin {
-						icon = ' . \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('iqtp13db') . 'Resources/Public/Icons/user_plugin_iqtp13dbadmin.svg
-						title = LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_iqtp13dbadmin
-						description = LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_iqtp13dbadmin.description
-						tt_content_defValues {
-							CType = list
-							list_type = iqtp13db_iqtp13dbadmin
-						}
-					}
-					iqtp13dbwebapp {
-						icon = ' . \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('iqtp13db') . 'Resources/Public/Icons/user_plugin_iqtp13dbwebapp.svg
-						title = LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_iqtp13dbwebapp
-						description = LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_iqtp13dbwebapp.description
-						tt_content_defValues {
-							CType = list
-							list_type = iqtp13db_iqtp13dbwebapp
-						}
-					}
-				}
-				show = *
-			}
-	   }'
-            );
+        
+        // Only include page.tsconfig if TYPO3 version is below 12 so that it is not imported twice.
+        $versionInformation = GeneralUtility::makeInstance(Typo3Version::class);
+        if ($versionInformation->getMajorVersion() < 12) {
+            ExtensionManagementUtility::addPageTSConfig('
+                 @import "EXT:iqtp13db/Configuration/page.tsconfig"
+            ');
+        }
+        
         
         /************************************************************************
          * XCLASS (Extending Classes) für FrontendUsergroup Klasse
@@ -86,13 +72,13 @@ call_user_func(
         ];
         
         // Register extended domain class
-        \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\Container\Container::class)
+        GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\Container\Container::class)
         ->registerImplementation(
             TYPO3\CMS\Extbase\Domain\Model\FrontendUserGroup::class,
             \Ud\Iqtp13db\Domain\Model\UserGroup::class
             );
         
-        \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\Container\Container::class)
+        GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\Container\Container::class)
         ->registerImplementation(
             TYPO3\CMS\Extbase\Domain\Model\FrontendUser::class,
             \Ud\Iqtp13db\Domain\Model\Berater::class

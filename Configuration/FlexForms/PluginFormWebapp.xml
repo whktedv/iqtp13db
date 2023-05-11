@@ -14,10 +14,14 @@
   				<type>select</type>
   				<renderType>selectSingle</renderType>
   				<items type="array">
-    			<numIndex index="0" type="array">
-      				<numIndex index="0">Anmeldung</numIndex>
-     				<numIndex index="1">anmeldung</numIndex>
-   				</numIndex>
+	    			<numIndex index="0" type="array">
+	      				<numIndex index="0">Anmeldung</numIndex>
+	     				<numIndex index="1">anmeldung</numIndex>
+	   				</numIndex>
+	   				<numIndex index="1" type="array">
+      					<numIndex index="0">Anmeldung nur PLZ</numIndex>
+     					<numIndex index="1">anmeldungplz</numIndex>
+   					</numIndex>
    				</items>
 				</config>
             </TCEforms>
