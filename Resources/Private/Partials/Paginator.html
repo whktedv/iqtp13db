@@ -7,18 +7,18 @@
         <f:if condition="{pagination.previousPageNumber} && {pagination.previousPageNumber} >= {pagination.firstPageNumber}">
             <f:then>
                 <li class="pagination-first">
-                    <f:link.action action="{action}" arguments="{demand:demand, currentPage: 1, orderby : orderby}" title="{f:translate(key: 'pagination.first')}"> |< </f:link.action>
+                    <f:link.action action="{action}" class="li-paginaton-first" arguments="{demand:demand, currentPage: 1, orderby : orderby}" title="{f:translate(key: 'pagination.first')}"> |< </f:link.action>
                 </li>
                 <li class="pagination-previous">
-                    <f:link.action action="{action}" arguments="{demand:demand, currentPage: pagination.previousPageNumber, orderby : orderby}" title="{f:translate(key: 'pagination.previous')}"> < </f:link.action>
+                    <f:link.action action="{action}" class="li-paginaton-previous" arguments="{demand:demand, currentPage: pagination.previousPageNumber, orderby : orderby}" title="{f:translate(key: 'pagination.previous')}"> < </f:link.action>
                 </li>
             </f:then>
             <f:else>
                 <li class="pagination-first disabled">
-                        <span> |< </span>
+                        <span class="li-paginaton-previous"> |< </span>
                 </li>
                 <li class="pagination-previous disabled">
-                        <span> < </span>
+                        <span class="li-paginaton-previous"> < </span>
                 </li>
             </f:else>
         </f:if>
@@ -31,7 +31,7 @@
          	</f:if>
         	<f:if condition="{iter.index} < {paginator.currentPageNumber + 6} && {iter.index} > {paginator.currentPageNumber - 8}">
 	            <li class="{f:if(condition: '{page} == {paginator.currentPageNumber}', then:'current')}">
-	                <f:link.action action="{action}" arguments="{demand:demand, currentPage: page, orderby : orderby}">{page}</f:link.action>
+	                <f:link.action action="{action}" class="li-paginaton-page" arguments="{demand:demand, currentPage: page, orderby : orderby}">{page}</f:link.action>
 	            </li>
             </f:if>
             <f:if condition="{iter.index} == {paginator.currentPageNumber + 7}">
@@ -44,18 +44,18 @@
         <f:if condition="{pagination.nextPageNumber} && {pagination.nextPageNumber} <= {pagination.lastPageNumber}">
             <f:then>
                 <li class="pagination-next">
-                    <f:link.action action="{action}" arguments="{demand:demand, currentPage: pagination.nextPageNumber, orderby : orderby}" title="{f:translate(key: 'pagination.next')}"> > </f:link.action>
+                    <f:link.action action="{action}" class="li-paginaton-next" arguments="{demand:demand, currentPage: pagination.nextPageNumber, orderby : orderby}" title="{f:translate(key: 'pagination.next')}"> > </f:link.action>
                 </li>
                 <li class="pagination-last">
-                    <f:link.action action="{action}" arguments="{demand:demand, currentPage: pagination.lastPageNumber, orderby : orderby}" title="{f:translate(key: 'pagination.last')}"> >| </f:link.action>
+                    <f:link.action action="{action}" class="li-paginaton-last" arguments="{demand:demand, currentPage: pagination.lastPageNumber, orderby : orderby}" title="{f:translate(key: 'pagination.last')}"> >| </f:link.action>
                 </li>
             </f:then>
             <f:else>
                 <li class="pagination-next disabled">
-                    <span> > </span>
+                    <span class="li-paginaton-first"> > </span>
                 </li>
                 <li class="pagination-last disabled">
-                    <span> >| </span>
+                    <span class="li-paginaton-last"> >| </span>
                 </li>
             </f:else>
         </f:if>

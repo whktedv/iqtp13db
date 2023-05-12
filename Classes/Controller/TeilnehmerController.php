@@ -229,6 +229,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     {
         $valArray = $this->request->getArguments();
         
+        $monatsnamen = array();
         for($i=1;$i<13;$i++) {
             $monatsnamen[$i] = date("M", mktime(0, 0, 0, $i, 1, date('Y')));
         }
@@ -279,10 +280,10 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         ksort($days4beratung);
         ksort($days4wartezeit);
         
-        $aktuelleanmeldungen = count($this->teilnehmerRepository->findAllOrder4Status(0, $this->niqbid)) + count($this->teilnehmerRepository->findAllOrder4Status(1, $this->niqbid));
-        $aktuellerstberatungen = count($this->teilnehmerRepository->findAllOrder4Status(2, $this->niqbid));
-        $aktuellberatungenfertig = count($teilnehmers = $this->teilnehmerRepository->findAllOrder4Status(3, $this->niqbid));
-        $archivierttotal = count($this->teilnehmerRepository->findAllOrder4Status(4, $this->niqbid));
+        $aktuelleanmeldungen = $this->teilnehmerRepository->countAllOrder4Status(0, $this->niqbid)[0]['anzahl'] + $this->teilnehmerRepository->countAllOrder4Status(1, $this->niqbid)[0]['anzahl'];
+        $aktuellerstberatungen = $this->teilnehmerRepository->countAllOrder4Status(2, $this->niqbid)[0]['anzahl'];
+        $aktuellberatungenfertig = $this->teilnehmerRepository->countAllOrder4Status(3, $this->niqbid)[0]['anzahl'];
+        $archivierttotal = $this->teilnehmerRepository->countAllOrder4Status(4, $this->niqbid)[0]['anzahl'];
         
         // keine Berater vorhanden?
         $alleberater = $this->beraterRepository->findAllBerater($this->settings['beraterstoragepid']);
@@ -306,7 +307,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         }
         
         // ******************** EXPORT Statistik ****************************
-        /*$rows[0] = $monatsnamen;
+        
+        $rows[0] = $monatsnamen;
         array_unshift($rows[0], " ");
         $rows[1] = $angemeldeteTN;
         array_unshift($rows[1], "Anmeldungen");
@@ -318,9 +320,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         array_unshift($rows[4], "Beratungen fertig");
         $rows[5] = $niqerfasst;
         array_unshift($rows[5], "davon NIQ erfasst");
-        $rows[6] = $totalavgmonthw;
+        $rows[6] = $days4wartezeit;
         array_unshift($rows[6], "durchschn. Tage Wartezeit");
-        $rows[7] = $totalavgmonthb;
+        $rows[7] = $days4beratung;
         array_unshift($rows[7], "durchschn. Tage Beratungsdauer");
         $rows[8] = $beratungfk22;
         array_unshift($rows[8], "Beratungen/Folgekontakte von Ratsuchenden alte Föpha.");
@@ -340,7 +342,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             fclose($fp);
             exit;
         }
-        */
+        
         // ******************** EXPORT Statistik bis hier ****************************
         
         $this->view->assignMultiple(

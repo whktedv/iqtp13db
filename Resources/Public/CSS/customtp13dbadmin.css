@@ -172,6 +172,14 @@
 	font-weight: bold;
 }
 
+.li-paginaton-first,
+.li-paginaton-previous,
+.li-paginaton-page,
+.li-paginaton-next,
+.li-paginaton-last {
+	padding: 0px 10px;
+}
+
 td.fktd {
 	background-color: #d7e1f9;
 	text-align: left;

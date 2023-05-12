@@ -187,20 +187,6 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     }
     
     /**
-     * @param $beratungsstatus
-     */
-    public function findAllOrder4Status($beratungsstatus, $niqbid)
-    {
-        $query = $this->createQuery();
-       
-        if($niqbid == '%') $query->matching($query->like('beratungsstatus', $beratungsstatus));
-        else $query->matching($query->logicalAnd($query->like('beratungsstatus', $beratungsstatus), $query->like('niqidberatungsstelle', $niqbid)));
-        
-        $query = $query->execute();
-        return $query;
-    }
-    
-    /**
      * @param $uid
      */
     public function findHiddenByUid($uid)
@@ -281,6 +267,34 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         return count($query);
     }
     
+    /**
+     * @param $orderby
+     * @param $order
+     */
+    public function findLast4Admin()
+    {
+        $query = $this->createQuery();
+        $query->getQuerySettings()->setIgnoreEnableFields(TRUE);
+        $query->getQuerySettings()->setEnableFieldsToBeIgnored(array('disabled', 'hidden'));
+        $query->setOrderings(array('uid' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING));
+        $query->setLimit(50);
+        $query = $query->execute();
+        return $query;
+    }
+    
+    
+    /**
+     * @param $beratungsstatus
+     */
+    public function countAllOrder4Status($beratungsstatus, $niqbid)
+    {
+        $query = $this->createQuery();
+        $query->statement("SELECT count(*) as anzahl FROM tx_iqtp13db_domain_model_teilnehmer WHERE
+				beratungsstatus = '$beratungsstatus' AND deleted = 0 AND hidden = 0 AND niqidberatungsstelle LIKE '$niqbid'");
+        
+        $query = $query->execute(true);
+        return $query;
+    }
     
     public function count4Status($datum1, $datum2, $niqbid, $bstatus)
     {

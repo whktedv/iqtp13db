@@ -175,12 +175,12 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         ksort($days4wartezeit);
         ksort($days4beratung);
         
-        $aktuelleanmeldungenunbestaetigt = count($this->teilnehmerRepository->findAllOrder4Status(0, '%'));        
-        $aktuelleanmeldungenbestaetigt = count($this->teilnehmerRepository->findAllOrder4Status(1, '%'));
+        $aktuelleanmeldungenunbestaetigt = $this->teilnehmerRepository->countAllOrder4Status(0, '%')[0]['anzahl'];        
+        $aktuelleanmeldungenbestaetigt = $this->teilnehmerRepository->countAllOrder4Status(1, '%')[0]['anzahl'];
         $aktuelleanmeldungen = $aktuelleanmeldungenbestaetigt + $aktuelleanmeldungenunbestaetigt;
-        $aktuellerstberatungen = count($this->teilnehmerRepository->findAllOrder4Status(2, '%'));
-        $aktuellberatungenfertig = count($this->teilnehmerRepository->findAllOrder4Status(3, '%'));
-        $archivierttotal = count($this->teilnehmerRepository->findAllOrder4Status(4, '%'));
+        $aktuellerstberatungen = $this->teilnehmerRepository->countAllOrder4Status(2, '%')[0]['anzahl'];
+        $aktuellberatungenfertig = $this->teilnehmerRepository->countAllOrder4Status(3, '%')[0]['anzahl'];
+        $archivierttotal = $this->teilnehmerRepository->countAllOrder4Status(4, '%')[0]['anzahl'];
         $sumalleaktuell = $aktuelleanmeldungen + $aktuellerstberatungen + $aktuellberatungenfertig + $archivierttotal;
         
         // keine Berater vorhanden?
@@ -198,10 +198,10 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         $anzratsuchendearch = array();
         foreach ($alleberatungsstellen as $bst) {
             $anzberater[$bst->getUid()] = 0;
-            $anzratsuchendeanmeld0[$bst->getUid()] = count($this->teilnehmerRepository->findAllOrder4Status(0, $bst->getNiqbid()));
-            $anzratsuchendeanmeld1[$bst->getUid()] = count($this->teilnehmerRepository->findAllOrder4Status(1, $bst->getNiqbid()));
-            $anzratsuchendeerstb[$bst->getUid()] = count($this->teilnehmerRepository->findAllOrder4Status(2, $bst->getNiqbid())) + count($this->teilnehmerRepository->findAllOrder4Status(3, $bst->getNiqbid()));
-            $anzratsuchendearch[$bst->getUid()] = count($this->teilnehmerRepository->findAllOrder4Status(4, $bst->getNiqbid()));
+            $anzratsuchendeanmeld0[$bst->getUid()] = $this->teilnehmerRepository->countAllOrder4Status(0, $bst->getNiqbid())[0]['anzahl'];
+            $anzratsuchendeanmeld1[$bst->getUid()] = $this->teilnehmerRepository->countAllOrder4Status(1, $bst->getNiqbid())[0]['anzahl'];
+            $anzratsuchendeerstb[$bst->getUid()] = $this->teilnehmerRepository->countAllOrder4Status(2, $bst->getNiqbid())[0]['anzahl'] + $this->teilnehmerRepository->countAllOrder4Status(3, $bst->getNiqbid())[0]['anzahl'];
+            $anzratsuchendearch[$bst->getUid()] = $this->teilnehmerRepository->countAllOrder4Status(4, $bst->getNiqbid())[0]['anzahl'];
             
             foreach ($alleberater as $brtr) {
                 foreach ($brtr->getUsergroup() as $onegrp) {
@@ -222,6 +222,8 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
             $neuanmeldungen7tage[$i]["tag"] = date("l, d.m.Y", strtotime( '-'.$i.' days' ));
             $neuanmeldungen7tage[$i]["wert"] = $this->teilnehmerRepository->count4Status($reftag, $reftag, '%', 1)[0]['anzahl'];
         }
+        
+        $letzteanmeldungen = $this->teilnehmerRepository->findLast4Admin();
         
         $this->view->assignMultiple(
             [
@@ -267,6 +269,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 'niqbidselected' => $niqbidselected,
                 'beratungsstelle' => $thisberatungsstelle,
                 'niqbid' => $thisniqbid,
+                'letzteanmeldungen' => $letzteanmeldungen
             ]
             );
     }

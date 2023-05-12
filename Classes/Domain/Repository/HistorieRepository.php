@@ -40,6 +40,7 @@ class HistorieRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 		    $query->equals('teilnehmer.niqidberatungsstelle', $niqbid)
         );
 		$query->setOrderings(array('crdate' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING));
+		$query->setLimit(200);
 		$query = $query->execute();
 		return $query;
 	}
