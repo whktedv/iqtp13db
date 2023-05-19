@@ -71,7 +71,7 @@
 				<td><f:link.action action="show" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">{teilnehmer.uid}</f:link.action></td>
 				<td><f:link.action action="show" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">{teilnehmer.nachname}</f:link.action></td>
 				<td><f:link.action action="show" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">{teilnehmer.vorname}</f:link.action></td>
-				<td class="tdcenter">{f:if(condition: '{teilnehmer.verificationDate} == 0', then: 'unbestätigt', else: '{f:format.date(date: teilnehmer.verificationDate, format:"d.m.Y")}')}</td>
+				<td class="tdcenter">{f:if(condition: '{teilnehmer.verificationDate} == 0', then: 'unbestätigt ({f:format.date(date: teilnehmer.crdate, format:"d.m.Y")})', else: '{f:format.date(date: teilnehmer.verificationDate, format:"d.m.Y")}')}</td>
 				<td>{teilnehmer.plz} {teilnehmer.ort}</td>
 				<td class="tdcenter">{f:if(condition: '{teilnehmer.geschlecht} == 2', then: '<span style="color: #84a0ff;">M</span>')}
 				{f:if(condition: '{teilnehmer.geschlecht} == 1', then: '<span style="color: #fe7a84;">W</span>')}

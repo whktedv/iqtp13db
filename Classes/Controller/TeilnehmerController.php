@@ -234,7 +234,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $monatsnamen[$i] = date("M", mktime(0, 0, 0, $i, 1, date('Y')));
         }
         
-        $tnberatungenfk22 = $this->folgekontaktRepository->fk4StatusFK2022("01.01.2023", date("t", strtotime('now')), $this->niqbid);
+        $tnberatungenfk22 = $this->folgekontaktRepository->fk4StatusFK2022("01.01.2023", date("d.m.Y", strtotime('now')), $this->niqbid);
         for($m = 1; $m < 13; $m++) $beratungfk22[$m] = 0;
         foreach($tnberatungenfk22 as $fk22) {
             $fkmonat = DateTime::createFromFormat('d.m.Y', $fk22->getDatum())->format('n');

@@ -34,6 +34,13 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $tstamp = 0;
     
     /**
+     * crdate
+     *
+     * @var int
+     */
+    protected $crdate = 0;
+    
+    /**
      * beratungsstatus
      *
      * @var int
@@ -603,6 +610,16 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setTstamp($tstamp)
     {
         $this->tstamp = $tstamp;
+    }
+    
+    /**
+     * Returns the crdate
+     *
+     * @return int $crdate
+     */
+    public function getCrdate()
+    {
+        return $this->crdate;
     }
     
     /**

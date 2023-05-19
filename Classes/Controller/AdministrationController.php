@@ -133,6 +133,9 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         }
         //
 
+        $bundeslandselected = $valArray['bundeslandauswahl'];
+        $allebundeslaender = $this->userGroupRepository->findAllBundeslaender();
+        
         for($i=1;$i<13;$i++) {
             $monatsnamen[$i] = date("M", mktime(0, 0, 0, $i, 1, date('Y')));
         }
@@ -146,26 +149,32 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         $days4wartezeit = $emptystatusarray;
         $days4beratung = $emptystatusarray;
         
-        $ergarrayangemeldete = $this->teilnehmerRepository->countTNbyBID('%', 1);
-        foreach($ergarrayangemeldete as $erg) $angemeldeteTN[$erg['monat']] = $erg['anzahl'];
+        if(isset($valArray['bundeslandauswahl']) && $bundeslandselected != '%') {
+            $ergarrayangemeldete = $this->teilnehmerRepository->countTNbyBundesland($bundeslandselected, 1);
+            foreach($ergarrayangemeldete as $erg) $angemeldeteTN[$erg['monat']] = $erg['anzahl'];
+            $ergarrayerstberatung = $this->teilnehmerRepository->countTNbyBundesland($bundeslandselected, 2);
+            foreach($ergarrayerstberatung as $erg) $erstberatung[$erg['monat']] = $erg['anzahl'];
+            $ergarrayberatungfertig = $this->teilnehmerRepository->countTNbyBundesland($bundeslandselected, 3);
+            foreach($ergarrayberatungfertig as $erg) $beratungfertig[$erg['monat']] = $erg['anzahl'];
+            $ergarrayniqerfasst = $this->teilnehmerRepository->countTNbyBundesland($bundeslandselected, 4);
+            foreach($ergarrayniqerfasst as $erg) $niqerfasst[$erg['monat']] = $erg['anzahl'];
+        } else {
+            $ergarrayangemeldete = $this->teilnehmerRepository->countTNbyBID('%', 1);
+            foreach($ergarrayangemeldete as $erg) $angemeldeteTN[$erg['monat']] = $erg['anzahl'];
+            $ergarrayerstberatung = $this->teilnehmerRepository->countTNbyBID('%', 2);
+            foreach($ergarrayerstberatung as $erg) $erstberatung[$erg['monat']] = $erg['anzahl'];
+            $ergarrayberatungfertig = $this->teilnehmerRepository->countTNbyBID('%', 3);
+            foreach($ergarrayberatungfertig as $erg) $beratungfertig[$erg['monat']] = $erg['anzahl'];
+            $ergarrayniqerfasst = $this->teilnehmerRepository->countTNbyBID('%', 4);
+            foreach($ergarrayniqerfasst as $erg) $niqerfasst[$erg['monat']] = $erg['anzahl'];
+            $ergarrayfolgekontakte = $this->folgekontaktRepository->countFKbyBID('%');
+            foreach($ergarrayfolgekontakte as $erg) $qfolgekontakte[$erg['monat']] = $erg['anzahl'];
+            $ergarraywartezeitanmeldung = $this->teilnehmerRepository->calcwaitingdays('%','anmeldung');
+            foreach($ergarraywartezeitanmeldung as $erg) $days4wartezeit[$erg['monat']] = $erg['wert'];
+            $ergarraywartezeitberatung = $this->teilnehmerRepository->calcwaitingdays('%','beratung');
+            foreach($ergarraywartezeitberatung as $erg) $days4beratung[$erg['monat']] = $erg['wert'];
+        }
         
-        $ergarrayerstberatung = $this->teilnehmerRepository->countTNbyBID('%', 2);
-        foreach($ergarrayerstberatung as $erg) $erstberatung[$erg['monat']] = $erg['anzahl'];
-        
-        $ergarrayberatungfertig = $this->teilnehmerRepository->countTNbyBID('%', 3);
-        foreach($ergarrayberatungfertig as $erg) $beratungfertig[$erg['monat']] = $erg['anzahl'];
-        
-        $ergarrayniqerfasst = $this->teilnehmerRepository->countTNbyBID('%', 4);
-        foreach($ergarrayniqerfasst as $erg) $niqerfasst[$erg['monat']] = $erg['anzahl'];
-        
-        $ergarrayfolgekontakte = $this->folgekontaktRepository->countFKbyBID('%');
-        foreach($ergarrayfolgekontakte as $erg) $qfolgekontakte[$erg['monat']] = $erg['anzahl'];
-        
-        $ergarraywartezeitanmeldung = $this->teilnehmerRepository->calcwaitingdays('%','anmeldung');
-        foreach($ergarraywartezeitanmeldung as $erg) $days4wartezeit[$erg['monat']] = $erg['wert'];
-        
-        $ergarraywartezeitberatung = $this->teilnehmerRepository->calcwaitingdays('%','beratung');
-        foreach($ergarraywartezeitberatung as $erg) $days4beratung[$erg['monat']] = $erg['wert'];
                
         ksort($angemeldeteTN);
         ksort($qfolgekontakte);
@@ -269,7 +278,9 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 'niqbidselected' => $niqbidselected,
                 'beratungsstelle' => $thisberatungsstelle,
                 'niqbid' => $thisniqbid,
-                'letzteanmeldungen' => $letzteanmeldungen
+                'letzteanmeldungen' => $letzteanmeldungen,
+                'allebundeslaender' => $allebundeslaender,
+                'bundeslandselected' => $bundeslandselected
             ]
             );
     }

@@ -372,6 +372,59 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     }
     
     /**
+     * Counts Teilnehmer by Bundesland and Status for last 12 month
+     *
+     * @param $bundesland
+     * @param $bstatus
+     *
+     */
+    public function countTNbyBundesland($bundesland, $bstatus)
+    {
+        $addfield = '';
+        if($bstatus == 1) $field = 'FROM_UNIXTIME(verification_date)';
+        if($bstatus == 2) $field = 'beratungdatum';
+        if($bstatus == 3) $field = 'erstberatungabgeschlossen';
+        if($bstatus == 4) {
+            $field = 'erstberatungabgeschlossen';
+            $addfield = " AND niqchiffre != '' ";
+        }
+        if($bstatus == 5) {
+            $field = 'erstberatungabgeschlossen';
+            $addfield = " AND beratungsstatus = 4 ";
+        }
+        
+        $query = $this->createQuery();
+        if(date('Y') > 2023) {
+            $query->statement("SELECT MONTH($field) as monat, count(*) as anzahl
+                FROM tx_iqtp13db_domain_model_teilnehmer as a
+                LEFT JOIN fe_groups as b on a.niqidberatungsstelle = b.niqbid
+                WHERE YEAR($field) = YEAR(CURRENT_DATE())
+                AND a.deleted = 0 AND a.hidden = 0 AND b.bundesland LIKE '$bundesland'
+                $addfield
+                GROUP BY MONTH($field)
+                UNION
+                SELECT MONTH($field) as monat, count(*) as anzahl
+                FROM tx_iqtp13db_domain_model_teilnehmer as a
+                LEFT JOIN fe_groups as b on a.niqidberatungsstelle = b.niqbid
+                WHERE YEAR($field) = YEAR(CURRENT_DATE())-1 AND MONTH($field) > MONTH(CURRENT_DATE())
+                AND a.deleted = 0 AND a.hidden = 0 AND b.bundesland LIKE '$bundesland'
+                $addfield
+                GROUP BY MONTH($field)");
+        } else {
+            $query->statement("SELECT MONTH($field) as monat, count(*) as anzahl
+                FROM tx_iqtp13db_domain_model_teilnehmer as a
+                LEFT JOIN fe_groups as b on a.niqidberatungsstelle = b.niqbid
+                WHERE YEAR($field) = YEAR(CURRENT_DATE())
+                AND a.deleted = 0 AND a.hidden = 0 AND b.bundesland LIKE '$bundesland'
+                $addfield
+                GROUP BY MONTH($field)");
+        }
+        
+        $query = $query->execute(true);
+        return $query;
+    }
+    
+    /**
      * Calculates average waiting days for last 12 month
      *
      * @param $niqbid

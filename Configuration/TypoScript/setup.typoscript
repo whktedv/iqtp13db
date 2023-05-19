@@ -112,6 +112,7 @@ plugin.tx_iqtp13db._CSS_DEFAULT_STYLE (
 page {
 	includeCSS {
 		tx_iqtp13db = EXT:iqtp13db/Resources/Public/CSS/customtp13db.css
+		tx_iqtp13dbadmin = EXT:iqtp13db/Resources/Public/CSS/customtp13dbadmin.css
 		tx_iqtp13dbjquery1 = EXT:iqtp13db/Resources/Public/CSS/jquery-ui.min.css
 		tx_iqtp13dbjquery2 = EXT:iqtp13db/Resources/Public/CSS/jquery-ui.structure.min.css
 		tx_iqtp13dbjquery3 = EXT:iqtp13db/Resources/Public/CSS/jquery-ui.theme.min.css

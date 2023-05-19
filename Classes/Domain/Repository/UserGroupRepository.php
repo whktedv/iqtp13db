@@ -97,4 +97,12 @@ class UserGroupRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         return $query;
     }
     
+    public function findAllBundeslaender()
+    {
+        $query = $this->createQuery();
+        $query->statement("SELECT DISTINCT(bundesland) FROM fe_groups ORDER BY bundesland");
+        $query = $query->execute(true);
+        return $query;
+    }
+    
 }

@@ -181,6 +181,11 @@ $(document).ready(function() {
     	this.form.submit();
     	$("#overlay").show();
     });
+
+	$("#selectbundesland").change(function() { 
+    	this.form.submit();
+    	$("#overlay").show();
+    });
 });
 
 
