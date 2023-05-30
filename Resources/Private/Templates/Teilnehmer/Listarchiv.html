@@ -13,6 +13,7 @@
 			<div>Ort: <f:form.textfield size="20" value="{filterort}" name="ort" /></div>
 			<div>Beruf: <f:form.textfield size="20" value="{filterberuf}" name="beruf" /></div>
 			<div>Geburtsland: <f:form.select value="{filterland}" name="land" options="{wohnsitzstaaten}" optionValueField="value" optionLabelField="value" /></div>
+			<div>Berater*in: <f:form.select value="{filterberater}" name="berater" options="{alleberater}" optionValueField="uid" optionLabelField="username" prependOptionLabel="-" prependOptionValue="0" sortByOptionLabel="1"/></div>
 			<div>Gruppe: <f:form.textfield size="20" value="{filtergruppe}" name="gruppe" /></div>
 			<div>Bescheid: <f:form.checkbox value="1" name="bescheid" checked="{filterbescheid} == 1" /></div>
 			<f:if condition="{filteron} == 1"><f:then><div><f:form.button name="filteraus" value="1" >Filter löschen</f:form.button></div></f:then></f:if>
@@ -32,21 +33,21 @@
 
 <table  class="tx_iqtp13db listarchiv" >
 	<tr>
-		<th>UID</th>
-		<th><f:link.action action="listarchiv" arguments="{orderby : 'nachname', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" /></f:link.action></th>
-		<th><f:link.action action="listarchiv" arguments="{orderby : 'vorname', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" /></f:link.action></th>
-		<th><f:link.action action="listarchiv" arguments="{orderby : 'verification_date', changeorder : 1}">Anmeldedatum</f:link.action></th>
-		<th><f:link.action action="listarchiv" arguments="{orderby : 'ort', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.plz" />/<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ort" /></f:link.action></th>
-		<th><f:link.action action="listarchiv" arguments="{orderby : 'geschlecht', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geschlecht" /></f:link.action></th>
+		<th><f:link.action action="listarchiv" arguments="{orderby : 'uid', changeorder : 1}">UID{f:if(condition:'{orderby} == "uid"',then: ' {orderchar}')}</f:link.action></th>
+		<th><f:link.action action="listarchiv" arguments="{orderby : 'nachname', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" />{f:if(condition:'{orderby} == "nachname"',then: ' {orderchar}')}</f:link.action></th>
+		<th><f:link.action action="listarchiv" arguments="{orderby : 'vorname', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" />{f:if(condition:'{orderby} == "vorname"',then: ' {orderchar}')}</f:link.action></th>
+		<th><f:link.action action="listarchiv" arguments="{orderby : 'verificationDate', changeorder : 1}">Anmeldedatum {f:if(condition:'{orderby} == "verificationDate"',then: ' {orderchar}')}</f:link.action></th>
+		<th><f:link.action action="listarchiv" arguments="{orderby : 'ort', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.plz" />/<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ort" />{f:if(condition:'{orderby} == "ort"',then: ' {orderchar}')}</f:link.action></th>
+		<th><f:link.action action="listarchiv" arguments="{orderby : 'geschlecht', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geschlecht" />{f:if(condition:'{orderby} == "geschlecht"',then: ' {orderchar}')}</f:link.action></th>
 		<th>Leistungs-<br>bezug</th>
 		<th>Anerkenn.-<br>zusch.<br>beantragt?</th>
-		<th><f:link.action action="listarchiv" arguments="{orderby : 'berater.username', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.berater" /></f:link.action></th>
-		<th><f:link.action action="listarchiv" arguments="{orderby : 'beratungdatum', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungdatum" /></f:link.action></th>
+		<th><f:link.action action="listarchiv" arguments="{orderby : 'berater.username', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.berater" />{f:if(condition:'{orderby} == "berater.username"',then: ' {orderchar}')}</f:link.action></th>
+		<th><f:link.action action="listarchiv" arguments="{orderby : 'beratungdatum', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungdatum" />{f:if(condition:'{orderby} == "beratungdatum"',then: ' {orderchar}')}</f:link.action></th>
 		<th id="resizablecol1"><f:translate key="tx_iqtp13db_domain_model_abschluss.deutscher_referenzberuf" /></th>
 		<th id="resizablecol2"><f:translate key="tx_iqtp13db_domain_model_abschluss.referenzberufzugewiesen" /></th>
 		<th>vorherige Antrag-<br>stellung</th>
-		<th><f:link.action action="listarchiv" arguments="{orderby : 'erstberatungabgeschlossen', changeorder : 1}">Erstberatung abgeschlossen</f:link.action></th>
-		<th id="resizablecol3"><f:link.action action="listarchiv" arguments="{orderby : 'kooperationgruppe', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.kooperationgruppe" /></f:link.action></th>
+		<th><f:link.action action="listarchiv" arguments="{orderby : 'erstberatungabgeschlossen', changeorder : 1}">Erstberatung abgeschlossen{f:if(condition:'{orderby} == "erstberatungabgeschlossen"',then: ' {orderchar}')}</f:link.action></th>
+		<th id="resizablecol3"><f:link.action action="listarchiv" arguments="{orderby : 'kooperationgruppe', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.kooperationgruppe" />{f:if(condition:'{orderby} == "kooperationgruppe"',then: ' {orderchar}')}</f:link.action></th>
 		<th>Anz. FK</th>
 		<th style="hyphens: auto;">Summe<br>Beratungsd.<br>(in h)</th>
 		<th> </th>

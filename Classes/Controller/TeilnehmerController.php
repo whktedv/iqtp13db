@@ -411,7 +411,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         if(!empty($valArray['callerpage'])) $currentPage = $valArray['callerpage'];
         
         if(empty($valArray['orderby'])) {
-            $orderby = 'verification_date';
+            $orderby = 'verificationDate';
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'listangemeldetorder', 'DESC');
             $order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listangemeldetorder');
         } else {
@@ -451,7 +451,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $wohnsitzstaaten = $this->settings['staaten'];
         unset($wohnsitzstaaten[201]);
         
-        //if($this->user['username'] == 'adminwebapp') DebuggerUtility::var_dump($plzberatungsstelle4tn);
+        $orderchar = $order == 'ASC' ? "↓" : "↑";
+        $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
         
         $this->view->assignMultiple(
             [
@@ -464,10 +465,12 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'pagination' => $pagination,
                 'pages' => range(1, $pagination->getLastPageNumber()),
                 'orderby' => $orderby,
+                'orderchar' => $orderchar,
                 'wohnsitzstaaten' => $wohnsitzstaaten,
                 'plzberatungsstelle4tn' => $plzberatungsstelle4tn,
                 'beratungsstelle' => $this->usergroup->getTitle(),
-                'niqbid' => $this->niqbid
+                'niqbid' => $this->niqbid,
+                'alleberater' => $alleberater
             ]
             );
     }
@@ -561,6 +564,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $wohnsitzstaaten = $this->settings['staaten'];
         unset($wohnsitzstaaten[201]);
         
+        $orderchar = $order == 'ASC' ? "↓" : "↑";
+        $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
+        
         $this->view->assignMultiple(
             [
                 'anzgesamt' => count($teilnehmer),
@@ -577,10 +583,12 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'pagination' => $pagination,
                 'pages' => range(1, $pagination->getLastPageNumber()),
                 'orderby' => $orderby,
+                'orderchar' => $orderchar,
                 'wohnsitzstaaten' => $wohnsitzstaaten,
                 'berufe' => $berufeliste,
                 'beratungsstelle' => $this->usergroup->getTitle(),
-                'niqbid' => $this->niqbid                
+                'niqbid' => $this->niqbid,
+                'alleberater' => $alleberater
             ]
             );
     }
@@ -672,6 +680,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $wohnsitzstaaten = $this->settings['staaten'];
         unset($wohnsitzstaaten[201]);
         
+        $orderchar = $order == 'ASC' ? "↓" : "↑";
+        $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
+        
         $this->view->assignMultiple(
             [
                 'anzgesamt' => count($teilnehmer),
@@ -688,10 +699,12 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'pagination' => $pagination,
                 'pages' => range(1, $pagination->getLastPageNumber()),
                 'orderby' => $orderby,
+                'orderchar' => $orderchar,
                 'wohnsitzstaaten' => $wohnsitzstaaten,
                 'berufe' => $berufeliste,
                 'beratungsstelle' => $this->usergroup->getTitle(),
-                'niqbid' => $this->niqbid
+                'niqbid' => $this->niqbid,
+                'alleberater' => $alleberater
             ]
             );
     }
@@ -742,6 +755,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $wohnsitzstaaten = $this->settings['staaten'];
         unset($wohnsitzstaaten[201]);
         
+        $orderchar = $order == 'ASC' ? "↓" : "↑";
+        
         $this->view->assignMultiple(
             [
                 'anzgesamt' => count($teilnehmer),
@@ -753,6 +768,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'pagination' => $pagination,
                 'pages' => range(1, $pagination->getLastPageNumber()),
                 'orderby' => $orderby,
+                'orderchar' => $orderchar,
                 'wohnsitzstaaten' => $wohnsitzstaaten,
                 'beratungsstelle' => $this->usergroup->getTitle(),
                 'niqbid' => $this->niqbid
@@ -900,7 +916,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         } else {
             $teilnehmer->setNiqidberatungsstelle($this->niqbid);
             if($teilnehmer->getBerater() == 0) $teilnehmer->setBerater($this->beraterRepository->findByUid($this->user['uid']));
-            
+            $teilnehmer->setCrdate(time());
             $this->teilnehmerRepository->add($teilnehmer);
             
             // Daten sofort in die Datenbank schreiben
@@ -2021,6 +2037,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     } 
                     
                     $teilnehmer->setBeratungsstatus(99);
+                    $teilnehmer->setCrdate(time());
+                    
                     if($direkt != '1' && ($bstid == '' || $bstid == '12345')) {
                         $plzberatungsstelle = array();
                         $plzberatungsstelle = $this->userGroupRepository->getBeratungsstelle4PLZ($teilnehmer->getPlz(), $this->settings['beraterstoragepid']);
@@ -2430,6 +2448,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', NULL);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', NULL);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', NULL);
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberater', NULL);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fgruppe', NULL);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fbescheid', NULL); // antragstellungvorher
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'filtermodus', NULL);
@@ -2440,6 +2459,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', $valArray['ort']);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', $valArray['beruf']);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', $valArray['land']);
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberater', $valArray['berater']);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fgruppe', $valArray['gruppe']);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fbescheid', $valArray['bescheid']); // antragstellungvorher
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'filtermodus', '1');
@@ -2450,12 +2470,18 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $filterArray['ort'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fort');
         $filterArray['beruf'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fberuf');
         $filterArray['land'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fland');
+        $filterArray['berater'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fberater');
         $filterArray['gruppe'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fgruppe');
         $filterArray['bescheid'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fbescheid'); // antragstellungvorher
         
+        
         if($filterArray['land'] == -1000 || $filterArray['land'] == NULL) $filterArray['land'] = '';
         
-        if ($filterArray['uid'] == '' && $filterArray['name'] == '' && $filterArray['ort'] == '' && $filterArray['beruf'] == '' && $filterArray['land'] == '' && $filterArray['gruppe'] == '' && $filterArray['bescheid'] == '') {
+        if($filterArray['berater'] == 0 || $filterArray['berater'] == NULL) $filterArray['berater'] = '';
+        
+        //if($this->user['username'] == 'admin') DebuggerUtility::var_dump($filterArray);
+        
+        if ($filterArray['uid'] == '' && $filterArray['name'] == '' && $filterArray['ort'] == '' && $filterArray['beruf'] == '' && $filterArray['land'] == '' && $filterArray['berater'] == '' && $filterArray['gruppe'] == '' && $filterArray['bescheid'] == '') {
             if($deleted == 1) {
                 $teilnehmers = $this->teilnehmerRepository->findhidden4list($orderby, $order, $this->niqbid);
             } else {
@@ -2469,6 +2495,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $this->view->assign('filterort', $filterArray['ort']);
             $this->view->assign('filterberuf', $filterArray['beruf']);
             $this->view->assign('filterland', $filterArray['land']);
+            $this->view->assign('filterberater', $filterArray['berater']);
             $this->view->assign('filtergruppe', $filterArray['gruppe']);
             $this->view->assign('filterbescheid', $filterArray['bescheid']);
             $this->view->assign('filteron', $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus'));

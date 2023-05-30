@@ -133,7 +133,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         }
         //
 
-        $bundeslandselected = $valArray['bundeslandauswahl'];
+        $bundeslandselected = $valArray['bundeslandauswahl'] ?? '';
         $allebundeslaender = $this->userGroupRepository->findAllBundeslaender();
         
         for($i=1;$i<13;$i++) {

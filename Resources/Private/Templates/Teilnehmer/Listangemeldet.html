@@ -14,6 +14,7 @@
 			<div>Ort: <f:form.textfield size="10" value="{filterort}" name="ort" /></div>
 			<div>Beruf: <f:form.textfield size="20" value="{filterberuf}" name="beruf" /></div>
 			<div>Geburtsland: <f:form.select value="{filterland}" name="land" options="{wohnsitzstaaten}" optionValueField="value" optionLabelField="value" /></div>
+			<div>Berater*in: <f:form.select value="{filterberater}" name="berater" options="{alleberater}" optionValueField="uid" optionLabelField="username" prependOptionLabel="-" prependOptionValue="0" sortByOptionLabel="1"/></div>
 			<div>Gruppe: <f:form.textfield size="20" value="{filtergruppe}" name="gruppe" /></div>
 			<div>Bescheid: <f:form.checkbox value="1" name="bescheid" checked="{filterbescheid} == 1" /></div>
 			<f:if condition="{filteron} == 1"><f:then><div><f:form.button name="filteraus" value="1" >Filter löschen</f:form.button></div></f:then></f:if>
@@ -33,19 +34,19 @@
 	
 	<table  class="tx_iqtp13db listangemeldet" >
 		<tr>
-			<th><f:link.action action="listangemeldet" arguments="{orderby : 'uid', changeorder : 1}">UID</f:link.action></th>
-			<th><f:link.action action="listangemeldet" arguments="{orderby : 'nachname', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" /></f:link.action></th>
-			<th><f:link.action action="listangemeldet" arguments="{orderby : 'vorname', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" /></f:link.action></th>
-			<th><f:link.action action="listangemeldet" arguments="{orderby : 'verificationDate', changeorder : 1}">Anmeldedatum</f:link.action></th>
-			<th><f:link.action action="listangemeldet" arguments="{orderby : 'ort', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.plz" />/<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ort" /></f:link.action></th>
-			<th><f:link.action action="listangemeldet" arguments="{orderby : 'geschlecht', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geschlecht" /></f:link.action></th>
-			<th><f:link.action action="listangemeldet" arguments="{orderby : 'geburtsland', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geburtsland" />/-ort</f:link.action></th>
+			<th><f:link.action action="listangemeldet" arguments="{orderby : 'uid', changeorder : 1}">UID{f:if(condition:'{orderby} == "uid"',then: ' {orderchar}')}</f:link.action></th>
+			<th><f:link.action action="listangemeldet" arguments="{orderby : 'nachname', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" />{f:if(condition:'{orderby} == "nachname"',then: ' {orderchar}')}</f:link.action></th>
+			<th><f:link.action action="listangemeldet" arguments="{orderby : 'vorname', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" />{f:if(condition:'{orderby} == "vorname"',then: ' {orderchar}')}</f:link.action></th>
+			<th><f:link.action action="listangemeldet" arguments="{orderby : 'verificationDate', changeorder : 1}">Anmeldedatum {f:if(condition:'{orderby} == "verificationDate"',then: ' {orderchar}')}</f:link.action></th>
+			<th><f:link.action action="listangemeldet" arguments="{orderby : 'ort', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.plz" />/<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ort" />{f:if(condition:'{orderby} == "ort"',then: ' {orderchar}')}</f:link.action></th>
+			<th><f:link.action action="listangemeldet" arguments="{orderby : 'geschlecht', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geschlecht" />{f:if(condition:'{orderby} == "geschlecht"',then: ' {orderchar}')}</f:link.action></th>
+			<th><f:link.action action="listangemeldet" arguments="{orderby : 'geburtsland', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geburtsland" />/-ort{f:if(condition:'{orderby} == "geburtsland"',then: ' {orderchar}')}</f:link.action></th>
 			<th>Leistungs-<br>bezug</th>
 			<th>Bereits<br>beraten</th>
-			<th><f:link.action action="listangemeldet" arguments="{orderby : 'berater.username', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.berater" /></f:link.action></th>
+			<th><f:link.action action="listangemeldet" arguments="{orderby : 'berater.username', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.berater" />{f:if(condition:'{orderby} == "berater.username"',then: ' {orderchar}')}</f:link.action></th>
 			<th id="resizablecol1"><f:translate key="tx_iqtp13db_domain_model_abschluss.deutscher_referenzberuf" /></th>
 			<th>vorherige Antrag-<br>stellung</th>
-			<th id="resizablecol2"><f:link.action action="listangemeldet" arguments="{orderby : 'kooperationgruppe', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.kooperationgruppe" /></f:link.action></th>
+			<th id="resizablecol2"><f:link.action action="listangemeldet" arguments="{orderby : 'kooperationgruppe', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.kooperationgruppe" />{f:if(condition:'{orderby} == "kooperationgruppe"',then: ' {orderchar}')}</f:link.action></th>
 			<th> </th>
 			<th> </th>
 			<th> </th>

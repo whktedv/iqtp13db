@@ -106,7 +106,7 @@
 		</label>
 		<f:form.select name="bundeslandauswahl" id="selectbundesland" options="{allebundeslaender}" optionValueField="bundesland" optionLabelField="bundesland" prependOptionValue="%" prependOptionLabel="-alle-" value="{bundeslandselected}"/>
 </f:form>
-	
+<br>
 <h2>Statistik letzte 12 Monate alle Beratungsstellen</h2>
 <table class="uebersicht-statistik">
 	<tr>
@@ -200,7 +200,7 @@
 				<td class="tdcenter">{f:if(condition: '{teilnehmer.verificationDate} == 0', then: 'unbestätigt', else: '{f:format.date(date: teilnehmer.verificationDate, format:"d.m.Y H:i:s")}')}</td>
 				<td>{teilnehmer.niqidberatungsstelle}</td>
 				<td>{teilnehmer.beratungsstatus} = 
-				{f:if(condition: '{teilnehmer.beratungsstatus} == 99', then: 'Anmeldeformular')}
+				{f:if(condition: '{teilnehmer.beratungsstatus} == 99', then: 'im Anmeldeformular')}
 				{f:if(condition: '{teilnehmer.beratungsstatus} == 0', then: 'nicht bestätigt')}
 				{f:if(condition: '{teilnehmer.beratungsstatus} == 1', then: 'bestätigt')}
 				{f:if(condition: '{teilnehmer.beratungsstatus} == 2', then: 'in Beratung')}

@@ -623,6 +623,17 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
     
     /**
+     * Sets the crdate
+     *
+     * @param int $crdate
+     * @return void
+     */
+    public function setCrdate($crdate)
+    {
+        $this->crdate = $crdate;
+    }    
+    
+    /**
      * Returns the beratungsstatus
      *
      * @return int $beratungsstatus

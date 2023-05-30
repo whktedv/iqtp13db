@@ -33,6 +33,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $name = $filterArray['name'] == '' ? '%' : $filterArray['name'];
         $ort = $filterArray['ort'] == '' ? '%' : $filterArray['ort'];
         $land = $filterArray['land'] == '' ? '%' : $filterArray['land'];
+        $berater = $filterArray['berater'] == '' ? '%' : $filterArray['berater'];
         $fberuf = $filterArray['beruf'] == '' ? '%' : $filterArray['beruf'];
         $gruppe = $filterArray['gruppe'] == '' ? '%' : $filterArray['gruppe'];
         $fbescheid = $filterArray['bescheid'] == '' ? '%' : $filterArray['bescheid'];
@@ -84,6 +85,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 WHERE (t.nachname LIKE '%$name%' OR t.vorname LIKE '%$name%')
                 AND t.ort LIKE '%$ort%'
                 AND t.geburtsland LIKE '$land'
+                AND t.berater = '$berater'
                 AND $beruf
                 AND t.kooperationgruppe LIKE '%$gruppe%'
                 $bescheid
@@ -98,6 +100,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 WHERE (t.nachname LIKE '%$name%' OR t.vorname LIKE '%$name%')
                 AND t.ort LIKE '%$ort%'
                 AND t.geburtsland LIKE '$land'
+                AND t.berater = '$berater'
                 AND $beruf
                 AND t.kooperationgruppe LIKE '%$gruppe%'
                 $bescheid
