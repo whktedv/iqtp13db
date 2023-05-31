@@ -2479,8 +2479,6 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         
         if($filterArray['berater'] == 0 || $filterArray['berater'] == NULL) $filterArray['berater'] = '';
         
-        //if($this->user['username'] == 'admin') DebuggerUtility::var_dump($filterArray);
-        
         if ($filterArray['uid'] == '' && $filterArray['name'] == '' && $filterArray['ort'] == '' && $filterArray['beruf'] == '' && $filterArray['land'] == '' && $filterArray['berater'] == '' && $filterArray['gruppe'] == '' && $filterArray['bescheid'] == '') {
             if($deleted == 1) {
                 $teilnehmers = $this->teilnehmerRepository->findhidden4list($orderby, $order, $this->niqbid);
@@ -2488,8 +2486,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 $teilnehmers = $this->teilnehmerRepository->findAllOrder4List($type, $orderby, $order, $this->niqbid, $beraterdiesergruppe, $this->usergroup);
             }
         } else {
-            $teilnehmers = $this->teilnehmerRepository->searchTeilnehmer($type, $filterArray, $deleted, $this->niqbid, $this->settings['berufe'], $orderby, $order, $beraterdiesergruppe, $this->usergroup);
             
+            $teilnehmers = $this->teilnehmerRepository->searchTeilnehmer($type, $filterArray, $deleted, $this->niqbid, $this->settings['berufe'], $orderby, $order, $beraterdiesergruppe, $this->usergroup);
+            //if($this->user['username'] == 'admin') DebuggerUtility::var_dump($teilnehmers);
             $this->view->assign('filteruid', $filterArray['uid'] ?? '');
             $this->view->assign('filtername', $filterArray['name']);
             $this->view->assign('filterort', $filterArray['ort']);

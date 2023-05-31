@@ -11,7 +11,7 @@
 	<f:form class="filterform" method="post" controller="Teilnehmer" action="listdeleted" name="listdeleted" >
 		<f:security.ifHasRole role="2"><div>UID:<f:form.textfield size="3" value="{filteruid}" name="uid" /></div></f:security.ifHasRole>
 			<div>Name: <f:form.textfield size="20" value="{filtername}" name="name" /></div>
-			<div>Ort: <f:form.textfield size="20" value="{filterort}" name="ort" /></div>
+			<div>Ort/PLZ: <f:form.textfield size="20" value="{filterort}" name="ort" /></div>
 			<div>Beruf: <f:form.textfield size="20" value="{filterberuf}" name="beruf" /></div>
 			<div>Geburtsland: <f:form.select value="{filterland}" name="land" options="{wohnsitzstaaten}" optionValueField="value" optionLabelField="value" /></div>
 			<div>Gruppe: <f:form.textfield size="20" value="{filtergruppe}" name="gruppe" /></div>
