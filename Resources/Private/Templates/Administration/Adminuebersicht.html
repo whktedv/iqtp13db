@@ -100,14 +100,13 @@
 	</tbody>
 </table>
 
+<h2>Statistik letzte 12 Monate alle Beratungsstellen</h2>
 <f:form method="post" controller="Administration" action="adminuebersicht" name="switchbundesland" enctype="multipart/form-data" >
 		<label for="bundeslandauswahl">
 			Auswahl Bundesland
 		</label>
 		<f:form.select name="bundeslandauswahl" id="selectbundesland" options="{allebundeslaender}" optionValueField="bundesland" optionLabelField="bundesland" prependOptionValue="%" prependOptionLabel="-alle-" value="{bundeslandselected}"/>
 </f:form>
-<br>
-<h2>Statistik letzte 12 Monate alle Beratungsstellen</h2>
 <table class="uebersicht-statistik">
 	<tr>
 		<th></th>

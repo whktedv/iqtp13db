@@ -54,7 +54,7 @@
 }
 
 .farbbalken_outer {
-	margin-top: 2rem;
+	margin-top: 2rem; 
 }
 
 .navbar-mainnavigation .navbar-brand {
@@ -372,4 +372,18 @@ input[type="text"].textfieldsmall  {
   padding-bottom: 3px;
   display: flex;
   justify-content: center;
+}
+
+/* -------- für Tablets -------- */
+@media (max-width: 1184px){
+	.navbar-nav li {
+  		padding-right: 0px;
+	}
+	.navbar-mainnavigation > .container > .collapse > .navbar-nav .nav-link {
+  		padding-right: 0.5rem;
+  		padding-left: 0.5rem;
+	}
+	.navbar {
+  		font-size: 0.85em;
+	}
 }
