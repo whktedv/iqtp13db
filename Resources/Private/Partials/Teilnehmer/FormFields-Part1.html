@@ -10,13 +10,33 @@
 </div>	
 </f:security.ifHasRole>
 
+<f:if condition="{newnacherfassung} == '1' OR {teilnehmer.nacherfassung} == 1">
+<f:then>
+	<div class="fframeadminonly">
+		<p class="nacherfassunginfotext">Nur zur Nacherfassung von bereits beratenen Klienten! Das Ankreuzen dieses Feldes ersetzt das Double-Opt-In-Verfahren, die Einwilligung muss in anderer Form vorliegen. <br><b>Die Felder 'Datum Erstberatung' und 'Erstberatung abgeschlossen' müssen ausgefüllt sein, damit der Datensatz gespeichert werden kann!</b></p>
+		<div class="tp13_formdivwebapp">
+			<label for="nacherfassung">
+				Nacherfassung
+			</label>
+				<f:form.checkbox id="nach1" property="nacherfassung" value="1" />				
+				<span class="nacherfassungtext">Die Beratung ist abgeschlossen, die Einwilligungserklärung liegt in anderer Form bei der Beratungsstelle vor.</span>			
+		</div>
+		<f:form.hidden name="teilnehmer[einwilligung]" value="1" />	
+	</div>
+</f:then>
+</f:if>
 <div class="fframe">
+	<f:if condition="{newnacherfassung} == '0' AND {teilnehmer.nacherfassung} != 1">
+		<f:then>
 		<div class="tp13_formdivwebapp">
 			<label for="einwilligung">
-				Einwilligung&nbsp;<f:form.checkbox id="ein1" property="einwilligung" value="1" />
-			</label>				
+				Einwilligung
+			</label>
+				<f:form.checkbox id="ein1" property="einwilligung" value="1" />				
 				<span class="einwilligungtext">Dem/der Ratsuchenden ggf. die <a href="{urleinwilligung}" target="_blank">Informationen zur Datenverarbeitung</a> vorlesen.</span>			
 		</div>
+		</f:then>
+	</f:if>
 		<div class="tp13_formdivwebapp">
 			<label for="schonberaten">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.schonberaten" />

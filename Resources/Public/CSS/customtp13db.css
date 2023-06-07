@@ -106,6 +106,11 @@
 	display: flex;
 }
 
+.tx-iqtp13db ul.typo3-messages {
+  list-style: none;
+  display: block;  
+}
+
 .tx-iqtp13db .fframe {
 	border: 1px solid #ababab;
 	padding: 15px;
@@ -174,12 +179,18 @@
 }
 
 .tx-iqtp13db .einwilligungtext {
-	/* display: flex;*/
-	width: 90%;
+	/* display: flex;
+	width: 90%;*/
     font-weight: 400;
     font-size: 1.1em;
 }
 
+.nacherfassunginfotext {
+    font-size: 1.1em;
+    color: #7478bf;
+}
+
+#7478bf
 .tx-iqtp13db .infolabel {
 	background-image: url(../Icons/infoicon.png);
 	background-repeat: no-repeat;

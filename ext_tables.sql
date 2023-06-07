@@ -61,6 +61,7 @@ CREATE TABLE tx_iqtp13db_domain_model_teilnehmer (
     notizen text NOT NULL,
     
     einwilligung tinyint(1) unsigned DEFAULT '0' NOT NULL,
+    nacherfassung tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	verification_code varchar(255) DEFAULT '' NOT NULL,
     verification_date int(11) unsigned DEFAULT '0' NOT NULL,
     verification_ip varchar(255) DEFAULT '' NOT NULL,

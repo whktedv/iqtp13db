@@ -24,7 +24,7 @@
 <f:flashMessages />
 
 <h1>Liste Archiv: {anzgesamt} Einträge <f:if condition="{filteron}"><f:then><span style="color: red;">(gefiltert)</span></f:then></f:if></h1>
-
+<f:link.action id="linkloadoverlay-new" class="linkbuttons buttonnew buttonnacherfassung" action="new" arguments="{newnacherfassung: 1, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">Nacherfassung</f:link.action>
 <!--  <table><tr><td>nicht NIQ synchronisiert: &#9888;</td><td>NIQ synchronisiert: &#9989;</td></tr></table>  -->
 
 <div class="toppaginator">
@@ -32,7 +32,7 @@
 </div>
 
 <table  class="tx_iqtp13db listarchiv" >
-	<tr>
+	<tr>	
 		<th><f:link.action action="listarchiv" arguments="{orderby : 'uid', changeorder : 1}">UID{f:if(condition:'{orderby} == "uid"',then: ' {orderchar}')}</f:link.action></th>
 		<th><f:link.action action="listarchiv" arguments="{orderby : 'nachname', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" />{f:if(condition:'{orderby} == "nachname"',then: ' {orderchar}')}</f:link.action></th>
 		<th><f:link.action action="listarchiv" arguments="{orderby : 'vorname', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" />{f:if(condition:'{orderby} == "vorname"',then: ' {orderchar}')}</f:link.action></th>
@@ -57,7 +57,13 @@
 
 	<f:for each="{paginator.paginatedItems}" as="teilnehmer" iteration="it">
 		{f:variable(name: 'summebdauer', value: '{summeberatungsdauer.{it.index}}')}
-		<tr>
+		<f:if condition="{teilnehmer.nacherfassung} == 1"><f:then>
+			<tr class="nacherfasst">
+		</f:then>
+		<f:else>
+			<tr>	
+		</f:else>
+		</f:if>
 			<td><f:link.action action="show" controller="Teilnehmer" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">{teilnehmer.uid}</f:link.action></td>
 			<td><f:link.action action="show" controller="Teilnehmer" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">{teilnehmer.nachname}</f:link.action></td>
 			<td>{teilnehmer.vorname}</td>
@@ -124,8 +130,14 @@
 	<span style="font-weight: bold; font-size: 0.7rem; margin-left: 5px;">Legende:</span>
 	<table>
 		<tr>
+			<td class="nacherfasst">Nacherfasst</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
 			<td><img src="/fileadmin/template/images/iq-webapp_bearbeiten.svg" alt="Bearbeiten" width="30" height="30"/> = Bearbeiten</td>
 			<td><img src="/fileadmin/template/images/iq-webapp_folgekontakt.svg" alt="Folgekontakt" width="30" height="30"/> = Folgekontakt anlegen</td>
+			<td><span class="linkbuttons buttonnew buttonnacherfassung">Nacherfassung</span> = Bereits Beratene nacherfassen</td>
 		</tr>
 	</table>
 </div>

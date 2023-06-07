@@ -2,19 +2,35 @@
 	display: none;
 }
 
-.error {
-	margin-top: 8rem;
+.errorframe {
 	padding: 1rem;
-	border: 1px solid #ef2323;
 	background-color: #fdb0b0;
-	font-size: 1.5rem;
+	border-radius: 4px;
 }
 
-.tx-iqtp13db ul .alert {  
+a.errorframe-close {
+	position: absolute;
+  	top: 0px;
+  	right: 10px;
+  	color: rgba(72,83,88,1.0);
+  	text-decoration: none;
+	font-size: 1.3em;
+}
+
+.tx-iqtp13db ul .alert, .errorframe {  
 	text-align: center;
 	display: block;
-	height: 55px;
 	border: 1px solid;
+	list-style: none;
+	display: block;	
+	z-index: 999;
+	position: fixed;
+	top: 40%;
+	left: 38%;
+	width: 25%;
+	height: auto;
+	margin: auto;
+	box-shadow: .4rem .4rem 2.4rem .2rem #000;
 }
 
 .tx-iqtp13db ul .alert-danger {
@@ -23,6 +39,10 @@
 
 .tx-iqtp13db ul .alert-success {
 	background: #def1de;
+}
+
+p.alert-message {
+	margin: 0px;
 }
 
 .frame {
@@ -111,21 +131,22 @@
 
 .tx-iqtp13db table .dublette {
     background-color: #997a3b54;
-     width: 25%;
 }
 
 .tx-iqtp13db table .bestaetigt {
     background-color: #7a970133;
-     width: 25%;
 }
 
 .tx-iqtp13db table .unbestaetigt-beraten {
     background-color: #ffbe6ac4;
-     width: 25%;
 }
 
 .tx-iqtp13db table .unbestaetigt-beraten img.anfordernbtnimg {
     border: 2px solid #f00;
+}
+
+.tx-iqtp13db table .nacherfasst {
+    background-color: #ffb30024;
 }
 
 .tx-iqtp13db .tablelinkbuttons {
@@ -232,7 +253,7 @@ td.tdcenter input[type="checkbox"] {
 }
 
 .edit-eingabefelder, .show-eingabefelder {
-	padding-top: 6rem;
+	padding-top: 4rem;
 }
 
 .buttoneinwilligung {

@@ -91,7 +91,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     
     /**
      * plz
-     *
+     * @Validate("NotEmpty")
      * @var string
      */
     protected $plz = '';
@@ -370,6 +370,13 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @Validate("\Ud\Iqtp13db\Domain\Validator\EinwilligungValidator")
      */
     protected $einwilligung = NULL;
+    
+    /**
+     * Nacherfassung Altfälle
+     *
+     * @var bool
+     */
+    protected $nacherfassung = NULL;
     
     /**
      * verificationCode
@@ -1623,6 +1630,34 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function isEinwilligung() {
         return $this->getEinwilligung();
+    }
+    
+    /**
+     * Returns the nacherfassung
+     *
+     * @return int $nacherfassung
+     */
+    public function getNacherfassung()
+    {
+        return $this->nacherfassung;
+    }
+    
+    /**
+     * Sets the nacherfassung
+     *
+     * @param int $nacherfassung
+     * @return void
+     */
+    public function setNacherfassung($nacherfassung)
+    {
+        $this->nacherfassung = $nacherfassung;
+    }
+    
+    /**
+     * @return boolean $nacherfassung
+     */
+    public function isNacherfassung() {
+        return $this->getNacherfassung();
     }
     
     /**

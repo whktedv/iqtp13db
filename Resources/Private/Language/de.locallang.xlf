@@ -125,7 +125,8 @@
 			<trans-unit id="kontaktberatungsstelle"><target>Das ist Ihre Beratungsstelle:</target></trans-unit>
 			
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer"><target>Teilnehmer</target></trans-unit>
-			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligung"><target>Einwilligung</target></trans-unit>	
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligung"><target>Einwilligung</target></trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.nacherfassung"><target>Nacherfassung</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.niqidberatungsstelle"><target>NIQ Beratungsstelle ID</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.beratungsstatus"><target>Beratungsstatus</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.niqchiffre"><target>NIQ Chiffre</target></trans-unit>
