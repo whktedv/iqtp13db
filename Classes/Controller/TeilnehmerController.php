@@ -1024,6 +1024,11 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $urleinwilligung = $this->settings['datenschutzeinwilligungurl'];
         }
         
+        $nacherfassung = $valArray['newnacherfassung'] ?? '0';
+        if($teilnehmer->getNacherfassung() == 1) {
+            $nacherfassung = 1;
+        }
+         
         $this->view->assignMultiple(
             [
                 'alleberatungsstellen' => $alleberatungsstellen,
@@ -1046,7 +1051,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'edituserfield' => $edituserfield ?? '0',
                 'edittstampfield' => $edittstampfield ?? '0',
                 'urleinwilligung' => $urleinwilligung,
-                'newnacherfassung' => $valArray['newnacherfassung'] ?? '0'
+                'newnacherfassung' => $nacherfassung
             ]
             );
     }
