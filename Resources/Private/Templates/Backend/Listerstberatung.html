@@ -1,0 +1,132 @@
+<f:layout name="DefaultBackend" />
+<f:section name="HeaderAssets">
+  		<link rel="stylesheet" href="{f:uri.resource(path: 'CSS/customtp13dbadmin.css')}"/>
+</f:section>
+
+<f:section name="main">
+ 
+<div class="filterframe">
+	<h1>Filter</h1>
+	<f:form class="filterform" method="post" action="listerstberatung" name="listerstberatung" >
+		<f:security.ifHasRole role="2"><div>UID:<f:form.textfield size="3" value="{filteruid}" name="uid" /></div></f:security.ifHasRole>
+			<div>Name: <f:form.textfield size="20" value="{filtername}" name="name" /></div>
+			<div>Ort/PLZ: <f:form.textfield size="20" value="{filterort}" name="ort" /></div>
+			<div>Beruf: <f:form.textfield size="20" value="{filterberuf}" name="beruf" /></div>
+			<div>Geburtsland: <f:form.select value="{filterland}" name="land" options="{wohnsitzstaaten}" optionValueField="value" optionLabelField="value" /></div>
+			<div>Berater*in: <f:form.select value="{filterberater}" name="berater" options="{alleberater}" optionValueField="uid" optionLabelField="username" prependOptionLabel="-" prependOptionValue="0" sortByOptionLabel="1"/></div>
+			<div>Gruppe: <f:form.textfield size="20" value="{filtergruppe}" name="gruppe" /></div>
+			<div>Bescheid: <f:form.checkbox value="1" name="bescheid" checked="{filterbescheid} == 1" /></div>
+			<f:if condition="{filteron} == 1"><f:then><div><f:form.button name="filteraus" value="1" >Filter löschen</f:form.button></div></f:then></f:if>
+			<f:if condition="{filteron} != 1"><f:then><div><f:form.button type="submit" name="filteran" >Filtern</f:form.button></div></f:then></f:if>
+	</f:form>
+</div>
+
+<f:flashMessages />
+
+<h1>Liste Erstberatung: {anzgesamt} Einträge <f:if condition="{filteron}"><f:then><span style="color: red;">(gefiltert)</span></f:then></f:if></h1>
+	
+<div class="toppaginator">
+	<f:render partial="Paginator" arguments="{pagination: pagination, pages: pages, paginator: paginator, action: calleraction, orderby : orderby}" />
+</div>
+
+<table  class="tx_iqtp13db listerstberatung" >
+	<tr>
+		<th><f:link.action action="listerstberatung" arguments="{orderby : 'uid', changeorder : 1}">UID{f:if(condition:'{orderby} == "uid"',then: ' {orderchar}')}</f:link.action></th>
+		<th><f:link.action action="listerstberatung" arguments="{orderby : 'nachname', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" />{f:if(condition:'{orderby} == "nachname"',then: ' {orderchar}')}</f:link.action></th>
+		<th><f:link.action action="listerstberatung" arguments="{orderby : 'vorname', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" />{f:if(condition:'{orderby} == "vorname"',then: ' {orderchar}')}</f:link.action></th>
+		<th><f:link.action action="listerstberatung" arguments="{orderby : 'verificationDate', changeorder : 1}">Anmeldedatum {f:if(condition:'{orderby} == "verificationDate"',then: ' {orderchar}')}</f:link.action></th>
+		<th><f:link.action action="listerstberatung" arguments="{orderby : 'ort', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.plz" />/<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ort" />{f:if(condition:'{orderby} == "ort"',then: ' {orderchar}')}</f:link.action></th>
+		<th>Leistungs-<br>bezug</th>
+		<th>Anerkenn.-<br>zusch.<br>beantragt?</th>
+		<th><f:link.action action="listerstberatung" arguments="{orderby : 'berater.username', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.berater" />{f:if(condition:'{orderby} == "berater.username"',then: ' {orderchar}')}</f:link.action></th>
+		<th><f:link.action action="listerstberatung" arguments="{orderby : 'beratungdatum', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungdatum" />{f:if(condition:'{orderby} == "beratungdatum"',then: ' {orderchar}')}</f:link.action></th>
+		<th id="resizablecol1"><f:translate key="tx_iqtp13db_domain_model_abschluss.deutscher_referenzberuf" /></th>
+		<th id="resizablecol2"><f:translate key="tx_iqtp13db_domain_model_abschluss.referenzberufzugewiesen" /></th>
+		<th>vorherige Antrag-<br>stellung</th>
+		<th><f:link.action action="listerstberatung" arguments="{orderby : 'erstberatungabgeschlossen', changeorder : 1}">Erstberatung abgeschlossen{f:if(condition:'{orderby} == "erstberatungabgeschlossen"',then: ' {orderchar}')}</f:link.action></th>
+		<th id="resizablecol3"><f:link.action action="listerstberatung" arguments="{orderby : 'kooperationgruppe', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.kooperationgruppe" />{f:if(condition:'{orderby} == "kooperationgruppe"',then: ' {orderchar}')}</f:link.action></th>
+		<th style="hyphens: auto;">Summe<br>Beratungsd.<br>(in h)</th>
+		<th> </th>
+		<th> </th>
+		<th> </th>
+		<th> </th>
+	</tr>
+
+	<f:for each="{paginator.paginatedItems}" as="teilnehmer" iteration="it">
+		{f:variable(name: 'summebdauer', value: '{summeberatungsdauer.{it.index}}')}
+		<tr>
+			<td><f:link.action action="show" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">{teilnehmer.uid}</f:link.action></td>
+			<td><f:link.action action="show" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">{teilnehmer.nachname}</f:link.action></td>
+			<td>{teilnehmer.vorname}</td>
+			<td><f:format.date format="d.m.Y">@{teilnehmer.verificationDate}</f:format.date></td>
+			<td>{teilnehmer.plz} {teilnehmer.ort}</td>
+			<td>{f:if(condition: '{teilnehmer.leistungsbezugjanein} == 1', then: '<img src="/fileadmin/template/images/iq-webapp_vollstaendig-ok.svg" alt="✓" width="16" height="16"/>', else: '')}</td>
+			<td>{f:if(condition: '{teilnehmer.anerkennungszuschussbeantragt} == 1', then: '<img src="/fileadmin/template/images/iq-webapp_vollstaendig-ok.svg" alt="✓" width="16" height="16"/>', else: '')}</td>
+			<td>{teilnehmer.berater.username}</td> 
+			<td><f:format.date format="d.m.Y">{teilnehmer.beratungdatum}</f:format.date></td>
+			<td>
+				<f:for each="{abschluesse.{it.index}}" as="abschluss" iteration="iter">
+					{f:if(condition: '{abschluesse.{it.index} -> f:count()} > 1', then: '{iter.index + 1}.', else: '')} {abschluss.deutscherReferenzberuf}<br>
+				</f:for>
+			</td>
+			<td>
+				<f:for each="{abschluesse.{it.index}}" as="abschluss" iteration="iter">
+					<f:for each="{settings.berufe}" as="beruf" key="key">
+						<f:if condition="{key} == {abschluss.referenzberufzugewiesen}"><f:then>
+							{f:if(condition: '{abschluesse.{it.index} -> f:count()} > 1', then: '{iter.index + 1}.', else: '')} 
+							
+							{f:if(condition: '{abschluss.referenzberufzugewiesen} == "-3"', then: '{abschluss.sonstigerberuf}')}
+							{f:if(condition: '{abschluss.referenzberufzugewiesen} == "-4"', then: '{abschluss.nregberuf}')}
+							{f:if(condition: '{abschluss.referenzberufzugewiesen} > -3', then: '{beruf}')}
+							<br>
+						</f:then></f:if>
+					</f:for>						
+				</f:for>
+			</td>
+			<td>
+				<f:for each="{abschluesse.{it.index}}" as="abschluss" iteration="iter">
+					{f:if(condition: '{abschluss.antragstellungvorher} == 1', then: '<img src="/fileadmin/template/images/iq-webapp_vollstaendig-ok.svg" alt="✓" width="16" height="16"/>')}
+					{f:if(condition: '{abschluss.antragstellungvorher} == 2', then: '<img src="/fileadmin/template/images/iq-webapp_vollstaendig-ok.svg" alt="✓" width="16" height="16"/>')}
+					{f:if(condition: '{abschluss.antragstellungvorher} == 3', then: '<img src="/fileadmin/template/images/iq-webapp_vollstaendig-ok.svg" alt="✓" width="16" height="16"/>')}					
+				</f:for>					
+			</td>
+			<td>
+			<f:if condition="{teilnehmer.erstberatungabgeschlossen} > 0">
+			<f:then>
+				<f:format.date format="d.m.Y">{teilnehmer.erstberatungabgeschlossen}</f:format.date>			
+			</f:then>
+			</f:if>				
+			</td>
+			<td>{teilnehmer.kooperationgruppe}</td>
+			<td>{summebdauer}</td>
+			<td><f:link.action action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" title="Bearbeiten"><img src="/fileadmin/template/images/iq-webapp_bearbeiten.svg" alt="Bearbeiten" width="30" height="30"/></f:link.action></td>
+			<td><f:link.action action="new" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Folgekontakt" title="Folgekontakt anlegen"><img src="/fileadmin/template/images/iq-webapp_folgekontakt.svg" width="30" height="30" alt="Folgekontakt" /></f:link.action></td>
+			<td><f:link.action action="sendtoarchiv" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Backend" onclick="return confirm('Wirklich archivieren?');" title="Archivieren"><img src="/fileadmin/template/images/iq-webapp_archivieren.svg" width="30" height="30" alt="Archivieren" /></f:link.action></td>				
+			<td><f:link.action action="delete" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" onclick="return confirm('Wirklich löschen?');" title="Löschen"><img src="/fileadmin/template/images/iq-webapp_loeschen.svg" width="30" height="30" alt="Löschen" /></f:link.action></td>
+		</tr>		
+		<f:if condition="{anzfolgekontakte.{it.index}} != 0"><f:then>
+			<f:render partial="Folgekontakt/Folgekontakte4List" arguments="{folgekontakte : folgekontakte, teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" />
+		</f:then></f:if>		
+	</f:for>
+</table>
+
+<div class="bottompaginator">
+	<f:render partial="Paginator" arguments="{pagination: pagination, pages: pages, paginator: paginator, action: calleraction, orderby : orderby}" />
+</div>
+
+<div class="legende">
+	<span style="font-weight: bold; font-size: 0.7rem; margin-left: 5px;">Legende:</span>
+	<table>
+		<tr>
+			<td><img src="/fileadmin/template/images/iq-webapp_bearbeiten.svg" alt="Bearbeiten" width="30" height="30"/> = Bearbeiten</td>
+			<td><img src="/fileadmin/template/images/iq-webapp_folgekontakt.svg" alt="Folgekontakt" width="30" height="30"/> = Folgekontakt anlegen</td>
+			<td><img src="/fileadmin/template/images/iq-webapp_archivieren.svg" alt="Archivieren" width="30" height="30"/> = Archivieren</td>
+			<td><img src="/fileadmin/template/images/iq-webapp_loeschen.svg" width="30" height="30" alt="Löschen" /> = Löschen</td>
+		</tr>
+	</table>
+</div>
+
+</f:section>
+
+
+

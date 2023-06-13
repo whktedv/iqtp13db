@@ -22,6 +22,71 @@ class Generalhelper
     //die();
     
     /**
+     * @param array $recipient recipient of the email in the format array('recipient@domain.tld' => 'Recipient Name')
+     * @param array $bcc
+     * @param array $sender
+     * @param $subject
+     * @param $templateName
+     * @param array $variables
+     * @param $addattachment
+     * @return boolean TRUE on success, otherwise false
+     */
+    function sendTemplateEmail(array $recipient, array $bcc, array $sender, $subject, $templateName, array $variables = array(), $emailView, $controlleruribuilder, $extbaseFrameworkConfiguration)
+    {
+        $templateRootPath = end($extbaseFrameworkConfiguration['view']['templateRootPaths']);
+        $templatePathAndFilename = $templateRootPath . 'Teilnehmer/' . $templateName . '.html';
+        
+        $emailView->setTemplatePathAndFilename($templatePathAndFilename);
+        $emailView->assignMultiple($variables);
+        $emailBody = $emailView->render();
+        
+        $message = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Mail\MailMessage::class);
+        $message->to(new \Symfony\Component\Mime\Address($recipient[0]))->from(new \Symfony\Component\Mime\Address($sender[0]));
+        $message->subject($subject);
+        if($templateName != 'Mailtoconfirm' && $bcc[0] != '') $message->bcc(new \Symfony\Component\Mime\Address($bcc[0]));
+        
+        // HTML Email
+        $message->html($emailBody);
+        
+        // Text Part
+        // Mail mit Bestätigungslink
+        if($templateName == 'Mailtoconfirm') {
+            $teilnehmer = $variables['teilnehmer'];
+            
+            $uriBuilder = $controlleruribuilder;
+            $uriBuilder->reset();
+            $uriBuilder->uriFor('confirm', array('code' => $teilnehmer->getVerificationcode(), 'askconsent' => $variables['askconsent']), 'Teilnehmer', 'iqtp13db', 'Iqtp13dbwebapp');
+            $uriBuilder->setTargetPageUid($variables['registrationpageuid']);
+            $uriBuilder->setCreateAbsoluteUri(TRUE);
+            $link = $uriBuilder->build();
+            
+            $mailtext = $variables['confirmmailtext1']."\r\n".
+                $link."\r\n\r\n".
+                $variables['confirmmailtext2'] .
+                "\r\n------------------------------\r\n\r\n".
+                $variables['kontaktlabel'] ."\r\n\r\n".
+                $variables['datenberatungsstelle'].
+                "\r\n------------------------------";
+                
+                $message->text(str_replace("</p>", "\r\n",(str_replace(["<p>", "<br>"], "", $mailtext))));
+        }
+        // Mail nach Bestätigung
+        if($templateName == 'Mail') {
+            $mailtext = $variables['anrede'] ."\r\n".
+                $variables['mailtext'] .
+                "\r\n------------------------------\r\n\r\n".
+                $variables['kontaktlabel'] ."\r\n\r\n".
+                $variables['datenberatungsstelle'].
+                "\r\n------------------------------";
+                
+                $message->text(str_replace("</p>", "\r\n",(str_replace(["<p>", "<br>"], "", $mailtext))));
+        }
+        $message->send();
+        
+        return $message->isSent();
+    }
+    
+    /**
      *  Aus den eingegebenen Parametern des Ratsuchenden die zugeordnete Beratungsstellen-ID zuweisen
      */
     function getNiqberatungsstellenid(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer, $usergroups, $standardniqbid) {

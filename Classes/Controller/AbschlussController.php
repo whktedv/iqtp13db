@@ -71,7 +71,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $this->view->assign('abschluss', $abschluss);
         $this->view->assign('teilnehmer', $teilnehmer);
         $this->view->assign('calleraction', $valArray['calleraction'] ?? 'edit');
-        $this->view->assign('callercontroller', $valArray['callercontroller'] ?? 'Teilnehmer');
+        $this->view->assign('callercontroller', $valArray['callercontroller'] ?? 'Backend');
         $this->view->assign('callerpage', $valArray['callerpage'] ?? '1');
         $this->view->assign('thisaction', $valArray['thisaction']);
     }
@@ -97,7 +97,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $this->view->assign('abschlussjahre', $abschlussjahre);
         $this->view->assign('teilnehmer', $teilnehmer);
         $this->view->assign('calleraction', $valArray['calleraction'] ?? 'edit');
-        $this->view->assign('callercontroller', $valArray['callercontroller'] ?? 'Teilnehmer');
+        $this->view->assign('callercontroller', $valArray['callercontroller'] ?? 'Backend');
         $this->view->assign('callerpage', $valArray['callerpage'] ?? '1');
         $this->view->assign('thisaction', $valArray['thisaction']);
     }
@@ -120,7 +120,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
         
-        $this->redirect($valArray['thisaction'], 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'showabschluesse' => '1'));
+        $this->redirect($valArray['thisaction'], 'Backend', null, array('teilnehmer' => $teilnehmer, 'showabschluesse' => '1'));
     }
 
     /**
@@ -147,7 +147,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $this->view->assign('teilnehmer', $teilnehmer);             
         $this->view->assign('abschluss', $abschluss);
         $this->view->assign('calleraction', $valArray['calleraction'] ?? 'edit');
-        $this->view->assign('callercontroller', $valArray['callercontroller'] ?? 'Teilnehmer');
+        $this->view->assign('callercontroller', $valArray['callercontroller'] ?? 'Backend');
         $this->view->assign('callerpage', $valArray['callerpage'] ?? '1');
         $this->view->assign('thisaction', $valArray['thisaction']);
     }
@@ -169,7 +169,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $teilnehmer = $this->teilnehmerRepository->findByUid($valArray['teilnehmer']);
         
         $this->abschlussRepository->update($abschluss);
-        $this->redirect($valArray['thisaction'], 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'showabschluesse' => '1'));
+        $this->redirect($valArray['thisaction'], 'Backend', null, array('teilnehmer' => $teilnehmer, 'showabschluesse' => '1'));
     }
 
     /**
@@ -184,7 +184,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $valArray = $this->request->getArguments();
         
         $this->abschlussRepository->remove($abschluss);
-        $this->redirect($valArray['thisaction'], 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'], 'showabschluesse' => '1'));
+        $this->redirect($valArray['thisaction'], 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'], 'showabschluesse' => '1'));
     }    
     
     

@@ -1,0 +1,33 @@
+
+<f:layout name="Default" />
+<f:section name="HeaderAssets">
+  		<link rel="stylesheet" href="{f:uri.resource(path: 'CSS/customtp13dbadmin.css')}"/>  		
+</f:section>
+
+ 
+<f:section name="main">
+
+<f:flashMessages />
+
+<f:render partial="FormErrors" arguments="{object:Teilnehmer}" />
+
+<f:form id="teilnehmerform" action="create" controller="Backend" name="teilnehmer" object="{teilnehmer}" arguments="{calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, newnacherfassung : newnacherfassung}">
+	
+	<div class="buttonmenu">
+		<div class="toplinkbuttons">
+			<f:form.button type="submit" class="linkbuttons" id="savebutton1">Speichern</f:form.button>
+			<f:link.action id="linkloadoverlay-back" class="linkbuttons" action="{calleraction}" controller="{callercontroller}" arguments="{callerpage : callerpage, tn : teilnehmer}">Zurück zur Liste</f:link.action>
+		</div>	
+	</div>
+	
+	<div class="edit-eingabefelder">
+		<h1>Neue*r Ratsuchende*r</h1>
+		 
+		<f:render partial="Teilnehmer/FormFields-Part1" arguments="{_all}" />
+		 
+		<f:render partial="Teilnehmer/FormFields-Part2" arguments="{_all}" />
+	</div>
+	
+</f:form>
+
+</f:section>
