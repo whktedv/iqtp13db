@@ -86,6 +86,17 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     
     
     /**
+     * action initnew
+     *
+     * @return void
+     */
+    public function initializeNewAction() {
+        $valArray = $this->request->getArguments();
+        $thistn = $this->teilnehmerRepository->findByUid($valArray['teilnehmer']);
+        if($thistn->getPlz() == '') $thistn->setPlz('0');
+    }
+    
+    /**
      * action new
      *
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer

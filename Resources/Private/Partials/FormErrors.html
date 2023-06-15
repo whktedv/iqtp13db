@@ -1,7 +1,7 @@
 <f:form.validationResults for="{object}">
 	<f:if condition="{validationResults.flattenedErrors}">
 		<div class="errorframe">
-			<a href="#" class="errorframe-close">x</a>
+			<a href="#" class="errorframe-close">✖</a>
 			<f:for each="{validationResults.flattenedErrors}" key="propertyName" as="errors">
 				<f:if condition="{errors -> f:count()}==1">
 						<div class="error">

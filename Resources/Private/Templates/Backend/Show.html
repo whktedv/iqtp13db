@@ -39,7 +39,9 @@
 	<div class="ankerbuttons">		
 			<a href="#AnkerBeratung" class="linkbuttons buttonberatung" >Beratung anzeigen</a>
 			<a href="#AnkerAbschluesse" class="linkbuttons buttonabschluesse" >Abschlüsse anzeigen</a>
-			<a href="#AnkerDokumente" class="linkbuttons buttondokumente" >Dokumente anzeigen</a>
+			<f:if condition="{teilnehmer.anonym} != '1'">
+				<a href="#AnkerDokumente" class="linkbuttons buttondokumente" >Dokumente anzeigen</a>
+			</f:if>			
 	</div>
 </div>
 
@@ -48,13 +50,14 @@
 
 <f:flashMessages />
 
-	<f:render partial="Teilnehmer/Properties" arguments="{teilnehmer:teilnehmer, historie : historie}" />
+	<f:render partial="TeilnehmerBackend/Properties" arguments="{teilnehmer:teilnehmer, historie : historie}" />
 </div>
 
 <f:render partial="Abschluss/Abschluss4Teilnehmer" arguments="{teilnehmer : teilnehmer, abschluesse: abschluesse, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : 'show'}" />
 
-<f:render partial="Dokument/Dokumente4Teilnehmer" arguments="{teilnehmer : teilnehmer, dokumente: dokumente, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, dokumentpfad : dokumentpfad, thisaction : 'show'}" />
-
+<f:if condition="{teilnehmer.anonym} != '1'">
+	<f:render partial="Dokument/Dokumente4Teilnehmer" arguments="{teilnehmer : teilnehmer, dokumente: dokumente, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, dokumentpfad : dokumentpfad, thisaction : 'show'}" />
+</f:if>
 <f:flashMessages />
 
 </f:section>

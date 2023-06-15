@@ -11,7 +11,7 @@
 
 <f:render partial="FormErrors" arguments="{object:Teilnehmer}" />
 
-<f:form id="teilnehmerform" action="create" controller="Backend" name="teilnehmer" object="{teilnehmer}" arguments="{calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, newnacherfassung : newnacherfassung}">
+<f:form id="teilnehmerform" action="create" controller="Backend" name="teilnehmer" object="{teilnehmer}" arguments="{calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, newnacherfassung : newnacherfassung, newanonymeberatung : newanonymeberatung}">
 	
 	<div class="buttonmenu">
 		<div class="toplinkbuttons">
@@ -23,9 +23,9 @@
 	<div class="edit-eingabefelder">
 		<h1>Neue*r Ratsuchende*r</h1>
 		 
-		<f:render partial="Teilnehmer/FormFields-Part1" arguments="{_all}" />
+		<f:render partial="TeilnehmerBackend/FormFields-Part1" arguments="{_all}" />
 		 
-		<f:render partial="Teilnehmer/FormFields-Part2" arguments="{_all}" />
+		<f:render partial="TeilnehmerBackend/FormFields-Part2" arguments="{_all}" />
 	</div>
 	
 </f:form>

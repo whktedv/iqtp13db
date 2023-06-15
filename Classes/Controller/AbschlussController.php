@@ -120,7 +120,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
         
-        $this->redirect($valArray['thisaction'], 'Backend', null, array('teilnehmer' => $teilnehmer, 'showabschluesse' => '1'));
+        $this->redirect($valArray['thisaction'], 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'], 'showabschluesse' => '1'));
     }
 
     /**
@@ -169,7 +169,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $teilnehmer = $this->teilnehmerRepository->findByUid($valArray['teilnehmer']);
         
         $this->abschlussRepository->update($abschluss);
-        $this->redirect($valArray['thisaction'], 'Backend', null, array('teilnehmer' => $teilnehmer, 'showabschluesse' => '1'));
+        $this->redirect($valArray['thisaction'], 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'], 'showabschluesse' => '1'));
     }
 
     /**

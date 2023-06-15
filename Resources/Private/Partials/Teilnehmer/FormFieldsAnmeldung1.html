@@ -43,8 +43,15 @@
 						<f:form.textfield class="orttextfield" property="ort" placeholder="<f:translate key='tx_iqtp13db_domain_model_teilnehmer.ort'/>"/>
 					</f:then>
 					<f:else>
-						<f:form.textfield class="plztextfield" pattern="[0-9][0-9][0-9][0-9][0-9]" property="plz" placeholder="00000"/>
-						<f:form.textfield class="orttextfield" property="ort" placeholder="<f:translate key='tx_iqtp13db_domain_model_teilnehmer.ort'/>"/>					
+						<f:if condition="{direkt} == '1'">
+							<f:then>
+								<f:form.textfield class="plztextfield" property="plz" placeholder=""/>
+							</f:then>
+							<f:else>
+								<f:form.textfield class="plztextfield" pattern="[0-9][0-9][0-9][0-9][0-9]" property="plz" placeholder="00000"/>
+							</f:else>
+						</f:if>
+						<f:form.textfield class="orttextfield" property="ort" placeholder="<f:translate key='tx_iqtp13db_domain_model_teilnehmer.ort'/>"/>											
 					</f:else>
 				</f:if>
 		</div>

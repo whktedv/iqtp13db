@@ -31,6 +31,14 @@ a.errorframe-close {
 	height: auto;
 	margin: auto;
 	box-shadow: .4rem .4rem 2.4rem .2rem #000;
+	cursor: pointer;
+}
+
+.tx-iqtp13db ul .alert::after {
+	content: '✖';
+	position: absolute;
+	right: 5px;
+	top: 0px;
 }
 
 .tx-iqtp13db ul .alert-danger {
@@ -39,6 +47,10 @@ a.errorframe-close {
 
 .tx-iqtp13db ul .alert-success {
 	background: #def1de;
+}
+
+.tx-iqtp13db ul .alert-warning {
+	background-color: #f0d051;
 }
 
 p.alert-message {

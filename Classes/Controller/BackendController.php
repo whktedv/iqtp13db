@@ -1039,6 +1039,23 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     }
     
     /**
+     * action initshow
+     *
+     * @return void
+     */
+    public function initializeShowAction() {
+        $valArray = $this->request->getArguments();
+        $thistn = $this->teilnehmerRepository->findByUid($valArray['teilnehmer']);
+        if($thistn->getPlz() == '') $thistn->setPlz('0');
+        
+        $tnanonym = $thistn->getAnonym();
+        $anonymeberatung = $valArray['newanonymeberatung'] ?? '';
+        if($anonymeberatung == '1' || $tnanonym == '1') {
+            $this->addFlashMessage("Bitte beachten: Für anonyme Beratungen ist zur Wahrung des Datenschutzes kein Dokumentenupload möglich!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+        }
+    }
+    
+    /**
      * action show
      *
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
@@ -1067,6 +1084,20 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'showdokumente' => $valArray['showdokumente'] ?? '0'
             ]
             );
+    }
+    
+    /**
+     * action initnew
+     *
+     * @return void
+     */
+    public function initializeNewAction() {
+        $valArray = $this->request->getArguments();
+        
+        $anonymeberatung = $valArray['newanonymeberatung'] ?? '';
+        if($anonymeberatung == '1') {
+            $this->addFlashMessage("Bitte beachten: Für anonyme Beratungen ist zur Wahrung des Datenschutzes kein Dokumentenupload möglich!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+        }
     }
     
     /**
@@ -1137,11 +1168,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'settings' => $this->settings,
                 'jahre' => $jahre,
                 'urleinwilligung' => $urleinwilligung,
-                'newnacherfassung' => $valArray['newnacherfassung'] ?? '0'
+                'newnacherfassung' => $valArray['newnacherfassung'] ?? '0',
+                'newanonymeberatung' => $valArray['newanonymeberatung'] ?? '0'
             ]
             );
     }
-    
     
     /**
      * action initcreate
@@ -1154,11 +1185,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $erstberatungabgeschlossen = $valArray['teilnehmer']['erstberatungabgeschlossen'] ?? '';
         
         if($beratungdatum != '' && !$this->generalhelper->validateDateYmd($beratungdatum)) {
-            $this->addFlashMessage("FEHLER: Datensatz NICHT gespeichert. -Beratung Datum- ungültige Eingabe. Datum im Format JJJJ-MM-TT eintragen!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->addFlashMessage("FEHLER: Datensatz NICHT gespeichert. 'Beratung Datum' ungültige Eingabe. Datum im Format JJJJ-MM-TT eintragen!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             $this->redirect($valArray['calleraction'] ?? 'new', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
         }
         if($erstberatungabgeschlossen != '' && !$this->generalhelper->validateDateYmd($erstberatungabgeschlossen)) {
-            $this->addFlashMessage("FEHLER: Datensatz NICHT gespeichert. -Erstberatung abgeschlossen- ungültige Eingabe. Datum im Format JJJJ-MM-TT eintragen!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->addFlashMessage("FEHLER: Datensatz NICHT gespeichert. 'Erstberatung abgeschlossen' ungültige Eingabe. Datum im Format JJJJ-MM-TT eintragen!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             $this->redirect($valArray['calleraction'] ?? 'new', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
         }
     }
@@ -1179,21 +1210,26 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         if($valArray['newnacherfassung'] == '1' && $teilnehmer->getNacherfassung() == '') {
             $teilnehmer->setBeratungsstatus(99);
-            $this->addFlashMessage("Datensatz NICHT gespeichert. Feld -Nacherfassung- muss angekreuzt sein!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);            
+            $this->addFlashMessage("Datensatz NICHT gespeichert. Feld 'Nacherfassung' muss angekreuzt sein!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);            
         } elseif($this->generalhelper->validateDateYmd($teilnehmer->getErstberatungabgeschlossen()) && !$this->generalhelper->validateDateYmd($teilnehmer->getBeratungdatum())) {
             $teilnehmer->setBeratungsstatus(99);
-            $this->addFlashMessage("Datensatz NICHT gespeichert. -Datum Erstberatung– muss eingetragen sein, wenn -Erstberatung abgeschlossen- ausgefüllt ist.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->addFlashMessage("Datensatz NICHT gespeichert. 'Datum Erstberatung' muss eingetragen sein, wenn 'Erstberatung abgeschlossen' ausgefüllt ist.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
         } elseif($teilnehmer->getNacherfassung() == 1 && (!$this->generalhelper->validateDateYmd($teilnehmer->getBeratungdatum()) || !$this->generalhelper->validateDateYmd($teilnehmer->getErstberatungabgeschlossen()))) {
             $teilnehmer->setBeratungsstatus(99);
             $this->addFlashMessage("Datensatz NICHT gespeichert. Bei Nacherfassungen müssen -Datum Erstberatung– und -Erstberatung abgeschlossen- ausgefüllt sein.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
         } else {
             $teilnehmer->setBeratungsstatus(0);
         }
+        if($teilnehmer->getAnonym() == 1) {
+            $teilnehmer->setBeratungsstatus(2);
+            $teilnehmer->setVerificationDate(new DateTime('now'));
+            $teilnehmer->setVerificationIp($_SERVER['REMOTE_ADDR']);
+        }
         if($teilnehmer->getNacherfassung() == 1) {
             $teilnehmer->setBeratungsstatus(4);
             $teilnehmer->setVerificationDate(new DateTime('now'));
             $teilnehmer->setVerificationIp($_SERVER['REMOTE_ADDR']);
-        }
+        }        
         $teilnehmer->setNiqidberatungsstelle($this->niqbid);
         if($teilnehmer->getBerater() == 0) $teilnehmer->setBerater($this->beraterRepository->findByUid($this->user['uid']));
         $teilnehmer->setCrdate(time());
@@ -1206,6 +1242,22 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         // 07.06.2023 auskommentiert, weil ggf. nicht notwendig: $tfolder = $this->generalhelper->createFolder($teilnehmer, $this->storageRepository->findAll());
         
         $this->redirect('edit', 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'], 'newnacherfassung' => $valArray['newnacherfassung']));
+    }
+    
+    /**
+     * action initedit
+     *
+     * @return void
+     */
+    public function initializeEditAction() {
+        $valArray = $this->request->getArguments();
+        
+        $thistn = $this->teilnehmerRepository->findByUid($valArray['teilnehmer']);
+        $tnanonym = $thistn->getAnonym();
+        $anonymeberatung = $valArray['newanonymeberatung'] ?? '';
+        if($anonymeberatung == '1' || $tnanonym == '1') {
+            $this->addFlashMessage("Bitte beachten: Für anonyme Beratungen ist zur Wahrung des Datenschutzes kein Dokumentenupload möglich!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+        }
     }
     
     /**
@@ -1330,11 +1382,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $erstberatungabgeschlossen = $valArray['teilnehmer']['erstberatungabgeschlossen'] ?? '';
         
         if($beratungdatum != '' && !$this->generalhelper->validateDateYmd($beratungdatum)) {
-            $this->addFlashMessage("FEHLER: Datensatz NICHT gespeichert. -Beratung Datum- ungültige Eingabe. Datum im Format JJJJ-MM-TT eintragen!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->addFlashMessage("FEHLER: Datensatz NICHT gespeichert. 'Beratung Datum' ungültige Eingabe. Datum im Format JJJJ-MM-TT eintragen!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             $this->redirect($valArray['calleraction'] ?? 'edit', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
         }
         if($erstberatungabgeschlossen != '' && !$this->generalhelper->validateDateYmd($erstberatungabgeschlossen)) {
-            $this->addFlashMessage("FEHLER: Datensatz NICHT gespeichert. -Erstberatung abgeschlossen- ungültige Eingabe. Datum im Format JJJJ-MM-TT eintragen!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->addFlashMessage("FEHLER: Datensatz NICHT gespeichert. 'Erstberatung abgeschlossen' ungültige Eingabe. Datum im Format JJJJ-MM-TT eintragen!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             $this->redirect($valArray['calleraction'] ?? 'edit', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
         }
     }
@@ -1358,22 +1410,22 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }        
         $nacherfassung = $valArray['newnacherfassung'] ?? '0';
         if($nacherfassung == '1' && $teilnehmer->getNacherfassung() == '') {
-            $this->addFlashMessage("Datensatz NICHT gespeichert. Feld -Nacherfassung- muss angekreuzt sein!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->addFlashMessage("Datensatz NICHT gespeichert. Feld 'Nacherfassung' muss angekreuzt sein!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             $this->redirect('edit', 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
         }
         
         if($teilnehmer->getNacherfassung() == 1 && (!$this->generalhelper->validateDateYmd($teilnehmer->getBeratungdatum()) || !$this->generalhelper->validateDateYmd($teilnehmer->getErstberatungabgeschlossen()))) {
-            $this->addFlashMessage("Datensatz NICHT gespeichert. Bei Nacherfassungen müssen -Datum Erstberatung– und -Erstberatung abgeschlossen- ausgefüllt sein.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->addFlashMessage("Datensatz NICHT gespeichert. Bei Nacherfassungen müssen 'Datum Erstberatung' und 'Erstberatung abgeschlossen' ausgefüllt sein.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             $this->redirect('edit', 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
         }
         
         if($teilnehmer->getNacherfassung() != 1 && $teilnehmer->getVerificationDate() == 0 && ($this->generalhelper->validateDateYmd($teilnehmer->getErstberatungabgeschlossen()) || $this->generalhelper->validateDateYmd($teilnehmer->getBeratungdatum()))) {
-            $this->addFlashMessage("Datensatz NICHT gespeichert. Vor Eintragung von -Datum Erstberatung- oder -Erstberatung abgeschlossen- muss die Anmeldung bestätigt werden!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->addFlashMessage("Datensatz NICHT gespeichert. Vor Eintragung von 'Datum Erstberatung' oder 'Erstberatung abgeschlossen' muss die Anmeldung bestätigt werden!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             $this->redirect('edit', 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
         }
         
         if($this->generalhelper->validateDateYmd($teilnehmer->getErstberatungabgeschlossen()) && !$this->generalhelper->validateDateYmd($teilnehmer->getBeratungdatum())) {
-            $this->addFlashMessage("Datensatz NICHT gespeichert. -Datum Erstberatung– muss eingetragen sein, wenn -Erstberatung abgeschlossen- ausgefüllt ist.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->addFlashMessage("Datensatz NICHT gespeichert. 'Datum Erstberatung' muss eingetragen sein, wenn 'Erstberatung abgeschlossen' ausgefüllt ist.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             $this->redirect($valArray['calleraction'] ?? 'edit', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
         }
 

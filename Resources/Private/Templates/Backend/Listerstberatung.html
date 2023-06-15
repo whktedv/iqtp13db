@@ -24,7 +24,8 @@
 <f:flashMessages />
 
 <h1>Liste Erstberatung: {anzgesamt} Einträge <f:if condition="{filteron}"><f:then><span style="color: red;">(gefiltert)</span></f:then></f:if></h1>
-	
+<f:link.action id="linkloadoverlay-new" class="linkbuttons buttonnew buttonanonymeberatung" action="new" arguments="{newanonymeberatung: 1, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">Anonyme Beratung</f:link.action>
+
 <div class="toppaginator">
 	<f:render partial="Paginator" arguments="{pagination: pagination, pages: pages, paginator: paginator, action: calleraction, orderby : orderby}" />
 </div>

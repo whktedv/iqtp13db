@@ -509,6 +509,15 @@ return [
                 'eval' => 'int'
             ]
         ],
+        'anonym' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.anonym',
+            'config' => [
+                'type' => 'input',
+                'size' => 4,
+                'eval' => 'int'
+            ]
+        ],
         'verification_code' => [
             'exclude' => true,
             'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.verification_code',

@@ -379,6 +379,13 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $nacherfassung = NULL;
     
     /**
+     * Anonyme Beratung
+     *
+     * @var bool
+     */
+    protected $anonym = NULL;
+    
+    /**
      * verificationCode
      *
      * @var string
@@ -1658,6 +1665,27 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function isNacherfassung() {
         return $this->getNacherfassung();
+    }
+    
+    /**
+     * Returns the anonym
+     *
+     * @return int $anonym
+     */
+    public function getAnonym()
+    {
+        return $this->anonym;
+    }
+    
+    /**
+     * Sets the anonym
+     *
+     * @param int $anonym
+     * @return void
+     */
+    public function setAnonym($anonym)
+    {
+        $this->anonym = $anonym;
     }
     
     /**

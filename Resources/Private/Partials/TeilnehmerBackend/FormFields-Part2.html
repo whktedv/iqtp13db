@@ -1,0 +1,142 @@
+{namespace iqtp13db=Ud\Iqtp13db\ViewHelpers}
+<div class="fframeadminonly"><h2>Erstberatung</h2>
+ <h3>(nicht in Anmeldeformular von Ratsuchendem/r ausfüllbar)</h3>
+		<div class="tp13_formdivwebapp">
+			<label for="anerkennendestellen">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.anerkennendestellen" />
+			</label>
+			<f:form.textarea property="anerkennendestellen" rows="3" cols="100" />
+		</div>		
+		<div class="tp13_formdivwebapp">
+			<label for="datum">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungdatum" />
+				<span class="niqfield" /> 
+			</label>
+				<f:form.textfield class="datumtextfieldberatung" name="teilnehmer[beratungdatum]" value="{teilnehmer.beratungdatum}" />&nbsp;<span class="hintdatumformat">(JJJJ-MM-TT)</span>
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="berater">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.berater" />
+			</label>
+				<f:form.select property="berater" options="{alleberater}" optionLabelField="username" optionValueField="uid" prependOptionLabel="-" prependOptionValue="0" sortByOptionLabel="1" />	
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="beratungsart">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungsart" />
+				<span class="niqfield" />
+			</label>
+			<div class="tp13_formdivwebappmultiradio">			
+				<f:for each="{settings.beratungsart}" as="option" key="key">
+					<f:variable name="varstring">{value -> f:for(each: '{teilnehmer.beratungsart}', as: 'value')}</f:variable>
+					<div class="tp13_formdivwebappradio">
+						<f:if condition="{key} == 1">
+							<f:then>
+								<f:form.checkbox id="chkberatungsartface2face" name="teilnehmer[beratungsart]" checked="{iqtp13db:instring(haystack:'{varstring}',needle:'{key}',then:'TRUE',else:'FALSE')}" multiple="1" value="{key}" />{option}
+							</f:then><f:else>
+								<f:form.checkbox  name="teilnehmer[beratungsart]" checked="{iqtp13db:instring(haystack:'{varstring}',needle:'{key}',then:'TRUE',else:'FALSE')}" multiple="1" value="{key}" />{option}
+							</f:else>
+						</f:if>
+					</div>
+				</f:for>
+			</div>
+		</div>
+		
+		<div class="tp13_formdivwebapp" id="textareaberatungsartfreitext">
+			<label for="beratungsartfreitext">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungsartfreitext" />
+			</label>
+				<f:form.textarea property="beratungsartfreitext" rows="3" cols="100" />
+		</div>
+		<div class="tp13_formdivwebapp" id="textfieldberatungsort">
+			<label for="beratungsort">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungsort" />
+				<span class="niqfield" />
+			</label>
+				<f:form.textfield property="beratungsort" placeholder="{settings.standardberatungort}"/>				
+		</div>
+		<div class="tp13_formdivwebapp" id="textfieldberatungsdauer">
+			<label for="beratungsdauer">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungsdauer" />
+				<span class="niqfield" />
+			</label>
+				<f:form.textfield class="textfieldsmall" property="beratungsdauer" size="5"/>				
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="anerkennungsberatung">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.anerkennungsberatung" />
+				<span class="niqfield" />
+			</label>
+			<div class="tp13_formdivwebappmultiradio">
+				<f:for each="{settings.anerkennungsberatung}" as="option" key="key">
+					<f:variable name="varstring">{value -> f:for(each: '{teilnehmer.anerkennungsberatung}', as: 'value')}</f:variable>
+					<div class="tp13_formdivwebappradio">
+						<f:form.checkbox name="teilnehmer[anerkennungsberatung]" checked="{iqtp13db:instring(haystack:'{varstring}',needle:'{key}',then:'TRUE',else:'FALSE')}" multiple="1" value="{key}" />{option}
+					</div>
+				</f:for>
+			</div>
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="anerkennungsberatungfreitext">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.anerkennungsberatungfreitext" />
+				<span class="niqfield" />
+			</label>
+			<f:form.textarea property="anerkennungsberatungfreitext" rows="2" cols="100" />
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="qualifizierungsberatung">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.qualifizierungsberatung" />
+				<span class="niqfield" />
+			</label>
+			<div class="tp13_formdivwebappmultiradio">
+				<f:for each="{settings.qualifizierungsberatung}" as="option" key="key">
+					<f:variable name="varstring">{value -> f:for(each: '{teilnehmer.qualifizierungsberatung}', as: 'value')}</f:variable>
+					<div class="tp13_formdivwebappradio">
+						<f:form.checkbox name="teilnehmer[qualifizierungsberatung]" checked="{iqtp13db:instring(haystack:'{varstring}',needle:'{key}',then:'TRUE',else:'FALSE')}" multiple="1" value="{key}" />{option}
+					</div>
+				</f:for>
+			</div>				
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="qualifizierungsberatungfreitext">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.qualifizierungsberatungfreitext" />
+				<span class="niqfield" />
+			</label>
+			<f:form.textarea property="qualifizierungsberatungfreitext" rows="3" cols="100" />
+		</div>
+		
+		<div class="tp13_formdivwebapp">
+  			<label for="beratungzu">
+  				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungzu" />
+  			</label>
+  			<div class="tp13_formdivwebappmultiradio">
+  				<f:form.checkbox property="beratungzu" value="1"/>
+  			</div>				
+  		</div>  		
+		<div class="tp13_formdivwebapp">
+  			<label for="anerkennungszuschussbeantragt">
+  				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.anerkennungszuschussbeantragt" />
+  			</label>
+  			<div class="tp13_formdivwebappmultiradio">
+  				<f:form.checkbox property="anerkennungszuschussbeantragt" value="1"/>
+  			</div>				
+  		</div>
+  		<div class="tp13_formdivwebapp">
+  			<label for="kooperationgruppe">
+  				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.kooperationgruppe" />
+  			</label>
+  				<f:form.textfield property="kooperationgruppe" />
+  		</div>	
+  		
+		<div class="tp13_formdivwebapp">
+			<label for="notizen">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungnotizen" />
+			</label>
+			<f:form.textarea property="beratungnotizen" rows="10" cols="100" />
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="erstberatungabgeschlossen">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.erstberatungabgeschlossen" />
+			</label>
+			<f:form.textfield class="datumtextfieldberatung" name="teilnehmer[erstberatungabgeschlossen]" value="{teilnehmer.erstberatungabgeschlossen}" />&nbsp;<span class="hintdatumformat">(JJJJ-MM-TT)</span>
+		</div>		
+</div>

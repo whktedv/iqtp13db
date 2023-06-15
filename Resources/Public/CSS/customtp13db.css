@@ -550,6 +550,13 @@ form.filterform div {
 	color: #026da7;
 }
 
+.ui-dialog-titlebar-close::after {
+	content: '✖';
+	position: absolute;
+	right: 3px;
+	top: -1px;
+}
+
 @media print {
   body {
   	font-size: 0.6em;
