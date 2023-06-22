@@ -18,7 +18,7 @@
 	      <label for="dauerBerufsausbildung">
 	        <f:translate key="tx_iqtp13db_domain_model_abschluss.dauer_berufsausbildung" />
 	       </label>
-	        <f:form.textfield property="dauerBerufsausbildung" /> 
+	        <f:form.textfield property="dauerBerufsausbildung" pattern="\p{Latin}|[0-9]|[[:space:]]|\:|\,|\.|\(|\)|\-|\\|\/|\+|\@|\`|\.|\&" /> 
 	</div>
 	<div class="tp13_formdivwebapp">
 	      <label for="abschlussjahr">
@@ -30,19 +30,19 @@
 	      <label for="ausbildungsinstitution">
 	        <f:translate key="tx_iqtp13db_domain_model_abschluss.ausbildungsinstitution" />
 	       </label>
-	        <f:form.textfield property="ausbildungsinstitution" /> 
+	        <f:form.textfield property="ausbildungsinstitution" pattern="\p{Latin}|[0-9]|[[:space:]]|\:|\,|\.|\(|\)|\-|\\|\/|\+|\@|\`|\.|\&" /> 
 	</div>
 	<div class="tp13_formdivwebapp">
 	      <label for="ausbildungsort">
 	        <f:translate key="tx_iqtp13db_domain_model_abschluss.ausbildungsort" />
 	       </label>
-	        <f:form.textfield property="ausbildungsort" /> 
+	        <f:form.textfield property="ausbildungsort" pattern="\p{Latin}|[0-9]|[[:space:]]|\:|\,|\.|\(|\)|\-|\\|\/|\+|\@|\`|\.|\&" /> 
 	</div>
 	<div class="tp13_formdivwebapp">
 	      <label for="abschluss">
 	        <f:translate key="tx_iqtp13db_domain_model_abschluss.abschluss" />
 	       </label>
-	        <f:form.textfield property="abschluss" /> 
+	        <f:form.textfield property="abschluss" pattern="\p{Latin}|[0-9]|[[:space:]]|\:|\,|\.|\(|\)|\-|\\|\/|\+|\@|\`|\.|\&" /> 
 	</div>
 	<div class="tp13_formdivwebapp" id="divantragstellungerfolgt">
 		<label for="berufserfahrung">
@@ -56,13 +56,13 @@
 	      <label for="deutscherReferenzberuf">
 	        <f:translate key="tx_iqtp13db_domain_model_abschluss.deutscher_referenzberuf" />
 	       </label>
-	        <f:form.textfield property="deutscherReferenzberuf" /> 
+	        <f:form.textfield property="deutscherReferenzberuf" pattern="\p{Latin}|[0-9]|[[:space:]]|\:|\,|\.|\(|\)|\-|\\|\/|\+|\@|\`|\.|\&" /> 
 	</div>
 	<div class="tp13_formdivwebapp">
 	      <label for="wunschberuf">
 	        <f:translate key="tx_iqtp13db_domain_model_abschluss.wunschberuf" />
 	       </label>
-	        <f:form.textfield property="wunschberuf" /> 
+	        <f:form.textfield property="wunschberuf" pattern="\p{Latin}|[0-9]|[[:space:]]|\:|\,|\.|\(|\)|\-|\\|\/|\+|\@|\`|\.|\&" /> 
 	</div>
 	
 	<div class="tp13_formdivwebapp" id="divantragstellungvorher">

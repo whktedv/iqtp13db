@@ -17,7 +17,7 @@
 			<label for="schonberatenvon">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.schonberatenvon" />
 			</label>
-				<f:form.textfield id="txtschonberatenvon" property="schonberatenvon" />
+				<f:form.textfield id="txtschonberatenvon" pattern="\p{Latin}|[0-9]|[[:space:]]|\:|\,|\.|\(|\)|\-|\\|\/|\+|\@|\`|\.|\&" property="schonberatenvon" />
 		</div>
 </div>
 <div class="fframe"><h2><f:translate key="persdaten" /></h2>
@@ -25,13 +25,13 @@
 			<label for="nachname">
 				<span id="infolab" title="<f:translate key='infoNachname' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" />
 			</label>
-				<f:form.textfield  property="nachname" />
+				<f:form.textfield property="nachname" pattern="\p{Latin}|[0-9]|[[:space:]]|\:|\,|\.|\(|\)|\-|\\|\/|\+|\@|\`|\.|\&" />
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="vorname">
 				<span id="infolab" title="<f:translate key='infoVorname' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" />
 			</label>
-				<f:form.textfield  property="vorname" />
+				<f:form.textfield property="vorname" pattern="\p{Latin}|[0-9]|[[:space:]]|\:|\,|\.|\(|\)|\-|\\|\/|\+|\@|\`|\.|\&" />
 		</div>		
 		<div class="tp13_formdivwebapp">
 			<label for="plz">
@@ -40,18 +40,18 @@
 				<f:if condition="{plz}"><f:then>
 						<f:form.hidden name="tnseite1[plz]" value="{plz}" />
 						<span class="plzprefilled">{plz}</span>
-						<f:form.textfield class="orttextfield" property="ort" placeholder="<f:translate key='tx_iqtp13db_domain_model_teilnehmer.ort'/>"/>
+						<f:form.textfield class="orttextfield" property="ort" pattern="\p{Latin}|[0-9]|[[:space:]]|\:|\,|\.|\(|\)|\-|\\|\/|\+|\@|\`|\.|\&" placeholder="<f:translate key='tx_iqtp13db_domain_model_teilnehmer.ort'/>"/>
 					</f:then>
 					<f:else>
 						<f:if condition="{direkt} == '1'">
 							<f:then>
-								<f:form.textfield class="plztextfield" property="plz" placeholder=""/>
+								<f:form.textfield class="plztextfield" property="plz" pattern="\p{Latin}|[0-9]|[[:space:]]|\:|\,|\.|\(|\)|\-|\\|\/|\+|\@|\`|\.|\&" placeholder=""/>
 							</f:then>
 							<f:else>
 								<f:form.textfield class="plztextfield" pattern="[0-9][0-9][0-9][0-9][0-9]" property="plz" placeholder="00000"/>
 							</f:else>
 						</f:if>
-						<f:form.textfield class="orttextfield" property="ort" placeholder="<f:translate key='tx_iqtp13db_domain_model_teilnehmer.ort'/>"/>											
+						<f:form.textfield class="orttextfield" property="ort" pattern="\p{Latin}|[0-9]|[[:space:]]|\:|\,|\.|\(|\)|\-|\\|\/|\+|\@|\`|\.|\&" placeholder="<f:translate key='tx_iqtp13db_domain_model_teilnehmer.ort'/>"/>											
 					</f:else>
 				</f:if>
 		</div>
@@ -85,7 +85,7 @@
 			<label for="telefon">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.telefon" />
 			</label>
-				<f:form.textfield  property="telefon" />
+				<f:form.textfield property="telefon" />
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="lebensalter">
@@ -160,10 +160,7 @@
 						<f:form.select id="inputwohnsitzNeinIn" property="wohnsitzNeinIn" options="{wohnsitzstaaten}" optionValueField="value" optionLabelField="value" />
 				</div>
 			</f:else>
-		</f:if>
-	
-		
-		
+		</f:if>		
 		
 		<div class="tp13_formdivwebapp" >
 			<label for="aufenthaltsstatus" class="tp13_options">

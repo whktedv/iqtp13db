@@ -100,7 +100,7 @@
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.notizen" />
 		</label>
 		<div class="tp13_formdivwebappnotizen">
-			<f:form.textarea property="notizen" rows="10" cols="100" />
+			<f:form.textarea property="notizen" pattern="\p{Latin}|[0-9]|[[:space:]]|\:|\,|\.|\(|\)|\-|\\|\/|\+|\@|\`|\.|\&" rows="10" cols="100" />
 		</div>
 		<div class="frameeinwilligung">
 			<f:form.checkbox id="ein1" property="einwilligunginfo" value="1" />

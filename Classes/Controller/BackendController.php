@@ -1038,16 +1038,20 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
     }
     
-    /**
+     /**
      * action initshow
      *
      * @return void
      */
     public function initializeShowAction() {
         $valArray = $this->request->getArguments();
-        $thistn = $this->teilnehmerRepository->findByUid($valArray['teilnehmer']);
-        if($thistn->getPlz() == '') $thistn->setPlz('0');
         
+        if(is_string($valArray['teilnehmer'])) $tnuid = $valArray['teilnehmer'];
+        else  $tnuid = $valArray['teilnehmer']->getUid();
+        
+        $thistn = $this->teilnehmerRepository->findByUid($tnuid);       
+        if($thistn->getPlz() == '') $thistn->setPlz('0');
+                
         $tnanonym = $thistn->getAnonym();
         $anonymeberatung = $valArray['newanonymeberatung'] ?? '';
         if($anonymeberatung == '1' || $tnanonym == '1') {
@@ -1070,6 +1074,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $dokumente = $this->dokumentRepository->findByTeilnehmer($teilnehmer);
         $dokumentpfad = $this->generalhelper->sanitizeFileFolderName($teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid(). '/');
         
+        $backenduser = $this->beraterRepository->findByUid($this->user['uid']);
         $this->view->assignMultiple(
             [
                 'dokumente' => $dokumente,
@@ -1081,7 +1086,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'teilnehmer' => $teilnehmer,
                 'abschluesse' => $abschluesse,
                 'showabschluesse' => $valArray['showabschluesse'] ?? '0',
-                'showdokumente' => $valArray['showdokumente'] ?? '0'
+                'showdokumente' => $valArray['showdokumente'] ?? '0',
+                'niqbid' => $backenduser->getUsergroup()[0]->getNiqbid()
             ]
             );
     }
@@ -1153,6 +1159,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $alleberatungsstellen = $this->userGroupRepository->findAllBeratungsstellen($this->settings['beraterstoragepid']);
                 
+        $backenduser = $this->beraterRepository->findByUid($this->user['uid']);
         $this->view->assignMultiple(
             [
                 'alleberatungsstellen' => $alleberatungsstellen,
@@ -1169,7 +1176,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'jahre' => $jahre,
                 'urleinwilligung' => $urleinwilligung,
                 'newnacherfassung' => $valArray['newnacherfassung'] ?? '0',
-                'newanonymeberatung' => $valArray['newanonymeberatung'] ?? '0'
+                'newanonymeberatung' => $valArray['newanonymeberatung'] ?? '0',
+                'niqbid' => $backenduser->getUsergroup()[0]->getNiqbid()
             ]
             );
     }
@@ -1342,7 +1350,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         if($teilnehmer->getNacherfassung() == 1) {
             $nacherfassung = 1;
         }
-         
+        
+        $backenduser = $this->beraterRepository->findByUid($this->user['uid']);
         $this->view->assignMultiple(
             [
                 'alleberatungsstellen' => $alleberatungsstellen,
@@ -1365,7 +1374,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'edituserfield' => $edituserfield ?? '0',
                 'edittstampfield' => $edittstampfield ?? '0',
                 'urleinwilligung' => $urleinwilligung,
-                'newnacherfassung' => $nacherfassung
+                'newnacherfassung' => $nacherfassung,
+                'niqbid' => $backenduser->getUsergroup()[0]->getNiqbid()
             ]
             );
     }

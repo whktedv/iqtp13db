@@ -9,7 +9,7 @@
 <div class="filterframe">
 	<h1>Filter</h1>
 	<f:form class="filterform" method="post" controller="Backend" action="listangemeldet" name="listangemeldet" >
-		<f:security.ifHasRole role="2"><div>UID:<f:form.textfield size="3" value="{filteruid}" name="uid" /></div></f:security.ifHasRole>
+			<div>UID:<f:form.textfield size="3" value="{filteruid}" name="uid" /></div>
 			<div>Name: <f:form.textfield size="20" value="{filtername}" name="name" /></div>
 			<div>Ort/PLZ: <f:form.textfield size="10" value="{filterort}" name="ort" /></div>
 			<div>Beruf: <f:form.textfield size="20" value="{filterberuf}" name="beruf" /></div>

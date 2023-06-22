@@ -77,41 +77,21 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         } else {
             $hidden = " AND t.hidden = 0 ";
         }
-        
-        // Hier Ausnahme Frau Hollands/AA Ddorf
-        if(substr($thisusergroup->getTitle(),0,2) == 'AA'){
-            $sql = "SELECT t.* FROM tx_iqtp13db_domain_model_teilnehmer t
-    			LEFT JOIN tx_iqtp13db_domain_model_abschluss a ON a.teilnehmer = t.uid
-                WHERE (t.nachname LIKE '%$name%' OR t.vorname LIKE '%$name%')
-                AND (t.ort LIKE '%$ort%' OR t.plz LIKE '%$ort%')
-                AND t.geburtsland LIKE '$land'
-                $berater
-                AND $beruf
-                AND t.kooperationgruppe LIKE '%$gruppe%'
-                $bescheid
-                AND $sqlberatungsstatus $hidden
-                AND niqidberatungsstelle LIKE $niqbid
-                AND (verification_date > '1672527600' OR verification_date = '0')
-                AND t.uid like '$uid' 
-                GROUP BY t.uid ORDER BY $orderby $order";                
-        } else {
-            $sql = "SELECT t.* FROM tx_iqtp13db_domain_model_teilnehmer t
-    			LEFT JOIN tx_iqtp13db_domain_model_abschluss a ON a.teilnehmer = t.uid
-                WHERE (t.nachname LIKE '%$name%' OR t.vorname LIKE '%$name%')
-                AND (t.ort LIKE '%$ort%' OR t.plz LIKE '%$ort%')
-                AND t.geburtsland LIKE '$land'
-                $berater
-                AND $beruf
-                AND t.kooperationgruppe LIKE '%$gruppe%'
-                $bescheid
-                AND $sqlberatungsstatus $hidden
-                AND niqidberatungsstelle LIKE $niqbid
-                AND t.uid like '$uid' 
-                GROUP BY t.uid ORDER BY $orderby $order";
-                
-        }
-        //DebuggerUtility::var_dump($sql);
-        
+       
+        $sql = "SELECT t.* FROM tx_iqtp13db_domain_model_teilnehmer t
+			LEFT JOIN tx_iqtp13db_domain_model_abschluss a ON a.teilnehmer = t.uid
+            WHERE (t.nachname LIKE '%$name%' OR t.vorname LIKE '%$name%')
+            AND (t.ort LIKE '%$ort%' OR t.plz LIKE '%$ort%')
+            AND t.geburtsland LIKE '$land'
+            $berater
+            AND $beruf
+            AND t.kooperationgruppe LIKE '%$gruppe%'
+            $bescheid
+            AND $sqlberatungsstatus $hidden
+            AND niqidberatungsstelle LIKE $niqbid
+            AND t.uid like '$uid' 
+            GROUP BY t.uid ORDER BY $orderby $order";
+                        
         $query->statement($sql);
         return $query->execute();
     }
@@ -138,28 +118,13 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             );
         }
         elseif($beratungsstatus == 2 || $beratungsstatus == 3) {
-            // Hier Ausnahme Frau Hollands/AA Ddorf
-            if(substr($thisusergroup->getTitle(),0,2) == 'AA'){
-                $query->matching(
-                    $query->logicalAnd(
-                        $query->logicalOr($query->like('beratungsstatus', '2'),$query->like('beratungsstatus', '3')),
-                        $query->greaterThan('verification_date', '0'), 
-                        $query->like('niqidberatungsstelle', $niqbid),
-                        $query->logicalOr(
-                            $query->logicalOr($query->greaterThan('verification_date', '1672527600'), $query->equals('verification_date', '0')),
-                            $query->in('berater', $berateruidarray)
-                        )
-                    )
-                );
-            } else {
-                $query->matching(
-                    $query->logicalAnd(
-                        $query->logicalOr($query->like('beratungsstatus', '2'),$query->like('beratungsstatus', '3')),
-                        $query->greaterThan('verification_date', '0'), 
-                        $query->like('niqidberatungsstelle', $niqbid),                        
-                    )
-                );
-            }
+            $query->matching(
+                $query->logicalAnd(
+                    $query->logicalOr($query->like('beratungsstatus', '2'),$query->like('beratungsstatus', '3')),
+                    $query->greaterThan('verification_date', '0'), 
+                    $query->like('niqidberatungsstelle', $niqbid),                        
+                )
+            );
         }
         else {
             $query->matching(

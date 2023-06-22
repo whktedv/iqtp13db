@@ -250,3 +250,9 @@ CREATE TABLE fe_groups (
 CREATE TABLE fe_users (
     company varchar(255) DEFAULT '' NOT NULL
 );
+
+CREATE TABLE tx_iqtp13db_domain_model_berufe (
+    uid int(11) NOT NULL,
+    titel varchar(255) DEFAULT '' NOT NULL,
+    PRIMARY KEY (uid)
+);
