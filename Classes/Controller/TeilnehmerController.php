@@ -297,16 +297,13 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         }
         $zugewieseneberatungsstelle = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $bstid);
         $zugewieseneberatungsstelle = $zugewieseneberatungsstelle[0];
-        
-        $nichtiq = $zugewieseneberatungsstelle != NULL ? $zugewieseneberatungsstelle->getNichtiq() : 0;  
-        if($nichtiq  == 1 && $zugewieseneberatungsstelle->getEinwilligungserklaerungsseite() != '') {
-            $uriBuilder = $this->controllerContext->getUriBuilder();
-            $uriBuilder->reset();
+                
+        if($zugewieseneberatungsstelle->getEinwilligungserklaerungsseite() != 0) {
             $uriBuilder->setTargetPageUid($zugewieseneberatungsstelle->getEinwilligungserklaerungsseite());
-            $urleinwilligung = $uriBuilder->build();                
         } else {
-            $urleinwilligung = $this->settings['datenschutzeinwilligungurl'];
+            $uriBuilder->setTargetPageUid($this->settings['datenschutzeinwilligungurluid']);
         }
+        $urleinwilligung = $uriBuilder->build();
         
         $this->view->assignMultiple(
             [

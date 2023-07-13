@@ -65,7 +65,7 @@
 
 			<trans-unit id="ja"><target>Ja</target></trans-unit>
 			<trans-unit id="nein"><target>Nein</target></trans-unit>
-			<trans-unit id="ka"><target>k.A.</target></trans-unit>
+			<trans-unit id="ka"><target>keine Angabe</target></trans-unit>
 			<trans-unit id="maennlich"><target>männlich</target></trans-unit>
 			<trans-unit id="weiblich"><target>weiblich</target></trans-unit>
 			<trans-unit id="divers"><target>divers</target></trans-unit>

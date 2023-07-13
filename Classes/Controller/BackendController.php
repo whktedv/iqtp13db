@@ -744,6 +744,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $filtervon = isset($valArray['filtervon']) ? $valArray['filtervon'] : '01.01.1970';
         $filterbis = isset($valArray['filtervon']) ? $valArray['filterbis'] : '31.12.2099';
         
+        $bundeslandselected = $valArray['bundeslandauswahl'] ?? '%';
+        $allebundeslaender = $this->userGroupRepository->findAllBundeslaender();
+        
         $arrjanein = array(0 => '', 1 => 'ja', 2 => 'nein', 3 => 'keine Angabe');
         $arrerwerbsstatus = $this->settings['erwerbsstatus'];
         $arrleistungsbezug = $this->settings['leistungsbezug'];
@@ -766,13 +769,13 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         if($fberatungsstatus == 1 || $fberatungsstatus == NULL) {
             $teilnehmers = array();
         } elseif($fberatungsstatus == 13) {
-            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer(4, 0, $filtervon, $filterbis, $this->niqbid);
+            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer(4, 0, $filtervon, $filterbis, $this->niqbid, $bundeslandselected);
         } elseif($fberatungsstatus == 12) {
-            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer(2, 0, $filtervon, $filterbis, $this->niqbid);
+            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer(2, 0, $filtervon, $filterbis, $this->niqbid, $bundeslandselected);
         } elseif($fberatungsstatus == 11) {
-            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer(1, 0, $filtervon, $filterbis, $this->niqbid);
+            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer(1, 0, $filtervon, $filterbis, $this->niqbid, $bundeslandselected);
         } else {
-            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer(0, 1, $filtervon, $filterbis, $this->niqbid);
+            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer(0, 1, $filtervon, $filterbis, $this->niqbid, $bundeslandselected);
         }
         
         foreach ($teilnehmers as $akey => $atn) {
@@ -1032,7 +1035,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     'filtervon' => $filtervon,
                     'filterbis' => $filterbis,
                     'beratungsstelle' => $this->usergroup->getTitle(),
-                    'niqbid' => $this->niqbid
+                    'niqbid' => $this->niqbid,
+                    'allebundeslaender' => $allebundeslaender,
+                    'bundeslandselected' => $bundeslandselected
                 ]
                 );
         }
@@ -1148,14 +1153,15 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $jahre[$jahr] = (String)$jahr;
         }
      
-        if($group->getNichtiq() == 1 && $group->getEinwilligungserklaerungsseite() != '') {
-            $uriBuilder = $this->controllerContext->getUriBuilder();
-            $uriBuilder->reset();
+        $uriBuilder = $this->controllerContext->getUriBuilder();
+        $uriBuilder->reset();
+        if($group->getEinwilligungserklaerungsseite() != 0) {
             $uriBuilder->setTargetPageUid($group->getEinwilligungserklaerungsseite());
-            $urleinwilligung = $uriBuilder->build();
         } else {
-            $urleinwilligung = $this->settings['datenschutzeinwilligungurl'];
+            $uriBuilder->setTargetPageUid($this->settings['datenschutzeinwilligungurluid']);
         }
+        
+        $urleinwilligung = $uriBuilder->build();
         
         $alleberatungsstellen = $this->userGroupRepository->findAllBeratungsstellen($this->settings['beraterstoragepid']);
                 
@@ -1260,9 +1266,13 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function initializeEditAction() {
         $valArray = $this->request->getArguments();
         
-        $thistn = $this->teilnehmerRepository->findByUid($valArray['teilnehmer']);
+        if(is_string($valArray['teilnehmer'])) $tnuid = $valArray['teilnehmer'];
+        else $tnuid = $valArray['teilnehmer']->getUid();
+        
+        $thistn = $this->teilnehmerRepository->findByUid($tnuid);
         $tnanonym = $thistn->getAnonym();
         $anonymeberatung = $valArray['newanonymeberatung'] ?? '';
+        
         if($anonymeberatung == '1' || $tnanonym == '1') {
             $this->addFlashMessage("Bitte beachten: Für anonyme Beratungen ist zur Wahrung des Datenschutzes kein Dokumentenupload möglich!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
         }
@@ -1337,7 +1347,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $alleberatungsstellen = $this->userGroupRepository->findAllBeratungsstellen($this->settings['beraterstoragepid']);
         
-        if($group->getNichtiq() == 1 && $group->getEinwilligungserklaerungsseite() != '') {
+        if($group->getEinwilligungserklaerungsseite() != '') {
             $uriBuilder = $this->controllerContext->getUriBuilder();
             $uriBuilder->reset();
             $uriBuilder->setTargetPageUid($group->getEinwilligungserklaerungsseite());
@@ -1375,7 +1385,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'edittstampfield' => $edittstampfield ?? '0',
                 'urleinwilligung' => $urleinwilligung,
                 'newnacherfassung' => $nacherfassung,
-                'niqbid' => $backenduser->getUsergroup()[0]->getNiqbid()
+                'niqbid' => $teilnehmer->getNiqidberatungsstelle()
             ]
             );
     }

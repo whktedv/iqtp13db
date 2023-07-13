@@ -460,13 +460,15 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         }
     }
 
-    /**
+     /**
      *
      */
-    public function search4exportTeilnehmer($type, $verstecktundgelöscht, $filtervon, $filterbis, $niqbid)
+    public function search4exportTeilnehmer($type, $verstecktundgelöscht, $filtervon, $filterbis, $niqbid, $bundesland)
     {
         $orderby = 'verification_date';
         
+        if($bundesland != '%') $niqbid = "%"; 
+            
         if($type == 0) {
             $sqlberatungsstatus = " beratungsstatus >= 0 ";
             $filternach = "FROM_UNIXTIME(verification_date)";
@@ -495,11 +497,13 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 
         $sql = "SELECT t.* FROM tx_iqtp13db_domain_model_teilnehmer t
     			LEFT JOIN tx_iqtp13db_domain_model_abschluss a ON a.teilnehmer = t.uid
+                LEFT JOIN fe_groups as b on t.niqidberatungsstelle = b.niqbid
                 WHERE
                 DATEDIFF(STR_TO_DATE('$filtervon', '%d.%m.%Y'),$filternach) <= 0 AND
 				DATEDIFF(STR_TO_DATE('$filterbis', '%d.%m.%Y'),$filternach) >= 0
                 AND $sqlberatungsstatus $hidden
-                AND niqidberatungsstelle LIKE $niqbid
+                AND niqidberatungsstelle LIKE '$niqbid' 
+                AND b.bundesland LIKE '$bundesland'
                 GROUP BY t.uid ORDER BY $orderby ASC";
          
         $query->statement($sql);
