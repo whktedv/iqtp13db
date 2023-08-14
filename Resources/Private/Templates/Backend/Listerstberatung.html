@@ -12,7 +12,7 @@
 			<div>Name: <f:form.textfield size="20" value="{filtername}" name="name" /></div>
 			<div>Ort/PLZ: <f:form.textfield size="20" value="{filterort}" name="ort" /></div>
 			<div>Beruf: <f:form.textfield size="20" value="{filterberuf}" name="beruf" /></div>
-			<div>Geburtsland: <f:form.select value="{filterland}" name="land" options="{wohnsitzstaaten}" optionValueField="value" optionLabelField="value" /></div>
+			<div>Geburtsland: <f:form.select value="{filterland}" name="land" options="{staatenarr}" optionValueField="berufid" optionLabelField="titel" /></div>
 			<div>Berater*in: <f:form.select value="{filterberater}" name="berater" options="{alleberater}" optionValueField="uid" optionLabelField="username" prependOptionLabel="-" prependOptionValue="0" sortByOptionLabel="1"/></div>
 			<div>Gruppe: <f:form.textfield size="20" value="{filtergruppe}" name="gruppe" /></div>
 			<div>Bescheid: <f:form.checkbox value="1" name="bescheid" checked="{filterbescheid} == 1" /></div>
@@ -72,13 +72,13 @@
 			</td>
 			<td>
 				<f:for each="{abschluesse.{it.index}}" as="abschluss" iteration="iter">
-					<f:for each="{settings.berufe}" as="beruf" key="key">
-						<f:if condition="{key} == {abschluss.referenzberufzugewiesen}"><f:then>
+					<f:for each="{berufe}" as="beruf">
+						<f:if condition="{beruf.berufid} == {abschluss.referenzberufzugewiesen}"><f:then>
 							{f:if(condition: '{abschluesse.{it.index} -> f:count()} > 1', then: '{iter.index + 1}.', else: '')} 
 							
 							{f:if(condition: '{abschluss.referenzberufzugewiesen} == "-3"', then: '{abschluss.sonstigerberuf}')}
 							{f:if(condition: '{abschluss.referenzberufzugewiesen} == "-4"', then: '{abschluss.nregberuf}')}
-							{f:if(condition: '{abschluss.referenzberufzugewiesen} > -3', then: '{beruf}')}
+							{f:if(condition: '{abschluss.referenzberufzugewiesen} > -3', then: '{beruf.titel}')}
 							<br>
 						</f:then></f:if>
 					</f:for>						

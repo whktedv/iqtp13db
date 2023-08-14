@@ -20,8 +20,8 @@
 			<label for="erwerbsland">
 				<f:translate key="tx_iqtp13db_domain_model_abschluss.erwerbsland" />
 			</label>
-			<f:for each="{settings.staaten}" as="text" key="wert">
-				{f:if(condition: '{abschluss.erwerbsland} == {wert}', then: '<span class="propdat">{text}</span>')}
+			<f:for each="{staaten}" as="staat">
+				{f:if(condition: '{abschluss.erwerbsland} == {staat.staatid}', then: '<span class="propdat">{staat.titel}</span>')}
 			</f:for>		    
 		</div>
 		<div class="tp13_formdivwebapp">

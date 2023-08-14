@@ -3,14 +3,14 @@
 <f:section name="main">
 <h1>{teilnehmer.nachname}, {teilnehmer.vorname}</h1>
  
-<f:render partial="TeilnehmerBackend/Properties" arguments="{teilnehmer:teilnehmer}" />
+<f:render partial="TeilnehmerBackend/Properties" arguments="{teilnehmer:teilnehmer, berufe:berufe, staaten:staaten}" />
 
 <h2>Abschlüsse</h2>
 <f:if condition="{abschluesse -> f:count()} > 0">
 <f:then>			
 	<f:for each="{abschluesse}" as="sabschluss">
 		<div class="fframe"><h2>Daten Abschluss/Beruf <i>{sabschluss.deutscherReferenzberuf}</i></h2>
-			<f:render partial="Abschluss/Properties" arguments="{abschluss:sabschluss}" />
+			<f:render partial="Abschluss/Properties" arguments="{abschluss:sabschluss, berufe:berufe, staaten:staaten}" />
 		</div>
 	</f:for>
 </f:then>

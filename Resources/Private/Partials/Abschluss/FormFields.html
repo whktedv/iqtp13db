@@ -17,7 +17,7 @@
 	        <f:translate key="tx_iqtp13db_domain_model_abschluss.erwerbsland" />
 	        <span class="niqfield" />
 	       </label>
-	       <f:form.select property="erwerbsland" value="{abschluss.erwerbsland}" options="{settings.staaten}" optionValueField="key" optionLabelField="value" />	       
+	       <f:form.select property="erwerbsland" value="{abschluss.erwerbsland}" options="{staatenarr}" optionValueField="key" optionLabelField="value" />	       
 	</div>
 	<div class="tp13_formdivwebapp">
 	      <label for="dauerBerufsausbildung">
@@ -68,7 +68,7 @@
 	        <f:translate key="tx_iqtp13db_domain_model_abschluss.referenzberufzugewiesen" />
 	        <span class="niqfield" />
 	       </label>
-	       <f:form.select id="selectreferenzberuf" property="referenzberufzugewiesen" value="{abschluss.referenzberufzugewiesen}" options="{settings.berufe}" optionValueField="key" optionLabelField="value" />	       
+	       <f:form.select id="selectreferenzberuf" property="referenzberufzugewiesen" value="{abschluss.referenzberufzugewiesen}" options="{berufearr}" optionValueField="key" optionLabelField="value" />	       
 	</div>
 	
 	<div id="divsonstigerberuf" class="tp13_formdivwebapp">
@@ -115,7 +115,7 @@
 			<f:form.select property="antragstellungzabvorher" value="{abschluss.antragstellungzabvorher}" options="{settings.ergebniszab}" optionValueField="key" optionLabelField="value" />	
 	</div>
 	
-	<div class="fframeadminonly"><h2>Anerkennungsverfahren zu "{settings.berufe.{abschluss.referenzberufzugewiesen}}"</h2>
+	<div class="fframeadminonly"><h2>Anerkennungsverfahren</h2>
 <h3>während oder nach der Beratung<br>(nicht in Anmeldeformular von Ratsuchendem/r ausfüllbar)</h3>
 	<div class="tp13_formdivwebapp" id="divantragstellungerfolgt">
 			<label for="antragstellungerfolgt">

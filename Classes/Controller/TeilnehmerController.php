@@ -2,6 +2,7 @@
 namespace Ud\Iqtp13db\Controller;
 use \Datetime;
 use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
@@ -15,6 +16,7 @@ use Ud\Iqtp13db\Domain\Repository\DokumentRepository;
 use Ud\Iqtp13db\Domain\Repository\BeraterRepository;
 use Ud\Iqtp13db\Domain\Repository\AbschlussRepository;
 use TYPO3\CMS\Core\Resource\StorageRepository;
+use Ud\Iqtp13db\Domain\Repository\StaatenRepository;
 
 /***
  *
@@ -40,8 +42,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     protected $beraterRepository;
     protected $abschlussRepository;
     protected $storageRepository;
+    protected $staatenRepository;
     
-    public function __construct(UserGroupRepository $userGroupRepository, TeilnehmerRepository $teilnehmerRepository, DokumentRepository $dokumentRepository, BeraterRepository $beraterRepository, AbschlussRepository $abschlussRepository, StorageRepository $storageRepository)
+    public function __construct(UserGroupRepository $userGroupRepository, TeilnehmerRepository $teilnehmerRepository, DokumentRepository $dokumentRepository, BeraterRepository $beraterRepository, AbschlussRepository $abschlussRepository, StorageRepository $storageRepository, StaatenRepository $staatenRepository)
     {
         $this->userGroupRepository = $userGroupRepository;
         $this->teilnehmerRepository = $teilnehmerRepository;
@@ -49,6 +52,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $this->beraterRepository = $beraterRepository;
         $this->abschlussRepository = $abschlussRepository;
         $this->storageRepository = $storageRepository;
+        $this->staatenRepository = $staatenRepository;
     }
     
     /**
@@ -272,9 +276,18 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $this->redirect('startseite', 'Teilnehmer', 'Iqtp13db', null);
         }
         
-        $staatsangehoerigkeitstaaten = $this->settings['staaten'];
-        $wohnsitzstaaten = $this->settings['staaten'];
-        unset($wohnsitzstaaten[201]);
+        $context = GeneralUtility::makeInstance(Context::class);
+        $site = $GLOBALS['TYPO3_REQUEST']->getAttribute('site');
+        $langId = $context->getPropertyFromAspect('language', 'id');
+        $language = $site->getLanguageById($langId);
+        $langCode = $language->getTwoLetterIsoCode();
+        
+        $staaten = $this->staatenRepository->findByLangisocode($langCode);
+        if(count($staaten) == 0) $staaten = $this->staatenRepository->findByLangisocode('en');
+        
+        foreach($staaten as $staat) {
+            $staatenarr[$staat->getStaatid()] = $staat->getTitel();
+        }
         
         $altervonbis[-1000] = '-';
         $altervonbis[-1] = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('ka', 'iqtp13db');
@@ -297,7 +310,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         }
         $zugewieseneberatungsstelle = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $bstid);
         $zugewieseneberatungsstelle = $zugewieseneberatungsstelle[0];
-                
+        
+        $uriBuilder = $this->controllerContext->getUriBuilder();
+        $uriBuilder->reset();
         if($zugewieseneberatungsstelle->getEinwilligungserklaerungsseite() != 0) {
             $uriBuilder->setTargetPageUid($zugewieseneberatungsstelle->getEinwilligungserklaerungsseite());
         } else {
@@ -308,8 +323,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $this->view->assignMultiple(
             [
                 'altervonbis' => $altervonbis,
-                'staatsangehoerigkeitstaaten' => $staatsangehoerigkeitstaaten,
-                'wohnsitzstaaten' => $wohnsitzstaaten,
+                'staatenarr' => $staatenarr,
                 'tnseite1' => $tnseite1,
                 'settings' => $this->settings,
                 'beratungsstelle' => $bstid,
@@ -557,6 +571,16 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $abschluesse = new \Ud\Iqtp13db\Domain\Model\Abschluss();
             $abschluesse = $this->abschlussRepository->findByTeilnehmer($teilnehmer);
             
+            $context = GeneralUtility::makeInstance(Context::class);
+            $site = $GLOBALS['TYPO3_REQUEST']->getAttribute('site');
+            $langId = $context->getPropertyFromAspect('language', 'id');
+            $language = $site->getLanguageById($langId);
+            $langCode = $language->getTwoLetterIsoCode();
+            
+            $staaten = $this->staatenRepository->findByLangisocode($langCode);
+            if(count($staaten) == 0) $staaten = $this->staatenRepository->findByLangisocode('en');
+            unset($staaten[200]);
+            
             $this->view->assignMultiple(
                 [
                     'settings' => $this->settings,
@@ -564,7 +588,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     'heute' => time(),
                     'teilnehmer' => $teilnehmer,
                     'dokumente' => $dokumente,
-                    'foldersize' =>  100-(intval(($foldersize/30000)*100))
+                    'foldersize' =>  100-(intval(($foldersize/30000)*100)),
+                    'staaten' => $staaten
                 ]
                 );
         } else {

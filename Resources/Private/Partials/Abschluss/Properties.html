@@ -22,8 +22,8 @@
 				<f:translate key="tx_iqtp13db_domain_model_abschluss.erwerbsland" />
 				<span class="niqfield" />
 			</label>
-			<f:for each="{settings.staaten}" as="text" key="wert">
-				{f:if(condition: '{abschluss.erwerbsland} == {wert}', then: '<span class="propdat">{text}</span>')}
+			<f:for each="{staaten}" as="staat">
+				{f:if(condition: '{abschluss.erwerbsland} == {staat.staatid}', then: '<span class="propdat">{staat.titel}</span>')}
 			</f:for>		    
 		</div>
 		<div class="tp13_formdivwebapp">
@@ -63,8 +63,8 @@
 		<div class="tp13_formdivwebapp">
 	      <label for="referenzberufzugewiesen"><f:translate key="tx_iqtp13db_domain_model_abschluss.referenzberufzugewiesen" />
 	        <span class="niqfield" /></label>
-	        <f:for each="{settings.berufe}" as="text" key="wert">
-					{f:if(condition: '{abschluss.referenzberufzugewiesen} == {wert}', then: '<span class="propdat">{text}&nbsp;</span>')}
+	        <f:for each="{berufe}" as="beruf">
+					{f:if(condition: '{abschluss.referenzberufzugewiesen} == {beruf.berufid}', then: '<span class="propdat">{beruf.titel}&nbsp;</span>')}
 			</f:for>	       		       
 		</div>
 		
@@ -106,7 +106,7 @@
 			</f:for>
 		</div>		
 		<br>
-		<h2>Anerkennungsverfahren zu "{settings.abschlusse.{abschluss.referenzabschlusszugewiesen}}"</h2>
+		<h2>Anerkennungsverfahren</h2>
 		<br>
 		<div class="tp13_formdivwebapp" id="divantragstellungerfolgt">
 				<label for="antragstellungerfolgt">

@@ -13,7 +13,7 @@
 			<div>Name: <f:form.textfield size="20" value="{filtername}" name="name" /></div>
 			<div>Ort/PLZ: <f:form.textfield size="10" value="{filterort}" name="ort" /></div>
 			<div>Beruf: <f:form.textfield size="20" value="{filterberuf}" name="beruf" /></div>
-			<div>Geburtsland: <f:form.select value="{filterland}" name="land" options="{wohnsitzstaaten}" optionValueField="value" optionLabelField="value" /></div>
+			<div>Geburtsland: <f:form.select value="{filterland}" name="land" options="{staatenarr}" optionValueField="value" optionLabelField="value" /></div>
 			<div>Berater*in: <f:form.select value="{filterberater}" name="berater" options="{alleberater}" optionValueField="uid" optionLabelField="username" prependOptionLabel="-" prependOptionValue="0" sortByOptionLabel="1"/></div>
 			<div>Gruppe: <f:form.textfield size="20" value="{filtergruppe}" name="gruppe" /></div>
 			<div>Bescheid: <f:form.checkbox value="1" name="bescheid" checked="{filterbescheid} == 1" /></div>
@@ -77,7 +77,7 @@
 				<td class="tdcenter">{f:if(condition: '{teilnehmer.geschlecht} == 2', then: '<span style="color: #84a0ff;">M</span>')}
 				{f:if(condition: '{teilnehmer.geschlecht} == 1', then: '<span style="color: #fe7a84;">W</span>')}
 				{f:if(condition: '{teilnehmer.geschlecht} == 3', then: '<span>D</span>')}</td>
-				<td>{iqtp13db:isint(field:'{teilnehmer.geburtsland}',then:'{settings.staaten.{teilnehmer.geburtsland}}',else:'{teilnehmer.geburtsland}')}</td>
+				<td>{iqtp13db:isint(field:'{teilnehmer.geburtsland}',then:'{staatenarr.{teilnehmer.geburtsland}}',else:'{teilnehmer.geburtsland}')}</td>
 				<td class="tdcenter">{f:if(condition: '{teilnehmer.leistungsbezugjanein} == 1', then: '<img src="/fileadmin/template/images/iq-webapp_vollstaendig-ok.svg" alt="✓" width="16" height="16"/>', else: '')}</td>
 				<td class="tdcenter">{f:if(condition: '{teilnehmer.schonberaten} == 1', then: '<img src="/fileadmin/template/images/iq-webapp_vollstaendig-ok.svg" alt="✓" width="16" height="16"/>', else: '')}</td>
 				<td><f:if condition="{teilnehmer.berater.username} == ''"><f:then>

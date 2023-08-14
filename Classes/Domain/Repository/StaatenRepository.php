@@ -13,9 +13,9 @@ namespace Ud\Iqtp13db\Domain\Repository;
  ***/
 
 /**
- * The repository for Abschluss
+ * The repository for Staaten
  */
-class AbschlussRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
+class StaatenRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
    
 }

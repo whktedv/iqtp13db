@@ -7,7 +7,7 @@
 				</f:form>
 			</f:then>
 	</f:if>	
-	
+
 	<f:if condition="{abschluesse}"><f:then>
 	<table class="abschluesseliste">
 			<thead>
@@ -40,7 +40,7 @@
 						</td>
 						<td>{abschluss.abschluss}</td>
 						<td>{abschluss.deutscherReferenzberuf}</td>
-						<td>{settings.berufe.{abschluss.referenzberufzugewiesen}}</td>
+						<td><f:for each="{berufe}" as="beruf">{f:if(condition: '{beruf.berufid} == {abschluss.referenzberufzugewiesen}', then:'{beruf.titel}')}</f:for></td>
 						<td>{f:if(condition: '{abschluss.abschlussjahr} == "-1"', then: 'k.A.', else: '{abschluss.abschlussjahr}')}</td>
 						<td>{settings.antragstellungvorher.{abschluss.antragstellungvorher}}</td>
 						<td><f:link.action action="edit" controller="Abschluss" arguments="{abschluss : abschluss, teilnehmer : teilnehmer, calleraction : calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : thisaction}" title="Bearbeiten"><img src="/fileadmin/template/images/iq-webapp_bearbeiten.svg" alt="Bearbeiten" width="30" height="30"/></f:link.action></td>

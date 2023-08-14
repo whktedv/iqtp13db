@@ -77,6 +77,13 @@ class UserGroup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $einwilligungserklaerungsseite = 0;
     
     /**
+     * avadresse
+     *
+     * @var string
+     */
+    protected $avadresse = '';
+    
+    /**
      * initializes this object
      *
      * @param string $title
@@ -298,6 +305,27 @@ class UserGroup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setEinwilligungserklaerungsseite($einwilligungserklaerungsseite)
     {
         $this->einwilligungserklaerungsseite = $einwilligungserklaerungsseite;
+    }
+    
+    /**
+     * Returns the avadresse
+     *
+     * @return string $avadresse
+     */
+    public function getAvadresse()
+    {
+        return $this->avadresse;
+    }
+    
+    /**
+     * Sets the avadresse
+     *
+     * @param string $avadresse
+     * @return void
+     */
+    public function setAvadresse($avadresse)
+    {
+        $this->avadresse = $avadresse;
     }
     
 }

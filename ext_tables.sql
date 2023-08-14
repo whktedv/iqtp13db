@@ -244,15 +244,35 @@ CREATE TABLE fe_groups (
         plzlist text NOT NULL,
         keywordlist text NOT NULL,
         beratungsarten varchar(255) DEFAULT '' NOT NULL,
-        einwilligungserklaerungsseite int(11) DEFAULT '0'
+        einwilligungserklaerungsseite int(11) DEFAULT '0',
+        avadresse text NOT NULL
 );
 
 CREATE TABLE fe_users (
     company varchar(255) DEFAULT '' NOT NULL
 );
 
+
+#
+# Table structure for table 'tx_iqtp13db_domain_model_berufe'
+#
 CREATE TABLE tx_iqtp13db_domain_model_berufe (
     uid int(11) NOT NULL,
+    pid int(11) DEFAULT '0' NOT NULL,
+    berufid varchar(64) DEFAULT '' NOT NULL,
     titel varchar(255) DEFAULT '' NOT NULL,
+    langisocode varchar(2) DEFAULT '' NOT NULL,
+    PRIMARY KEY (uid)
+);
+
+#
+# Table structure for table 'tx_iqtp13db_domain_model_staaten'
+#
+CREATE TABLE tx_iqtp13db_domain_model_staaten (
+    uid int(11) NOT NULL,
+    pid int(11) DEFAULT '0' NOT NULL,
+    staatid varchar(64) DEFAULT '' NOT NULL,
+    titel varchar(255) DEFAULT '' NOT NULL,
+    langisocode varchar(2) DEFAULT '' NOT NULL,
     PRIMARY KEY (uid)
 );

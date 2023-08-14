@@ -50,10 +50,10 @@
 
 <f:flashMessages />
 
-	<f:render partial="TeilnehmerBackend/Properties" arguments="{teilnehmer:teilnehmer, historie : historie}" />
+	<f:render partial="TeilnehmerBackend/Properties" arguments="{teilnehmer:teilnehmer, historie : historie, staaten:staaten}" />
 </div>
 
-<f:render partial="Abschluss/Abschluss4Teilnehmer" arguments="{teilnehmer : teilnehmer, abschluesse: abschluesse, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : 'show'}" />
+<f:render partial="Abschluss/Abschluss4Teilnehmer" arguments="{teilnehmer : teilnehmer, abschluesse: abschluesse, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : 'show', berufe:berufe, staaten:staaten}" />
 
 <f:if condition="{teilnehmer.anonym} != '1'">
 	<f:render partial="Dokument/Dokumente4Teilnehmer" arguments="{teilnehmer : teilnehmer, dokumente: dokumente, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, dokumentpfad : dokumentpfad, thisaction : 'show'}" />

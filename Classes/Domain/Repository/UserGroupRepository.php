@@ -104,5 +104,14 @@ class UserGroupRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $query = $query->execute(true);
         return $query;
     }
+        
+    public function getallplzarray() {
+        $query = $this->createQuery();
+        $query->statement("SELECT niqbid, plzlist FROM fe_groups");
+        $query = $query->execute(true);
+        
+        
+        return $query;
+    }
     
 }

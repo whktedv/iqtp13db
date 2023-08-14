@@ -103,6 +103,16 @@ $fields = array(
             ),
         ),
     ),
+    'avadresse' => array(
+        'exclude' => 1,
+        'label' => 'Adresse in HTML-Code für die Erstellung der AV',
+        'config' => array(
+            'type' => 'text',
+            'cols' => 30,
+            'rows' => 10,
+            'eval' => 'trim'
+        ),
+    ),
     
 );
 
@@ -111,7 +121,7 @@ $fields = array(
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
     'fe_groups',
-    'niqbid, nichtiq, bundesland, generalmail, plzlist, keywordlist, beratungsarten, einwilligungserklaerungsseite',
+    'niqbid, nichtiq, bundesland, generalmail, plzlist, keywordlist, beratungsarten, einwilligungserklaerungsseite, avadresse',
     '',
     ''
     );

@@ -234,6 +234,26 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         
         $letzteanmeldungen = $this->teilnehmerRepository->findLast4Admin();
         
+        // ********************* PLZ doppelt vergeben? *********************
+        $plzarray = $this->userGroupRepository->getallplzarray();
+        $bidplzarray = array();
+        $i=0;
+        foreach($plzarray as $bid) {
+            $bidplz = explode(',', $bid['plzlist']);
+            foreach($bidplz as $plz) {
+                $bidplzarray[$i] = $plz;
+                $bidarray[$i] =
+                $i++;
+            }
+        }
+        $unique = array_unique($bidplzarray);
+        $doppelteplzarr = array_diff_assoc($bidplzarray, $unique);
+        $doppelteplzberatungsstelle = array();
+        foreach($doppelteplzarr as $doppelteplz) {
+            if($doppelteplz != '') $doppelteplzberatungsstelle[$doppelteplz] = $this->userGroupRepository->getBeratungsstelle4PLZ($doppelteplz, $this->settings['beraterstoragepid']);
+        }
+        // ******************************************************************
+        
         $this->view->assignMultiple(
             [
                 'monatsnamen'=> $monatsnamen,
@@ -280,7 +300,8 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 'niqbid' => $thisniqbid,
                 'letzteanmeldungen' => $letzteanmeldungen,
                 'allebundeslaender' => $allebundeslaender,
-                'bundeslandselected' => $bundeslandselected
+                'bundeslandselected' => $bundeslandselected,
+                'doppelteplzarray' => $doppelteplzberatungsstelle
             ]
             );
     }

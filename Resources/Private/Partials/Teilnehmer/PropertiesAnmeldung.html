@@ -55,8 +55,8 @@
 			<label for="geburtsland">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.geburtsland" />
 			</label>
-				<f:for each="{settings.staaten}" as="text" key="wert">
-					{f:if(condition: '{teilnehmer.geburtsland} == {wert}', then: '<span class="propdat">{text}</span>')}					 
+				<f:for each="{staaten}" as="staat">
+					{f:if(condition: '{teilnehmer.geburtsland} == {staat.staatid}', then: '<span class="propdat">{staat.titel}</span>')}					 
 				</f:for>
 		</div>
 		<div class="tp13_formdivwebapp">
@@ -83,16 +83,16 @@
 			<label for="ersteStaatsangehoerigkeit">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.erste_staatsangehoerigkeit" />
 			</label>
-			<f:for each="{settings.staaten}" as="text" key="wert">
-				{f:if(condition: '{teilnehmer.ersteStaatsangehoerigkeit} == {wert}', then: '<span class="propdat">{text}</span>')}					 
+			<f:for each="{staaten}" as="staat">
+				{f:if(condition: '{teilnehmer.ersteStaatsangehoerigkeit} == {staat.staatid}', then: '<span class="propdat">{staat.titel}</span>')}					 
 			</f:for>
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="zweiteStaatsangehoerigkeit">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.zweite_staatsangehoerigkeit" />
 			</label>
-				<f:for each="{settings.staaten}" as="text" key="wert">
-					{f:if(condition: '{teilnehmer.zweiteStaatsangehoerigkeit} == {wert}', then: '<span class="propdat">{text}</span>')}					 
+				<f:for each="{staaten}" as="staat">
+					{f:if(condition: '{teilnehmer.zweiteStaatsangehoerigkeit} == {staat.staatid}', then: '<span class="propdat">{staat.titel}</span>')}					 
 				</f:for>
 		</div>
 		<f:if condition="{teilnehmer.einreisejahr} != ''"><f:then>
@@ -129,8 +129,8 @@
 				<label id="labelwohnsitzNeinIn4propertypage" for="wohnsitzNeinIn">
 					<f:translate key="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_nein_in" />
 				</label>
-					<f:for each="{settings.staaten}" as="text" key="wert">
-						{f:if(condition: '{teilnehmer.wohnsitzNeinIn} == {wert}', then: '<span class="propdat">{text}</span>')}					 
+					<f:for each="{staaten}" as="staat">
+						{f:if(condition: '{teilnehmer.wohnsitzNeinIn} == {staat.staatid}', then: '<span class="propdat">{staat.titel}</span>')}					 
 					</f:for>
 			</div>
 		</f:if>

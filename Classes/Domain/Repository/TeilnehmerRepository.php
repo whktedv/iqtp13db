@@ -49,8 +49,8 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         if($type != 0) {
             if($filterArray['beruf'] != '') {
                 
-                foreach ($berufearr as $beruf => $bkey) {
-                    if (strpos(strtolower($bkey), strtolower($fberuf)) !== false) { $results[] = $beruf; }
+                foreach ($berufearr as $beruf) {
+                    if (strpos(strtolower($beruf->getTitel()), strtolower($fberuf)) !== false) { $results[] = $beruf->getBerufid(); }
                 }
                 if(!empty($results)) {
                     $beruf = " a.referenzberufzugewiesen IN ('".implode("','", $results)."') ";

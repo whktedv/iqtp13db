@@ -145,7 +145,7 @@
 			<label for="geburtsland">
 				<span id="infolab" title="<f:translate key='infoGeburtsland' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geburtsland" />
 			</label>
-			<f:form.select property="geburtsland" options="{wohnsitzstaaten}" optionValueField="value" optionLabelField="value" />
+			<f:form.select property="geburtsland" options="{staatenarr}" optionValueField="value" optionLabelField="value" />
 			{iqtp13db:isint(field:'{teilnehmer.geburtsland}',then:'',else:'{teilnehmer.geburtsland}')}
 		</div>
 		<div class="tp13_formdivwebapp">
@@ -167,14 +167,14 @@
 				<span id="infolab" title="<f:translate key='infoStaatsangehoerigkeit' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.erste_staatsangehoerigkeit" />
 				<span class="niqfield" />
 			</label>
-				<f:form.select property="ersteStaatsangehoerigkeit" options="{staatsangehoerigkeitstaaten}" optionValueField="value" optionLabelField="value" />
+				<f:form.select property="ersteStaatsangehoerigkeit" options="{staatenarr}" optionValueField="value" optionLabelField="value" />
 				{iqtp13db:isint(field:'{teilnehmer.ersteStaatsangehoerigkeit}',then:'',else:'{teilnehmer.ersteStaatsangehoerigkeit}')}
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="zweiteStaatsangehoerigkeit">
 				<span id="infolab" title="<f:translate key='infoStaatsangehoerigkeit' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.zweite_staatsangehoerigkeit" />
 			</label>
-				<f:form.select property="zweiteStaatsangehoerigkeit" options="{staatsangehoerigkeitstaaten}" optionValueField="value" optionLabelField="value" />
+				<f:form.select property="zweiteStaatsangehoerigkeit" options="{staatenarr}" optionValueField="value" optionLabelField="value" />
 				{iqtp13db:isint(field:'{teilnehmer.zweiteStaatsangehoerigkeit}',then:'',else:'{teilnehmer.zweiteStaatsangehoerigkeit}')}
 		</div>
 		<div class="tp13_formdivwebapp">
@@ -201,7 +201,7 @@
 				<span id="infolab" title="<f:translate key='infoWohnsitzinDeutschlandNein' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_nein_in" />
 				<span class="niqfield" />
 			</label>
-				<f:form.select id="inputwohnsitzNeinIn" property="wohnsitzNeinIn" options="{wohnsitzstaaten}" optionValueField="value" optionLabelField="value" />
+				<f:form.select id="inputwohnsitzNeinIn" property="wohnsitzNeinIn" options="{staatenarr}" optionValueField="value" optionLabelField="value" />
 				{iqtp13db:isint(field:'{teilnehmer.wohnsitzNeinIn}',then:'',else:'{teilnehmer.wohnsitzNeinIn}')}
 		</div>	
 		<div class="tp13_formdivwebapp" id="divaufenthaltsstatus">

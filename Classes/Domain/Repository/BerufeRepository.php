@@ -13,9 +13,9 @@ namespace Ud\Iqtp13db\Domain\Repository;
  ***/
 
 /**
- * The repository for Abschluss
+ * The repository for Berufe
  */
-class AbschlussRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
+class BerufeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
    
 }

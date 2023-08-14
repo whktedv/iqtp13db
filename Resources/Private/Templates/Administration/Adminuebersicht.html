@@ -214,4 +214,19 @@
 	</table>
 </div>
 
+<h1>Doppelte PLZ zugewiesen</h1>
+<table>
+	<tbody>
+	<tr>
+		<th>PLZ</th>
+		<th>Beratungsstellen</th>
+	</tr>
+	<f:for each="{doppelteplzarray}" as="plzeintrag" key="plz">
+		<tr>
+			<td>{plz}</td>
+			<td><f:for each="{plzeintrag}" as="bst">{bst.title} ({bst.niqbid}), </f:for></td>
+		</tr>
+	</f:for>
+	</tbody>
+</table>
 </f:section>

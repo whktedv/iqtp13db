@@ -20,6 +20,8 @@ use Ud\Iqtp13db\Domain\Repository\HistorieRepository;
 use Ud\Iqtp13db\Domain\Repository\BeraterRepository;
 use Ud\Iqtp13db\Domain\Repository\AbschlussRepository;
 use TYPO3\CMS\Core\Resource\StorageRepository;
+use Ud\Iqtp13db\Domain\Repository\BerufeRepository;
+use Ud\Iqtp13db\Domain\Repository\StaatenRepository;
 
 require_once(Environment::getPublicPath() . '/' . 'typo3conf/ext/iqtp13db/Resources/Private/Libraries/xlsxwriter.class.php');
 
@@ -50,8 +52,10 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     protected $beraterRepository;
     protected $abschlussRepository;
     protected $storageRepository;
+    protected $berufeRepository;
+    protected $staatenRepository;
     
-    public function __construct(UserGroupRepository $userGroupRepository, TeilnehmerRepository $teilnehmerRepository, FolgekontaktRepository $folgekontaktRepository, DokumentRepository $dokumentRepository, HistorieRepository $historieRepository, BeraterRepository $beraterRepository, AbschlussRepository $abschlussRepository, StorageRepository $storageRepository)
+    public function __construct(UserGroupRepository $userGroupRepository, TeilnehmerRepository $teilnehmerRepository, FolgekontaktRepository $folgekontaktRepository, DokumentRepository $dokumentRepository, HistorieRepository $historieRepository, BeraterRepository $beraterRepository, AbschlussRepository $abschlussRepository, StorageRepository $storageRepository, BerufeRepository $berufeRepository, StaatenRepository $staatenRepository)
     {
         $this->userGroupRepository = $userGroupRepository;
         $this->teilnehmerRepository = $teilnehmerRepository;
@@ -61,6 +65,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $this->beraterRepository = $beraterRepository;
         $this->abschlussRepository = $abschlussRepository;
         $this->storageRepository = $storageRepository;
+        $this->berufeRepository = $berufeRepository;
+        $this->staatenRepository = $staatenRepository;
     }
     
     /**
@@ -365,17 +371,17 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         if(!empty($valArray['callerpage'])) $currentPage = $valArray['callerpage'];
         
-        if(empty($valArray['orderby'])) {
-            $orderby = 'verificationDate';
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'listangemeldetorder', 'DESC');
-            $order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listangemeldetorder');
+        if(empty($valArray['orderby'])) {            
+            $orderby = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listangemeldetorderby') ?? 'verificationDate';
+            $order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listangemeldetorder') ?? 'DESC';
         } else {
             $orderby = $valArray['orderby'];
             $order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listangemeldetorder');
-        }
-        
+        }        
         if(isset($valArray['changeorder']) && $valArray['changeorder'] == 1) {
+            $orderby = $valArray['orderby'];
             $order = $order == 'DESC' ? 'ASC' : 'DESC';
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'listangemeldetorderby', $orderby);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'listangemeldetorder', $order);
         }
         
@@ -402,9 +408,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $plzberatungsstelle4tn[$j] = count($plzberatungsstelle) > 0 ? $plzberatungsstelle[0]->getNiqbid() : '';
         }
         
-        
-        $wohnsitzstaaten = $this->settings['staaten'];
-        unset($wohnsitzstaaten[201]);
+        $staaten = $this->staatenRepository->findByLangisocode('de');
+        unset($staaten[200]);
+        foreach($staaten as $staat) {
+            $staatenarr[$staat->getStaatid()] = $staat->getTitel();
+        }
         
         $orderchar = $order == 'ASC' ? "↓" : "↑";
         $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
@@ -421,7 +429,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'pages' => range(1, $pagination->getLastPageNumber()),
                 'orderby' => $orderby,
                 'orderchar' => $orderchar,
-                'wohnsitzstaaten' => $wohnsitzstaaten,
+                'staatenarr' => $staatenarr,
                 'plzberatungsstelle4tn' => $plzberatungsstelle4tn,
                 'beratungsstelle' => $this->usergroup->getTitle(),
                 'niqbid' => $this->niqbid,
@@ -457,16 +465,16 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         if(!empty($valArray['callerpage'])) $currentPage = $valArray['callerpage'];
         
         if(empty($valArray['orderby'])) {
-            $orderby = 'beratungdatum';
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'listerstberatungorder', 'DESC');
-            $order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listerstberatungorder');
+            $orderby = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listerstberatungorderby') ?? 'verificationDate';
+            $order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listerstberatungorder') ?? 'DESC';
         } else {
             $orderby = $valArray['orderby'];
             $order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listerstberatungorder');
         }
-        
         if(isset($valArray['changeorder']) && $valArray['changeorder'] == 1) {
+            $orderby = $valArray['orderby'];
             $order = $order == 'DESC' ? 'ASC' : 'DESC';
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'listerstberatungorderby', $orderby);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'listerstberatungorder', $order);
         }
         
@@ -514,10 +522,12 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             // **** NIQ deaktiviert **** if($niqstat == 0 || $niqstat == 2) $niqwasfehlt[$key] = $this->niqinterface->niqwasfehlt($tn, $abschluesse[$key]);            
         }
         
-        
-        $berufeliste = $this->settings['berufe'];
-        $wohnsitzstaaten = $this->settings['staaten'];
-        unset($wohnsitzstaaten[201]);
+        $berufeliste = $this->berufeRepository->findAll();
+        $staaten = $this->staatenRepository->findByLangisocode('de');
+        unset($staaten[200]);
+        foreach($staaten as $staat) {
+            $staatenarr[$staat->getStaatid()] = $staat->getTitel();
+        }
         
         $orderchar = $order == 'ASC' ? "↓" : "↑";
         $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
@@ -539,7 +549,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'pages' => range(1, $pagination->getLastPageNumber()),
                 'orderby' => $orderby,
                 'orderchar' => $orderchar,
-                'wohnsitzstaaten' => $wohnsitzstaaten,
+                'staatenarr' => $staatenarr,
                 'berufe' => $berufeliste,
                 'beratungsstelle' => $this->usergroup->getTitle(),
                 'niqbid' => $this->niqbid,
@@ -574,18 +584,17 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         if(!empty($valArray['callerpage'])) $currentPage = $valArray['callerpage'];
         
-        
         if(empty($valArray['orderby'])) {
-            $orderby = 'erstberatungabgeschlossen';
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'listarchivorder', 'DESC');
-            $order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listarchivorder');
+            $orderby = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listarchivorderby') ?? 'verificationDate';
+            $order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listarchivorder') ?? 'DESC';
         } else {
             $orderby = $valArray['orderby'];
             $order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listarchivorder');
         }
-        
         if(isset($valArray['changeorder']) && $valArray['changeorder'] == 1) {
+            $orderby = $valArray['orderby'];
             $order = $order == 'DESC' ? 'ASC' : 'DESC';
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'listarchivorderby', $orderby);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'listarchivorder', $order);
         }
         
@@ -631,10 +640,13 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         $folgekontakte = $this->folgekontaktRepository->findAll4List($this->niqbid);
         
-        $berufeliste = $this->settings['berufe'];
-        $wohnsitzstaaten = $this->settings['staaten'];
-        unset($wohnsitzstaaten[201]);
-        
+        $berufeliste = $this->berufeRepository->findAll();
+        $staaten = $this->staatenRepository->findByLangisocode('de');
+        unset($staaten[200]);
+        foreach($staaten as $staat) {
+            $staatenarr[$staat->getStaatid()] = $staat->getTitel();
+        }
+                
         $orderchar = $order == 'ASC' ? "↓" : "↑";
         $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
         
@@ -655,7 +667,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'pages' => range(1, $pagination->getLastPageNumber()),
                 'orderby' => $orderby,
                 'orderchar' => $orderchar,
-                'wohnsitzstaaten' => $wohnsitzstaaten,
+                'staatenarr' => $staatenarr,
                 'berufe' => $berufeliste,
                 'beratungsstelle' => $this->usergroup->getTitle(),
                 'niqbid' => $this->niqbid,
@@ -676,19 +688,19 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         if(!empty($valArray['callerpage'])) $currentPage = $valArray['callerpage'];
         
         if(empty($valArray['orderby'])) {
-            $orderby = 'crdate';
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'listdeletedorder', 'DESC');
-            $order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listdeletedorder');
+            $orderby = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listdeletedorderby') ?? 'verificationDate';
+            $order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listdeletedorder') ?? 'DESC';
         } else {
             $orderby = $valArray['orderby'];
             $order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listdeletedorder');
         }
-        
         if(isset($valArray['changeorder']) && $valArray['changeorder'] == 1) {
+            $orderby = $valArray['orderby'];
             $order = $order == 'DESC' ? 'ASC' : 'DESC';
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'listdeletedorderby', $orderby);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'listdeletedorder', $order);
         }
-        
+               
         $teilnehmer = $this->setfilter(999, $valArray, $orderby, $order, 1);
         
         // Wegen Bug in Paginator, der nicht mit Custom SQL Queryresults funktioniert, werden hier alle gefilterten Einträge auf einer Seite dargestellt. Queryresultpaginator hat dann keine Auswahl an Datensätzen, sondern alle.
@@ -707,8 +719,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $abschluesse[$j] = $this->abschlussRepository->findByTeilnehmer($teilnehmerpag[$j]);
         }
         
-        $wohnsitzstaaten = $this->settings['staaten'];
-        unset($wohnsitzstaaten[201]);
+        $staaten = $this->staatenRepository->findByLangisocode('de');
+        unset($staaten[200]);
+        foreach($staaten as $staat) {
+            $staatenarr[$staat->getStaatid()] = $staat->getTitel();
+        }
         
         $orderchar = $order == 'ASC' ? "↓" : "↑";
         
@@ -724,7 +739,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'pages' => range(1, $pagination->getLastPageNumber()),
                 'orderby' => $orderby,
                 'orderchar' => $orderchar,
-                'wohnsitzstaaten' => $wohnsitzstaaten,
+                'staatenarr' => $staatenarr,
                 'beratungsstelle' => $this->usergroup->getTitle(),
                 'niqbid' => $this->niqbid
             ]
@@ -750,7 +765,10 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $arrjanein = array(0 => '', 1 => 'ja', 2 => 'nein', 3 => 'keine Angabe');
         $arrerwerbsstatus = $this->settings['erwerbsstatus'];
         $arrleistungsbezug = $this->settings['leistungsbezug'];
-        $arrstaaten = $this->settings['staaten'];
+        $staaten = $this->staatenRepository->findByLangisocode('de');
+        foreach($staaten as $staat) {
+            $arrstaaten[$staat->getStaatid()] = $staat->getTitel();
+        }
         $arraufenthaltsstatus = $this->settings['aufenthaltsstatus'];
         $arrberatungsart = $this->settings['beratungsart'];
         $arranerkennungsberatung = $this->settings['anerkennungsberatung'];
@@ -758,7 +776,10 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $arrberatungsstelle = $this->settings['beratungsstelle'];
         //$arrberatungzu = $this->settings['beratungzu'];
         $arrzertifikatlevel = $this->settings['zertifikatlevel'];
-        $arrberufe = $this->settings['berufe'];
+        $berufeliste = $this->berufeRepository->findAll();
+        foreach($berufeliste as $beruf) {
+            $arrberufe[$beruf->getBerufid()] = $beruf->getTitel();
+        }
         $arrabschlussart =  array('-1' => 'keine Angabe', '1' => 'Ausbildungsabschluss', '2' => 'Universitätsabschluss');
         $arrantragstellungerfolgt = $this->settings['antragstellungerfolgt'];
         
@@ -1079,6 +1100,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $dokumente = $this->dokumentRepository->findByTeilnehmer($teilnehmer);
         $dokumentpfad = $this->generalhelper->sanitizeFileFolderName($teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid(). '/');
         
+        $berufeliste = $this->berufeRepository->findAll();
+        $staaten = $this->staatenRepository->findByLangisocode('de');
+                
         $backenduser = $this->beraterRepository->findByUid($this->user['uid']);
         $this->view->assignMultiple(
             [
@@ -1092,7 +1116,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'abschluesse' => $abschluesse,
                 'showabschluesse' => $valArray['showabschluesse'] ?? '0',
                 'showdokumente' => $valArray['showdokumente'] ?? '0',
-                'niqbid' => $backenduser->getUsergroup()[0]->getNiqbid()
+                'niqbid' => $backenduser->getUsergroup()[0]->getNiqbid(),
+                'staaten' => $staaten,
+                'berufe' => $berufeliste,
             ]
             );
     }
@@ -1124,9 +1150,10 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
         
-        $staatsangehoerigkeitstaaten = $this->settings['staaten'];
-        $wohnsitzstaaten = $this->settings['staaten'];
-        unset($wohnsitzstaaten[201]);
+        $staaten = $this->staatenRepository->findByLangisocode('de');
+        foreach($staaten as $staat) {
+            $staatenarr[$staat->getStaatid()] = $staat->getTitel();
+        }
         
         $altervonbis[-1000] = '-';
         $altervonbis[-1] = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('ka', 'iqtp13db');
@@ -1173,9 +1200,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'calleraction' => $valArray['calleraction'] ?? 'listangemeldet',
                 'callercontroller' => $valArray['callercontroller'] ?? 'Backend',
                 'callerpage' => $valArray['callerpage'] ?? '1',
-                'staatsangehoerigkeitstaaten' => $staatsangehoerigkeitstaaten,
                 'abschluss' => $abschluss,
-                'wohnsitzstaaten' => $wohnsitzstaaten,
+                'staatenarr' => $staatenarr,
                 'alleberater' => $alleberater,
                 'berater' => $this->user,
                 'settings' => $this->settings,
@@ -1235,7 +1261,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $teilnehmer->setBeratungsstatus(0);
         }
         if($teilnehmer->getAnonym() == 1) {
-            $teilnehmer->setBeratungsstatus(2);
+            if($teilnehmer->getErstberatungabgeschlossen() != '') {
+                $teilnehmer->setBeratungsstatus(3);
+            } else {
+                $teilnehmer->setBeratungsstatus(2);
+            }            
             $teilnehmer->setVerificationDate(new DateTime('now'));
             $teilnehmer->setVerificationIp($_SERVER['REMOTE_ADDR']);
         }
@@ -1266,15 +1296,17 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function initializeEditAction() {
         $valArray = $this->request->getArguments();
         
-        if(is_string($valArray['teilnehmer'])) $tnuid = $valArray['teilnehmer'];
-        else $tnuid = $valArray['teilnehmer']->getUid();
-        
-        $thistn = $this->teilnehmerRepository->findByUid($tnuid);
-        $tnanonym = $thistn->getAnonym();
-        $anonymeberatung = $valArray['newanonymeberatung'] ?? '';
-        
-        if($anonymeberatung == '1' || $tnanonym == '1') {
-            $this->addFlashMessage("Bitte beachten: Für anonyme Beratungen ist zur Wahrung des Datenschutzes kein Dokumentenupload möglich!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+        if(is_string($valArray['teilnehmer'])) {
+            $tnuid = $valArray['teilnehmer'];
+            //else $tnuid = $valArray['teilnehmer']['__identity'];
+
+            $thistn = $this->teilnehmerRepository->findByUid($tnuid);
+            $tnanonym = $thistn->getAnonym();
+            $anonymeberatung = $valArray['newanonymeberatung'] ?? '';
+            
+            if($anonymeberatung == '1' || $tnanonym == '1') {
+                $this->addFlashMessage("Bitte beachten: Für anonyme Beratungen ist zur Wahrung des Datenschutzes kein Dokumentenupload möglich!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+            }
         }
     }
     
@@ -1314,9 +1346,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $dokumente = $this->dokumentRepository->findByTeilnehmer($teilnehmer);
         $dokumentpfad = $this->generalhelper->sanitizeFileFolderName($teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid(). '/');
         
-        $staatsangehoerigkeitstaaten = $this->settings['staaten'];
-        $wohnsitzstaaten = $this->settings['staaten'];
-        unset($wohnsitzstaaten[201]);
+        $berufe = $this->berufeRepository->findAll();
+        $staaten = $this->staatenRepository->findByLangisocode('de');
+        foreach($staaten as $staat) {
+            $staatenarr[$staat->getStaatid()] = $staat->getTitel();
+        }
         
         $altervonbis[-1000] = '-';
         $altervonbis[-1] = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('ka', 'iqtp13db');
@@ -1369,11 +1403,12 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'calleraction' => $valArray['calleraction'] ?? 'listangemeldet',
                 'callercontroller' => $valArray['callercontroller'] ?? 'Backend',
                 'callerpage' => $valArray['callerpage'] ?? '1',
-                'staatsangehoerigkeitstaaten' => $staatsangehoerigkeitstaaten,
                 'abschluesse' => $abschluesse,
                 'alleberater' => $alleberater,
                 'settings' => $this->settings,
-                'wohnsitzstaaten' => $wohnsitzstaaten,
+                'staatenarr' => $staatenarr,
+                'berufe' => $berufe,
+                'staaten' => $staaten,
                 'teilnehmer' => $teilnehmer,
                 'dokumente' => $dokumente,
                 'dokumentpfad' => $dokumentpfad,
@@ -1401,6 +1436,13 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $beratungdatum = $valArray['teilnehmer']['beratungdatum'] ?? '';
         $erstberatungabgeschlossen = $valArray['teilnehmer']['erstberatungabgeschlossen'] ?? '';
         
+        $email = $valArray['teilnehmer']['email'] ?? '';
+        $confirmemail = $valArray['teilnehmer']['confirmemail'] ?? '';
+        
+        if($email == '' || $confirmemail == '' || $email != $confirmemail) {
+            $this->addFlashMessage("FEHLER: E-Mail-Adressen stimmen nicht überein!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->redirect('edit', 'Backend', null, array('teilnehmer' => $valArray['teilnehmer']['__identity'], 'callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
+        }        
         if($beratungdatum != '' && !$this->generalhelper->validateDateYmd($beratungdatum)) {
             $this->addFlashMessage("FEHLER: Datensatz NICHT gespeichert. 'Beratung Datum' ungültige Eingabe. Datum im Format JJJJ-MM-TT eintragen!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             $this->redirect($valArray['calleraction'] ?? 'edit', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
@@ -1758,10 +1800,14 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $thisdate = new DateTime();
         $zeitstempel = $thisdate->format('d.m.Y - H:i:s');
         $zeitstempel4filename = $thisdate->format('dmY-His');
-        
+        $berufeliste = $this->berufeRepository->findAll();
+        $staaten = $this->staatenRepository->findByLangisocode('de');
+               
         $this->view->assign('teilnehmer', $teilnehmer);
         $this->view->assign('abschluesse', $abschluesse);
         $this->view->assign('dokumente', $dokumente);
+        $this->view->assign('berufe', $berufeliste);
+        $this->view->assign('staaten', $staaten);
         
         $htmlcode = $this->view->render();
         
@@ -1824,6 +1870,106 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         //********************************************************************
         
         $this->redirect('show', 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer, 'callerpage' => $valArray['callerpage'], 'showdokumente' => '1'));
+    }
+    
+    /**
+     * action saveAVpdf
+     *
+     * @return void
+     */
+    public function saveAVpdfAction()
+    {
+        $valArray = $this->request->getArguments();
+        
+        // MPDF per composer einbinden - wenn nicht vorhanden, dann s.u.
+        $mpdfComposer = \TYPO3\CMS\Core\Core\Environment::getConfigPath() . '/ext/vendor/autoload.php';
+        if (file_exists($mpdfComposer)) {
+            //require_once __DIR__ . '/vendor/autoload.php';
+            require_once($mpdfComposer);
+        } else {
+            // MPDF nicht per composer eingebunden, dann prüfe, ob extension web2pdf installiert ist und binde MPDF aus der ext web2pdf ein
+            $mpdfAutoload = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('web2pdf') . 'Resources/Private/Libraries/vendor/autoload.php';
+            if (file_exists($mpdfAutoload)) {
+                require_once($mpdfAutoload);
+            } else {
+                // PDF erstellen nicht möglich
+                $this->addFlashMessage('AV kann nicht erstellt werden, da MPDF nicht installiert. Bitte Admin kontaktieren.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                $this->redirect('show', 'Backend', 'Iqtp13db', null);
+            }
+        }
+        
+        $thisdate = new DateTime();
+        $zeitstempel = $thisdate->format('d.m.Y - H:i:s');        
+        $zeitstempel4filename = $thisdate->format('dmY-His');
+        
+        $default_mpdfconfig = [
+            'mode' => 'c',
+            'format' => 'A4',
+            'default_font_size' => 10.5,
+            'default_font' => 'Arial',
+            'margin_left' => 15,
+            'margin_right' => 15,
+            'margin_top' => 16,
+            'margin_bottom' => 16,
+            'margin_header' => 9,
+            'margin_footer' => 9,
+            'orientation' => 'P',
+        ];
+        
+        $mpdf = new \Mpdf\Mpdf($default_mpdfconfig);
+        
+        $sourcefile = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('iqtp13db') . 'Resources/Public/' . '/IQWebapp_Auftragsverarbeitung.pdf'; // absolute path to pdf file
+        $mpdf->setSourceFile($sourcefile);
+        
+        $mpdf->SetHeader('AV generiert am '.$zeitstempel.'||IQ Webapp zur Anerkennungs- und Qualifizierungsberatung');
+
+        $tplIdx = $mpdf->importPage(1);
+        $mpdf->useTemplate($tplIdx, 10, 10, 200);
+        
+        $mpdf->SetTextColor(0, 0, 0);
+        $mpdf->SetXY(34, 187);
+        $mpdf->WriteHTML('<b>'.$this->usergroup->getAvadresse().'</b>');
+        
+        $mpdf->AddPage();
+        $mpdf->setSourceFile($sourcefile);
+        $tplIdx = $mpdf->importPage(2);
+        $mpdf->useImportedPage($tplIdx, 0, 0, 210);
+        $mpdf->AddPage();
+        $mpdf->setSourceFile($sourcefile);
+        $tplIdx = $mpdf->importPage(3);
+        $mpdf->useImportedPage($tplIdx, 0, 0, 210);
+        $mpdf->AddPage();
+        $mpdf->setSourceFile($sourcefile);
+        $tplIdx = $mpdf->importPage(4);
+        $mpdf->useImportedPage($tplIdx, 0, 0, 210);
+        $mpdf->AddPage();
+        $mpdf->setSourceFile($sourcefile);
+        $tplIdx = $mpdf->importPage(5);
+        $mpdf->useImportedPage($tplIdx, 0, 0, 210);
+        $mpdf->AddPage();
+        $mpdf->setSourceFile($sourcefile);
+        $tplIdx = $mpdf->importPage(6);
+        $mpdf->useImportedPage($tplIdx, 0, 0, 210);
+        $mpdf->AddPage();
+        $mpdf->setSourceFile($sourcefile);
+        $tplIdx = $mpdf->importPage(7);
+        $mpdf->useImportedPage($tplIdx, 0, 0, 210);
+        
+        $mpdf->SetTextColor(0, 0, 0);
+        $mpdf->SetXY(55, 22);
+        $mpdf->WriteHTML('<b>'.$thisdate->format('d.m.Y').'</b>');
+        
+        $niqbid = $this->niqbid;
+        $filename = 'AV-IQWebapp_WHKT_' . $niqbid . '_' . $zeitstempel4filename. '.pdf';
+        $storage = $this->generalhelper->getTP13Storage($this->storageRepository->findAll());
+        
+        $beratungsstellenfolder = $niqbid == '' ? 'Beratene' : $niqbid;
+        $fullpath = $storage->getConfiguration()['basePath']. '/' .$beratungsstellenfolder. '/' . $filename;
+        
+        $mpdf->Output($fullpath, \Mpdf\Output\Destination::DOWNLOAD);
+        $mpdf->Output($fullpath, \Mpdf\Output\Destination::FILE);
+        
+        die;        
     }
     
     
@@ -1945,7 +2091,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             }
         } else {
             
-            $teilnehmers = $this->teilnehmerRepository->searchTeilnehmer($type, $filterArray, $deleted, $this->niqbid, $this->settings['berufe'], $orderby, $order, $beraterdiesergruppe, $this->usergroup);
+            $berufearr = $this->berufeRepository->findAll();
+            
+            $teilnehmers = $this->teilnehmerRepository->searchTeilnehmer($type, $filterArray, $deleted, $this->niqbid, $berufearr, $orderby, $order, $beraterdiesergruppe, $this->usergroup);
             //if($this->user['username'] == 'admin') DebuggerUtility::var_dump($teilnehmers);
             $this->view->assign('filteruid', $filterArray['uid'] ?? '');
             $this->view->assign('filtername', $filterArray['name']);
@@ -1984,7 +2132,12 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $oldvalue = $teilnehmer->_getCleanProperty($property) ?? '';
             $newvalue = $teilnehmer->_getProperty($property) ?? '';
             
-            if($property == 'geburtsland' || $property == 'ersteStaatsangehoerigkeit' || $property == 'zweiteStaatsangehoerigkeit' || $property == 'wohnsitzNeinIn') $newvalue = $this->settings['staaten'][$newvalue];
+            $staaten = $this->staatenRepository->findByLangisocode('de');
+            foreach($staaten as $staat) {
+                $staatenarr[$staat->getStaatid()] = $staat->getTitel();
+            }
+            
+            if($property == 'geburtsland' || $property == 'ersteStaatsangehoerigkeit' || $property == 'zweiteStaatsangehoerigkeit' || $property == 'wohnsitzNeinIn') $newvalue = $staatenarr[$newvalue];
             if($property == 'geschlecht') {
                 if($newvalue == 2) $newvalue = 'männlich';
                 if($newvalue == 1) $newvalue = 'weiblich';
