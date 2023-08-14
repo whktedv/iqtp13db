@@ -1,0 +1,747 @@
+1;90;-1;keine Angabe;de
+2;90;-4;nicht reglementierter Länderberuf;de
+3;90;-3;Sonstiger Referenzberuf, nicht in der Liste enthalten;de
+4;90;-2;keine Zuordnung zu deutschem Referenzberuf möglich;de
+5;90;1;Abwassermeister*in (Geprüfte*r);de
+6;90;2;Agrarservicemeister*in;de
+7;90;734;Agrarwissenschaftler*in;de
+8;90;3;Altenpflegehelfer*in;de
+9;90;748;Altenpfleger*in (ab 1.1.2020 nach PflBG);de
+10;90;4;Altenpfleger*in (bis 31.12.2019 nach AltPflG);de
+11;90;5;Änderungsschneider*in;de
+12;90;6;Anlagenmechaniker*in;de
+13;90;7;Anlagenmechaniker*in für Sanitär-, Heizungs- und Klimatechnik;de
+14;90;8;Apotheker*in;de
+15;90;9;Architekt*in;de
+16;90;10;Arzt*Ärztin;de
+17;90;11;Asphaltbauer*in;de
+18;90;12;Aufbereitungsmechaniker*in;de
+19;90;13;Augenoptiker*in;de
+20;90;14;Augenoptikermeister*in;de
+21;90;15;Aus- und Weiterbildungspädagoge*in (Geprüfte*r);de
+22;90;16;Ausbaufacharbeiter*in;de
+23;90;17;Automatenfachmann*frau;de
+24;90;18;Automobilkaufmann*frau;de
+25;90;19;Bäcker*in;de
+26;90;20;Bäckermeister*in;de
+27;90;21;Bankfachwirt*in (Geprüfte*r);de
+28;90;22;Bankkaufmann*frau;de
+29;90;23;Baugeräteführer*in;de
+30;90;25;Baumaschinenmeister*in;de
+31;90;26;Baustoffprüfer*in;de
+32;90;27;Bauten- und Objektbeschichter*in;de
+33;90;28;Bauwerksabdichter*in;de
+34;90;29;Bauwerksmechaniker*in für Abbruch und Betontrenntechnik;de
+35;90;30;Bauzeichner*in;de
+36;90;31;Beamter*in;de
+37;90;32;Behälter- und Apparatebauer*in;de
+38;90;33;Behälter- und Apparatebauermeister*in;de
+39;90;34;Berg- und Maschinenmann*frau;de
+40;90;35;Berg- und Skiführer*in;de
+41;90;36;Bergbautechnologe*in;de
+42;90;37;Berufskraftfahrer*in;de
+43;90;38;Berufspädagoge*in (Geprüfte*r);de
+44;90;39;Besamungstechniker*in;de
+45;90;40;Bestattermeister*in;de
+46;90;41;Bestattungsfachkraft;de
+47;90;42;Beton- und Stahlbetonbauer*in;de
+48;90;43;Betonfertigteilbauer*in;de
+49;90;44;Betonstein- und Terrazzohersteller*in;de
+50;90;45;Betonstein- und Terrazzoherstellermeister*in (bis 30.6.2021);de
+51;90;46;Betriebswirt*in;de
+52;90;47;Betriebswirt*in (Geprüfte*r);de
+53;90;48;Betriebswirt*in (Geprüfte*r) nach der Handwerksordnung;de
+54;90;49;Bewacher*in;de
+55;90;50;Bilanzbuchhalter*in (Geprüfte*r);de
+56;90;51;Binnenschiffer*in;de
+57;90;765;Binnenschifffahrtskapitän*in;de
+58;90;52;Biologe*in;de
+59;90;53;Biologielaborant*in;de
+60;90;54;Biologiemodellmacher*in;de
+61;90;55;Bodenleger*in;de
+62;90;56;Bogenmacher*in;de
+63;90;57;Bogenmachermeister*in;de
+64;90;58;Bootsbauer*in;de
+65;90;59;Bootsbauermeister*in, Schiffbauermeister*in;de
+66;90;60;Böttcher*in;de
+67;90;61;Böttchermeister*in;de
+68;90;62;Brauer- und Mälzermeister*in;de
+69;90;63;Brauer*in und Mälzer*in;de
+70;90;64;Brenner*in;de
+71;90;65;Brunnenbauer*in;de
+72;90;66;Brunnenbauermeister*in;de
+73;90;67;Buchbinder*in;de
+74;90;68;Buchbindermeister*in;de
+75;90;69;Buchhändler*in;de
+76;90;70;Büchsenmacher*in;de
+77;90;71;Büchsenmachermeister*in;de
+78;90;72;Bühnenmaler*in und -plastiker*in;de
+79;90;74;Bürsten- und Pinselmacher*in;de
+80;90;75;Bürsten- und Pinselmachermeister*in;de
+81;90;76;Chemielaborant*in;de
+82;90;77;Chemielaborjungwerker*in;de
+83;90;78;Chemikant*in;de
+84;90;79;Chemiker*in;de
+85;90;80;Chirurgiemechaniker*in;de
+86;90;81;Chirurgiemechanikermeister*in;de
+87;90;82;Controller*in (Geprüfte*r);de
+88;90;83;Dachdecker*in;de
+89;90;84;Dachdeckermeister*in;de
+90;90;85;Damen- und Herrenschneidermeister*in, Maßschneidermeister*in;de
+91;90;86;Destillateur*in;de
+92;90;87;Diamantschleifer*in;de
+93;90;88;Diätassistent*in;de
+94;90;89;Dolmetscher*in;de
+95;90;90;Dolmetscher*in, öffentlich bestellt und/oder staatlich vereidigt;de
+96;90;92;Drechsler*in (Elfenbeinschnitzer*in);de
+97;90;91;Drechsler-/Elfenbeinschnitzer- und Holzspielzeugmachermeister*in;de
+98;90;93;Drogist*in;de
+99;90;94;Druckermeister*in (bis 30.6.2021);de
+100;90;95;Edelmetallprüfer*in;de
+101;90;96;Edelsteinfasser*in;de
+102;90;97;Edelsteingraveur*in;de
+103;90;98;Edelsteinschleifer- und Edelsteingraveurmeister*in;de
+104;90;99;Edelsteinschleifer*in;de
+105;90;100;Eisenbahner*in im Betriebsdienst;de
+106;90;766;Eisenbahner*in in der Zugverkehrssteuerung;de
+107;90;101;Elektroanlagenmonteur*in;de
+108;90;102;Elektromaschinenbauermeister*in;de
+109;90;103;Elektroniker*in;de
+110;90;104;Elektroniker*in für Automatisierungstechnik;de
+111;90;105;Elektroniker*in für Betriebstechnik;de
+112;90;106;Elektroniker*in für Gebäude- und Infrastruktursysteme;de
+113;90;759;Elektroniker*in für Gebäudesystemintegration;de
+114;90;107;Elektroniker*in für Geräte und Systeme;de
+115;90;108;Elektroniker*in für Informations- und Systemtechnik;de
+116;90;109;Elektroniker*in für Maschinen und Antriebstechnik (bis 31.7.2021);de
+117;90;758;Elektroniker*in für Maschinen und Antriebstechnik nach BBiG (ab 1.8.2021);de
+118;90;757;Elektroniker*in für Maschinen und Antriebstechnik nach der HwO (ab 1.8.2021);de
+119;90;110;Elektrotechnikermeister*in;de
+120;90;111;Ergotherapeut*in;de
+121;90;112;Erzieher*in;de
+122;90;731;Erziehungswissenschaftler*in bzw. Pädagoge/Pädagogin;de
+123;90;113;Estrichleger*in;de
+124;90;114;Estrichlegermeister*in;de
+125;90;115;Fachagrarwirt*in (Geprüfte*r) für Baumpflege und Baumsanierung;de
+126;90;116;Fachagrarwirt*in für Klauenpflege;de
+127;90;117;Fachangestellte*r für Arbeitsmarktdienstleistungen;de
+128;90;118;Fachangestellte*r für Bäderbetriebe;de
+129;90;120;Fachangestellte*r für Markt- und Sozialforschung;de
+130;90;121;Fachangestellte*r für Medien- und Informationsdienste;de
+131;90;122;Fachapotheker*in (Weiterbildung);de
+132;90;123;Facharzt*Fachärztin für Allgemeinchirurgie;de
+133;90;124;Facharzt*Fachärztin für Allgemeinmedizin;de
+134;90;125;Facharzt*Fachärztin für Anästhesiologie;de
+135;90;126;Facharzt*Fachärztin für Anatomie;de
+136;90;127;Facharzt*Fachärztin für Arbeitsmedizin;de
+137;90;128;Facharzt*Fachärztin für Augenheilkunde;de
+138;90;129;Facharzt*Fachärztin für Biochemie;de
+139;90;130;Facharzt*Fachärztin für Frauenheilkunde und Geburtshilfen;de
+140;90;131;Facharzt*Fachärztin für Gefäßchirurgie;de
+141;90;132;Facharzt*Fachärztin für Hals-Nasen-Ohrenheilkunde;de
+142;90;133;Facharzt*Fachärztin für Haut- und Geschlechtskrankheiten;de
+143;90;134;Facharzt*Fachärztin für Herzchirurgie;de
+144;90;135;Facharzt*Fachärztin für Humangenetik;de
+145;90;136;Facharzt*Fachärztin für Hygiene und Umweltmedizin;de
+146;90;137;Facharzt*Fachärztin für Innere Medizin;de
+147;90;138;Facharzt*Fachärztin für Innere Medizin und Angiologie;de
+148;90;139;Facharzt*Fachärztin für Innere Medizin und Endokrinologie und Diabetologie;de
+149;90;140;Facharzt*Fachärztin für Innere Medizin und Gastroenterologie;de
+150;90;141;Facharzt*Fachärztin für Innere Medizin und Geriatrie;de
+151;90;142;Facharzt*Fachärztin für Innere Medizin und Hämatologie und Onkologie;de
+152;90;143;Facharzt*Fachärztin für Innere Medizin und Kardiologie;de
+153;90;144;Facharzt*Fachärztin für Innere Medizin und Nephrologie;de
+154;90;145;Facharzt*Fachärztin für Innere Medizin und Pneumologie;de
+155;90;146;Facharzt*Fachärztin für Innere Medizin und Rheumatologie;de
+156;90;147;Facharzt*Fachärztin für Kinder- und Jugendmedizin;de
+157;90;148;Facharzt*Fachärztin für Kinder- und Jugendpsychiatrie und -psychotherapie;de
+158;90;149;Facharzt*Fachärztin für Kinderchirurgie;de
+159;90;150;Facharzt*Fachärztin für Klinische Pharmakologie;de
+160;90;151;Facharzt*Fachärztin für Laboratoriumsmedizin;de
+161;90;152;Facharzt*Fachärztin für Mikrobiologie (Virologie) und Infektionsepidemiologie;de
+162;90;153;Facharzt*Fachärztin für Mund-, Kiefer- und Gesichtschirurgie;de
+163;90;154;Facharzt*Fachärztin für Neurochirurgie;de
+164;90;155;Facharzt*Fachärztin für Neurologie;de
+165;90;156;Facharzt*Fachärztin für Neuropathologie;de
+166;90;157;Facharzt*Fachärztin für Nuklearmedizin;de
+167;90;158;Facharzt*Fachärztin für Öffentliches Gesundheitswesen;de
+168;90;159;Facharzt*Fachärztin für Orthopädie (und Unfallchirurgie);de
+169;90;160;Facharzt*Fachärztin für Pathologie;de
+170;90;161;Facharzt*Fachärztin für Pharmakologie und Toxikologie;de
+171;90;162;Facharzt*Fachärztin für Physikalische und Rehabilitative Medizin;de
+172;90;163;Facharzt*Fachärztin für Physiologie;de
+173;90;164;Facharzt*Fachärztin für Plastische und Ästhetische Chirurgie;de
+174;90;165;Facharzt*Fachärztin für Psychiatrie und Psychotherapie;de
+175;90;166;Facharzt*Fachärztin für Psychosomische Medizin und Psychotherapie;de
+176;90;167;Facharzt*Fachärztin für Radiologie;de
+177;90;168;Facharzt*Fachärztin für Rechtsmedizin;de
+178;90;169;Facharzt*Fachärztin für Sprach-, Stimm- und kindliche Hörstörungen;de
+179;90;170;Facharzt*Fachärztin für Strahlentherapie;de
+180;90;171;Facharzt*Fachärztin für Thoraxchirurgie;de
+181;90;172;Facharzt*Fachärztin für Transfusionsmedizin;de
+182;90;173;Facharzt*Fachärztin für Urologie;de
+183;90;174;Facharzt*Fachärztin für Viszeralchirurgie;de
+184;90;175;Fachbauleiter*in (Geprüfte*r) im Tischlerhandwerk;de
+185;90;176;Fachberater*in (Geprüfte*r) im Vertrieb;de
+186;90;177;Fachberater*in für Finanzdienstleistungen;de
+187;90;178;Fachhauswirtschafter*in (Geprüfte*r);de
+188;90;179;Fachinformatiker*in;de
+189;90;181;Fachkaufmann*frau (Geprüfte*r) für Einkauf und Logistik;de
+190;90;182;Fachkaufmann*frau (Geprüfte*r) für Marketing;de
+191;90;183;Fachkaufmann*frau für Logistiksysteme;de
+192;90;184;Fachkaufmann*kauffrau (Geprüfte*r) für Büro- und Projektorganisation;de
+193;90;185;Fachkraft (Geprüfte) zur Arbeits- und Berufsförderung in Werkstätten für behinderte Menschen;de
+194;90;186;Fachkraft für Abwassertechnik;de
+195;90;187;Fachkraft für Agrarservice;de
+196;90;188;Fachkraft für Automatenservice;de
+197;90;189;Fachkraft für Fruchtsafttechnik;de
+198;90;190;Fachkraft für Hafenlogistik;de
+199;90;191;Fachkraft für Holz- und Bautenschutzarbeiten;de
+200;90;192;Fachkraft für Kreislauf- und Abfallwirtschaft;de
+201;90;193;Fachkraft für Kurier-, Express- und Postdienstleistungen;de
+202;90;194;Fachkraft für Lagerlogistik;de
+203;90;195;Fachkraft für Lebensmitteltechnik;de
+204;90;727;Fachkraft für Lederherstellung und Gerbereitechnik;de
+205;90;196;Fachkraft für Lederverarbeitung;de
+206;90;197;Fachkraft für Metalltechnik;de
+207;90;198;Fachkraft für Möbel-, Küchen- und Umzugsservice;de
+208;90;199;Fachkraft für Rohr-, Kanal- und Industrieservice;de
+209;90;200;Fachkraft für Schutz und Sicherheit;de
+210;90;722;Fachkraft für Speiseeis;de
+211;90;201;Fachkraft für Straßen- und Verkehrstechnik;de
+212;90;203;Fachkraft für Veranstaltungstechnik;de
+213;90;204;Fachkraft für Wasserversorgungstechnik;de
+214;90;205;Fachkraft für Wasserwirtschaft;de
+215;90;206;Fachkraft im Fahrbetrieb;de
+216;90;207;Fachkraft für Gastronomie;de
+217;90;767;Fachkraft Küche;de
+218;90;208;Fachkundige*r für den Umgang mit pyrotechnischen Gegenständen;de
+219;90;209;Fachkundige*r für explosionsgefährliche Stoffe mit anderer Zweckbestimmung;de
+220;90;210;Fachkundige*r für Tätigkeiten mit Explosivstoffen;de
+221;90;211;Fachlagerist*in;de
+222;90;212;Fachmann*frau für Systemgastronomie;de
+223;90;213;Fachverkäufer*in im Lebensmittelhandwerk;de
+224;90;214;Fachwirt*in  (Geprüfte*r) für Güterverkehr und Logistik;de
+225;90;737;Fachwirt*in (Geprüfte*r) für Außenwirtschaft;de
+226;90;738;Fachwirt*in (Geprüfte*r) für Energiewirtschaft;de
+227;90;215;Fachwirt*in (Geprüfte*r) für Versicherungen und Finanzen;de
+228;90;216;Fachwirt*in (Geprüfte*r) im Gesundheits- und Sozialwesen;de
+229;90;217;Fachwirt*in für Finanzberatung;de
+230;90;218;Fachwirt*in für Personenverkehr und Mobilität;de
+231;90;755;Fachwirt*in im E-Commerce;de
+232;90;219;Fachzahnarzt*Fachzahnärztin für Kieferorthopädie;de
+233;90;220;Fachzahnarzt*Fachzahnärztin für öffentliches Gesundheitswesen;de
+234;90;221;Fachzahnarzt*Fachzahnärztin für Oralchirurgie;de
+235;90;222;Fachzahnarzt*Fachzahnärztin für Parodontologie;de
+236;90;223;Fahrlehrer*in;de
+237;90;224;Fahrradmonteur*in;de
+238;90;225;Fahrzeuginnenausstatter*in (bis 31.7.2021);de
+239;90;756;Fahrzeuginterieur-Mechaniker*in  (ab 1.8.2021);de
+240;90;226;Fahrzeuglackierer*in;de
+241;90;227;Fassadenmonteur*in;de
+242;90;228;Feinoptiker*in;de
+243;90;229;Feinoptikermeister*in;de
+244;90;230;Feinpolierer*in;de
+245;90;231;Feinwerkmechaniker*in;de
+246;90;232;Feinwerkmechanikermeister*in;de
+247;90;233;Fertigungsmechaniker*in;de
+248;90;234;Fertigungsplaner*in (Geprüfte*r) im Tischlerhandwerk;de
+249;90;235;Feuerungs- und Schornsteinbauer*in;de
+250;90;236;Figurenkeramformer*in;de
+251;90;237;Film- und Videoeditor*in (bis 31.7.2020);de
+252;90;239;Fischwirt*in;de
+253;90;240;Fischwirtschaftsmeister*in;de
+254;90;241;Fischwirtschaftsmeister*in Fachrichtung Fischhaltung und Fischzucht;de
+255;90;242;Fischwirtschaftsmeister*in Fachrichtung Kleine Hochsee- und Küstenfischerei;de
+256;90;243;Fischwirtschaftsmeister*in Fachrichtung Seen- und Flussfischerei;de
+257;90;740;Flachglastechnologe*technologin;de
+258;90;245;Flechtwerkgestalter*in;de
+259;90;246;Fleischer*in;de
+260;90;247;Fleischermeister*in;de
+261;90;248;Flexografenmeister*in;de
+262;90;249;Fliesen-, Platten- und Mosaikleger*in;de
+263;90;250;Fliesen-, Platten- und Mosaiklegermeister*in;de
+264;90;251;Florist*in;de
+265;90;252;Floristmeister*in (Geprüfte*r);de
+266;90;253;Flugdatenbearbeiter*in;de
+267;90;254;Fluggeräteelektroniker*in;de
+268;90;255;Fluggerätmechaniker*in;de
+269;90;256;Fluglotse*in;de
+270;90;257;Flugsicherungstechniker*in;de
+271;90;258;Forstmaschinenführer*in (Geprüfte*r);de
+272;90;259;Forstwirt*in;de
+273;90;260;Forstwirtschaftsmeister*in;de
+274;90;261;Fotograf*in;de
+275;90;262;Fotografenmeister*in;de
+276;90;263;Fotomedienfachmann*frau;de
+277;90;264;Fremdsprachenkorrespondent*in (Geprüfte*r);de
+278;90;265;Friseur*in;de
+279;90;266;Friseurmeister*in;de
+280;90;267;Galvaniseurmeister*in;de
+281;90;268;Gärtner*in;de
+282;90;269;Gärtnermeister*in;de
+283;90;270;Gärtnermeister*in Fachrichtung Baumschulen;de
+284;90;271;Gärtnermeister*in Fachrichtung Friedhofsgärtnerei;de
+285;90;272;Gärtnermeister*in Fachrichtung Garten- und Landschaftsbau;de
+286;90;273;Gärtnermeister*in Fachrichtung Gemüsebau;de
+287;90;274;Gärtnermeister*in Fachrichtung Obstbau;de
+288;90;275;Gärtnermeister*in Fachrichtung Staudengärtnerei;de
+289;90;276;Gärtnermeister*in Fachrichtung Zierpflanzenbau;de
+290;90;277;Gebäudereiniger*in;de
+291;90;278;Gebäudereinigermeister*in;de
+292;90;279;Geigenbauer*in;de
+293;90;280;Geigenbauermeister*in;de
+294;90;281;Geograf*in;de
+295;90;282;Geomatiker*in;de
+296;90;284;Germanist*in;de
+297;90;285;Gerüstbauer*in;de
+298;90;286;Gerüstbauermeister*in;de
+299;90;287;Gerüstbau-Kolonnenführer*in (Geprüfte*r);de
+300;90;288;Gestalter*in für visuelles Marketing;de
+301;90;289;Gestaltungsberater*in (Geprüfte*r) im Raumausstatter-Handwerk;de
+302;90;747;Gesundheits- und Kinderkrankenpfleger*in (ab 1.1.2020 nach PflBG);de
+303;90;290;Gesundheits- und Kinderkrankenpfleger*in (bis 31.12.2019 nach KrPflG);de
+304;90;292;Gesundheits- und Krankenpflegehelfer*in;de
+305;90;291;Gesundheits- und Krankenpfleger*in (bis 31.12.2019 nach KrPflG);de
+306;90;293;Gießereimechaniker*in;de
+307;90;294;Glas- und Porzellanmaler*in;de
+308;90;295;Glas- und Porzellanmalermeister*in;de
+309;90;296;Glasapparatebauer*in;de
+310;90;297;Glasapparatebauermeister*in, Glasbläsermeister*in, Thermometermachermeister*in;de
+311;90;298;Glasbläser*in;de
+312;90;299;Glaser*in;de
+313;90;300;Glasermeister*in;de
+314;90;301;Glasmacher*in;de
+315;90;302;Glasveredler*in;de
+316;90;303;Glasveredlermeister*in;de
+317;90;304;Gleisbauer*in;de
+318;90;305;Glockengießermeister*in, Metallformermeister*in, Metallgießermeister*in, Zinngießermeister*in;de
+319;90;306;Gold- und Silberschmiedemeister*in;de
+320;90;307;Goldschmied*in;de
+321;90;308;Graveur*in;de
+322;90;309;Graveurmeister*in;de
+323;90;310;Hafenschiffer*in;de
+324;90;311;Handelsassistent*in (Geprüfte*r) Einzelhandel;de
+325;90;312;Handelsfachwirt*in (Geprüfte*r);de
+326;90;313;Handzuginstrumentenmacher*in;de
+327;90;314;Handzuginstrumentenmachermeister*in;de
+328;90;315;Haus- und Familienpfleger*in;de
+329;90;316;Hauswirtschafter*in;de
+330;90;317;Hebamme und Entbindungspfleger*in;de
+331;90;318;Heilerziehungspfleger*in;de
+332;90;319;Heilpädagoge*in;de
+333;90;320;Heilpraktiker*in;de
+334;90;321;Historiker*in;de
+335;90;322;Hochbaufacharbeiter*in;de
+336;90;323;Holz- und Bautenschützer*in;de
+337;90;324;Holz- und Bautenschutzmeister*in;de
+338;90;325;Holzbearbeitungsmechaniker*in;de
+339;90;326;Holzbildhauer*in;de
+340;90;327;Holzbildhauermeister*in;de
+341;90;328;Holzblasinstrumentenmacher*in;de
+342;90;329;Holzblasinstrumentenmachermeister*in;de
+343;90;330;Holzmechaniker*in;de
+344;90;331;Holzspielzeugmacher*in;de
+345;90;728;Hörakustiker*in;de
+346;90;736;Hörakustikermeister*in;de
+347;90;334;Hotelfachmann*frau;de
+348;90;335;Kaufmann*frau für Hotelmanagement;de
+349;90;336;Hotelmeister*in (Geprüfte*r);de
+350;90;337;Hufbeschlagschmied*in;de
+351;90;338;Immobilienfachwirt*in (Geprüfte*r);de
+352;90;339;Immobilienkaufmann*frau;de
+353;90;340;Industrieelektriker*in;de
+354;90;341;Industriefachwirt*in (Geprüfte*r);de
+355;90;342;Industrie-Isolierer*in;de
+356;90;343;Industriekaufmann*frau;de
+357;90;344;Industriekeramiker*in Anlagentechnik;de
+358;90;345;Industriekeramiker*in Dekorationstechnik;de
+359;90;346;Industriekeramiker*in Modelltechnik;de
+360;90;347;Industriekeramiker*in Verfahrenstechnik;de
+361;90;348;Industriemechaniker*in;de
+362;90;754;Industriemeister*in (Geprüfte*r) - Fachrichtung Printmedien (ab 21.12.2019);de
+363;90;349;Industriemeister*in (Geprüfte*r) Buchbinderei (bis 20.12.2019);de
+364;90;350;Industriemeister*in (Geprüfte*r) Chemie;de
+365;90;351;Industriemeister*in (Geprüfte*r) Elektrotechnik;de
+366;90;352;Industriemeister*in (Geprüfte*r) Glas;de
+367;90;353;Industriemeister*in (Geprüfte*r) Isolierung (Wärme-, Kälte-, Schall- und Brandschutz);de
+368;90;354;Industriemeister*in (Geprüfte*r) Kunststoff und Kautschuk;de
+369;90;355;Industriemeister*in (Geprüfte*r) Lebensmittel;de
+370;90;356;Industriemeister*in (Geprüfte*r) Mechatronik;de
+371;90;357;Industriemeister*in (Geprüfte*r) Metall;de
+372;90;358;Industriemeister*in (Geprüfte*r) Papier- und Kunststoffverarbeitung;de
+373;90;359;Industriemeister*in (Geprüfte*r) Papiererzeugung;de
+374;90;360;Industriemeister*in (Geprüfte*r) Pharmazie;de
+375;90;361;Industriemeister*in (Geprüfte*r) Printmedien;de
+376;90;362;Industriemeister*in (Geprüfte*r) Schuhfertigung;de
+377;90;363;Industriemeister*in (Geprüfte*r) Süßwaren;de
+378;90;364;Industriemeister*in (Geprüfte*r) Textilwirtschaft;de
+379;90;365;Informatiker*in;de
+380;90;366;Informatiker*in (Geprüfte*r) (Certified IT Technical Engineer);de
+381;90;367;Informatikkaufmann*frau (bis 31.7.2020);de
+382;90;368;Informations- und Telekommunikationssystem-Elektroniker*in;de
+383;90;369;Informations- und Telekommunikationssystem-Kaufmann*frau (bis 31.7.2020);de
+384;90;370;Informationselektroniker*in;de
+385;90;371;Informationstechnikermeister*in;de
+386;90;372;Ingenieur*in;de
+387;90;373;Ingenieur*in Markscheidewesen;de
+388;90;374;Ingenieur*in, Beratende*r;de
+389;90;375;Inkassodienstleister*in;de
+390;90;376;Innenarchitekt*in;de
+391;90;377;Installateur- und Heizungsbauermeister*in;de
+392;90;378;Investmentfondskaufmann*frau;de
+393;90;379;Isolierfacharbeiter*in;de
+394;90;380;IT-Berater*in (Geprüfte*r) (Certified IT Business Consultant);de
+395;90;381;IT-Entwickler*in (Geprüfte*r) (Certified IT Systems Manager);de
+396;90;382;IT-Ökonom*in (Geprüfte*r) (Certified IT Marketing Manager);de
+397;90;383;IT-Projektleiter*in (Geprüfte*r) (Certified IT Business Manager);de
+398;90;384;Journalist*in;de
+399;90;385;Justizfachangestellte*r;de
+400;90;386;Kälteanlagenbauermeister*in;de
+401;90;387;Kanalbauer*in;de
+402;90;388;Karosserie- und Fahrzeugbauermeister*in;de
+403;90;389;Karosserie- und Fahrzeugbaumechaniker*in;de
+404;90;390;Kaufmann*frau für audiovisuelle Medien;de
+405;90;719;Kaufmann*frau für Büromanagement;de
+406;90;392;Kaufmann*frau für Dialogmarketing;de
+407;90;749;Kaufmann*frau für Digitalisierungsmanagement (ab 1.8.2020);de
+408;90;750;Kaufmann*frau für Groß- und Außenhandelsmanagement (ab 1.8.2020);de
+409;90;751;Kaufmann*frau für IT-System-Management (ab 1.8.2020);de
+410;90;393;Kaufmann*frau für Kurier-, Express- und Postdienstleistungen;de
+411;90;394;Kaufmann*frau für Marketingkommunikation;de
+412;90;395;Kaufmann*frau für Spedition und Logistikdienstleistung;de
+413;90;396;Kaufmann*frau für Tourismus und Freizeit;de
+414;90;397;Kaufmann*frau für Verkehrsservice;de
+415;90;398;Kaufmann*frau für Versicherungen und Finanzanlagen;de
+416;90;739;Kaufmann*frau im E-Commerce;de
+417;90;399;Kaufmann*frau im Einzelhandel;de
+418;90;400;Kaufmann*frau im Eisenbahn- und Straßenverkehr;de
+419;90;401;Kaufmann*frau im Gesundheitswesen;de
+420;90;402;Kaufmann*frau im Groß- und Außenhandel (bis 31.7.2020);de
+421;90;729;Kaufmännische*r Fachwirt*in nach der Handwerksordnung (Gepr.);de
+422;90;403;Keramiker*in;de
+423;90;404;Keramikermeister*in;de
+424;90;726;Kerzenhersteller*in und Wachsbildner*in;de
+425;90;405;Kinder- und Jugendlichenpsychotherapeut*in;de
+426;90;406;Klauenpfleger*in (Geprüfte*r);de
+427;90;407;Klavier- und Cembalobauer*in;de
+428;90;408;Klavier- und Cembalobauermeister*in;de
+429;90;409;Klempner*in;de
+430;90;410;Klempnermeister*in;de
+431;90;411;Koch*Köchin;de
+432;90;412;Konditor*in;de
+433;90;413;Konditormeister*in;de
+434;90;414;Konstrukteur*in (Geprüfte*r);de
+435;90;415;Konstruktionsmechaniker*in;de
+436;90;416;Korbmachermeister, Korb- und Flechtwerkgestaltermeister*in;de
+437;90;417;Kosmetiker*in;de
+438;90;764;Kosmetikermeister*in;de
+439;90;418;Kraftfahrzeugmechatroniker*in;de
+440;90;419;Kraftfahrzeugsachverständige*r, Amtlich anerkannte*r Sachverständige*r für den Kraftfahrzeugverkehr;de
+441;90;420;Kraftfahrzeugservicemechaniker*in;de
+442;90;421;Kraftfahrzeug-Servicetechniker*in (Geprüfte*r);de
+443;90;422;Kraftfahrzeugtechnikermeister*in;de
+444;90;423;Kraftwerker*in (Geprüfte*r);de
+445;90;424;Küchenmeister*in (Geprüfte*r);de
+446;90;425;Kundenberater*in (Geprüfte*r) im Gartenbau;de
+447;90;426;Kundenberater*in (Geprüfte*r) im Tischlerhandwerk;de
+448;90;427;Kürschner*in;de
+449;90;428;Kürschnermeister*in;de
+450;90;429;Lacklaborant*in;de
+451;90;721;Land- und Baumaschinenmechatroniker*in;de
+452;90;760;Land- und Baumaschinenmechatronikermeister*in (ab 1.7.2021);de
+453;90;430;Landmaschinenmechanikermeister*in (bis 30.6.2021);de
+454;90;431;Landschaftsarchitekt*in;de
+455;90;432;Landwirt*in;de
+456;90;433;Landwirtschaftliche(r) Brennmeister*in;de
+457;90;434;Landwirtschaftsmeister*in;de
+458;90;435;Leasingfachwirt*in (Geprüfte*r);de
+459;90;436;Lebensmittelchemiker*in;de
+460;90;437;Lehrer*in;de
+461;90;438;Leichtflugzeugbauer*in;de
+462;90;439;Leuchtröhrenglasbläser*in;de
+463;90;440;Logistikmeister*in (Geprüfte*r);de
+464;90;441;Logopäde*in;de
+465;90;442;Luftverkehrskaufmann*frau;de
+466;90;443;Maler- und Lackierermeister*in;de
+467;90;444;Maler*in und Lackierer*in;de
+468;90;445;Manufakturporzellanmaler*in;de
+469;90;446;Maschinen- und Anlagenführer*in;de
+470;90;447;Maskenbildner*in;de
+471;90;448;Masseur*in und medizinische*r Bademeister*in;de
+472;90;449;Maßschneider*in;de
+473;90;741;Maßschuhmacher*in;de
+474;90;450;Mathematiker*in;de
+475;90;451;Mathematisch-technische*r Softwareentwickler*in;de
+476;90;452;Maurer- und Betonbauermeister*in;de
+477;90;453;Maurer*in;de
+478;90;455;Mechaniker*in für Reifen- und Vulkanisationstechnik;de
+479;90;456;Mechanikermeister*in für Reifen- und Vulkanisationstechnik, Vulkaniseur- und Reifenmechanikermeister*in;de
+480;90;457;Mechatroniker*in;de
+481;90;458;Mechatroniker*in für Kältetechnik;de
+482;90;752;Medienfachwirt*in (Geprüfte*r) (ab 21.12.2019);de
+483;90;459;Medienfachwirt*in (Geprüfte*r) Digital (bis 20.12.2019);de
+484;90;460;Medienfachwirt*in (Geprüfte*r) Print (bis 20.12.2019);de
+485;90;461;Mediengestalter*in Bild und Ton;de
+486;90;462;Mediengestalter*in Digital und Print;de
+487;90;464;Medienkaufmann*frau Digital und Print;de
+488;90;465;Medientechnologe*in Druck;de
+489;90;466;Medientechnologe*in Druckverarbeitung;de
+490;90;467;Medientechnologe*in Siebdruck;de
+491;90;468;Medizinische*r Fachangestellte*r;de
+492;90;469;Medizinisch-technische*r Assistent*in für Funktionsdiagnostik;de
+493;90;470;Medizinisch-technische*r Laboratoriumsassistent*in;de
+494;90;471;Medizinisch-technische*r Radiologieassistent*in;de
+495;90;472;Meister*in (Geprüfte*r) der Hauswirtschaft;de
+496;90;473;Meister*in (Geprüfte*r) für Bäderbetriebe;de
+497;90;474;Meister*in (Geprüfte*r) für Kraftverkehr;de
+498;90;475;Meister*in (Geprüfte*r) für Kreislauf- und Abfallwirtschaft und Städtereinigung;de
+499;90;476;Meister*in (Geprüfte*r) für Rohr-, Kanal- und Industrieservice;de
+500;90;477;Meister*in (Geprüfte*r) für Schutz und Sicherheit;de
+501;90;753;Meister*in (Geprüfte*r) für Veranstaltungstechnik (ab 21.12.2019);de
+502;90;478;Meister*in (Geprüfte*r) für Veranstaltungstechnik (bis 20.12.2019);de
+503;90;479;Meister*in (Geprüfte*r) für Veranstaltungstechnik Fachrichtung Beleuchtung (bis 20.12.2019);de
+504;90;480;Meister*in (Geprüfte*r) für Veranstaltungstechnik Fachrichtung Bühne/Studio (bis 20.12.2019);de
+505;90;481;Meister*in (Geprüfte*r) für Veranstaltungstechnik Fachrichtung Halle (bis 20.12.2019);de
+506;90;482;Meister*in (Geprüfte*r) Medienproduktion Bild und Ton;de
+507;90;483;Metall- und Glockengießer*in;de
+508;90;484;Metallbauer*in;de
+509;90;485;Metallbauermeister*in;de
+510;90;486;Metallbildner*in;de
+511;90;487;Metallbildnermeister*in;de
+512;90;488;Metallblasinstrumentenmacher*in;de
+513;90;489;Metallblasinstrumentenmachermeister*in;de
+514;90;490;Mikrotechnologe*in;de
+515;90;491;Milchtechnologe*in;de
+516;90;492;Milchwirtschaftliche*r Laborant*in;de
+517;90;493;Milchwirtschaftliche*r Labormeister*in;de
+518;90;494;Modellbauermeister*in;de
+519;90;497;Modist*in;de
+520;90;498;Modistenmeister*in;de
+521;90;499;Molkereimeister*in;de
+522;90;501;Müllermeister*in;de
+523;90;502;Musikfachhändler*in;de
+524;90;503;Natur- und Landschaftspfleger*in (Geprüfte*r);de
+525;90;504;Naturwerksteinmechaniker*in;de
+526;90;505;Notarfachangestellte*r;de
+527;90;718;Notfallsanitäter;de
+528;90;506;Oberflächenbeschichter*in;de
+529;90;509;Oekonom*in;de
+530;90;507;Ofen- und Luftheizungsbauer*in;de
+531;90;508;Ofen- und Luftheizungsbauermeister*in;de
+532;90;511;Orgel- und Harmoniumbauermeister*in;de
+533;90;745;Orgelbauer*in (Fachrichtung Orgelbau/Pfeifenbau);de
+534;90;512;Orthopädiemechaniker*in- und Bandagistenmeister*in, Orthopädietechnikermeister*in;de
+535;90;513;Orthopädieschuhmacher*in;de
+536;90;514;Orthopädieschuhmachermeister*in;de
+537;90;515;Orthopädietechnik-Mechaniker*in;de
+538;90;516;Orthoptist*in;de
+539;90;517;Packmitteltechnologe*in;de
+540;90;518;Papiertechnologe*in;de
+541;90;519;Parkettleger*in;de
+542;90;520;Parkettlegermeister*in;de
+543;90;521;Patentanwalt*Patentanwältin;de
+544;90;522;Patentanwaltsfachangestellte*r;de
+545;90;523;Pelzveredler*in;de
+546;90;524;Personaldienstleistungsfachwirt*in (Geprüfte*r);de
+547;90;525;Personaldienstleistungskaufmann*frau;de
+548;90;526;Personalfachkaufmann*frau (Geprüfte*r);de
+549;90;527;Pferdewirt*in;de
+550;90;528;Pferdewirtschaftsmeister*in;de
+551;90;529;Pferdewirtschaftsmeister*in Fachrichtung Galopprenntraining;de
+552;90;530;Pferdewirtschaftsmeister*in Fachrichtung Pferdezucht und -haltung;de
+553;90;531;Pferdewirtschaftsmeister*in Fachrichtung Reitausbildung;de
+554;90;532;Pferdewirtschaftsmeister*in Fachrichtung Trabrenntraining;de
+555;90;533;Pflanzentechnologe*in;de
+556;90;746;Pflegefachmann/Pflegefachfrau (ab 1.1.2020 nach PflBG);de
+557;90;534;Pharmakant*in;de
+558;90;535;Pharmareferent*in (Geprüfte*r);de
+559;90;536;Pharmazeutisch-kaufmännische*r Angestellte*r;de
+560;90;537;Pharmazeutisch-technische*r Assistent*in;de
+561;90;538;Physiker*in;de
+562;90;539;Physiklaborant*in;de
+563;90;540;Physiotherapeut*in;de
+564;90;541;Pilot*in;de
+565;90;542;Podologe*in;de
+566;90;543;Polier*in (Geprüfte*r);de
+567;90;730;Politikwissenschaftler*in;de
+568;90;544;Polster- und Dekorationsnäher*in;de
+569;90;545;Polsterer*in;de
+570;90;742;Präzisionswerkzeugmechaniker*in;de
+571;90;762;Präzisionswerkzeugmechanikermeister*in (ab 1.7.2021);de
+572;90;763;Print- und Medientechnologiemeister*in (Drucker, Siebdrucker, Flexografen) (ab 1.7.2021);de
+573;90;546;Produktgestalter*in Textil;de
+574;90;547;Produktionsfachkraft Chemie;de
+575;90;548;Produktionsmechaniker*in Textil;de
+576;90;549;Produktionstechnologe*in;de
+577;90;550;Produktprüfer*in Textil;de
+578;90;551;Produktveredler*in Textil;de
+579;90;552;Prozessmanager*in (Geprüfte*r) Elektrotechnik (Process manager electric/electronics);de
+580;90;553;Prozessmanager*in (Geprüfte*r) Mikrotechnologie (Certified Process Manager - Microtechnology);de
+581;90;554;Prozessmanager*in (Geprüfte*r) Produktionstechnologie;de
+582;90;555;Prüfingenieur*in nach Straßenverkehrzulassungsordnung StVZO;de
+583;90;743;Prüftechnologe*technologin Keramik;de
+584;90;556;Psychologe*in;de
+585;90;557;Psychotherapeut*in, psychologische*r;de
+586;90;558;Pyrotechniker*in;de
+587;90;559;Raumausstatter*in;de
+588;90;560;Raumausstattermeister*in;de
+589;90;561;Rechtsanwalt*rechtsanwältin;de
+590;90;562;Rechtsanwalt*rechtsanwältin, europäische*r;de
+591;90;563;Rechtsanwalts- und Notarfachangestellte*r;de
+592;90;564;Rechtsanwaltsfachangestellte*r;de
+593;90;565;Rechtsdienstleister*in im ausländischen Recht;de
+594;90;566;Rechtsfachwirt*in (Geprüfte*r);de
+595;90;733;Rechtswissenschaftler*in;de
+596;90;567;Rentenberater*in;de
+597;90;568;Fachmann*frau für Restaurants und Veranstaltungsgastronomie;de
+598;90;569;Restaurantmeister*in (Geprüfte*r);de
+599;90;571;Revierjagdmeister*in;de
+600;90;572;Revierjäger*in;de
+601;90;573;Rohrleitungsbauer*in;de
+602;90;574;Rollladen- und Jalousiebauermeister*in, Rollladen- und Sonnenschutztechnikermeister*in;de
+603;90;575;Rollladen- und Sonnenschutzmechatroniker*in;de
+604;90;576;Sachkundige*r für die Anwendung von Pflanzenschutzmitteln;de
+605;90;577;Sattler- und Feintäschnermeister*in;de
+606;90;578;Sattler*in;de
+607;90;579;Schädlingsbekämpfer*in;de
+608;90;580;Schifffahrtskaufmann*frau;de
+609;90;581;Schiffsmechaniker*in;de
+610;90;582;Schilder- und Lichtreklamehersteller*in;de
+611;90;583;Schilder- und Lichtreklameherstellermeister*in;de
+612;90;584;Schließ- und Sicherungstechniker*in (Geprüfte*r);de
+613;90;586;Schneidwerkzeugmechanikermeister*in (bis 30.6.2021);de
+614;90;587;Schornsteinfeger*in;de
+615;90;588;Schornsteinfegermeister*in;de
+616;90;589;Schriftsetzer-(Buchdrucker-)Meister*in;de
+617;90;590;Schuhfertiger*in;de
+618;90;592;Schuhmachermeister*in;de
+619;90;593;Segelmacher*in;de
+620;90;594;Segelmachermeister*in;de
+621;90;595;Seilbahnbetriebsleiter*in (Bayern);de
+622;90;596;Seiler*in;de
+623;90;597;Seilermeister*in;de
+624;90;598;Servicefachkraft für Dialogmarketing;de
+625;90;599;Servicefahrer*in;de
+626;90;600;Servicekaufmann*frau im Luftverkehr;de
+627;90;601;Servicekraft für Schutz und Sicherheit;de
+628;90;602;Siebdruckermeister*in;de
+629;90;603;Silberschmied*in;de
+630;90;604;Skilehrer*in (Bayern);de
+631;90;605;Snowboardlehrer*in (Bayern);de
+632;90;606;Sonderpädagogische Lehrämter;de
+633;90;607;Sozialpädagoge*in, Sozialarbeiter*in;de
+634;90;608;Sozialsekretär*in (Geprüfte*r);de
+635;90;609;Sozialversicherungsfachangestellte*r;de
+636;90;610;Sozialversicherungsfachwirt*in Fachrichtung gesetzliche Renten- und knappschaftliche Sozialversicherung;de
+637;90;611;Sozialwissenschaftler*in;de
+638;90;613;Spezialtiefbauer*in;de
+639;90;614;Spielzeughersteller*in;de
+640;90;615;Sport- und Fitnesskaufmann*frau;de
+641;90;616;Sportfachmann*frau;de
+642;90;617;Sportfachwirt*in (Geprüfte*r);de
+643;90;732;Sprachwissenschaftler*in;de
+644;90;618;Stadtplaner*in;de
+645;90;619;Stanz- und Umformmechaniker;de
+646;90;620;Steinmetz und Steinbildhauer*in;de
+647;90;621;Steinmetz- und Steinbildhauermeister*in;de
+648;90;622;Steuerberater*in;de
+649;90;623;Steuerfachangestellte*r;de
+650;90;625;Straßenbauer*in;de
+651;90;626;Straßenbauermeister*in;de
+652;90;627;Straßenwärter*in;de
+653;90;628;Stuckateur*in;de
+654;90;629;Stuckateurmeister*in;de
+655;90;720;Süßwarentechnologe*in;de
+656;90;630;Systemelektroniker*in (bis 31.7.2021);de
+657;90;631;Tankwart*in;de
+658;90;632;Taucher*in (Geprüfte*r);de
+659;90;633;Technische*r Betriebswirt*in (Geprüfte*r);de
+660;90;634;Technische*r Fachwirt*in (Geprüfte*r);de
+661;90;635;Technische*r Konfektionär*in;de
+662;90;636;Technische*r Modellbauer*in;de
+663;90;637;Technische*r Produktdesigner*in;de
+664;90;638;Technische*r Systemplaner*in;de
+665;90;724;Textil- und Modenäher*in;de
+666;90;725;Textil- und Modeschneider*in;de
+667;90;639;Textilgestalter*in im Handwerk;de
+668;90;640;Textilgestaltermeister*in;de
+669;90;641;Textillaborant*in;de
+670;90;642;Textilreiniger*in;de
+671;90;643;Textilreinigermeister*in;de
+672;90;644;Thermometermacher*in;de
+673;90;645;Tiefbaufacharbeiter*in;de
+674;90;646;Tierarzt*Tierärztin (Erteilung der Approbation);de
+675;90;647;Tierarzt*Tierärztin (Weiterbildung zum/zur Fachtierarzt*Fachtierärztin);de
+676;90;648;Tiermedizinische*r Fachangestellte*r;de
+677;90;649;Tierpflegemeister*in (Geprüfte*r);de
+678;90;650;Tierpfleger*in;de
+679;90;651;Tierwirt*in;de
+680;90;652;Tierwirtschaftsmeister*in;de
+681;90;653;Tierwirtschaftsmeister*in Fachrichtung Geflügelhaltung;de
+682;90;654;Tierwirtschaftsmeister*in Fachrichtung Imkerei;de
+683;90;655;Tierwirtschaftsmeister*in Fachrichtung Rinderhaltung;de
+684;90;656;Tierwirtschaftsmeister*in Fachrichtung Schäferei;de
+685;90;657;Tierwirtschaftsmeister*in Fachrichtung Schweinehaltung;de
+686;90;658;Tierzuchtleiter*in (für die Tierzucht verantwortliche Person);de
+687;90;659;Tischler*in;de
+688;90;660;Tischlermeister*in;de
+689;90;661;Tourismusfachwirt*in;de
+690;90;662;Tourismuskaufmann*frau (Kaufmann*frau für Privat- und Geschäftsreisen);de
+691;90;663;Trockenbaumonteur*in;de
+692;90;744;Übersetzer*in (Geprüfte*r);de
+693;90;664;Uebersetzer*in;de
+694;90;665;Uebersetzer*in, öffentlich bestellt und/oder staatlich vereidigt;de
+695;90;666;Uhrmacher*in;de
+696;90;667;Uhrmachermeister*in;de
+697;90;668;Veranstaltungsfachwirt*in (Geprüfte*r);de
+698;90;669;Veranstaltungskaufmann*frau;de
+699;90;670;Verfahrensmechaniker*in für Beschichtungstechnik;de
+700;90;671;Verfahrensmechaniker*in für Brillenoptik;de
+701;90;672;Verfahrensmechaniker*in für Glastechnik;de
+702;90;673;Verfahrensmechaniker*in für Kunststoff- und Kautschuktechnik;de
+703;90;674;Verfahrensmechaniker*in in der Hütten- und Halbzeugindustrie;de
+704;90;675;Verfahrensmechaniker*in in der Steine- und Erdenindustrie;de
+705;90;735;Verfahrenstechnologe*in Mühlen- und Getreidewirtschaft;de
+706;90;676;Vergolder*in;de
+707;90;677;Vergoldermeister*in;de
+708;90;678;Verkäufer*in;de
+709;90;679;Vermessungstechniker*in;de
+710;90;680;Versicherungsvermittler*in;de
+711;90;681;Verwaltungsfachangestellte*r;de
+712;90;682;Veterinärmedizinisch-technische*r Assistent*in;de
+713;90;683;Volkswirt*in;de
+714;90;684;Vorpolierer*in in der Schmuck- und Kleingeräteherstellung;de
+715;90;686;Wachsziehermeister*in;de
+716;90;687;Wärme-, Kälte- und Schallschutzisolierer*in;de
+717;90;688;Wärme-, Kälte- und Schallschutzisolierermeister*in;de
+718;90;689;Wasserbauer*in;de
+719;90;690;Wasserbaumeister*in (Geprüfte*r);de
+720;90;691;Wassermeister*in (Geprüfte*r);de
+721;90;692;Weinküfermeister*in;de
+722;90;693;Weintechnologe*in;de
+723;90;694;Werkfeuerwehrmann*frau;de
+724;90;695;Werkgehilfe*in Schmuckwarenindustrie, Taschen- und Armbanduhren;de
+725;90;761;Werkstein- und Terrazzoherstellermeister*in (ab 1.7.2021);de
+726;90;696;Werkstoffprüfer*in;de
+727;90;697;Werkzeugmechaniker*in;de
+728;90;698;Winzer*in;de
+729;90;699;Winzermeister*in;de
+730;90;700;Wirtschaftsassistent*in (Geprüfte*r) Industrie;de
+731;90;701;Wirtschaftsfachwirt*in (Geprüfte*r);de
+732;90;702;Wirtschaftsinformatiker*in (Geprüfte*r) (Certified IT Business Engineer);de
+733;90;703;Wirtschaftsprüfer*in;de
+734;90;704;Wirtschaftswissenschaftler*in;de
+735;90;705;Zahnarzt*Zahnärztin (Erteilung der Approbation);de
+736;90;706;Zahnmedizinische*r Fachangestellte*r;de
+737;90;707;Zahntechniker*in;de
+738;90;708;Zahntechnikermeister*in;de
+739;90;709;Zerspanungsmechaniker*in;de
+740;90;710;Zimmerer*in;de
+741;90;711;Zimmerermeister*in;de
+742;90;712;Zupfinstrumentenmacher*in;de
+743;90;713;Zupfinstrumentenmachermeister*in;de
+744;90;715;Zweiradmechanikermeister*in;de
+745;90;723;Zweiradmechatroniker*in;de
+746;90;716;Zweirad-Servicetechniker*in Fachrichtung Motorisierte Zweiradtechnik;de
+747;90;717;Zweirad-Servicetechniker*in Fachrichtung Nichtmotorisierte Zweiradtechnik;de
