@@ -6,6 +6,20 @@
 
 <f:section name="main">
 
+<f:if condition="{firstcolheader} != ''">
+<f:then>
+	<script>
+		(function($) {
+		    $(document).ready(function() {
+		    	location.href = "#berufstaatstatsframe"; 
+		    });
+		})(jQuery);		
+	</script>
+</f:then>
+</f:if>
+
+<f:flashMessages />
+
 <div class="uebersicht-beratungsstelle">
 	<div><span class="label-beratungsstelle">Anzahl Beratungsstellen gesamt:</span> <span class="value-beratungsstelle">{anzberatungsstellen}</span></div>
 	<div><span class="label-beratungsstelle">Anzahl Berater:innen gesamt:</span> <span class="value-beratungsstelle">{anzalleberater}</span></div>	
@@ -107,6 +121,7 @@
 		</label>
 		<f:form.select name="bundeslandauswahl" id="selectbundesland" options="{allebundeslaender}" optionValueField="bundesland" optionLabelField="bundesland" prependOptionValue="%" prependOptionLabel="-alle-" value="{bundeslandselected}"/>
 </f:form>
+<br>
 <table class="uebersicht-statistik">
 	<tr>
 		<th></th>
@@ -166,6 +181,46 @@
 		<td><f:format.number>{SUMtotalavgmonthb}</f:format.number></td>
 	</tr>
 </table>
+
+<h1>Statistik nach Beruf / Staatsangehörigkeit</h1>
+<div class="filterframe exportfilterform" id="berufstaatstatsframe">
+	<f:form class="statsform" method="post" controller="Administration" action="adminuebersicht" name="berufstaatstats" >
+			Auswahl Bundesland: <f:form.select name="filterbundesland" options="{allebundeslaender}" optionValueField="bundesland" optionLabelField="bundesland" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterbundesland}"/>
+			Auswahl Status: <f:form.select value="{filterberatungsstatus}" name="filterberatungsstatus" options="{beratungsstatusarr}" optionValueField="key" optionLabelField="value" />
+			von: <f:form.textfield size="10" id="datepickerfiltervon" value="{filtervon}" name="filtervon" />
+			bis: <f:form.textfield size="10" id="datepickerfilterbis" value="{filterbis}" name="filterbis" />				
+			<br>
+			Auswahl Erste Staatsangehörigkeit: <f:form.select name="filterstaat" options="{staatenarr}" optionValueField="key" optionLabelField="value" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterstaat}"/>
+			Auswahl Beruf/Abschluss: <f:form.select name="filterberuf" options="{berufearr}" optionValueField="key" optionLabelField="value" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterberuf}"/>
+			<br>
+			<f:form.button type="submit" name="showstats">Statistik anzeigen</f:form.button>
+	</f:form>
+</div>
+
+<f:if condition="{firstcolheader} != ''">
+<f:then>
+	<div id="statistikoutput">
+		<table>
+			<tbody>
+			<tr>
+				<th></th>
+				<th>{firstcolheader}</th>
+				<th>Anzahl</th>
+			</tr>
+			<f:for each="{statistikergebnisarray}" as="element" key="key">
+				<tr>
+					<td>{key + 1}</td>
+					<td>{element.titel}</td>
+					<td>{element.anz}</td>
+				</tr>
+			</f:for>
+			</tbody>
+		</table>
+	</div>
+	<pre>Anm.: Es werden maximal die ersten 20 Werte ausgegeben.</pre>
+	<br>
+</f:then>
+</f:if>
 
 <h2>Letzte 50 Anmeldungen</h2>
 <div class="pretablediv">

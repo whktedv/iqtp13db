@@ -147,6 +147,9 @@ $(document).ready(function() {
 	$('#exportfilterselect').change(function() {
 	  $("#exportfilterform").submit(); 
 	});
+	$('#exportfilterselectstaat').change(function() {
+	  $("#exportfilterform").submit(); 
+	});
 	
 		
 	

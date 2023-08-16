@@ -759,8 +759,10 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $filtervon = isset($valArray['filtervon']) ? $valArray['filtervon'] : '01.01.1970';
         $filterbis = isset($valArray['filtervon']) ? $valArray['filterbis'] : '31.12.2099';
         
-        $bundeslandselected = $valArray['bundeslandauswahl'] ?? '%';
+        $bundeslandselected = $valArray['filterbundesland'] ?? '%';
         $allebundeslaender = $this->userGroupRepository->findAllBundeslaender();
+        $staatselected = $valArray['filterstaat'] ?? '%';
+        //DebuggerUtility::var_dump($valArray);
         
         $arrjanein = array(0 => '', 1 => 'ja', 2 => 'nein', 3 => 'keine Angabe');
         $arrerwerbsstatus = $this->settings['erwerbsstatus'];
@@ -790,13 +792,15 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         if($fberatungsstatus == 1 || $fberatungsstatus == NULL) {
             $teilnehmers = array();
         } elseif($fberatungsstatus == 13) {
-            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer(4, 0, $filtervon, $filterbis, $this->niqbid, $bundeslandselected);
+            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer(4, 0, $filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected);
         } elseif($fberatungsstatus == 12) {
-            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer(2, 0, $filtervon, $filterbis, $this->niqbid, $bundeslandselected);
+            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer(2, 0, $filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected);
         } elseif($fberatungsstatus == 11) {
-            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer(1, 0, $filtervon, $filterbis, $this->niqbid, $bundeslandselected);
+            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer(1, 0, $filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected);
+        } elseif($fberatungsstatus == 10) {
+            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer(0, 0, $filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected);
         } else {
-            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer(0, 1, $filtervon, $filterbis, $this->niqbid, $bundeslandselected);
+            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer(0, 1, $filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected);
         }
         
         foreach ($teilnehmers as $akey => $atn) {
@@ -905,6 +909,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $rows[$x]['beratungsdauer'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungsdauer');
                 $rows[$x]['beratungdatum'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungdatum');
                 $rows[$x]['erstberatungabgeschlossen'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'erstberatungabgeschlossen');
+                $einwilligunginfo = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'einwilligunginfo');
+                if($einwilligunginfo == 1) $rows[$x]['einwilligunginfo'] = 'ja';
+                else $rows[$x]['einwilligunginfo'] = 'nein';
                 
                 foreach($abschluesse[$x] as $y => $abschluss) {
                     $aprops = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getGettablePropertyNames($abschluss);
@@ -973,6 +980,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'Beratungsdauer' => 'string',
                 'Beratungdatum' => 'string',
                 'Erstberatungabgeschlossen' => 'string',
+                'Einwilligung Infos' => 'string',
                 'Abschluss1 Referenzberuf zugewiesen' => 'string',
                 'Abschluss1 Abschlussart' => 'string',
                 'Abschluss1 Erwerbsland' => 'string',
@@ -1039,10 +1047,16 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     'callercontroller' => 'Backend',
                     'callerpage' => $currentPage,
                     'filterberatungsstatus' => $fberatungsstatus,
+                    'filterbundesland' => $bundeslandselected,
+                    'filterstaat' => $staatselected,
                     'filteron' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus')
                 ]
                 );
         } else {
+            foreach($staaten as $staat) {
+                $staatenarr[$staat->getStaatid()] = $staat->getTitel();
+            }
+            
             $filtervon = isset($valArray['filtervon']) ? $valArray['filtervon'] : '';
             $filterbis = isset($valArray['filterbis']) ? $valArray['filterbis'] : '';
             $this->view->assignMultiple(
@@ -1058,7 +1072,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     'beratungsstelle' => $this->usergroup->getTitle(),
                     'niqbid' => $this->niqbid,
                     'allebundeslaender' => $allebundeslaender,
-                    'bundeslandselected' => $bundeslandselected
+                    'filterbundesland' => $bundeslandselected,
+                    'filterstaat' => $staatselected,
+                    'staatenarr' => $staatenarr
                 ]
                 );
         }

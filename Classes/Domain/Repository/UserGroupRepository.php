@@ -97,8 +97,7 @@ class UserGroupRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         return $query;
     }
     
-    public function findAllBundeslaender()
-    {
+    public function findAllBundeslaender() {
         $query = $this->createQuery();
         $query->statement("SELECT DISTINCT(bundesland) FROM fe_groups WHERE bundesland != '' ORDER BY bundesland");
         $query = $query->execute(true);
@@ -108,9 +107,7 @@ class UserGroupRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     public function getallplzarray() {
         $query = $this->createQuery();
         $query->statement("SELECT niqbid, plzlist FROM fe_groups");
-        $query = $query->execute(true);
-        
-        
+        $query = $query->execute(true);        
         return $query;
     }
     

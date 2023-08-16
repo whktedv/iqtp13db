@@ -18,6 +18,8 @@ use Ud\Iqtp13db\Domain\Repository\DokumentRepository;
 use Ud\Iqtp13db\Domain\Repository\BeraterRepository;
 use Ud\Iqtp13db\Domain\Repository\AbschlussRepository;
 use TYPO3\CMS\Core\Resource\StorageRepository;
+use Ud\Iqtp13db\Domain\Repository\BerufeRepository;
+use Ud\Iqtp13db\Domain\Repository\StaatenRepository;
 
 /***
  *
@@ -45,8 +47,10 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
     protected $beraterRepository;
     protected $abschlussRepository;
     protected $storageRepository;
+    protected $berufeRepository;
+    protected $staatenRepository;
     
-    public function __construct(UserGroupRepository $userGroupRepository, TeilnehmerRepository $teilnehmerRepository, FolgekontaktRepository $folgekontaktRepository, DokumentRepository $dokumentRepository, BeraterRepository $beraterRepository, AbschlussRepository $abschlussRepository, StorageRepository $storageRepository)
+    public function __construct(UserGroupRepository $userGroupRepository, TeilnehmerRepository $teilnehmerRepository, FolgekontaktRepository $folgekontaktRepository, DokumentRepository $dokumentRepository, BeraterRepository $beraterRepository, AbschlussRepository $abschlussRepository, StorageRepository $storageRepository, BerufeRepository $berufeRepository, StaatenRepository $staatenRepository)
     {
         $this->userGroupRepository = $userGroupRepository;
         $this->teilnehmerRepository = $teilnehmerRepository;
@@ -55,6 +59,8 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         $this->beraterRepository = $beraterRepository;
         $this->abschlussRepository = $abschlussRepository;
         $this->storageRepository = $storageRepository;
+        $this->berufeRepository = $berufeRepository;
+        $this->staatenRepository = $staatenRepository;
     }
     
     /**
@@ -234,6 +240,54 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         
         $letzteanmeldungen = $this->teilnehmerRepository->findLast4Admin();
         
+        // *********** Stats Bundesland/Beruf/Staatsangehörigkeit ***********
+        
+        $berufe = $this->berufeRepository->findAll();
+        foreach($berufe as $beruf) {
+            $berufearr[$beruf->getBerufid()] = $beruf->getTitel();
+        }
+        $staaten = $this->staatenRepository->findByLangisocode('de');
+        foreach($staaten as $staat) {
+            $staatenarr[$staat->getStaatid()] = $staat->getTitel();
+        }
+        $allebundeslaender = $this->userGroupRepository->findAllBundeslaender();
+        array_pop($this->settings['filterberatungsstatus']);
+        $beratungsstatusarr = $this->settings['filterberatungsstatus'];
+        $firstcolheader = '';
+        
+        if(isset($valArray['showstats'])) {
+            $bundeslandselected = $valArray['filterbundesland'] ?? '%';
+            $staatselected = $valArray['filterstaat'] ?? '%';
+            $berufselected = $valArray['filterberuf'] ?? '%';
+            $filtervon = isset($valArray['filtervon']) ? ($valArray['filtervon'] != '' ? $valArray['filtervon'] : '01.01.1970') : '01.01.1970';
+            $filterbis = isset($valArray['filtervon']) ? ($valArray['filterbis'] != '' ? $valArray['filterbis'] : '31.12.2099') : '31.12.2099';
+            $fberatungsstatus = isset($valArray['filterberatungsstatus']) ? $valArray['filterberatungsstatus'] : '';
+            
+            if($berufselected == '%' && $staatselected == '%') {
+                // Fehler
+                $this->addFlashMessage("FEHLER: Mindestens 'Staatsangehörigkeit' oder 'Beruf' müssen selektiert sein!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            } else {
+                if($fberatungsstatus == 13) {
+                    $type = 4;
+                } elseif($fberatungsstatus == 12) {
+                    $type = 2;
+                } elseif($fberatungsstatus == 11) {
+                    $type = 1;
+                } else {
+                    $type = 0;
+                }
+                $statistikergebnisarray = $this->teilnehmerRepository->showAdminStatsBerufLand($type, $filtervon, $filterbis, $bundeslandselected, $berufselected, $staatselected);
+                
+                if($berufselected == '%') $firstcolheader = 'Beruf/Abschluss';
+                elseif($staatselected == '%') $firstcolheader = 'Erste Staatsangehörigkeit';
+                elseif($bundeslandselected == '%') $firstcolheader = 'Bundesland';
+                
+                if(count($statistikergebnisarray) == 0) $this->addFlashMessage("Keine Werte!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+            }
+            
+        }        
+        // ******************************************************
+        
         // ********************* PLZ doppelt vergeben? *********************
         $plzarray = $this->userGroupRepository->getallplzarray();
         $bidplzarray = array();
@@ -253,6 +307,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
             if($doppelteplz != '') $doppelteplzberatungsstelle[$doppelteplz] = $this->userGroupRepository->getBeratungsstelle4PLZ($doppelteplz, $this->settings['beraterstoragepid']);
         }
         // ******************************************************************
+        
         
         $this->view->assignMultiple(
             [
@@ -301,7 +356,19 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 'letzteanmeldungen' => $letzteanmeldungen,
                 'allebundeslaender' => $allebundeslaender,
                 'bundeslandselected' => $bundeslandselected,
-                'doppelteplzarray' => $doppelteplzberatungsstelle
+                'doppelteplzarray' => $doppelteplzberatungsstelle,
+                'beratungsstatusarr' => $beratungsstatusarr,
+                'staatenarr' => $staatenarr,
+                'berufearr' => $berufearr,
+                'allebundeslaender' => $allebundeslaender,
+                'filtervon' => $filtervon,
+                'filterbis' => $filterbis,
+                'filterberatungsstatus' => $fberatungsstatus,
+                'filterbundesland' => $bundeslandselected,
+                'filterstaat' => $staatselected,
+                'filterberuf' => $berufselected,
+                'firstcolheader' => $firstcolheader,
+                'statistikergebnisarray' => $statistikergebnisarray
             ]
             );
     }

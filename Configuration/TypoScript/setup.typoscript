@@ -30,6 +30,7 @@ plugin.tx_iqtp13db.settings {
 	}
 	
 	filterberatungsstatus {
+		10 = alle nicht gelöschten
 		11 = Angemeldet (bestätigt)
 		12 = Beraten
 		13 = Archiviert
