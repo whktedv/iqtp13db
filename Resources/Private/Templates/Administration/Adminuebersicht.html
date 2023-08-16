@@ -206,12 +206,14 @@
 				<th></th>
 				<th>{firstcolheader}</th>
 				<th>Anzahl</th>
+				<th>Anteil</th>
 			</tr>
-			<f:for each="{statistikergebnisarray}" as="element" key="key">
+			<f:for each="{ausgabearray}" as="element" key="key">
 				<tr>
 					<td>{key + 1}</td>
 					<td>{element.titel}</td>
 					<td>{element.anz}</td>
+					<td>{element.anteil} %</td>
 				</tr>
 			</f:for>
 			</tbody>

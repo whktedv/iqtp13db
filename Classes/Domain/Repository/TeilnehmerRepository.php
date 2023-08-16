@@ -550,7 +550,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                     AND d.bundesland LIKE '$bundesland'
                     AND erste_staatsangehoerigkeit LIKE '$staat'
                     AND a.hidden = 0 and a.deleted = 0
-                    GROUP BY referenzberufzugewiesen ORDER BY anz DESC LIMIT 20";
+                    GROUP BY referenzberufzugewiesen ORDER BY anz DESC";
         } elseif ($staat == '%') {
             // Ausgabe Liste Staatsangehörigkeit
             $sql = "SELECT c.titel, count(erste_staatsangehoerigkeit) as anz
@@ -565,7 +565,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                     AND d.bundesland LIKE '$bundesland'
                     AND b.referenzberufzugewiesen LIKE '$beruf'
                     AND a.hidden = 0 and a.deleted = 0
-                    GROUP BY erste_staatsangehoerigkeit ORDER BY anz DESC LIMIT 20";
+                    GROUP BY erste_staatsangehoerigkeit ORDER BY anz DESC";
         } elseif($bundesland == '%') {
             // Ausgabe Liste Bundesland
             $sql = "SELECT d.bundesland, count(d.bundesland) as anz
@@ -580,7 +580,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                     AND b.referenzberufzugewiesen LIKE '$beruf'
                     AND erste_staatsangehoerigkeit LIKE '$staat'
                     AND a.hidden = 0 and a.deleted = 0
-                    GROUP BY d.bundesland ORDER BY anz DESC LIMIT 20";
+                    GROUP BY d.bundesland ORDER BY anz DESC";
         } else {
             // Fehler
         }

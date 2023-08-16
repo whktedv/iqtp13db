@@ -180,8 +180,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
             $ergarraywartezeitberatung = $this->teilnehmerRepository->calcwaitingdays('%','beratung');
             foreach($ergarraywartezeitberatung as $erg) $days4beratung[$erg['monat']] = $erg['wert'];
         }
-        
-               
+                       
         ksort($angemeldeteTN);
         ksort($qfolgekontakte);
         ksort($erstberatung);
@@ -240,7 +239,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         
         $letzteanmeldungen = $this->teilnehmerRepository->findLast4Admin();
         
-        // *********** Stats Bundesland/Beruf/Staatsangehörigkeit ***********
+        // *********** Stats Bundesland/Beruf/Staatsangehörigkeit *************
         
         $berufe = $this->berufeRepository->findAll();
         foreach($berufe as $beruf) {
@@ -283,10 +282,24 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 elseif($bundeslandselected == '%') $firstcolheader = 'Bundesland';
                 
                 if(count($statistikergebnisarray) == 0) $this->addFlashMessage("Keine Werte!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+                
+                $statsarr = array();
+                $ausgabearray = array();
+                foreach($statistikergebnisarray as $arrelemarr) {
+                    $statsarr[$arrelemarr['titel']] = $arrelemarr['anz'];
+                    $ausgabearray[] = $arrelemarr;
+                }                
+                $anzgesamt = array_sum($statsarr);
+                $i = 0;
+                foreach($ausgabearray as $key => $val) {
+                    if($i > 19) break;
+                    $ausgabearray[$key]['anteil'] = floatval($ausgabearray[$key]['anz']/$anzgesamt) * 100;
+                    $i++;
+                }
             }
             
         }        
-        // ******************************************************
+        // *****************************************************************
         
         // ********************* PLZ doppelt vergeben? *********************
         $plzarray = $this->userGroupRepository->getallplzarray();
@@ -361,14 +374,14 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 'staatenarr' => $staatenarr,
                 'berufearr' => $berufearr,
                 'allebundeslaender' => $allebundeslaender,
-                'filtervon' => $filtervon,
-                'filterbis' => $filterbis,
-                'filterberatungsstatus' => $fberatungsstatus,
-                'filterbundesland' => $bundeslandselected,
-                'filterstaat' => $staatselected,
-                'filterberuf' => $berufselected,
+                'filtervon' => $filtervon ?? '',
+                'filterbis' => $filterbis ?? '',
+                'filterberatungsstatus' => $fberatungsstatus ?? '',
+                'filterbundesland' => $bundeslandselected ?? '',
+                'filterstaat' => $staatselected ?? '',
+                'filterberuf' => $berufselected ?? '',
                 'firstcolheader' => $firstcolheader,
-                'statistikergebnisarray' => $statistikergebnisarray
+                'ausgabearray' => $ausgabearray ?? ''
             ]
             );
     }
