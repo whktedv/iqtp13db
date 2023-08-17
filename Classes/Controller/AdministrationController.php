@@ -255,47 +255,43 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         $firstcolheader = '';
         
         if(isset($valArray['showstats'])) {
-            $bundeslandselected = $valArray['filterbundesland'] ?? '%';
+            $filterbundesland = $valArray['filterbundesland'] ?? '%';
             $staatselected = $valArray['filterstaat'] ?? '%';
             $berufselected = $valArray['filterberuf'] ?? '%';
             $filtervon = isset($valArray['filtervon']) ? ($valArray['filtervon'] != '' ? $valArray['filtervon'] : '01.01.1970') : '01.01.1970';
             $filterbis = isset($valArray['filtervon']) ? ($valArray['filterbis'] != '' ? $valArray['filterbis'] : '31.12.2099') : '31.12.2099';
             $fberatungsstatus = isset($valArray['filterberatungsstatus']) ? $valArray['filterberatungsstatus'] : '';
             
-            if($berufselected == '%' && $staatselected == '%') {
-                // Fehler
-                $this->addFlashMessage("FEHLER: Mindestens 'Staatsangehörigkeit' oder 'Beruf' müssen selektiert sein!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            if($fberatungsstatus == 13) {
+                $type = 4;
+            } elseif($fberatungsstatus == 12) {
+                $type = 2;
+            } elseif($fberatungsstatus == 11) {
+                $type = 1;
             } else {
-                if($fberatungsstatus == 13) {
-                    $type = 4;
-                } elseif($fberatungsstatus == 12) {
-                    $type = 2;
-                } elseif($fberatungsstatus == 11) {
-                    $type = 1;
-                } else {
-                    $type = 0;
-                }
-                $statistikergebnisarray = $this->teilnehmerRepository->showAdminStatsBerufLand($type, $filtervon, $filterbis, $bundeslandselected, $berufselected, $staatselected);
-                
-                if($berufselected == '%') $firstcolheader = 'Beruf/Abschluss';
-                elseif($staatselected == '%') $firstcolheader = 'Erste Staatsangehörigkeit';
-                elseif($bundeslandselected == '%') $firstcolheader = 'Bundesland';
-                
-                if(count($statistikergebnisarray) == 0) $this->addFlashMessage("Keine Werte!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
-                
-                $statsarr = array();
-                $ausgabearray = array();
-                foreach($statistikergebnisarray as $arrelemarr) {
-                    $statsarr[$arrelemarr['titel']] = $arrelemarr['anz'];
-                    $ausgabearray[] = $arrelemarr;
-                }                
-                $anzgesamt = array_sum($statsarr);
-                $i = 0;
-                foreach($ausgabearray as $key => $val) {
-                    if($i > 19) break;
-                    $ausgabearray[$key]['anteil'] = floatval($ausgabearray[$key]['anz']/$anzgesamt) * 100;
-                    $i++;
-                }
+                $type = 0;
+            }
+            $statistikergebnisarray = $this->teilnehmerRepository->showAdminStatsBerufLand($type, $filtervon, $filterbis, $filterbundesland, $berufselected, $staatselected);
+             
+            if($berufselected == '%') $firstcolheader = 'Beruf/Abschluss';
+            elseif($staatselected == '%') $firstcolheader = 'Erste Staatsangehörigkeit';
+            elseif($filterbundesland == '%') $firstcolheader = 'Bundesland';
+            else $firstcolheader = 'Geschlecht';
+            
+            if(count($statistikergebnisarray) == 0) $this->addFlashMessage("Keine Werte!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+            
+            $statsarr = array();
+            $ausgabearray = array();
+            foreach($statistikergebnisarray as $arrelemarr) {
+                $titel = is_null($arrelemarr['titel']) ? 'kein Wert eingetragen' : $arrelemarr['titel'];
+                $arrelemarr['titel'] = $titel;
+                $statsarr[$titel] = $arrelemarr['anz'];
+                $ausgabearray[] = $arrelemarr;
+            }            
+            $anzgesamt = array_sum($statsarr);
+            $ausgabearray = array_slice($ausgabearray, 0, 20);
+            foreach($ausgabearray as $key => $val) {
+                $ausgabearray[$key]['anteil'] = floatval($ausgabearray[$key]['anz']/$anzgesamt) * 100;
             }
             
         }        
@@ -377,11 +373,12 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 'filtervon' => $filtervon ?? '',
                 'filterbis' => $filterbis ?? '',
                 'filterberatungsstatus' => $fberatungsstatus ?? '',
-                'filterbundesland' => $bundeslandselected ?? '',
+                'filterbundesland' => $filterbundesland ?? '',
                 'filterstaat' => $staatselected ?? '',
                 'filterberuf' => $berufselected ?? '',
                 'firstcolheader' => $firstcolheader,
-                'ausgabearray' => $ausgabearray ?? ''
+                'ausgabearray' => $ausgabearray ?? '',
+                'anzgesamt' => $anzgesamt ?? ''         
             ]
             );
     }

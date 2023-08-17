@@ -193,7 +193,7 @@
 			Auswahl Erste Staatsangehörigkeit: <f:form.select name="filterstaat" options="{staatenarr}" optionValueField="key" optionLabelField="value" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterstaat}"/>
 			Auswahl Beruf/Abschluss: <f:form.select name="filterberuf" options="{berufearr}" optionValueField="key" optionLabelField="value" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterberuf}"/>
 			<br>
-			<f:form.button type="submit" name="showstats">Statistik anzeigen</f:form.button>
+			<f:form.button id="linkloadoverlay-export" type="submit" name="showstats">Statistik anzeigen</f:form.button>
 	</f:form>
 </div>
 
@@ -213,14 +213,13 @@
 					<td>{key + 1}</td>
 					<td>{element.titel}</td>
 					<td>{element.anz}</td>
-					<td>{element.anteil} %</td>
+					<td><f:format.number decimals="1" decimalSeparator="," thousandsSeparator=".">{element.anteil}</f:format.number> %</td>
 				</tr>
 			</f:for>
 			</tbody>
 		</table>
 	</div>
-	<pre>Anm.: Es werden maximal die ersten 20 Werte ausgegeben.</pre>
-	<br>
+	<b>Gesamtzahl: {anzgesamt}</b><pre>(Anm.: In der Tabelle werden nur die ersten 20 Werte ausgegeben.)</pre>
 </f:then>
 </f:if>
 

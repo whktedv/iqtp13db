@@ -773,6 +773,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         $arraufenthaltsstatus = $this->settings['aufenthaltsstatus'];
         $arrberatungsart = $this->settings['beratungsart'];
+        $arrberatungsformfolgeberatung = $this->settings['beratungsformfolgeberatung'];
         $arranerkennungsberatung = $this->settings['anerkennungsberatung'];
         $arrqualifizierungsberatung = $this->settings['qualifizierungsberatung'];
         $arrberatungsstelle = $this->settings['beratungsstelle'];
@@ -789,35 +790,61 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $order = 'ASC';
         $fberatungsstatus = isset($valArray['filterberatungsstatus']) ? $valArray['filterberatungsstatus'] : '';
         
-        if($fberatungsstatus == 1 || $fberatungsstatus == NULL) {
-            $teilnehmers = array();
-        } elseif($fberatungsstatus == 13) {
-            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer(4, 0, $filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected);
+        $del = 0;
+        if($fberatungsstatus == 13) {
+            $type = 4;
         } elseif($fberatungsstatus == 12) {
-            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer(2, 0, $filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected);
+            $type = 2;
         } elseif($fberatungsstatus == 11) {
-            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer(1, 0, $filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected);
+            $type = 1;
         } elseif($fberatungsstatus == 10) {
-            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer(0, 0, $filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected);
+            $type = 0;
         } else {
-            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer(0, 1, $filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected);
+            $type = 0;
+            $del = 1;
         }
         
-        foreach ($teilnehmers as $akey => $atn) {
-            $anzfolgekontakte[$akey] = count($this->folgekontaktRepository->findByTeilnehmer($atn->getUid()));
-            $abschluesse[$akey] = $this->abschlussRepository->findByTeilnehmer($atn);
-        }
-        
+        $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer($type, $del, $filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected);
+         
         // ******************** EXPORT ****************************
         if (isset($valArray['export']) && $fberatungsstatus != '') {
             
             $rows = array();
+            $rowsfk = array();
+            $summedauerfk = array();
+            
+            foreach ($teilnehmers as $akey => $atn) {
+                $folgekontakte[$akey] = $this->folgekontaktRepository->findByTeilnehmer($atn->getUid());
+                $anzfolgekontakte[$akey] = count($folgekontakte[$akey]);
+                $abschluesse[$akey] = $this->abschlussRepository->findByTeilnehmer($atn);
+                $summedauerfk[$akey] = 0;
+                
+                foreach($folgekontakte[$akey] as $y => $fk) {
+                    $rowsfk[$y] = array();
+                    $beraterfk = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'berater');
+                    $teilnehmerfk = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'teilnehmer');
+                    
+                    $rowsfk[$y]['teilnehmeruid'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($teilnehmerfk, 'uid');
+                    $rowsfk[$y]['teilnehmernachname'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($teilnehmerfk, 'nachname');
+                    $rowsfk[$y]['teilnehmervorname'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($teilnehmerfk, 'vorname');
+                    $rowsfk[$y]['datum'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'datum');
+                    if($beraterfk != NULL) $rowsfk[$y]['Beraterin'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($beraterfk, 'username');
+                    else $rowsfk[$y]['beraterin'] = '-';
+                    $rowsfk[$y]['notizen'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'notizen');
+                    $bform = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'beratungsform');
+                    $rowsfk[$y]['beratungsform'] = $arrberatungsformfolgeberatung[($bform == '-1000' ? '-' : $bform)];
+                    $rowsfk[$y]['beratungsdauer'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'beratungsdauer');
+                    $fkdauer = floatval(str_replace(',', '.', $rowsfk[$y]['beratungsdauer']));
+                    $summedauerfk[$akey] += $fkdauer;
+                }
+            }
             
             foreach($teilnehmers as $x => $tn) {
                 
                 $berater = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'berater');
                 
                 $rows[$x] = array();
+                $rows[$x]['uid'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'uid');
                 $rows[$x]['verificationDate'] = date('d.m.Y H:i:s', \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'verificationDate'));
                 $rows[$x]['Nachname'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'nachname');
                 $rows[$x]['Vorname'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'vorname');
@@ -904,6 +931,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $rows[$x]['beratungzuschulabschluss'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungzu');
                 
                 $rows[$x]['AnzFolgekontakte'] = $anzfolgekontakte[$x];
+                $rows[$x]['sumDauerFolgekontakte'] = str_replace('.', ',', $summedauerfk[$x]);
                 
                 $rows[$x]['kooperationgruppe'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'kooperationgruppe');
                 $rows[$x]['beratungsdauer'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungsdauer');
@@ -944,7 +972,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             
             // XLSX
             $filename = 'export_'.$bezbstatus.'_'.date('Y-m-d_H-i', time()).'.xlsx';
-            $header = [
+            $headerblatt1 = [
+                'UID' => 'string',
                 'Bestätigungsdatum' => 'string',
                 'Nachname' => 'string',
                 'Vorname' => 'string',
@@ -976,6 +1005,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'Beratung Notizen' => 'string',
                 'Beratung zu Schulabschluss' => 'string',
                 'Anz. Folgekontakte' => 'string',
+                'Summe Dauer Folgekontakte' => 'string',
                 'Kooperationgruppe' => 'string',
                 'Beratungsdauer' => 'string',
                 'Beratungdatum' => 'string',
@@ -1026,17 +1056,28 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'Abschluss4 Wunschberuf' => 'string',
                 'Abschluss4 Antragstellung erfolgt' => 'string'
             ];
-            
+           
+            $headerblatt2 = [
+                'Teilnehmer UID' => 'string',
+                'Nachname' => 'string',
+                'Vorname' => 'string',
+                'Datum' => 'string',
+                'Berater' => 'string',
+                'Notizen' => 'string',
+                'Beratungsform' => 'string',
+                'Beratungsdauer' => 'string',
+            ];
             $writer = new \XLSXWriter();
             $writer->setAuthor('IQ Webapp');
-            $writer->writeSheet($rows, 'Blatt1', $header);  // with headers
+
+            $writer->writeSheet($rows, 'Ratsuchende', $headerblatt1);
+            $writer->writeSheet($rowsfk, 'Folgekontakte', $headerblatt2);
             
             header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
             header('Content-Disposition: attachment;filename="'.$filename.'"');
             header('Cache-Control: max-age=0');
             $writer->writeToStdOut();
-            exit;
-            
+            exit;            
         } elseif(isset($valArray['export']) && $valArray['export'] && $fberatungsstatus == '') {
             
             $this->addFlashMessage("Bitte Status für Export auswählen.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);

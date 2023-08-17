@@ -473,7 +473,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             $sqlberatungsstatus = " beratungsstatus >= 0 ";
             $filternach = "FROM_UNIXTIME(verification_date)";
         } elseif($type == 1) {
-            $sqlberatungsstatus = " beratungsstatus = 1 ";
+            $sqlberatungsstatus = " beratungsstatus >= 1 ";
             $filternach = "FROM_UNIXTIME(verification_date)";
         } elseif($type == 2) {
             $sqlberatungsstatus = " (beratungsstatus = 2 OR beratungsstatus = 3) ";
@@ -521,7 +521,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             $sqlberatungsstatus = " beratungsstatus >= 0 ";
             $filternach = "FROM_UNIXTIME(verification_date)";
         } elseif($type == 1) {
-            $sqlberatungsstatus = " beratungsstatus = 1 ";
+            $sqlberatungsstatus = " beratungsstatus >= 1 ";
             $filternach = "FROM_UNIXTIME(verification_date)";
         } elseif($type == 2) {
             $sqlberatungsstatus = " (beratungsstatus = 2 OR beratungsstatus = 3) ";
@@ -535,7 +535,6 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         
         $query = $this->createQuery();
         
-        
         if ($beruf == '%') {
             // Ausgabe Liste Berufe
             $sql = "SELECT c.titel, count(referenzberufzugewiesen) as anz
@@ -543,14 +542,14 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                     LEFT JOIN  tx_iqtp13db_domain_model_abschluss as b ON a.uid = b.teilnehmer
                     LEFT JOIN tx_iqtp13db_domain_model_berufe as c ON b.referenzberufzugewiesen = c.berufid
                     LEFT JOIN fe_groups as d ON niqidberatungsstelle = d.niqbid
-                    WHERE 
+                    WHERE
                     DATEDIFF(STR_TO_DATE('$filtervon', '%d.%m.%Y'),$filternach) <= 0 AND
 				    DATEDIFF(STR_TO_DATE('$filterbis', '%d.%m.%Y'),$filternach) >= 0
                     AND $sqlberatungsstatus
                     AND d.bundesland LIKE '$bundesland'
                     AND erste_staatsangehoerigkeit LIKE '$staat'
                     AND a.hidden = 0 and a.deleted = 0
-                    GROUP BY referenzberufzugewiesen ORDER BY anz DESC";
+                    GROUP BY referenzberufzugewiesen HAVING anz > 0 ORDER BY anz DESC";
         } elseif ($staat == '%') {
             // Ausgabe Liste Staatsangehörigkeit
             $sql = "SELECT c.titel, count(erste_staatsangehoerigkeit) as anz
@@ -558,17 +557,17 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                     LEFT JOIN  tx_iqtp13db_domain_model_abschluss as b ON a.uid = b.teilnehmer
                     LEFT JOIN tx_iqtp13db_domain_model_staaten as c ON erste_staatsangehoerigkeit = c.staatid
                     LEFT JOIN fe_groups as d ON niqidberatungsstelle = d.niqbid
-                    WHERE 
+                    WHERE
                     DATEDIFF(STR_TO_DATE('$filtervon', '%d.%m.%Y'),$filternach) <= 0 AND
 				    DATEDIFF(STR_TO_DATE('$filterbis', '%d.%m.%Y'),$filternach) >= 0
                     AND $sqlberatungsstatus
                     AND d.bundesland LIKE '$bundesland'
                     AND b.referenzberufzugewiesen LIKE '$beruf'
                     AND a.hidden = 0 and a.deleted = 0
-                    GROUP BY erste_staatsangehoerigkeit ORDER BY anz DESC";
+                    GROUP BY erste_staatsangehoerigkeit HAVING anz > 0 ORDER BY anz DESC";
         } elseif($bundesland == '%') {
             // Ausgabe Liste Bundesland
-            $sql = "SELECT d.bundesland, count(d.bundesland) as anz
+            $sql = "SELECT d.bundesland as titel, count(d.bundesland) as anz
                     FROM  tx_iqtp13db_domain_model_teilnehmer as a
                     LEFT JOIN  tx_iqtp13db_domain_model_abschluss as b ON a.uid = b.teilnehmer
                     LEFT JOIN tx_iqtp13db_domain_model_berufe as c ON b.referenzberufzugewiesen = c.berufid
@@ -580,11 +579,32 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                     AND b.referenzberufzugewiesen LIKE '$beruf'
                     AND erste_staatsangehoerigkeit LIKE '$staat'
                     AND a.hidden = 0 and a.deleted = 0
-                    GROUP BY d.bundesland ORDER BY anz DESC";
+                    AND b.teilnehmer IS NOT NULL AND c.berufid IS NOT NULL
+                    GROUP BY d.bundesland HAVING anz > 0 ORDER BY anz DESC";
         } else {
-            // Fehler
+            $sql = "WITH temptable_gender AS
+                    (
+                      SELECT 1 as id,'weiblich' as val UNION
+                      SELECT 2 as id,'männlich' as val UNION
+                      SELECT 3 as id,'divers' as val
+                    )
+                    SELECT e.val as titel, count(*) as anz
+                    FROM tx_iqtp13db_domain_model_teilnehmer as a
+                    LEFT JOIN  tx_iqtp13db_domain_model_abschluss as b ON a.uid = b.teilnehmer
+                    LEFT JOIN tx_iqtp13db_domain_model_berufe as c ON b.referenzberufzugewiesen = c.berufid
+                    LEFT JOIN fe_groups as d ON niqidberatungsstelle = d.niqbid
+                    LEFT JOIN temptable_gender as e ON a.geschlecht = e.id
+                    WHERE
+                    DATEDIFF(STR_TO_DATE('$filtervon', '%d.%m.%Y'),$filternach) <= 0 AND
+				    DATEDIFF(STR_TO_DATE('$filterbis', '%d.%m.%Y'),$filternach) >= 0
+                    AND $sqlberatungsstatus
+                    AND d.bundesland LIKE '$bundesland'
+                    AND b.referenzberufzugewiesen LIKE '$beruf'
+                    AND erste_staatsangehoerigkeit LIKE '$staat'
+                    AND a.hidden = 0 and a.deleted = 0
+                    AND b.teilnehmer IS NOT NULL AND c.berufid IS NOT NULL
+                    GROUP BY geschlecht HAVING anz > 0 ORDER BY geschlecht";
         }
-        //DebuggerUtility::var_dump($sql);
 
         $query->statement($sql);
         return $query->execute(true);

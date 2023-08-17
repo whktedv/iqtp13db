@@ -58,7 +58,7 @@ document.querySelectorAll('form').forEach(form => {
 		
 		if(form.attributes.id) {
 			var formid = form.attributes.id.value;
-			if(formid != 'exportfilterform' && !document.getElementById('newabschlusszurueckbutton')) {
+			if(formid != 'exportformdata' && formid != 'exportfilterform' && !document.getElementById('newabschlusszurueckbutton')) {
 				$("#overlay").show();
 			}
 		}
@@ -145,9 +145,11 @@ $(document).ready(function() {
     });
 
 	$('#exportfilterselect').change(function() {
+		$("#overlay").show();
 	  $("#exportfilterform").submit(); 
 	});
 	$('#exportfilterselectstaat').change(function() {
+		$("#overlay").show();
 	  $("#exportfilterform").submit(); 
 	});
 	
@@ -176,7 +178,7 @@ $(document).ready(function() {
     $("#linkloadoverlay-savedb").click(function() {
     	$("#overlay").show();
     });
-    
+		
     
     $("body").prepend('<div id="overlay" class="ui-widget-overlay" style="z-index: 10001; display: none;"><div class="overlay-inner"><img width="200" height="200" src="/typo3conf/ext/iqtp13db/Resources/Public/Icons/giphy.gif"/></div></div>');
   
@@ -262,5 +264,4 @@ function btncancel_Click() {
 function showFolgekontakt(uid) {
     $('table#fkt' + uid).toggle();
 }
-
 
