@@ -515,7 +515,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      *
      */
-    public function showAdminStatsBerufLand($type, $filtervon, $filterbis, $bundesland, $beruf, $staat)
+    public function showAdminStatsBerufLand($type, $filtervon, $filterbis, $bundesland, $beruf, $staat, $filterberufstaat)
     {
         if($type == 0) {
             $sqlberatungsstatus = " beratungsstatus >= 0 ";
@@ -535,7 +535,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         
         $query = $this->createQuery();
         
-        if ($beruf == '%') {
+        if ($beruf == '%' && $filterberufstaat != 'staat') {
             // Ausgabe Liste Berufe
             $sql = "SELECT c.titel, count(referenzberufzugewiesen) as anz
                     FROM  tx_iqtp13db_domain_model_teilnehmer as a
@@ -550,7 +550,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                     AND erste_staatsangehoerigkeit LIKE '$staat'
                     AND a.hidden = 0 and a.deleted = 0
                     GROUP BY referenzberufzugewiesen HAVING anz > 0 ORDER BY anz DESC";
-        } elseif ($staat == '%') {
+        } elseif ($staat == '%' && $filterberufstaat != 'beruf') {
             // Ausgabe Liste Staatsangehörigkeit
             $sql = "SELECT c.titel, count(erste_staatsangehoerigkeit) as anz
                     FROM  tx_iqtp13db_domain_model_teilnehmer as a

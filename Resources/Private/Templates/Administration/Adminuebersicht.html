@@ -188,11 +188,15 @@
 			Auswahl Bundesland: <f:form.select name="filterbundesland" options="{allebundeslaender}" optionValueField="bundesland" optionLabelField="bundesland" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterbundesland}"/>
 			Auswahl Status: <f:form.select value="{filterberatungsstatus}" name="filterberatungsstatus" options="{beratungsstatusarr}" optionValueField="key" optionLabelField="value" />
 			von: <f:form.textfield size="10" id="datepickerfiltervon" value="{filtervon}" name="filtervon" />
-			bis: <f:form.textfield size="10" id="datepickerfilterbis" value="{filterbis}" name="filterbis" />				
+			bis: <f:form.textfield size="10" id="datepickerfilterbis" value="{filterbis}" name="filterbis" />			 
 			<br>
 			Auswahl Erste Staatsangehörigkeit: <f:form.select name="filterstaat" options="{staatenarr}" optionValueField="key" optionLabelField="value" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterstaat}"/>
 			Auswahl Beruf/Abschluss: <f:form.select name="filterberuf" options="{berufearr}" optionValueField="key" optionLabelField="value" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterberuf}"/>
-			<br>
+			<div style="margin: 0.5rem 0;">
+					<span style="margin: 0 0.5rem;"><f:form.checkbox name="filternachberuf" value="1" checked="{filternachberuf} == 1" /> nach Beruf</span>
+					<span style="margin: 0 0.5rem;"><f:form.checkbox name="filternachstaat" value="1" checked="{filternachstaat} == 1" /> nach Staat</span>
+					<span style="margin: 0 0.5rem; font-size: 0.7rem;">(nur wenn weder Beruf noch Staatsangehörigkeit ausgewählt)</span>
+			</div>			
 			<f:form.button id="linkloadoverlay-export" type="submit" name="showstats">Statistik anzeigen</f:form.button>
 	</f:form>
 </div>

@@ -11,7 +11,7 @@
 			<f:for each="{dokumente}" as="dokument">
 					<tr>
 						<td><f:link.action action="openfile" arguments="{dokument : dokument, teilnehmer : teilnehmer}" controller="Dokument" target="_blank">{dokument.name}</f:link.action></td>
-						<f:form method="post" action="updateBackend" controller="Dokument" arguments="{teilnehmer:teilnehmer, calleraction : calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : thisaction}" name="dokument" object="{dokument}" enctype="multipart/form-data" >
+						<f:form id="dokumenteform1" method="post" action="updateBackend" controller="Dokument" arguments="{teilnehmer:teilnehmer, calleraction : calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : thisaction}" name="dokument" object="{dokument}" enctype="multipart/form-data" >
 							<td><f:form.textfield property="beschreibung" value="{dokument.beschreibung}" size="50" /></td>
 							<td><f:form.button type="submit" class="linkbuttons updatebutton" id="savebutton1" >Kurzbeschreibung speichern</f:form.button></td>
 						</f:form>						
@@ -21,7 +21,7 @@
 		</table>
 	</f:then></f:if>
 	
-	<f:form method="post" action="saveFileBackend" name="dokument" controller="Dokument" arguments="{teilnehmer:teilnehmer, calleraction : calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : thisaction}" object="{dokument}" enctype="multipart/form-data" ><br />
+	<f:form id="dokumenteform2" method="post" action="saveFileBackend" name="dokument" controller="Dokument" arguments="{teilnehmer:teilnehmer, calleraction : calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : thisaction}" object="{dokument}" enctype="multipart/form-data" ><br />
 		<div class="tp13_formdiv100 dokupload">
 				<f:form.upload name="file" />
 				<f:form.textfield class="inputdokumentbeschreibung" property="beschreibung" size="50" placeholder="<f:translate key='tx_iqtp13db_domain_model_dokument.beschreibung' />" />

@@ -15,7 +15,16 @@ window.onbeforeunload = function() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-    var form = document.getElementById("teilnehmerform");
+    var form1 = document.getElementById("teilnehmerform");
+	var form2 = document.getElementById("dokumenteform1");
+	var form3 = document.getElementById("dokumenteform2");
+	
+	prepareformelements(form1);
+	prepareformelements(form2);
+	prepareformelements(form3);
+});
+
+function prepareformelements(form) {
 	if(form) {
 	    var formElements = form.elements;
 	    for(var i = 0; i < formElements.length; i++) {
@@ -25,6 +34,13 @@ document.addEventListener("DOMContentLoaded", function() {
 		if (document.getElementById("savebutton1")) {
 			var submitButton1 = document.getElementById("savebutton1");
 		    submitButton1.addEventListener("click", function() {
+				$("#overlay").hide();
+		        window.onbeforeunload = null;			
+		    });	
+		}
+		if (document.getElementById("savebutton2")) {
+			var submitButton2 = document.getElementById("savebutton2");
+		    submitButton2.addEventListener("click", function() {
 				$("#overlay").hide();
 		        window.onbeforeunload = null;			
 		    });	
@@ -43,9 +59,8 @@ document.addEventListener("DOMContentLoaded", function() {
 		        window.onbeforeunload = null;			
 		    });	
 		}		
-	}	
-});
-
+	}
+}
 // ********************************************************************************
 // Prevent Double Submits by showing Overlay with rotating circle after submit-click
 
@@ -199,6 +214,7 @@ $(document).ready(function() {
     $(".errorframe").click(function() {
     	$(".errorframe").hide();
     });
+
 });
 
 

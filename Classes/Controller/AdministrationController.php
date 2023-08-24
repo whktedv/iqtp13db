@@ -260,6 +260,8 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
             $berufselected = $valArray['filterberuf'] ?? '%';
             $filtervon = isset($valArray['filtervon']) ? ($valArray['filtervon'] != '' ? $valArray['filtervon'] : '01.01.1970') : '01.01.1970';
             $filterbis = isset($valArray['filtervon']) ? ($valArray['filterbis'] != '' ? $valArray['filterbis'] : '31.12.2099') : '31.12.2099';
+            $filternachberuf = $valArray['filternachberuf'] ?? '%';
+            $filternachstaat = $valArray['filternachstaat'] ?? '%';
             $fberatungsstatus = isset($valArray['filterberatungsstatus']) ? $valArray['filterberatungsstatus'] : '';
             
             if($fberatungsstatus == 13) {
@@ -271,7 +273,12 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
             } else {
                 $type = 0;
             }
-            $statistikergebnisarray = $this->teilnehmerRepository->showAdminStatsBerufLand($type, $filtervon, $filterbis, $filterbundesland, $berufselected, $staatselected);
+            
+            if($filternachberuf == '1') $filterberufstaat = 'beruf';
+            elseif($filternachstaat == '1') $filterberufstaat = 'staat';
+            else $filterberufstaat = '';
+                        
+            $statistikergebnisarray = $this->teilnehmerRepository->showAdminStatsBerufLand($type, $filtervon, $filterbis, $filterbundesland, $berufselected, $staatselected, $filterberufstaat);
              
             if($berufselected == '%') $firstcolheader = 'Beruf/Abschluss';
             elseif($staatselected == '%') $firstcolheader = 'Erste Staatsangehörigkeit';
@@ -376,6 +383,8 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 'filterbundesland' => $filterbundesland ?? '',
                 'filterstaat' => $staatselected ?? '',
                 'filterberuf' => $berufselected ?? '',
+                'filternachstaat' => $filternachstaat ?? '',
+                'filternachberuf' => $filternachberuf ?? '',
                 'firstcolheader' => $firstcolheader,
                 'ausgabearray' => $ausgabearray ?? '',
                 'anzgesamt' => $anzgesamt ?? ''         

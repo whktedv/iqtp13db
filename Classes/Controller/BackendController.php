@@ -812,30 +812,31 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $rows = array();
             $rowsfk = array();
             $summedauerfk = array();
-            
+            $fkcnt = 0;
             foreach ($teilnehmers as $akey => $atn) {
                 $folgekontakte[$akey] = $this->folgekontaktRepository->findByTeilnehmer($atn->getUid());
                 $anzfolgekontakte[$akey] = count($folgekontakte[$akey]);
                 $abschluesse[$akey] = $this->abschlussRepository->findByTeilnehmer($atn);
                 $summedauerfk[$akey] = 0;
                 
-                foreach($folgekontakte[$akey] as $y => $fk) {
-                    $rowsfk[$y] = array();
+                foreach($folgekontakte[$akey] as $fk) {
+                    $rowsfk[$fkcnt] = array();
                     $beraterfk = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'berater');
                     $teilnehmerfk = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'teilnehmer');
                     
-                    $rowsfk[$y]['teilnehmeruid'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($teilnehmerfk, 'uid');
-                    $rowsfk[$y]['teilnehmernachname'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($teilnehmerfk, 'nachname');
-                    $rowsfk[$y]['teilnehmervorname'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($teilnehmerfk, 'vorname');
-                    $rowsfk[$y]['datum'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'datum');
-                    if($beraterfk != NULL) $rowsfk[$y]['Beraterin'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($beraterfk, 'username');
-                    else $rowsfk[$y]['beraterin'] = '-';
-                    $rowsfk[$y]['notizen'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'notizen');
+                    $rowsfk[$fkcnt]['teilnehmeruid'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($teilnehmerfk, 'uid');
+                    $rowsfk[$fkcnt]['teilnehmernachname'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($teilnehmerfk, 'nachname');
+                    $rowsfk[$fkcnt]['teilnehmervorname'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($teilnehmerfk, 'vorname');
+                    $rowsfk[$fkcnt]['datum'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'datum');
+                    if($beraterfk != NULL) $rowsfk[$fkcnt]['Beraterin'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($beraterfk, 'username');
+                    else $rowsfk[$fkcnt]['beraterin'] = '-';
+                    $rowsfk[$fkcnt]['notizen'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'notizen');
                     $bform = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'beratungsform');
-                    $rowsfk[$y]['beratungsform'] = $arrberatungsformfolgeberatung[($bform == '-1000' ? '-' : $bform)];
-                    $rowsfk[$y]['beratungsdauer'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'beratungsdauer');
-                    $fkdauer = floatval(str_replace(',', '.', $rowsfk[$y]['beratungsdauer']));
+                    $rowsfk[$fkcnt]['beratungsform'] = $bform == '-1000' ? '-' : $arrberatungsformfolgeberatung[$bform];
+                    $rowsfk[$fkcnt]['beratungsdauer'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'beratungsdauer');
+                    $fkdauer = floatval(str_replace(',', '.', $rowsfk[$fkcnt]['beratungsdauer']));
                     $summedauerfk[$akey] += $fkdauer;
+                    $fkcnt++;
                 }
             }
             
@@ -1490,6 +1491,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function initializeUpdateAction() {
         
         $valArray = $this->request->getArguments();
+       
         $beratungdatum = $valArray['teilnehmer']['beratungdatum'] ?? '';
         $erstberatungabgeschlossen = $valArray['teilnehmer']['erstberatungabgeschlossen'] ?? '';
         
