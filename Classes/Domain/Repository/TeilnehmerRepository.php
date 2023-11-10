@@ -529,6 +529,9 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         } elseif($type == 4) {
             $sqlberatungsstatus = " beratungsstatus = 4 ";
             $filternach = "erstberatungabgeschlossen";
+        } elseif($type == 5) {
+            $sqlberatungsstatus = " (beratungsstatus = 2 OR beratungsstatus = 3 OR beratungsstatus = 4) ";
+            $filternach = "erstberatungabgeschlossen";
         } else {
             // fehler!
         }

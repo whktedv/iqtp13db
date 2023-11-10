@@ -52,6 +52,18 @@ call_user_func(
             ]
             );
         
+        ExtensionUtility::configurePlugin(
+            'Iqtp13db',
+            'Json',
+            [
+                \Ud\Iqtp13db\Controller\TeilnehmerController::class => 'show'
+            ],
+            // non-cacheable actions
+            [
+                \Ud\Iqtp13db\Controller\TeilnehmerController::class => 'show'
+            ]
+            );
+        
         // Only include page.tsconfig if TYPO3 version is below 12 so that it is not imported twice.
         $versionInformation = GeneralUtility::makeInstance(Typo3Version::class);
         if ($versionInformation->getMajorVersion() < 12) {

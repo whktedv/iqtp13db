@@ -107,6 +107,53 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $this->generalhelper = new \Ud\Iqtp13db\Helper\Generalhelper();
         
     }
+        
+    /*
+     * API-Funktion, um die Zahlen als JSON zwecks Abruf für den Counter auf der IQ-Webseite zu generieren.
+     * 
+     * Folgendes muss ins Typoscript der IQ Webapp eingetragen werden, damit ein Aufruf der API über 
+     * https://www.iq-webapp.de/frontend-iq-webapp/anmeldung?type=112233
+     * möglich ist.
+     * 
+     * myJson = PAGE
+     *   myJson {
+     *   	typeNum = 112233
+     *   	config {
+     *          additionalHeaders = Content-Type: application/json
+     *           additionalHeaders.10.header = Content-Type: application/json
+     *           no_cache = 1
+     *           disableAllHeaderCode = 1
+     *           disablePrefixComment = 1
+     *           xhtml_cleaning = 0
+     *           admPanel = 0
+     *           debug = 0
+     *       }
+     *       10 < tt_content.list.20.iqtp13db_json
+     *   }
+     */
+    public function showAction(): ResponseInterface
+    {
+        $reftag = date("d.m.Y");
+        $neuanmeldungenheute = $this->teilnehmerRepository->count4Status($reftag, $reftag, '%', 1)[0]['anzahl'];
+        
+        $aktuelleanmeldungenunbestaetigt = $this->teilnehmerRepository->countAllOrder4Status(0, '%')[0]['anzahl'];
+        $aktuelleanmeldungenbestaetigt = $this->teilnehmerRepository->countAllOrder4Status(1, '%')[0]['anzahl'];
+        $aktuelleanmeldungen = $aktuelleanmeldungenbestaetigt + $aktuelleanmeldungenunbestaetigt;
+        
+        $aktuellerstberatungen = $this->teilnehmerRepository->countAllOrder4Status(2, '%')[0]['anzahl'];
+        $aktuellberatungenfertig = $this->teilnehmerRepository->countAllOrder4Status(3, '%')[0]['anzahl'];
+        
+        $statsgesamtfertigberaten = $this->teilnehmerRepository->count4Status("01.1.1970", "31.12.".date('Y'), '%', 3)[0]['anzahl'];
+        
+        $data = [
+            'anmeldungenheute' => $neuanmeldungenheute,
+            'anmeldungenwartend' => $aktuelleanmeldungen,
+            'erstberatungenlaufend' => $aktuellerstberatungen,
+            'erstberatungenabgeschlossen' => $statsgesamtfertigberaten
+        ];
+        $jsonOutput = json_encode($data);
+        return $this->jsonResponse($jsonOutput);
+    }
     
     /**
      * action start

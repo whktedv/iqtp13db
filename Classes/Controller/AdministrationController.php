@@ -250,8 +250,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
         }
         $allebundeslaender = $this->userGroupRepository->findAllBundeslaender();
-        array_pop($this->settings['filterberatungsstatus']);
-        $beratungsstatusarr = $this->settings['filterberatungsstatus'];
+        $beratungsstatusarr = $this->settings['filterberatungsstatus4admin'];
         $firstcolheader = '';
         
         if(isset($valArray['showstats'])) {
@@ -264,7 +263,9 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
             $filternachstaat = $valArray['filternachstaat'] ?? '%';
             $fberatungsstatus = isset($valArray['filterberatungsstatus']) ? $valArray['filterberatungsstatus'] : '';
             
-            if($fberatungsstatus == 13) {
+            if($fberatungsstatus == 14) {
+                $type = 5;
+            } elseif($fberatungsstatus == 13) {
                 $type = 4;
             } elseif($fberatungsstatus == 12) {
                 $type = 2;

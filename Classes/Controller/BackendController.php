@@ -2122,7 +2122,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', $valArray['ort']);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', $valArray['beruf']);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', $valArray['land']);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberater', $valArray['berater']);
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberater', $valArray['berater'] ?? '');
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fgruppe', $valArray['gruppe']);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fbescheid', $valArray['bescheid']); // antragstellungvorher
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'filtermodus', '1');
