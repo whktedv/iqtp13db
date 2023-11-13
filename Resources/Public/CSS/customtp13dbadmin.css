@@ -403,6 +403,11 @@ input[type="text"].textfieldsmall  {
   justify-content: center;
 }
 
+.ck-editor__editable {
+	height: 300px;
+	min-width: 850px;	
+}
+
 /* -------- für Tablets -------- */
 @media (max-width: 1184px){
 	.navbar-nav li {

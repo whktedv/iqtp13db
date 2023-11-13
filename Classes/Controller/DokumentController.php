@@ -13,6 +13,9 @@ use Ud\Iqtp13db\Domain\Repository\UserGroupRepository;
 use Ud\Iqtp13db\Domain\Repository\TeilnehmerRepository;
 use Ud\Iqtp13db\Domain\Repository\DokumentRepository;
 use TYPO3\CMS\Core\Resource\StorageRepository;
+use TYPO3\CMS\Core\Resource\Folder;
+use TYPO3\CMS\Core\Resource\InaccessibleFolder;
+use TYPO3\CMS\Core\Resource\Search\FileSearchDemand;
 
 /***
  *
@@ -210,17 +213,21 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         if($this->generalhelper->getFolderSize($storage->getConfiguration()['basePath'] . $beratenepath) > 20000) {
     	    $this->addFlashMessage('Maximum total filesize of 20 MB exceeded, please reduce filesize. Maximale Dateigröße aller Dateien zusammen ist 20 MB. Bitte Dateigröße verringern.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
     	} else {
-    	    if ($files['name']['file'] && !file_exists($fullpath)) {
+    	    if ($files['name']['file']) {
     	        
     	        $dokument = $this->savefile($dokument->getBeschreibung(), $beratenepath, $files);
     	        
-    	        $dokument->setTeilnehmer($teilnehmer);
-    	        $this->dokumentRepository->update($dokument);
-    	        //Daten sofort in die Datenbank schreiben
-    	        $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
-    	        $persistenceManager->persistAll();
-    	           	        
-    	        $this->teilnehmerRepository->update($teilnehmer);
+    	        if($dokument == null) {
+    	            $this->addFlashMessage('File already uploaded. Datei wurde schon hochgeladen.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+    	        } else {
+    	            $dokument->setTeilnehmer($teilnehmer);
+    	            $this->dokumentRepository->update($dokument);
+    	            //Daten sofort in die Datenbank schreiben
+    	            $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+    	            $persistenceManager->persistAll();
+    	            
+    	            $this->teilnehmerRepository->update($teilnehmer);
+    	        }    	        
     	    } else {
     	    	// Fehler
     	    }
@@ -273,37 +280,43 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         
         $tmpName = $this->generalhelper->sanitizeFileFolderName($arrfiles['name']['file']);
         $tmpFile = $arrfiles['tmp_name']['file'];
-        
-        
+                
         $storage = $this->generalhelper->getTP13Storage( $this->storageRepository->findAll());
-      
+        
         if (!$storage->hasFolder($pfad)) {
             $targetFolder = $storage->createFolder($pfad);
         } else {
             $targetFolder = $storage->getFolder($pfad);            
         }
-        
-        $movedNewFile = $storage->addFile($tmpFile, $targetFolder, $tmpName);
 
-        $reducedfile = $this->reduce_filesize($arrfiles, $tmpName, $storage->getConfiguration()['basePath'] . "/" .$pfad);
+        $searchDemand = FileSearchDemand::createForSearchTerm($tmpName);
+        $files = $targetFolder->searchFiles($searchDemand);
         
-        $dokument->setBeschreibung($beschreibung);
-        if($reducedfile) {            
-            $movedNewFile->delete();
-            $dokument->setName($reducedfile);
+        if(count($files) != 0) {
+            return null;
         } else {
-            $dokument->setName($movedNewFile->getName());
+            $movedNewFile = $storage->addFile($tmpFile, $targetFolder, $tmpName, \TYPO3\CMS\Core\Resource\DuplicationBehavior::REPLACE);
+            
+            $reducedfile = $this->reduce_filesize($arrfiles, $tmpName, $storage->getConfiguration()['basePath'] . "/" .$pfad);
+            
+            $dokument->setBeschreibung($beschreibung);
+            if($reducedfile) {            
+                $movedNewFile->delete();
+                $dokument->setName($reducedfile);
+            } else {
+                $dokument->setName($movedNewFile->getName());
+            }
+            
+            $dokument->setPfad($pfad);
+            
+            $this->dokumentRepository->add($dokument);
+            
+            //Daten sofort in die Datenbank schreiben
+            $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+            $persistenceManager->persistAll();
+            
+            return $dokument;
         }
-        
-        $dokument->setPfad($pfad);
-        
-        $this->dokumentRepository->add($dokument);
-        
-        //Daten sofort in die Datenbank schreiben
-        $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
-        $persistenceManager->persistAll();
-        
-        return $dokument;
     }
 
     /**
@@ -412,6 +425,16 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
             
         }
         return FALSE;
+    }
+    
+    /**
+     *
+     * Check if file was already uploaded to server
+     *
+     **/
+    function file_already_uploaded($pfad) {
+        
+    
     }
         
 }

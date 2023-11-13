@@ -1,0 +1,10 @@
+Update 13.11.2023:
+
+- Verhindere Mehrfach-Upload von identischen Dateien im Anmeldeformular für Ratsuchende 
+- bei Abschluss ist das Feld "Zugewiesener Referenzberuf" nun ein Pflichtfeld
+- Export-Modul: Beratungsort in Excel-Export aufgenommen
+- Bei Einwilligung Datenweitergabe anerkennende Stelle oder weitere Person gibt es nun auch die Option "face-to-face"
+- In der Ansicht Folgekontakt kann nun direkt auf die Daten der/des Ratsuchenden gewechselt werden
+- Erweiterung Adminübersicht: Statistik nach Beruf/Staat auch Auswahl nach Beratungsstelle möglich (BETA: nicht getestet!)
+- Im Archiv können Einträge gelöscht werden sofern noch keine NIQ-Chiffre vorhanden, also keine Übertragung in die NIQ-Datenbank erfolgt ist
+- Notizenfeld zu Beratung im Ratsuchenden-Datensatz kann nun formatiert werden und wird entsprechend angezeigt

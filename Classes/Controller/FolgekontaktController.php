@@ -78,6 +78,9 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     {
         $this->view->assign('folgekontakt', $folgekontakt);
         
+        $teilnehmer = $folgekontakt->getTeilnehmer();
+        $this->view->assign('teilnehmer', $teilnehmer);
+        
         $valArray = $this->request->getArguments();
         $this->view->assign('calleraction', $valArray['calleraction']);
         $this->view->assign('callercontroller', $valArray['callercontroller']);

@@ -270,6 +270,7 @@
 			$('#chkeinwanerkennmedium2').prop("checked", false);
 			$('#chkeinwanerkennmedium3').prop("checked", false);
 			$('#chkeinwanerkennmedium4').prop("checked", false);
+			$('#chkeinwanerkennmedium5').prop("checked", false);
 			$('#txteinwanerkennname').val('');
 			$('#txteinwanerkennkontakt').val('');			
 		}
@@ -292,6 +293,7 @@
 			$('#chkeinwpersonmedium2').prop("checked", false);
 			$('#chkeinwpersonmedium3').prop("checked", false);
 			$('#chkeinwpersonmedium4').prop("checked", false);
+			$('#chkeinwpersonmedium5').prop("checked", false);
 			$('#txteinwpersonname').val('');
 			$('#txteinwpersonkontakt').val('');			
 		}

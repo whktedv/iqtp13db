@@ -52,7 +52,7 @@
 		<th style="hyphens: auto;">Summe<br>Beratungsd.<br>(in h)</th>
 		<th> </th>
 		<th> </th>
-		
+		<th> </th>
 	</tr>
 
 	<f:for each="{paginator.paginatedItems}" as="teilnehmer" iteration="it">
@@ -114,7 +114,8 @@
 			<td>{anzfolgekontakte.{it.index}}</td>
 			<td>{summebdauer}</td>
 			<td><f:link.action action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" title="Bearbeiten"><img src="/fileadmin/template/images/iq-webapp_bearbeiten.svg" alt="Bearbeiten" width="30" height="30"/></f:link.action></td>
-			<td><f:link.action action="new" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Folgekontakt" title="Folgekontakt anlegen"><img src="/fileadmin/template/images/iq-webapp_folgekontakt.svg" width="30" height="30" alt="Folgekontakt" /></f:link.action></td>				
+			<td><f:link.action action="new" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Folgekontakt" title="Folgekontakt anlegen"><img src="/fileadmin/template/images/iq-webapp_folgekontakt.svg" width="30" height="30" alt="Folgekontakt" /></f:link.action></td>
+			<td><f:link.action action="delete" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" onclick="return confirm('Wirklich löschen?');" title="Löschen"><img src="/fileadmin/template/images/iq-webapp_loeschen.svg" width="30" height="30" alt="Löschen" /></f:link.action></td>
 		</tr>
 		<f:if condition="{anzfolgekontakte.{it.index}} != 0"><f:then>
 			<f:render partial="Folgekontakt/Folgekontakte4List" arguments="{folgekontakte : folgekontakte, teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" />

@@ -249,12 +249,13 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
         }
-        $allebundeslaender = $this->userGroupRepository->findAllBundeslaender();
+        
         $beratungsstatusarr = $this->settings['filterberatungsstatus4admin'];
         $firstcolheader = '';
         
         if(isset($valArray['showstats'])) {
             $filterbundesland = $valArray['filterbundesland'] ?? '%';
+            $filterberatungsstelle = $valArray['filterberatungsstelle'] ?? '%';
             $staatselected = $valArray['filterstaat'] ?? '%';
             $berufselected = $valArray['filterberuf'] ?? '%';
             $filtervon = isset($valArray['filtervon']) ? ($valArray['filtervon'] != '' ? $valArray['filtervon'] : '01.01.1970') : '01.01.1970';
@@ -279,7 +280,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
             elseif($filternachstaat == '1') $filterberufstaat = 'staat';
             else $filterberufstaat = '';
                         
-            $statistikergebnisarray = $this->teilnehmerRepository->showAdminStatsBerufLand($type, $filtervon, $filterbis, $filterbundesland, $berufselected, $staatselected, $filterberufstaat);
+            $statistikergebnisarray = $this->teilnehmerRepository->showAdminStatsBerufLand($type, $filtervon, $filterbis, $filterbundesland, $filterberatungsstelle, $berufselected, $staatselected, $filterberufstaat);
              
             if($berufselected == '%') $firstcolheader = 'Beruf/Abschluss';
             elseif($staatselected == '%') $firstcolheader = 'Erste Staatsangehörigkeit';
@@ -377,11 +378,11 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 'beratungsstatusarr' => $beratungsstatusarr,
                 'staatenarr' => $staatenarr,
                 'berufearr' => $berufearr,
-                'allebundeslaender' => $allebundeslaender,
                 'filtervon' => $filtervon ?? '',
                 'filterbis' => $filterbis ?? '',
                 'filterberatungsstatus' => $fberatungsstatus ?? '',
                 'filterbundesland' => $filterbundesland ?? '',
+                'filterberatungsstelle' => $filterberatungsstelle ?? '',
                 'filterstaat' => $staatselected ?? '',
                 'filterberuf' => $berufselected ?? '',
                 'filternachstaat' => $filternachstaat ?? '',

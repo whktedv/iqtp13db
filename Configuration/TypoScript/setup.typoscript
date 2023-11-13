@@ -129,6 +129,7 @@ page {
 	}
 	
 	includeJS.tx_iqtp13dbjquery = EXT:iqtp13db/Resources/Public/JS/jquery-3.6.3.min.js
+	includeJS.ckeditor = EXT:iqtp13db/Resources/Public/ckeditor/ckeditor.js
 	
 	includeJSFooter {
 		tx_iqtp13dbjqueryui = EXT:iqtp13db/Resources/Public/JS/jquery-ui.min.js
@@ -148,6 +149,7 @@ plugin.tx_iqtp13db.settings {
    	2 = E-Mail
    	3 = Video-Chat
    	4 = Webapp (siehe ggf. Anmerkungen Ratsuchende:r)
+   	5 = face-to-face
    }
    	
    einwilligungweiterepersonmedium {
@@ -155,6 +157,7 @@ plugin.tx_iqtp13db.settings {
    	2 = E-Mail
    	3 = Video-Chat
    	4 = Webapp
+   	5 = face-to-face
    }  
    	
    beratungsart {

@@ -215,6 +215,26 @@ $(document).ready(function() {
     	$(".errorframe").hide();
     });
 
+	ClassicEditor
+		.create( document.querySelector( '#textareaberatungnotizen' ), {
+			toolbar: {
+			    items: [
+			        'undo', 'redo',
+			        '|', 'bold', 'italic', 
+			        '|', 'link', 'blockQuote',
+			        '|', 'numberedList', 'outdent', 'indent'
+			    ],
+			    shouldNotGroupWhenFull: true
+			}
+
+		} )
+		.then( editor => {
+			window.editor = editor;
+		} )
+		.catch( err => {
+			console.error( err.stack );
+		} );
+	
 });
 
 

@@ -185,7 +185,8 @@
 <h1>Statistik nach Beruf / Staatsangehörigkeit</h1>
 <div class="filterframe exportfilterform" id="berufstaatstatsframe">
 	<f:form class="statsform" method="post" controller="Administration" action="adminuebersicht" name="berufstaatstats" >
-			Auswahl Bundesland: <f:form.select name="filterbundesland" options="{allebundeslaender}" optionValueField="bundesland" optionLabelField="bundesland" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterbundesland}"/>
+			Auswahl Bundesland: <f:form.select name="filterbundesland" options="{allebundeslaender}" optionValueField="bundesland" optionLabelField="bundesland" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterbundesland}"/> ODER 
+			Auswahl Beratungsstelle: <f:form.select name="filterberatungsstelle" options="{alleberatungsstellen}" optionValueField="niqbid" optionLabelField="title" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterberatungsstelle}"/>			
 			Auswahl Status: <f:form.select value="{filterberatungsstatus}" name="filterberatungsstatus" options="{beratungsstatusarr}" optionValueField="key" optionLabelField="value" />
 			von: <f:form.textfield size="10" id="datepickerfiltervon" value="{filtervon}" name="filtervon" />
 			bis: <f:form.textfield size="10" id="datepickerfilterbis" value="{filterbis}" name="filterbis" />			 

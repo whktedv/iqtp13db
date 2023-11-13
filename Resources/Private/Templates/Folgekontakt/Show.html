@@ -6,6 +6,15 @@
 
 
 <f:section name="main">
+
+<div class="buttonmenu">
+	<div class="toplinkbuttons">
+		<f:link.action target="_blank" class="linkbuttons" action="show" controller="Backend" arguments="{teilnehmer: teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">Daten {teilnehmer.nachname}, {teilnehmer.vorname} anzeigen</f:link.action>
+		<f:link.action target="_blank" class="linkbuttons" action="edit" controller="Backend" arguments="{teilnehmer: teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">Daten {teilnehmer.nachname}, {teilnehmer.vorname} bearbeiten</f:link.action>
+		<f:link.action id="linkloadoverlay-back" class="linkbuttons" action="{calleraction}" controller="{callercontroller}" arguments="{callerpage : callerpage}">Zurück zur Liste</f:link.action>
+	</div>
+</div>
+
 <h1>Folgekontakt anzeigen</h1>
 
 <f:flashMessages />

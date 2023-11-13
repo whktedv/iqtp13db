@@ -515,7 +515,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      *
      */
-    public function showAdminStatsBerufLand($type, $filtervon, $filterbis, $bundesland, $beruf, $staat, $filterberufstaat)
+    public function showAdminStatsBerufLand($type, $filtervon, $filterbis, $bundesland, $beratungsstelle, $beruf, $staat, $filterberufstaat)
     {
         if($type == 0) {
             $sqlberatungsstatus = " beratungsstatus >= 0 ";
@@ -550,6 +550,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 				    DATEDIFF(STR_TO_DATE('$filterbis', '%d.%m.%Y'),$filternach) >= 0
                     AND $sqlberatungsstatus
                     AND d.bundesland LIKE '$bundesland'
+                    AND d.niqbid LIKE '$beratungsstelle' 
                     AND erste_staatsangehoerigkeit LIKE '$staat'
                     AND a.hidden = 0 and a.deleted = 0
                     GROUP BY referenzberufzugewiesen HAVING anz > 0 ORDER BY anz DESC";
@@ -565,6 +566,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 				    DATEDIFF(STR_TO_DATE('$filterbis', '%d.%m.%Y'),$filternach) >= 0
                     AND $sqlberatungsstatus
                     AND d.bundesland LIKE '$bundesland'
+                    AND d.niqbid LIKE '$beratungsstelle'
                     AND b.referenzberufzugewiesen LIKE '$beruf'
                     AND a.hidden = 0 and a.deleted = 0
                     GROUP BY erste_staatsangehoerigkeit HAVING anz > 0 ORDER BY anz DESC";

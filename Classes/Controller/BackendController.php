@@ -916,6 +916,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 foreach (\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungsart') as $atn) $stringberatungsart .= $atn == '' ? '-;' : $arrberatungsart[$atn].";";
                 $rows[$x]['beratungsart'] = $stringberatungsart;
                 
+                $rows[$x]['beratungsort'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungsort');
+                
                 $stringanerkennungsberatung = '';
                 foreach (\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'anerkennungsberatung') as $atn) $stringanerkennungsberatung .= $atn == '' ? '-;' : $arranerkennungsberatung[$atn].";";
                 $rows[$x]['anerkennungsberatung'] = $stringanerkennungsberatung;
@@ -1000,6 +1002,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'Notizen Ratsuchender' => 'string',
                 'Berater:in' => 'string',
                 'Beratungsart' => 'string',
+                'Beratungsort' => 'string',
                 'Anerkennungsberatung' => 'string',
                 'Qualifizierungsberatung' => 'string',
                 'Beratungsstelle' => 'string',
