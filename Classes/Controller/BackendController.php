@@ -1134,16 +1134,18 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $valArray = $this->request->getArguments();
         
         if(is_string($valArray['teilnehmer'])) $tnuid = $valArray['teilnehmer'];
-        else  $tnuid = $valArray['teilnehmer']->getUid();
+        else $tnuid = $valArray['teilnehmer']->getUid();
         
-        $thistn = $this->teilnehmerRepository->findByUid($tnuid);       
-        if($thistn->getPlz() == '') $thistn->setPlz('0');
-                
-        $tnanonym = $thistn->getAnonym();
-        $anonymeberatung = $valArray['newanonymeberatung'] ?? '';
-        if($anonymeberatung == '1' || $tnanonym == '1') {
-            $this->addFlashMessage("Bitte beachten: Für anonyme Beratungen ist zur Wahrung des Datenschutzes kein Dokumentenupload möglich!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
-        }
+        $thistn = $this->teilnehmerRepository->findByUid($tnuid);   
+        
+        if($thistn != null) {
+            if($thistn->getPlz() == '') $thistn->setPlz('0');
+            $tnanonym = $thistn->getAnonym();
+            $anonymeberatung = $valArray['newanonymeberatung'] ?? '';
+            if($anonymeberatung == '1' || $tnanonym == '1') {
+                $this->addFlashMessage("Bitte beachten: Für anonyme Beratungen ist zur Wahrung des Datenschutzes kein Dokumentenupload möglich!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+            }            
+        }        
     }
     
     /**
