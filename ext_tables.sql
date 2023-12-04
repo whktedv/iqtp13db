@@ -245,7 +245,10 @@ CREATE TABLE fe_groups (
         keywordlist text NOT NULL,
         beratungsarten varchar(255) DEFAULT '' NOT NULL,
         einwilligungserklaerungsseite int(11) DEFAULT '0',
-        avadresse text NOT NULL
+        avadresse text NOT NULL,
+        custominfotextmail text NOT NULL,
+        custominfotextstart text NOT NULL,
+        customlogourl varchar(255) DEFAULT '' NOT NULL
 );
 
 CREATE TABLE fe_users (

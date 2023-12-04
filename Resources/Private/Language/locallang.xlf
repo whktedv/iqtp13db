@@ -109,7 +109,8 @@
 		<trans-unit id="infoStaatsangehoerigkeit"><source>If you have two different citizenships/nationalities, please state both.</source></trans-unit>
 		<trans-unit id="infoJahrEinreise"><source>Please enter the year in which you entered Germany.</source></trans-unit>
 		<trans-unit id="infoWohnsitzinDeutschlandNein"><source>Please indicate in which country you currently live.</source></trans-unit>
-		<trans-unit id="infoAbschluss"><source>A training qualification is a qualification obtained after vocational training. A university degree is an academic degree obtained after a course of study at a college/university. As a rule, the degree programme lasted at least 3 years. Please indicate which degree you have obtained.</source></trans-unit>
+		<trans-unit id="infoAbschlussart"><source>A training qualification is a qualification obtained after vocational training. A university degree is an academic degree obtained after a course of study at a college/university. As a rule, the degree programme lasted at least 3 years. Please indicate which degree you have obtained.</source></trans-unit>
+		<trans-unit id="infoAbschluss">i.e. Bachelor of Arts, Master of Science, ...<target></target></trans-unit>
 		<trans-unit id="infoAusbildungsort"><source>Please indicate the city in which you graduated.</source></trans-unit>
 		<trans-unit id="infoBerufserfahrung"><source>Please indicate how long you have worked in the profession of education/study (months/years).</source></trans-unit>
 		<trans-unit id="infoBezug"><source>From which institution/authority/office do you currently receive money for your living expenses? Please indicate this institution/authority/office here.</source></trans-unit>

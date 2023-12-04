@@ -116,7 +116,7 @@
 	<trans-unit id="infoJahrEinreise"><target>	الرجاء إدخال السنة التي دخلت فيها ألمانيا.	</target></trans-unit>
 	<trans-unit id="infoWohnsitzinDeutschlandNein"><target>	الرجاء تحديد البلد الذي تعيش فيه حاليا.	</target></trans-unit>
 	<trans-unit id="infoBundesland"><target>	الرجاء تحديد الولاية التي تعيش فيها حاليًا.	</target></trans-unit>
-	<trans-unit id="infoAbschluss"><target>	مؤهل التكوين المهني هو استكمال للتدريب المهني. الدرجة الجامعية هي درجة أكاديمية يتم الحصول عليها بعد الدراسة في كلية / جامعة. تستغرق الدراسة عادة 3 سنوات على الأقل. يرجى تحديد الدرجة التي حصلت عليها.	</target></trans-unit>
+	<trans-unit id="infoAbschlussart"><target>	مؤهل التكوين المهني هو استكمال للتدريب المهني. الدرجة الجامعية هي درجة أكاديمية يتم الحصول عليها بعد الدراسة في كلية / جامعة. تستغرق الدراسة عادة 3 سنوات على الأقل. يرجى تحديد الدرجة التي حصلت عليها.	</target></trans-unit>
 	<trans-unit id="infoAusbildungsort"><target>	يرجى تحديد المدينة التي تخرجت فيها.	</target></trans-unit>
 	<trans-unit id="infoBerufserfahrung"><target>	يرجى الإشارة إلى المدة التي عملت بها في مجال التدريب المهني / الدراسة العليا (شهور / سنوات).	</target></trans-unit>
 	<trans-unit id="infoAusbildungsfremdeBerufserfahrung"><target>	تعني عبارة "غير متعلق بالتدريب" أنك عملت في مهنة مختلفة عن مهنة التدريب / الدراسة. يرجى الإشارة إلى نوعية ومدة هذا العمل (شهور / سنوات).	</target></trans-unit>

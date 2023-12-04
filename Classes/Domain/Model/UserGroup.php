@@ -84,6 +84,27 @@ class UserGroup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $avadresse = '';
     
     /**
+     * custominfotextmail
+     *
+     * @var string
+     */
+    protected $custominfotextmail = '';
+    
+    /**
+     * custominfotextstart
+     *
+     * @var string
+     */
+    protected $custominfotextstart = '';
+    
+    /**
+     * customlogourl
+     *
+     * @var string
+     */
+    protected $customlogourl = '';
+    
+    /**
      * initializes this object
      *
      * @param string $title
@@ -326,6 +347,69 @@ class UserGroup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setAvadresse($avadresse)
     {
         $this->avadresse = $avadresse;
+    }
+    
+    /**
+     * Returns the custominfotextmail
+     *
+     * @return string $custominfotextmail
+     */
+    public function getCustominfotextmail()
+    {
+        return $this->custominfotextmail;
+    }
+    
+    /**
+     * Sets the custominfotextmail
+     *
+     * @param string $custominfotextmail
+     * @return void
+     */
+    public function setCustominfotextmail($custominfotextmail)
+    {
+        $this->custominfotextmail = $custominfotextmail;
+    }
+    
+    /**
+     * Returns the custominfotextstart
+     *
+     * @return string $custominfotextstart
+     */
+    public function getCustominfotextstart()
+    {
+        return $this->custominfotextstart;
+    }
+    
+    /**
+     * Sets the custominfotextstart
+     *
+     * @param string $custominfotextstart
+     * @return void
+     */
+    public function setCustominfotextstart($custominfotextstart)
+    {
+        $this->custominfotextstart = $custominfotextstart;
+    }
+    
+    /**
+     * Returns the customlogourl
+     *
+     * @return string $customlogourl
+     */
+    public function getCustomlogourl()
+    {
+        return $this->customlogourl;
+    }
+    
+    /**
+     * Sets the customlogourl
+     *
+     * @param string $customlogourl
+     * @return void
+     */
+    public function setCustomlogourl($customlogourl)
+    {
+        $this->customlogourl = $customlogourl;
     }
     
 }

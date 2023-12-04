@@ -395,7 +395,13 @@
                             <tr>
                                 <td valign="top" class="textContent" style="padding: 0px 18px;">
 
-                                    <f:format.html>{anrede}<br>{mailtext}</f:format.html>                                    
+                                    <f:format.html>
+	                                    {anrede}
+	                                    <br>{mailtext}
+	                                    <f:if condition="{custommailtext} != ''">
+	                                    	{custommailtext}
+	                                    </f:if>           
+	                                </f:format.html>                                    
 									
 									<div style="background-color: #dedede; padding: 10px; border: 1px solid #222; margin-top: 15px;">
 										<div style="font-size: 14px; color:#222222;">
@@ -403,8 +409,8 @@
 											<f:format.raw>{datenberatungsstelle}</f:format.raw>
 										</div>
 									</div>
-									</td>                           
-									</tr> 
+								</td>                           
+							</tr> 
                             </tbody>
                         </table>
                         <!--[if mso]></td></tr></table><![endif]-->

@@ -111,7 +111,7 @@
 	<trans-unit id="infoJahrEinreise"><target>Proszę podać rok, w którym przyjechał/a Pan/i do Niemiec. </target></trans-unit>
 	<trans-unit id="infoWohnsitzinDeutschlandNein"><target>Proszę podać, w jakim Państwie Pan/i aktualnie mieszka. </target></trans-unit>
 	<trans-unit id="infoBundesland"><target>Proszę podać w jakim kraju związkowym Pan/i aktualnie mieszka. </target></trans-unit>
-	<trans-unit id="infoAbschluss"><target>Tytuł wykształcenia zawodowego otrzymuje się po ukończeniu kształcenia zawodowego. Dyplom ukończenia szkoły wyższej otrzymuje się po ukończeniu studiów w szkole wyższej lub na uniwersytecie. Studia wyższe trwają zazwyczaj 3 lata. Proszę podać posiadany tytuł. </target></trans-unit>
+	<trans-unit id="infoAbschlussart"><target>Tytuł wykształcenia zawodowego otrzymuje się po ukończeniu kształcenia zawodowego. Dyplom ukończenia szkoły wyższej otrzymuje się po ukończeniu studiów w szkole wyższej lub na uniwersytecie. Studia wyższe trwają zazwyczaj 3 lata. Proszę podać posiadany tytuł. </target></trans-unit>
 	<trans-unit id="infoAusbildungsort"><target>Proszę podać miejscowoć, w której Pan/Pani zdobył/a wykształcenie </target></trans-unit>
 	<trans-unit id="infoBerufserfahrung"><target>Proszę podać jak długo pracował/a Pan/Pani w wyuczonym zawodzie (miesiące, lata)</target></trans-unit>
 	<trans-unit id="infoAusbildungsfremdeBerufserfahrung"><target>"Niezwiązane z wykształceniem zawodowym" oznacza, że pracował/a Pan/Pani w innym niż wyuczonym zawodzie. Proszę podać co to było i jak długo Pan/Pani pracował/a (miesiące/lata).</target></trans-unit>

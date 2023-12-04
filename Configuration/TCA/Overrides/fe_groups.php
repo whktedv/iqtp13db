@@ -113,6 +113,35 @@ $fields = array(
             'eval' => 'trim'
         ),
     ),
+    'custominfotextmail' => array(
+        'exclude' => 1,
+        'label' => 'Eigener Infotext für die Bestätigungs-E-Mail',
+        'config' => array(
+            'type' => 'text',
+            'cols' => 30,
+            'rows' => 10,
+            'eval' => 'trim'
+        ),
+    ),
+    'custominfotextstart' => array(
+        'exclude' => 1,
+        'label' => 'Eigener Infotext für die Startseite der Anmeldung',
+        'config' => array(
+            'type' => 'text',
+            'cols' => 30,
+            'rows' => 10,
+            'eval' => 'trim'
+        ),
+    ),
+    'customlogourl' => array(
+        'exclude' => 1,
+        'label' => 'Eigenes Logo (URL) für die Startseite der Anmeldung',
+        'config' => array(
+            'type' => 'input',
+            'size' => 50,
+            'eval' => 'trim'
+        ),
+    ),
     
 );
 

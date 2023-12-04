@@ -113,7 +113,7 @@
 	<trans-unit id="infoJahrEinreise"><target>Almanya'ya geldiğniz yılı yazın.</target></trans-unit>
 	<trans-unit id="infoWohnsitzinDeutschlandNein"><target>Şimdi hangi ülkede yaşıyorsunuz?</target></trans-unit>
 	<trans-unit id="infoBundesland"><target>Şimdi Almanyada hangi eyalette yaşıyorsunuz?</target></trans-unit>
-	<trans-unit id="infoAbschluss"><target>Mesleki mezuniyeti bir meslek Lisesinin eğitimin sonucu mezun olmaktır. Yüksek öğrenim mezuniyeti, yani akademik bir eğitimden sonra yüksek okul/Üniversiteden alınan ve genellikle en az 3 yıl süren bir mezuniyettir. Lütfen hangi mezuniyet belgesini/diplomasını aldıysaniz buraya yazın.</target></trans-unit>
+	<trans-unit id="infoAbschlussart"><target>Mesleki mezuniyeti bir meslek Lisesinin eğitimin sonucu mezun olmaktır. Yüksek öğrenim mezuniyeti, yani akademik bir eğitimden sonra yüksek okul/Üniversiteden alınan ve genellikle en az 3 yıl süren bir mezuniyettir. Lütfen hangi mezuniyet belgesini/diplomasını aldıysaniz buraya yazın.</target></trans-unit>
 	<trans-unit id="infoAusbildungsort"><target>Hangi şehirden mezun oldunuz?</target></trans-unit>
 	<trans-unit id="infoBerufserfahrung"><target>Meslek eğitimi/yüksek öğrenim yoluyla öğrendiğiniz meslekte ne kadar çalıştığınızı bildirin (Aylar/yıllar).</target></trans-unit>
 	<trans-unit id="infoAusbildungsfremdeBerufserfahrung"><target>"Ausbildungsfremd" anlamı şu, Siz mesleki eğitiminizden/Üniversitede öğrendiğiniz meslek dışındaki, bir başka iş deneyimi yani farklı meslek/iş tecrübesi yaptınız‘mı demektir. Bu hangi meslekti ve bu meslekte ne kadar çalıştınız, lütfen buraya yazın (Aylar/yıllar).</target></trans-unit>

@@ -10,3 +10,7 @@ Update 13.11.2023:
 
 Update 29.11.2023
 - Beim Export ist eine Obergrenze von 500 gleichzeitig exportierbaren Datensätze festgelegt, um Abbrüche beim Exportvorgang zu verhindern
+
+Update 04.12.2023
+- Infotext beim Feld Abschluss in der Anmeldung, um den Begriff "Abschluss" verständlicher zu machen
+- Felder für eigenen Infotext Mail, Startseite und Logo Startseite vorbereitet

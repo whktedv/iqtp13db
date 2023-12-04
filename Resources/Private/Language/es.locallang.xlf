@@ -112,7 +112,7 @@
 	<trans-unit id="infoJahrEinreise"><target>Indique el año en que entró en Alemania.</target></trans-unit>
 	<trans-unit id="infoWohnsitzinDeutschlandNein"><target>Indique en qué país vive actualmente.</target></trans-unit>
 	<trans-unit id="infoBundesland"><target>Seleccione el estado federado en el que vive actualmente.</target></trans-unit>
-	<trans-unit id="infoAbschluss"><target>Una cualificación de formación es un título que se otorga al finalizar una formación profesional. Un título universitario es un grado académico que se obtiene tras un curso de estudios en una universidad. Por regla general, los estudios duran al menos tres años. Indique qué título ha obtenido.</target></trans-unit>
+	<trans-unit id="infoAbschlussart"><target>Una cualificación de formación es un título que se otorga al finalizar una formación profesional. Un título universitario es un grado académico que se obtiene tras un curso de estudios en una universidad. Por regla general, los estudios duran al menos tres años. Indique qué título ha obtenido.</target></trans-unit>
 	<trans-unit id="infoAusbildungsort"><target>Indique la ciudad en la que se graduó.</target></trans-unit>
 	<trans-unit id="infoBerufserfahrung"><target>Indique el tiempo que ha trabajado en la profesión de formación/estudio (meses/años).</target></trans-unit>
 	<trans-unit id="infoAusbildungsfremdeBerufserfahrung"><target>'Sin formación' significa que ha trabajado en una profesión distinta a la de su formación/estudio. Indique en qué consistió y cuánto tiempo trabajó (meses/años).</target></trans-unit>

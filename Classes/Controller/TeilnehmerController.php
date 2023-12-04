@@ -889,6 +889,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $bcc = "edv@whkt.de";
         } else {
             $bcc = $zugewieseneberatungsstelle[0]->getGeneralmail() != '' ? $zugewieseneberatungsstelle[0]->getGeneralmail() : '';
+            $custommailtext = $zugewieseneberatungsstelle[0]->getCustominfotextmail() != '' ? $zugewieseneberatungsstelle[0]->getCustominfotextmail() : '';
         }
         
         $sender = $this->settings['sender'];
@@ -897,6 +898,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $anrede = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('anredemail', 'Iqtp13db');
         $mailtext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtext', 'Iqtp13db');
         $mailtext = str_replace("WARTEZEITWOCHEN", $this->settings['wartezeitwochen'], $mailtext);
+         
         $datenberatungsstelle = $zugewieseneberatungsstelle != NULL ? $zugewieseneberatungsstelle[0]->getDescription() : '';
         if($datenberatungsstelle != '') $kontaktlabel = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('kontaktberatungsstelle', 'Iqtp13db');
         else $kontaktlabel = '';
@@ -904,6 +906,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $variables = array(
             'anrede' => $anrede . $teilnehmer->getVorname(). ' ' . $teilnehmer->getNachname() . ',',
             'mailtext' => $mailtext,
+            'custommailtext' => $custommailtext,
             'datenberatungsstelle' => $datenberatungsstelle,
             'kontaktlabel' => $kontaktlabel,
             'startseitelink' => $this->settings['startseitelink'],

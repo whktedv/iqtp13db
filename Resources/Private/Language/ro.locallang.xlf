@@ -118,7 +118,7 @@
 	<trans-unit id="infoJahrEinreise"><target>Vă rugăm să introduceți anul în care ați sosit în Germania.</target></trans-unit>
 	<trans-unit id="infoWohnsitzinDeutschlandNein"><target>Vă rugăm să indicați în ce țară locuiți în prezent.</target></trans-unit>
 	<trans-unit id="infoBundesland"><target>Vă rugăm să selectați land federal în care locuiți în prezent.</target></trans-unit>
-	<trans-unit id="infoAbschluss"><target>O calificare obținută se referă la diploma profesională obținută. O diplomă universitară se referă la o diplomă academică obținută la o universitate. Durata diplomei este, de obicei, de 3 ani. Vă rugăm să indicați ce calificare ați dobândit.</target></trans-unit>
+	<trans-unit id="infoAbschlussart"><target>O calificare obținută se referă la diploma profesională obținută. O diplomă universitară se referă la o diplomă academică obținută la o universitate. Durata diplomei este, de obicei, de 3 ani. Vă rugăm să indicați ce calificare ați dobândit.</target></trans-unit>
 	<trans-unit id="infoAusbildungsort"><target>Vă rugăm să indicați orașul în care ați absolvit.</target></trans-unit>
 	<trans-unit id="infoBerufserfahrung"><target>Vă rugăm să indicați de cât timp lucrați în profesia de ucenicie / studiu (luni / ani).</target></trans-unit>
 	<trans-unit id="infoAusbildungsfremdeBerufserfahrung"><target>„În afara meseriei pentru care sunteți calificat” înseamnă că ați profesat în alt domeniu/ altă meserie decât cea în care ați obținut calificarea profesională (luni / ani). </target></trans-unit>
