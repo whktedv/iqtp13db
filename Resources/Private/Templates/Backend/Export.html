@@ -17,17 +17,17 @@ Das Datum von/bis bezieht sich bei den Optionen Angemeldet und Gelöscht auf das
 	<div>
 				<f:security.ifHasRole role="Webapp Admin"> 
 				<f:then> 
-					<span style="color: #cd0000; font-weight: bold;">0.</span> Auswahl Bundesland:
-					<f:form.select name="filterbundesland" options="{allebundeslaender}" optionValueField="bundesland" optionLabelField="bundesland" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterbundesland}"/>	
+					Auswahl Bundesland:
+					<f:form.select name="filterbundesland" id="exportfilterselectbundesland" options="{allebundeslaender}" optionValueField="bundesland" optionLabelField="bundesland" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterbundesland}"/>	
 				</f:then>
 				</f:security.ifHasRole>	
-				<span style="color: #cd0000; font-weight: bold;">1.</span> von: <f:form.textfield size="10" id="datepickerfiltervon" value="{filtervon}" name="filtervon" />
-				<span style="color: #cd0000; font-weight: bold;">2.</span> bis: <f:form.textfield size="10" id="datepickerfilterbis" value="{filterbis}" name="filterbis" />				
-				<span style="color: #cd0000; font-weight: bold;">3.</span> Auswahl Status: <f:form.select id="exportfilterselect" value="{filterberatungsstatus}" name="filterberatungsstatus" options="{settings.filterberatungsstatus}" optionValueField="key" optionLabelField="value" />
+				von: <f:form.textfield size="10" id="datepickerfiltervon" value="{filtervon}" name="filtervon" />
+				bis: <f:form.textfield size="10" id="datepickerfilterbis" value="{filterbis}" name="filterbis" />				
+				Auswahl Status: <f:form.select id="exportfilterselect" value="{filterberatungsstatus}" name="filterberatungsstatus" options="{settings.filterberatungsstatus}" optionValueField="key" optionLabelField="value" />
 				<br>
 				<f:security.ifHasRole role="Webapp Admin">
 					<f:then> 
-						<span style="color: #cd0000; font-weight: bold;">4.</span>Auswahl Erste Staatsangehörigkeit:
+						Auswahl Erste Staatsangehörigkeit:
 						<f:form.select id="exportfilterselectstaat" name="filterstaat" options="{staatenarr}" optionValueField="key" optionLabelField="value" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterstaat}"/>	
 					</f:then>
 				</f:security.ifHasRole>
@@ -39,7 +39,14 @@ Das Datum von/bis bezieht sich bei den Optionen Angemeldet und Gelöscht auf das
 		<f:form.hidden value="{filterbis}" name="filterbis" />
 		<f:form.hidden value="{filterbundesland}" name="filterbundesland" />
 		<f:form.hidden value="{filterstaat}" name="filterstaat" />
-		<span style="color: #cd0000; font-weight: bold;">5.</span> <f:form.button id="linkloadoverlay-export" type="submit" name="export">{anzgesamt} Ratsuchende exportieren</f:form.button>	
+		<f:if condition="{anzgesamt} > 500"><f:then>
+			<f:form.button id="linkloadoverlay-export" type="submit" name="export" disabled="disabled" style="background-color: #9A9CA2;">Ratsuchende exportieren</f:form.button>
+			<span style="color: #cd0000; font-weight: bold;">Export nicht möglich, da zuviele Datensätze. Bitte Zeitraum eingrenzen.</span>
+		</f:then>
+		<f:else>
+			<f:form.button id="linkloadoverlay-export" type="submit" name="export">{anzgesamt} Ratsuchende exportieren</f:form.button>
+		</f:else>
+		</f:if>	
 	</f:form>
 	</div>
 </div>

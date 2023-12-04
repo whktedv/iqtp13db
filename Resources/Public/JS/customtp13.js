@@ -132,13 +132,22 @@ $(document).ready(function() {
     $('#datepickerfiltervon').datepicker({
         showButtonPanel : true,
         firstDay: 1,
-        dateFormat : "dd.mm.yy"
+        dateFormat : "dd.mm.yy",
+		onSelect: function(dateText, inst) {
+	        $("#overlay").show();
+	  		$("#exportfilterform").submit(); 
+    	}
     });
+
 
     $('#datepickerfilterbis').datepicker({
         showButtonPanel : true,
         firstDay: 1,
-        dateFormat : "dd.mm.yy"
+        dateFormat : "dd.mm.yy",
+		onSelect: function(dateText, inst) {
+	        $("#overlay").show();
+	  		$("#exportfilterform").submit(); 
+    	}
     });
 	
 	$("a[href='#top']").click(function(){
@@ -164,6 +173,10 @@ $(document).ready(function() {
 	  $("#exportfilterform").submit(); 
 	});
 	$('#exportfilterselectstaat').change(function() {
+		$("#overlay").show();
+	  $("#exportfilterform").submit(); 
+	});
+	$('#exportfilterselectbundesland').change(function() {
 		$("#overlay").show();
 	  $("#exportfilterform").submit(); 
 	});

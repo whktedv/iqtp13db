@@ -756,8 +756,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     {
         $valArray = $this->request->getArguments();
         
-        $filtervon = isset($valArray['filtervon']) ? $valArray['filtervon'] : '01.01.1970';
-        $filterbis = isset($valArray['filtervon']) ? $valArray['filterbis'] : '31.12.2099';
+        $filtervon = isset($valArray['filtervon']) ? $valArray['filtervon'] : '';
+        $filterbis = isset($valArray['filtervon']) ? $valArray['filterbis'] : '';
         
         $bundeslandselected = $valArray['filterbundesland'] ?? '%';
         $allebundeslaender = $this->userGroupRepository->findAllBundeslaender();
@@ -804,7 +804,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $del = 1;
         }
         
-        $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer($type, $del, $filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected);
+        $anzteilnehmers = 0;
+        if($filtervon != '' && $filterbis != '') {
+            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer($type, $del, $filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected);
+            $anzteilnehmers = count($teilnehmers);
+        }
          
         // ******************** EXPORT ****************************
         if (isset($valArray['export']) && $fberatungsstatus != '') {
@@ -1106,7 +1110,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $filterbis = isset($valArray['filterbis']) ? $valArray['filterbis'] : '';
             $this->view->assignMultiple(
                 [
-                    'anzgesamt' => count($teilnehmers),
+                    'anzgesamt' => $anzteilnehmers,
                     'calleraction' => 'export',
                     'callercontroller' => 'Backend',
                     'callerpage' => $currentPage,
