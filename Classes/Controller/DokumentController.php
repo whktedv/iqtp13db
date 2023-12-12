@@ -356,10 +356,12 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
             $percent = 50;
             
             $new_file_name = $fileNamewoExt . '_r.' . $fileExt;
-            
-            switch ($filearr['type']['file'])
+                        
+            //switch ($filearr['type']['file'])
+            switch (exif_imagetype($pfad.$filename))
             {
-                case 'image/jpeg':
+                //case 'image/jpeg':
+                case IMAGETYPE_JPEG:
                     $image = imagecreatefromjpeg($pfad.$filename);
                     
                     if($image) {
@@ -378,8 +380,9 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
                         return false;                        
                     }
                     break;
-                    
-                case 'image/gif':
+                
+                //case 'image/gif':
+                case IMAGETYPE_GIF:
                     $image = imagecreatefromgif($pfad.$filename);
                     
                     if($image) {
@@ -398,8 +401,9 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
                         return false;
                     }                    
                     break;
-                    
-                case 'image/png':
+                
+                //case 'image/png':
+                case IMAGETYPE_PNG:
                     $image = imagecreatefrompng($pfad.$filename);
                     
                     if($image) {

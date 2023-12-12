@@ -150,8 +150,8 @@
 				<td>{hist.berater.username}</td>
 				<td>{hist.teilnehmer.nachname}, {hist.teilnehmer.vorname} (UID: {hist.teilnehmer.uid})</td>
 				<td>{hist.property}</td>
-				<td>{hist.oldvalue}</td>
-				<td>{hist.newvalue}</td> 
+				<td><f:format.raw>{hist.oldvalue}</f:format.raw></td>
+				<td><f:format.raw>{hist.newvalue}</f:format.raw></td> 
 			</tr>
 		</f:for>
 	</table>

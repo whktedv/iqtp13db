@@ -14,3 +14,6 @@ Update 29.11.2023
 Update 04.12.2023
 - Infotext beim Feld Abschluss in der Anmeldung, um den Begriff "Abschluss" verständlicher zu machen
 - Felder für eigenen Infotext Mail, Startseite und Logo Startseite vorbereitet
+
+Update 12.12.2023
+- Verbesserte Erkennung von Bild-Dateitypen
