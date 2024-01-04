@@ -569,6 +569,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                     AND d.niqbid LIKE '$beratungsstelle'
                     AND b.referenzberufzugewiesen LIKE '$beruf'
                     AND a.hidden = 0 and a.deleted = 0
+                    AND c.langisocode = 'de' 
                     GROUP BY erste_staatsangehoerigkeit HAVING anz > 0 ORDER BY anz DESC";
         } elseif($bundesland == '%') {
             // Ausgabe Liste Bundesland

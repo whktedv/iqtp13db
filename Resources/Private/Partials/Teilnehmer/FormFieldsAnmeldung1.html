@@ -43,12 +43,12 @@
 						<f:form.textfield class="orttextfield" property="ort" pattern="\p{Latin}|[0-9]|[[:space:]]|\:|\,|\.|\(|\)|\-|\\|\/|\+|\@|\`|\.|\&" placeholder="<f:translate key='tx_iqtp13db_domain_model_teilnehmer.ort'/>"/>
 					</f:then>
 					<f:else>
-						<f:if condition="{direkt} == '1'">
+						<f:if condition="{direkt} == '1' && {wohnsitzDeutschland} != '2'">
 							<f:then>
-								<f:form.textfield class="plztextfield" property="plz" pattern="\p{Latin}|[0-9]|[[:space:]]|\:|\,|\.|\(|\)|\-|\\|\/|\+|\@|\`|\.|\&" placeholder=""/>
+								<f:form.textfield class="plztextfield" property="plz" pattern="\p{Latin}|[0-9]|[[:space:]]|\:|\,|\.|\(|\)|\-|\\|\/|\+|\@|\`|\.|\&" placeholder="" required="1"/>
 							</f:then>
 							<f:else>
-								<f:form.textfield class="plztextfield" pattern="[0-9][0-9][0-9][0-9][0-9]" property="plz" placeholder="00000"/>
+								<f:form.textfield class="plztextfield" property="plz" pattern="\p{Latin}|[0-9]|[[:space:]]|\:|\,|\.|\(|\)|\-|\\|\/|\+|\@|\`|\.|\&" value="00000"/>
 							</f:else>
 						</f:if>
 						<f:form.textfield class="orttextfield" property="ort" pattern="\p{Latin}|[0-9]|[[:space:]]|\:|\,|\.|\(|\)|\-|\\|\/|\+|\@|\`|\.|\&" placeholder="<f:translate key='tx_iqtp13db_domain_model_teilnehmer.ort'/>"/>											

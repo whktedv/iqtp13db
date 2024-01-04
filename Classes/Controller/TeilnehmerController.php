@@ -177,6 +177,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 $valArray = $this->request->getArguments();
                 $beratungsstellenid = $valArray['beratung'] ?? '';
                 $direkt = $valArray['direkt'] ?? '';
+                $wohnsitzDeutschland = $valArray['wohnsitzDeutschland'] ?? '';
                 if($beratungsstellenid != '') {
                     $allusergroups = $this->userGroupRepository->findAllGroups($this->settings['beraterstoragepid']);
                     foreach ($allusergroups as $group) {
@@ -185,7 +186,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                             $GLOBALS['TSFE']->fe_user->setKey('ses', 'beratungsstellenid', $group->getNiqbid());
                             
                             if($direkt == '1'){
-                                $this->forward('anmeldseite0', 'Teilnehmer', 'Iqtp13db', array('direkt' => $direkt));
+                                $this->forward('anmeldseite0', 'Teilnehmer', 'Iqtp13db', array('direkt' => $direkt, 'wohnsitzDeutschland' => $wohnsitzDeutschland));
                             } else {
                                 if($this->settings['modtyp'] == 'anmeldungplz') {
                                     $this->forward('startseiteplz', 'Teilnehmer', 'Iqtp13db');
@@ -269,7 +270,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $valarrwohnsitzdeutschland = $valArray['wohnsitzDeutschland'] ?? '';
         $direkt = $valArray['direkt'] ?? '0';
         
-        if($valarrwohnsitzdeutschland == 2) {
+        if($valarrwohnsitzdeutschland == 2 && $direkt == 0) {
             $uri = $uriBuilder->setTargetPageUid($this->settings['anmeldungzsbapageuid'])->build();
             $this->redirectToUri($uri, 0, 303);
         } elseif($valarrwohnsitzdeutschland == 1 && $valArray['plz'] == '' && $bstid == '') {
@@ -374,7 +375,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'tnseite1' => $tnseite1,
                 'settings' => $this->settings,
                 'beratungsstelle' => $bstid,
-                'wohnsitzdeutschland' => $valArray['wohnsitzDeutschland'] ?? '',
+                'wohnsitzDeutschland' => $valArray['wohnsitzDeutschland'] ?? '',
                 'plz' => $valArray['plz'] ?? '',
                 'jahre' => $jahre,
                 'urleinwilligung' => $urleinwilligung,

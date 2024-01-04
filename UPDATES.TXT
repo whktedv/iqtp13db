@@ -16,4 +16,12 @@ Update 04.12.2023
 - Felder für eigenen Infotext Mail, Startseite und Logo Startseite vorbereitet
 
 Update 12.12.2023
-- Verbesserte Erkennung von Bild-Dateitypen
+- Verbesserte Erkennung von Bild-Dateitypen beim Upload von Dokumenten
+
+Updates 04.01.2024
+- Bugfix in Adminmodul Statistik
+- Bugfix in Anmeldeformular bei Direkt-Anmeldung 
+- Bugfix in BackendController bei initializeEditAction neu mit Prüfung "array_key_exists", ob im valArray der Eintrag teilnehmer vorhanden ist
+- Bugfix in BackendController bei initializeUpdateAction neu mit Prüfung "array_key_exists", ob im valArray der Eintrag teilnehmer vorhanden ist
+- Bugfix PLZ-Eingabe bei ZSBA-Fall in BW
+- Bugfix in Exportroutine

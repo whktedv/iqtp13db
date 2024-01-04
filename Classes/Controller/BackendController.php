@@ -813,279 +813,296 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         // ******************** EXPORT ****************************
         if (isset($valArray['export']) && $fberatungsstatus != '') {
             
-            $rows = array();
-            $rowsfk = array();
-            $summedauerfk = array();
-            $fkcnt = 0;
-            foreach ($teilnehmers as $akey => $atn) {
-                $folgekontakte[$akey] = $this->folgekontaktRepository->findByTeilnehmer($atn->getUid());
-                $anzfolgekontakte[$akey] = count($folgekontakte[$akey]);
-                $abschluesse[$akey] = $this->abschlussRepository->findByTeilnehmer($atn);
-                $summedauerfk[$akey] = 0;
-                
-                foreach($folgekontakte[$akey] as $fk) {
-                    $rowsfk[$fkcnt] = array();
-                    $beraterfk = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'berater');
-                    $teilnehmerfk = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'teilnehmer');
+            if($anzteilnehmers == 0) {
+                $this->addFlashMessage("Keine Einträge, bitte Suchparameter anpassen.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                $this->view->assignMultiple(
+                    [
+                        'anzgesamt' => $anzteilnehmers,
+                        'calleraction' => 'export',
+                        'callercontroller' => 'Backend',
+                        'callerpage' => $currentPage,
+                        'filterberatungsstatus' => $fberatungsstatus,
+                        'filterbundesland' => $bundeslandselected,
+                        'filterstaat' => $staatselected,
+                        'filteron' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus')
+                    ]
+                    );
+            } else {
+            
+                $rows = array();
+                $rowsfk = array();
+                $summedauerfk = array();
+                $fkcnt = 0;
+                foreach ($teilnehmers as $akey => $atn) {
+                    $folgekontakte[$akey] = $this->folgekontaktRepository->findByTeilnehmer($atn->getUid());
+                    $anzfolgekontakte[$akey] = count($folgekontakte[$akey]);
+                    $abschluesse[$akey] = $this->abschlussRepository->findByTeilnehmer($atn);
+                    $summedauerfk[$akey] = 0;
                     
-                    $rowsfk[$fkcnt]['teilnehmeruid'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($teilnehmerfk, 'uid');
-                    $rowsfk[$fkcnt]['teilnehmernachname'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($teilnehmerfk, 'nachname');
-                    $rowsfk[$fkcnt]['teilnehmervorname'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($teilnehmerfk, 'vorname');
-                    $rowsfk[$fkcnt]['datum'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'datum');
-                    if($beraterfk != NULL) $rowsfk[$fkcnt]['Beraterin'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($beraterfk, 'username');
-                    else $rowsfk[$fkcnt]['beraterin'] = '-';
-                    $rowsfk[$fkcnt]['notizen'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'notizen');
-                    $bform = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'beratungsform');
-                    $rowsfk[$fkcnt]['beratungsform'] = $bform == '-1000' ? '-' : $arrberatungsformfolgeberatung[$bform];
-                    $rowsfk[$fkcnt]['beratungsdauer'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'beratungsdauer');
-                    $fkdauer = floatval(str_replace(',', '.', $rowsfk[$fkcnt]['beratungsdauer']));
-                    $summedauerfk[$akey] += $fkdauer;
-                    $fkcnt++;
+                    foreach($folgekontakte[$akey] as $fk) {
+                        $rowsfk[$fkcnt] = array();
+                        $beraterfk = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'berater');
+                        $teilnehmerfk = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'teilnehmer');
+                        
+                        $rowsfk[$fkcnt]['teilnehmeruid'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($teilnehmerfk, 'uid');
+                        $rowsfk[$fkcnt]['teilnehmernachname'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($teilnehmerfk, 'nachname');
+                        $rowsfk[$fkcnt]['teilnehmervorname'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($teilnehmerfk, 'vorname');
+                        $rowsfk[$fkcnt]['datum'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'datum');
+                        if($beraterfk != NULL) $rowsfk[$fkcnt]['Beraterin'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($beraterfk, 'username');
+                        else $rowsfk[$fkcnt]['beraterin'] = '-';
+                        $rowsfk[$fkcnt]['notizen'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'notizen');
+                        $bform = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'beratungsform');
+                        $rowsfk[$fkcnt]['beratungsform'] = $bform == '-1000' ? '-' : $arrberatungsformfolgeberatung[$bform];
+                        $rowsfk[$fkcnt]['beratungsdauer'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'beratungsdauer');
+                        $fkdauer = floatval(str_replace(',', '.', $rowsfk[$fkcnt]['beratungsdauer']));
+                        $summedauerfk[$akey] += $fkdauer;
+                        $fkcnt++;
+                    }
                 }
+                
+                foreach($teilnehmers as $x => $tn) {
+                    
+                    $berater = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'berater');
+                    
+                    $rows[$x] = array();
+                    $rows[$x]['uid'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'uid');
+                    $rows[$x]['verificationDate'] = date('d.m.Y H:i:s', \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'verificationDate'));
+                    $rows[$x]['Nachname'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'nachname');
+                    $rows[$x]['Vorname'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'vorname');
+                    $rows[$x]['PLZ'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'plz');
+                    $rows[$x]['Ort'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'ort');
+                    $rows[$x]['Email'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'email');
+                    $rows[$x]['Telefon'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'telefon');
+                    $rows[$x]['Lebensalter'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'lebensalter');
+                    
+                    $tn1staatsangehoerigkeit = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'erste_staatsangehoerigkeit');
+                    $rows[$x]['ErsteStaatsangehoerigkeit'] = $tn1staatsangehoerigkeit == '' ? '-' : $arrstaaten[$tn1staatsangehoerigkeit];
+                    
+                    $tn2staatsangehoerigkeit = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'zweite_staatsangehoerigkeit');
+                    $rows[$x]['ZweiteStaatsangehoerigkeit'] = $tn2staatsangehoerigkeit == '' ? '-' : $arrstaaten[$tn2staatsangehoerigkeit];
+                    
+                    $wohnsitzdeutschland = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'wohnsitz_deutschland ');
+                    if($wohnsitzdeutschland == 1) $wohnsitzdeutschland = 'ja';
+                    if($wohnsitzdeutschland == 2) $wohnsitzdeutschland = 'nein';
+                    if($wohnsitzdeutschland == -1) $wohnsitzdeutschland = 'k.a.';
+                    $rows[$x]['WohnsitzDeutschland'] = $wohnsitzdeutschland ?? '';
+                    
+                    $rows[$x]['Einreisejahr'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'einreisejahr');
+                    
+                    $wohnsitzneinin = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'wohnsitz_nein_in ');
+                    $rows[$x]['WohnsitzNeinIn'] = $wohnsitzneinin == '' ? '-' : $arrstaaten[$wohnsitzneinin];
+                    
+                    $deutschkenntnisse = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'deutschkenntnisse ');
+                    if($deutschkenntnisse == 1) $deutschkenntnisse = 'ja';
+                    if($deutschkenntnisse == 2) $deutschkenntnisse = 'nein';
+                    if($deutschkenntnisse == -1) $deutschkenntnisse = 'k.a.';
+                    $rows[$x]['Deutschkenntnisse'] = $deutschkenntnisse ?? '';
+                    
+                    $zertifikatsprachniveau = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'zertifikat_sprachniveau ');
+                    $rows[$x]['ZertifikatSprachniveau'] = $zertifikatsprachniveau == '' ? '-' : $arrzertifikatlevel[$zertifikatsprachniveau];
+                    
+                    $rows[$x]['Sonstigerstatus'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'sonstigerstatus');
+                    
+                    $tnerwerbsstatus = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'erwerbsstatus');
+                    $rows[$x]['erwerbsstatus'] = $tnerwerbsstatus == 0 ? '-' : $arrerwerbsstatus[$tnerwerbsstatus];
+                    
+                    $tnleistungsbezugjanein = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'leistungsbezugjanein');
+                    $rows[$x]['Leistungsbezugjanein'] = $tnleistungsbezugjanein == 0 ? '-' : $arrjanein[$tnleistungsbezugjanein];
+                    
+                    $tnleistungsbezug = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'leistungsbezug');
+                    $rows[$x]['Leistungsbezug'] = $tnleistungsbezug == '' ? '-' : $arrleistungsbezug[$tnleistungsbezug];
+                    
+                    $tngeburtsland = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'geburtsland');
+                    $rows[$x]['Geburtsland'] = $tngeburtsland == '' ? '-' : $arrstaaten[$tngeburtsland];
+                    
+                    $tnaufenthaltsstatus = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'aufenthaltsstatus');
+                    $rows[$x]['aufenthaltsstatus'] = $tnaufenthaltsstatus == 0 ? '-' : $arraufenthaltsstatus[$tnaufenthaltsstatus];
+                    
+                    $geschlecht = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'geschlecht');
+                    if($geschlecht == 1) $geschlecht = 'w';
+                    if($geschlecht == 2) $geschlecht = 'm';
+                    if($geschlecht == 3) $geschlecht = 'd';
+                    $rows[$x]['Geschlecht'] = $geschlecht;
+                    
+                    $rows[$x]['notizen'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'notizen');
+                    
+                    if($berater != NULL) {
+                        $rows[$x]['Beraterin'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($berater, 'username');
+                    } else {
+                        $rows[$x]['Beraterin'] = '-';
+                    }
+                    
+                    $stringberatungsart = '';
+                    foreach (\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungsart') as $atn) $stringberatungsart .= $atn == '' ? '-;' : $arrberatungsart[$atn].";";
+                    $rows[$x]['beratungsart'] = $stringberatungsart;
+                    
+                    $rows[$x]['beratungsort'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungsort');
+                    
+                    $stringanerkennungsberatung = '';
+                    foreach (\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'anerkennungsberatung') as $atn) $stringanerkennungsberatung .= $atn == '' ? '-;' : $arranerkennungsberatung[$atn].";";
+                    $rows[$x]['anerkennungsberatung'] = $stringanerkennungsberatung;
+                    
+                    $stringqualifizierungsberatung = '';
+                    foreach (\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'qualifizierungsberatung') as $atn) $stringqualifizierungsberatung .= $atn == '' ? '-;' : $arrqualifizierungsberatung[$atn].";";
+                    $rows[$x]['qualifizierungsberatung'] = $stringqualifizierungsberatung;
+                    
+                    $tnnameberatungsstelle = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'name_beratungsstelle');
+                    $rows[$x]['nameberatungsstelle'] = $tnnameberatungsstelle == '' ? '-' : $arrberatungsstelle[$tnnameberatungsstelle];
+                    
+                    $rows[$x]['beratungnotizen'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungnotizen');
+                    
+                    $rows[$x]['beratungzuschulabschluss'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungzu');
+                    
+                    $rows[$x]['AnzFolgekontakte'] = $anzfolgekontakte[$x];
+                    $rows[$x]['sumDauerFolgekontakte'] = str_replace('.', ',', $summedauerfk[$x]);
+                    
+                    $rows[$x]['kooperationgruppe'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'kooperationgruppe');
+                    $rows[$x]['beratungsdauer'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungsdauer');
+                    $rows[$x]['beratungdatum'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungdatum');
+                    $rows[$x]['erstberatungabgeschlossen'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'erstberatungabgeschlossen');
+                    $einwilligunginfo = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'einwilligunginfo');
+                    if($einwilligunginfo == 1) $rows[$x]['einwilligunginfo'] = 'ja';
+                    else $rows[$x]['einwilligunginfo'] = 'nein';
+                    
+                    foreach($abschluesse[$x] as $y => $abschluss) {
+                        $aprops = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getGettablePropertyNames($abschluss);
+                        
+                        $abreferenzberufzugewiesen = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'referenzberufzugewiesen');
+                        $rows[$x]['Abschluss'.$y.' Referenzberufzugewiesen'] = $abreferenzberufzugewiesen == '' ? '-' : $arrberufe[$abreferenzberufzugewiesen];
+                        
+                        $rows[$x]['Abschluss'.$y.' Abschlussart'] = '';
+                        foreach (\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'abschlussart') as $atn) $rows[$x]['Abschluss'.$y.' Abschlussart'] .= $atn == '' ? '' : $arrabschlussart[$atn]." ";
+                        
+                        $aberwerbsland = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'erwerbsland');
+                        $rows[$x]['Abschluss'.$y.' Erwerbsland'] = $aberwerbsland == '' ? '-' : $arrstaaten[$aberwerbsland];
+                        
+                        $rows[$x]['Abschluss'.$y.' Abschlussjahr'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'abschlussjahr');
+                        $rows[$x]['Abschluss'.$y.' Ausbildungsort'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'ausbildungsort');
+                        $rows[$x]['Abschluss'.$y.' Abschluss'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'abschluss');
+                        
+                        $rows[$x]['Abschluss'.$y.' DauerBerufsausbildung'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'dauer_berufsausbildung');
+                        $rows[$x]['Abschluss'.$y.' Ausbildungsinstitution'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'ausbildungsinstitution');
+                        $rows[$x]['Abschluss'.$y.' Berufserfahrung'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'berufserfahrung');
+                        $rows[$x]['Abschluss'.$y.' Wunschberuf'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'wunschberuf');
+                        
+                        $abantragstellungerfolgt = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'antragstellungerfolgt');
+                        $rows[$x]['Abschluss'.$y.' Antragstellungerfolgt'] = $abantragstellungerfolgt == 0 ? '-' : $arrantragstellungerfolgt[$abantragstellungerfolgt];
+                        
+                    }
+                }
+                
+                $bezbstatus = $this->settings['filterberatungsstatus'][$fberatungsstatus];
+                
+                // XLSX
+                $filename = 'export_'.$bezbstatus.'_'.date('Y-m-d_H-i', time()).'.xlsx';
+                $headerblatt1 = [
+                    'UID' => 'string',
+                    'Bestätigungsdatum' => 'string',
+                    'Nachname' => 'string',
+                    'Vorname' => 'string',
+                    'PLZ' => 'string',
+                    'Ort' => 'string',
+                    'E-Mail' => 'string',
+                    'Telefon' => 'string',
+                    'Lebensalter' => 'string',
+                    'Erste Staatsangehoerigkeit' => 'string',
+                    'Zweite Staatsangehoerigkeit' => 'string',
+                    'WohnsitzDeutschland' => 'string',
+                    'Einreisejahr' => 'string',
+                    'WohnsitzNeinIn' => 'string',
+                    'Deutschkenntnisse' => 'string',
+                    'ZertifikatSprachniveau' => 'string',
+                    'SonstigerStatus' => 'string',
+                    'Erwerbsstatus' => 'string',
+                    'Leistungsbezug ja/nein' => 'string',
+                    'Leistungsbezug' => 'string',
+                    'Geburtsland' => 'string',
+                    'Aufenthaltsstatus' => 'string',
+                    'Geschlecht' => 'string',
+                    'Notizen Ratsuchender' => 'string',
+                    'Berater:in' => 'string',
+                    'Beratungsart' => 'string',
+                    'Beratungsort' => 'string',
+                    'Anerkennungsberatung' => 'string',
+                    'Qualifizierungsberatung' => 'string',
+                    'Beratungsstelle' => 'string',
+                    'Beratung Notizen' => 'string',
+                    'Beratung zu Schulabschluss' => 'string',
+                    'Anz. Folgekontakte' => 'string',
+                    'Summe Dauer Folgekontakte' => 'string',
+                    'Kooperationgruppe' => 'string',
+                    'Beratungsdauer' => 'string',
+                    'Beratungdatum' => 'string',
+                    'Erstberatungabgeschlossen' => 'string',
+                    'Einwilligung Infos' => 'string',
+                    'Abschluss1 Referenzberuf zugewiesen' => 'string',
+                    'Abschluss1 Abschlussart' => 'string',
+                    'Abschluss1 Erwerbsland' => 'string',
+                    'Abschluss1 Abschlussjahr' => 'string',
+                    'Abschluss1 Ausbildungsort' => 'string',
+                    'Abschluss1 Abschluss' => 'string',
+                    'Abschluss1 DauerBerufsausbildung' => 'string',
+                    'Abschluss1 Ausbildungsinstitution' => 'string',
+                    'Abschluss1 Berufserfahrung' => 'string',
+                    'Abschluss1 Wunschberuf' => 'string',
+                    'Abschluss1 Antragstellung erfolgt' => 'string',
+                    'Abschluss2 Referenzberuf zugewiesen' => 'string',
+                    'Abschluss2 Abschlussart' => 'string',
+                    'Abschluss2 Erwerbsland' => 'string',
+                    'Abschluss2 Abschlussjahr' => 'string',
+                    'Abschluss2 Ausbildungsort' => 'string',
+                    'Abschluss2 Abschluss' => 'string',
+                    'Abschluss2 DauerBerufsausbildung' => 'string',
+                    'Abschluss2 Ausbildungsinstitution' => 'string',
+                    'Abschluss2 Berufserfahrung' => 'string',
+                    'Abschluss2 Wunschberuf' => 'string',
+                    'Abschluss2 Antragstellung erfolgt' => 'string',
+                    'Abschluss3 Referenzberuf zugewiesen' => 'string',
+                    'Abschluss3 Abschlussart' => 'string',
+                    'Abschluss3 Erwerbsland' => 'string',
+                    'Abschluss3 Abschlussjahr' => 'string',
+                    'Abschluss3 Ausbildungsort' => 'string',
+                    'Abschluss3 Abschluss' => 'string',
+                    'Abschluss3 DauerBerufsausbildung' => 'string',
+                    'Abschluss3 Ausbildungsinstitution' => 'string',
+                    'Abschluss3 Berufserfahrung' => 'string',
+                    'Abschluss3 Wunschberuf' => 'string',
+                    'Abschluss3 Antragstellung erfolgt' => 'string',
+                    'Abschluss4 Referenzberuf zugewiesen' => 'string',
+                    'Abschluss4 Abschlussart' => 'string',
+                    'Abschluss4 Erwerbsland' => 'string',
+                    'Abschluss4 Abschlussjahr' => 'string',
+                    'Abschluss4 Ausbildungsort' => 'string',
+                    'Abschluss4 Abschluss' => 'string',
+                    'Abschluss4 DauerBerufsausbildung' => 'string',
+                    'Abschluss4 Ausbildungsinstitution' => 'string',
+                    'Abschluss4 Berufserfahrung' => 'string',
+                    'Abschluss4 Wunschberuf' => 'string',
+                    'Abschluss4 Antragstellung erfolgt' => 'string'
+                ];
+               
+                $headerblatt2 = [
+                    'Teilnehmer UID' => 'string',
+                    'Nachname' => 'string',
+                    'Vorname' => 'string',
+                    'Datum' => 'string',
+                    'Berater' => 'string',
+                    'Notizen' => 'string',
+                    'Beratungsform' => 'string',
+                    'Beratungsdauer' => 'string',
+                ];
+                $writer = new \XLSXWriter();
+                $writer->setAuthor('IQ Webapp');
+    
+                $writer->writeSheet($rows, 'Ratsuchende', $headerblatt1);
+                $writer->writeSheet($rowsfk, 'Folgekontakte', $headerblatt2);
+                
+                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                header('Content-Disposition: attachment;filename="'.$filename.'"');
+                header('Cache-Control: max-age=0');
+                $writer->writeToStdOut();
+                exit;
             }
-            
-            foreach($teilnehmers as $x => $tn) {
-                
-                $berater = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'berater');
-                
-                $rows[$x] = array();
-                $rows[$x]['uid'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'uid');
-                $rows[$x]['verificationDate'] = date('d.m.Y H:i:s', \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'verificationDate'));
-                $rows[$x]['Nachname'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'nachname');
-                $rows[$x]['Vorname'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'vorname');
-                $rows[$x]['PLZ'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'plz');
-                $rows[$x]['Ort'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'ort');
-                $rows[$x]['Email'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'email');
-                $rows[$x]['Telefon'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'telefon');
-                $rows[$x]['Lebensalter'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'lebensalter');
-                
-                $tn1staatsangehoerigkeit = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'erste_staatsangehoerigkeit');
-                $rows[$x]['ErsteStaatsangehoerigkeit'] = $tn1staatsangehoerigkeit == '' ? '-' : $arrstaaten[$tn1staatsangehoerigkeit];
-                
-                $tn2staatsangehoerigkeit = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'zweite_staatsangehoerigkeit');
-                $rows[$x]['ZweiteStaatsangehoerigkeit'] = $tn2staatsangehoerigkeit == '' ? '-' : $arrstaaten[$tn2staatsangehoerigkeit];
-                
-                $wohnsitzdeutschland = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'wohnsitz_deutschland ');
-                if($wohnsitzdeutschland == 1) $wohnsitzdeutschland = 'ja';
-                if($wohnsitzdeutschland == 2) $wohnsitzdeutschland = 'nein';
-                if($wohnsitzdeutschland == -1) $wohnsitzdeutschland = 'k.a.';
-                $rows[$x]['WohnsitzDeutschland'] = $wohnsitzdeutschland ?? '';
-                
-                $rows[$x]['Einreisejahr'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'einreisejahr');
-                
-                $wohnsitzneinin = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'wohnsitz_nein_in ');
-                $rows[$x]['WohnsitzNeinIn'] = $wohnsitzneinin == '' ? '-' : $arrstaaten[$wohnsitzneinin];
-                
-                $deutschkenntnisse = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'deutschkenntnisse ');
-                if($deutschkenntnisse == 1) $deutschkenntnisse = 'ja';
-                if($deutschkenntnisse == 2) $deutschkenntnisse = 'nein';
-                if($deutschkenntnisse == -1) $deutschkenntnisse = 'k.a.';
-                $rows[$x]['Deutschkenntnisse'] = $deutschkenntnisse ?? '';
-                
-                $zertifikatsprachniveau = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'zertifikat_sprachniveau ');
-                $rows[$x]['ZertifikatSprachniveau'] = $zertifikatsprachniveau == '' ? '-' : $arrzertifikatlevel[$zertifikatsprachniveau];
-                
-                $rows[$x]['Sonstigerstatus'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'sonstigerstatus');
-                
-                $tnerwerbsstatus = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'erwerbsstatus');
-                $rows[$x]['erwerbsstatus'] = $tnerwerbsstatus == 0 ? '-' : $arrerwerbsstatus[$tnerwerbsstatus];
-                
-                $tnleistungsbezugjanein = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'leistungsbezugjanein');
-                $rows[$x]['Leistungsbezugjanein'] = $tnleistungsbezugjanein == 0 ? '-' : $arrjanein[$tnleistungsbezugjanein];
-                
-                $tnleistungsbezug = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'leistungsbezug');
-                $rows[$x]['Leistungsbezug'] = $tnleistungsbezug == '' ? '-' : $arrleistungsbezug[$tnleistungsbezug];
-                
-                $tngeburtsland = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'geburtsland');
-                $rows[$x]['Geburtsland'] = $tngeburtsland == '' ? '-' : $arrstaaten[$tngeburtsland];
-                
-                $tnaufenthaltsstatus = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'aufenthaltsstatus');
-                $rows[$x]['aufenthaltsstatus'] = $tnaufenthaltsstatus == 0 ? '-' : $arraufenthaltsstatus[$tnaufenthaltsstatus];
-                
-                $geschlecht = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'geschlecht');
-                if($geschlecht == 1) $geschlecht = 'w';
-                if($geschlecht == 2) $geschlecht = 'm';
-                if($geschlecht == 3) $geschlecht = 'd';
-                $rows[$x]['Geschlecht'] = $geschlecht;
-                
-                $rows[$x]['notizen'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'notizen');
-                
-                if($berater != NULL) {
-                    $rows[$x]['Beraterin'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($berater, 'username');
-                } else {
-                    $rows[$x]['Beraterin'] = '-';
-                }
-                
-                $stringberatungsart = '';
-                foreach (\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungsart') as $atn) $stringberatungsart .= $atn == '' ? '-;' : $arrberatungsart[$atn].";";
-                $rows[$x]['beratungsart'] = $stringberatungsart;
-                
-                $rows[$x]['beratungsort'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungsort');
-                
-                $stringanerkennungsberatung = '';
-                foreach (\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'anerkennungsberatung') as $atn) $stringanerkennungsberatung .= $atn == '' ? '-;' : $arranerkennungsberatung[$atn].";";
-                $rows[$x]['anerkennungsberatung'] = $stringanerkennungsberatung;
-                
-                $stringqualifizierungsberatung = '';
-                foreach (\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'qualifizierungsberatung') as $atn) $stringqualifizierungsberatung .= $atn == '' ? '-;' : $arrqualifizierungsberatung[$atn].";";
-                $rows[$x]['qualifizierungsberatung'] = $stringqualifizierungsberatung;
-                
-                $tnnameberatungsstelle = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'name_beratungsstelle');
-                $rows[$x]['nameberatungsstelle'] = $tnnameberatungsstelle == '' ? '-' : $arrberatungsstelle[$tnnameberatungsstelle];
-                
-                $rows[$x]['beratungnotizen'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungnotizen');
-                
-                $rows[$x]['beratungzuschulabschluss'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungzu');
-                
-                $rows[$x]['AnzFolgekontakte'] = $anzfolgekontakte[$x];
-                $rows[$x]['sumDauerFolgekontakte'] = str_replace('.', ',', $summedauerfk[$x]);
-                
-                $rows[$x]['kooperationgruppe'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'kooperationgruppe');
-                $rows[$x]['beratungsdauer'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungsdauer');
-                $rows[$x]['beratungdatum'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungdatum');
-                $rows[$x]['erstberatungabgeschlossen'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'erstberatungabgeschlossen');
-                $einwilligunginfo = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'einwilligunginfo');
-                if($einwilligunginfo == 1) $rows[$x]['einwilligunginfo'] = 'ja';
-                else $rows[$x]['einwilligunginfo'] = 'nein';
-                
-                foreach($abschluesse[$x] as $y => $abschluss) {
-                    $aprops = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getGettablePropertyNames($abschluss);
-                    
-                    $abreferenzberufzugewiesen = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'referenzberufzugewiesen');
-                    $rows[$x]['Abschluss'.$y.' Referenzberufzugewiesen'] = $abreferenzberufzugewiesen == '' ? '-' : $arrberufe[$abreferenzberufzugewiesen];
-                    
-                    $rows[$x]['Abschluss'.$y.' Abschlussart'] = '';
-                    foreach (\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'abschlussart') as $atn) $rows[$x]['Abschluss'.$y.' Abschlussart'] .= $atn == '' ? '' : $arrabschlussart[$atn]." ";
-                    
-                    $aberwerbsland = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'erwerbsland');
-                    $rows[$x]['Abschluss'.$y.' Erwerbsland'] = $aberwerbsland == '' ? '-' : $arrstaaten[$aberwerbsland];
-                    
-                    $rows[$x]['Abschluss'.$y.' Abschlussjahr'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'abschlussjahr');
-                    $rows[$x]['Abschluss'.$y.' Ausbildungsort'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'ausbildungsort');
-                    $rows[$x]['Abschluss'.$y.' Abschluss'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'abschluss');
-                    
-                    $rows[$x]['Abschluss'.$y.' DauerBerufsausbildung'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'dauer_berufsausbildung');
-                    $rows[$x]['Abschluss'.$y.' Ausbildungsinstitution'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'ausbildungsinstitution');
-                    $rows[$x]['Abschluss'.$y.' Berufserfahrung'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'berufserfahrung');
-                    $rows[$x]['Abschluss'.$y.' Wunschberuf'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'wunschberuf');
-                    
-                    $abantragstellungerfolgt = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'antragstellungerfolgt');
-                    $rows[$x]['Abschluss'.$y.' Antragstellungerfolgt'] = $abantragstellungerfolgt == 0 ? '-' : $arrantragstellungerfolgt[$abantragstellungerfolgt];
-                    
-                }
-            }
-            
-            $bezbstatus = $this->settings['filterberatungsstatus'][$fberatungsstatus];
-            
-            // XLSX
-            $filename = 'export_'.$bezbstatus.'_'.date('Y-m-d_H-i', time()).'.xlsx';
-            $headerblatt1 = [
-                'UID' => 'string',
-                'Bestätigungsdatum' => 'string',
-                'Nachname' => 'string',
-                'Vorname' => 'string',
-                'PLZ' => 'string',
-                'Ort' => 'string',
-                'E-Mail' => 'string',
-                'Telefon' => 'string',
-                'Lebensalter' => 'string',
-                'Erste Staatsangehoerigkeit' => 'string',
-                'Zweite Staatsangehoerigkeit' => 'string',
-                'WohnsitzDeutschland' => 'string',
-                'Einreisejahr' => 'string',
-                'WohnsitzNeinIn' => 'string',
-                'Deutschkenntnisse' => 'string',
-                'ZertifikatSprachniveau' => 'string',
-                'SonstigerStatus' => 'string',
-                'Erwerbsstatus' => 'string',
-                'Leistungsbezug ja/nein' => 'string',
-                'Leistungsbezug' => 'string',
-                'Geburtsland' => 'string',
-                'Aufenthaltsstatus' => 'string',
-                'Geschlecht' => 'string',
-                'Notizen Ratsuchender' => 'string',
-                'Berater:in' => 'string',
-                'Beratungsart' => 'string',
-                'Beratungsort' => 'string',
-                'Anerkennungsberatung' => 'string',
-                'Qualifizierungsberatung' => 'string',
-                'Beratungsstelle' => 'string',
-                'Beratung Notizen' => 'string',
-                'Beratung zu Schulabschluss' => 'string',
-                'Anz. Folgekontakte' => 'string',
-                'Summe Dauer Folgekontakte' => 'string',
-                'Kooperationgruppe' => 'string',
-                'Beratungsdauer' => 'string',
-                'Beratungdatum' => 'string',
-                'Erstberatungabgeschlossen' => 'string',
-                'Einwilligung Infos' => 'string',
-                'Abschluss1 Referenzberuf zugewiesen' => 'string',
-                'Abschluss1 Abschlussart' => 'string',
-                'Abschluss1 Erwerbsland' => 'string',
-                'Abschluss1 Abschlussjahr' => 'string',
-                'Abschluss1 Ausbildungsort' => 'string',
-                'Abschluss1 Abschluss' => 'string',
-                'Abschluss1 DauerBerufsausbildung' => 'string',
-                'Abschluss1 Ausbildungsinstitution' => 'string',
-                'Abschluss1 Berufserfahrung' => 'string',
-                'Abschluss1 Wunschberuf' => 'string',
-                'Abschluss1 Antragstellung erfolgt' => 'string',
-                'Abschluss2 Referenzberuf zugewiesen' => 'string',
-                'Abschluss2 Abschlussart' => 'string',
-                'Abschluss2 Erwerbsland' => 'string',
-                'Abschluss2 Abschlussjahr' => 'string',
-                'Abschluss2 Ausbildungsort' => 'string',
-                'Abschluss2 Abschluss' => 'string',
-                'Abschluss2 DauerBerufsausbildung' => 'string',
-                'Abschluss2 Ausbildungsinstitution' => 'string',
-                'Abschluss2 Berufserfahrung' => 'string',
-                'Abschluss2 Wunschberuf' => 'string',
-                'Abschluss2 Antragstellung erfolgt' => 'string',
-                'Abschluss3 Referenzberuf zugewiesen' => 'string',
-                'Abschluss3 Abschlussart' => 'string',
-                'Abschluss3 Erwerbsland' => 'string',
-                'Abschluss3 Abschlussjahr' => 'string',
-                'Abschluss3 Ausbildungsort' => 'string',
-                'Abschluss3 Abschluss' => 'string',
-                'Abschluss3 DauerBerufsausbildung' => 'string',
-                'Abschluss3 Ausbildungsinstitution' => 'string',
-                'Abschluss3 Berufserfahrung' => 'string',
-                'Abschluss3 Wunschberuf' => 'string',
-                'Abschluss3 Antragstellung erfolgt' => 'string',
-                'Abschluss4 Referenzberuf zugewiesen' => 'string',
-                'Abschluss4 Abschlussart' => 'string',
-                'Abschluss4 Erwerbsland' => 'string',
-                'Abschluss4 Abschlussjahr' => 'string',
-                'Abschluss4 Ausbildungsort' => 'string',
-                'Abschluss4 Abschluss' => 'string',
-                'Abschluss4 DauerBerufsausbildung' => 'string',
-                'Abschluss4 Ausbildungsinstitution' => 'string',
-                'Abschluss4 Berufserfahrung' => 'string',
-                'Abschluss4 Wunschberuf' => 'string',
-                'Abschluss4 Antragstellung erfolgt' => 'string'
-            ];
-           
-            $headerblatt2 = [
-                'Teilnehmer UID' => 'string',
-                'Nachname' => 'string',
-                'Vorname' => 'string',
-                'Datum' => 'string',
-                'Berater' => 'string',
-                'Notizen' => 'string',
-                'Beratungsform' => 'string',
-                'Beratungsdauer' => 'string',
-            ];
-            $writer = new \XLSXWriter();
-            $writer->setAuthor('IQ Webapp');
-
-            $writer->writeSheet($rows, 'Ratsuchende', $headerblatt1);
-            $writer->writeSheet($rowsfk, 'Folgekontakte', $headerblatt2);
-            
-            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-            header('Content-Disposition: attachment;filename="'.$filename.'"');
-            header('Cache-Control: max-age=0');
-            $writer->writeToStdOut();
-            exit;            
         } elseif(isset($valArray['export']) && $valArray['export'] && $fberatungsstatus == '') {
             
             $this->addFlashMessage("Bitte Status für Export auswählen.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
@@ -1363,16 +1380,18 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function initializeEditAction() {
         $valArray = $this->request->getArguments();
         
-        if(is_string($valArray['teilnehmer'])) {
-            $tnuid = $valArray['teilnehmer'];
-            //else $tnuid = $valArray['teilnehmer']['__identity'];
-
-            $thistn = $this->teilnehmerRepository->findByUid($tnuid);
-            $tnanonym = $thistn->getAnonym();
-            $anonymeberatung = $valArray['newanonymeberatung'] ?? '';
-            
-            if($anonymeberatung == '1' || $tnanonym == '1') {
-                $this->addFlashMessage("Bitte beachten: Für anonyme Beratungen ist zur Wahrung des Datenschutzes kein Dokumentenupload möglich!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+        if(array_key_exists('teilnehmer', $valArray)) {
+            if(is_string($valArray['teilnehmer'])) {
+                $tnuid = $valArray['teilnehmer'];
+                //else $tnuid = $valArray['teilnehmer']['__identity'];
+    
+                $thistn = $this->teilnehmerRepository->findByUid($tnuid);
+                $tnanonym = $thistn->getAnonym();
+                $anonymeberatung = $valArray['newanonymeberatung'] ?? '';
+                
+                if($anonymeberatung == '1' || $tnanonym == '1') {
+                    $this->addFlashMessage("Bitte beachten: Für anonyme Beratungen ist zur Wahrung des Datenschutzes kein Dokumentenupload möglich!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+                }
             }
         }
     }
@@ -1501,23 +1520,28 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $valArray = $this->request->getArguments();
        
-        $beratungdatum = $valArray['teilnehmer']['beratungdatum'] ?? '';
-        $erstberatungabgeschlossen = $valArray['teilnehmer']['erstberatungabgeschlossen'] ?? '';
-        
-        $email = $valArray['teilnehmer']['email'] ?? '';
-        $confirmemail = $valArray['teilnehmer']['confirmemail'] ?? '';
-        
-        if($email == '' || $confirmemail == '' || $email != $confirmemail) {
-            $this->addFlashMessage("FEHLER: E-Mail-Adressen stimmen nicht überein!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-            $this->redirect('edit', 'Backend', null, array('teilnehmer' => $valArray['teilnehmer']['__identity'], 'callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
-        }        
-        if($beratungdatum != '' && !$this->generalhelper->validateDateYmd($beratungdatum)) {
-            $this->addFlashMessage("FEHLER: Datensatz NICHT gespeichert. 'Beratung Datum' ungültige Eingabe. Datum im Format JJJJ-MM-TT eintragen!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-            $this->redirect($valArray['calleraction'] ?? 'edit', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
-        }
-        if($erstberatungabgeschlossen != '' && !$this->generalhelper->validateDateYmd($erstberatungabgeschlossen)) {
-            $this->addFlashMessage("FEHLER: Datensatz NICHT gespeichert. 'Erstberatung abgeschlossen' ungültige Eingabe. Datum im Format JJJJ-MM-TT eintragen!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-            $this->redirect($valArray['calleraction'] ?? 'edit', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
+        if(array_key_exists('teilnehmer', $valArray)) {
+            $beratungdatum = $valArray['teilnehmer']['beratungdatum'] ?? '';
+            $erstberatungabgeschlossen = $valArray['teilnehmer']['erstberatungabgeschlossen'] ?? '';
+            
+            $email = $valArray['teilnehmer']['email'] ?? '';
+            $confirmemail = $valArray['teilnehmer']['confirmemail'] ?? '';
+            
+            if($email == '' || $confirmemail == '' || $email != $confirmemail) {
+                $this->addFlashMessage("FEHLER: E-Mail-Adressen stimmen nicht überein!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                $this->redirect('edit', 'Backend', null, array('teilnehmer' => $valArray['teilnehmer']['__identity'], 'callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
+            }
+            if($beratungdatum != '' && !$this->generalhelper->validateDateYmd($beratungdatum)) {
+                $this->addFlashMessage("FEHLER: Datensatz NICHT gespeichert. 'Beratung Datum' ungültige Eingabe. Datum im Format JJJJ-MM-TT eintragen!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                $this->redirect($valArray['calleraction'] ?? 'edit', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
+            }
+            if($erstberatungabgeschlossen != '' && !$this->generalhelper->validateDateYmd($erstberatungabgeschlossen)) {
+                $this->addFlashMessage("FEHLER: Datensatz NICHT gespeichert. 'Erstberatung abgeschlossen' ungültige Eingabe. Datum im Format JJJJ-MM-TT eintragen!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                $this->redirect($valArray['calleraction'] ?? 'edit', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
+            }
+        } else {
+            $this->addFlashMessage("FEHLER in initializeUpdateAction.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
         }
     }
     

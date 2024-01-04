@@ -230,7 +230,7 @@ plugin.tx_iqtp13db.settings {
 		7 = Aufenthalt aus völkerrechtlichen, humanitären oder politischen Gründen (§22-26, 104a, 104b AufenthG)
 		4 = Aufenthalt zum Zweck der Ausbildung (§16-17 AufenthG)
 		5 = Aufenthalt zum Zweck der Erwerbstätigkeit (§18, 18a, 19b, 19d, 20, 21 AufenthG) 
-		9 = Aufenthalt zum Zwecke einer Anpassungsqualifizierung oder einer Kenntnisprüfung (§ 17a AufenthG)
+		9 = Aufenthalt zum Zwecke einer Anpassungsqualifizierung oder einer Kenntnisprüfung (§ 16d AufenthG)
 		2 = Blaue Karte EU (§19a AufenthG)
 		13 = Duldung (§60a Abs. 4 AufenthG)
 		10 = Niederlassungserlaubnis (§9 AufenthG)
@@ -302,9 +302,9 @@ plugin.tx_iqtp13db.settings {
 
    leistungsbezug {
 	    -1 = keine Angabe
-	     2 = mit (ergänzendem) SGB II-Leistungsbezug
-	     3 = mit SGB III-Leistungsbezug 
-	     4 = mit SGB III- und SGB II-Leistungsbezug
+	     2 = mit (ergänzendem) SGB II-Leistungsbezug (Bürgergeld)
+	     3 = mit SGB III-Leistungsbezug (Arbeitslosengeld)
+	     4 = mit SGB III- und SGB II-Leistungsbezug (Arbeitslosengeld + Bürgergeld)
 	     5 = mit (ergänzendem) Asylbewerberleistungsbezug   
    }
    
@@ -351,7 +351,7 @@ plugin.tx_iqtp13db.settings {
 		 7 = Residence permit for reasons of international law, humanitarian and political reasons (§22-26, 104a, 104b AufenthG)
 		 4 = Residence permit for the purpose of professional training (§16-17 AufenthG)
 		 5 = Residence permit for the purpose of employment (§18, 18a, 19b, 19d, 20, 21 AufenthG)
-		 9 = Residence permit for the purpose of adaptation qualification or knowledge test (§17a AufenthG)
+		 9 = Residence permit for the purpose of adaptation qualification or knowledge test (§16d AufenthG)
 		 2 = Blue Card EU (§19a AufenthG)
 		 13 = Toleration (§60a Abs .4 AufenthG)
 		 10 = Permanent residence permit (§9 AufenthG)
@@ -423,9 +423,9 @@ plugin.tx_iqtp13db.settings {
  
    leistungsbezug {
 	   	 -1 = no specification
-	     2 = with (complementary) SGB II-support
-	     3 = with SGB III-support
-	     4 = with SGB III- and SGB II-support
+	     2 = with (complementary) SGB II-support (Bürgergeld)
+	     3 = with SGB III-support (Arbeitslosengeld)
+	     4 = with SGB III- and SGB II-support (Arbeitslosengeld + Bürgergeld)
 	     5 = with (complementary) asylum seekers support
    }
     
@@ -475,7 +475,7 @@ plugin.tx_iqtp13db.settings {
 		7 = (§22-26, 104a, 104b AufenthG)  إقامة لأسباب تتعلق بالقانون الدولي أو لأسباب إنسانية أو سياسية    
 		4 = (§16-17 AufenthG) إقامة لأجل التكوين المهني
 		5 = (§18, 18a, 19b, 19d, 20, 21 AufenthG) إقامة لغرض العمل
-		9 = (§ 17a AufenthG) إقامة لإجراء التأهيل المهني الإضافي أو إجتياز إمتحان المعرفة للحصول على المعادلة    
+		9 = (§ 16d AufenthG) إقامة لإجراء التأهيل المهني الإضافي أو إجتياز إمتحان المعرفة للحصول على المعادلة    
 		2 = (§19a AufenthG)  البطاقة الزرقاء   في الاتحاد الأوروبي (الموظفين ذو تأهيل عالي)
 	    13 = (§60a Abs. 4 AufenthG) / Duldung تعليق مؤقت للترحيل
 	    10 = (§9 AufenthG) تصريح إقامة دائمة
@@ -547,9 +547,9 @@ plugin.tx_iqtp13db.settings {
 	
 	leistungsbezug {
 		-1 = لا توجد معلومات
-		2 = أحصل على إعانة (تكميلية) حسب القانون SGB II
-		3 = أحصل على إعانة  حسب القانون SGB III
-		4 = أحصل على إعانة  حسب القانونSGB III  والقانون SGB II
+		2 = أحصل على إعانة (تكميلية) حسب القانون SGB II (Bürgergeld)
+		3 = أحصل على إعانة  حسب القانون SGB III (Arbeitslosengeld)
+		4 = أحصل على إعانة  حسب القانونSGB III  والقانون SGB II (Arbeitslosengeld + Bürgergeld)
 		5 = أحصل على إعانة طالبي اللجوء (تكميلية)
 	}
 	
@@ -598,7 +598,7 @@ plugin.tx_iqtp13db.settings {
 	    7 = اقامت به دلایل مربوط به حقوق بین‌الملل، انسان‌دوستانه یا سیاسی (ماده 22-26 و 104a و 104b از AufenthG)
 	    4 = اقامت به منظور آموزش (ماده 16-17 از AufenthG)
 	    5 = اقامت به منظور فعالیت درآمدزا (ماده 18 و 18a و 19b و 19d و 20 و 21 از AufenthG) 
-	    9 = اقامت به منظور یک تعیین صلاحیت تطبیقی یا بررسی دانش (ماده 17a از AufenthG)
+	    9 = اقامت به منظور یک تعیین صلاحیت تطبیقی یا بررسی دانش (ماده 16d از AufenthG)
 	    2 = کارت آبی اتحادیه اروپا (ماده 19a از AufenthG)
 	    13 = حکم تحمل (ماده 60a بخش 4 از AufenthG)
 	    10 = مجوز استقرار (ماده 9 از AufenthG)
@@ -671,8 +671,8 @@ plugin.tx_iqtp13db.settings {
 	
 	leistungsbezug {
 		-1 = نمی‌دانم
-		2 = دریافت مزایا (مکمل) طبق جلد دوم کتاب قوانین اجتماعی (SGB II)
-		3 = دریافت مزایا طبق جلد سوم کتاب قوانین اجتماعی (SGB III)
+		2 = دریافت مزایا (مکمل) طبق جلد دوم کتاب قوانین اجتماعی (SGB II Bürgergeld)
+		3 = دریافت مزایا طبق جلد سوم کتاب قوانین اجتماعی (SGB III Arbeitslosengeld)
 		4 = دریافت مزایا طبق جلد سوم کتاب قوانین اجتماعی و جلد دوم کتاب قوانین اجتماعی
 		5 = دریافت مزایا (مکمل) برای پناهجویان
 	}
@@ -719,7 +719,7 @@ plugin.tx_iqtp13db.settings {
 	    7 = séjour pour des raisons de droit international public, humanitaires ou politiques (§22-26, 104a, 104b AufenthG)
 	    4 = Séjour aux fins de formation (§16-17 AufenthG)
 	    5 = séjour aux fins d'un emploi (§18, 18a, 19b, 19d, 20, 21 AufenthG)
-	    9 = séjour aux fins d'une qualification d'adaptation ou d'un contrôle des connaissances (§ 17a AufenthG)
+	    9 = séjour aux fins d'une qualification d'adaptation ou d'un contrôle des connaissances (§ 16d AufenthG)
 	    2 = carte bleue UE (§19a AufenthG)
 	    13 = tolérance  „Duldung“  (§60a Abs. 4 AufenthG)
 	    10 = Niepermis de résidence „Niederlassungserlaubnis (§9 AufenthG)
@@ -791,9 +791,9 @@ plugin.tx_iqtp13db.settings {
 	
 	leistungsbezug {
 		-1 = non spécifié
-		2 = bénéficiaire de prestations (complémentaires) du SGB II
-		3 = bénéficiaire de prestations du SGB III
-		4 = bénéficiaire de prestations SGB III et du SGB II
+		2 = bénéficiaire de prestations (complémentaires) du SGB II (Bürgergeld)
+		3 = bénéficiaire de prestations du SGB III (Arbeitslosengeld)
+		4 = bénéficiaire de prestations SGB III et du SGB II (Arbeitslosengeld + Bürgergeld)
 		5 = bénéficiaire d'une allocation (supplémentaire) pour demande d'asile   
 	}	
 	
@@ -839,7 +839,7 @@ plugin.tx_iqtp13db.settings {
 	    7 = (§22-26, 104a, 104b AufenthG) Pobyt ze względu na prawo międzynarodowe, względy humanitarne lub polityczne (§22-26, 104a, 104b  AufenthG) 
 	    4 = (§16-17 AufenthG) Pobyt w celu ukończenia wykształcenia zawodowego (§16-17 AufenthG) 
 	    5 = (§18, 18a, 19b, 19d, 20, 21 AufenthG)  Pobyt w celu pracy zarobkowej (§18, 18a, 19b, 19d, 20, 21 AufenthG)  
-	    9 = Pobyt w celu odbycia szkolenia kwalifikacyjnego lub odbycia testu sprawdzającego wiedzę (§ 17a AufenthG)
+	    9 = Pobyt w celu odbycia szkolenia kwalifikacyjnego lub odbycia testu sprawdzającego wiedzę (§ 16d AufenthG)
 	    2 = Niebieska Karta UE (§19a AufenthG) 
 	    13 = Pobyt tolerowany (§60a Abs. 4 AufenthG) 
 	    10 = (§9 AufenthG) Zezwolenie na osiedlenie  (§9 AufenthG) 
@@ -960,7 +960,7 @@ plugin.tx_iqtp13db.settings {
 	    7 = Reședința din motive de drept internațional, motive umanitare sau politice (§22-26, 104a, 104b AufenthG)
 	    4 = Reședința în scop educațional (§16-17 AufenthG)
 	    5 = Reședința în scopul unei activități ca salariat (§18, 18a, 19b, 19d, 20, 21 AufenthG) 
-	    9 = Reședință în scopul unei calificări de adaptare sau al unui test de cunoștințe (§ 17a AufenthG)
+	    9 = Reședință în scopul unei calificări de adaptare sau al unui test de cunoștințe (§ 16d AufenthG)
 	    2 = Cardul albastru UE (§19a AufenthG)
 	    13 = Toleranță (suspendare temporară a deportării) (§60a par. 4 AufenthG)
 	    10 = Permis de ședere pe durată nelimitată (§9 AufenthG)
@@ -1032,9 +1032,9 @@ plugin.tx_iqtp13db.settings {
 	
 	leistungsbezug {
 		-1 = Lipsă date
-		2 = Cu venituri sociale SGB II
-		3 = Cu venituri sociale SGB III
-		4 = Cu venituri sociale SGB III şi SGB II
+		2 = Cu venituri sociale SGB II (Bürgergeld)
+		3 = Cu venituri sociale SGB III (Arbeitslosengeld)
+		4 = Cu venituri sociale SGB III şi SGB II (Arbeitslosengeld + Bürgergeld)
 		5 = Cu venituri sociale (în completare) pentru solicitanţii de azil 
 	}
 	
@@ -1081,7 +1081,7 @@ plugin.tx_iqtp13db.settings {
 	    7 = Проживание по международному праву, гуманитарным или политическим причинам (§22-26, 104a, 104b AufenthG)
 	    4 = Резиденция с целью обучения (§16-17 AufenthG)
 	    5 = Проживание по трудовой деятельности (§18, 18a, 19b, 19d, 20, 21 AufenthG)
-	    9 = Проживание с целью подпорки квалификации или проверки знаний (§ 17a AufenthG)
+	    9 = Проживание с целью подпорки квалификации или проверки знаний (§ 16d AufenthG)
 	    2 = Голубая карта ЕС (§19a AufenthG)
 	    13 = Временное разрешение (Duldung) (§60a Abs. 4 AufenthG)
 	    10 = Бессрочный Вид на жительство
@@ -1202,7 +1202,7 @@ plugin.tx_iqtp13db.settings {
 	    7 = Residencia por razones de derecho internacional, humanitarias o políticas (§22-26, 104a, 104b AufenthG)
 	    4 = Residencia por motivos de formación (§16-17 AufenthG)
 	    5 = Residencia con fines de empleo remunerado (§18, 18a, 19b, 19d, 20, 21 AufenthG)
-	    9 = Residencia a efectos de un calificacion de adaptación o de una prueba de conocimientos (§ 17a AufenthG)
+	    9 = Residencia a efectos de un calificacion de adaptación o de una prueba de conocimientos (§ 16d AufenthG)
 	    2 = Tarjeta azul (§19a AufenthG)
 	    13 = Premiso de residencia (§60a Abs. 4 AufenthG)
 	    10 = Permiso de residencia permanente (§9 AufenthG)
@@ -1275,9 +1275,9 @@ plugin.tx_iqtp13db.settings {
 	
 	leistungsbezug {
 		-1 = No se especifica
-		2 = con prestaciones (complementarias) SGB II
-		3 = con prestaciones SGB III
-		4 = con prestaciones SGB III y SGB II
+		2 = con prestaciones (complementarias) SGB II (Bürgergeld)
+		3 = con prestaciones SGB III (Arbeitslosengeld)
+		4 = con prestaciones SGB III y SGB II (Arbeitslosengeld + Bürgergeld)
 		5 = con prestaciones (complementarias) como solicitante de asilo 
 	}
 	
@@ -1324,7 +1324,7 @@ plugin.tx_iqtp13db.settings {
 	    7 = Uluslararası hukuk, insani veya siyasi nedenlerle ikamet (§22-26, 104a, 104b AufenthG)
 	    4 = Eğitim amaçlı oturum izni (§16-17 AufenthG)
 	    5 = Çalışma üzerinden oturum izni (§18, 18a, 19b, 19d, 20, 21 AufenthG) 
-	    9 = Mesleki uyum yeterliliğin tamamlanması veyağı Mesleği tanıma sınavı için oturma izni (§ 17a AufenthG)
+	    9 = Mesleki uyum yeterliliğin tamamlanması veyağı Mesleği tanıma sınavı için oturma izni (§ 16d AufenthG)
 	    2 = Mavi kart (§19a AufenthG)
 	    13 = Sınırlı oturum izni (§60a Abs. 4 AufenthG)
 	  	10 = Kalıcı oturma izni (§9 AufenthG)
@@ -1396,9 +1396,9 @@ plugin.tx_iqtp13db.settings {
 	
 	leistungsbezug {
 		-1 = B.y.
-		2 = Tamamlayıcı SGB II- yardımı alıyorum
-		3 = SGB III- yardımı alıyorum
-		4 = SGB III- ve SGB II yardımı alıyorum
+		2 = Tamamlayıcı SGB II - yardımı alıyorum (Bürgergeld) 
+		3 = SGB III- yardımı alıyorum (Arbeitslosengeld)
+		4 = SGB III- ve SGB II yardımı alıyorum (Arbeitslosengeld + Bürgergeld)
 		5 = Tamamlayıcı iltica dilekçesi sahibi yardımı alıyorum
 	}
 		
@@ -1446,7 +1446,7 @@ plugin.tx_iqtp13db.settings {
 	    7 = Проживання з міркувань міжнародного права, гуманітарних чи політичних причин (§22-26, 104a, 104 b Закону про проживання AufenthG)
 	    4 = Проживання з метою навчання (§16-17 Закону про проживання AufenthG)
 	    5 = Проживання з метою працевлаштування (§18, 18a, 19b, 19d, 20, 21 Закону про проживання AufenthG)
-	    9 = Проживання з метою підтвердження кваліфікаціі або іспита на перевірку знаннь (§17a Закону про проживання AufenthG)
+	    9 = Проживання з метою підтвердження кваліфікаціі або іспита на перевірку знаннь (§16d Закону про проживання AufenthG)
 	    2 = Блакитна карта ЄС (§19a Закону про проживання AufenthG)
 	    13 = тимчасове припинення депортації (§60a абз. 4 Закону про проживання AufenthG)
 	    10 = дозвіл на постійне проживання (§9 Закону про проживання AufenthG)
@@ -1518,9 +1518,9 @@ plugin.tx_iqtp13db.settings {
 
    leistungsbezug {
 		-1 = без відповіді
-		 2 = SGB II (доповнююча) базова фінансова підтримка для шукачів роботи (Hartz IV) 
-		 3 = SGB III страхові виплати по безробіттю та виплати за сприяння працевлаштуванню
-		 4 = SGB II базова фінансова підтримка для шукачів роботи (Hartz IV) і SGB III страхові виплати по безробіттю та виплати за сприяння працевлаштуванню
+		 2 = SGB II (доповнююча) базова фінансова підтримка для шукачів роботи (Bürgergeld) 
+		 3 = SGB III страхові виплати по безробіттю та виплати за сприяння працевлаштуванню (Arbeitslosengeld)
+		 4 = SGB II базова фінансова підтримка для шукачів роботи і SGB III страхові виплати по безробіттю та виплати за сприяння працевлаштуванню (Arbeitslosengeld + Bürgergeld)
 		 5 = Asylbewerberleistungsbezug (доповнюючі) основні пільги для шукачів притулку, толерованих осіб та іноземців, які підлягають виконанню зобов'язання залишити країну 
    }
 		
