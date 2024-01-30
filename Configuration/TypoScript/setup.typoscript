@@ -8,7 +8,7 @@ plugin.tx_iqtp13db.settings {
 	registrationpageuid = 
 	standardberatungort =
 	beraterstoragepid = 0
-	wartezeitwochen = 6
+	wartezeitwochen = 10-12
 	anmeldungzsbapageuid =
 	anmeldungnichtwebapppageuid = 
 	datenschutzeinwilligungurluid = 

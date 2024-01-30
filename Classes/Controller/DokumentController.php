@@ -355,7 +355,9 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
             $fileNamewoExt = pathinfo($filearr['name']['file'], PATHINFO_FILENAME); 
             $percent = 50;
             
-            $new_file_name = $fileNamewoExt . '_r.' . $fileExt;
+            $timestamp = time();
+            
+            $new_file_name = $fileNamewoExt . '_' . $timestamp . '_r.' . $fileExt;
                         
             //switch ($filearr['type']['file'])
             switch (exif_imagetype($pfad.$filename))

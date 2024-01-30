@@ -50,9 +50,7 @@
 			<th> </th>
 			<th> </th>
 			<th> </th>
-			<f:security.ifHasRole role="Webapp Admin">
-				<th> </th>
-			</f:security.ifHasRole>
+			<th> </th>
 		</tr>
 
 		<f:for each="{paginator.paginatedItems}" as="teilnehmer" iteration="it">
@@ -102,9 +100,7 @@
 				</td>
 				<td>{teilnehmer.kooperationgruppe}</td>
 				<td><f:link.action action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" title="Bearbeiten"><img src="/fileadmin/template/images/iq-webapp_bearbeiten.svg" alt="Bearbeiten" width="30" height="30"/></f:link.action></td>
-				<f:security.ifHasRole role="Webapp Admin">
-					<td><f:if condition="{teilnehmer.niqidberatungsstelle} != {plzberatungsstelle4tn.{it.index}} && {plzberatungsstelle4tn.{it.index}} != ''"><f:then><f:link.action action="setBeratungsstellebyPLZ" arguments="{teilnehmer : teilnehmer, callerpage : callerpage}" onclick="return confirm('Beratungsstelle nach PLZ zuweisen?');" title="Beratungsstelle zuweisen"><img src="/fileadmin/template/images/iq-webapp_AQB-PLZ.svg" alt="AQB nach PLZ" width="30" height="30"/><span style="font-size: 0.6rem;">{plzberatungsstelle4tn.{it.index}}</span></f:link.action></f:then></f:if></td>
-				</f:security.ifHasRole>
+				<td><f:if condition="{teilnehmer.niqidberatungsstelle} != {plzberatungsstelle4tn.{it.index}} && {plzberatungsstelle4tn.{it.index}} != ''"><f:then><f:link.action action="setBeratungsstellebyPLZ" arguments="{teilnehmer : teilnehmer, callerpage : callerpage}" onclick="return confirm('Achtung: Ratsuchende:r wird Beratungsstelle nach PLZ zugewiesen?');" title="Beratungsstelle zuweisen"><img src="/fileadmin/template/images/iq-webapp_AQB-PLZ.svg" alt="AQB nach PLZ" width="30" height="30"/><span style="font-size: 0.6rem;">{plzberatungsstelle4tn.{it.index}}</span></f:link.action></f:then></f:if></td>
 				<td><f:if condition="{teilnehmer.verificationDate} == 0"><f:then><f:link.action action="askconsent" arguments="{teilnehmer : teilnehmer, callerpage : callerpage}" onclick="return confirm('E-Mail senden?');" title="Einwilligung anfordern"><img src="/fileadmin/template/images/iq-webapp_einwilligung-anfordern.svg" alt="Einwilligung anfordern" width="30" height="30" class="anfordernbtnimg"/></f:link.action></f:then></f:if></td>
 				<td><f:link.action action="delete" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" onclick="return confirm('Wirklich löschen?');" title="Löschen"><img src="/fileadmin/template/images/iq-webapp_loeschen.svg" width="30" height="30" alt="Löschen" /></f:link.action></td>
 			</tr>
@@ -125,19 +121,18 @@
 			<td class="unbestaetigt-beraten"><span class="legendeanmeldungunbestaetigtberaten">Anm. nicht bestätigt trotz Beratung</span></td>
 			<td class="bestaetigt"><span class="legendeanmeldungbest"></span>Anmeldung bestätigt</td>
 			<td class="dublette"><span class="legendeanmeldungdoublette"></span>mögliche Dublette</td>
-		</tr>
-		<tr>
 			<td><span class="linkbuttons buttonnew"></span> = Neuen Fall hinzufügen</td>
-			<td></td>
-			<td></td>
-			<td></td>
 		</tr>
 		<tr>
 			<td><img src="/fileadmin/template/images/iq-webapp_fall-uebernehmen.svg" alt="Fall übernehmen" width="30" height="30"/> = Fall übernehmen</td>
 			<td><img src="/fileadmin/template/images/iq-webapp_bearbeiten.svg" alt="Bearbeiten" width="30" height="30"/> = Bearbeiten</td>
+			<td><img src="/fileadmin/template/images/iq-webapp_AQB-PLZ.svg" alt="AQB nach PLZ" width="30" height="30"/> = Ratsuchende zu Beratungsstelle<br>nach PLZ übertragen</td>
 			<td><img src="/fileadmin/template/images/iq-webapp_einwilligung-anfordern.svg" alt="Einwilligung anfordern" width="30" height="30"/> = Einwilligung anfordern</td>
 			<td><img src="/fileadmin/template/images/iq-webapp_loeschen.svg" width="30" height="30" alt="Löschen" /> = Löschen</td>
 		</tr>
+
+		
+		
 	</table>
 </div>
 </f:section>

@@ -56,10 +56,10 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                     $beruf = " a.referenzberufzugewiesen IN ('".implode("','", $results)."') ";
                 }
             } else {
-                $beruf = "(a.deutscher_referenzberuf LIKE '%".$fberuf."%' OR a.deutscher_referenzberuf IS NULL)";
+                $beruf = "(a.deutscher_referenzberuf LIKE '%".$fberuf."%')";
             }
         } else {
-            $beruf = "(a.deutscher_referenzberuf LIKE '%".$fberuf."%' OR a.deutscher_referenzberuf IS NULL)";
+            $beruf = "(a.deutscher_referenzberuf LIKE '%".$fberuf."%')";
         }
         
         if($fbescheid != '%') {
@@ -91,7 +91,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             AND niqidberatungsstelle LIKE $niqbid
             AND t.uid like '$uid' 
             GROUP BY t.uid ORDER BY $orderby $order";
-                        
+              
         $query->statement($sql);
         return $query->execute();
     }
@@ -291,13 +291,14 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     }
     
     /**
-     * Counts Teilnehmer by Status for last 12 month
+     * Counts Teilnehmer by Status for last 12 month or $jahr
      *
      * @param $niqbid
      * @param $bstatus
+     * @param $jahr
      *  
      */
-    public function countTNbyBID($niqbid, $bstatus)
+    public function countTNbyBID($niqbid, $bstatus, $jahr)
     {
         $addfield = '';
         if($bstatus == 1) $field = 'FROM_UNIXTIME(verification_date)';
@@ -313,7 +314,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         }
 
         $query = $this->createQuery();
-        if(date('Y') > 2023) {
+        if($jahr == 0) {
             $query->statement("SELECT MONTH($field) as monat, count(*) as anzahl
                 FROM tx_iqtp13db_domain_model_teilnehmer
                 WHERE YEAR($field) = YEAR(CURRENT_DATE())
@@ -330,7 +331,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         } else {
             $query->statement("SELECT MONTH($field) as monat, count(*) as anzahl
                 FROM tx_iqtp13db_domain_model_teilnehmer
-                WHERE YEAR($field) = YEAR(CURRENT_DATE())
+                WHERE YEAR($field) = $jahr
                 AND deleted = 0 AND hidden = 0 AND niqidberatungsstelle LIKE '$niqbid'
                 $addfield
                 GROUP BY MONTH($field)");
@@ -347,7 +348,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      * @param $bstatus
      *
      */
-    public function countTNbyBundesland($bundesland, $bstatus)
+    public function countTNbyBundesland($bundesland, $bstatus, $jahr)
     {
         $addfield = '';
         if($bstatus == 1) $field = 'FROM_UNIXTIME(verification_date)';
@@ -363,7 +364,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         }
         
         $query = $this->createQuery();
-        if(date('Y') > 2023) {
+        if($jahr == 0) {
             $query->statement("SELECT MONTH($field) as monat, count(*) as anzahl
                 FROM tx_iqtp13db_domain_model_teilnehmer as a
                 LEFT JOIN fe_groups as b on a.niqidberatungsstelle = b.niqbid
@@ -383,7 +384,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             $query->statement("SELECT MONTH($field) as monat, count(*) as anzahl
                 FROM tx_iqtp13db_domain_model_teilnehmer as a
                 LEFT JOIN fe_groups as b on a.niqidberatungsstelle = b.niqbid
-                WHERE YEAR($field) = YEAR(CURRENT_DATE())
+                WHERE YEAR($field) = $jahr
                 AND a.deleted = 0 AND a.hidden = 0 AND b.bundesland LIKE '$bundesland'
                 $addfield
                 GROUP BY MONTH($field)");
@@ -394,13 +395,14 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     }
     
     /**
-     * Calculates average waiting days for last 12 month
+     * Calculates average waiting days for last 12 month or $jahr
      *
      * @param $niqbid
      * @param $status
+     * @param $jahr
      *
      */
-    public function calcwaitingdays($niqbid, $status)
+    public function calcwaitingdays($niqbid, $status, $jahr)
     {
         if($status == 'anmeldung') {
             $von = "FROM_UNIXTIME(verification_date)";
@@ -412,7 +414,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         }
         
         $query = $this->createQuery();
-        if(date('Y') > 2023) {
+        if($jahr == 0) {
             $query->statement("SELECT MONTH($bis) as monat, SUM(IF(DATEDIFF($bis,$von) < 0, 0, DATEDIFF($bis,$von))) / count(*) as wert
                         FROM tx_iqtp13db_domain_model_teilnehmer 
                         WHERE $bis != '' AND deleted = 0 AND hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND YEAR($von) = YEAR(CURRENT_DATE())
@@ -425,7 +427,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         } else {
             $query->statement("SELECT MONTH($bis) as monat, SUM(IF(DATEDIFF($bis,$von) < 0, 0, DATEDIFF($bis,$von))) / count(*) as wert
                         FROM tx_iqtp13db_domain_model_teilnehmer
-                        WHERE $bis != '' AND deleted = 0 AND hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND YEAR($von) = YEAR(CURRENT_DATE())
+                        WHERE $bis != '' AND deleted = 0 AND hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND YEAR($von) = $jahr
                         GROUP BY MONTH($bis)");
         }
         

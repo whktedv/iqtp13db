@@ -214,12 +214,7 @@ $(document).ready(function() {
     	this.form.submit();
     	$("#overlay").show();
     });
-
-	$("#selectbundesland").change(function() { 
-    	this.form.submit();
-    	$("#overlay").show();
-    });
-    
+        
     $("ul.typo3-messages").click(function() {
     	$("ul.typo3-messages").hide();
     });

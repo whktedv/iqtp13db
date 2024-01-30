@@ -8,6 +8,7 @@
 <f:flashMessages />
 
 <f:link.action id="linkloadoverlay-back" class="linkbuttons" action="{thisaction}" controller="{callercontroller}" arguments="{teilnehmer: teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, showabschluesse : '1'}">Zurück</f:link.action>
+<f:link.action class="linkbuttons" action="edit" controller="Abschluss" arguments="{abschluss : abschluss, teilnehmer : teilnehmer, calleraction : calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : 'edit'}" title="Bearbeiten">Bearbeiten</f:link.action>
 <h1>Daten Abschluss</h1>
 <f:render partial="Abschluss/Properties" arguments="{abschluss:abschluss, staaten:staaten, berufe:berufe}" />
 <f:link.action id="linkloadoverlay-edit" class="linkbuttons" action="{thisaction}" controller="{callercontroller}" arguments="{teilnehmer: teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, showabschluesse : '1'}">Zurück</f:link.action>

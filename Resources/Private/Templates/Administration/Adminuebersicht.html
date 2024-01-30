@@ -116,10 +116,12 @@
 
 <h2>Statistik letzte 12 Monate alle Beratungsstellen</h2>
 <f:form method="post" controller="Administration" action="adminuebersicht" name="switchbundesland" enctype="multipart/form-data" >
-		<label for="bundeslandauswahl">
-			Auswahl Bundesland
-		</label>
-		<f:form.select name="bundeslandauswahl" id="selectbundesland" options="{allebundeslaender}" optionValueField="bundesland" optionLabelField="bundesland" prependOptionValue="%" prependOptionLabel="-alle-" value="{bundeslandselected}"/>
+		<label for="bundeslandauswahl">Auswahl Bundesland</label>
+		<f:form.select name="bundeslandauswahl" options="{allebundeslaender}" optionValueField="bundesland" optionLabelField="bundesland" prependOptionValue="%" prependOptionLabel="-alle-" value="{bundeslandselected}"/>
+		<label for="jahrauswahl">Auswahl Jahr</label>
+		<f:form.select name="jahrauswahl" options="{jahrauswahl}" prependOptionValue="0" prependOptionLabel="-letzte 12 Monate-" value="{jahrselected}"/>
+		
+		<f:form.button id="linkloadoverlay-export" type="submit" name="showstats">Statistik anzeigen</f:form.button>
 </f:form>
 <br>
 <table class="uebersicht-statistik">
@@ -181,15 +183,15 @@
 		<td><f:format.number>{SUMtotalavgmonthb}</f:format.number></td>
 	</tr>
 </table>
-
+<!-- 
 <h1>Statistik nach Beruf / Staatsangehörigkeit</h1>
 <div class="filterframe exportfilterform" id="berufstaatstatsframe">
 	<f:form class="statsform" method="post" controller="Administration" action="adminuebersicht" name="berufstaatstats" >
 			Auswahl Bundesland: <f:form.select name="filterbundesland" options="{allebundeslaender}" optionValueField="bundesland" optionLabelField="bundesland" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterbundesland}"/> ODER 
 			Auswahl Beratungsstelle: <f:form.select name="filterberatungsstelle" options="{alleberatungsstellen}" optionValueField="niqbid" optionLabelField="title" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterberatungsstelle}"/>			
 			Auswahl Status: <f:form.select value="{filterberatungsstatus}" name="filterberatungsstatus" options="{beratungsstatusarr}" optionValueField="key" optionLabelField="value" />
-			von: <f:form.textfield size="10" id="datepickerfiltervon" value="{filtervon}" name="filtervon" />
-			bis: <f:form.textfield size="10" id="datepickerfilterbis" value="{filterbis}" name="filterbis" />			 
+			von: <f:form.textfield size="10" id="datepicker1" value="{filtervon}" name="filtervon" />
+			bis: <f:form.textfield size="10" id="datepicker2" value="{filterbis}" name="filterbis" />			 
 			<br>
 			Auswahl Erste Staatsangehörigkeit: <f:form.select name="filterstaat" options="{staatenarr}" optionValueField="key" optionLabelField="value" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterstaat}"/>
 			Auswahl Beruf/Abschluss: <f:form.select name="filterberuf" options="{berufearr}" optionValueField="key" optionLabelField="value" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterberuf}"/>
@@ -227,7 +229,9 @@
 	<b>Gesamtzahl: {anzgesamt}</b><pre>(Anm.: In der Tabelle werden nur die ersten 20 Werte ausgegeben.)</pre>
 </f:then>
 </f:if>
+-->
 
+<!-- 
 <h2>Letzte 50 Anmeldungen</h2>
 <div class="pretablediv">
 	<table class="tx_iqtp13db listangemeldet" >
@@ -274,7 +278,7 @@
 		</f:for>
 	</table>
 </div>
-
+ -->
 <h1>Doppelte PLZ zugewiesen</h1>
 <table>
 	<tbody>

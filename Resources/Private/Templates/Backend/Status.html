@@ -12,6 +12,20 @@
 	<div><f:link.action class="linkbuttons" action="saveAVpdf" controller="Backend">AV-Vertrag</f:link.action></div>
 </div>
 
+<h2>PLZ Abfrage Beratungsstelle</h2>
+<div>
+<f:form method="post" controller="Backend" action="status" name="checkplz" enctype="multipart/form-data" >
+	<label for="jahrauswahl">Eingabe PLZ</label>
+	<f:form.textfield name="plzeingabe" value="{plzinput}"/>
+	<f:form.button type="submit" class="linkbuttons" name="zeigebstelle">Zuständige Beratungsstelle</f:form.button>
+</f:form>
+<f:if condition="{bstellevonplz}">
+	<div style="background-color: #6060601c; margin-top: 1rem; width: 60rem; padding: 1rem">
+		<f:format.raw>{bstellevonplz.description}</f:format.raw>
+	</div>
+</f:if>
+</div>
+
 <h1>Status aktuell</h1>
 
 <f:flashMessages />
@@ -52,6 +66,14 @@
 </table>
 <br>
 <h2>Statistik letzte 12 Monate</h2>
+<f:form method="post" controller="Backend" action="status" name="switchjahr" enctype="multipart/form-data" >
+	<label for="jahrauswahl">Auswahl Jahr</label>
+	<f:form.select name="jahrauswahl" id="selectjahr" options="{jahrauswahl}" prependOptionValue="0" prependOptionLabel="-letzte 12 Monate-" value="{jahrselected}"/>
+	
+	<f:form.button id="linkloadoverlay-export" type="submit" name="showstats">Statistik anzeigen</f:form.button>
+	<f:form.button type="submit" class="linkbuttons" id="savebutton1" name="statsexport">Statistik exportieren</f:form.button>
+</f:form>
+
 <table class="uebersicht-statistik">
 	<tr>
 		<th></th>
@@ -74,7 +96,7 @@
 		</f:for>
 		<td>{SUMerstberatung}</td>
 	</tr>
-	<f:if condition="{niqbid} == '900026' || {niqbid} == '900143'">
+	<f:if condition="({niqbid} == '900026' || {niqbid} == '900143') && {jahrselected} == '2023'">
 		<tr>
 			<th>FK/Beratungen aus alter Förderphase</th>
 			<f:for each="{beratungfk22}" as="fkeb" iteration="iter">
@@ -85,7 +107,7 @@
 	</f:if>
 	<tr>
 		<th>Folgekontakte 
-		<f:if condition="{niqbid} == '900026' || {niqbid} == '900143'">
+		<f:if condition="({niqbid} == '900026' || {niqbid} == '900143') && {jahrselected} == '2023'">
 			(inkl. alte Föpha)
 		</f:if></th>
 		<f:for each="{qfolgekontakte}" as="qf" iteration="iter">
@@ -123,12 +145,8 @@
 		<td><f:format.number>{SUMtotalavgmonthb}</f:format.number></td>
 	</tr>
 </table>
-<f:form method="post" controller="Backend" action="status" name="statsexp" enctype="multipart/form-data" ><br />	
-	<f:form.button type="submit" class="linkbuttons" id="savebutton1" name="statsexport">Statistik exportieren</f:form.button>	
-</f:form>
 
 <hr>
-
 <h2>Historie Änderung Daten Ratsuchende im Backend</h2>
 
 <div class="toppaginator">

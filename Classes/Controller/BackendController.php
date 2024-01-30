@@ -189,18 +189,35 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function statusAction(int $currentPage = 1)
     {
         $valArray = $this->request->getArguments();
+       
+        $jahrselected = $valArray['jahrauswahl'] ?? 0;
         
+        //DebuggerUtility::var_dump($valArray);
+               
         $monatsnamen = array();
         for($i=1;$i<13;$i++) {
             $monatsnamen[$i] = date("M", mktime(0, 0, 0, $i, 1, date('Y')));
         }
         
-        $tnberatungenfk22 = $this->folgekontaktRepository->fk4StatusFK2022("01.01.2023", date("d.m.Y", strtotime('now')), $this->niqbid);
+        $jahrarray = array();
+        for($j=2023;$j<date('Y');$j++){
+            $jahrarray[$j] = $j;
+        }
+        
+        if(isset($valArray['zeigebstelle'])) {
+            $plzbstelle = $this->userGroupRepository->getBeratungsstelle4PLZ($valArray['plzeingabe'], $this->settings['beraterstoragepid']);
+            $plzgroup = $plzbstelle[0];
+            //DebuggerUtility::var_dump($plzgroup);
+        }
+        
+        // FK/Beratungen aus alter Förderphase in 2023
+        $tnberatungenfk22 = $this->folgekontaktRepository->fk4StatusFK2022("01.01.2023", "31.12.2023", $this->niqbid);
         for($m = 1; $m < 13; $m++) $beratungfk22[$m] = 0;
         foreach($tnberatungenfk22 as $fk22) {
             $fkmonat = DateTime::createFromFormat('d.m.Y', $fk22->getDatum())->format('n');
             $beratungfk22[$fkmonat]++;
         }
+        //
         
         $emptystatusarray = array(1 => 0,2 => 0,3 => 0,4 => 0,5 => 0,6 => 0,7 => 0,8 => 0,9 => 0,10 => 0,11 => 0, 12 => 0);
         $angemeldeteTN = $emptystatusarray;
@@ -211,27 +228,27 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $days4beratung = $emptystatusarray;
         $days4wartezeit = $emptystatusarray;
         
-        $ergarrayangemeldete = $this->teilnehmerRepository->countTNbyBID($this->niqbid, 1);
+        $ergarrayangemeldete = $this->teilnehmerRepository->countTNbyBID($this->niqbid, 1, $jahrselected);
         foreach($ergarrayangemeldete as $erg) $angemeldeteTN[$erg['monat']] = $erg['anzahl'];
         
-        $ergarrayerstberatung = $this->teilnehmerRepository->countTNbyBID($this->niqbid, 2);
+        $ergarrayerstberatung = $this->teilnehmerRepository->countTNbyBID($this->niqbid, 2, $jahrselected);
         foreach($ergarrayerstberatung as $erg) $erstberatung[$erg['monat']] = $erg['anzahl'];
         
-        $ergarrayberatungfertig = $this->teilnehmerRepository->countTNbyBID($this->niqbid, 3);
+        $ergarrayberatungfertig = $this->teilnehmerRepository->countTNbyBID($this->niqbid, 3, $jahrselected);
         foreach($ergarrayberatungfertig as $erg) $beratungfertig[$erg['monat']] = $erg['anzahl'];
         
-        $ergarrayniqerfasst = $this->teilnehmerRepository->countTNbyBID($this->niqbid, 4);
+        $ergarrayniqerfasst = $this->teilnehmerRepository->countTNbyBID($this->niqbid, 4, $jahrselected);
         foreach($ergarrayniqerfasst as $erg) $niqerfasst[$erg['monat']] = $erg['anzahl'];
         
-        $ergarrayfolgekontakte = $this->folgekontaktRepository->countFKbyBID($this->niqbid);
+        $ergarrayfolgekontakte = $this->folgekontaktRepository->countFKbyBID($this->niqbid, $jahrselected);
         foreach($ergarrayfolgekontakte as $erg) $qfolgekontakte[$erg['monat']] = $erg['anzahl'];
         
-        $ergarraywartezeitanmeldung = $this->teilnehmerRepository->calcwaitingdays($this->niqbid,'anmeldung');
+        $ergarraywartezeitanmeldung = $this->teilnehmerRepository->calcwaitingdays($this->niqbid,'anmeldung', $jahrselected);
         foreach($ergarraywartezeitanmeldung as $erg) $days4wartezeit[$erg['monat']] = $erg['wert'];
         
-        $ergarraywartezeitberatung = $this->teilnehmerRepository->calcwaitingdays($this->niqbid,'beratung');
+        $ergarraywartezeitberatung = $this->teilnehmerRepository->calcwaitingdays($this->niqbid,'beratung', $jahrselected);
         foreach($ergarraywartezeitberatung as $erg) $days4beratung[$erg['monat']] = $erg['wert'];
-      
+        
         ksort($angemeldeteTN);
         ksort($qfolgekontakte);
         ksort($erstberatung);
@@ -268,27 +285,26 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         
         // ******************** EXPORT Statistik ****************************
-        
-        $rows[0] = $monatsnamen;
-        array_unshift($rows[0], " ");
-        $rows[1] = $angemeldeteTN;
-        array_unshift($rows[1], "Anmeldungen");
-        $rows[2] = $erstberatung;
-        array_unshift($rows[2], "Erstberatungen");
-        $rows[3] = $qfolgekontakte;
-        array_unshift($rows[3], "Folgekontakte");
-        $rows[4] = $beratungfertig;
-        array_unshift($rows[4], "Beratungen fertig");
-        $rows[5] = $niqerfasst;
-        array_unshift($rows[5], "davon NIQ erfasst");
-        $rows[6] = $days4wartezeit;
-        array_unshift($rows[6], "durchschn. Tage Wartezeit");
-        $rows[7] = $days4beratung;
-        array_unshift($rows[7], "durchschn. Tage Beratungsdauer");
-        $rows[8] = $beratungfk22;
-        array_unshift($rows[8], "Beratungen/Folgekontakte von Ratsuchenden alte Föpha.");
-        
         if (isset($valArray['statsexport'])) {
+            
+            $rows[0] = $monatsnamen;
+            array_unshift($rows[0], " ");
+            $rows[1] = $angemeldeteTN;
+            array_unshift($rows[1], "Anmeldungen");
+            $rows[2] = $erstberatung;
+            array_unshift($rows[2], "Erstberatungen");
+            $rows[3] = $qfolgekontakte;
+            array_unshift($rows[3], "Folgekontakte");
+            $rows[4] = $beratungfertig;
+            array_unshift($rows[4], "Beratungen fertig");
+            $rows[5] = $niqerfasst;
+            array_unshift($rows[5], "davon NIQ erfasst");
+            $rows[6] = $days4wartezeit;
+            array_unshift($rows[6], "durchschn. Tage Wartezeit");
+            $rows[7] = $days4beratung;
+            array_unshift($rows[7], "durchschn. Tage Beratungsdauer");
+            $rows[8] = $beratungfk22;
+            array_unshift($rows[8], "Beratungen/Folgekontakte von Ratsuchenden alte Föpha.");
             
             $filename = 'stats_' . date('Y-m-d_H-i', time()) . '.csv';
             header('Content-Encoding: UTF-8');
@@ -311,7 +327,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'beratungfk22'=> $beratungfk22,
                 'SUMberatungfk22'=> count($tnberatungenfk22),
                 'monatsnamen'=> $monatsnamen,
-                'aktmonat'=> idate('m')-1,
+                'jahrauswahl' => $jahrarray,
+                'jahrselected' => $jahrselected,
+                'aktmonat'=> $jahrselected == 0 ? idate('m')-1 : '',
                 'angemeldeteTN'=> $angemeldeteTN,
                 'SUMangemeldeteTN'=> array_sum($angemeldeteTN),
                 'qfolgekontakte'=> $qfolgekontakte,
@@ -323,9 +341,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'niqerfasst'=> $niqerfasst,
                 'SUMniqerfasst'=> array_sum($niqerfasst),
                 'totalavgmonthb'=> $days4beratung,
-                'SUMtotalavgmonthb'=> array_sum($days4beratung)/(date('Y') == 2023 ? idate('m') : count($days4beratung)),
+                'SUMtotalavgmonthb'=> array_sum($days4beratung)/count($days4beratung),
                 'totalavgmonthw'=> $days4wartezeit,
-                'SUMtotalavgmonthw'=> array_sum($days4wartezeit)/(date('Y') == 2023 ? idate('m') : count($days4beratung)),
+                'SUMtotalavgmonthw'=> array_sum($days4wartezeit)/count($days4beratung),
                 'aktuelleanmeldungen'=> $aktuelleanmeldungen,
                 'aktuellerstberatungen'=> $aktuellerstberatungen,
                 'aktuellberatungenfertig'=> $aktuellberatungenfertig,
@@ -340,7 +358,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'username' => $this->user['username'],
                 'neuanmeldungen7tage' => $neuanmeldungen7tage,
                 'diesesjahr' => date('y'),
-                'letztesjahr' => idate('y') - 1                
+                'letztesjahr' => idate('y') - 1,
+                'bstellevonplz' => $plzgroup ?? ''
             ]
             );
     }
@@ -1579,8 +1598,10 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         
         if($this->generalhelper->validateDateYmd($teilnehmer->getErstberatungabgeschlossen()) && !$this->generalhelper->validateDateYmd($teilnehmer->getBeratungdatum())) {
-            $this->addFlashMessage("Datensatz NICHT gespeichert. 'Datum Erstberatung' muss eingetragen sein, wenn 'Erstberatung abgeschlossen' ausgefüllt ist.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-            $this->redirect($valArray['calleraction'] ?? 'edit', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
+            $teilnehmer->setBeratungdatum($teilnehmer->getErstberatungabgeschlossen());
+            
+            $this->addFlashMessage("Datensatz gespeichert. Für 'Datum Erstberatung' wurde automatisch das Datum 'Erstberatung abgeschlossen' eingetragen.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+            //$this->redirect($valArray['calleraction'] ?? 'edit', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
         }
 
         // Stammdaten (im Fragebogen Seite 1)

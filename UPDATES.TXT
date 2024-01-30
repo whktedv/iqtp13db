@@ -25,3 +25,16 @@ Updates 04.01.2024
 - Bugfix in BackendController bei initializeUpdateAction neu mit Prüfung "array_key_exists", ob im valArray der Eintrag teilnehmer vorhanden ist
 - Bugfix PLZ-Eingabe bei ZSBA-Fall in BW
 - Bugfix in Exportroutine
+
+Updates 30.01.2024
+- Bugfix Adminmodul von/bis Felder
+- Bugfix Dateiupload: Überschreiben von Dateien mit gleichem Namen - Timestamp im Namen ergänzt
+- Statistik im Admin-Modul vorübergehend deaktiviert. Diese muss korrigiert werden, da die Abfragen zu falschen Zahlen führen (Left join mit Abschlüssen etc.)
+- Statistikübersicht Auswahl Jahr möglich
+- PLZ-Abfrage-Tool zuständige Beratungsstelle
+- Wenn für 'Datum Erstberatung' kein Datum eingetragen wurde, jedoch für 'Datum Erstberatung abgeschlossen', dann wird für 'Datum Erstberatung' automatisch das 'Datum Erstberatung abgeschlossen' eingetragen
+- Ratsuchende können per Button "AQB nach PLZ" an die per PLZ zuständige Beratungsstelle übertragen. Achtung bei beabsichtigten Zuweisungen per Direktlink, da Rückübertragung nur per Support möglich ist.
+- Neuer Folgekontakt: Für Datum wird automatisch das aktuelle Datum eingetragen
+
+Neu:
+

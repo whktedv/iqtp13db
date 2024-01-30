@@ -33,10 +33,10 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      * @param $niqbid
      */
-	public function countFKbyBID($niqbid)
+	public function countFKbyBID($niqbid, $jahr)
 	{
 	    $query = $this->createQuery();
-	    if(date('Y') > 2023) {
+	    if($jahr == 0) {
 	        $query->statement("SELECT MONTH(STR_TO_DATE(a.datum, '%d.%m.%Y')) as monat, count(*) as anzahl
                 FROM tx_iqtp13db_domain_model_folgekontakt as a
                 LEFT JOIN tx_iqtp13db_domain_model_teilnehmer as b ON a.teilnehmer = b.uid 
@@ -54,7 +54,7 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 	        $query->statement("SELECT MONTH(STR_TO_DATE(a.datum, '%d.%m.%Y')) as monat, count(*) as anzahl
                 FROM tx_iqtp13db_domain_model_folgekontakt as a
                 LEFT JOIN tx_iqtp13db_domain_model_teilnehmer as b ON a.teilnehmer = b.uid
-                WHERE YEAR(STR_TO_DATE(a.datum, '%d.%m.%Y')) = YEAR(CURRENT_DATE())
+                WHERE YEAR(STR_TO_DATE(a.datum, '%d.%m.%Y')) = $jahr
                 AND a.deleted = 0 AND niqidberatungsstelle LIKE '$niqbid'
                 GROUP BY MONTH(STR_TO_DATE(a.datum, '%d.%m.%Y'))");
 	    }

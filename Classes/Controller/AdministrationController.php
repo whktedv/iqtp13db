@@ -112,6 +112,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
     public function adminuebersichtAction()
     {       
         $valArray = $this->request->getArguments();
+        $jahrselected = $valArray['jahrauswahl'] ?? 0;
         
         // Admin Gruppenwechsel Beratungsstelle
         $backenduser = $this->beraterRepository->findByUid($this->user['uid']);
@@ -145,7 +146,11 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         for($i=1;$i<13;$i++) {
             $monatsnamen[$i] = date("M", mktime(0, 0, 0, $i, 1, date('Y')));
         }
-                
+        $jahrarray = array();
+        for($j=2023;$j<date('Y');$j++){
+            $jahrarray[$j] = $j;
+        }
+        
         $emptystatusarray = array(1 => 0,2 => 0,3 => 0,4 => 0,5 => 0,6 => 0,7 => 0,8 => 0,9 => 0,10 => 0,11 => 0, 12 => 0);
         $angemeldeteTN = $emptystatusarray;
         $erstberatung = $emptystatusarray;
@@ -156,28 +161,28 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         $days4beratung = $emptystatusarray;
         
         if(isset($valArray['bundeslandauswahl']) && $bundeslandselected != '%') {
-            $ergarrayangemeldete = $this->teilnehmerRepository->countTNbyBundesland($bundeslandselected, 1);
+            $ergarrayangemeldete = $this->teilnehmerRepository->countTNbyBundesland($bundeslandselected, 1, $jahrselected);
             foreach($ergarrayangemeldete as $erg) $angemeldeteTN[$erg['monat']] = $erg['anzahl'];
-            $ergarrayerstberatung = $this->teilnehmerRepository->countTNbyBundesland($bundeslandselected, 2);
+            $ergarrayerstberatung = $this->teilnehmerRepository->countTNbyBundesland($bundeslandselected, 2, $jahrselected);
             foreach($ergarrayerstberatung as $erg) $erstberatung[$erg['monat']] = $erg['anzahl'];
-            $ergarrayberatungfertig = $this->teilnehmerRepository->countTNbyBundesland($bundeslandselected, 3);
+            $ergarrayberatungfertig = $this->teilnehmerRepository->countTNbyBundesland($bundeslandselected, 3, $jahrselected);
             foreach($ergarrayberatungfertig as $erg) $beratungfertig[$erg['monat']] = $erg['anzahl'];
-            $ergarrayniqerfasst = $this->teilnehmerRepository->countTNbyBundesland($bundeslandselected, 4);
+            $ergarrayniqerfasst = $this->teilnehmerRepository->countTNbyBundesland($bundeslandselected, 4, $jahrselected);
             foreach($ergarrayniqerfasst as $erg) $niqerfasst[$erg['monat']] = $erg['anzahl'];
         } else {
-            $ergarrayangemeldete = $this->teilnehmerRepository->countTNbyBID('%', 1);
+            $ergarrayangemeldete = $this->teilnehmerRepository->countTNbyBID('%', 1, $jahrselected);
             foreach($ergarrayangemeldete as $erg) $angemeldeteTN[$erg['monat']] = $erg['anzahl'];
-            $ergarrayerstberatung = $this->teilnehmerRepository->countTNbyBID('%', 2);
+            $ergarrayerstberatung = $this->teilnehmerRepository->countTNbyBID('%', 2, $jahrselected);
             foreach($ergarrayerstberatung as $erg) $erstberatung[$erg['monat']] = $erg['anzahl'];
-            $ergarrayberatungfertig = $this->teilnehmerRepository->countTNbyBID('%', 3);
+            $ergarrayberatungfertig = $this->teilnehmerRepository->countTNbyBID('%', 3, $jahrselected);
             foreach($ergarrayberatungfertig as $erg) $beratungfertig[$erg['monat']] = $erg['anzahl'];
-            $ergarrayniqerfasst = $this->teilnehmerRepository->countTNbyBID('%', 4);
+            $ergarrayniqerfasst = $this->teilnehmerRepository->countTNbyBID('%', 4, $jahrselected);
             foreach($ergarrayniqerfasst as $erg) $niqerfasst[$erg['monat']] = $erg['anzahl'];
-            $ergarrayfolgekontakte = $this->folgekontaktRepository->countFKbyBID('%');
+            $ergarrayfolgekontakte = $this->folgekontaktRepository->countFKbyBID('%', $jahrselected);
             foreach($ergarrayfolgekontakte as $erg) $qfolgekontakte[$erg['monat']] = $erg['anzahl'];
-            $ergarraywartezeitanmeldung = $this->teilnehmerRepository->calcwaitingdays('%','anmeldung');
+            $ergarraywartezeitanmeldung = $this->teilnehmerRepository->calcwaitingdays('%','anmeldung', $jahrselected);
             foreach($ergarraywartezeitanmeldung as $erg) $days4wartezeit[$erg['monat']] = $erg['wert'];
-            $ergarraywartezeitberatung = $this->teilnehmerRepository->calcwaitingdays('%','beratung');
+            $ergarraywartezeitberatung = $this->teilnehmerRepository->calcwaitingdays('%','beratung', $jahrselected);
             foreach($ergarraywartezeitberatung as $erg) $days4beratung[$erg['monat']] = $erg['wert'];
         }
                        
@@ -330,7 +335,9 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         $this->view->assignMultiple(
             [
                 'monatsnamen'=> $monatsnamen,
-                'aktmonat'=> idate('m')-1,
+                'aktmonat'=> $jahrselected == 0 ? idate('m')-1 : '',
+                'jahrauswahl' => $jahrarray,
+                'jahrselected' => $jahrselected,
                 'angemeldeteTN'=> $angemeldeteTN,
                 'SUMangemeldeteTN'=> array_sum($angemeldeteTN),
                 'qfolgekontakte'=> $qfolgekontakte,
@@ -342,9 +349,9 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 'niqerfasst'=> $niqerfasst,
                 'SUMniqerfasst'=> array_sum($niqerfasst),
                 'totalavgmonthb'=> $days4beratung,
-                'SUMtotalavgmonthb'=> array_sum($days4beratung)/(date('Y') == 2023 ? idate('m') : count($days4beratung)),
+                'SUMtotalavgmonthb'=> array_sum($days4beratung)/count($days4beratung),
                 'totalavgmonthw'=> $days4wartezeit,
-                'SUMtotalavgmonthw'=> array_sum($days4wartezeit)/(date('Y') == 2023 ? idate('m') : count($days4beratung)),
+                'SUMtotalavgmonthw'=> array_sum($days4wartezeit)/count($days4beratung),
                 'aktuelleanmeldungen'=> $aktuelleanmeldungen,
                 'aktuelleanmeldungenunbestaetigt' => $aktuelleanmeldungenunbestaetigt,
                 'aktuelleanmeldungenbestaetigt' => $aktuelleanmeldungenbestaetigt,
