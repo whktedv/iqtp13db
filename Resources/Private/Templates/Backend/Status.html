@@ -78,7 +78,7 @@
 	<tr>
 		<th></th>
 		<f:for each="{monatsnamen}" as="monat" iteration="iter">
-			<th {f:if(condition: '{iter.index} == {aktmonat}', then: 'style="background-color: #ffcaf2;"')}> {monat} {f:if(condition: '{iter.index} > {aktmonat}', then: '{letztesjahr}', else: '{diesesjahr}')}</th>
+			<th {f:if(condition: '{iter.index} == {aktmonat}', then: 'style="background-color: #ffcaf2;"')}> {monat} {f:if(condition: '{iter.index} > {aktmonat}', then: '{headerjahrweiteremonate}', else: '{diesesjahr}')}</th>
 		</f:for>
 		<th>Summe</th>
 	</tr>

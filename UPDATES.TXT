@@ -36,5 +36,8 @@ Updates 30.01.2024
 - Ratsuchende können per Button "AQB nach PLZ" an die per PLZ zuständige Beratungsstelle übertragen. Achtung bei beabsichtigten Zuweisungen per Direktlink, da Rückübertragung nur per Support möglich ist.
 - Neuer Folgekontakt: Für Datum wird automatisch das aktuelle Datum eingetragen
 
-Neu:
+Updates 01.02.2024
+- Bugfix Suchfunktion
+- Bugfix Auswahl Jahr Statistik
 
+Neu:

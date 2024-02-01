@@ -200,7 +200,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         
         $jahrarray = array();
-        for($j=2023;$j<date('Y');$j++){
+        for($j=2023;$j<=date('Y');$j++){
             $jahrarray[$j] = $j;
         }
         
@@ -357,8 +357,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'niqdbstatus' => $niqdbstatus,
                 'username' => $this->user['username'],
                 'neuanmeldungen7tage' => $neuanmeldungen7tage,
-                'diesesjahr' => date('y'),
-                'letztesjahr' => idate('y') - 1,
+                'diesesjahr' => date('Y'),
+                'headerjahrweiteremonate' => $jahrselected != 0 ? $jahrselected : idate('Y') - 1,
                 'bstellevonplz' => $plzgroup ?? ''
             ]
             );

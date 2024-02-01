@@ -34,12 +34,13 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $ort = $filterArray['ort'] == '' ? '%' : $filterArray['ort'];
         $land = $filterArray['land'] == '' ? '%' : $filterArray['land'];
         $berater = $filterArray['berater'] == '' ? '' : " AND t.berater LIKE '".$filterArray['berater']."'";
-        $fberuf = $filterArray['beruf'] == '' ? '%' : $filterArray['beruf'];
+        $fberuf = $filterArray['beruf']; // == '' ? '%' : $filterArray['beruf'];
         $gruppe = $filterArray['gruppe'] == '' ? '%' : $filterArray['gruppe'];
         $fbescheid = $filterArray['bescheid'] == '' ? '%' : $filterArray['bescheid'];
         
         $orderby = $orderby == 'verificationDate' ? 'verification_date' : $orderby;
         
+        // Beratungsstatus
         if($type == 0 || $type == 1) $sqlberatungsstatus = " (beratungsstatus = 0 OR beratungsstatus = 1) ";
         elseif($type == 2 || $type == 3) $sqlberatungsstatus = " (beratungsstatus = 2 OR beratungsstatus = 3) ";
         elseif($type == 999) $sqlberatungsstatus = " beratungsstatus LIKE '%' ";
@@ -47,8 +48,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 
         // Beruf
         if($type != 0) {
-            if($filterArray['beruf'] != '') {
-                
+            if($fberuf != '') {
                 foreach ($berufearr as $beruf) {
                     if (strpos(strtolower($beruf->getTitel()), strtolower($fberuf)) !== false) { $results[] = $beruf->getBerufid(); }
                 }
@@ -59,15 +59,17 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 $beruf = "(a.deutscher_referenzberuf LIKE '%".$fberuf."%')";
             }
         } else {
-            $beruf = "(a.deutscher_referenzberuf LIKE '%".$fberuf."%')";
+            $beruf = "(a.deutscher_referenzberuf LIKE '%".$fberuf."%' OR a.deutscher_referenzberuf IS NULL)";
         }
         
+        // Antragstellungvorher
         if($fbescheid != '%') {
             $bescheid = "AND (a.antragstellungvorher > 0 AND a.antragstellungvorher < 4) ";
         } else {
             $bescheid = '';
         }
-        
+                
+        // Erstelle Query
         $query = $this->createQuery();
         
         if($verstecktundgelöscht == 1) {
