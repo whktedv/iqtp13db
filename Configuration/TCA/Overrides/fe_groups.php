@@ -150,7 +150,7 @@ $fields = array(
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
     'fe_groups',
-    'niqbid, nichtiq, bundesland, generalmail, plzlist, keywordlist, beratungsarten, einwilligungserklaerungsseite, avadresse',
+    'niqbid, nichtiq, bundesland, generalmail, plzlist, keywordlist, beratungsarten, einwilligungserklaerungsseite, avadresse, custominfotextmail, custominfotextstart, customlogourl',
     '',
     ''
     );

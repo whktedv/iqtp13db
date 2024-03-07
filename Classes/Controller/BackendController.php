@@ -1203,9 +1203,20 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $dokumente = $this->dokumentRepository->findByTeilnehmer($teilnehmer);
         $dokumentpfad = $this->generalhelper->sanitizeFileFolderName($teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid(). '/');
         
+        $storage = $this->generalhelper->getTP13Storage($this->storageRepository->findAll());
+        $folder = $storage->getConfiguration()['basePath'].'/';
+        
+        $filesizesum = 0;
+        foreach($dokumente as $key => $dok) {
+            $dokfs = $dok->getFilesize($folder) ?? 0;
+            $filesizes[$key] = $this->generalhelper->human_filesize($dokfs, 1);
+            $filesizesum += $dokfs;
+        }
+        $speicherbelegung = intval(($filesizesum/31457280)*100);
+       
         $berufeliste = $this->berufeRepository->findAll();
         $staaten = $this->staatenRepository->findByLangisocode('de');
-                
+     
         $backenduser = $this->beraterRepository->findByUid($this->user['uid']);
         $this->view->assignMultiple(
             [
@@ -1222,6 +1233,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'niqbid' => $backenduser->getUsergroup()[0]->getNiqbid(),
                 'staaten' => $staaten,
                 'berufe' => $berufeliste,
+                'filesizes' => $filesizes,
+                'speicherbelegung' => $speicherbelegung
             ]
             );
     }

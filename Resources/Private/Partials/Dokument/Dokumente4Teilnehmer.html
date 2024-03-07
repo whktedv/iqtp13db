@@ -4,13 +4,16 @@
 		<table>
 			<thead>
 				<th>Dateiname</th>
+				<th>Dateigröße</th>
 				<th>Kurzbeschreibung</th>
 				<th></th>
 				<th></th>
 			</thead>
-			<f:for each="{dokumente}" as="dokument">
+			
+			<f:for each="{dokumente}" as="dokument" iteration="iter">
 					<tr>
 						<td><f:link.action action="openfile" arguments="{dokument : dokument, teilnehmer : teilnehmer}" controller="Dokument" target="_blank">{dokument.name}</f:link.action></td>
+						<td>{filesizes.{iter.index}}</td>
 						<f:form id="dokumenteform1" method="post" action="updateBackend" controller="Dokument" arguments="{teilnehmer:teilnehmer, calleraction : calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : thisaction}" name="dokument" object="{dokument}" enctype="multipart/form-data" >
 							<td><f:form.textfield property="beschreibung" value="{dokument.beschreibung}" size="50" /></td>
 							<td><f:form.button type="submit" class="linkbuttons updatebutton" id="savebutton1" >Kurzbeschreibung speichern</f:form.button></td>
@@ -19,6 +22,7 @@
 					</tr>		
 			</f:for>
 		</table>
+		<div style="font-size: 0.8rem;">Speichergröße: 30 MB, Auslastung: {speicherbelegung} %</div>
 	</f:then></f:if>
 	
 	<f:form id="dokumenteform2" method="post" action="saveFileBackend" name="dokument" controller="Dokument" arguments="{teilnehmer:teilnehmer, calleraction : calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : thisaction}" object="{dokument}" enctype="multipart/form-data" ><br />

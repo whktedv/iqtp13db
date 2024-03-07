@@ -291,10 +291,14 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             if($bstid != '') {
                 $GLOBALS['TSFE']->fe_user->setKey('ses', 'beratungsstellenid', $bstid);
                 
+                $zugewieseneberatungsstelle = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $bstid);
+                $zugewieseneberatungsstelle = $zugewieseneberatungsstelle[0];
+                
                 $this->view->assign('beratungsstelle', $bstid);
                 $this->view->assign('wohnsitzDeutschland', $valarrwohnsitzdeutschland);
                 $this->view->assign('plz', $valArray['plz'] ?? '');
                 $this->view->assign('direkt', $valArray['direkt'] ?? '');
+                $this->view->assign('logourl', $zugewieseneberatungsstelle->getCustomlogourl());
             } else {
                 $uri = $uriBuilder->setTargetPageUid($this->settings['anmeldungnichtwebapppageuid'])->build();
                 $this->redirectToUri($uri, 0, 303);
@@ -899,7 +903,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $anrede = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('anredemail', 'Iqtp13db');
         $mailtext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtext', 'Iqtp13db');
         $mailtext = str_replace("WARTEZEITWOCHEN", $this->settings['wartezeitwochen'], $mailtext);
-         
+        $grcinfotext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('grcinfotext', 'Iqtp13db');
+        
         $datenberatungsstelle = $zugewieseneberatungsstelle != NULL ? $zugewieseneberatungsstelle[0]->getDescription() : '';
         if($datenberatungsstelle != '') $kontaktlabel = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('kontaktberatungsstelle', 'Iqtp13db');
         else $kontaktlabel = '';
@@ -912,7 +917,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             'kontaktlabel' => $kontaktlabel,
             'startseitelink' => $this->settings['startseitelink'],
             'logolink' => $this->settings['logolink'],
-            'baseurl' => $this->request->getBaseUri()
+            'baseurl' => $this->request->getBaseUri(),
+            'grcinfotext' => $grcinfotext 
         );
         $extbaseFrameworkConfiguration = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
         $this->generalhelper->sendTemplateEmail(array($recipient), array($bcc), array($sender), $subject, $templateName, $variables, $this->objectManager->get('TYPO3\\CMS\\Fluid\\View\\StandaloneView'), $this->controllerContext->getUriBuilder(), $extbaseFrameworkConfiguration);

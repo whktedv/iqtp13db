@@ -118,12 +118,13 @@
 	
 			<trans-unit id="anredemail"><target>Guten Tag </target></trans-unit>
 			<trans-unit id="mailtext"><target> <![CDATA[ <p>vielen Dank für Ihre Informationen.</p> <p>Sie sind jetzt zur Beratung angemeldet. Wir setzen uns mit Ihnen in Verbindung, sobald Sie an der Reihe sind.</p> <p>Wir bitten um Ihr Verständnis und Ihre Geduld.</p> <p>Mit freundlichen Grüßen</p>Ihre IQ Anerkennungs- und Qualifizierungsberatung ]]></target></trans-unit>
+			<trans-unit id="grcinfotext"><target><![CDATA[ <p>Wir weisen Sie darauf hin, dass das Beratungsangebot gemäß der Charta der Grundrechte der Europäischen Union umgesetzt wird. Wir setzen das gegenseitige Einverständnis der Einhaltung der Charta für die Anerkennungs- und Qualifizierungsberatung voraus.</p><p>Charta der Grundrechte der europäischen Union: <a href="https://www.europarl.europa.eu/charter/pdf/text_de.pdf" target="_blank">https://www.europarl.europa.eu/charter/pdf/text_de.pdf</a></p> ]]></target></trans-unit>
 			<trans-unit id="subject"><target>Ihre Anmeldung zur Anerkennungsberatung beim IQ Netzwerk</target></trans-unit>
 			<trans-unit id="confirmlinktext"><target> <![CDATA[ Bestätigung der Anmeldung ]]></target></trans-unit>
 			<trans-unit id="confirmmailtext1"><target> <![CDATA[ <p>Guten Tag VORNAMENACHNAME,</p> <p>bestätigen Sie Ihre Anmeldung zur Anerkennungsberatung bitte hier:</p> ]]></target></trans-unit>			
 			<trans-unit id="confirmmailtext2"><target> <![CDATA[ <p>Mit freundlichem Gruß</p> <p>Ihre Anerkennungs- und Qualifizierungsberatung beim IQ Netzwerk</p>]]></target></trans-unit>
 			<trans-unit id="confirmsubject"><target>Bitte bestätigen Sie Ihre Anmeldung zur Anerkennungsberatung beim IQ Netzwerk</target></trans-unit>	
-			<trans-unit id="kontaktberatungsstelle"><target>Das ist Ihre Beratungsstelle:</target></trans-unit>
+			<trans-unit id="kontaktberatungsstelle"><target>Das ist Ihre Beratungsstelle:</target></trans-unit>			
 			
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer"><target>Teilnehmer</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligung"><target>Einwilligung</target></trans-unit>

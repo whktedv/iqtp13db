@@ -41,3 +41,12 @@ Updates 01.02.2024
 - Bugfix Auswahl Jahr Statistik
 
 Neu:
+- Fehlermeldung bei fehlenden Dateien klarifiziert
+- Speichergröße je Ratsuchenden erhöht (auf 30MB)
+- Fehlerkorrektur in Suchfunktion. Ratsuchende ohne Berufangabe wurden zuvor nicht gefunden
+- Anpassungen in ext_tables und ext_localconf
+- Anpassungen/Korrektur der Optionen beim Aufenthaltsstatus
+- Vorbereitung für eigenen Text in E-Mail und auf Startseite sowie eigenes Logo auf Startseite
+- Einbindung GRC-Infotext in E-Mail 
+- Dateigröße in Backend bei Ratsuchenden im Dokumentebereich 
+- Anpassungen Berechnung Wartezeiten in Übersicht

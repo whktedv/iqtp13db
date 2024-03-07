@@ -46,6 +46,13 @@ class Dokument extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $teilnehmer = NULL;
     
     /**
+     * filesize
+     * 
+     * @var int
+     */
+    protected $filesize = 0;    
+    
+    /**
      * Returns the name
      *
      * @return string $name
@@ -127,6 +134,16 @@ class Dokument extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setTeilnehmer(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
         $this->teilnehmer = $teilnehmer;
+    }
+    
+    /**
+     * Get filesize for file
+     * 
+     * @param string $basepath
+     * @return int     
+     */
+    public function getFilesize($basepath) {
+        return filesize($basepath.$this->getPfad().$this->getName());
     }
     
 }

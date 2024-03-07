@@ -128,6 +128,7 @@
 
   	<trans-unit id="anredemail"><target>Добрый день</target></trans-unit>
 	<trans-unit id="mailtext"><target><![CDATA[<p>Спасибо за информацию.</p><p>Вы зарегистрированы на консультацию. Мы свяжемся с вами, как только подойдет ваша очередь.<br><br>Консультации могут быть предоставлены по электронной почте, телефону или в видеочате, если вы хотите.</p><p>Мы стремимся обработать ваш запрос в течение WARTEZEITWOCHEN недель. Мы просим вашего понимания и терпения.</p> <p>С уважением </p>Ваш совет по признанию IQ и квалификации]]></target></trans-unit>
+				<trans-unit id="grcinfotext"><target><![CDATA[ <p>Мы хотели бы отметить, что консультационные услуги предоставляются в соответствии с Хартией основных прав Европейского союза. Мы требуем взаимного согласия на соблюдение Хартии для признания и квалификации консультирования.</p><p>Хартия основных прав Европейского союза (PDF, английский): <a href="https://www.europarl.europa.eu/charter/pdf/text_en.pdf" target="_blank">https://www.europarl.europa.eu/charter/pdf/text_en.pdf</a></p> ]]></target></trans-unit>
 	<trans-unit id="subject"><target>Ваша регистрация на консультацию по первичному признанию в NRW</target></trans-unit>
 	<trans-unit id="confirmlinktext"><target>	Подтверждение регистрации - Confirm registration</target></trans-unit>
 	<trans-unit id="confirmmailtext1"><target><![CDATA[<p>Уважаемые соискатели совета,</p><p>пожалуйста, подтвердите свою регистрацию для первичной консультации по признанию здесь:</p>	]]></target></trans-unit>

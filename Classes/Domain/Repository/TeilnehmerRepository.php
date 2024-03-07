@@ -56,10 +56,14 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                     $beruf = " a.referenzberufzugewiesen IN ('".implode("','", $results)."') ";
                 }
             } else {
-                $beruf = "(a.deutscher_referenzberuf LIKE '%".$fberuf."%')";
+                $beruf = "(a.deutscher_referenzberuf LIKE '%".$fberuf."%' OR a.deutscher_referenzberuf IS NULL)";
             }
         } else {
-            $beruf = "(a.deutscher_referenzberuf LIKE '%".$fberuf."%' OR a.deutscher_referenzberuf IS NULL)";
+            if($fberuf != '') {
+                $beruf = "(a.deutscher_referenzberuf LIKE '%".$fberuf."%')";
+            } else {
+                $beruf = "(a.deutscher_referenzberuf LIKE '%".$fberuf."%' OR a.deutscher_referenzberuf IS NULL)";
+            }            
         }
         
         // Antragstellungvorher
@@ -99,9 +103,6 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     }
     
     /**
-     * @param $beratungsstatus
-     * @param $orderby
-     * @param $order
      */
     public function findAllOrder4List($beratungsstatus, $orderby, $order, $niqbid, $beraterdiesergruppe, $thisusergroup)
     {
@@ -171,6 +172,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      * @param $orderby
      * @param $order
+     * @param $niqbid
      */
     public function findhidden4list($orderby, $order, $niqbid)
     {
@@ -208,6 +210,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      * @param $nachname
      * @param $vorname
+     * @param $niqbid
      */
     public function findDublette4Angemeldet($nachname, $vorname, $niqbid)
     {
@@ -225,6 +228,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      * @param $nachname
      * @param $vorname
+     * @param $niqbid
      */
     public function findDublette4Deleted($nachname, $vorname, $niqbid)
     {
@@ -238,9 +242,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         return count($query);
     }
     
-    /**
-     * @param $orderby
-     * @param $order
+    /**     
      */
     public function findLast4Admin()
     {
@@ -348,6 +350,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      *
      * @param $bundesland
      * @param $bstatus
+     * @param $jahr
      *
      */
     public function countTNbyBundesland($bundesland, $bstatus, $jahr)
@@ -422,7 +425,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                         WHERE $bis != '' AND deleted = 0 AND hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND YEAR($von) = YEAR(CURRENT_DATE())
                         GROUP BY MONTH($bis)
                         UNION
-                        SELECT MONTH($bis) as monat, SUM(DATEDIFF($bis,beratungdatum)) / count(*) as wert
+                        SELECT MONTH($bis) as monat, SUM(DATEDIFF($bis,$von)) / count(*) as wert
                         FROM tx_iqtp13db_domain_model_teilnehmer 
                         WHERE $bis != '' AND deleted = 0 AND hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND YEAR($von) = YEAR(CURRENT_DATE())-1 AND MONTH($von) > MONTH(CURRENT_DATE())
                         GROUP BY MONTH($bis)");
@@ -434,6 +437,50 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         }
         
         $query = $query->execute(true);        
+        return $query;
+    }
+    
+    /**
+     * Calculates average waiting days for last 12 month or $jahr for Bundesland
+     *
+     * @param $bundesland
+     * @param $status
+     * @param $jahr
+     *
+     */
+    public function calcwaitingdaysBundesland($bundesland, $status, $jahr)
+    {
+        if($status == 'anmeldung') {
+            $von = "FROM_UNIXTIME(verification_date)";
+            $bis = "beratungdatum";
+        }
+        if($status == 'beratung') {
+            $von = "beratungdatum";
+            $bis = "erstberatungabgeschlossen";
+        }
+
+        $query = $this->createQuery();
+        if($jahr == 0) {
+            $query->statement("SELECT MONTH($bis) as monat, SUM(IF(DATEDIFF($bis,$von) < 0, 0, DATEDIFF($bis,$von))) / count(*) as wert
+                        FROM tx_iqtp13db_domain_model_teilnehmer as a
+                        LEFT JOIN fe_groups as b on a.niqidberatungsstelle = b.niqbid
+                        WHERE $bis != '' AND a.deleted = 0 AND a.hidden = 0 AND b.bundesland LIKE '$bundesland' AND YEAR($von) = YEAR(CURRENT_DATE())
+                        GROUP BY MONTH($bis)
+                        UNION
+                        SELECT MONTH($bis) as monat, SUM(DATEDIFF($bis,$von)) / count(*) as wert
+                        FROM tx_iqtp13db_domain_model_teilnehmer as a
+                        LEFT JOIN fe_groups as b on a.niqidberatungsstelle = b.niqbid
+                        WHERE $bis != '' AND a.deleted = 0 AND a.hidden = 0 AND b.bundesland LIKE '$bundesland' AND YEAR($von) = YEAR(CURRENT_DATE())-1 AND MONTH($von) > MONTH(CURRENT_DATE())
+                        GROUP BY MONTH($bis)");
+        } else {
+            $query->statement("SELECT MONTH($bis) as monat, SUM(IF(DATEDIFF($bis,$von) < 0, 0, DATEDIFF($bis,$von))) / count(*) as wert
+                        FROM tx_iqtp13db_domain_model_teilnehmer as a
+                        LEFT JOIN fe_groups as b on a.niqidberatungsstelle = b.niqbid
+                        WHERE $bis != '' AND a.deleted = 0 AND a.hidden = 0 AND b.bundesland LIKE '$bundesland' AND YEAR($von) = $jahr
+                        GROUP BY MONTH($bis)");
+        }
+        
+        $query = $query->execute(true);
         return $query;
     }
     

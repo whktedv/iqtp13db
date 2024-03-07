@@ -169,6 +169,12 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
             foreach($ergarrayberatungfertig as $erg) $beratungfertig[$erg['monat']] = $erg['anzahl'];
             $ergarrayniqerfasst = $this->teilnehmerRepository->countTNbyBundesland($bundeslandselected, 4, $jahrselected);
             foreach($ergarrayniqerfasst as $erg) $niqerfasst[$erg['monat']] = $erg['anzahl'];
+            $ergarrayfolgekontakte = $this->folgekontaktRepository->countFKbyBundesland($bundeslandselected, $jahrselected);
+            foreach($ergarrayfolgekontakte as $erg) $qfolgekontakte[$erg['monat']] = $erg['anzahl'];
+            $ergarraywartezeitanmeldung = $this->teilnehmerRepository->calcwaitingdaysBundesland($bundeslandselected,'anmeldung', $jahrselected);
+            foreach($ergarraywartezeitanmeldung as $erg) $days4wartezeit[$erg['monat']] = $erg['wert'];
+            $ergarraywartezeitberatung = $this->teilnehmerRepository->calcwaitingdaysBundesland($bundeslandselected,'beratung', $jahrselected);
+            foreach($ergarraywartezeitberatung as $erg) $days4beratung[$erg['monat']] = $erg['wert'];
         } else {
             $ergarrayangemeldete = $this->teilnehmerRepository->countTNbyBID('%', 1, $jahrselected);
             foreach($ergarrayangemeldete as $erg) $angemeldeteTN[$erg['monat']] = $erg['anzahl'];

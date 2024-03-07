@@ -130,6 +130,7 @@
   <trans-unit id="anredemail"><target>İyi günler</target></trans-unit>
 	<trans-unit id="mailtext"><target><![CDATA[<p>Verdiğiniz bilgiler için çok teşekkürler.</p><p<&nbsp;</p><p> Danışmanlık hizmeti almak için kaydedildiniz. Sıranız geldiğinde Sizinle irtibata geçeceğiz.<br><br> Danışmanlık hizmeti isteğe bağlı olarak E-Mail, Telefon yada Video üzerinden online’da verilir.</p><p> Başvurunuzu WARTEZEITWOCHEN hafta içerisinde işleme koymak için çaba sarfedeceğiz. Sizden anlayış ve sabır bekliyoruz. </p><p<&nbsp;</p><p> En içten selamlarımızla</p> Sizin Mobil IQ Yeterlilik ve denklik için Danışmanlığınız
 	]]></target></trans-unit>
+				<trans-unit id="grcinfotext"><target><![CDATA[ <p>Danışmanlık hizmetinin Avrupa Birliği Temel Haklar Şartı'na uygun olarak yürütüldüğünü belirtmek isteriz. Tanınma ve yeterlilik danışmanlığı için Şart'a uymak üzere karşılıklı mutabakata ihtiyacımız var.</p><p>Avrupa Birliği Temel Haklar Şartı (PDF, İngilizce): <a href="https://www.europarl.europa.eu/charter/pdf/text_en.pdf" target="_blank">https://www.europarl.europa.eu/charter/pdf/text_en.pdf</a></p> ]]></target></trans-unit>
 	<trans-unit id="subject"><target>Yeterlilik ve denklik için danışmanlık (Kuzey Ren Vestfalya Eyaleti) başvurunuz</target></trans-unit>
 	<trans-unit id="confirmlinktext"><target>Başvuru onayı</target></trans-unit>
 	<trans-unit id="confirmmailtext1"><target><![CDATA[<p>Değerli Danışmanlık başvurusu yapan </p><p<&nbsp;</p><p> 

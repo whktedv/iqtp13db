@@ -136,6 +136,7 @@
 	<trans-unit id="mailtext"><target> <![CDATA[
 						 <p>Merci pour votre information.</p>  <p>Vous êtes désormais inscrit à la consultation. Nous vous contacterons dès que ce sera votre tour. <br><br>La consultation se fera par courriel, téléphone ou chat vidéo selon la demande.</p> <p>Nous nous efforcerons de traiter votre demande dans un délai de WARTEZEITWOCHEN semaines. Nous vous demandons de bien vouloir faire preuve de compréhension et de patience.</p> <p>Meilleures salutations</p>Votre IQ service-conseil en reconnaissance et qualification.
 						  ]]></target></trans-unit>
+				<trans-unit id="grcinfotext"><target><![CDATA[ <p>Nous attirons votre attention sur le fait que l'offre de conseil est mise en œuvre conformément à la Charte des droits fondamentaux de l'Union européenne. Nous supposons le consentement mutuel du respect de la charte pour le conseil en reconnaissance et qualification.</p><p>Charte des droits fondamentaux de l'Union européenne: <a href="https://www.europarl.europa.eu/charter/pdf/text_fr.pdf" target="_blank">https://www.europarl.europa.eu/charter/pdf/text_fr.pdf</a></p> ]]></target></trans-unit>
 	<trans-unit id="subject"><target>Votre inscription au conseil en reconnaissance NRW</target></trans-unit>
 	<trans-unit id="confirmlinktext"><target>
 						 Confirmer l'inscription - Confirmer l'inscription

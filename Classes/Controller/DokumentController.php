@@ -127,8 +127,13 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $tmpName = $dokument->getName();
         
         if($storage->getConfiguration()['pathType'] == 'relative') {
-            $folder = $storage->getFolder($beratenepath);
-            $targetfile = $folder->getStorage()->getFileInFolder($tmpName, $folder);
+            if($folder->getStorage()->hasFileInFolder($tmpName, $folder)) {
+                $folder = $storage->getFolder($beratenepath);
+                $targetfile = $folder->getStorage()->getFileInFolder($tmpName, $folder);
+            } else {
+                $this->addFlashMessage('Datei wurde nicht gefunden. ', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                $this->redirect($valArray['thisaction'], 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'] ?? 'edit', 'callercontroller' => $valArray['callercontroller'] ?? 'Backend', 'callerpage' => $valArray['callerpage'] ?? '1', 'showdokumente' => '1'));
+            }
         } else {
             $targetfile = $storage->getFile($beratenepath . $tmpName);
         }
@@ -210,8 +215,8 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $tmpName = $this->generalhelper->sanitizeFileFolderName($files['name']['file']);
         $fullpath = $storage->getConfiguration()['basePath'] . $beratenepath . $tmpName;
         
-        if($this->generalhelper->getFolderSize($storage->getConfiguration()['basePath'] . $beratenepath) > 20000) {
-    	    $this->addFlashMessage('Maximum total filesize of 20 MB exceeded, please reduce filesize. Maximale Dateigröße aller Dateien zusammen ist 20 MB. Bitte Dateigröße verringern.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+        if($this->generalhelper->getFolderSize($storage->getConfiguration()['basePath'] . $beratenepath) > 30000) {
+    	    $this->addFlashMessage('Maximum total filesize of 30 MB exceeded, please reduce filesize. Maximale Dateigröße aller Dateien zusammen ist 30 MB. Bitte Dateigröße verringern.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
     	} else {
     	    if ($files['name']['file']) {
     	        
@@ -353,7 +358,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
             $fileName = $filearr['tmp_name']['file'];
             $fileExt = pathinfo($filearr['name']['file'], PATHINFO_EXTENSION);
             $fileNamewoExt = pathinfo($filearr['name']['file'], PATHINFO_FILENAME); 
-            $percent = 50;
+            $percent = 40;
             
             $timestamp = time();
             

@@ -118,6 +118,7 @@
 
 		<trans-unit id="anredemail"><source>Hello </source></trans-unit>
 		<trans-unit id="mailtext"><source> <![CDATA[ <p>Thank you for your information.</p> <p>You are now registered for counselling. We will contact you as soon as it is your turn. <p>We ask for your understanding and patience.</p><p>Regards</p>Your recognition counselling ]]></source></trans-unit>
+		<trans-unit id="grcinfotext"><source><![CDATA[ <p>We would like to point out that the counselling service is implemented in accordance with the Charter of Fundamental Rights of the European Union. We require mutual agreement to comply with the Charter for recognition and qualification counselling.</p><p>Charter of Fundamental Rights of the European Union: <a href="https://www.europarl.europa.eu/charter/pdf/text_en.pdf" target="_blank">https://www.europarl.europa.eu/charter/pdf/text_en.pdf</a></p> ]]></source></trans-unit>
 		<trans-unit id="subject"><source>Your registration for the initial recognition counselling</source></trans-unit>
 		<trans-unit id="confirmlinktext"><source>Confirm registration</source></trans-unit>
 		<trans-unit id="confirmmailtext1"><source><![CDATA[ <p>Dear VORNAMENACHNAME,</p> <p>Please confirm your registration for the initial recognition counselling here:</p>]]></source></trans-unit>

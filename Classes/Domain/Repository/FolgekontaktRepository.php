@@ -32,6 +32,7 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     
     /**
      * @param $niqbid
+     * @param $jahr
      */
 	public function countFKbyBID($niqbid, $jahr)
 	{
@@ -63,8 +64,43 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 	}
 	
 	/**
-	 * @param $orderby
-	 * @param $order
+	 * @param $bundesland
+	 * @param $jahr
+	 */
+	public function countFKbyBundesland($bundesland, $jahr)
+	{
+	    $query = $this->createQuery();
+	    if($jahr == 0) {
+	        $query->statement("SELECT MONTH(STR_TO_DATE(a.datum, '%d.%m.%Y')) as monat, count(*) as anzahl
+                FROM tx_iqtp13db_domain_model_folgekontakt as a
+                LEFT JOIN tx_iqtp13db_domain_model_teilnehmer as b ON a.teilnehmer = b.uid
+                LEFT JOIN fe_groups as c on b.niqidberatungsstelle = c.niqbid
+                WHERE YEAR(STR_TO_DATE(a.datum, '%d.%m.%Y')) = YEAR(CURRENT_DATE())
+                AND a.deleted = 0 AND c.bundesland LIKE '$bundesland'
+                GROUP BY MONTH(STR_TO_DATE(a.datum, '%d.%m.%Y'))
+                UNION
+                SELECT MONTH(STR_TO_DATE(a.datum, '%d.%m.%Y')) as monat, count(*) as anzahl
+                FROM tx_iqtp13db_domain_model_folgekontakt as a
+                LEFT JOIN tx_iqtp13db_domain_model_teilnehmer as b ON a.teilnehmer = b.uid
+                LEFT JOIN fe_groups as c on b.niqidberatungsstelle = c.niqbid
+                WHERE YEAR(STR_TO_DATE(a.datum, '%d.%m.%Y')) = YEAR(CURRENT_DATE())-1 AND MONTH(STR_TO_DATE(a.datum, '%d.%m.%Y')) > MONTH(CURRENT_DATE())
+                AND a.deleted = 0 AND c.bundesland LIKE '$bundesland'
+                GROUP BY MONTH(STR_TO_DATE(a.datum, '%d.%m.%Y'))");
+	    } else {
+	        $query->statement("SELECT MONTH(STR_TO_DATE(a.datum, '%d.%m.%Y')) as monat, count(*) as anzahl
+                FROM tx_iqtp13db_domain_model_folgekontakt as a
+                LEFT JOIN tx_iqtp13db_domain_model_teilnehmer as b ON a.teilnehmer = b.uid
+                LEFT JOIN fe_groups as c on b.niqidberatungsstelle = c.niqbid
+                WHERE YEAR(STR_TO_DATE(a.datum, '%d.%m.%Y')) = $jahr
+                AND a.deleted = 0 AND c.bundesland LIKE '$bundesland'
+                GROUP BY MONTH(STR_TO_DATE(a.datum, '%d.%m.%Y'))");
+	    }
+	    $query = $query->execute(true);
+	    return $query;
+	}
+	
+	/**
+	 * @param $teilnehmeruid
 	 */
 	public function findLastByTNuid($teilnehmeruid)
 	{

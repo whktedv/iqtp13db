@@ -5,7 +5,7 @@ use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-defined('TYPO3_MODE') || die('Access denied.');
+defined('TYPO3') or die();
 
 call_user_func(
     function($extKey)

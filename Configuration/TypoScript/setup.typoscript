@@ -223,21 +223,22 @@ plugin.tx_iqtp13db.settings {
    
    aufenthaltsstatus {
 		1 = keine Angabe
-		6 = Aufenthaltserlaubnis zur Arbeitsplatzsuche (§18c AufenthG)
+		6 = Aufenthaltserlaubnis zur Arbeitsplatzsuche für Fachkräfte (§20 AufenthG)
 		11 = Aufenthaltserlaubnis für in anderen Mitgliedsstaaten der EU langfristig Aufenthaltsberechtigte (§38a AufenthG)
-		12 = Aufenthaltsgestattung (§55 Abs. 1 AsylVfG)
+		12 = Aufenthaltsgestattung (§55 Abs. 1 AsylG)  
 		8 = Aufenthalt aus familiären Gründen (§27-36 AufenthG)
 		7 = Aufenthalt aus völkerrechtlichen, humanitären oder politischen Gründen (§22-26, 104a, 104b AufenthG)
 		4 = Aufenthalt zum Zweck der Ausbildung (§16-17 AufenthG)
-		5 = Aufenthalt zum Zweck der Erwerbstätigkeit (§18, 18a, 19b, 19d, 20, 21 AufenthG) 
+		5 = Aufenthalt zum Zweck der Erwerbstätigkeit (§18, 18a, 18b, 19b, 19d, 20, 21 AufenthG) 
 		9 = Aufenthalt zum Zwecke einer Anpassungsqualifizierung oder einer Kenntnisprüfung (§ 16d AufenthG)
-		2 = Blaue Karte EU (§19a AufenthG)
+		2 = Blaue Karte EU (§18g AufenthG)
 		13 = Duldung (§60a Abs. 4 AufenthG)
+		19 = Niederlassungserlaubnis für Fachkräfte (§18c AufenthG)
 		10 = Niederlassungserlaubnis (§9 AufenthG)
 		14 = Staatsbürger-/in EU/EWR/Schweiz oder Freizügigkeit (§2-5, §§12-13, §15 FreizüG/EU, §28 AufenthG)
 		17 = kein Aufenthaltstitel, da Wohnsitz im Ausland 
 		15 = Fiktionsbescheinigung
-		18 = Anmerkung
+		18 = Anmerkung		
    }
    
    zertifikatlevel {
@@ -344,16 +345,17 @@ plugin.tx_iqtp13db.settings {
    
    aufenthaltsstatus {
 		 1 = no specification
-		 6 = Residence permit for job search (§18c AufenthG)
+		 6 = Residence permit for job search for skilled workers (§20 AufenthG)
 		 11 = Residence permit entitled to reside in other Member States (§28a AufenthG)
-		 12 = Residence permission (§55 Abs. 1 AsylVfG)
+		 12 = Residence permission (§55 Abs. 1 AsylG)
 		 8 = Residence permit for family reasons (§27-36 AufenthG)
 		 7 = Residence permit for reasons of international law, humanitarian and political reasons (§22-26, 104a, 104b AufenthG)
 		 4 = Residence permit for the purpose of professional training (§16-17 AufenthG)
-		 5 = Residence permit for the purpose of employment (§18, 18a, 19b, 19d, 20, 21 AufenthG)
+		 5 = Residence permit for the purpose of employment (§18, 18a, 18b, 19b, 19d, 20, 21 AufenthG)
 		 9 = Residence permit for the purpose of adaptation qualification or knowledge test (§16d AufenthG)
-		 2 = Blue Card EU (§19a AufenthG)
+		 2 = Blue Card EU (§18g AufenthG)
 		 13 = Toleration (§60a Abs .4 AufenthG)
+		 19 = Permanent residence permit for skilled workers (§18c)
 		 10 = Permanent residence permit (§9 AufenthG)
 		 14 = Citizen of EU/EWR/Switzerland or freedom of movement (§2-5, §§12-13, §15 FreizüG/EU, §28 AufenthG)
 		 17 = No residence permit because you reside abroad
@@ -468,16 +470,17 @@ plugin.tx_iqtp13db.settings {
 	
 	aufenthaltsstatus {
 	    1 = لا توجد معلومات
-		6 = (§18c AufenthG) رخصة الإقامة لأجل البحث عن العمل
+		6 = (§20 AufenthG) رخصة الإقامة لأجل البحث عن العمل
 		11 = (§38a AufenthG ) رخصة الإقامة للأشخاص ذوي حق الإقامة طويلة الأمد في الدول الأخرى للإتحاد الأوروبي 
-		12 = (§55 Abs. 1 AsylVfG) تصريح الإقامة
+		12 = (§55 Abs. 1 AsylG) تصريح الإقامة
 	    8 = (§27-36 AufenthG)   إقامة لأسباب عائلية
 		7 = (§22-26, 104a, 104b AufenthG)  إقامة لأسباب تتعلق بالقانون الدولي أو لأسباب إنسانية أو سياسية    
 		4 = (§16-17 AufenthG) إقامة لأجل التكوين المهني
-		5 = (§18, 18a, 19b, 19d, 20, 21 AufenthG) إقامة لغرض العمل
+		5 = (§18, 18a, 18b, 19b, 19d, 20, 21 AufenthG) إقامة لغرض العمل
 		9 = (§ 16d AufenthG) إقامة لإجراء التأهيل المهني الإضافي أو إجتياز إمتحان المعرفة للحصول على المعادلة    
-		2 = (§19a AufenthG)  البطاقة الزرقاء   في الاتحاد الأوروبي (الموظفين ذو تأهيل عالي)
+		2 = (§18g AufenthG)  البطاقة الزرقاء   في الاتحاد الأوروبي (الموظفين ذو تأهيل عالي)
 	    13 = (§60a Abs. 4 AufenthG) / Duldung تعليق مؤقت للترحيل
+	    19 = (§18c AufenthG) تصريح إقامة دائمة
 	    10 = (§9 AufenthG) تصريح إقامة دائمة
 		14 = (§2-5, §§12-13, §15 FreizüG/EU, §28 AufenthG) جنسية دولة من دول الاتحاد الأوروبي / المنطقة الاقتصادية الأوروبية / سويسرا أو حرية التنقل 
 		17 = لا يوجد تصريح إقامة ، لأن مكان الإقامة بالخارج
@@ -591,16 +594,17 @@ plugin.tx_iqtp13db.settings {
 
 	aufenthaltsstatus {
 	    1 = اعلام نمی‌کنم
-	    6 = مجوز اقامت برای جستجوی موقعیت شغلی (ماده 18c از AufenthG)
+	    6 = مجوز اقامت برای جستجوی موقعیت شغلی (ماده 20c از AufenthG)
 	    11 = مجوز اقامت برای اتباع کشورهای دیگر اتحادیه اروپا افراد دارای حق اقامت طولانی مدت (ماده 38a از AufenthG)
-	    12 = مجوز اقامت موقت (ماده 55 بخش 1 از AsylVfG)
+	    12 = مجوز اقامت موقت (ماده 55 بخش 1 از AsylG)
 	    8 = اقامت به دلایل خانوادگی (ماده 36-27 از AufenthG)
 	    7 = اقامت به دلایل مربوط به حقوق بین‌الملل، انسان‌دوستانه یا سیاسی (ماده 22-26 و 104a و 104b از AufenthG)
 	    4 = اقامت به منظور آموزش (ماده 16-17 از AufenthG)
 	    5 = اقامت به منظور فعالیت درآمدزا (ماده 18 و 18a و 19b و 19d و 20 و 21 از AufenthG) 
 	    9 = اقامت به منظور یک تعیین صلاحیت تطبیقی یا بررسی دانش (ماده 16d از AufenthG)
-	    2 = کارت آبی اتحادیه اروپا (ماده 19a از AufenthG)
+	    2 = کارت آبی اتحادیه اروپا (ماده 18g از AufenthG)
 	    13 = حکم تحمل (ماده 60a بخش 4 از AufenthG)
+	    19 = مجوز استقرار (ماده 18c از AufenthG)
 	    10 = مجوز استقرار (ماده 9 از AufenthG)
 	    14 = تبعه اتحادیه اروپا/منطقه اقتصادی اروپا/سوئیس یا فرد دارای حق آزادی جابه‌جایی (ماده 2-5 و ماده‌های 12-13 و ماده 15 از FreizüG/EU و ماده 28 از AufenthG)
 	    17 = بدون عنوان اقامت، به دلیل سکونت در خارج از کشور 
@@ -712,17 +716,18 @@ plugin.tx_iqtp13db.settings {
 	
 	aufenthaltsstatus {
 	    1 = pas d'indication
-	    6 = titre de séjour pour recherche d'emploi (§18c AufenthG)
+	    6 = titre de séjour pour recherche d'emploi pour les professionnels (§20 AufenthG)
 	    11 = titre de séjour pour les résidents de longue durée dans d'autres États membres de l'UE (§38a AufenthG)
-	    12 = permis de séjour (§55 Abs. 1 AsylVfG)
+	    12 = permis de séjour (§55 Abs. 1 AsylG)
 	    8 = séjour pour raisons familiales (§27-36 AufenthG)
 	    7 = séjour pour des raisons de droit international public, humanitaires ou politiques (§22-26, 104a, 104b AufenthG)
 	    4 = Séjour aux fins de formation (§16-17 AufenthG)
-	    5 = séjour aux fins d'un emploi (§18, 18a, 19b, 19d, 20, 21 AufenthG)
+	    5 = séjour aux fins d'un emploi (§18, 18a, 18b, 19b, 19d, 20, 21 AufenthG)
 	    9 = séjour aux fins d'une qualification d'adaptation ou d'un contrôle des connaissances (§ 16d AufenthG)
-	    2 = carte bleue UE (§19a AufenthG)
+	    2 = carte bleue UE (§18g AufenthG)
 	    13 = tolérance  „Duldung“  (§60a Abs. 4 AufenthG)
-	    10 = Niepermis de résidence „Niederlassungserlaubnis (§9 AufenthG)
+	    19 = Niepermis de résidence pour les professionnels „Niederlassungserlaubnis für Fachkräfte“ (§18c AufenthG)
+	    10 = Niepermis de résidence „Niederlassungserlaubnis“ (§9 AufenthG)
 	    14 = citoyen/ne UE/EEE/Suisse ou «Freizügigkeit » (§2-5, §§12-13, §15 FreizüG/EU, §28 AufenthG)
 	    17 = pas de titre de séjour, car résidence à l'étranger
 	    15 = „Fiktionsbescheinigung“
@@ -832,16 +837,17 @@ plugin.tx_iqtp13db.settings {
 	
 	aufenthaltsstatus {
 	    1 = brak informacji
-	    6 = Zezwolenie na pobyt w celu poszukiwania pracy (§18c AufenthG))
+	    6 = Zezwolenie na pobyt w celu poszukiwania pracy dla wykwalifikowanych pracowników (§20 AufenthG))
 	    11 = Zezwolenie na pobyt dla rezydentów długoterminowych innych państw członkowskich UE (§38a AufenthG)  
-	    12 = Zezwolenie na pobyt w trakcie trwania postępowania o udzielenie azylu (§55 Abs. 1 AsylVfG)  
+	    12 = Zezwolenie na pobyt w trakcie trwania postępowania o udzielenie azylu (§55 Abs. 1 AsylG)  
 	    8 = Pobyt ze względów rodzinnych (§27-36 AufenthG)
 	    7 = (§22-26, 104a, 104b AufenthG) Pobyt ze względu na prawo międzynarodowe, względy humanitarne lub polityczne (§22-26, 104a, 104b  AufenthG) 
 	    4 = (§16-17 AufenthG) Pobyt w celu ukończenia wykształcenia zawodowego (§16-17 AufenthG) 
-	    5 = (§18, 18a, 19b, 19d, 20, 21 AufenthG)  Pobyt w celu pracy zarobkowej (§18, 18a, 19b, 19d, 20, 21 AufenthG)  
+	    5 = (§18, 18a, 19b, 19d, 20, 21 AufenthG)  Pobyt w celu pracy zarobkowej (§18, 18a, 18b, 19b, 19d, 20, 21 AufenthG)  
 	    9 = Pobyt w celu odbycia szkolenia kwalifikacyjnego lub odbycia testu sprawdzającego wiedzę (§ 16d AufenthG)
-	    2 = Niebieska Karta UE (§19a AufenthG) 
+	    2 = Niebieska Karta UE (§18g AufenthG) 
 	    13 = Pobyt tolerowany (§60a Abs. 4 AufenthG) 
+	    19 = (§9 AufenthG) Zezwolenie na osiedlenie dla wykwalifikowanych pracowników (§18c AufenthG)
 	    10 = (§9 AufenthG) Zezwolenie na osiedlenie  (§9 AufenthG) 
 	    14 = Obywatel UE/EOG/Szwajcarii lub osoba posiadająca prawo do swobodnego przemieszczania się (§2-5, §§12-13, §15 FreizüG/EU, §28 AufenthG) 
 	    17 = Brak zezwolenia na pobyt, ponieważ miejsce zamieszkania jest za granicą
@@ -953,16 +959,17 @@ plugin.tx_iqtp13db.settings {
 	
 	aufenthaltsstatus {
 	    1 = Lipsă date
-	    6 = Permis de ședere pentru căutarea unui loc de muncă (§18c AufenthG* = *Legea germană privind rezidența)
+	    6 = Permis de ședere pentru lucrătorii calificați în căutarea unui loc de muncă (§20 AufenthG* = *Legea germană privind rezidența)
 	    11 = Permis de ședere pentru rezidenții pe termen lung în alte state membre UE (§38a AufenthG)
-	    12 = Permis de ședere temporară prin procedura de azil (§55 par. 1 AsylVfG* = Legea privind procedura de azil)
+	    12 = Permis de ședere temporară prin procedura de azil (§55 par. 1 AsylG* = Legea privind procedura de azil)
 	    8 = Reședința din motive familiale (§27-36 AufenthG)
 	    7 = Reședința din motive de drept internațional, motive umanitare sau politice (§22-26, 104a, 104b AufenthG)
 	    4 = Reședința în scop educațional (§16-17 AufenthG)
-	    5 = Reședința în scopul unei activități ca salariat (§18, 18a, 19b, 19d, 20, 21 AufenthG) 
+	    5 = Reședința în scopul unei activități ca salariat (§18, 18a, 18b, 19b, 19d, 20, 21 AufenthG) 
 	    9 = Reședință în scopul unei calificări de adaptare sau al unui test de cunoștințe (§ 16d AufenthG)
-	    2 = Cardul albastru UE (§19a AufenthG)
+	    2 = Cardul albastru UE (§18g AufenthG)
 	    13 = Toleranță (suspendare temporară a deportării) (§60a par. 4 AufenthG)
+	    19 = Permis de ședere pe durată nelimitată pentru lucrătorii calificați (§18c AufenthG)
 	    10 = Permis de ședere pe durată nelimitată (§9 AufenthG)
 	    14 = Cetățean UE/SEE/elvețian sau libertatea de circulație (§2-5, §§12-13, FreizüG/UE (*Legea privind libera circulație), §28 AufenthG)
 	    17 = Fără permis de ședere, deoarece domiciliul este în străinătate 
@@ -1074,17 +1081,18 @@ plugin.tx_iqtp13db.settings {
 	
 	aufenthaltsstatus {
 	    1 = Информация отсутствует
-	    6 = Вид на жительство для поиска работы (§18c AufenthG)
+	    6 = Вид на жительство для квалифицированных работников, ищущих работу (§20 AufenthG)
 	    11 = Долгосрочный вид на жительство для жителей других стран-членов ЕС (§38a AufenthG)
-	    12 = Разрешение на жительство (§55 Abs. 1 AsylVfG)
+	    12 = Разрешение на жительство (§55 Abs. 1 AsylG)
 	    8 = Проживание по семейным обстоятельствам (§27-36 AufenthG)
 	    7 = Проживание по международному праву, гуманитарным или политическим причинам (§22-26, 104a, 104b AufenthG)
 	    4 = Резиденция с целью обучения (§16-17 AufenthG)
-	    5 = Проживание по трудовой деятельности (§18, 18a, 19b, 19d, 20, 21 AufenthG)
+	    5 = Проживание по трудовой деятельности (§18, 18a, 18b, 19b, 19d, 20, 21 AufenthG)
 	    9 = Проживание с целью подпорки квалификации или проверки знаний (§ 16d AufenthG)
-	    2 = Голубая карта ЕС (§19a AufenthG)
+	    2 = Голубая карта ЕС (§18g AufenthG)
 	    13 = Временное разрешение (Duldung) (§60a Abs. 4 AufenthG)
-	    10 = Бессрочный Вид на жительство
+	    19 = Постоянный вид на жительство для квалифицированных работников (§18c AufenthG) 
+	    10 = Бессрочный Вид на жительство (§9 AufenthG)  
 	    14 = ЕС/ЕЭЗ/швейцарское гражданство или свобода передвижения (§2-5, §§12-13, §15 FreizüG/EU, §28 AufenthG)
 	    17 = Отсутствие вида на жительство ввиду того, что место жительства за границей
 	    15 = Заменяющий документ выданной со стороны Миграционной службы
@@ -1195,16 +1203,17 @@ plugin.tx_iqtp13db.settings {
 	
 	aufenthaltsstatus {
 	    1 = No se especifica
-	    6 = Permiso de residencia para buscar trabajo (§18c AufenthG)
+	    6 = Permiso de residencia para trabajadores cualificados en busca de empleo (§20 AufenthG)
 	    11 = Permiso de residencia para residentes de larga duración en otros Estados miembros de la UE (§38a AufenthG)
-	    12 = Concentimiento de residencia (§55 Abs. 1 AsylVfG) 
+	    12 = Concentimiento de residencia (§55 Abs. 1 AsylG) 
 	    8 = por motivos familiares (§27-36 AufenthG)
 	    7 = Residencia por razones de derecho internacional, humanitarias o políticas (§22-26, 104a, 104b AufenthG)
 	    4 = Residencia por motivos de formación (§16-17 AufenthG)
-	    5 = Residencia con fines de empleo remunerado (§18, 18a, 19b, 19d, 20, 21 AufenthG)
+	    5 = Residencia con fines de empleo remunerado (§18, 18a, 18b, 19b, 19d, 20, 21 AufenthG)
 	    9 = Residencia a efectos de un calificacion de adaptación o de una prueba de conocimientos (§ 16d AufenthG)
-	    2 = Tarjeta azul (§19a AufenthG)
+	    2 = Tarjeta azul (§18g AufenthG)
 	    13 = Premiso de residencia (§60a Abs. 4 AufenthG)
+	    19 = Permiso de residencia permanente para trabajadores cualificados (§18c AufenthG)
 	    10 = Permiso de residencia permanente (§9 AufenthG)
 	    14 = Ciudadano/ciudadano UE, EEE o Libertad de circulación y de residencia (§2-5, §§12-13, §15 FreizüG/EU, §28 AufenthG) 
 	    17 = no titulo de residencia, porque el lugar de residencia es en el extranjero
@@ -1317,16 +1326,17 @@ plugin.tx_iqtp13db.settings {
 	
 	aufenthaltsstatus {
 	    1 = Bilgi yok (B.y.)
-	    6 = İş aramak için oturma izni
+	    6 = İş arayan vasıflı işçiler için oturma izni (§20 AufenthG) 
 	    11 = Diğer AB üye ülkelerinde uzun süreli oturma izni (§38a AufenthG)
-	    12 = Geçici oturum izni (§55 Abs. 1 AsylVfG)
+	    12 = Geçici oturum izni (§55 Abs. 1 AsylG)
 	    8 = Ailevi nedenlerle oturum izni (§27-36 AufenthG)
 	    7 = Uluslararası hukuk, insani veya siyasi nedenlerle ikamet (§22-26, 104a, 104b AufenthG)
 	    4 = Eğitim amaçlı oturum izni (§16-17 AufenthG)
-	    5 = Çalışma üzerinden oturum izni (§18, 18a, 19b, 19d, 20, 21 AufenthG) 
+	    5 = Çalışma üzerinden oturum izni (§18, 18a, 18b, 19b, 19d, 20, 21 AufenthG) 
 	    9 = Mesleki uyum yeterliliğin tamamlanması veyağı Mesleği tanıma sınavı için oturma izni (§ 16d AufenthG)
-	    2 = Mavi kart (§19a AufenthG)
+	    2 = Mavi kart (§18g AufenthG)
 	    13 = Sınırlı oturum izni (§60a Abs. 4 AufenthG)
+	    19 = Nitelikli işçiler için daimi ikamet izni (§18c AufenthG)
 	  	10 = Kalıcı oturma izni (§9 AufenthG)
 	    14 = AB/AEA/İsviçre'de vatandaşlık veya serbest dolaşım özgürlüğü (§2-5, §§12-13, §15 FreizüG/EU, §28 AufenthG)
 	    17 = Oturma izni yok, çünkü yurtdışında yaşıyor
@@ -1439,16 +1449,17 @@ plugin.tx_iqtp13db.settings {
 	
 	aufenthaltsstatus { 
 	    1 = без відповіді
-	    6 = дозвіл на проживання для пошуку роботи (§18c Закону про проживання AufenthG)
+	    6 = Дозвіл на проживання для кваліфікованих працівників, які шукають роботу (§20 Закону про проживання AufenthG)
 	    11 = дозвіл на проживання для довгострокових резидентів інших країн-членів ЄС (§38a Закону про проживання AufenthG)
-	    12 = дозвіл на проживання для здійснення процедури надання притулку (§55 пункт 1 Закону про процедуру надання притулку AsylVfG)
+	    12 = дозвіл на проживання для здійснення процедури надання притулку (§55 пункт 1 Закону про процедуру надання притулку AsylG)
 	    8 = проживання за сімейними обставинами (§27-36 Закону про проживання AufenthG)
 	    7 = Проживання з міркувань міжнародного права, гуманітарних чи політичних причин (§22-26, 104a, 104 b Закону про проживання AufenthG)
 	    4 = Проживання з метою навчання (§16-17 Закону про проживання AufenthG)
-	    5 = Проживання з метою працевлаштування (§18, 18a, 19b, 19d, 20, 21 Закону про проживання AufenthG)
+	    5 = Проживання з метою працевлаштування (§18, 18a, 18b, 19b, 19d, 20, 21 Закону про проживання AufenthG)
 	    9 = Проживання з метою підтвердження кваліфікаціі або іспита на перевірку знаннь (§16d Закону про проживання AufenthG)
-	    2 = Блакитна карта ЄС (§19a Закону про проживання AufenthG)
+	    2 = Блакитна карта ЄС (§18g Закону про проживання AufenthG)
 	    13 = тимчасове припинення депортації (§60a абз. 4 Закону про проживання AufenthG)
+	    19 = Дозвіл на поселення для кваліфікованих працівників (§18c Закону про проживання AufenthG)
 	    10 = дозвіл на постійне проживання (§9 Закону про проживання AufenthG)
 	    14 = Громадянство ЄС/ЄЕЗ/Швейцарії або свобода пересування (§2-5, §§12-13, §15 Закону про свободу пересування/ЄС FreizüG/EU, §28 Закону про проживання AufenthG)
 	    17 = відсутність посвідки на проживання, так як місце проживання за кордоном
