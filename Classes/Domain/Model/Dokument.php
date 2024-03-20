@@ -143,7 +143,12 @@ class Dokument extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @return int     
      */
     public function getFilesize($basepath) {
-        return filesize($basepath.$this->getPfad().$this->getName());
+        $filepath = $basepath.$this->getPfad().$this->getName();
+        if(file_exists($filepath)) {
+            return filesize($filepath);
+        } else {
+            return 0;
+        }
     }
     
 }

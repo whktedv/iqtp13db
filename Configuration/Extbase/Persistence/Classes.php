@@ -38,7 +38,6 @@ return [
                 'fieldName' => 'title'
             ],
         ],
-    ],
-    
+    ],    
 ];
 

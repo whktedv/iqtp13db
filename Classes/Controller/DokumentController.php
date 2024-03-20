@@ -174,7 +174,9 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
             $this->addFlashMessage('Error in saveFileWebapp: File does not meet policy.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
         } else {
             if ($_FILES['tx_iqtp13db_iqtp13dbwebapp']['tmp_name']['file'] == '') {
-                $this->addFlashMessage('Error in saveFileWebapp: maximum filesize exceeded or permission error', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                $this->addFlashMessage('Error in saveFileWebapp: permission error or maximum filesize exceeded.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            } elseif (filesize($_FILES['tx_iqtp13db_iqtp13dbwebapp']['tmp_name']['file']) > 10485760) {
+                $this->addFlashMessage('Error in saveFileWebapp: Maximum filesize exceeded (10 MB). Please reduce filesize.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             } else {
                 $dokument = new \Ud\Iqtp13db\Domain\Model\Dokument();
                 $dokument->setBeschreibung($valArray['beschreibung']);
@@ -215,8 +217,8 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $tmpName = $this->generalhelper->sanitizeFileFolderName($files['name']['file']);
         $fullpath = $storage->getConfiguration()['basePath'] . $beratenepath . $tmpName;
         
-        if($this->generalhelper->getFolderSize($storage->getConfiguration()['basePath'] . $beratenepath) > 30000) {
-    	    $this->addFlashMessage('Maximum total filesize of 30 MB exceeded, please reduce filesize. Maximale Dateigröße aller Dateien zusammen ist 30 MB. Bitte Dateigröße verringern.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+        if($this->generalhelper->getFolderSize($storage->getConfiguration()['basePath'] . $beratenepath) > 40000) {
+    	    $this->addFlashMessage('Maximum total filesize of 40 MB exceeded, please reduce filesize. Maximale Dateigröße aller Dateien zusammen ist 40 MB. Bitte Dateigröße verringern.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
     	} else {
     	    if ($files['name']['file']) {
     	        

@@ -22,6 +22,7 @@ use Ud\Iqtp13db\Domain\Repository\AbschlussRepository;
 use TYPO3\CMS\Core\Resource\StorageRepository;
 use Ud\Iqtp13db\Domain\Repository\BerufeRepository;
 use Ud\Iqtp13db\Domain\Repository\StaatenRepository;
+use Ud\Iqtp13db\Domain\Repository\OrtRepository;
 
 require_once(Environment::getPublicPath() . '/' . 'typo3conf/ext/iqtp13db/Resources/Private/Libraries/xlsxwriter.class.php');
 
@@ -42,7 +43,7 @@ require_once(Environment::getPublicPath() . '/' . 'typo3conf/ext/iqtp13db/Resour
 class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
     
-    protected $generalhelper, $niqinterface, $niqapiurl, $usergroup, $niqbid;
+    protected $generalhelper, $usergroup, $niqbid;
     
     protected $userGroupRepository;
     protected $teilnehmerRepository;
@@ -54,8 +55,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     protected $storageRepository;
     protected $berufeRepository;
     protected $staatenRepository;
+    protected $ortRepository;
     
-    public function __construct(UserGroupRepository $userGroupRepository, TeilnehmerRepository $teilnehmerRepository, FolgekontaktRepository $folgekontaktRepository, DokumentRepository $dokumentRepository, HistorieRepository $historieRepository, BeraterRepository $beraterRepository, AbschlussRepository $abschlussRepository, StorageRepository $storageRepository, BerufeRepository $berufeRepository, StaatenRepository $staatenRepository)
+    public function __construct(UserGroupRepository $userGroupRepository, TeilnehmerRepository $teilnehmerRepository, FolgekontaktRepository $folgekontaktRepository, DokumentRepository $dokumentRepository, HistorieRepository $historieRepository, BeraterRepository $beraterRepository, AbschlussRepository $abschlussRepository, StorageRepository $storageRepository, BerufeRepository $berufeRepository, StaatenRepository $staatenRepository, OrtRepository $ortRepository)
     {
         $this->userGroupRepository = $userGroupRepository;
         $this->teilnehmerRepository = $teilnehmerRepository;
@@ -67,6 +69,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $this->storageRepository = $storageRepository;
         $this->berufeRepository = $berufeRepository;
         $this->staatenRepository = $staatenRepository;
+        $this->ortRepository = $ortRepository;
     }
     
     /**
@@ -114,8 +117,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         /* Propertymapping bis hier */
         
         $this->generalhelper = new \Ud\Iqtp13db\Helper\Generalhelper();
-        // **** NIQ deaktiviert **** $this->niqinterface = new \Ud\Iqtp13db\Helper\NiqInterface();
-        // **** NIQ deaktiviert **** $this->niqapiurl = $this->settings['niqapiurl'];
         
         $this->user=null;
         $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
@@ -207,7 +208,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         if(isset($valArray['zeigebstelle'])) {
             $plzbstelle = $this->userGroupRepository->getBeratungsstelle4PLZ($valArray['plzeingabe'], $this->settings['beraterstoragepid']);
             $plzgroup = $plzbstelle[0];
-            //DebuggerUtility::var_dump($plzgroup);
         }
         
         // FK/Beratungen aus alter Förderphase in 2023
@@ -223,7 +223,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $angemeldeteTN = $emptystatusarray;
         $erstberatung = $emptystatusarray;
         $beratungfertig = $emptystatusarray;
-        $niqerfasst = $emptystatusarray;
         $qfolgekontakte =  $emptystatusarray;
         $days4beratung = $emptystatusarray;
         $days4wartezeit = $emptystatusarray;
@@ -236,9 +235,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $ergarrayberatungfertig = $this->teilnehmerRepository->countTNbyBID($this->niqbid, 3, $jahrselected);
         foreach($ergarrayberatungfertig as $erg) $beratungfertig[$erg['monat']] = $erg['anzahl'];
-        
-        $ergarrayniqerfasst = $this->teilnehmerRepository->countTNbyBID($this->niqbid, 4, $jahrselected);
-        foreach($ergarrayniqerfasst as $erg) $niqerfasst[$erg['monat']] = $erg['anzahl'];
         
         $ergarrayfolgekontakte = $this->folgekontaktRepository->countFKbyBID($this->niqbid, $jahrselected);
         foreach($ergarrayfolgekontakte as $erg) $qfolgekontakte[$erg['monat']] = $erg['anzahl'];
@@ -254,7 +250,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         ksort($erstberatung);
         ksort($beratungfk22);
         ksort($beratungfertig);
-        ksort($niqerfasst);
         ksort($days4beratung);
         ksort($days4wartezeit);
         
@@ -273,10 +268,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : $currentPage;
         $paginator = new QueryResultPaginator($historie, $currentPage, 25);
         $pagination = new SimplePagination($paginator);
-        
-        // **** NIQ deaktiviert **** $niqdbstatus = $this->niqinterface->check_curl($this->niqapiurl) ? "<span style='color: green;'>erreichbar</span>" : "<span style='color: red;'>nicht erreichbar!</span>";
-        $niqdbstatus = '';
-        
+                
         $neuanmeldungen7tage = array();
         for($i = 7; $i >= 0; $i--) {
             $reftag = date("d.m.Y", strtotime( '-'.$i.' days' ));
@@ -297,8 +289,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             array_unshift($rows[3], "Folgekontakte");
             $rows[4] = $beratungfertig;
             array_unshift($rows[4], "Beratungen fertig");
-            $rows[5] = $niqerfasst;
-            array_unshift($rows[5], "davon NIQ erfasst");
             $rows[6] = $days4wartezeit;
             array_unshift($rows[6], "durchschn. Tage Wartezeit");
             $rows[7] = $days4beratung;
@@ -338,8 +328,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'SUMerstberatung'=> array_sum($erstberatung),
                 'beratungfertig'=> $beratungfertig,
                 'SUMberatungfertig'=> array_sum($beratungfertig),
-                'niqerfasst'=> $niqerfasst,
-                'SUMniqerfasst'=> array_sum($niqerfasst),
                 'totalavgmonthb'=> $days4beratung,
                 'SUMtotalavgmonthb'=> array_sum($days4beratung)/count($days4beratung),
                 'totalavgmonthw'=> $days4wartezeit,
@@ -354,7 +342,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'historie' => $historie,
                 'beratungsstelle' => $this->usergroup->getTitle(),
                 'niqbid' => $this->niqbid,
-                'niqdbstatus' => $niqdbstatus,
                 'username' => $this->user['username'],
                 'neuanmeldungen7tage' => $neuanmeldungen7tage,
                 'diesesjahr' => date('Y'),
@@ -407,7 +394,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $teilnehmer = $this->setfilter(0, $valArray, $orderby, $order, 0);
         
         // Wegen Bug in Paginator, der nicht mit Custom SQL Queryresults funktioniert, werden hier alle gefilterten Einträge auf einer Seite dargestellt. Queryresultpaginator hat dann keine Auswahl an Datensätzen, sondern alle.
-        $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 250 : 25;
+        $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 100 : 25;
         
         $currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : $currentPage;
         $paginator = new QueryResultPaginator($teilnehmer, $currentPage, $anzperpag);
@@ -434,7 +421,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         
         $orderchar = $order == 'ASC' ? "↓" : "↑";
-        $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
+        $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->usergroup);
         
         $this->view->assignMultiple(
             [
@@ -511,8 +498,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $anzfolgekontakte = array();
         $summeberatungsdauer = array();
         $abschluesse = array();
-        $niqstatusberatung = array();
-        $niqwasfehlt = '';
         
         $folgekontakte = $this->folgekontaktRepository->findAll4List($this->niqbid);
         
@@ -525,20 +510,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $summeberatungsdauer[$key] = str_replace('.',',',floatval(str_replace(',','.',$tn->getBeratungsdauer())) + $summebdauerfk);
             
             $abschluesse[$key] = $this->abschlussRepository->findByTeilnehmer($tn);
-            // **** NIQ deaktiviert **** $niqstat = $this->niqinterface->niqstatus($tn, $abschluesse[$key]);
-            $niqstat = '';
-            
-            if($niqstat == 0) {
-                $niqstatusberatung[$key] = 'rot';
-            } elseif($niqstat == 2) {
-                $niqstatusberatung[$key] = 'gelb';
-            } elseif($niqstat == 1) {
-                $niqstatusberatung[$key] = 'gruen';
-            } else {
-                $niqstatusberatung[$key] = '';
-            }
-            
-            // **** NIQ deaktiviert **** if($niqstat == 0 || $niqstat == 2) $niqwasfehlt[$key] = $this->niqinterface->niqwasfehlt($tn, $abschluesse[$key]);            
         }
         
         $berufeliste = $this->berufeRepository->findAll();
@@ -549,14 +520,12 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         
         $orderchar = $order == 'ASC' ? "↓" : "↑";
-        $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
+        $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->usergroup);
         
         $this->view->assignMultiple(
             [
                 'anzgesamt' => count($teilnehmer),
                 'anzfolgekontakte' => $anzfolgekontakte,
-                'niqstatuus' => $niqstatusberatung,
-                'niqwasfehlt' => $niqwasfehlt,
                 'folgekontakte' => $folgekontakte,
                 'summeberatungsdauer' => $summeberatungsdauer,
                 'abschluesse' => $abschluesse,
@@ -631,8 +600,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $anzfolgekontakte = array();
         $summeberatungsdauer = array();
         $abschluesse = array();
-        $niqstatusberatung = array();
-        $niqwasfehlt = '';
         foreach ($teilnehmerpag as $key => $tn) {
             $fk4tn = $this->folgekontaktRepository->findByTeilnehmer($tn->getUid());
             $anzfolgekontakte[$key] = count($fk4tn);
@@ -642,20 +609,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $summeberatungsdauer[$key] = str_replace('.',',',floatval(str_replace(',','.',$tn->getBeratungsdauer())) + $summebdauerfk);
             
             $abschluesse[$key] = $this->abschlussRepository->findByTeilnehmer($tn);
-            // **** NIQ deaktiviert ****  $niqstat = $this->niqinterface->niqstatus($tn, $abschluesse[$key]);
-            $niqstat = '';
-            
-            if($niqstat == 0) {
-                $niqstatusberatung[$key] = 'rot';
-            } elseif($niqstat == 2) {
-                $niqstatusberatung[$key] = 'gelb';
-            } elseif($niqstat == 1) {
-                $niqstatusberatung[$key] = 'gruen';
-            } else {
-                $niqstatusberatung[$key] = '';
-            }
-            
-            // **** NIQ deaktiviert **** if($niqstat == 0 || $niqstat == 2) $niqwasfehlt[$key] = $this->niqinterface->niqwasfehlt($tn, $abschluesse[$key]);
         }
         $folgekontakte = $this->folgekontaktRepository->findAll4List($this->niqbid);
         
@@ -667,14 +620,12 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
                 
         $orderchar = $order == 'ASC' ? "↓" : "↑";
-        $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
+        $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->usergroup);
         
         $this->view->assignMultiple(
             [
                 'anzgesamt' => count($teilnehmer),
                 'anzfolgekontakte' => $anzfolgekontakte,
-                'niqstatuus' => $niqstatusberatung,
-                'niqwasfehlt' => $niqwasfehlt,
                 'folgekontakte' => $folgekontakte,
                 'summeberatungsdauer' => $summeberatungsdauer,
                 'abschluesse' => $abschluesse,
@@ -778,7 +729,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $filtervon = isset($valArray['filtervon']) ? $valArray['filtervon'] : '';
         $filterbis = isset($valArray['filtervon']) ? $valArray['filterbis'] : '';
         
-        $bundeslandselected = $valArray['filterbundesland'] ?? '%';
+        $bundeslandselected = $valArray['filterbundesland'] ?? $this->usergroup->getBundesland();
         $allebundeslaender = $this->userGroupRepository->findAllBundeslaender();
         $staatselected = $valArray['filterstaat'] ?? '%';
         //DebuggerUtility::var_dump($valArray);
@@ -789,6 +740,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $staaten = $this->staatenRepository->findByLangisocode('de');
         foreach($staaten as $staat) {
             $arrstaaten[$staat->getStaatid()] = $staat->getTitel();
+        }
+        
+        $orte = $this->ortRepository->findByBundesland($bundeslandselected);
+        foreach($orte as $ort) {
+            $arrorte[$ort->getPlz()] = $ort->getLandkreis();
         }
         $arraufenthaltsstatus = $this->settings['aufenthaltsstatus'];
         $arrberatungsart = $this->settings['beratungsart'];
@@ -905,6 +861,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     if($wohnsitzdeutschland == 2) $wohnsitzdeutschland = 'nein';
                     if($wohnsitzdeutschland == -1) $wohnsitzdeutschland = 'k.a.';
                     $rows[$x]['WohnsitzDeutschland'] = $wohnsitzdeutschland ?? '';
+                    if($wohnsitzdeutschland == 'ja') {
+                        $rows[$x]['Landkreis'] = $rows[$x]['PLZ'] == '' ? '-' : $arrorte[$rows[$x]['PLZ']];
+                    } else {
+                        $rows[$x]['Landkreis'] = '';
+                    }
                     
                     $rows[$x]['Einreisejahr'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'einreisejahr');
                     
@@ -1027,6 +988,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     'Erste Staatsangehoerigkeit' => 'string',
                     'Zweite Staatsangehoerigkeit' => 'string',
                     'WohnsitzDeutschland' => 'string',
+                    'Landkreis' => 'string',
                     'Einreisejahr' => 'string',
                     'WohnsitzNeinIn' => 'string',
                     'Deutschkenntnisse' => 'string',
@@ -1206,6 +1168,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $storage = $this->generalhelper->getTP13Storage($this->storageRepository->findAll());
         $folder = $storage->getConfiguration()['basePath'].'/';
         
+        $filesizes = array();
         $filesizesum = 0;
         foreach($dokumente as $key => $dok) {
             $dokfs = $dok->getFilesize($folder) ?? 0;
@@ -1418,7 +1381,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 //else $tnuid = $valArray['teilnehmer']['__identity'];
     
                 $thistn = $this->teilnehmerRepository->findByUid($tnuid);
-                $tnanonym = $thistn->getAnonym();
+                if($tnuid != null) $tnanonym = $thistn->getAnonym();
+                else $tnanonym = 0;
                 $anonymeberatung = $valArray['newanonymeberatung'] ?? '';
                 
                 if($anonymeberatung == '1' || $tnanonym == '1') {
@@ -2098,69 +2062,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         die;        
     }
     
-    
-    /**
-     * action checkniqconnection
-     *
-     * @return void
-     */
-    public function checkniqconnectionAction()
-    {
-        // **** NIQ deaktiviert **** $retval = $this->niqinterface->check_curl($this->niqapiurl);
-        
-        if($retval) {
-            $this->addFlashMessage('NIQ Verbindung verfügbar.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
-        } else {
-            $this->addFlashMessage('NIQ Verbindung nicht erreichbar!', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-        }
-        $this->redirect('listerstberatung');
-    }
-    
-    /**
-     * action sendtoniq
-     *
-     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
-     * @return void
-     */
-    public function sendtoniqAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
-    {
-        $valArray = $this->request->getArguments();
-        
-        // NIQ verfügbar?
-        $retval = $this->niqinterface->check_curl($this->niqapiurl);
-        if(!$retval) {
-            $this->addFlashMessage('NIQ Verbindung nicht erreichbar!', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-            $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']), null);
-        } else {
-            $abschluesse = $this->abschlussRepository->findByTeilnehmer($teilnehmer);
-            $folgekontakte = $this->folgekontaktRepository->findByTeilnehmer($teilnehmer);
-            
-            if($teilnehmer->getNiqidberatungsstelle() != '0') {
-                $niqidbstelle = $teilnehmer->getNiqidberatungsstelle();
-            } else {
-                $niqidbstelle = $this->niqbid;
-            }
-            $returnarray = $this->niqinterface->uploadtoNIQ($teilnehmer, $abschluesse, $folgekontakte, $niqidbstelle, $this->niqapiurl);
-            
-            $retteilnehmer = $returnarray[0];
-            $retstring = $returnarray[1];
-            
-            if($retteilnehmer instanceof \Ud\Iqtp13db\Domain\Model\Teilnehmer) {
-                $this->teilnehmerRepository->update($retteilnehmer);
-                // Daten sofort in die Datenbank schreiben
-                $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
-                $persistenceManager->persistAll();
-                
-                $this->addFlashMessage($retstring, '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
-            } else {
-                $this->addFlashMessage($retstring, '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-            }
-            
-            $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']), null);
-        }
-    }
-    
-    
     /*************************************************************************/
     /********** NO ACTION FUNCTIONS - TODO: in Hilfsklasse auslagern **********/
     /*************************************************************************/
@@ -2170,66 +2071,39 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      */
     function setfilter(int $type, array $valArray, $orderby, $order, $deleted) {
         // FILTER
-        $beraterdiesergruppe = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
+        $beraterdiesergruppe = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->usergroup);
         
-        if (isset($valArray['filteraus'])) {
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fuid', NULL);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', NULL);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', NULL);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', NULL);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', NULL);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberater', NULL);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fgruppe', NULL);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fbescheid', NULL); // antragstellungvorher
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'filtermodus', NULL);
-        }
-        if (isset($valArray['filteran'])) {
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fuid', $valArray['uid'] ?? '');
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', $valArray['name']);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', $valArray['ort']);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', $valArray['beruf']);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', $valArray['land']);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberater', $valArray['berater'] ?? '');
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fgruppe', $valArray['gruppe']);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fbescheid', $valArray['bescheid']); // antragstellungvorher
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'filtermodus', '1');
-        }
-        
-        $filterArray['uid'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fuid');
-        $filterArray['name'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fname');
-        $filterArray['ort'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fort');
-        $filterArray['beruf'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fberuf');
-        $filterArray['land'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fland');
-        $filterArray['berater'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fberater');
-        $filterArray['gruppe'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fgruppe');
-        $filterArray['bescheid'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fbescheid'); // antragstellungvorher
-        
-        
-        if($filterArray['land'] == -1000 || $filterArray['land'] == NULL) $filterArray['land'] = '';
-        
-        if($filterArray['berater'] == 0 || $filterArray['berater'] == NULL) $filterArray['berater'] = '';
-        
-        if ($filterArray['uid'] == '' && $filterArray['name'] == '' && $filterArray['ort'] == '' && $filterArray['beruf'] == '' && $filterArray['land'] == '' && $filterArray['berater'] == '' && $filterArray['gruppe'] == '' && $filterArray['bescheid'] == '') {
+        $f['uid'] = $valArray['uid'] ?? '';
+        $f['name'] = $valArray['name'] ?? '';
+        $f['ort'] = $valArray['ort'] ?? '';
+        $f['beruf'] = $valArray['beruf'] ?? '';
+        $f['land'] = $valArray['land'] ?? '';
+        $f['berater'] = $valArray['berater'] ?? '';
+        $f['gruppe'] = $valArray['gruppe'] ?? '';
+        $f['bescheid'] = $valArray['bescheid'] ?? ''; // antragstellungvorher
+
+        if($f['land'] == '-1000' || $f['land'] == NULL) $f['land'] = '';
+        if($f['berater'] == 0 || $f['berater'] == NULL) $f['berater'] = '';
+        if($f['uid'] == '' && $f['name'] == '' && $f['ort'] == '' && $f['beruf'] == '' && $f['land'] == '' && $f['berater'] == '' && $f['gruppe'] == '' && $f['bescheid'] == '') {
             if($deleted == 1) {
                 $teilnehmers = $this->teilnehmerRepository->findhidden4list($orderby, $order, $this->niqbid);
             } else {
                 $teilnehmers = $this->teilnehmerRepository->findAllOrder4List($type, $orderby, $order, $this->niqbid, $beraterdiesergruppe, $this->usergroup);
             }
         } else {
-            
             $berufearr = $this->berufeRepository->findAll();
             
-            $teilnehmers = $this->teilnehmerRepository->searchTeilnehmer($type, $filterArray, $deleted, $this->niqbid, $berufearr, $orderby, $order, $beraterdiesergruppe, $this->usergroup);
+            $teilnehmers = $this->teilnehmerRepository->searchTeilnehmer($type, $f, $deleted, $this->niqbid, $berufearr, $orderby, $order, $beraterdiesergruppe, $this->usergroup);
             //if($this->user['username'] == 'admin') DebuggerUtility::var_dump($teilnehmers);
-            $this->view->assign('filteruid', $filterArray['uid'] ?? '');
-            $this->view->assign('filtername', $filterArray['name']);
-            $this->view->assign('filterort', $filterArray['ort']);
-            $this->view->assign('filterberuf', $filterArray['beruf']);
-            $this->view->assign('filterland', $filterArray['land']);
-            $this->view->assign('filterberater', $filterArray['berater']);
-            $this->view->assign('filtergruppe', $filterArray['gruppe']);
-            $this->view->assign('filterbescheid', $filterArray['bescheid']);
-            $this->view->assign('filteron', $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus'));
+            $this->view->assign('filteruid', $f['uid']);
+            $this->view->assign('filtername', $f['name']);
+            $this->view->assign('filterort', $f['ort']);
+            $this->view->assign('filterberuf', $f['beruf']);
+            $this->view->assign('filterland', $f['land']);
+            $this->view->assign('filterberater', $f['berater']);
+            $this->view->assign('filtergruppe', $f['gruppe']);
+            $this->view->assign('filterbescheid', $f['bescheid']); // antragstellungvorher
+            $this->view->assign('filteron', isset($valArray['filteran']) ? 1 : 0);
         }
         
         // FILTER bis hier

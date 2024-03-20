@@ -69,16 +69,35 @@ p.alert-message {
 	margin: 1rem 0rem 2rem 0rem;
 }
 
+.suchfelder {
+  background-color: #4E638D;
+  border: 0px solid transparent;
+  white-space: nowrap;
+  font-weight: normal;
+  font-family: Roboto Condensed;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.42857;
+  padding: 0px 23px;
+  color: #fff;
+  cursor: pointer;
+  -moz-user-select: none;
+  text-decoration: none;
+  text-transform: uppercase;
+  border-bottom-right-radius: 7px;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  height: 1.75rem;
+}
+
+
+  
 .body-bg-top {
   padding-top: 59px;
 }
 
 .navbar-toggle {
 	display: none;
-}
-
-.navbar {
-	font-size: 1.0em;
 }
 
 .farbbalken_outer {

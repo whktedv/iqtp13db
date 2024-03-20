@@ -161,13 +161,6 @@
 		<td>{SUMberatungfertig}</td>
 	</tr>
 	<tr>
-		<th>davon NIQ erfasst</th>
-		<f:for each="{niqerfasst}" as="ni" iteration="iter">
-			<td {f:if(condition: '{iter.index} == {aktmonat}', then: 'style="background-color: #ffcaf2;"')}>{ni}</td>
-		</f:for>
-		<td>{SUMniqerfasst}</td>
-	</tr>
-		<tr>
 		<th>&Oslash; Tage Wartezeit</th>
 		<f:for each="{totalavgmonthw}" as="avgw" iteration="iter">
 			<td {f:if(condition: '{iter.index} == {aktmonat}', then: 'style="background-color: #ffcaf2;"')}><f:format.number>{avgw}</f:format.number></td>
@@ -231,54 +224,6 @@
 </f:if>
 -->
 
-<!-- 
-<h2>Letzte 50 Anmeldungen</h2>
-<div class="pretablediv">
-	<table class="tx_iqtp13db listangemeldet" >
-		<tr>
-			<th>UID</th>
-			<th><f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" /></th>
-			<th><f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" /></th>
-			<th>Timestamp</th>
-			<th>Anmeldedatum</th>
-			<th>Beratungsstelle</th>
-			<th>Beratungsstatus</th>
-			<th>PLZ</th>
-			<th>Ort</th>
-			<th>E-Mail</th>
-			<th>Gruppe</th>
-		</tr>
-
-		<f:for each="{letzteanmeldungen}" as="teilnehmer" iteration="it">
-			<f:if condition="{teilnehmer.verificationDate} != 0"><f:then>
-				<tr class="bestaetigt">
-			</f:then>
-			<f:else>
-				{f:if(condition: "{teilnehmer.verificationDate} == 0 AND {teilnehmer.beratungdatum} != ''", then: '<tr class="unbestaetigt-beraten">', else: '<tr>')}	
-			</f:else>
-			</f:if>
-				<td><f:link.action action="show" controller="Teilnehmer" arguments="{teilnehmer : teilnehmer, calleraction: 'adminuebersicht', callercontroller : 'Administration'}">{teilnehmer.uid}</f:link.action></td>
-				<td><f:link.action action="show" controller="Teilnehmer" arguments="{teilnehmer : teilnehmer, calleraction: 'adminuebersicht', callercontroller : 'Administration'}">{teilnehmer.nachname}</f:link.action></td>
-				<td><f:link.action action="show" controller="Teilnehmer" arguments="{teilnehmer : teilnehmer, calleraction: 'adminuebersicht', callercontroller : 'Administration'}">{teilnehmer.vorname}</f:link.action></td>
-				<td class="tdcenter">{f:format.date(date: teilnehmer.tstamp, format:"d.m.Y H:i:s")}</td>
-				<td class="tdcenter">{f:if(condition: '{teilnehmer.verificationDate} == 0', then: 'unbestätigt', else: '{f:format.date(date: teilnehmer.verificationDate, format:"d.m.Y H:i:s")}')}</td>
-				<td>{teilnehmer.niqidberatungsstelle}</td>
-				<td>{teilnehmer.beratungsstatus} = 
-				{f:if(condition: '{teilnehmer.beratungsstatus} == 99', then: 'im Anmeldeformular')}
-				{f:if(condition: '{teilnehmer.beratungsstatus} == 0', then: 'nicht bestätigt')}
-				{f:if(condition: '{teilnehmer.beratungsstatus} == 1', then: 'bestätigt')}
-				{f:if(condition: '{teilnehmer.beratungsstatus} == 2', then: 'in Beratung')}
-				{f:if(condition: '{teilnehmer.beratungsstatus} == 3', then: 'Beratung fertig')}
-				{f:if(condition: '{teilnehmer.beratungsstatus} == 4', then: 'archiviert')}</td>
-				<td>{teilnehmer.plz}</td>
-				<td>{teilnehmer.ort}</td>
-				<td>{teilnehmer.email}</td>
-				<td>{teilnehmer.kooperationgruppe}</td>
-			</tr>
-		</f:for>
-	</table>
-</div>
- -->
 <h1>Doppelte PLZ zugewiesen</h1>
 <table>
 	<tbody>

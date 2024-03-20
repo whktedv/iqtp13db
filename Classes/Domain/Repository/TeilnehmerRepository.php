@@ -97,7 +97,6 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             AND niqidberatungsstelle LIKE $niqbid
             AND t.uid like '$uid' 
             GROUP BY t.uid ORDER BY $orderby $order";
-              
         $query->statement($sql);
         return $query->execute();
     }

@@ -147,7 +147,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
             $monatsnamen[$i] = date("M", mktime(0, 0, 0, $i, 1, date('Y')));
         }
         $jahrarray = array();
-        for($j=2023;$j<date('Y');$j++){
+        for($j=2023;$j<=date('Y');$j++){
             $jahrarray[$j] = $j;
         }
         

@@ -123,13 +123,6 @@
 		<td>{SUMberatungfertig}</td>
 	</tr>
 	<tr>
-		<th>davon NIQ erfasst</th>
-		<f:for each="{niqerfasst}" as="ni" iteration="iter">
-			<td {f:if(condition: '{iter.index} == {aktmonat}', then: 'style="background-color: #ffcaf2;"')}>{ni}</td>
-		</f:for>
-		<td>{SUMniqerfasst}</td>
-	</tr>
-		<tr>
 		<th>&Oslash; Tage Wartezeit</th>
 		<f:for each="{totalavgmonthw}" as="avgw" iteration="iter">
 			<td {f:if(condition: '{iter.index} == {aktmonat}', then: 'style="background-color: #ffcaf2;"')}><f:format.number>{avgw}</f:format.number></td>

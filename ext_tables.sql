@@ -279,3 +279,18 @@ CREATE TABLE tx_iqtp13db_domain_model_staaten (
     langisocode varchar(2) DEFAULT '' NOT NULL,
     PRIMARY KEY (uid)
 );
+
+#
+# Table structure for table 'tx_iqtp13db_domain_model_ortedb'
+#
+CREATE TABLE tx_iqtp13db_domain_model_ort (
+    uid int(11) NOT NULL,
+    pid int(11) DEFAULT '0' NOT NULL,
+    plz varchar(5) DEFAULT '' NOT NULL,
+    ort varchar(255) DEFAULT '' NOT NULL,
+    bundesland varchar(255) DEFAULT '' NOT NULL,
+    landkreis varchar(255) DEFAULT '' NOT NULL,
+    lat varchar(20) DEFAULT '' NOT NULL,
+    lon varchar(20) DEFAULT '' NOT NULL,
+    PRIMARY KEY (uid)
+);

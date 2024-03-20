@@ -40,9 +40,9 @@ Updates 01.02.2024
 - Bugfix Suchfunktion
 - Bugfix Auswahl Jahr Statistik
 
-Neu:
+Updates 07.03.2024
 - Fehlermeldung bei fehlenden Dateien klarifiziert
-- Speichergröße je Ratsuchenden erhöht (auf 30MB)
+- Speichergröße je Ratsuchenden erhöht (auf 40 MB)
 - Fehlerkorrektur in Suchfunktion. Ratsuchende ohne Berufangabe wurden zuvor nicht gefunden
 - Anpassungen in ext_tables und ext_localconf
 - Anpassungen/Korrektur der Optionen beim Aufenthaltsstatus
@@ -50,3 +50,10 @@ Neu:
 - Einbindung GRC-Infotext in E-Mail 
 - Dateigröße in Backend bei Ratsuchenden im Dokumentebereich 
 - Anpassungen Berechnung Wartezeiten in Übersicht
+
+Neu:
+- Fehlerbehebungen
+- maximale Größe für hochladbare Dateien auf 10 MB begrenzt, Speichergröße je Ratsuchenden auf 40 MB begrenzt
+- neue Tabelle Landkreise
+- in Export wird Landkreis mit ausgegeben, sofern der Wohnsitz der/des Ratsuchenden in Deutschland ist
+- Suche optimiert: Filter muss nicht gelöscht werden, bevor die nächste Suche erfolgt. Also einfach neuen Wert eingeben und Suche starten
