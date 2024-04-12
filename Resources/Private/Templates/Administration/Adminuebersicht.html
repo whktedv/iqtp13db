@@ -37,36 +37,42 @@
 	</f:form>
 </div>
 
+<details>
+	<summary>Alle Beratungsstellen</summary>
+	<table class="beratungsstellen">	
+		<th>Name Beratungsstelle</th>
+		<th>Bundesland</th>
+		<th>NIQBID</th>
+		<th>Anzahl Berater:innen</th>
+		<th>Anzahl Angemeldet (unbestätigt)</th>
+		<th>Anzahl Angemeldet (bestätigt)</th>
+		<th>Anzahl in Beratung</th>
+		<th>Anzahl im Archiv</th>
+		<f:for each="{alleberatungsstellen}" as="beratungsstelle" iteration="iter">
+			<tr>
+				<td>{beratungsstelle.title} {f:if(condition:'{beratungsstelle.nichtiq} == 1',then: '<b>(Nicht IQ)</b>')}</td>
+				<td>{beratungsstelle.bundesland}</td>
+				<td>{beratungsstelle.niqbid}</td>
+				<td>{anzberater.{beratungsstelle.uid}}</td>
+				<td>{anzratsuchendeanmeld0.{beratungsstelle.uid}}</td>
+				<td style="background-color: #7a970133;">{anzratsuchendeanmeld1.{beratungsstelle.uid}}</td>
+				<td>{anzratsuchendeerstb.{beratungsstelle.uid}}</td>
+				<td>{anzratsuchendearch.{beratungsstelle.uid}}</td>
+			</tr>
+		</f:for>
+	</table>
+</details>
 
-<h1>Beratungsstellen</h1>
 
-<table class="beratungsstellen">
-	<th>Name Beratungsstelle</th>
-	<th>Bundesland</th>
-	<th>NIQBID</th>
-	<th>Anzahl Berater:innen</th>
-	<th>Anzahl Angemeldet (unbestätigt)</th>
-	<th>Anzahl Angemeldet (bestätigt)</th>
-	<th>Anzahl in Beratung</th>
-	<th>Anzahl im Archiv</th>
-	<f:for each="{alleberatungsstellen}" as="beratungsstelle" iteration="iter">
-		<tr>
-			<td>{beratungsstelle.title} {f:if(condition:'{beratungsstelle.nichtiq} == 1',then: '<b>(Nicht IQ)</b>')}</td>
-			<td>{beratungsstelle.bundesland}</td>
-			<td>{beratungsstelle.niqbid}</td>
-			<td>{anzberater.{beratungsstelle.uid}}</td>
-			<td>{anzratsuchendeanmeld0.{beratungsstelle.uid}}</td>
-			<td style="background-color: #7a970133;">{anzratsuchendeanmeld1.{beratungsstelle.uid}}</td>
-			<td>{anzratsuchendeerstb.{beratungsstelle.uid}}</td>
-			<td>{anzratsuchendearch.{beratungsstelle.uid}}</td>
-		</tr>
-	</f:for>
-	
-</table>
 
-<h1>Anmeldungen (nur bestätigte) letzte 7 Tage</h1>
+<h1>Übersicht Statistik</h1>
 <table>
 	<tbody>
+	<tr>
+		<th colspan="8">
+			Anmeldungen (nur bestätigte) letzte 7 Tage
+		</th>
+	</tr>
 	<tr>
 		<f:for each="{neuanmeldungen7tage}" as="neuanmeld" iteration="iter">
 			<th>{neuanmeld.tag}</th>
@@ -79,8 +85,6 @@
 	</tr>
 	</tbody>
 </table>
-
-<h1>Statistik aktuell</h1>
 <table>
 	<tbody>
 	<tr>
@@ -97,8 +101,6 @@
 	</tr>
 	</tbody>
 </table>
-
-<h1>Statistik gesamt</h1>
 <table>
 	<tbody>
 	<tr>
@@ -113,17 +115,21 @@
 	</tr>
 	</tbody>
 </table>
-
-<h2>Statistik letzte 12 Monate alle Beratungsstellen</h2>
-<f:form method="post" controller="Administration" action="adminuebersicht" name="switchbundesland" enctype="multipart/form-data" >
-		<label for="bundeslandauswahl">Auswahl Bundesland</label>
-		<f:form.select name="bundeslandauswahl" options="{allebundeslaender}" optionValueField="bundesland" optionLabelField="bundesland" prependOptionValue="%" prependOptionLabel="-alle-" value="{bundeslandselected}"/>
-		<label for="jahrauswahl">Auswahl Jahr</label>
-		<f:form.select name="jahrauswahl" options="{jahrauswahl}" prependOptionValue="0" prependOptionLabel="-letzte 12 Monate-" value="{jahrselected}"/>
-		
-		<f:form.button id="linkloadoverlay-export" type="submit" name="showstats">Statistik anzeigen</f:form.button>
-</f:form>
 <br>
+<div class="filterframe">
+	<h2>Jahres-Statistik</h2>
+	<f:form class="filterform" method="post" controller="Administration" action="adminuebersicht" name="switchbundesland" enctype="multipart/form-data" >
+			Auswahl Bundesland:
+			<f:form.select name="bundeslandauswahl" options="{allebundeslaender}" optionValueField="bundesland" optionLabelField="bundesland" prependOptionValue="%" prependOptionLabel="-alle-" value="{bundeslandselected}"/>
+			Auswahl Jahr:
+			<f:form.select name="jahrauswahl" options="{jahrauswahl}" prependOptionValue="0" prependOptionLabel="-letzte 12 Monate-" value="{jahrselected}"/>
+			Auswahl Erste Staatsangehörigkeit: 
+			<f:form.select name="filterstaat" options="{staatenarr}" optionValueField="key" optionLabelField="value" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterstaat}"/>
+			
+			<f:form.button id="linkloadoverlay-export" type="submit" name="showstats">Statistik anzeigen</f:form.button>
+	</f:form>
+</div>
+
 <table class="uebersicht-statistik">
 	<tr>
 		<th></th>
@@ -176,53 +182,136 @@
 		<td><f:format.number>{SUMtotalavgmonthb}</f:format.number></td>
 	</tr>
 </table>
-<!-- 
-<h1>Statistik nach Beruf / Staatsangehörigkeit</h1>
-<div class="filterframe exportfilterform" id="berufstaatstatsframe">
-	<f:form class="statsform" method="post" controller="Administration" action="adminuebersicht" name="berufstaatstats" >
-			Auswahl Bundesland: <f:form.select name="filterbundesland" options="{allebundeslaender}" optionValueField="bundesland" optionLabelField="bundesland" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterbundesland}"/> ODER 
-			Auswahl Beratungsstelle: <f:form.select name="filterberatungsstelle" options="{alleberatungsstellen}" optionValueField="niqbid" optionLabelField="title" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterberatungsstelle}"/>			
-			Auswahl Status: <f:form.select value="{filterberatungsstatus}" name="filterberatungsstatus" options="{beratungsstatusarr}" optionValueField="key" optionLabelField="value" />
-			von: <f:form.textfield size="10" id="datepicker1" value="{filtervon}" name="filtervon" />
-			bis: <f:form.textfield size="10" id="datepicker2" value="{filterbis}" name="filterbis" />			 
-			<br>
-			Auswahl Erste Staatsangehörigkeit: <f:form.select name="filterstaat" options="{staatenarr}" optionValueField="key" optionLabelField="value" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterstaat}"/>
-			Auswahl Beruf/Abschluss: <f:form.select name="filterberuf" options="{berufearr}" optionValueField="key" optionLabelField="value" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterberuf}"/>
-			<div style="margin: 0.5rem 0;">
-					<span style="margin: 0 0.5rem;"><f:form.checkbox name="filternachberuf" value="1" checked="{filternachberuf} == 1" /> nach Beruf</span>
-					<span style="margin: 0 0.5rem;"><f:form.checkbox name="filternachstaat" value="1" checked="{filternachstaat} == 1" /> nach Staat</span>
-					<span style="margin: 0 0.5rem; font-size: 0.7rem;">(nur wenn weder Beruf noch Staatsangehörigkeit ausgewählt)</span>
-			</div>			
-			<f:form.button id="linkloadoverlay-export" type="submit" name="showstats">Statistik anzeigen</f:form.button>
-	</f:form>
-</div>
 
-<f:if condition="{firstcolheader} != ''">
-<f:then>
-	<div id="statistikoutput">
+<f:if condition="{abschlussartanmeldungen}">
+	<f:then>
 		<table>
-			<tbody>
 			<tr>
-				<th></th>
-				<th>{firstcolheader}</th>
-				<th>Anzahl</th>
-				<th>Anteil</th>
+				<th>Abschlussart alle Anmeldungen in {jahrselected}</th><th>Anzahl</th>
 			</tr>
-			<f:for each="{ausgabearray}" as="element" key="key">
-				<tr>
-					<td>{key + 1}</td>
-					<td>{element.titel}</td>
-					<td>{element.anz}</td>
-					<td><f:format.number decimals="1" decimalSeparator="," thousandsSeparator=".">{element.anteil}</f:format.number> %</td>
-				</tr>
+			<f:for each="{abschlussartanmeldungen}" as="abschlussart" iteration="iter">
+				<tr><td>{arrabschlussart.{abschlussart.abschlussart}}</td><td>{abschlussart.anz}</td></tr>
 			</f:for>
-			</tbody>
 		</table>
-	</div>
-	<b>Gesamtzahl: {anzgesamt}</b><pre>(Anm.: In der Tabelle werden nur die ersten 20 Werte ausgegeben.)</pre>
-</f:then>
+	</f:then>
 </f:if>
--->
+<f:if condition="{abschlussartberatungabgeschl}">
+	<f:then>
+		<table>
+			<tr>
+				<th>Abschlussart alle Beratenen in {jahrselected}</th><th>Anzahl</th>
+			</tr>
+			<f:for each="{abschlussartberatungabgeschl}" as="abschlussart" iteration="iter">
+				<tr><td>{arrabschlussart.{abschlussart.abschlussart}}</td><td>{abschlussart.anz}</td></tr>
+			</f:for>
+		</table>
+	</f:then>
+</f:if>
+
+<br>
+<f:if condition="{herkunftanmeldungen}">
+	<f:then>
+		<table>
+			<tr>
+				<th>Herkunft alle Anmeldungen in {jahrselected}</th><th>Anzahl</th>
+			</tr>
+			<f:for each="{herkunftanmeldungen}" as="herkunft" iteration="iter">
+				<tr><td>{herkunft.titel}</td><td>{herkunft.anz}</td></tr>
+			</f:for>
+		</table>
+	</f:then>
+</f:if>
+<f:if condition="{herkunftberatungabgeschl}">
+	<f:then>
+		<table>
+			<tr>
+				<th>Herkunft alle Beratenen in {jahrselected}</th><th>Anzahl</th>
+			</tr>
+			<f:for each="{herkunftberatungabgeschl}" as="herkunft" iteration="iter">
+				<tr><td>{herkunft.titel}</td><td>{herkunft.anz}</td></tr>
+			</f:for>
+		</table>
+	</f:then>
+</f:if>
+
+<br>
+<f:if condition="{berufeanmeldungen}">
+	<f:then>
+		<table>
+			<tr>
+				<th>Berufe/Abschlüsse alle Anmeldungen in {jahrselected}</th><th>Anzahl</th>
+			</tr>
+			<f:for each="{berufeanmeldungen}" as="berufe" iteration="iter">
+				<tr><td>{berufe.titel}</td><td>{berufe.anz}</td></tr>
+			</f:for>
+		</table>
+	</f:then>
+</f:if>
+<f:if condition="{berufeberatungabgeschl}">
+	<f:then>
+		<table>
+			<tr>
+				<th>Berufe/Abschlüsse alle Beratenen in {jahrselected}</th><th>Anzahl</th>
+			</tr>
+			<f:for each="{berufeberatungabgeschl}" as="berufe" iteration="iter">
+				<tr><td>{berufe.titel}</td><td>{berufe.anz}</td></tr>
+			</f:for>
+		</table>
+	</f:then>
+</f:if>
+
+
+<br>
+<f:if condition="{geschlechtartanmeldungen}">
+	<f:then>
+		<table>
+			<tr>
+				<th>Geschlecht alle Anmeldungen in {jahrselected}</th><th>Anzahl</th>
+			</tr>
+			<f:for each="{geschlechtartanmeldungen}" as="geschlecht" iteration="iter">
+				<tr><td>{arrgeschlecht.{geschlecht.geschlecht}}</td><td>{geschlecht.anz}</td></tr>
+			</f:for>
+		</table>
+	</f:then>
+</f:if>
+<f:if condition="{geschlechtberatungabgeschl}">
+	<f:then>
+		<table>
+			<tr>
+				<th>Geschlecht alle Beratenen in {jahrselected}</th><th>Anzahl</th>
+			</tr>
+			<f:for each="{geschlechtberatungabgeschl}" as="geschlecht" iteration="iter">
+				<tr><td>{arrgeschlecht.{geschlecht.geschlecht}}</td><td>{geschlecht.anz}</td></tr>
+			</f:for>
+		</table>
+	</f:then>
+</f:if>
+
+<br>
+<f:if condition="{lebensalteranmeldungen}">
+	<f:then>
+		<table>
+			<tr>
+				<th>Lebensalter alle Anmeldungen in {jahrselected}</th><th>Anzahl</th>
+			</tr>
+			<f:for each="{lebensalteranmeldungen}" as="lebensalter" iteration="iter">
+				<tr><td>{lebensalter.lebensalter}</td><td>{lebensalter.anz}</td></tr>
+			</f:for>
+		</table>
+	</f:then>
+</f:if>
+<f:if condition="{lebensalterberatungabgeschl}">
+	<f:then>
+		<table>
+			<tr>
+				<th>Lebensalter alle Beratenen in {jahrselected}</th><th>Anzahl</th>
+			</tr>
+			<f:for each="{lebensalterberatungabgeschl}" as="lebensalter" iteration="iter">
+				<tr><td>{lebensalter.lebensalter}</td><td>{lebensalter.anz}</td></tr>
+			</f:for>
+		</table>
+	</f:then>
+</f:if>
 
 <h1>Doppelte PLZ zugewiesen</h1>
 <table>

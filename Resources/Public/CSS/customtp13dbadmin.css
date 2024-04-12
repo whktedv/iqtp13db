@@ -134,6 +134,19 @@ p.alert-message {
 	padding: 3px;
 }
 
+.tx-iqtp13db summary {
+  color: #468787;
+  font-size: 1.0em;
+  background: #e1e0e0;;
+  width: fit-content;
+  padding-right: 2rem;
+  padding-left: 2rem;
+  text-transform: uppercase;
+  padding-bottom: 3px;
+  padding-top: 3px;
+  margin-top: 1rem;
+}
+
 .tx-iqtp13db table {
     border-collapse: separate;
     border-spacing: 2px;

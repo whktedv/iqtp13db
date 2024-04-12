@@ -113,6 +113,8 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
     {       
         $valArray = $this->request->getArguments();
         $jahrselected = $valArray['jahrauswahl'] ?? 0;
+        $bundeslandselected = $valArray['bundeslandauswahl'] ?? '';
+        $staatselected = $valArray['filterstaat'] ?? '%';
         
         // Admin Gruppenwechsel Beratungsstelle
         $backenduser = $this->beraterRepository->findByUid($this->user['uid']);
@@ -139,8 +141,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
             $niqbidselected = $thisniqbid;
         }
         //
-
-        $bundeslandselected = $valArray['bundeslandauswahl'] ?? '';
+        
         $allebundeslaender = $this->userGroupRepository->findAllBundeslaender();
         
         for($i=1;$i<13;$i++) {
@@ -160,37 +161,20 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         $days4wartezeit = $emptystatusarray;
         $days4beratung = $emptystatusarray;
         
-        if(isset($valArray['bundeslandauswahl']) && $bundeslandselected != '%') {
-            $ergarrayangemeldete = $this->teilnehmerRepository->countTNbyBundesland($bundeslandselected, 1, $jahrselected);
-            foreach($ergarrayangemeldete as $erg) $angemeldeteTN[$erg['monat']] = $erg['anzahl'];
-            $ergarrayerstberatung = $this->teilnehmerRepository->countTNbyBundesland($bundeslandselected, 2, $jahrselected);
-            foreach($ergarrayerstberatung as $erg) $erstberatung[$erg['monat']] = $erg['anzahl'];
-            $ergarrayberatungfertig = $this->teilnehmerRepository->countTNbyBundesland($bundeslandselected, 3, $jahrselected);
-            foreach($ergarrayberatungfertig as $erg) $beratungfertig[$erg['monat']] = $erg['anzahl'];
-            $ergarrayniqerfasst = $this->teilnehmerRepository->countTNbyBundesland($bundeslandselected, 4, $jahrselected);
-            foreach($ergarrayniqerfasst as $erg) $niqerfasst[$erg['monat']] = $erg['anzahl'];
-            $ergarrayfolgekontakte = $this->folgekontaktRepository->countFKbyBundesland($bundeslandselected, $jahrselected);
-            foreach($ergarrayfolgekontakte as $erg) $qfolgekontakte[$erg['monat']] = $erg['anzahl'];
-            $ergarraywartezeitanmeldung = $this->teilnehmerRepository->calcwaitingdaysBundesland($bundeslandselected,'anmeldung', $jahrselected);
-            foreach($ergarraywartezeitanmeldung as $erg) $days4wartezeit[$erg['monat']] = $erg['wert'];
-            $ergarraywartezeitberatung = $this->teilnehmerRepository->calcwaitingdaysBundesland($bundeslandselected,'beratung', $jahrselected);
-            foreach($ergarraywartezeitberatung as $erg) $days4beratung[$erg['monat']] = $erg['wert'];
-        } else {
-            $ergarrayangemeldete = $this->teilnehmerRepository->countTNbyBID('%', 1, $jahrselected);
-            foreach($ergarrayangemeldete as $erg) $angemeldeteTN[$erg['monat']] = $erg['anzahl'];
-            $ergarrayerstberatung = $this->teilnehmerRepository->countTNbyBID('%', 2, $jahrselected);
-            foreach($ergarrayerstberatung as $erg) $erstberatung[$erg['monat']] = $erg['anzahl'];
-            $ergarrayberatungfertig = $this->teilnehmerRepository->countTNbyBID('%', 3, $jahrselected);
-            foreach($ergarrayberatungfertig as $erg) $beratungfertig[$erg['monat']] = $erg['anzahl'];
-            $ergarrayniqerfasst = $this->teilnehmerRepository->countTNbyBID('%', 4, $jahrselected);
-            foreach($ergarrayniqerfasst as $erg) $niqerfasst[$erg['monat']] = $erg['anzahl'];
-            $ergarrayfolgekontakte = $this->folgekontaktRepository->countFKbyBID('%', $jahrselected);
-            foreach($ergarrayfolgekontakte as $erg) $qfolgekontakte[$erg['monat']] = $erg['anzahl'];
-            $ergarraywartezeitanmeldung = $this->teilnehmerRepository->calcwaitingdays('%','anmeldung', $jahrselected);
-            foreach($ergarraywartezeitanmeldung as $erg) $days4wartezeit[$erg['monat']] = $erg['wert'];
-            $ergarraywartezeitberatung = $this->teilnehmerRepository->calcwaitingdays('%','beratung', $jahrselected);
-            foreach($ergarraywartezeitberatung as $erg) $days4beratung[$erg['monat']] = $erg['wert'];
-        }
+        $ergarrayangemeldete = $this->teilnehmerRepository->countTNby('%', $bundeslandselected, 1, $jahrselected, $staatselected);
+        foreach($ergarrayangemeldete as $erg) $angemeldeteTN[$erg['monat']] = $erg['anzahl'];
+        $ergarrayerstberatung = $this->teilnehmerRepository->countTNby('%', $bundeslandselected, 2, $jahrselected, $staatselected);
+        foreach($ergarrayerstberatung as $erg) $erstberatung[$erg['monat']] = $erg['anzahl'];
+        $ergarrayberatungfertig = $this->teilnehmerRepository->countTNby('%', $bundeslandselected, 3, $jahrselected, $staatselected);
+        foreach($ergarrayberatungfertig as $erg) $beratungfertig[$erg['monat']] = $erg['anzahl'];
+        $ergarrayniqerfasst = $this->teilnehmerRepository->countTNby('%', $bundeslandselected, 4, $jahrselected, $staatselected);
+        foreach($ergarrayniqerfasst as $erg) $niqerfasst[$erg['monat']] = $erg['anzahl'];
+        $ergarrayfolgekontakte = $this->folgekontaktRepository->countFKby('%', $bundeslandselected, $jahrselected, $staatselected);
+        foreach($ergarrayfolgekontakte as $erg) $qfolgekontakte[$erg['monat']] = $erg['anzahl'];
+        $ergarraywartezeitanmeldung = $this->teilnehmerRepository->calcwaitingdays('%', $bundeslandselected,'anmeldung', $jahrselected, $staatselected);
+        foreach($ergarraywartezeitanmeldung as $erg) $days4wartezeit[$erg['monat']] = $erg['wert'];
+        $ergarraywartezeitberatung = $this->teilnehmerRepository->calcwaitingdays('%', $bundeslandselected,'beratung', $jahrselected, $staatselected);
+        foreach($ergarraywartezeitberatung as $erg) $days4beratung[$erg['monat']] = $erg['wert'];
                        
         ksort($angemeldeteTN);
         ksort($qfolgekontakte);
@@ -249,6 +233,8 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         }
         
         $letzteanmeldungen = $this->teilnehmerRepository->findLast4Admin();
+               
+        
         
         // *********** Stats Bundesland/Beruf/Staatsangehörigkeit *************
         
@@ -260,6 +246,32 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
         }
+        
+        if($jahrselected != 0) {
+            $arrabschlussart =  array('' => 'nichts eingetragen', '-1' => 'keine Angabe', '1' => 'Ausbildungsabschluss', '2' => 'Universitätsabschluss', '1,2' => 'sowohl Uni, als auch Ausbildungsabschluss', '-1,1' => 'k.A. und Ausbildungsabschluss', '-1,2' => 'k.A. und Universitätsabschluss');
+            
+            $abschlussartanmeldungen = $this->teilnehmerRepository->showAbschlussart(0, $jahrselected, $bundeslandselected, $staatselected);
+            $abschlussartberatungabgeschl = $this->teilnehmerRepository->showAbschlussart(4, $jahrselected, $bundeslandselected, $staatselected);
+            
+            if($staatselected == '%') {
+                $herkunftanmeldungen = $this->teilnehmerRepository->showHerkunft(0, $jahrselected, $bundeslandselected);
+                $herkunftberatungabgeschl = $this->teilnehmerRepository->showHerkunft(4, $jahrselected, $bundeslandselected);
+            }
+            
+            $berufeanmeldungen = $this->teilnehmerRepository->showAbschluesseBerufe(0, $jahrselected, $bundeslandselected, $staatselected);
+            $berufeberatungabgeschl = $this->teilnehmerRepository->showAbschluesseBerufe(4, $jahrselected, $bundeslandselected, $staatselected);
+            
+            $geschlechtartanmeldungen = $this->teilnehmerRepository->showGeschlecht(0, $jahrselected, $bundeslandselected, $staatselected);
+            $geschlechtberatungabgeschl = $this->teilnehmerRepository->showGeschlecht(4, $jahrselected, $bundeslandselected, $staatselected);
+            
+            $arrgeschlecht =  array('0' => 'nichts eingetragen', '-1' => 'keine Angabe', '1' => 'weiblich', '2' => 'männlich', '3' => 'divers');
+            
+            $lebensalteranmeldungen = $this->teilnehmerRepository->showAlter(0, $jahrselected, $bundeslandselected, $staatselected);
+            $lebensalterberatungabgeschl = $this->teilnehmerRepository->showAlter(4, $jahrselected, $bundeslandselected, $staatselected);
+            
+            //DebuggerUtility::var_dump($abschlussartanmeldungen);
+        }
+        /*
         
         $beratungsstatusarr = $this->settings['filterberatungsstatus4admin'];
         $firstcolheader = '';
@@ -315,6 +327,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
             }
             
         }        
+        */
         // *****************************************************************
         
         // ********************* PLZ doppelt vergeben? *********************
@@ -391,18 +404,25 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 'beratungsstatusarr' => $beratungsstatusarr,
                 'staatenarr' => $staatenarr,
                 'berufearr' => $berufearr,
-                'filtervon' => $filtervon ?? '',
-                'filterbis' => $filterbis ?? '',
-                'filterberatungsstatus' => $fberatungsstatus ?? '',
                 'filterbundesland' => $filterbundesland ?? '',
-                'filterberatungsstelle' => $filterberatungsstelle ?? '',
-                'filterstaat' => $staatselected ?? '',
+                'filterstaat' => $staatselected,
                 'filterberuf' => $berufselected ?? '',
-                'filternachstaat' => $filternachstaat ?? '',
-                'filternachberuf' => $filternachberuf ?? '',
                 'firstcolheader' => $firstcolheader,
                 'ausgabearray' => $ausgabearray ?? '',
-                'anzgesamt' => $anzgesamt ?? ''         
+                'anzgesamt' => $anzgesamt ?? '',
+                'abschlussartanmeldungen' => $abschlussartanmeldungen,
+                'abschlussartberatungabgeschl' => $abschlussartberatungabgeschl,
+                'arrabschlussart' => $arrabschlussart,
+                'herkunftanmeldungen' => $herkunftanmeldungen,
+                'herkunftberatungabgeschl' => $herkunftberatungabgeschl,
+                'berufeanmeldungen' => $berufeanmeldungen,
+                'berufeberatungabgeschl' => $berufeberatungabgeschl,
+                'arrgeschlecht' => $arrgeschlecht,
+                'geschlechtartanmeldungen' => $geschlechtartanmeldungen,
+                'geschlechtberatungabgeschl' => $geschlechtberatungabgeschl,
+                'lebensalteranmeldungen' => $lebensalteranmeldungen,
+                'lebensalterberatungabgeschl' => $lebensalterberatungabgeschl
+                
             ]
             );
     }

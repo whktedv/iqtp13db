@@ -10,7 +10,7 @@
 <f:if condition="{filteron}">
 	<f:then>
 		<span style="margin-bottom: 5px;"> 
-			<f:link.action action="listangemeldet">
+			<f:link.action action="start">
 			<span class="suchfelder">✖ 
 				{f:if(condition:'{filteruid} != ""', then: 'UID: {filteruid} ', else: '' )}
 				{f:if(condition:'{filtername} != ""', then: 'Name: {filtername} ', else: '' )}

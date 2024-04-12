@@ -47,12 +47,12 @@
 
 <f:render partial="FormErrors" arguments="{object:Teilnehmer}" />
 
-<f:form id="teilnehmerform" action="update" controller="Backend" name="teilnehmer" object="{teilnehmer}" arguments="{abschluss: abschluss, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, newnacherfassung : newnacherfassung}" >
+<f:form id="teilnehmerform" action="update" controller="Backend" name="teilnehmer" object="{teilnehmer}" arguments="{abschluss: abschluss, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, newnacherfassung : newnacherfassung, searchparams : searchparams}" >
 	
 	<div class="buttonmenu">
 		<div class="toplinkbuttons">
 			<f:form.button type="submit" id="savebutton1">Speichern</f:form.button>
-			<f:link.action id="linkloadoverlay-back" class="linkbuttons" action="{calleraction}" controller="{callercontroller}" arguments="{callerpage : callerpage, tn : teilnehmer}">Zurück zur Liste</f:link.action>
+			<f:link.action id="linkloadoverlay-back" class="linkbuttons" action="{calleraction}" controller="{callercontroller}" arguments="{callerpage : callerpage, tn : teilnehmer, searchparams : searchparams}">Zurück zur Liste</f:link.action>
 		</div>		
 		<div class="ankerbuttons">		
 			<a href="#AnkerBeratung" class="linkbuttons buttonberatung" >Beratung anzeigen</a>

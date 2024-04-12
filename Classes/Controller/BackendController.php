@@ -227,22 +227,22 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $days4beratung = $emptystatusarray;
         $days4wartezeit = $emptystatusarray;
         
-        $ergarrayangemeldete = $this->teilnehmerRepository->countTNbyBID($this->niqbid, 1, $jahrselected);
+        $ergarrayangemeldete = $this->teilnehmerRepository->countTNby($this->niqbid,'%', 1, $jahrselected, '%');
         foreach($ergarrayangemeldete as $erg) $angemeldeteTN[$erg['monat']] = $erg['anzahl'];
         
-        $ergarrayerstberatung = $this->teilnehmerRepository->countTNbyBID($this->niqbid, 2, $jahrselected);
+        $ergarrayerstberatung = $this->teilnehmerRepository->countTNby($this->niqbid, '%', 2, $jahrselected, '%');
         foreach($ergarrayerstberatung as $erg) $erstberatung[$erg['monat']] = $erg['anzahl'];
         
-        $ergarrayberatungfertig = $this->teilnehmerRepository->countTNbyBID($this->niqbid, 3, $jahrselected);
+        $ergarrayberatungfertig = $this->teilnehmerRepository->countTNby($this->niqbid, '%', 3, $jahrselected, '%');
         foreach($ergarrayberatungfertig as $erg) $beratungfertig[$erg['monat']] = $erg['anzahl'];
         
-        $ergarrayfolgekontakte = $this->folgekontaktRepository->countFKbyBID($this->niqbid, $jahrselected);
+        $ergarrayfolgekontakte = $this->folgekontaktRepository->countFKby($this->niqbid, '%', $jahrselected, '%');
         foreach($ergarrayfolgekontakte as $erg) $qfolgekontakte[$erg['monat']] = $erg['anzahl'];
         
-        $ergarraywartezeitanmeldung = $this->teilnehmerRepository->calcwaitingdays($this->niqbid,'anmeldung', $jahrselected);
+        $ergarraywartezeitanmeldung = $this->teilnehmerRepository->calcwaitingdays($this->niqbid, '%', 'anmeldung', $jahrselected, '%');
         foreach($ergarraywartezeitanmeldung as $erg) $days4wartezeit[$erg['monat']] = $erg['wert'];
         
-        $ergarraywartezeitberatung = $this->teilnehmerRepository->calcwaitingdays($this->niqbid,'beratung', $jahrselected);
+        $ergarraywartezeitberatung = $this->teilnehmerRepository->calcwaitingdays($this->niqbid, '%', 'beratung', $jahrselected, '%');
         foreach($ergarraywartezeitberatung as $erg) $days4beratung[$erg['monat']] = $erg['wert'];
         
         ksort($angemeldeteTN);
@@ -804,10 +804,31 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * @return void
      */
     public function showsearchresultAction()
-    {
+    {        
         $valArray = $this->request->getArguments();
         
-        $alleteilnehmer = $this->setfilter(999, $valArray, "beratungsstatus DESC, uid ", "DESC", -1, 50);
+        if(array_key_exists("searchparams", $valArray)) {
+            $searchparams = $valArray['searchparams'];
+        } else {
+            if($valArray['action'] == 'showsearchresult') {
+                if(!isset($valArray['filteran'])) {
+                    // Filterfelder sind leer, weil z.B. Abschlüsse geöffnet wurden, dann ist die Suche nicht mehr aktiv und das aktive Standardmodul kann aufgerufen werden
+                    $this->redirect('start');
+                } else {
+                    $searchparams['uid'] = $valArray['uid'];
+                    $searchparams['name'] = $valArray['name'];
+                    $searchparams['ort'] = $valArray['ort'];
+                    $searchparams['beruf'] = $valArray['beruf'];
+                    $searchparams['land'] = $valArray['land'];
+                    $searchparams['berater'] = $valArray['berater'];
+                    $searchparams['gruppe'] = $valArray['gruppe'];
+                    $searchparams['bescheid'] = $valArray['bescheid'];
+                    $searchparams['filteran'] = $valArray['filteran'];
+                }
+            }
+        }
+        
+        $alleteilnehmer = $this->setfilter(999, $searchparams, "beratungsstatus DESC, uid ", "DESC", -1, 50);
         
         $folgekontakte = $this->folgekontaktRepository->findAll4List($this->niqbid);
         
@@ -836,7 +857,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $summeberatungsdauer[$teilnehmer->getUid()] = str_replace('.',',',floatval(str_replace(',','.',$teilnehmer->getBeratungsdauer())) + $summebdauerfk);
             }
         }
-        //DebuggerUtility::var_dump($anzfolgekontakte);
+        //DebuggerUtility::var_dump($valArray);
         
         $berufeliste = $this->berufeRepository->findAll();
         $staaten = $this->staatenRepository->findByLangisocode('de');
@@ -859,6 +880,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'niqbid' => $this->niqbid,
                 'berufe' => $berufeliste,
                 'teilnehmers' => $alleteilnehmer,
+                'searchparams' => $searchparams
             ]
         );
     }
@@ -1322,6 +1344,10 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     {
         $valArray = $this->request->getArguments();
         
+        if(array_key_exists("searchparams", $valArray)) {
+            $searchparams = $valArray['searchparams'];
+        }
+                
         $abschluesse = $this->abschlussRepository->findByTeilnehmer($teilnehmer);
         $historie = $this->historieRepository->findByTeilnehmerOrdered($teilnehmer->getUid());
         $dokumente = $this->dokumentRepository->findByTeilnehmer($teilnehmer);
@@ -1359,7 +1385,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'staaten' => $staaten,
                 'berufe' => $berufeliste,
                 'filesizes' => $filesizes,
-                'speicherbelegung' => $speicherbelegung
+                'speicherbelegung' => $speicherbelegung,
+                'searchparams' => $searchparams
             ]
             );
     }
@@ -1567,6 +1594,10 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     {
         $valArray = $this->request->getArguments();
         
+        if(array_key_exists("searchparams", $valArray)) {
+            $searchparams = $valArray['searchparams'];
+        }
+        
         $edituserfield = '';
         
         if($teilnehmer->getEdittstamp() == 0 || $teilnehmer->getEdituser() == $this->user['uid'] || (time() - $teilnehmer->getEdittstamp()) > 10) {
@@ -1664,7 +1695,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'edittstampfield' => $edittstampfield ?? '0',
                 'urleinwilligung' => $urleinwilligung,
                 'newnacherfassung' => $nacherfassung,
-                'niqbid' => $teilnehmer->getNiqidberatungsstelle()
+                'niqbid' => $teilnehmer->getNiqidberatungsstelle(),
+                'searchparams' => $searchparams
             ]
             );
     }
@@ -1713,27 +1745,30 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function updateAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
         $valArray = $this->request->getArguments();
-                
+        if(array_key_exists("searchparams", $valArray)) {
+            $searchparams = $valArray['searchparams'];
+        }
+        
         if(is_numeric($teilnehmer->getLebensalter())) {
             if($teilnehmer->getLebensalter() > 0 && ($teilnehmer->getLebensalter() < 15 || $teilnehmer->getLebensalter() > 80)) {
                 $this->addFlashMessage("Datensatz NICHT gespeichert. Lebensalter muss zwischen 15 und 80 oder k.A. sein.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-                $this->redirect($valArray['calleraction'] ?? 'edit', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
+                $this->redirect($valArray['calleraction'] ?? 'edit', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung'], 'searchparams' => $searchparams));
             }
         }        
         $nacherfassung = $valArray['newnacherfassung'] ?? '0';
         if($nacherfassung == '1' && $teilnehmer->getNacherfassung() == '') {
             $this->addFlashMessage("Datensatz NICHT gespeichert. Feld 'Nacherfassung' muss angekreuzt sein!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-            $this->redirect('edit', 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
+            $this->redirect('edit', 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung'], 'searchparams' => $searchparams));
         }
         
         if($teilnehmer->getNacherfassung() == 1 && (!$this->generalhelper->validateDateYmd($teilnehmer->getBeratungdatum()) || !$this->generalhelper->validateDateYmd($teilnehmer->getErstberatungabgeschlossen()))) {
             $this->addFlashMessage("Datensatz NICHT gespeichert. Bei Nacherfassungen müssen 'Datum Erstberatung' und 'Erstberatung abgeschlossen' ausgefüllt sein.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-            $this->redirect('edit', 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
+            $this->redirect('edit', 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung'], 'searchparams' => $searchparams));
         }
         
         if($teilnehmer->getNacherfassung() != 1 && $teilnehmer->getVerificationDate() == 0 && ($this->generalhelper->validateDateYmd($teilnehmer->getErstberatungabgeschlossen()) || $this->generalhelper->validateDateYmd($teilnehmer->getBeratungdatum()))) {
             $this->addFlashMessage("Datensatz NICHT gespeichert. Vor Eintragung von 'Datum Erstberatung' oder 'Erstberatung abgeschlossen' muss die Anmeldung bestätigt werden!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-            $this->redirect('edit', 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
+            $this->redirect('edit', 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung'], 'searchparams' => $searchparams));
         }
         
         if($this->generalhelper->validateDateYmd($teilnehmer->getErstberatungabgeschlossen()) && !$this->generalhelper->validateDateYmd($teilnehmer->getBeratungdatum())) {
@@ -1827,7 +1862,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
         
-        $this->redirect('edit', $valArray['callercontroller'] ?? 'Backend', null, array('teilnehmer'=> $teilnehmer, 'callerpage' => $valArray['callerpage'] ?? '1', 'calleraction' => $valArray['calleraction'] ?? 'listangemeldet', 'newnacherfassung' => $nacherfassung));
+        $this->redirect('edit', $valArray['callercontroller'] ?? 'Backend', null, array('teilnehmer'=> $teilnehmer, 'callerpage' => $valArray['callerpage'] ?? '1', 'calleraction' => $valArray['calleraction'] ?? 'listangemeldet', 'newnacherfassung' => $nacherfassung, 'searchparams' => $searchparams));
     }
     
     /**
@@ -1839,6 +1874,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function deleteAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
         $valArray = $this->request->getArguments();
+        if(array_key_exists("searchparams", $valArray)) {
+            $searchparams = $valArray['searchparams'];
+        }
         
         if($teilnehmer->getNiqchiffre() == '') {
             $teilnehmer->setHidden(1);
@@ -1851,7 +1889,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         } else {
             $this->addFlashMessage('Bereits in NIQ übertragene Datensätze können nicht gelöscht werden.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
         }
-        $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
+        $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'], 'searchparams' => $searchparams));
     }
     
     /**
@@ -1862,6 +1900,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      */
     public function undeleteAction($tnuid)
     {
+        $valArray = $this->request->getArguments();
+        if(array_key_exists("searchparams", $valArray)) {
+            $searchparams = $valArray['searchparams'];
+        }
+        
         $teilnehmer = $this->teilnehmerRepository->findHiddenByUid($tnuid);
         $teilnehmer->setHidden(0);
         
@@ -1871,7 +1914,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
         
-        $this->redirect('listdeleted');
+        $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'], 'searchparams' => $searchparams));
     }
     
     
@@ -1885,6 +1928,10 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     {
         $valArray = $this->request->getArguments();
         
+        if(array_key_exists("searchparams", $valArray)) {
+            $searchparams = $valArray['searchparams'];
+        }
+        
         $berater = $this->beraterRepository->findByUid($this->user['uid']);
         
         $teilnehmer->setBerater($berater);
@@ -1894,7 +1941,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
         
-        $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
+        $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'], 'searchparams' => $searchparams));
     }
     
     /**
@@ -1944,6 +1991,10 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     {
         $valArray = $this->request->getArguments();
         
+        if(array_key_exists("searchparams", $valArray)) {
+            $searchparams = $valArray['searchparams'];
+        }
+        
         $bcc = '';
         $sender = $this->settings['sender'];
         if($sender == '') {
@@ -1990,7 +2041,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             
             $this->addFlashMessage('Einwilligungsanforderung versendet.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
             
-            $this->redirect('listangemeldet', 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer, 'callerpage' => $valArray['callerpage']));
+            $this->redirect('listangemeldet', 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer, 'callerpage' => $valArray['callerpage'], 'searchparams' => $searchparams));
         }
     }     
         
@@ -2029,6 +2080,10 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function savedatenblattpdfAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
         $valArray = $this->request->getArguments();
+        
+        if(array_key_exists("searchparams", $valArray)) {
+            $searchparams = $valArray['searchparams'];
+        }
         
         // MPDF per composer einbinden - wenn nicht vorhanden, dann s.u.
         $mpdfComposer = \TYPO3\CMS\Core\Core\Environment::getConfigPath() . '/ext/vendor/autoload.php';
@@ -2121,7 +2176,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         //********************************************************************
         
-        $this->redirect('show', 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer, 'callerpage' => $valArray['callerpage'], 'showdokumente' => '1'));
+        $this->redirect('show', 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer, 'callerpage' => $valArray['callerpage'], 'showdokumente' => '1', 'searchparams' => $searchparams));
     }
     
     /**
@@ -2231,18 +2286,18 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     /**
      * Set Filter
      */
-    function setfilter(int $type, array $valArray, $orderby, $order, $deleted, $limit) {
+    function setfilter(int $type, array $searchparams, $orderby, $order, $deleted, $limit) {
         // FILTER
         $beraterdiesergruppe = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->usergroup);
         
-        $f['uid'] = $valArray['uid'] ?? '';
-        $f['name'] = $valArray['name'] ?? '';
-        $f['ort'] = $valArray['ort'] ?? '';
-        $f['beruf'] = $valArray['beruf'] ?? '';
-        $f['land'] = $valArray['land'] ?? '';
-        $f['berater'] = $valArray['berater'] ?? '';
-        $f['gruppe'] = $valArray['gruppe'] ?? '';
-        $f['bescheid'] = $valArray['bescheid'] ?? ''; // antragstellungvorher
+        $f['uid'] = $searchparams['uid'] ?? '';
+        $f['name'] = $searchparams['name'] ?? '';
+        $f['ort'] = $searchparams['ort'] ?? '';
+        $f['beruf'] = $searchparams['beruf'] ?? '';
+        $f['land'] = $searchparams['land'] ?? '';
+        $f['berater'] = $searchparams['berater'] ?? '';
+        $f['gruppe'] = $searchparams['gruppe'] ?? '';
+        $f['bescheid'] = $searchparams['bescheid'] ?? ''; // antragstellungvorher
 
         if($f['land'] == '-1000' || $f['land'] == NULL) $f['land'] = '';
         if($f['berater'] == 0 || $f['berater'] == NULL) $f['berater'] = '';
@@ -2268,7 +2323,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $this->view->assign('filterberater', $f['berater']);
             $this->view->assign('filtergruppe', $f['gruppe']);
             $this->view->assign('filterbescheid', $f['bescheid']); // antragstellungvorher
-            $this->view->assign('filteron', isset($valArray['filteran']) ? 1 : 0);
+            $this->view->assign('filteron', isset($searchparams['filteran']) ? 1 : 0);
         }
         
         // FILTER bis hier

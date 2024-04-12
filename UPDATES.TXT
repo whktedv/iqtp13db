@@ -56,6 +56,7 @@ Neu:
 - maximale Größe für hochladbare Dateien auf 10 MB begrenzt, Speichergröße je Ratsuchenden auf 40 MB begrenzt
 - neue Tabelle Landkreise
 - in Export wird Landkreis mit ausgegeben, sofern der Wohnsitz der/des Ratsuchenden in Deutschland ist
-- Suche optimiert: Filter muss nicht gelöscht werden, bevor die nächste Suche erfolgt. Also einfach neuen Wert eingeben und Suche starten
+- Suche optimiert: Filter muss nicht gelöscht werden, bevor die nächste Suche erfolgt. Ausgabe der Ergebnisse erfolgt Modul-übergreifend
 - Export um Felder "deutscher Referenzberuf", "Sonstiger Beruf" und "nicht reglementierter Beruf" erweitert
+- Statistik-Modul optimiert
 

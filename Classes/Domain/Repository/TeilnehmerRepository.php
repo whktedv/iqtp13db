@@ -235,6 +235,88 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         return $query;
     }
     
+    /**
+     * Gets the Teilnehmer by verificationCode
+     *
+     * @param string $verificationCode
+     * @return Tx_Extbase_Persistence_QueryResultInterface Teilnehmer
+     */
+    public function findByVerificationCode(String $verificationCode)
+    {
+        $query = $this->createQuery();
+        
+        $constraints = array(
+            $query->equals('verification_code', $verificationCode),
+            $query->equals('verification_date', 0)
+        );
+        
+        $query->matching(
+            $query->logicalAnd($constraints)
+            );
+        
+        $result = $query->execute()->toArray();
+        if(count($result) > 0) {
+            return $result[0];
+        } else {
+            return NULL;
+        }
+    }
+    
+    /**
+     *
+     */
+    public function search4exportTeilnehmer($type, $verstecktundgelöscht, $filtervon, $filterbis, $niqbid, $bundesland, $staat)
+    {
+        $orderby = 'verification_date';
+        
+        if($bundesland != '%') $niqbid = "%";
+        
+        if($type == 0) {
+            $sqlberatungsstatus = " beratungsstatus >= 0 ";
+            $filternach = "FROM_UNIXTIME(verification_date)";
+        } elseif($type == 1) {
+            $sqlberatungsstatus = " beratungsstatus >= 1 ";
+            $filternach = "FROM_UNIXTIME(verification_date)";
+        } elseif($type == 2) {
+            $sqlberatungsstatus = " (beratungsstatus = 2 OR beratungsstatus = 3) ";
+            $filternach = "beratungdatum";
+        } elseif($type == 4) {
+            $sqlberatungsstatus = " beratungsstatus = 4 ";
+            $filternach = "erstberatungabgeschlossen";
+        } else {
+            // fehler!
+        }
+        
+        $query = $this->createQuery();
+        
+        if($verstecktundgelöscht == 1) {
+            $query->getQuerySettings()->setIgnoreEnableFields(TRUE);
+            $query->getQuerySettings()->setEnableFieldsToBeIgnored(array('disabled', 'hidden'));
+            $hidden = " AND t.hidden = 1 ";
+        } else {
+            $hidden = " AND t.hidden = 0 ";
+        }
+        
+        $sql = "SELECT t.* FROM tx_iqtp13db_domain_model_teilnehmer t
+    			LEFT JOIN tx_iqtp13db_domain_model_abschluss a ON a.teilnehmer = t.uid
+                LEFT JOIN fe_groups as b on t.niqidberatungsstelle = b.niqbid
+                WHERE
+                DATEDIFF(STR_TO_DATE('$filtervon', '%d.%m.%Y'),$filternach) <= 0 AND
+				DATEDIFF(STR_TO_DATE('$filterbis', '%d.%m.%Y'),$filternach) >= 0
+                AND $sqlberatungsstatus $hidden
+                AND niqidberatungsstelle LIKE '$niqbid'
+                AND b.bundesland LIKE '$bundesland'
+                AND t.erste_staatsangehoerigkeit LIKE '$staat'
+                GROUP BY t.uid ORDER BY $orderby ASC";
+        
+        $query->statement($sql);
+        
+        return $query->execute();
+    }
+    
+    
+    // STATUS
+    
     
     /**
      * @param $beratungsstatus
@@ -282,7 +364,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      * @param $jahr
      *  
      */
-    public function countTNbyBID($niqbid, $bstatus, $jahr)
+    public function countTNby($niqbid, $bundesland, $bstatus, $jahr, $staat)
     {
         $addfield = '';
         if($bstatus == 1) $field = 'FROM_UNIXTIME(verification_date)';
@@ -300,82 +382,31 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $query = $this->createQuery();
         if($jahr == 0) {
             $query->statement("SELECT MONTH($field) as monat, count(*) as anzahl
-                FROM tx_iqtp13db_domain_model_teilnehmer
+                FROM tx_iqtp13db_domain_model_teilnehmer as a
+                LEFT JOIN fe_groups as b on a.niqidberatungsstelle = b.niqbid
                 WHERE YEAR($field) = YEAR(CURRENT_DATE())
-                AND deleted = 0 AND hidden = 0 AND niqidberatungsstelle LIKE '$niqbid'
+                AND a.deleted = 0 AND a.hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND b.bundesland LIKE '$bundesland' AND erste_staatsangehoerigkeit LIKE '$staat'
                 $addfield
                 GROUP BY MONTH($field)
                 UNION
                 SELECT MONTH($field) as monat, count(*) as anzahl
-                FROM tx_iqtp13db_domain_model_teilnehmer
+                FROM tx_iqtp13db_domain_model_teilnehmer as a
+                LEFT JOIN fe_groups as b on a.niqidberatungsstelle = b.niqbid
                 WHERE YEAR($field) = YEAR(CURRENT_DATE())-1 AND MONTH($field) > MONTH(CURRENT_DATE())
-                AND deleted = 0 AND hidden = 0 AND niqidberatungsstelle LIKE '$niqbid'
+                AND a.deleted = 0 AND a.hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND b.bundesland LIKE '$bundesland' AND erste_staatsangehoerigkeit LIKE '$staat'
                 $addfield
                 GROUP BY MONTH($field)");
         } else {
             $query->statement("SELECT MONTH($field) as monat, count(*) as anzahl
-                FROM tx_iqtp13db_domain_model_teilnehmer
+                FROM tx_iqtp13db_domain_model_teilnehmer as a
+                LEFT JOIN fe_groups as b on a.niqidberatungsstelle = b.niqbid
                 WHERE YEAR($field) = $jahr
-                AND deleted = 0 AND hidden = 0 AND niqidberatungsstelle LIKE '$niqbid'
+                AND a.deleted = 0 AND a.hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND b.bundesland LIKE '$bundesland' AND erste_staatsangehoerigkeit LIKE '$staat'
                 $addfield
                 GROUP BY MONTH($field)");
         }
         
         $query = $query->execute(true);        
-        return $query;
-    }
-    
-    /**
-     * Counts Teilnehmer by Bundesland and Status for last 12 month
-     *
-     * @param $bundesland
-     * @param $bstatus
-     * @param $jahr
-     *
-     */
-    public function countTNbyBundesland($bundesland, $bstatus, $jahr)
-    {
-        $addfield = '';
-        if($bstatus == 1) $field = 'FROM_UNIXTIME(verification_date)';
-        if($bstatus == 2) $field = 'beratungdatum';
-        if($bstatus == 3) $field = 'erstberatungabgeschlossen';
-        if($bstatus == 4) {
-            $field = 'erstberatungabgeschlossen';
-            $addfield = " AND niqchiffre != '' ";
-        }
-        if($bstatus == 5) {
-            $field = 'erstberatungabgeschlossen';
-            $addfield = " AND beratungsstatus = 4 ";
-        }
-        
-        $query = $this->createQuery();
-        if($jahr == 0) {
-            $query->statement("SELECT MONTH($field) as monat, count(*) as anzahl
-                FROM tx_iqtp13db_domain_model_teilnehmer as a
-                LEFT JOIN fe_groups as b on a.niqidberatungsstelle = b.niqbid
-                WHERE YEAR($field) = YEAR(CURRENT_DATE())
-                AND a.deleted = 0 AND a.hidden = 0 AND b.bundesland LIKE '$bundesland'
-                $addfield
-                GROUP BY MONTH($field)
-                UNION
-                SELECT MONTH($field) as monat, count(*) as anzahl
-                FROM tx_iqtp13db_domain_model_teilnehmer as a
-                LEFT JOIN fe_groups as b on a.niqidberatungsstelle = b.niqbid
-                WHERE YEAR($field) = YEAR(CURRENT_DATE())-1 AND MONTH($field) > MONTH(CURRENT_DATE())
-                AND a.deleted = 0 AND a.hidden = 0 AND b.bundesland LIKE '$bundesland'
-                $addfield
-                GROUP BY MONTH($field)");
-        } else {
-            $query->statement("SELECT MONTH($field) as monat, count(*) as anzahl
-                FROM tx_iqtp13db_domain_model_teilnehmer as a
-                LEFT JOIN fe_groups as b on a.niqidberatungsstelle = b.niqbid
-                WHERE YEAR($field) = $jahr
-                AND a.deleted = 0 AND a.hidden = 0 AND b.bundesland LIKE '$bundesland'
-                $addfield
-                GROUP BY MONTH($field)");
-        }
-        
-        $query = $query->execute(true);
         return $query;
     }
     
@@ -387,7 +418,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      * @param $jahr
      *
      */
-    public function calcwaitingdays($niqbid, $status, $jahr)
+    public function calcwaitingdays($niqbid, $bundesland, $status, $jahr, $staat)
     {
         if($status == 'anmeldung') {
             $von = "FROM_UNIXTIME(verification_date)";
@@ -401,18 +432,21 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $query = $this->createQuery();
         if($jahr == 0) {
             $query->statement("SELECT MONTH($bis) as monat, SUM(IF(DATEDIFF($bis,$von) < 0, 0, DATEDIFF($bis,$von))) / count(*) as wert
-                        FROM tx_iqtp13db_domain_model_teilnehmer 
-                        WHERE $bis != '' AND deleted = 0 AND hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND YEAR($von) = YEAR(CURRENT_DATE())
+                        FROM tx_iqtp13db_domain_model_teilnehmer as a 
+                        LEFT JOIN fe_groups as b on a.niqidberatungsstelle = b.niqbid
+                        WHERE $bis != '' AND a.deleted = 0 AND a.hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND b.bundesland LIKE '$bundesland' AND YEAR($von) = YEAR(CURRENT_DATE()) AND erste_staatsangehoerigkeit LIKE '$staat'
                         GROUP BY MONTH($bis)
                         UNION
                         SELECT MONTH($bis) as monat, SUM(DATEDIFF($bis,$von)) / count(*) as wert
-                        FROM tx_iqtp13db_domain_model_teilnehmer 
-                        WHERE $bis != '' AND deleted = 0 AND hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND YEAR($von) = YEAR(CURRENT_DATE())-1 AND MONTH($von) > MONTH(CURRENT_DATE())
+                        FROM tx_iqtp13db_domain_model_teilnehmer as a
+                        LEFT JOIN fe_groups as b on a.niqidberatungsstelle = b.niqbid
+                        WHERE $bis != '' AND a.deleted = 0 AND a.hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND b.bundesland LIKE '$bundesland' AND YEAR($von) = YEAR(CURRENT_DATE())-1 AND MONTH($von) > MONTH(CURRENT_DATE()) AND erste_staatsangehoerigkeit LIKE '$staat'
                         GROUP BY MONTH($bis)");
         } else {
             $query->statement("SELECT MONTH($bis) as monat, SUM(IF(DATEDIFF($bis,$von) < 0, 0, DATEDIFF($bis,$von))) / count(*) as wert
-                        FROM tx_iqtp13db_domain_model_teilnehmer
-                        WHERE $bis != '' AND deleted = 0 AND hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND YEAR($von) = $jahr
+                        FROM tx_iqtp13db_domain_model_teilnehmer as a
+                        LEFT JOIN fe_groups as b on a.niqidberatungsstelle = b.niqbid
+                        WHERE $bis != '' AND a.deleted = 0 AND a.hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND b.bundesland LIKE '$bundesland' AND YEAR($von) = $jahr AND erste_staatsangehoerigkeit LIKE '$staat'
                         GROUP BY MONTH($bis)");
         }
         
@@ -420,97 +454,16 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         return $query;
     }
     
-    /**
-     * Calculates average waiting days for last 12 month or $jahr for Bundesland
-     *
-     * @param $bundesland
-     * @param $status
-     * @param $jahr
-     *
-     */
-    public function calcwaitingdaysBundesland($bundesland, $status, $jahr)
-    {
-        if($status == 'anmeldung') {
-            $von = "FROM_UNIXTIME(verification_date)";
-            $bis = "beratungdatum";
-        }
-        if($status == 'beratung') {
-            $von = "beratungdatum";
-            $bis = "erstberatungabgeschlossen";
-        }
-
-        $query = $this->createQuery();
-        if($jahr == 0) {
-            $query->statement("SELECT MONTH($bis) as monat, SUM(IF(DATEDIFF($bis,$von) < 0, 0, DATEDIFF($bis,$von))) / count(*) as wert
-                        FROM tx_iqtp13db_domain_model_teilnehmer as a
-                        LEFT JOIN fe_groups as b on a.niqidberatungsstelle = b.niqbid
-                        WHERE $bis != '' AND a.deleted = 0 AND a.hidden = 0 AND b.bundesland LIKE '$bundesland' AND YEAR($von) = YEAR(CURRENT_DATE())
-                        GROUP BY MONTH($bis)
-                        UNION
-                        SELECT MONTH($bis) as monat, SUM(DATEDIFF($bis,$von)) / count(*) as wert
-                        FROM tx_iqtp13db_domain_model_teilnehmer as a
-                        LEFT JOIN fe_groups as b on a.niqidberatungsstelle = b.niqbid
-                        WHERE $bis != '' AND a.deleted = 0 AND a.hidden = 0 AND b.bundesland LIKE '$bundesland' AND YEAR($von) = YEAR(CURRENT_DATE())-1 AND MONTH($von) > MONTH(CURRENT_DATE())
-                        GROUP BY MONTH($bis)");
-        } else {
-            $query->statement("SELECT MONTH($bis) as monat, SUM(IF(DATEDIFF($bis,$von) < 0, 0, DATEDIFF($bis,$von))) / count(*) as wert
-                        FROM tx_iqtp13db_domain_model_teilnehmer as a
-                        LEFT JOIN fe_groups as b on a.niqidberatungsstelle = b.niqbid
-                        WHERE $bis != '' AND a.deleted = 0 AND a.hidden = 0 AND b.bundesland LIKE '$bundesland' AND YEAR($von) = $jahr
-                        GROUP BY MONTH($bis)");
-        }
-        
-        $query = $query->execute(true);
-        return $query;
-    }
     
     /**
-     * Gets the Teilnehmer by verificationCode
-     *
-     * @param string $verificationCode
-     * @return Tx_Extbase_Persistence_QueryResultInterface Teilnehmer
+     * Abschlussart für Adminübersicht
      */
-    public function findByVerificationCode(String $verificationCode)
-    {
-        $query = $this->createQuery();
+    public function showAbschlussart($type, $jahr, $bundesland, $staat) {
         
-        $constraints = array(
-            $query->equals('verification_code', $verificationCode),
-            $query->equals('verification_date', 0)
-        );
-        
-        $query->matching(
-            $query->logicalAnd($constraints)
-            );
-        
-        $result = $query->execute()->toArray();
-        if(count($result) > 0) {
-            return $result[0];
-        } else {
-            return NULL;
-        }
-    }
-
-    /**
-     *
-     */
-    public function search4exportTeilnehmer($type, $verstecktundgelöscht, $filtervon, $filterbis, $niqbid, $bundesland, $staat)
-    {
-        $orderby = 'verification_date';
-        
-        if($bundesland != '%') $niqbid = "%"; 
-            
         if($type == 0) {
-            $sqlberatungsstatus = " beratungsstatus >= 0 ";
+            // Anmeldungen (unbestätigt und bestätigt)
             $filternach = "FROM_UNIXTIME(verification_date)";
-        } elseif($type == 1) {
-            $sqlberatungsstatus = " beratungsstatus >= 1 ";
-            $filternach = "FROM_UNIXTIME(verification_date)";
-        } elseif($type == 2) {
-            $sqlberatungsstatus = " (beratungsstatus = 2 OR beratungsstatus = 3) ";
-            $filternach = "beratungdatum";
         } elseif($type == 4) {
-            $sqlberatungsstatus = " beratungsstatus = 4 ";
             $filternach = "erstberatungabgeschlossen";
         } else {
             // fehler!
@@ -518,29 +471,151 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         
         $query = $this->createQuery();
         
-        if($verstecktundgelöscht == 1) {
-            $query->getQuerySettings()->setIgnoreEnableFields(TRUE);
-            $query->getQuerySettings()->setEnableFieldsToBeIgnored(array('disabled', 'hidden'));
-            $hidden = " AND t.hidden = 1 ";
-        } else {
-            $hidden = " AND t.hidden = 0 ";
-        }
-                
-        $sql = "SELECT t.* FROM tx_iqtp13db_domain_model_teilnehmer t
-    			LEFT JOIN tx_iqtp13db_domain_model_abschluss a ON a.teilnehmer = t.uid
-                LEFT JOIN fe_groups as b on t.niqidberatungsstelle = b.niqbid
-                WHERE
-                DATEDIFF(STR_TO_DATE('$filtervon', '%d.%m.%Y'),$filternach) <= 0 AND
-				DATEDIFF(STR_TO_DATE('$filterbis', '%d.%m.%Y'),$filternach) >= 0
-                AND $sqlberatungsstatus $hidden
-                AND niqidberatungsstelle LIKE '$niqbid' 
-                AND b.bundesland LIKE '$bundesland'
-                AND t.erste_staatsangehoerigkeit LIKE '$staat'
-                GROUP BY t.uid ORDER BY $orderby ASC";
-         
-        $query->statement($sql);
+        $sql = "SELECT abschlussart, count(abschlussart) as anz
+                    FROM  tx_iqtp13db_domain_model_teilnehmer as a
+                    LEFT JOIN  tx_iqtp13db_domain_model_abschluss as b ON a.uid = b.teilnehmer
+                    LEFT JOIN fe_groups as d ON niqidberatungsstelle = d.niqbid
+                    WHERE
+				    YEAR($filternach) LIKE $jahr
+                    AND d.bundesland LIKE '$bundesland'
+                    AND erste_staatsangehoerigkeit LIKE '$staat'
+                    AND a.hidden = 0 and a.deleted = 0
+                    AND b.teilnehmer IS NOT NULL 
+                    GROUP BY abschlussart ORDER BY anz DESC";
+        //DebuggerUtility::var_dump($sql);
         
-        return $query->execute();
+        $query->statement($sql);
+        $query = $query->execute(true);
+        return $query;
+    }
+    
+    
+    /**
+     * Herkunft für Adminübersicht
+     */
+    public function showHerkunft($type, $jahr, $bundesland) {
+        
+        if($type == 0) {
+            // Anmeldungen (unbestätigt und bestätigt)
+            $filternach = "FROM_UNIXTIME(verification_date)";
+        } elseif($type == 4) {
+            $filternach = "erstberatungabgeschlossen";
+        } else {
+            // fehler!
+        }
+        
+        $query = $this->createQuery();
+        
+        $sql = "SELECT s.titel, count(erste_staatsangehoerigkeit) as anz
+                    FROM  tx_iqtp13db_domain_model_teilnehmer as a
+                    LEFT JOIN fe_groups as d ON niqidberatungsstelle = d.niqbid
+                    LEFT JOIN tx_iqtp13db_domain_model_staaten as s ON erste_staatsangehoerigkeit = s.staatid
+                    WHERE
+				    YEAR($filternach) LIKE $jahr
+                    AND d.bundesland LIKE '$bundesland'
+                    AND a.hidden = 0 and a.deleted = 0
+                    AND s.langisocode = 'de'
+                    GROUP BY erste_staatsangehoerigkeit ORDER BY anz DESC LIMIT 20";
+        
+        $query->statement($sql);
+        $query = $query->execute(true);
+        return $query;
+    }
+    
+    /**
+     *  Abschlüsse/Berufe für Adminübersicht
+     */
+    public function showAbschluesseBerufe($type, $jahr, $bundesland, $staat) {
+        
+        if($type == 0) {
+            // Anmeldungen (unbestätigt und bestätigt)
+            $filternach = "FROM_UNIXTIME(verification_date)";
+        } elseif($type == 4) {
+            $filternach = "erstberatungabgeschlossen";
+        } else {
+            // fehler!
+        }
+        
+        $query = $this->createQuery();
+        
+        $sql = "SELECT c.titel, count(b.referenzberufzugewiesen) as anz
+                    FROM  tx_iqtp13db_domain_model_teilnehmer as a
+                    LEFT JOIN tx_iqtp13db_domain_model_abschluss as b ON a.uid = b.teilnehmer
+                    LEFT JOIN tx_iqtp13db_domain_model_berufe as c ON b.referenzberufzugewiesen = c.berufid
+                    LEFT JOIN fe_groups as d ON niqidberatungsstelle = d.niqbid
+                    WHERE
+                    YEAR($filternach) LIKE $jahr
+                    AND d.bundesland LIKE '$bundesland'
+                    AND erste_staatsangehoerigkeit LIKE '$staat'
+                    AND a.hidden = 0 and a.deleted = 0
+                    AND b.teilnehmer IS NOT NULL
+                    GROUP BY b.referenzberufzugewiesen ORDER BY anz DESC LIMIT 20";
+        
+        $query->statement($sql);
+        $query = $query->execute(true);
+        return $query;
+    }
+      
+    /**
+     * Geschlecht für Adminübersicht
+     */
+    public function showGeschlecht($type, $jahr, $bundesland, $staat) {
+        
+        if($type == 0) {
+            // Anmeldungen (unbestätigt und bestätigt)
+            $filternach = "FROM_UNIXTIME(verification_date)";
+        } elseif($type == 4) {
+            $filternach = "erstberatungabgeschlossen";
+        } else {
+            // fehler!
+        }
+        
+        $query = $this->createQuery();
+        
+        $sql = "SELECT geschlecht, count(geschlecht) as anz
+                    FROM  tx_iqtp13db_domain_model_teilnehmer as a
+                    LEFT JOIN fe_groups as d ON niqidberatungsstelle = d.niqbid
+                    WHERE
+				    YEAR($filternach) LIKE $jahr
+                    AND d.bundesland LIKE '$bundesland'
+                    AND erste_staatsangehoerigkeit LIKE '$staat'
+                    AND a.hidden = 0 and a.deleted = 0
+                    GROUP BY geschlecht ORDER BY anz DESC";
+        
+        $query->statement($sql);
+        $query = $query->execute(true);
+        return $query;
+    }
+    
+    /**
+     * Alter für Adminübersicht
+     */
+    public function showAlter($type, $jahr, $bundesland, $staat) {
+        
+        if($type == 0) {
+            // Anmeldungen (unbestätigt und bestätigt)
+            $filternach = "FROM_UNIXTIME(verification_date)";
+        } elseif($type == 4) {
+            $filternach = "erstberatungabgeschlossen";
+        } else {
+            // fehler!
+        }
+        
+        $query = $this->createQuery();
+        
+        $sql = "SELECT lebensalter, count(lebensalter) as anz
+                    FROM  tx_iqtp13db_domain_model_teilnehmer as a
+                    LEFT JOIN fe_groups as d ON niqidberatungsstelle = d.niqbid
+                    WHERE
+				    YEAR($filternach) LIKE $jahr
+                    AND d.bundesland LIKE '$bundesland'
+                    AND erste_staatsangehoerigkeit LIKE '$staat'
+                    AND a.hidden = 0 and a.deleted = 0
+                    GROUP BY lebensalter ORDER BY lebensalter DESC";
+        
+        $query->statement($sql);
+        $query = $query->execute(true);
+        return $query;
     }
     
     /**

@@ -140,31 +140,33 @@
 </table>
 
 <hr>
-<h2>Historie Änderung Daten Ratsuchende im Backend</h2>
 
-<div class="toppaginator">
-	<f:render partial="Paginator" arguments="{pagination: pagination, pages: pages, paginator: paginator, action: calleraction}" />
-</div>
-	<table class="uebersicht-historie" >
-		<tr>
-			<th>Datum/Zeit</th>
-			<th>Kürzel</th>
-			<th>Teilnehmer</th>
-			<th>Feld</th>
-			<th>alter Wert</th>
-			<th>neuer Wert</th>
-		</tr>
-	
-		<f:for each="{paginator.paginatedItems}" as="hist" iteration="it">
-			<tr>		
-				<td>{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}</td>
-				<td>{hist.berater.username}</td>
-				<td>{hist.teilnehmer.nachname}, {hist.teilnehmer.vorname} (UID: {hist.teilnehmer.uid})</td>
-				<td>{hist.property}</td>
-				<td><f:format.raw>{hist.oldvalue}</f:format.raw></td>
-				<td><f:format.raw>{hist.newvalue}</f:format.raw></td> 
+<details>
+	<summary>Historie Änderung Daten Ratsuchende im Backend</summary>
+	<div class="toppaginator">
+		<f:render partial="Paginator" arguments="{pagination: pagination, pages: pages, paginator: paginator, action: calleraction}" />
+	</div>
+		<table class="uebersicht-historie" >
+			<tr>
+				<th>Datum/Zeit</th>
+				<th>Kürzel</th>
+				<th>Teilnehmer</th>
+				<th>Feld</th>
+				<th>alter Wert</th>
+				<th>neuer Wert</th>
 			</tr>
-		</f:for>
-	</table>
+		
+			<f:for each="{paginator.paginatedItems}" as="hist" iteration="it">
+				<tr>		
+					<td>{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}</td>
+					<td>{hist.berater.username}</td>
+					<td>{hist.teilnehmer.nachname}, {hist.teilnehmer.vorname} (UID: {hist.teilnehmer.uid})</td>
+					<td>{hist.property}</td>
+					<td><f:format.raw>{hist.oldvalue}</f:format.raw></td>
+					<td><f:format.raw>{hist.newvalue}</f:format.raw></td> 
+				</tr>
+			</f:for>
+		</table>
+</details>
 
 </f:section>
