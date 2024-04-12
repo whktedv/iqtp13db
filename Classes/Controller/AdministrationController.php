@@ -271,63 +271,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
             
             //DebuggerUtility::var_dump($abschlussartanmeldungen);
         }
-        /*
         
-        $beratungsstatusarr = $this->settings['filterberatungsstatus4admin'];
-        $firstcolheader = '';
-        
-        if(isset($valArray['showstats'])) {
-            $filterbundesland = $valArray['filterbundesland'] ?? '%';
-            $filterberatungsstelle = $valArray['filterberatungsstelle'] ?? '%';
-            $staatselected = $valArray['filterstaat'] ?? '%';
-            $berufselected = $valArray['filterberuf'] ?? '%';
-            $filtervon = isset($valArray['filtervon']) ? ($valArray['filtervon'] != '' ? $valArray['filtervon'] : '01.01.1970') : '01.01.1970';
-            $filterbis = isset($valArray['filtervon']) ? ($valArray['filterbis'] != '' ? $valArray['filterbis'] : '31.12.2099') : '31.12.2099';
-            $filternachberuf = $valArray['filternachberuf'] ?? '%';
-            $filternachstaat = $valArray['filternachstaat'] ?? '%';
-            $fberatungsstatus = isset($valArray['filterberatungsstatus']) ? $valArray['filterberatungsstatus'] : '';
-            
-            if($fberatungsstatus == 14) {
-                $type = 5;
-            } elseif($fberatungsstatus == 13) {
-                $type = 4;
-            } elseif($fberatungsstatus == 12) {
-                $type = 2;
-            } elseif($fberatungsstatus == 11) {
-                $type = 1;
-            } else {
-                $type = 0;
-            }
-            
-            if($filternachberuf == '1') $filterberufstaat = 'beruf';
-            elseif($filternachstaat == '1') $filterberufstaat = 'staat';
-            else $filterberufstaat = '';
-                        
-            $statistikergebnisarray = $this->teilnehmerRepository->showAdminStatsBerufLand($type, $filtervon, $filterbis, $filterbundesland, $filterberatungsstelle, $berufselected, $staatselected, $filterberufstaat);
-             
-            if($berufselected == '%') $firstcolheader = 'Beruf/Abschluss';
-            elseif($staatselected == '%') $firstcolheader = 'Erste Staatsangehörigkeit';
-            elseif($filterbundesland == '%') $firstcolheader = 'Bundesland';
-            else $firstcolheader = 'Geschlecht';
-            
-            if(count($statistikergebnisarray) == 0) $this->addFlashMessage("Keine Werte!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
-            
-            $statsarr = array();
-            $ausgabearray = array();
-            foreach($statistikergebnisarray as $arrelemarr) {
-                $titel = is_null($arrelemarr['titel']) ? 'kein Wert eingetragen' : $arrelemarr['titel'];
-                $arrelemarr['titel'] = $titel;
-                $statsarr[$titel] = $arrelemarr['anz'];
-                $ausgabearray[] = $arrelemarr;
-            }            
-            $anzgesamt = array_sum($statsarr);
-            $ausgabearray = array_slice($ausgabearray, 0, 20);
-            foreach($ausgabearray as $key => $val) {
-                $ausgabearray[$key]['anteil'] = floatval($ausgabearray[$key]['anz']/$anzgesamt) * 100;
-            }
-            
-        }        
-        */
         // *****************************************************************
         
         // ********************* PLZ doppelt vergeben? *********************
@@ -401,13 +345,11 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 'allebundeslaender' => $allebundeslaender,
                 'bundeslandselected' => $bundeslandselected,
                 'doppelteplzarray' => $doppelteplzberatungsstelle,
-                'beratungsstatusarr' => $beratungsstatusarr,
                 'staatenarr' => $staatenarr,
                 'berufearr' => $berufearr,
                 'filterbundesland' => $filterbundesland ?? '',
                 'filterstaat' => $staatselected,
                 'filterberuf' => $berufselected ?? '',
-                'firstcolheader' => $firstcolheader,
                 'ausgabearray' => $ausgabearray ?? '',
                 'anzgesamt' => $anzgesamt ?? '',
                 'abschlussartanmeldungen' => $abschlussartanmeldungen ?? '',

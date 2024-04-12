@@ -88,7 +88,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         
         $limitsql = $limit == 0 ? '' : ' LIMIT '.$limit;
         
-        $sql = "SELECT t.*, GROUP_CONCAT(a.deutscher_referenzberuf) deutschereferenzberufe FROM tx_iqtp13db_domain_model_teilnehmer t
+        $sql = "SELECT t.* FROM tx_iqtp13db_domain_model_teilnehmer t
 			LEFT JOIN tx_iqtp13db_domain_model_abschluss a ON a.teilnehmer = t.uid
             WHERE (t.nachname LIKE '%$name%' OR t.vorname LIKE '%$name%')
             AND (t.ort LIKE '%$ort%' OR t.plz LIKE '%$ort%')
@@ -108,41 +108,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     }
     
     /**
-     */
-    
-    /*
-    public function findAllOrder4List($beratungsstatus, $orderby, $order, $niqbid)
-    {
-        $query = $this->createQuery();
-        
-        //$berateruidarray = array();
-        //foreach($beraterdiesergruppe as $oneberater) $berateruidarray[] = $oneberater->getUid();
-        
-        // Beratungsstatus
-        if($beratungsstatus == 0 || $beratungsstatus == 1) $sqlberatungsstatus = " (beratungsstatus = 0 OR beratungsstatus = 1) ";
-        elseif($beratungsstatus == 2 || $beratungsstatus == 3) $sqlberatungsstatus = " (beratungsstatus = 2 OR beratungsstatus = 3) ";
-        else $sqlberatungsstatus = " beratungsstatus = 4 ";
-        
-        $orderby = $orderby == 'verificationDate' ? 'verification_date' : $orderby;
-        
-        $sql = "SELECT t.*, GROUP_CONCAT(a.deutscher_referenzberuf) deutschereferenzberufe, GROUP_CONCAT(a.referenzberufzugewiesen) referenzberufzugewiesen, GROUP_CONCAT(a.antragstellungvorher) antragstellungvorher
-            FROM tx_iqtp13db_domain_model_teilnehmer t
-			LEFT JOIN tx_iqtp13db_domain_model_abschluss a ON a.teilnehmer = t.uid
-            WHERE 
-            $sqlberatungsstatus
-            AND niqidberatungsstelle LIKE $niqbid
-            AND t.hidden = 0 AND t.deleted = 0
-            GROUP BY t.uid ORDER BY $orderby $order";
-
-        $query->statement($sql);
-            
-        $query = $query->execute();
-        return $query;
-    }
-    */ 
-    
-    /**
-     */
+     */    
     public function findAllOrder4List($beratungsstatus, $orderby, $order, $niqbid, $beraterdiesergruppe, $thisusergroup)
     {
         $query = $this->createQuery();

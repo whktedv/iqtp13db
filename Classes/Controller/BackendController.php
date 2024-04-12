@@ -9,6 +9,7 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Extbase\Annotation\Validate;
 
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
+use TYPO3\CMS\Core\Pagination\ArrayPaginator;
 use TYPO3\CMS\Core\Pagination\SimplePagination;
 
 use Psr\Http\Message\ResponseInterface;
@@ -398,38 +399,20 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : $currentPage;
         $paginator = new QueryResultPaginator($teilnehmer, $currentPage, $anzperpag);
+        //$paginator = new ArrayPaginator($teilnehmer, $currentPage, $anzperpag);
         $pagination = new SimplePagination($paginator);
         
         $teilnehmerpag = $paginator->getPaginatedItems();
         
         $plzberatungsstelle4tn = array();
         for($j=0; $j < count($teilnehmerpag); $j++) {
-            
             $anz = $this->teilnehmerRepository->findDublette4Angemeldet($teilnehmerpag[$j]->getNachname(), $teilnehmerpag[$j]->getVorname(), $this->niqbid);
             if($anz > 1) $teilnehmerpag[$j]->setDublette(TRUE);
+            $abschluesse[$j] = $this->abschlussRepository->findByTeilnehmer($teilnehmerpag[$j]);
             
             $plzberatungsstelle = array();
             $plzberatungsstelle = $this->userGroupRepository->getBeratungsstelle4PLZ($teilnehmerpag[$j]->getPlz(), $this->settings['beraterstoragepid']);
             $plzberatungsstelle4tn[$j] = count($plzberatungsstelle) > 0 ? $plzberatungsstelle[0]->getNiqbid() : '';
-            
-            // Berufedarstellung mit 1. \n 2. usw.
-            $berufe = $teilnehmerpag[$j]->getDeutschereferenzberufe();
-            $berufearr = explode(',', $berufe);
-            if(count($berufearr) > 1) {
-                $newberufestring = '';
-                $n = 1;
-                foreach($berufearr as $b) {
-                    if($b != '') {
-                        $newberufestring .= ($n != 1 ? "<br>" : "").$n.". ".$b;
-                        $n++;
-                    }
-                }            
-                $n = 0;
-                $teilnehmerpag[$j]->setDeutschereferenzberufe($newberufestring);
-            }
-            
-            $antragstellungvorher = explode(',',$teilnehmerpag[$j]->getAntragstellungvorher());
-            $teilnehmerpag[$j]->setAntragstellungvorher($antragstellungvorher[0]);
         }
         
         $staaten = $this->staatenRepository->findByLangisocode('de');
@@ -438,12 +421,13 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
         }
         
-        $orderchar = $order == 'ASC' ? "↓" : "↑";
+        $orderchar = $order == 'ASC' ? "↓" : "↑";        
         $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->usergroup);
         
         $this->view->assignMultiple(
             [
-                'anzgesamt' => count($teilnehmer),                
+                'anzgesamt' => count($teilnehmer),
+                'abschluesse' => $abschluesse,
                 'calleraction' => 'listangemeldet',
                 'callercontroller' => 'Backend',
                 'callerpage' => $currentPage,
@@ -457,8 +441,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'beratungsstelle' => $this->usergroup->getTitle(),
                 'niqbid' => $this->niqbid,
                 'alleberater' => $alleberater
-            ]
-            );
+            ]);
     }
     
     /**
@@ -514,6 +497,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $anzfolgekontakte = array();
         $summeberatungsdauer = array();
+        $abschluesse = array();
         
         $folgekontakte = $this->folgekontaktRepository->findAll4List($this->niqbid);
         $berufeliste = $this->berufeRepository->findAll();
@@ -521,78 +505,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         foreach ($teilnehmerpag as $key => $tn) {
             $fk4tn = $this->folgekontaktRepository->findByTeilnehmer($tn->getUid());
             $anzfolgekontakte[$key] = count($fk4tn);
-            
             $summebdauerfk = 0;
             foreach($fk4tn as $singlefk) $summebdauerfk = $summebdauerfk + floatval(str_replace(',','.',$singlefk->getBeratungsdauer()));
             $summeberatungsdauer[$key] = str_replace('.',',',floatval(str_replace(',','.',$tn->getBeratungsdauer())) + $summebdauerfk);
             
-            // Berufedarstellung mit 1. \n 2. usw.
-            $berufe = $teilnehmerpag[$key]->getDeutschereferenzberufe();
-            $berufearr = explode(',', $berufe);
-            if(count($berufearr) > 1) {
-                $newberufestring = '';
-                $n = 1;
-                foreach($berufearr as $b) {
-                    if($b != '') {
-                        $newberufestring .= ($n != 1 ? "<br>" : "").$n.". ".$b;
-                        $n++;
-                    }
-                }
-                $n = 0;
-                $teilnehmerpag[$key]->setDeutschereferenzberufe($newberufestring);
-            }
-            
-            // Berufedarstellung mit 1. \n 2. usw.
-            $berufe = $teilnehmerpag[$key]->getReferenzberufzugewiesen();
-            $berufearr = explode(',', $berufe);
-            if(count($berufearr) > 1) {
-                $newberufestring = '';
-                $n = 1;
-                foreach($berufearr as $b) {
-                    if($b == -3) {
-                        $abschluessetn = $this->abschlussRepository->findByTeilnehmer($teilnehmer);
-                        foreach($abschluessetn as $ab) {
-                            if($ab->getReferenzberufzugewiesen() == -3) {
-                                $newberufestring .= ($n != 1 ? "<br>" : "").$n.". ".$ab->getSonstigerBeruf();
-                                $n++;
-                            }
-                        }
-                    } elseif($b == -4) {
-                        $abschluessetn = $this->abschlussRepository->findByTeilnehmer($teilnehmer);
-                        foreach($abschluessetn as $ab) {
-                            if($ab->getReferenzberufzugewiesen() == -4) {
-                                $newberufestring .= ($n != 1 ? "<br>" : "").$n.". ".$ab->getNregberuf();
-                                $n++;
-                            }
-                        }
-                    } else {
-                        if($b != '') {
-                            foreach ($berufeliste as $beruf) {
-                                if($beruf->getBerufid() == $b) {
-                                    $btitel = $beruf->getTitel();
-                                }
-                            }
-                            $newberufestring .= ($n != 1 ? "<br>" : "").$n.". ".$btitel;
-                            $n++;
-                        }
-                    }
-                }
-                $n = 0;
-                $teilnehmerpag[$key]->setReferenzberufzugewiesen($newberufestring);
-            } else {
-                $b = $teilnehmerpag[$key]->getReferenzberufzugewiesen();
-                if($b != '') {
-                    foreach ($berufeliste as $beruf) {
-                        if($beruf->getBerufid() == $b) {
-                            $btitel = $beruf->getTitel();
-                            $teilnehmerpag[$key]->setReferenzberufzugewiesen($btitel);
-                        }
-                    }
-                }
-            }          
-            
-            $antragstellungvorher = explode(',',$teilnehmerpag[$key]->getAntragstellungvorher());
-            $teilnehmerpag[$key]->setAntragstellungvorher($antragstellungvorher[0]);
+            $abschluesse[$key] = $this->abschlussRepository->findByTeilnehmer($tn);
         }
         
         
@@ -872,7 +789,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'abschluesse' => $abschluesse,
                 'anzfolgekontakte' => $anzfolgekontakte,
                 'folgekontakte' => $folgekontakte,
-                'summeberatungsdauer' => $summeberatungsdauer,
+                'summeberatungsdauer' => $summeberatungsdauer ?? 0,
                 'calleraction' => 'showsearchresult',
                 'callercontroller' => 'Backend',
                 'staatenarr' => $staatenarr,
@@ -1386,7 +1303,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'berufe' => $berufeliste,
                 'filesizes' => $filesizes,
                 'speicherbelegung' => $speicherbelegung,
-                'searchparams' => $searchparams
+                'searchparams' => $searchparams ?? ''
             ]
             );
     }
@@ -1696,7 +1613,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'urleinwilligung' => $urleinwilligung,
                 'newnacherfassung' => $nacherfassung,
                 'niqbid' => $teilnehmer->getNiqidberatungsstelle(),
-                'searchparams' => $searchparams
+                'searchparams' => $searchparams ?? ''
             ]
             );
     }
@@ -1889,7 +1806,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         } else {
             $this->addFlashMessage('Bereits in NIQ übertragene Datensätze können nicht gelöscht werden.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
         }
-        $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'], 'searchparams' => $searchparams));
+        $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'], 'searchparams' => $searchparams ?? ''));
     }
     
     /**
@@ -1941,7 +1858,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
         
-        $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'], 'searchparams' => $searchparams));
+        $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'], 'searchparams' => $searchparams ?? ''));
     }
     
     /**
@@ -2041,7 +1958,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             
             $this->addFlashMessage('Einwilligungsanforderung versendet.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
             
-            $this->redirect('listangemeldet', 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer, 'callerpage' => $valArray['callerpage'], 'searchparams' => $searchparams));
+            $this->redirect('listangemeldet', 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer, 'callerpage' => $valArray['callerpage'], 'searchparams' => $searchparams ?? ''));
         }
     }     
         
@@ -2176,7 +2093,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         //********************************************************************
         
-        $this->redirect('show', 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer, 'callerpage' => $valArray['callerpage'], 'showdokumente' => '1', 'searchparams' => $searchparams));
+        $this->redirect('show', 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer, 'callerpage' => $valArray['callerpage'], 'showdokumente' => '1', 'searchparams' => $searchparams ?? ''));
     }
     
     /**

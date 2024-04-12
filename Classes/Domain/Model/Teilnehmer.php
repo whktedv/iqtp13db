@@ -568,10 +568,6 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $hidden;
     
-    /**
-     * 
-     */
-    protected $deutschereferenzberufe = '';
     
     /**
      * referenzberufezugewiesen
@@ -2302,27 +2298,6 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function setHidden($hidden) {
         $this->hidden = $hidden;
-    }
-    
-    /**
-     * Returns the deutschereferenzberufe
-     *
-     * @return string $deutschereferenzberufe
-     */
-    public function getDeutschereferenzberufe()
-    {
-        return $this->deutschereferenzberufe;
-    }
-    
-    /**
-     * Sets the deutschereferenzberufe
-     *
-     * @param string $deutschereferenzberufe
-     * @return void
-     */
-    public function setDeutschereferenzberufe(string $deutschereferenzberufe)
-    {
-        $this->deutschereferenzberufe = $deutschereferenzberufe;
     }
     
     /**
