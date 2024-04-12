@@ -410,18 +410,18 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 'firstcolheader' => $firstcolheader,
                 'ausgabearray' => $ausgabearray ?? '',
                 'anzgesamt' => $anzgesamt ?? '',
-                'abschlussartanmeldungen' => $abschlussartanmeldungen,
-                'abschlussartberatungabgeschl' => $abschlussartberatungabgeschl,
+                'abschlussartanmeldungen' => $abschlussartanmeldungen ?? '',
+                'abschlussartberatungabgeschl' => $abschlussartberatungabgeschl ?? '',
                 'arrabschlussart' => $arrabschlussart,
-                'herkunftanmeldungen' => $herkunftanmeldungen,
-                'herkunftberatungabgeschl' => $herkunftberatungabgeschl,
-                'berufeanmeldungen' => $berufeanmeldungen,
-                'berufeberatungabgeschl' => $berufeberatungabgeschl,
+                'herkunftanmeldungen' => $herkunftanmeldungen ?? '',
+                'herkunftberatungabgeschl' => $herkunftberatungabgeschl ?? '',
+                'berufeanmeldungen' => $berufeanmeldungen ?? '',
+                'berufeberatungabgeschl' => $berufeberatungabgeschl ?? '',
                 'arrgeschlecht' => $arrgeschlecht,
-                'geschlechtartanmeldungen' => $geschlechtartanmeldungen,
-                'geschlechtberatungabgeschl' => $geschlechtberatungabgeschl,
-                'lebensalteranmeldungen' => $lebensalteranmeldungen,
-                'lebensalterberatungabgeschl' => $lebensalterberatungabgeschl
+                'geschlechtartanmeldungen' => $geschlechtartanmeldungen ?? '',
+                'geschlechtberatungabgeschl' => $geschlechtberatungabgeschl ?? '',
+                'lebensalteranmeldungen' => $lebensalteranmeldungen ?? '',
+                'lebensalterberatungabgeschl' => $lebensalterberatungabgeschl ?? ''
                 
             ]
             );

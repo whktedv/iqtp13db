@@ -394,7 +394,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $teilnehmer = $this->setfilter(0, $valArray, $orderby, $order, 0, 0);
         
         // Wegen Bug in Paginator, der nicht mit Custom SQL Queryresults funktioniert, werden hier alle gefilterten Einträge auf einer Seite dargestellt. Queryresultpaginator hat dann keine Auswahl an Datensätzen, sondern alle.
-        $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 100 : 25;
+        $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 100 : 20;
         
         $currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : $currentPage;
         $paginator = new QueryResultPaginator($teilnehmer, $currentPage, $anzperpag);

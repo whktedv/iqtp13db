@@ -109,6 +109,8 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     
     /**
      */
+    
+    /*
     public function findAllOrder4List($beratungsstatus, $orderby, $order, $niqbid)
     {
         $query = $this->createQuery();
@@ -134,6 +136,63 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 
         $query->statement($sql);
             
+        $query = $query->execute();
+        return $query;
+    }
+    */ 
+    
+    /**
+     */
+    public function findAllOrder4List($beratungsstatus, $orderby, $order, $niqbid, $beraterdiesergruppe, $thisusergroup)
+    {
+        $query = $this->createQuery();
+        
+        $berateruidarray = array();
+        
+        foreach($beraterdiesergruppe as $oneberater) $berateruidarray[] = $oneberater->getUid();
+        
+        if($beratungsstatus == 0 || $beratungsstatus == 1) {
+            $query->matching(
+                $query->logicalAnd(
+                    $query->logicalOr($query->like('beratungsstatus', '0'),$query->like('beratungsstatus', '1')),
+                    $query->like('niqidberatungsstelle', $niqbid)
+                    )
+                );
+        }
+        elseif($beratungsstatus == 2 || $beratungsstatus == 3) {
+            $query->matching(
+                $query->logicalAnd(
+                    $query->logicalOr($query->like('beratungsstatus', '2'),$query->like('beratungsstatus', '3')),
+                    $query->greaterThan('verification_date', '0'),
+                    $query->like('niqidberatungsstelle', $niqbid),
+                    )
+                );
+        }
+        else {
+            $query->matching(
+                $query->logicalAnd(
+                    $query->like('beratungsstatus', '4'),
+                    $query->greaterThan('verification_date', '0'),
+                    $query->like('niqidberatungsstelle', $niqbid)
+                    )
+                );
+        }
+        
+        if($order == 'DESC') $order = \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING;
+        else $order = \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING;
+        
+        if($beratungsstatus == 0) {
+            $query->setOrderings(
+                [
+                    'beratungsstatus' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING,
+                    $orderby => $order,
+                    'uid' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING
+                ]
+                );
+        } else {
+            $query->setOrderings([ $orderby => $order ]);
+        }
+        
         $query = $query->execute();
         return $query;
     }
