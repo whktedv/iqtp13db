@@ -568,21 +568,6 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $hidden;
     
-    
-    /**
-     * referenzberufezugewiesen
-     *
-     * @var string
-     */
-    protected $referenzberufzugewiesen = '';
-    
-    /**
-     * antragstellungvorher
-     *
-     * @var int
-     */
-    protected $antragstellungvorher = 0;
-    
     /**
      * initializes this object
      *
@@ -2298,48 +2283,6 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function setHidden($hidden) {
         $this->hidden = $hidden;
-    }
-    
-    /**
-     * Returns the referenzberufzugewiesen
-     *
-     * @return string $referenzberufzugewiesen
-     */
-    public function getReferenzberufzugewiesen()
-    {
-        return $this->referenzberufzugewiesen;
-    }
-    
-    /**
-     * Sets the referenzberufzugewiesen
-     *
-     * @param string $referenzberufzugewiesen
-     * @return void
-     */
-    public function setReferenzberufzugewiesen(string $referenzberufzugewiesen)
-    {
-        $this->referenzberufzugewiesen = $referenzberufzugewiesen;
-    }
-    
-    /**
-     * Returns the antragstellungvorher
-     *
-     * @return int $antragstellungvorher
-     */
-    public function getAntragstellungvorher()
-    {
-        return $this->antragstellungvorher;
-    }
-    
-    /**
-     * Sets the antragstellungvorher
-     *
-     * @param int $antragstellungvorher
-     * @return void
-     */
-    public function setAntragstellungvorher(int $antragstellungvorher)
-    {
-        $this->antragstellungvorher = $antragstellungvorher;
     }
     
     /**

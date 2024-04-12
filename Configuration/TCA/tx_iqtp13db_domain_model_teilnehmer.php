@@ -734,24 +734,7 @@ return [
                 'eval' => 'int'
             ]
         ],      
-        'referenzberufzugewiesen' => [
-            'exclude' => true,
-            'label' => 'referenzberufzugewiesen',
-            'config' => [
-                'type' => 'input',
-                'size' => 100,
-                'eval' => 'trim'
-            ]
-        ],
-        'antragstellungvorher' => [
-            'exclude' => true,
-            'label' => 'antragstellungvorher',
-            'config' => [
-                'type' => 'input',
-                'size' => 5,
-                'eval' => 'trim'
-            ]
-        ],
+       
         
     ],
 ];
