@@ -1,0 +1,51 @@
+<table  class="tx_iqtp13db listangemeldet" >
+		<tr>
+			<th>UID</th>
+			<th><f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" /></th>
+			<th><f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" /></th>
+			<th>Anmeldedatum</th>
+			<th><f:translate key="tx_iqtp13db_domain_model_teilnehmer.plz" />/<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ort" /></th>
+			<th><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geschlecht" /></th>
+			<th><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geburtsland" /></th>
+			<th><f:translate key="tx_iqtp13db_domain_model_teilnehmer.berater" /></th>
+			<th id="resizablecol1"><f:translate key="tx_iqtp13db_domain_model_abschluss.deutscher_referenzberuf" /></th>
+			<th id="resizablecol2"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.kooperationgruppe" /></th>
+			<th> </th>
+			<th> </th>
+			<th> </th>
+		</tr>
+
+		<f:for each="{teilnehmers}" as="teilnehmer" iteration="it">
+			<f:if condition="{teilnehmer.dublette}"><f:then><tr class="dublette"></f:then>
+			<f:else><f:if condition="{teilnehmer.verificationDate} != 0"><f:then><tr class="bestaetigt"></f:then>
+				<f:else>{f:if(condition: "{teilnehmer.verificationDate} == 0 AND {teilnehmer.beratungdatum} != ''", then: '<tr class="unbestaetigt-beraten">', else: '<tr>')}</f:else>
+				</f:if>
+			</f:else>
+			</f:if>
+				<td><f:link.action action="show" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}">{teilnehmer.uid}</f:link.action></td>
+				<td><f:link.action action="show" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}">{teilnehmer.nachname}</f:link.action></td>
+				<td><f:link.action action="show" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}">{teilnehmer.vorname}</f:link.action></td>
+				<td class="tdcenter">{f:if(condition: '{teilnehmer.verificationDate} == 0', then: 'unbestätigt ({f:format.date(date: teilnehmer.crdate, format:"d.m.Y")})', else: '{f:format.date(date: teilnehmer.verificationDate, format:"d.m.Y")}')}</td>
+				<td>{teilnehmer.plz} {teilnehmer.ort}</td>
+				<td class="tdcenter">{f:if(condition: '{teilnehmer.geschlecht} == 2', then: '<span style="color: #84a0ff;">M</span>')}
+				{f:if(condition: '{teilnehmer.geschlecht} == 1', then: '<span style="color: #fe7a84;">W</span>')}
+				{f:if(condition: '{teilnehmer.geschlecht} == 3', then: '<span>D</span>')}</td>
+				<td>{iqtp13db:isint(field:'{teilnehmer.geburtsland}',then:'{staatenarr.{teilnehmer.geburtsland}}',else:'{teilnehmer.geburtsland}')}</td>
+				<td><f:if condition="{teilnehmer.berater.username} == ''"><f:then>
+						<f:link.action action="takeover" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}" title="Fall übernehmen"><img src="/fileadmin/template/images/iq-webapp_fall-uebernehmen.svg" alt="Fall übernehmen" width="30" height="30"/></f:link.action>
+					</f:then>
+					<f:else>
+						{teilnehmer.berater.username}
+					</f:else>
+					</f:if>
+				</td>
+				<td>
+					
+				</td>
+				<td>{teilnehmer.kooperationgruppe}</td>
+				<td><f:link.action action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}" title="Bearbeiten"><img src="/fileadmin/template/images/iq-webapp_bearbeiten.svg" alt="Bearbeiten" width="30" height="30"/></f:link.action></td>
+				<td><f:if condition="{teilnehmer.verificationDate} == 0"><f:then><f:link.action action="askconsent" arguments="{teilnehmer : teilnehmer}" onclick="return confirm('E-Mail senden?');" title="Einwilligung anfordern"><img src="/fileadmin/template/images/iq-webapp_einwilligung-anfordern.svg" alt="Einwilligung anfordern" width="30" height="30" class="anfordernbtnimg"/></f:link.action></f:then></f:if></td>
+				<td><f:link.action action="delete" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller}" onclick="return confirm('Wirklich löschen?');" title="Löschen"><img src="/fileadmin/template/images/iq-webapp_loeschen.svg" width="30" height="30" alt="Löschen" /></f:link.action></td>
+			</tr>
+		</f:for>
+	</table>

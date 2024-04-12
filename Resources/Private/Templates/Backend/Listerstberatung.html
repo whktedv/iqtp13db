@@ -7,7 +7,7 @@
  
 <div class="filterframe">
 	<h1>Filter</h1>
-	<f:form class="filterform" method="post" action="listerstberatung" name="listerstberatung" >
+	<f:form class="filterform" method="post" controller="Backend" action="showsearchresult" name="listerstberatung" >
 		<f:render partial="Backend/Suchfelder" arguments="{_all}" />
 	</f:form>
 </div>
@@ -56,31 +56,12 @@
 			<td>{f:if(condition: '{teilnehmer.anerkennungszuschussbeantragt} == 1', then: '<img src="/fileadmin/template/images/iq-webapp_vollstaendig-ok.svg" alt="✓" width="16" height="16"/>', else: '')}</td>
 			<td>{teilnehmer.berater.username}</td> 
 			<td><f:format.date format="d.m.Y">{teilnehmer.beratungdatum}</f:format.date></td>
+			<td><f:format.raw>{teilnehmer.deutschereferenzberufe}</f:format.raw></td>
+			<td><f:format.raw>{teilnehmer.referenzberufzugewiesen}</f:format.raw></td>
 			<td>
-				<f:for each="{abschluesse.{it.index}}" as="abschluss" iteration="iter">
-					{f:if(condition: '{abschluesse.{it.index} -> f:count()} > 1', then: '{iter.index + 1}.', else: '')} {abschluss.deutscherReferenzberuf}<br>
-				</f:for>
-			</td>
-			<td>
-				<f:for each="{abschluesse.{it.index}}" as="abschluss" iteration="iter">
-					<f:for each="{berufe}" as="beruf">
-						<f:if condition="{beruf.berufid} == {abschluss.referenzberufzugewiesen}"><f:then>
-							{f:if(condition: '{abschluesse.{it.index} -> f:count()} > 1', then: '{iter.index + 1}.', else: '')} 
-							
-							{f:if(condition: '{abschluss.referenzberufzugewiesen} == "-3"', then: '{abschluss.sonstigerberuf}')}
-							{f:if(condition: '{abschluss.referenzberufzugewiesen} == "-4"', then: '{abschluss.nregberuf}')}
-							{f:if(condition: '{abschluss.referenzberufzugewiesen} > -3', then: '{beruf.titel}')}
-							<br>
-						</f:then></f:if>
-					</f:for>						
-				</f:for>
-			</td>
-			<td>
-				<f:for each="{abschluesse.{it.index}}" as="abschluss" iteration="iter">
-					{f:if(condition: '{abschluss.antragstellungvorher} == 1', then: '<img src="/fileadmin/template/images/iq-webapp_vollstaendig-ok.svg" alt="✓" width="16" height="16"/>')}
-					{f:if(condition: '{abschluss.antragstellungvorher} == 2', then: '<img src="/fileadmin/template/images/iq-webapp_vollstaendig-ok.svg" alt="✓" width="16" height="16"/>')}
-					{f:if(condition: '{abschluss.antragstellungvorher} == 3', then: '<img src="/fileadmin/template/images/iq-webapp_vollstaendig-ok.svg" alt="✓" width="16" height="16"/>')}					
-				</f:for>					
+				{f:if(condition: '{teilnehmer.antragstellungvorher} == 1', then: '<img src="/fileadmin/template/images/iq-webapp_vollstaendig-ok.svg" alt="✓" width="16" height="16"/>')}
+				{f:if(condition: '{teilnehmer.antragstellungvorher} == 2', then: '<img src="/fileadmin/template/images/iq-webapp_vollstaendig-ok.svg" alt="✓" width="16" height="16"/>')}
+				{f:if(condition: '{teilnehmer.antragstellungvorher} == 3', then: '<img src="/fileadmin/template/images/iq-webapp_vollstaendig-ok.svg" alt="✓" width="16" height="16"/>')}					
 			</td>
 			<td>
 			<f:if condition="{teilnehmer.erstberatungabgeschlossen} > 0">

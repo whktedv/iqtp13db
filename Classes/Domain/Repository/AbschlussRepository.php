@@ -17,5 +17,11 @@ namespace Ud\Iqtp13db\Domain\Repository;
  */
 class AbschlussRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
-   
+    public function findByTnByUidarray(array $uids)
+    {
+        $q = $this->createQuery();
+        $q->matching($q->in('teilnehmer', $uids));
+       
+        return $q->execute();
+    }
 }

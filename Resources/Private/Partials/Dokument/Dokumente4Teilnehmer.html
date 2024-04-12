@@ -12,7 +12,14 @@
 			
 			<f:for each="{dokumente}" as="dokument" iteration="iter">
 					<tr>
-						<td><f:link.action action="openfile" arguments="{dokument : dokument, teilnehmer : teilnehmer}" controller="Dokument" target="_blank">{dokument.name}</f:link.action></td>
+						<td>
+							<f:if condition="{filesizes.{iter.index}} == 0"><f:then>
+								Datei {dokument.name} wurde nicht vollständig hochgeladen oder ist defekt.
+							</f:then><f:else>
+								<f:link.action action="openfile" arguments="{dokument : dokument, teilnehmer : teilnehmer}" controller="Dokument" target="_blank">{dokument.name}</f:link.action>
+							</f:else>
+							</f:if>
+						</td>
 						<td>{filesizes.{iter.index}}</td>
 						<f:form id="dokumenteform1" method="post" action="updateBackend" controller="Dokument" arguments="{teilnehmer:teilnehmer, calleraction : calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : thisaction}" name="dokument" object="{dokument}" enctype="multipart/form-data" >
 							<td><f:form.textfield property="beschreibung" value="{dokument.beschreibung}" size="50" /></td>

@@ -556,9 +556,36 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $dublette = FALSE;
     
     /**
+     * modul
+     *
+     * @var int
+     */
+    protected $modul = 0;
+    
+    
+    /**
      * @var boolean
      */
     protected $hidden;
+    
+    /**
+     * 
+     */
+    protected $deutschereferenzberufe = '';
+    
+    /**
+     * referenzberufezugewiesen
+     *
+     * @var string
+     */
+    protected $referenzberufzugewiesen = '';
+    
+    /**
+     * antragstellungvorher
+     *
+     * @var int
+     */
+    protected $antragstellungvorher = 0;
     
     /**
      * initializes this object
@@ -2234,6 +2261,26 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->dublette = $dublette;
     }
     
+    /**
+     * Returns the modul
+     *
+     * @return int $modul
+     */
+    public function getModul()
+    {
+        return $this->modul;
+    }
+    
+    /**
+     * Sets the modul
+     *
+     * @param int $modul
+     * @return void
+     */
+    public function setModul($modul)
+    {
+        $this->modul = $modul;
+    }
     
     /**
      * @return boolean $hidden
@@ -2255,6 +2302,69 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function setHidden($hidden) {
         $this->hidden = $hidden;
+    }
+    
+    /**
+     * Returns the deutschereferenzberufe
+     *
+     * @return string $deutschereferenzberufe
+     */
+    public function getDeutschereferenzberufe()
+    {
+        return $this->deutschereferenzberufe;
+    }
+    
+    /**
+     * Sets the deutschereferenzberufe
+     *
+     * @param string $deutschereferenzberufe
+     * @return void
+     */
+    public function setDeutschereferenzberufe(string $deutschereferenzberufe)
+    {
+        $this->deutschereferenzberufe = $deutschereferenzberufe;
+    }
+    
+    /**
+     * Returns the referenzberufzugewiesen
+     *
+     * @return string $referenzberufzugewiesen
+     */
+    public function getReferenzberufzugewiesen()
+    {
+        return $this->referenzberufzugewiesen;
+    }
+    
+    /**
+     * Sets the referenzberufzugewiesen
+     *
+     * @param string $referenzberufzugewiesen
+     * @return void
+     */
+    public function setReferenzberufzugewiesen(string $referenzberufzugewiesen)
+    {
+        $this->referenzberufzugewiesen = $referenzberufzugewiesen;
+    }
+    
+    /**
+     * Returns the antragstellungvorher
+     *
+     * @return int $antragstellungvorher
+     */
+    public function getAntragstellungvorher()
+    {
+        return $this->antragstellungvorher;
+    }
+    
+    /**
+     * Sets the antragstellungvorher
+     *
+     * @param int $antragstellungvorher
+     * @return void
+     */
+    public function setAntragstellungvorher(int $antragstellungvorher)
+    {
+        $this->antragstellungvorher = $antragstellungvorher;
     }
     
     /**

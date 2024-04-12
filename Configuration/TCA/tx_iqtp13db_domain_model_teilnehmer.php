@@ -734,6 +734,33 @@ return [
                 'eval' => 'int'
             ]
         ],
-    
+        'deutschereferenzberufe' => [
+            'exclude' => true,
+            'label' => 'deutschereferenzberufe',
+            'config' => [
+                'type' => 'input',
+                'size' => 100,
+                'eval' => 'trim'
+            ]
+        ],
+        'referenzberufzugewiesen' => [
+            'exclude' => true,
+            'label' => 'referenzberufzugewiesen',
+            'config' => [
+                'type' => 'input',
+                'size' => 100,
+                'eval' => 'trim'
+            ]
+        ],
+        'antragstellungvorher' => [
+            'exclude' => true,
+            'label' => 'antragstellungvorher',
+            'config' => [
+                'type' => 'input',
+                'size' => 5,
+                'eval' => 'trim'
+            ]
+        ],
+        
     ],
 ];

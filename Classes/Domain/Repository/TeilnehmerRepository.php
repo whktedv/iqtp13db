@@ -24,10 +24,10 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      * Finds Teilnehmer by the specified name, ort and/or geburtsland
      */
-    public function searchTeilnehmer($type, $filterArray, $verstecktundgelöscht, $niqbid, $berufearr, $orderby, $order, $beraterdiesergruppe, $thisusergroup)
+    public function searchTeilnehmer($type, $filterArray, $verstecktundgelöscht, $niqbid, $berufearr, $orderby, $order, $beraterdiesergruppe, $thisusergroup, $limit)
     {
-        $berateruidarray = array();        
-        foreach($beraterdiesergruppe as $oneberater) $berateruidarray[] = $oneberater->getUid();
+        //$berateruidarray = array();        
+        //foreach($beraterdiesergruppe as $oneberater) $berateruidarray[] = $oneberater->getUid();
                 
         $uid = $filterArray['uid'] == '' ? '%' : $filterArray['uid'];
         $name = $filterArray['name'] == '' ? '%' : $filterArray['name'];
@@ -80,11 +80,15 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             $query->getQuerySettings()->setIgnoreEnableFields(TRUE);
             $query->getQuerySettings()->setEnableFieldsToBeIgnored(array('disabled', 'hidden'));
             $hidden = " AND t.hidden = 1 ";
-        } else {
+        } elseif($verstecktundgelöscht == 0) {
             $hidden = " AND t.hidden = 0 ";
+        } else {
+            $hidden = ""; // für Suche ist es egal, ob hidden or nicht
         }
-       
-        $sql = "SELECT t.* FROM tx_iqtp13db_domain_model_teilnehmer t
+        
+        $limitsql = $limit == 0 ? '' : ' LIMIT '.$limit;
+        
+        $sql = "SELECT t.*, GROUP_CONCAT(a.deutscher_referenzberuf) deutschereferenzberufe FROM tx_iqtp13db_domain_model_teilnehmer t
 			LEFT JOIN tx_iqtp13db_domain_model_abschluss a ON a.teilnehmer = t.uid
             WHERE (t.nachname LIKE '%$name%' OR t.vorname LIKE '%$name%')
             AND (t.ort LIKE '%$ort%' OR t.plz LIKE '%$ort%')
@@ -96,63 +100,40 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             AND $sqlberatungsstatus $hidden
             AND niqidberatungsstelle LIKE $niqbid
             AND t.uid like '$uid' 
-            GROUP BY t.uid ORDER BY $orderby $order";
+            AND t.deleted = 0
+            GROUP BY t.uid ORDER BY $orderby $order $limitsql";
+
         $query->statement($sql);
         return $query->execute();
     }
     
     /**
      */
-    public function findAllOrder4List($beratungsstatus, $orderby, $order, $niqbid, $beraterdiesergruppe, $thisusergroup)
+    public function findAllOrder4List($beratungsstatus, $orderby, $order, $niqbid)
     {
         $query = $this->createQuery();
         
-        $berateruidarray = array();
+        //$berateruidarray = array();
+        //foreach($beraterdiesergruppe as $oneberater) $berateruidarray[] = $oneberater->getUid();
         
-        foreach($beraterdiesergruppe as $oneberater) $berateruidarray[] = $oneberater->getUid();
+        // Beratungsstatus
+        if($beratungsstatus == 0 || $beratungsstatus == 1) $sqlberatungsstatus = " (beratungsstatus = 0 OR beratungsstatus = 1) ";
+        elseif($beratungsstatus == 2 || $beratungsstatus == 3) $sqlberatungsstatus = " (beratungsstatus = 2 OR beratungsstatus = 3) ";
+        else $sqlberatungsstatus = " beratungsstatus = 4 ";
         
-        if($beratungsstatus == 0 || $beratungsstatus == 1) {
-            $query->matching(
-                $query->logicalAnd(
-                    $query->logicalOr($query->like('beratungsstatus', '0'),$query->like('beratungsstatus', '1')),
-                    $query->like('niqidberatungsstelle', $niqbid)                    
-                )
-            );
-        }
-        elseif($beratungsstatus == 2 || $beratungsstatus == 3) {
-            $query->matching(
-                $query->logicalAnd(
-                    $query->logicalOr($query->like('beratungsstatus', '2'),$query->like('beratungsstatus', '3')),
-                    $query->greaterThan('verification_date', '0'), 
-                    $query->like('niqidberatungsstelle', $niqbid),                        
-                )
-            );
-        }
-        else {
-            $query->matching(
-                $query->logicalAnd(
-                    $query->like('beratungsstatus', '4'),
-                    $query->greaterThan('verification_date', '0'), 
-                    $query->like('niqidberatungsstelle', $niqbid)
-                )
-            );
-        }
+        $orderby = $orderby == 'verificationDate' ? 'verification_date' : $orderby;
         
-        if($order == 'DESC') $order = \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING;
-        else $order = \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING;
-        
-        if($beratungsstatus == 0) {
-            $query->setOrderings(
-                [
-                    'beratungsstatus' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING,
-                    $orderby => $order,
-                    'uid' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING
-                ]
-                );
-        } else {
-            $query->setOrderings([ $orderby => $order ]);
-        }
-        
+        $sql = "SELECT t.*, GROUP_CONCAT(a.deutscher_referenzberuf) deutschereferenzberufe, GROUP_CONCAT(a.referenzberufzugewiesen) referenzberufzugewiesen, GROUP_CONCAT(a.antragstellungvorher) antragstellungvorher
+            FROM tx_iqtp13db_domain_model_teilnehmer t
+			LEFT JOIN tx_iqtp13db_domain_model_abschluss a ON a.teilnehmer = t.uid
+            WHERE 
+            $sqlberatungsstatus
+            AND niqidberatungsstelle LIKE $niqbid
+            AND t.hidden = 0 AND t.deleted = 0
+            GROUP BY t.uid ORDER BY $orderby $order";
+
+        $query->statement($sql);
+            
         $query = $query->execute();
         return $query;
     }

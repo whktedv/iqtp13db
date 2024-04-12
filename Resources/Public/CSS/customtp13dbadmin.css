@@ -176,6 +176,10 @@ p.alert-message {
     background-color: #ffb30024;
 }
 
+.tx-iqtp13db table .geloescht {
+    background-color: #ee05058c !important;
+}
+
 .tx-iqtp13db .tablelinkbuttons {
   background-color: #4E638D;
   color: #fff;

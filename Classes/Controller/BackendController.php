@@ -391,7 +391,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'listangemeldetorder', $order);
         }
         
-        $teilnehmer = $this->setfilter(0, $valArray, $orderby, $order, 0);
+        $teilnehmer = $this->setfilter(0, $valArray, $orderby, $order, 0, 0);
         
         // Wegen Bug in Paginator, der nicht mit Custom SQL Queryresults funktioniert, werden hier alle gefilterten Einträge auf einer Seite dargestellt. Queryresultpaginator hat dann keine Auswahl an Datensätzen, sondern alle.
         $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 100 : 25;
@@ -402,16 +402,34 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $teilnehmerpag = $paginator->getPaginatedItems();
         
-        $abschluesse = array();
         $plzberatungsstelle4tn = array();
         for($j=0; $j < count($teilnehmerpag); $j++) {
+            
             $anz = $this->teilnehmerRepository->findDublette4Angemeldet($teilnehmerpag[$j]->getNachname(), $teilnehmerpag[$j]->getVorname(), $this->niqbid);
             if($anz > 1) $teilnehmerpag[$j]->setDublette(TRUE);
-            $abschluesse[$j] = $this->abschlussRepository->findByTeilnehmer($teilnehmerpag[$j]);
             
             $plzberatungsstelle = array();
             $plzberatungsstelle = $this->userGroupRepository->getBeratungsstelle4PLZ($teilnehmerpag[$j]->getPlz(), $this->settings['beraterstoragepid']);
             $plzberatungsstelle4tn[$j] = count($plzberatungsstelle) > 0 ? $plzberatungsstelle[0]->getNiqbid() : '';
+            
+            // Berufedarstellung mit 1. \n 2. usw.
+            $berufe = $teilnehmerpag[$j]->getDeutschereferenzberufe();
+            $berufearr = explode(',', $berufe);
+            if(count($berufearr) > 1) {
+                $newberufestring = '';
+                $n = 1;
+                foreach($berufearr as $b) {
+                    if($b != '') {
+                        $newberufestring .= ($n != 1 ? "<br>" : "").$n.". ".$b;
+                        $n++;
+                    }
+                }            
+                $n = 0;
+                $teilnehmerpag[$j]->setDeutschereferenzberufe($newberufestring);
+            }
+            
+            $antragstellungvorher = explode(',',$teilnehmerpag[$j]->getAntragstellungvorher());
+            $teilnehmerpag[$j]->setAntragstellungvorher($antragstellungvorher[0]);
         }
         
         $staaten = $this->staatenRepository->findByLangisocode('de');
@@ -425,8 +443,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $this->view->assignMultiple(
             [
-                'anzgesamt' => count($teilnehmer),
-                'abschluesse' => $abschluesse,
+                'anzgesamt' => count($teilnehmer),                
                 'calleraction' => 'listangemeldet',
                 'callercontroller' => 'Backend',
                 'callerpage' => $currentPage,
@@ -484,7 +501,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'listerstberatungorder', $order);
         }
         
-        $teilnehmer = $this->setfilter(3, $valArray, $orderby, $order, 0);
+        $teilnehmer = $this->setfilter(3, $valArray, $orderby, $order, 0, 0);
         
         // Wegen Bug in Paginator, der nicht mit Custom SQL Queryresults funktioniert, werden hier alle gefilterten Einträge auf einer Seite dargestellt. Queryresultpaginator hat dann keine Auswahl an Datensätzen, sondern alle.
         $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 250 : 25;
@@ -497,22 +514,88 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $anzfolgekontakte = array();
         $summeberatungsdauer = array();
-        $abschluesse = array();
         
         $folgekontakte = $this->folgekontaktRepository->findAll4List($this->niqbid);
+        $berufeliste = $this->berufeRepository->findAll();
         
         foreach ($teilnehmerpag as $key => $tn) {
             $fk4tn = $this->folgekontaktRepository->findByTeilnehmer($tn->getUid());
             $anzfolgekontakte[$key] = count($fk4tn);
-
+            
             $summebdauerfk = 0;
             foreach($fk4tn as $singlefk) $summebdauerfk = $summebdauerfk + floatval(str_replace(',','.',$singlefk->getBeratungsdauer()));
             $summeberatungsdauer[$key] = str_replace('.',',',floatval(str_replace(',','.',$tn->getBeratungsdauer())) + $summebdauerfk);
             
-            $abschluesse[$key] = $this->abschlussRepository->findByTeilnehmer($tn);
+            // Berufedarstellung mit 1. \n 2. usw.
+            $berufe = $teilnehmerpag[$key]->getDeutschereferenzberufe();
+            $berufearr = explode(',', $berufe);
+            if(count($berufearr) > 1) {
+                $newberufestring = '';
+                $n = 1;
+                foreach($berufearr as $b) {
+                    if($b != '') {
+                        $newberufestring .= ($n != 1 ? "<br>" : "").$n.". ".$b;
+                        $n++;
+                    }
+                }
+                $n = 0;
+                $teilnehmerpag[$key]->setDeutschereferenzberufe($newberufestring);
+            }
+            
+            // Berufedarstellung mit 1. \n 2. usw.
+            $berufe = $teilnehmerpag[$key]->getReferenzberufzugewiesen();
+            $berufearr = explode(',', $berufe);
+            if(count($berufearr) > 1) {
+                $newberufestring = '';
+                $n = 1;
+                foreach($berufearr as $b) {
+                    if($b == -3) {
+                        $abschluessetn = $this->abschlussRepository->findByTeilnehmer($teilnehmer);
+                        foreach($abschluessetn as $ab) {
+                            if($ab->getReferenzberufzugewiesen() == -3) {
+                                $newberufestring .= ($n != 1 ? "<br>" : "").$n.". ".$ab->getSonstigerBeruf();
+                                $n++;
+                            }
+                        }
+                    } elseif($b == -4) {
+                        $abschluessetn = $this->abschlussRepository->findByTeilnehmer($teilnehmer);
+                        foreach($abschluessetn as $ab) {
+                            if($ab->getReferenzberufzugewiesen() == -4) {
+                                $newberufestring .= ($n != 1 ? "<br>" : "").$n.". ".$ab->getNregberuf();
+                                $n++;
+                            }
+                        }
+                    } else {
+                        if($b != '') {
+                            foreach ($berufeliste as $beruf) {
+                                if($beruf->getBerufid() == $b) {
+                                    $btitel = $beruf->getTitel();
+                                }
+                            }
+                            $newberufestring .= ($n != 1 ? "<br>" : "").$n.". ".$btitel;
+                            $n++;
+                        }
+                    }
+                }
+                $n = 0;
+                $teilnehmerpag[$key]->setReferenzberufzugewiesen($newberufestring);
+            } else {
+                $b = $teilnehmerpag[$key]->getReferenzberufzugewiesen();
+                if($b != '') {
+                    foreach ($berufeliste as $beruf) {
+                        if($beruf->getBerufid() == $b) {
+                            $btitel = $beruf->getTitel();
+                            $teilnehmerpag[$key]->setReferenzberufzugewiesen($btitel);
+                        }
+                    }
+                }
+            }          
+            
+            $antragstellungvorher = explode(',',$teilnehmerpag[$key]->getAntragstellungvorher());
+            $teilnehmerpag[$key]->setAntragstellungvorher($antragstellungvorher[0]);
         }
         
-        $berufeliste = $this->berufeRepository->findAll();
+        
         $staaten = $this->staatenRepository->findByLangisocode('de');
         unset($staaten[200]);
         foreach($staaten as $staat) {
@@ -528,7 +611,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'anzfolgekontakte' => $anzfolgekontakte,
                 'folgekontakte' => $folgekontakte,
                 'summeberatungsdauer' => $summeberatungsdauer,
-                'abschluesse' => $abschluesse,
                 'calleraction' => 'listerstberatung',
                 'callercontroller' => 'Backend',
                 'callerpage' => $currentPage,
@@ -586,7 +668,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'listarchivorder', $order);
         }
         
-        $teilnehmer = $this->setfilter(4, $valArray, $orderby, $order, 0);
+        $teilnehmer = $this->setfilter(4, $valArray, $orderby, $order, 0, 0);
         
         // Wegen Bug in Paginator, der nicht mit Custom SQL Queryresults funktioniert, werden hier alle gefilterten Einträge auf einer Seite dargestellt. Queryresultpaginator hat dann keine Auswahl an Datensätzen, sondern alle.
         $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 250 : 25;
@@ -671,7 +753,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'listdeletedorder', $order);
         }
                
-        $teilnehmer = $this->setfilter(999, $valArray, $orderby, $order, 1);
+        $teilnehmer = $this->setfilter(999, $valArray, $orderby, $order, 1, 0);
         
         // Wegen Bug in Paginator, der nicht mit Custom SQL Queryresults funktioniert, werden hier alle gefilterten Einträge auf einer Seite dargestellt. Queryresultpaginator hat dann keine Auswahl an Datensätzen, sondern alle.
         $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 250 : 25;
@@ -714,6 +796,71 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'niqbid' => $this->niqbid
             ]
             );
+    }
+    
+    /**
+     * action showsearchresult
+     *
+     * @return void
+     */
+    public function showsearchresultAction()
+    {
+        $valArray = $this->request->getArguments();
+        
+        $alleteilnehmer = $this->setfilter(999, $valArray, "beratungsstatus DESC, uid ", "DESC", -1, 50);
+        
+        $folgekontakte = $this->folgekontaktRepository->findAll4List($this->niqbid);
+        
+        $abschluesse = array();
+        $anzfolgekontakte = array();
+        foreach($alleteilnehmer as $key => $teilnehmer) {
+            // Dublettenprüfung
+            $anz = $this->teilnehmerRepository->findDublette4Angemeldet($teilnehmer->getNachname(),$teilnehmer->getVorname(), $this->niqbid);
+            if($anz > 1) $alleteilnehmer[$key]->setDublette(TRUE);
+            
+            // Modul
+            $beratungsstatus = $teilnehmer->getBeratungsstatus();
+            if($teilnehmer->getHidden() == 1) $alleteilnehmer[$key]->setModul("Gelöscht");
+            elseif($beratungsstatus == 0 || $beratungsstatus == 1) $alleteilnehmer[$key]->setModul("Angemeldet");
+            elseif($beratungsstatus == 2 || $beratungsstatus == 3) $alleteilnehmer[$key]->setModul("Erstberatung");
+            else $alleteilnehmer[$key]->setModul("Archiv");
+            
+            // Abschlüsse
+            $abschluesse[$teilnehmer->getUid()] = $this->abschlussRepository->findByTeilnehmer($teilnehmer);
+            
+            if($teilnehmer->getBeratungsstatus() > 1) {
+                $fk4tn = $this->folgekontaktRepository->findByTeilnehmer($teilnehmer);
+                $anzfolgekontakte[$teilnehmer->getUid()] = count($fk4tn);
+                $summebdauerfk = 0;
+                foreach($fk4tn as $singlefk) $summebdauerfk = $summebdauerfk + floatval(str_replace(',','.',$singlefk->getBeratungsdauer()));
+                $summeberatungsdauer[$teilnehmer->getUid()] = str_replace('.',',',floatval(str_replace(',','.',$teilnehmer->getBeratungsdauer())) + $summebdauerfk);
+            }
+        }
+        //DebuggerUtility::var_dump($anzfolgekontakte);
+        
+        $berufeliste = $this->berufeRepository->findAll();
+        $staaten = $this->staatenRepository->findByLangisocode('de');
+        unset($staaten[200]);
+        foreach($staaten as $staat) {
+            $staatenarr[$staat->getStaatid()] = $staat->getTitel();
+        }
+        
+        $this->view->assignMultiple(
+            [
+                'anzgesamt' => count($alleteilnehmer),
+                'abschluesse' => $abschluesse,
+                'anzfolgekontakte' => $anzfolgekontakte,
+                'folgekontakte' => $folgekontakte,
+                'summeberatungsdauer' => $summeberatungsdauer,
+                'calleraction' => 'showsearchresult',
+                'callercontroller' => 'Backend',
+                'staatenarr' => $staatenarr,
+                'beratungsstelle' => $this->usergroup->getTitle(),
+                'niqbid' => $this->niqbid,
+                'berufe' => $berufeliste,
+                'teilnehmers' => $alleteilnehmer,
+            ]
+        );
     }
     
     /**
@@ -949,6 +1096,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                         
                         $abreferenzberufzugewiesen = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'referenzberufzugewiesen');
                         $rows[$x]['Abschluss'.$y.' Referenzberufzugewiesen'] = $abreferenzberufzugewiesen == '' ? '-' : $arrberufe[$abreferenzberufzugewiesen];
+                        $rows[$x]['Abschluss'.$y.' SonstigerBeruf'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'sonstigerberuf');
+                        $rows[$x]['Abschluss'.$y.' NichtreglementierterBeruf'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'nregberuf');
                         
                         $rows[$x]['Abschluss'.$y.' Abschlussart'] = '';
                         foreach (\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'abschlussart') as $atn) $rows[$x]['Abschluss'.$y.' Abschlussart'] .= $atn == '' ? '' : $arrabschlussart[$atn]." ";
@@ -964,6 +1113,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                         $rows[$x]['Abschluss'.$y.' Ausbildungsinstitution'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'ausbildungsinstitution');
                         $rows[$x]['Abschluss'.$y.' Berufserfahrung'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'berufserfahrung');
                         $rows[$x]['Abschluss'.$y.' Wunschberuf'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'wunschberuf');
+                        $rows[$x]['Abschluss'.$y.' DeutscherReferenzberuf'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'deutscher_referenzberuf');
                         
                         $abantragstellungerfolgt = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'antragstellungerfolgt');
                         $rows[$x]['Abschluss'.$y.' Antragstellungerfolgt'] = $abantragstellungerfolgt == 0 ? '-' : $arrantragstellungerfolgt[$abantragstellungerfolgt];
@@ -1017,6 +1167,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     'Erstberatungabgeschlossen' => 'string',
                     'Einwilligung Infos' => 'string',
                     'Abschluss1 Referenzberuf zugewiesen' => 'string',
+                    'Abschluss1 Referenzberuf - sonstiger Beruf' => 'string',
+                    'Abschluss1 Referenzberuf - nicht reglementierter Beruf' => 'string',                    
                     'Abschluss1 Abschlussart' => 'string',
                     'Abschluss1 Erwerbsland' => 'string',
                     'Abschluss1 Abschlussjahr' => 'string',
@@ -1026,8 +1178,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     'Abschluss1 Ausbildungsinstitution' => 'string',
                     'Abschluss1 Berufserfahrung' => 'string',
                     'Abschluss1 Wunschberuf' => 'string',
+                    'Abschluss1 Deutscher Referenzberuf' => 'string',
                     'Abschluss1 Antragstellung erfolgt' => 'string',
                     'Abschluss2 Referenzberuf zugewiesen' => 'string',
+                    'Abschluss2 Referenzberuf - sonstiger Beruf' => 'string',
+                    'Abschluss2 Referenzberuf - nicht reglementierter Beruf' => 'string',
                     'Abschluss2 Abschlussart' => 'string',
                     'Abschluss2 Erwerbsland' => 'string',
                     'Abschluss2 Abschlussjahr' => 'string',
@@ -1037,8 +1192,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     'Abschluss2 Ausbildungsinstitution' => 'string',
                     'Abschluss2 Berufserfahrung' => 'string',
                     'Abschluss2 Wunschberuf' => 'string',
+                    'Abschluss2 Deutscher Referenzberuf' => 'string',
                     'Abschluss2 Antragstellung erfolgt' => 'string',
                     'Abschluss3 Referenzberuf zugewiesen' => 'string',
+                    'Abschluss3 Referenzberuf - sonstiger Beruf' => 'string',
+                    'Abschluss3 Referenzberuf - nicht reglementierter Beruf' => 'string',
                     'Abschluss3 Abschlussart' => 'string',
                     'Abschluss3 Erwerbsland' => 'string',
                     'Abschluss3 Abschlussjahr' => 'string',
@@ -1048,8 +1206,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     'Abschluss3 Ausbildungsinstitution' => 'string',
                     'Abschluss3 Berufserfahrung' => 'string',
                     'Abschluss3 Wunschberuf' => 'string',
+                    'Abschluss3 Deutscher Referenzberuf' => 'string',
                     'Abschluss3 Antragstellung erfolgt' => 'string',
                     'Abschluss4 Referenzberuf zugewiesen' => 'string',
+                    'Abschluss4 Referenzberuf - sonstiger Beruf' => 'string',
+                    'Abschluss4 Referenzberuf - nicht reglementierter Beruf' => 'string',
                     'Abschluss4 Abschlussart' => 'string',
                     'Abschluss4 Erwerbsland' => 'string',
                     'Abschluss4 Abschlussjahr' => 'string',
@@ -1059,6 +1220,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     'Abschluss4 Ausbildungsinstitution' => 'string',
                     'Abschluss4 Berufserfahrung' => 'string',
                     'Abschluss4 Wunschberuf' => 'string',
+                    'Abschluss4 Deutscher Referenzberuf' => 'string',
                     'Abschluss4 Antragstellung erfolgt' => 'string'
                 ];
                
@@ -1172,7 +1334,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $filesizesum = 0;
         foreach($dokumente as $key => $dok) {
             $dokfs = $dok->getFilesize($folder) ?? 0;
-            $filesizes[$key] = $this->generalhelper->human_filesize($dokfs, 1);
+            $filesizes[$key] = $dokfs == 0 ? 0 : $this->generalhelper->human_filesize($dokfs, 1);
             $filesizesum += $dokfs;
         }
         $speicherbelegung = intval(($filesizesum/31457280)*100);
@@ -2069,7 +2231,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     /**
      * Set Filter
      */
-    function setfilter(int $type, array $valArray, $orderby, $order, $deleted) {
+    function setfilter(int $type, array $valArray, $orderby, $order, $deleted, $limit) {
         // FILTER
         $beraterdiesergruppe = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->usergroup);
         
@@ -2092,8 +2254,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             }
         } else {
             $berufearr = $this->berufeRepository->findAll();
-            
-            $teilnehmers = $this->teilnehmerRepository->searchTeilnehmer($type, $f, $deleted, $this->niqbid, $berufearr, $orderby, $order, $beraterdiesergruppe, $this->usergroup);
+            if($limit > 0) {
+                $teilnehmers = $this->teilnehmerRepository->searchTeilnehmer($type, $f, $deleted, $this->niqbid, $berufearr, $orderby, $order, $beraterdiesergruppe, $this->usergroup, $limit);
+            } else {
+                $teilnehmers = $this->teilnehmerRepository->searchTeilnehmer($type, $f, $deleted, $this->niqbid, $berufearr, $orderby, $order, $beraterdiesergruppe, $this->usergroup, $limit);
+            }            
             //if($this->user['username'] == 'admin') DebuggerUtility::var_dump($teilnehmers);
             $this->view->assign('filteruid', $f['uid']);
             $this->view->assign('filtername', $f['name']);
