@@ -411,6 +411,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $teilnehmerpag = $paginator->getPaginatedItems();
         
         $plzberatungsstelle4tn = array();
+        $abschluesse = array();
         for($j=0; $j < count($teilnehmerpag); $j++) {
             $anz = $this->teilnehmerRepository->findDublette4Angemeldet($teilnehmerpag[$j]->getNachname(), $teilnehmerpag[$j]->getVorname(), $this->niqbid);
             if($anz > 1) $teilnehmerpag[$j]->setDublette(TRUE);
