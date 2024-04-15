@@ -60,4 +60,8 @@ Updates 12.04.2024
 - Export um Felder "deutscher Referenzberuf", "Sonstiger Beruf" und "nicht reglementierter Beruf" erweitert
 - Statistik-Modul optimiert
 
+Update 15.04.2024
+- Suche wieder wie vor 12.04., aber angepasst (nicht mehr Filtermodus)
+ 
+
 Neu:

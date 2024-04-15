@@ -1,9 +1,16 @@
 <?php
 namespace Ud\Iqtp13db\Domain\Repository;
-use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+
+use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+
+use \TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
+use \TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
+
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
-  
+
 /***
  *
  * This file is part of the "IQ Webapp Anerkennungserstberatung" Extension for TYPO3 CMS.
@@ -20,91 +27,150 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
  */
 class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
-    
     /**
      * Finds Teilnehmer by the specified name, ort and/or geburtsland
      */
     public function searchTeilnehmer($type, $filterArray, $verstecktundgelöscht, $niqbid, $berufearr, $orderby, $order, $beraterdiesergruppe, $thisusergroup, $limit)
     {
-        //$berateruidarray = array();        
-        //foreach($beraterdiesergruppe as $oneberater) $berateruidarray[] = $oneberater->getUid();
-                
-        $uid = $filterArray['uid'] == '' ? '%' : $filterArray['uid'];
-        $name = $filterArray['name'] == '' ? '%' : $filterArray['name'];
-        $ort = $filterArray['ort'] == '' ? '%' : $filterArray['ort'];
-        $land = $filterArray['land'] == '' ? '%' : $filterArray['land'];
-        $berater = $filterArray['berater'] == '' ? '' : " AND t.berater LIKE '".$filterArray['berater']."'";
-        $fberuf = $filterArray['beruf']; // == '' ? '%' : $filterArray['beruf'];
-        $gruppe = $filterArray['gruppe'] == '' ? '%' : $filterArray['gruppe'];
-        $fbescheid = $filterArray['bescheid'] == '' ? '%' : $filterArray['bescheid'];
+        $uid = $filterArray['uid'];
+        $name = $filterArray['name'];
+        $ort = $filterArray['ort'];
+        $land = $filterArray['land'];
+        $berater = $filterArray['berater'];
+        $gruppe = $filterArray['gruppe'];
+        $fberuf = $filterArray['beruf'];        
+        $fbescheid = $filterArray['bescheid'];
         
-        $orderby = $orderby == 'verificationDate' ? 'verification_date' : $orderby;
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_iqtp13db_domain_model_teilnehmer');
         
-        // Beratungsstatus
-        if($type == 0 || $type == 1) $sqlberatungsstatus = " (beratungsstatus = 0 OR beratungsstatus = 1) ";
-        elseif($type == 2 || $type == 3) $sqlberatungsstatus = " (beratungsstatus = 2 OR beratungsstatus = 3) ";
-        elseif($type == 999) $sqlberatungsstatus = " beratungsstatus LIKE '%' ";
-        else $sqlberatungsstatus = " beratungsstatus = 4 ";
-                
-        // Beruf
+        $whereExpressions = array();
+        $orwhereExpressionsName = array();
+        $orwhereExpressionsOrt = array();
+        $andwhereExpressionAntrag = array();
+        $orwhereExpressionsBeratungsstatus = array();
+        $orwhereExpressionsBeruf = array();
+        
+        $whereExpressions = [
+            $queryBuilder->expr()->eq('niqidberatungsstelle', $queryBuilder->createNamedParameter($niqbid, Connection::PARAM_INT)),
+            //$queryBuilder->expr()->eq('tx_iqtp13db_domain_model_teilnehmer.deleted', $queryBuilder->createNamedParameter(0, Connection::PARAM_INT))
+        ];
+        
+        if($uid != '') {
+            $whereExpressions[] = $queryBuilder->expr()->eq('tx_iqtp13db_domain_model_teilnehmer.uid', $queryBuilder->createNamedParameter($uid, Connection::PARAM_INT));
+        }
+        if($name != '') {
+            $orwhereExpressionsName = [
+                $queryBuilder->expr()->like('nachname', $queryBuilder->createNamedParameter('%' . $queryBuilder->escapeLikeWildcards($name) . '%')),
+                $queryBuilder->expr()->like('vorname', $queryBuilder->createNamedParameter('%' . $queryBuilder->escapeLikeWildcards($name) . '%'))
+            ];
+        }
+        if($ort != '') {
+            $orwhereExpressionsOrt = [
+                $queryBuilder->expr()->like('ort', $queryBuilder->createNamedParameter('%' . $queryBuilder->escapeLikeWildcards($ort) . '%')),
+                $queryBuilder->expr()->like('plz', $queryBuilder->createNamedParameter('%' . $queryBuilder->escapeLikeWildcards($ort) . '%'))
+            ];
+        }
+        if($land != '') {
+            $whereExpressions[] = $queryBuilder->expr()->like('geburtsland', $queryBuilder->createNamedParameter('%' . $queryBuilder->escapeLikeWildcards($land) . '%'));
+        }
+        if($berater != '') {
+            $whereExpressions[] = $queryBuilder->expr()->eq('tx_iqtp13db_domain_model_teilnehmer.berater', $queryBuilder->createNamedParameter($berater, Connection::PARAM_INT));
+        }
+        if($gruppe != '') {
+            $whereExpressions[] = $queryBuilder->expr()->like('kooperationgruppe', $queryBuilder->createNamedParameter('%' . $queryBuilder->escapeLikeWildcards($gruppe) . '%'));
+        }
+        
+        // Beruf        
         if($type != 0) {
             if($fberuf != '') {
                 foreach ($berufearr as $beruf) {
                     if (strpos(strtolower($beruf->getTitel()), strtolower($fberuf)) !== false) { $results[] = $beruf->getBerufid(); }
                 }
                 if(!empty($results)) {
-                    $beruf = " a.referenzberufzugewiesen IN ('".implode("','", $results)."') ";
+                    $whereExpressions[] = $queryBuilder->expr()->in('a.referenzberufzugewiesen', $queryBuilder->createNamedParameter($results, Connection::PARAM_INT_ARRAY));
                 }
             } else {
-                $beruf = "(a.deutscher_referenzberuf LIKE '%".$fberuf."%' OR a.deutscher_referenzberuf IS NULL)";
+                $orwhereExpressionsBeruf = [
+                    $queryBuilder->expr()->like('a.deutscher_referenzberuf', $queryBuilder->createNamedParameter('%' . $queryBuilder->escapeLikeWildcards($fberuf) . '%')),
+                    $queryBuilder->expr()->isNull('a.deutscher_referenzberuf')
+                ];
             }
         } else {
             if($fberuf != '') {
-                $beruf = "(a.deutscher_referenzberuf LIKE '%".$fberuf."%')";
+                $whereExpressions[] = $queryBuilder->expr()->like('a.deutscher_referenzberuf', $queryBuilder->createNamedParameter('%' . $queryBuilder->escapeLikeWildcards($fberuf) . '%'));
             } else {
-                $beruf = "(a.deutscher_referenzberuf LIKE '%".$fberuf."%' OR a.deutscher_referenzberuf IS NULL)";
-            }            
+                $orwhereExpressionsBeruf = [
+                    $queryBuilder->expr()->like('a.deutscher_referenzberuf', $queryBuilder->createNamedParameter('%' . $queryBuilder->escapeLikeWildcards($fberuf) . '%')),
+                    $queryBuilder->expr()->isNull('a.deutscher_referenzberuf')
+                ];
+            }
         }
         
-        // Antragstellungvorher
-        if($fbescheid != '%') {
-            $bescheid = "AND (a.antragstellungvorher > 0 AND a.antragstellungvorher < 4) ";
+        // Antragstellungvorher / Bescheid
+        if($fbescheid != '') {
+            $andwhereExpressionAntrag[] = [
+                $queryBuilder->expr()->gt('a.antragstellungvorher', $queryBuilder->createNamedParameter(0, Connection::PARAM_INT)),
+                $queryBuilder->expr()->lt('a.antragstellungvorher', $queryBuilder->createNamedParameter(4, Connection::PARAM_INT))
+            ];
+        }    
+        
+        // Beratungsstatus        
+        if($type == 0 || $type == 1) {
+            $orwhereExpressionsBeratungsstatus = [
+                $queryBuilder->expr()->eq('beratungsstatus', $queryBuilder->createNamedParameter(0, Connection::PARAM_INT)),
+                $queryBuilder->expr()->eq('beratungsstatus', $queryBuilder->createNamedParameter(1, Connection::PARAM_INT))
+            ];
+        } elseif($type == 2 || $type == 3) {
+            $orwhereExpressionsBeratungsstatus = [
+                $queryBuilder->expr()->eq('beratungsstatus', $queryBuilder->createNamedParameter(2, Connection::PARAM_INT)),
+                $queryBuilder->expr()->eq('beratungsstatus', $queryBuilder->createNamedParameter(3, Connection::PARAM_INT))
+            ];
+        } elseif($type == 999) {
+            //
         } else {
-            $bescheid = '';
+            $whereExpressions[] = $queryBuilder->expr()->eq('beratungsstatus', $queryBuilder->createNamedParameter(4, Connection::PARAM_INT));
         }
-                
-        // Erstelle Query
-        $query = $this->createQuery();
         
         if($verstecktundgelöscht == 1) {
-            $query->getQuerySettings()->setIgnoreEnableFields(TRUE);
-            $query->getQuerySettings()->setEnableFieldsToBeIgnored(array('disabled', 'hidden'));
-            $hidden = " AND t.hidden = 1 ";
+            $whereExpressions[] = $queryBuilder->expr()->eq('tx_iqtp13db_domain_model_teilnehmer.hidden', $queryBuilder->createNamedParameter(1, Connection::PARAM_INT));
         } elseif($verstecktundgelöscht == 0) {
-            $hidden = " AND t.hidden = 0 ";
-        } else {
-            $hidden = ""; // für Suche ist es egal, ob hidden or nicht
-        }
+            $whereExpressions[] = $queryBuilder->expr()->eq('tx_iqtp13db_domain_model_teilnehmer.hidden', $queryBuilder->createNamedParameter(0, Connection::PARAM_INT));
+        } 
         
-        $limitsql = $limit == 0 ? '' : ' LIMIT '.$limit;
+        $orderby = $orderby == 'verificationDate' ? 'verification_date' : $orderby;
         
-        $sql = "SELECT t.* FROM tx_iqtp13db_domain_model_teilnehmer t
-			LEFT JOIN tx_iqtp13db_domain_model_abschluss a ON a.teilnehmer = t.uid
-            WHERE (t.nachname LIKE '%$name%' OR t.vorname LIKE '%$name%')
-            AND (t.ort LIKE '%$ort%' OR t.plz LIKE '%$ort%')
-            AND t.geburtsland LIKE '$land'
-            $berater
-            AND $beruf
-            AND t.kooperationgruppe LIKE '%$gruppe%'
-            $bescheid
-            AND $sqlberatungsstatus $hidden
-            AND niqidberatungsstelle LIKE $niqbid
-            AND t.uid like '$uid' 
-            AND t.deleted = 0
-            GROUP BY t.uid ORDER BY $orderby $order $limitsql";
+        //$limitsql = $limit == 0 ? '' : ' LIMIT '.$limit;
+        
+        $result = $queryBuilder
+            ->select('tx_iqtp13db_domain_model_teilnehmer.*')
+            ->from('tx_iqtp13db_domain_model_teilnehmer')
+            ->leftJoin(
+                'tx_iqtp13db_domain_model_teilnehmer',
+                'tx_iqtp13db_domain_model_abschluss',
+                'a',
+                $queryBuilder->expr()->eq('a.teilnehmer',$queryBuilder->quoteIdentifier('tx_iqtp13db_domain_model_teilnehmer.uid'))
+            )
+            ->where(
+                $queryBuilder->expr()->or(...$orwhereExpressionsName),
+                $queryBuilder->expr()->or(...$orwhereExpressionsOrt),
+                $queryBuilder->expr()->or(...$orwhereExpressionsBeruf),
+                $queryBuilder->expr()->or(...$orwhereExpressionsBeratungsstatus),
+                $queryBuilder->expr()->and(...$andwhereExpressionAntrag),
+                ...$whereExpressions,                
+            )
+            ->groupBy('tx_iqtp13db_domain_model_teilnehmer.uid')            
+            ->orderBy($orderby, $order)
+            ->addOrderBy('uid', 'DESC')
+            ->executeQuery();
 
-        $query->statement($sql);
-        return $query->execute();
+           //DebuggerUtility::var_dump($queryBuilder->getSQL());
+           //DebuggerUtility::var_dump($queryBuilder->getParameters());
+           //die;
+        
+        $dataMapper = GeneralUtility::makeInstance(DataMapper::class);
+        $teilnehmerresult = $dataMapper->map(\Ud\Iqtp13db\Domain\Model\Teilnehmer::class, $result->fetchAll());
+        return $teilnehmerresult;
+            
     }
     
     /**

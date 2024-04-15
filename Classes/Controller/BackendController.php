@@ -120,7 +120,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $this->generalhelper = new \Ud\Iqtp13db\Helper\Generalhelper();
         
         $this->user=null;
-        $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
+        $context = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
         if($context->getPropertyFromAspect('frontend.user', 'isLoggedIn')){
             $this->user=$GLOBALS['TSFE']->fe_user->user;
         } else {
@@ -150,6 +150,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      */
     public function startAction()
     {
+        $GLOBALS['TSFE']->fe_user->setKey('ses', 'filtermodus', '0');
+        
         $wartungvon = new DateTime($this->settings['wartungvon'] == '' ? '01.01.2020 01:00' : $this->settings['wartungvon']);
         $wartungbis = new DateTime($this->settings['wartungbis'] == '' ? '01.01.2020 02:00' : $this->settings['wartungbis']);
         
@@ -371,11 +373,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $editedteilnehmer->setEdittstamp(0);
                 $this->teilnehmerRepository->update($editedteilnehmer);
                 // Daten sofort in die Datenbank schreiben
-                $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+                $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
                 $persistenceManager->persistAll();
             }
         }
-        
+                
         if(!empty($valArray['callerpage'])) $currentPage = $valArray['callerpage'];
         
         if(empty($valArray['orderby'])) {            
@@ -396,10 +398,14 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         // Wegen Bug in Paginator, der nicht mit Custom SQL Queryresults funktioniert, werden hier alle gefilterten Einträge auf einer Seite dargestellt. Queryresultpaginator hat dann keine Auswahl an Datensätzen, sondern alle.
         $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 100 : 20;
-        
         $currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : $currentPage;
-        $paginator = new QueryResultPaginator($teilnehmer, $currentPage, $anzperpag);
-        //$paginator = new ArrayPaginator($teilnehmer, $currentPage, $anzperpag);
+                
+        if($GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1') {
+            $paginator = new ArrayPaginator($teilnehmer, $currentPage, $anzperpag);
+        } else {
+            $paginator = new QueryResultPaginator($teilnehmer, $currentPage, $anzperpag);
+        }
+        
         $pagination = new SimplePagination($paginator);
         
         $teilnehmerpag = $paginator->getPaginatedItems();
@@ -463,7 +469,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $editedteilnehmer->setEdittstamp(0);
                 $this->teilnehmerRepository->update($editedteilnehmer);
                 // Daten sofort in die Datenbank schreiben
-                $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+                $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
                 $persistenceManager->persistAll();
             }
         }
@@ -490,7 +496,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 100 : 20;
         
         $currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : $currentPage;
-        $paginator = new QueryResultPaginator($teilnehmer, $currentPage, $anzperpag);
+        if($GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1') {
+            $paginator = new ArrayPaginator($teilnehmer, $currentPage, $anzperpag);
+        } else {
+            $paginator = new QueryResultPaginator($teilnehmer, $currentPage, $anzperpag);
+        }
         $pagination = new SimplePagination($paginator);
         
         $teilnehmerpag = $paginator->getPaginatedItems();
@@ -565,7 +575,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $editedteilnehmer->setEdittstamp(0);
                 $this->teilnehmerRepository->update($editedteilnehmer);
                 // Daten sofort in die Datenbank schreiben
-                $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+                $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
                 $persistenceManager->persistAll();
             }
         }
@@ -592,7 +602,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 250 : 25;
         
         $currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : $currentPage;
-        $paginator = new QueryResultPaginator($teilnehmer, $currentPage, $anzperpag);
+        if($GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1') {
+            $paginator = new ArrayPaginator($teilnehmer, $currentPage, $anzperpag);
+        } else {
+            $paginator = new QueryResultPaginator($teilnehmer, $currentPage, $anzperpag);
+        }
         $pagination = new SimplePagination($paginator);
         
         $teilnehmerpag = $paginator->getPaginatedItems();
@@ -677,7 +691,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 250 : 25;
         
         $currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : $currentPage;
-        $paginator = new QueryResultPaginator($teilnehmer, $currentPage, $anzperpag);
+        if($GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1') {
+            $paginator = new ArrayPaginator($teilnehmer, $currentPage, $anzperpag);
+        } else {
+            $paginator = new QueryResultPaginator($teilnehmer, $currentPage, $anzperpag);
+        }
         $pagination = new SimplePagination($paginator);
         
         $teilnehmerpag = $paginator->getPaginatedItems();
@@ -718,10 +736,10 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     
     /**
      * action showsearchresult
-     *
+     * @param int $currentPage
      * @return void
      */
-    public function showsearchresultAction()
+    public function showsearchresultAction(int $currentPage = 1)
     {        
         $valArray = $this->request->getArguments();
         
@@ -746,12 +764,13 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             }
         }
         
-        $alleteilnehmer = $this->setfilter(999, $searchparams, "beratungsstatus DESC, uid ", "DESC", -1, 50);
-        
+        $alleteilnehmer = $this->setfilter(999, $searchparams, "beratungsstatus", "DESC", -1, 50);
+
         $folgekontakte = $this->folgekontaktRepository->findAll4List($this->niqbid);
         
         $abschluesse = array();
         $anzfolgekontakte = array();
+        
         foreach($alleteilnehmer as $key => $teilnehmer) {
             // Dublettenprüfung
             $anz = $this->teilnehmerRepository->findDublette4Angemeldet($teilnehmer->getNachname(),$teilnehmer->getVorname(), $this->niqbid);
@@ -797,8 +816,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'beratungsstelle' => $this->usergroup->getTitle(),
                 'niqbid' => $this->niqbid,
                 'berufe' => $berufeliste,
-                'teilnehmers' => $alleteilnehmer,
-                'searchparams' => $searchparams
+                'searchparams' => $searchparams,
+                'alleteilnehmer' => $alleteilnehmer
             ]
         );
     }
@@ -1282,7 +1301,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $filesizesum += $dokfs;
         }
         $speicherbelegung = intval(($filesizesum/31457280)*100);
-       
+        
         $berufeliste = $this->berufeRepository->findAll();
         $staaten = $this->staatenRepository->findByLangisocode('de');
      
@@ -1466,7 +1485,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $this->teilnehmerRepository->add($teilnehmer);
         
         // Daten sofort in die Datenbank schreiben
-        $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+        $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
         
         // 07.06.2023 auskommentiert, weil ggf. nicht notwendig: $tfolder = $this->generalhelper->createFolder($teilnehmer, $this->storageRepository->findAll());
@@ -1524,7 +1543,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $this->teilnehmerRepository->update($teilnehmer);
             
             // Daten sofort in die Datenbank schreiben
-            $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+            $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
             $persistenceManager->persistAll();
         } else {
             $editberater = $this->beraterRepository->findByUid($teilnehmer->getEdituser());
@@ -1538,6 +1557,18 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $dokumente = $this->dokumentRepository->findByTeilnehmer($teilnehmer);
         $dokumentpfad = $this->generalhelper->sanitizeFileFolderName($teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid(). '/');
+        
+        $storage = $this->generalhelper->getTP13Storage($this->storageRepository->findAll());
+        $folder = $storage->getConfiguration()['basePath'].'/';
+        
+        $filesizes = array();
+        $filesizesum = 0;
+        foreach($dokumente as $key => $dok) {
+            $dokfs = $dok->getFilesize($folder) ?? 0;
+            $filesizes[$key] = $dokfs == 0 ? 0 : $this->generalhelper->human_filesize($dokfs, 1);
+            $filesizesum += $dokfs;
+        }
+        $speicherbelegung = intval(($filesizesum/31457280)*100);
         
         $berufe = $this->berufeRepository->findAll();
         $staaten = $this->staatenRepository->findByLangisocode('de');
@@ -1605,6 +1636,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'teilnehmer' => $teilnehmer,
                 'dokumente' => $dokumente,
                 'dokumentpfad' => $dokumentpfad,
+                'filesizes' => $filesizes,
+                'speicherbelegung' => $speicherbelegung,
                 'abschlusshinzu' => $abschlusshinzu,
                 'jahre' => $jahre,
                 'showabschluesse' => $valArray['showabschluesse'] ?? '0',
@@ -1777,7 +1810,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $this->teilnehmerRepository->update($teilnehmer);
         
         // Daten sofort in die Datenbank schreiben
-        $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+        $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
         
         $this->redirect('edit', $valArray['callercontroller'] ?? 'Backend', null, array('teilnehmer'=> $teilnehmer, 'callerpage' => $valArray['callerpage'] ?? '1', 'calleraction' => $valArray['calleraction'] ?? 'listangemeldet', 'newnacherfassung' => $nacherfassung, 'searchparams' => $searchparams));
@@ -1802,7 +1835,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $this->teilnehmerRepository->update($teilnehmer);
             
             // Daten sofort in die Datenbank schreiben
-            $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+            $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
             $persistenceManager->persistAll();
         } else {
             $this->addFlashMessage('Bereits in NIQ übertragene Datensätze können nicht gelöscht werden.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
@@ -1829,7 +1862,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $this->teilnehmerRepository->update($teilnehmer);
         
         // Daten sofort in die Datenbank schreiben
-        $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+        $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
         
         $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'], 'searchparams' => $searchparams));
@@ -1856,7 +1889,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $this->teilnehmerRepository->update($teilnehmer);
         
         // Daten sofort in die Datenbank schreiben
-        $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+        $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
         
         $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'], 'searchparams' => $searchparams ?? ''));
@@ -1888,7 +1921,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $this->teilnehmerRepository->update($teilnehmer);
                 
                 // Daten sofort in die Datenbank schreiben
-                $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+                $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
                 $persistenceManager->persistAll();
                 
                 $this->addFlashMessage('Datensatz zu Beratungsstelle '.$plzberatungsstelle[0]->getTitle(). ' verschoben.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
@@ -1980,7 +2013,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             
             $this->teilnehmerRepository->update($teilnehmer);
             // Daten sofort in die Datenbank schreiben
-            $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+            $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
             $persistenceManager->persistAll();
             
             $this->addFlashMessage('Archiviert.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
@@ -2084,7 +2117,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $this->dokumentRepository->add($dokument);
             
             //Daten sofort in die Datenbank schreiben
-            $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+            $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
             $persistenceManager->persistAll();
             
             $this->addFlashMessage('Datenblatt wurde in '.$pfad->getIdentifier().' erstellt.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
@@ -2208,6 +2241,38 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         // FILTER
         $beraterdiesergruppe = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->usergroup);
         
+        if (isset($searchparams['filteran'])) {
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fuid', $searchparams['uid'] ?? '');
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', $searchparams['name'] ?? '');
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', $searchparams['ort'] ?? '');
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', $searchparams['beruf'] ?? '');
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', $searchparams['land'] ?? '');
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberater', $searchparams['berater'] ?? '');
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fgruppe', $searchparams['gruppe'] ?? '');
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fbescheid', $searchparams['bescheid'] ?? ''); // antragstellungvorher
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'filtermodus', '1');
+        } else {
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fuid', NULL);
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', NULL);
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', NULL);
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', NULL);
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', NULL);
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberater', NULL);
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fgruppe', NULL);
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fbescheid', NULL); // antragstellungvorher
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'filtermodus', NULL);            
+        }
+        
+        $f['uid'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fuid');
+        $f['name'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fname');
+        $f['ort'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fort');
+        $f['beruf'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fberuf');
+        $f['land'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fland');
+        $f['berater'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fberater');
+        $f['gruppe'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fgruppe');
+        $f['bescheid'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fbescheid'); // antragstellungvorher
+        
+        /*
         $f['uid'] = $searchparams['uid'] ?? '';
         $f['name'] = $searchparams['name'] ?? '';
         $f['ort'] = $searchparams['ort'] ?? '';
@@ -2216,7 +2281,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $f['berater'] = $searchparams['berater'] ?? '';
         $f['gruppe'] = $searchparams['gruppe'] ?? '';
         $f['bescheid'] = $searchparams['bescheid'] ?? ''; // antragstellungvorher
-
+*/
         if($f['land'] == '-1000' || $f['land'] == NULL) $f['land'] = '';
         if($f['berater'] == 0 || $f['berater'] == NULL) $f['berater'] = '';
         if($f['uid'] == '' && $f['name'] == '' && $f['ort'] == '' && $f['beruf'] == '' && $f['land'] == '' && $f['berater'] == '' && $f['gruppe'] == '' && $f['bescheid'] == '') {
@@ -2241,7 +2306,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $this->view->assign('filterberater', $f['berater']);
             $this->view->assign('filtergruppe', $f['gruppe']);
             $this->view->assign('filterbescheid', $f['bescheid']); // antragstellungvorher
-            $this->view->assign('filteron', isset($searchparams['filteran']) ? 1 : 0);
+            $this->view->assign('filteron', $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus'));
         }
         
         // FILTER bis hier

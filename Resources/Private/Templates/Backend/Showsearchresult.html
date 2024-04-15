@@ -17,7 +17,8 @@
 
 <h1>{f:if(condition:'{filteron} == 1', then: 'Suchergebnis: ', else: '' )} {anzgesamt} Ratsuchende</h1>
 <div class="pretablediv">
-<table  class="tx_iqtp13db listangemeldet" >
+	
+	<table  class="tx_iqtp13db listangemeldet" >
 		<tr>
 			<th>UID</th>
 			<th><f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" /></th>
@@ -35,7 +36,7 @@
 			<th> </th>
 		</tr>
 
-		<f:groupedFor each="{teilnehmers}" as="teilnehmerbystatus" groupBy="modul" groupKey="status">
+		<f:groupedFor each="{alleteilnehmer}" as="teilnehmerbystatus" groupBy="modul" groupKey="status">
 			<tr><td colspan="14"><h1>Modul: {status}
 			</h1></td></tr>
 			<f:for each="{teilnehmerbystatus}" as="teilnehmer" iteration="it">
@@ -100,7 +101,8 @@
 				</f:then></f:if>	
 			</f:for>
 		</f:groupedFor>
-</table>
+	</table>
+	
 </div>
 
 
