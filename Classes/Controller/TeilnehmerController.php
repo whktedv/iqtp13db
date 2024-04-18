@@ -107,7 +107,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $this->generalhelper = new \Ud\Iqtp13db\Helper\Generalhelper();
         
     }
-        
+    
+    
     /*
      * API-Funktion, um die Zahlen als JSON zwecks Abruf für den Counter auf der IQ-Webseite zu generieren.
      * 
@@ -472,6 +473,14 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     }
     
     /**
+     * action initanmeldseite2
+     *
+     * @return void
+     */
+    public function initializeAnmeldseite2Action() {
+        $this->exists_teilnehmer($this->request->getArguments());        
+    }    
+    /**
      * action anmeldseite2
      *
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
@@ -504,6 +513,14 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     }
     
     /**
+     * action initanmeldseite2redirect
+     *
+     * @return void
+     */
+    public function initializeAnmeldseite2redirectAction() {
+        $this->exists_teilnehmer($this->request->getArguments());
+    }
+    /**
      * action anmeldseite2redirect
      *
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
@@ -512,6 +529,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function anmeldseite2redirectAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
         $valArray = $this->request->getArguments();
+        
         if (isset($valArray['btnabschlusshinzu'])) {
             $this->redirect('newWebapp', 'Abschluss', null, array('teilnehmer' => $teilnehmer));
         } elseif (isset($valArray['btnzurueck'])) {
@@ -528,6 +546,14 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     }
     
     /**
+     * action initanmeldseite3
+     *
+     * @return void
+     */
+    public function initializeAnmeldseite3Action() {
+        $this->exists_teilnehmer($this->request->getArguments());
+    }
+    /**
      * action anmeldseite3
      *
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
@@ -536,6 +562,16 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function anmeldseite3Action(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
         $valArray = $this->request->getArguments();
+        $tnarr = $this->teilnehmerRepository->findByUid($teilnehmer->getUid());
+        if($tnarr == NULL) {
+            // TN ist (nicht) mehr vorhanden (gelöscht z.B. durch Task)
+            $this->addFlashMessage("ERROR: Session expired or data not found. Please restart registration.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid') != NULL) {
+                $this->cancelregistration($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid'));
+            } else {
+                $this->cancelregistration(null);
+            }
+        }
         
         $allusergroups = $this->userGroupRepository->findAllGroups($this->settings['beraterstoragepid']);
         foreach ($allusergroups as $group) {
@@ -554,16 +590,18 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             }
         }
         
-        $tnarr = $this->teilnehmerRepository->findByUid($teilnehmer->getUid());
-        
-        if($tnarr != NULL) {
-            $this->view->assign('settings', $this->settings);
-            $this->view->assign('teilnehmer', $teilnehmer);
-        } else {
-            $this->forward('startseite', 'Teilnehmer', 'Iqtp13db');
-        }
+        $this->view->assign('settings', $this->settings);
+        $this->view->assign('teilnehmer', $teilnehmer);
     }
     
+    /**
+     * action initanmeldseite3redirect
+     *
+     * @return void
+     */
+    public function initializeAnmeldseite3redirectAction() {
+        $this->exists_teilnehmer($this->request->getArguments());
+    }
     /**
      * action anmeldseite3redirect
      *
@@ -602,6 +640,14 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         }
     }
     
+    /**
+     * action initanmeldungcomplete
+     *
+     * @return void
+     */
+    public function initializeAnmeldungcompleteAction() {
+        $this->exists_teilnehmer($this->request->getArguments());
+    }
     /**
      * action anmeldungcomplete
      *
@@ -649,6 +695,14 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         }
     }
     
+    /**
+     * action initanmeldungcompleteredirect
+     *
+     * @return void
+     */
+    public function initializeAnmeldungcompleteredirectAction() {
+        $this->exists_teilnehmer($this->request->getArguments());
+    }
     /**
      * action anmeldungcompleteredirect
      *
@@ -755,6 +809,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         
     }
     
+    
     /**
      * action confirm
      *
@@ -843,30 +898,31 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         if($tnuid != null) {
             
             $teilnehmer = $this->teilnehmerRepository->findByUid($tnuid);
-            
-            $niqbid = $teilnehmer->getNiqidberatungsstelle();
-            $beratungsstellenfolder = $niqbid;
-            $filePath = $beratungsstellenfolder.'/' . $teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid(). '/';
-            $storage = $this->generalhelper->getTP13Storage( $this->storageRepository->findAll());
-            $dokumente = $this->dokumentRepository->findByTeilnehmer($teilnehmer);
-            
-            if(count($dokumente) > 0) {
-                foreach($dokumente as $dokument) {
-                    $this->dokumentRepository->remove($dokument);
-                    
-                    $delfilepath = $filePath . $dokument->getName();
-                    $delfile = $storage->getFile($delfilepath);
-                    $erg = $storage->deleteFile($delfile);
+            if($teilnehmer != NULL) {
+                $niqbid = $teilnehmer->getNiqidberatungsstelle();
+                $beratungsstellenfolder = $niqbid;
+                $filePath = $beratungsstellenfolder.'/' . $teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid(). '/';
+                $storage = $this->generalhelper->getTP13Storage( $this->storageRepository->findAll());
+                $dokumente = $this->dokumentRepository->findByTeilnehmer($teilnehmer);
+                
+                if(count($dokumente) > 0) {
+                    foreach($dokumente as $dokument) {
+                        $this->dokumentRepository->remove($dokument);
+                        
+                        $delfilepath = $filePath . $dokument->getName();
+                        $delfile = $storage->getFile($delfilepath);
+                        $erg = $storage->deleteFile($delfile);
+                    }
                 }
+                
+                if(is_dir($storage->getConfiguration()['basePath'].$filePath)) {
+                    rmdir($storage->getConfiguration()['basePath'].$filePath);
+                }
+                
+                $this->teilnehmerRepository->remove($teilnehmer);
+                $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+                $persistenceManager->persistAll();
             }
-            
-            if(is_dir($storage->getConfiguration()['basePath'].$filePath)) {
-                rmdir($storage->getConfiguration()['basePath'].$filePath);
-            }
-            
-            $this->teilnehmerRepository->remove($teilnehmer);
-            $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
-            $persistenceManager->persistAll();
         }
         
         $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnseite1', null);
@@ -967,6 +1023,29 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         }
         
         return $teilnehmer;
+    }
+    
+    /*
+     * Checks if teilnehmer exists
+     */
+    protected function exists_teilnehmer($valArray) {
+        $valArray = $this->request->getArguments();
+        
+        if(is_string($valArray['teilnehmer'])) $tnuid = $valArray['teilnehmer'];
+        else $tnuid = $valArray['teilnehmer']['__identity'];
+        //$tnuid = $valArray['teilnehmer']->getUid();
+        
+        $thistn = $this->teilnehmerRepository->findByUid($tnuid);
+        
+        if($thistn == null) {
+            // TN ist (nicht) mehr vorhanden (gelöscht z.B. durch Task)
+            $this->addFlashMessage("ERROR: Session expired or data not found. Please restart registration.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid') != NULL) {
+                $this->cancelregistration($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid'));
+            } else {
+                $this->cancelregistration(null);
+            }
+        }
     }
     
     

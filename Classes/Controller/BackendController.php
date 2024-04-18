@@ -400,7 +400,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 100 : 20;
         $currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : $currentPage;
                 
-        if($GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1') {
+        if($GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' && is_array($teilnehmer)) {
             $paginator = new ArrayPaginator($teilnehmer, $currentPage, $anzperpag);
         } else {
             $paginator = new QueryResultPaginator($teilnehmer, $currentPage, $anzperpag);
@@ -497,7 +497,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 100 : 20;
         
         $currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : $currentPage;
-        if($GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1') {
+        if($GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' && is_array($teilnehmer)) {
             $paginator = new ArrayPaginator($teilnehmer, $currentPage, $anzperpag);
         } else {
             $paginator = new QueryResultPaginator($teilnehmer, $currentPage, $anzperpag);
@@ -603,7 +603,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 250 : 25;
         
         $currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : $currentPage;
-        if($GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1') {
+        if($GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' && is_array($teilnehmer)) {
             $paginator = new ArrayPaginator($teilnehmer, $currentPage, $anzperpag);
         } else {
             $paginator = new QueryResultPaginator($teilnehmer, $currentPage, $anzperpag);
@@ -692,7 +692,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 250 : 25;
         
         $currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : $currentPage;
-        if($GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1') {
+        if($GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' && is_array($teilnehmer)) {
             $paginator = new ArrayPaginator($teilnehmer, $currentPage, $anzperpag);
         } else {
             $paginator = new QueryResultPaginator($teilnehmer, $currentPage, $anzperpag);
@@ -968,8 +968,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     if($wohnsitzdeutschland == 2) $wohnsitzdeutschland = 'nein';
                     if($wohnsitzdeutschland == -1) $wohnsitzdeutschland = 'k.a.';
                     $rows[$x]['WohnsitzDeutschland'] = $wohnsitzdeutschland ?? '';
+                    
                     if($wohnsitzdeutschland == 'ja') {
-                        $rows[$x]['Landkreis'] = $rows[$x]['PLZ'] == '' ? '-' : $arrorte[$rows[$x]['PLZ']];
+                        $rows[$x]['Landkreis'] = (preg_match("/[0-9]{5}/", $rows[$x]['PLZ']) && array_key_exists($rows[$x]['PLZ'], $arrorte)) ? $arrorte[$rows[$x]['PLZ']] : '-';
                     } else {
                         $rows[$x]['Landkreis'] = '';
                     }
@@ -1269,7 +1270,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             if($anonymeberatung == '1' || $tnanonym == '1') {
                 $this->addFlashMessage("Bitte beachten: Für anonyme Beratungen ist zur Wahrung des Datenschutzes kein Dokumentenupload möglich!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
             }            
-        }        
+        } else {
+            // TN ist (nicht) mehr vorhanden (gelöscht z.B. durch Task)
+            $this->addFlashMessage("FEHLER: Datensatz mit ID $tnuid nicht vorhanden.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->redirect($valArray['calleraction'] ?? 'listangemeldet', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1'));
+        }
     }
     
     /**
@@ -1815,6 +1820,26 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $persistenceManager->persistAll();
         
         $this->redirect('edit', $valArray['callercontroller'] ?? 'Backend', null, array('teilnehmer'=> $teilnehmer, 'callerpage' => $valArray['callerpage'] ?? '1', 'calleraction' => $valArray['calleraction'] ?? 'listangemeldet', 'newnacherfassung' => $nacherfassung, 'searchparams' => $searchparams));
+    }
+    
+    /**
+     * action initdelete
+     *
+     * @return void
+     */
+    public function initializeDeleteAction() {
+        $valArray = $this->request->getArguments();
+        
+        if(is_string($valArray['teilnehmer'])) $tnuid = $valArray['teilnehmer'];
+        else $tnuid = $valArray['teilnehmer']->getUid();
+        
+        $thistn = $this->teilnehmerRepository->findByUid($tnuid);
+        
+        if($thistn == null) {
+            // TN ist (nicht) mehr vorhanden (gelöscht z.B. durch Task)
+            $this->addFlashMessage("FEHLER: Datensatz mit ID $tnuid nicht vorhanden.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->redirect($valArray['calleraction'] ?? 'listangemeldet', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1'));
+        }
     }
     
     /**

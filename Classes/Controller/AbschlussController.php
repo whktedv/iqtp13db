@@ -217,7 +217,14 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $this->redirect($valArray['thisaction'], 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'], 'showabschluesse' => '1'));
     }    
     
-    
+    /**
+     * action initnewwebapp
+     *
+     * @return void
+     */
+    public function initializeNewWebappAction() {
+        $this->exists_teilnehmer($this->request->getArguments());
+    }
     /**
      * action newWebapp
      * 
@@ -260,6 +267,15 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         );
     }
     
+    
+    /**
+     * action initcreatewebapp
+     *
+     * @return void
+     */
+    public function initializeCreateWebappAction() {
+        $this->exists_teilnehmer($this->request->getArguments());
+    }
     /**
      * action createWebapp
      *
@@ -270,6 +286,12 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     public function createWebappAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
         $valArray = $this->request->getArguments();
+        
+        $tnarr = $this->teilnehmerRepository->findByUid($teilnehmer->getUid());
+        if($tnarr == NULL) {
+            // TN ist (nicht) mehr vorhanden (gelöscht z.B. durch Task)
+            $this->redirect('anmeldseite2', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
+        }
         
         if (!isset($valArray['btnzurueck'])) {
             $abschluss->setTeilnehmer($teilnehmer);
@@ -283,6 +305,14 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $this->redirect('anmeldseite2', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
     }
     
+    /**
+     * action initeditwebapp
+     *
+     * @return void
+     */
+    public function initializeEditWebappAction() {
+        $this->exists_teilnehmer($this->request->getArguments());
+    }
     /**
      * action editWebapp
      *
@@ -326,6 +356,14 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     }
     
     /**
+     * action initupdatewebapp
+     *
+     * @return void
+     */
+    public function initializeUpdateWebappAction() {
+        $this->exists_teilnehmer($this->request->getArguments());
+    }
+    /**
      * action updateWebapp
      *
      * @param \Ud\Iqtp13db\Domain\Model\Abschluss $abschluss
@@ -341,7 +379,15 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         }
         $this->redirect('anmeldseite2', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
     }
-      
+    
+    /**
+     * action initdeletewebapp
+     *
+     * @return void
+     */
+    public function initializeDeleteWebappAction() {
+        $this->exists_teilnehmer($this->request->getArguments());
+    }
     /**
      * action deleteWebapp
      *
@@ -356,5 +402,24 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $this->redirect('anmeldseite2', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
     }
         
-    
+    /*
+     * Checks if teilnehmer exists
+     */
+    protected function exists_teilnehmer($valArray) {
+        $valArray = $this->request->getArguments();
+        
+        if(is_string($valArray['teilnehmer'])) $tnuid = $valArray['teilnehmer'];
+        else $tnuid = $valArray['teilnehmer']->getUid();
+        
+        $thistn = $this->teilnehmerRepository->findByUid($tnuid);
+        
+        if($thistn == null) {
+            // TN ist (nicht) mehr vorhanden (gelöscht z.B. durch Task)
+            $this->addFlashMessage("ERROR: Session expired or data not found. Please restart registration.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnseite1', null);
+            $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnuid', null);
+            $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('ses', null);
+            $this->forward('startseite', 'Teilnehmer', 'Iqtp13db');
+        }
+    }
 }

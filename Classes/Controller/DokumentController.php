@@ -149,19 +149,6 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     
     
     /**
-     * action initdeleteFileWebapp
-     *
-     * @param void
-     */
-    public function initializedeleteFileWebappAction() 
-    {
-        $arguments = $this->request->getArguments();
-        if($this->dokumentRepository->countByUid($arguments['dokument']) == 0) {
-            return (new ForwardResponse('anmeldungcomplete'))->withControllerName('Teilnehmer');
-        }
-    }
-    
-    /**
      * action saveFileWebapp
      *
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
@@ -187,6 +174,26 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $this->redirect('anmeldungcomplete', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
     }
     
+    
+    /**
+    * action initdeleteFileWebapp
+    *
+    * @param void
+    */
+    public function initializedeleteFileWebappAction()
+    {
+        $arguments = $this->request->getArguments();
+        
+        if(is_string($arguments['dokument'])) $dcuid = $arguments['dokument'];
+        else $dcuid = $arguments['dokument']->getUid();
+        
+        $thisdok = $this->dokumentRepository->findByUid($dcuid);
+        
+        if($thisdok == null) {
+            $this->redirect('anmeldungcomplete', 'Teilnehmer', null, array('teilnehmer' => $arguments['teilnehmer']));
+        }
+      
+    }
     /**
      * action deleteFileWebapp
      *
@@ -199,7 +206,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $retval = $this->deleteFileTeilnehmer($dokument, $teilnehmer);
         return (new ForwardResponse('anmeldungcomplete'))->withControllerName('Teilnehmer');
     }
-
+   
     /**
      * saveFileTeilnehmer
      *
@@ -447,7 +454,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      **/
     function file_already_uploaded($pfad) {
         
-    
     }
-        
+    
+    
 }
