@@ -1029,25 +1029,24 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      * Checks if teilnehmer exists
      */
     protected function exists_teilnehmer($valArray) {
-        $valArray = $this->request->getArguments();
         
-        if (array_key_exists('teilnehmer', $valArray)) {
-            if(is_string($valArray['teilnehmer'])) $tnuid = $valArray['teilnehmer'];
-            else $tnuid = $valArray['teilnehmer']['__identity'];
-            //$tnuid = $valArray['teilnehmer']->getUid();
-            
-            $thistn = $this->teilnehmerRepository->findByUid($tnuid);
-            
-            if($thistn == null) {
-                // TN ist (nicht) mehr vorhanden (gelöscht z.B. durch Task)
-                $this->addFlashMessage("ERROR: Session expired or data not found. Please restart registration.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-                if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid') != NULL) {
-                    $this->cancelregistration($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid'));
-                } else {
-                    $this->cancelregistration(null);
-                }
+        $valarrteilnehmer = $valArray['teilnehmer'] ?? '';
+        
+        if(is_string($valarrteilnehmer)) $tnuid = $valarrteilnehmer;
+        else $tnuid = $valarrteilnehmer['__identity'];
+        //$tnuid = $valarrteilnehmer->getUid();
+        
+        $thistn = $this->teilnehmerRepository->findByUid($tnuid);
+        
+        if($thistn == null) {
+            // TN ist (nicht) mehr vorhanden (gelöscht z.B. durch Task)
+            $this->addFlashMessage("ERROR: Session expired or data not found. Please restart registration.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid') != NULL) {
+                $this->cancelregistration($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid'));
+            } else {
+                $this->cancelregistration(null);
             }
-        }
+        }        
     }
     
     

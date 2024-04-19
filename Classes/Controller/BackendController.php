@@ -199,8 +199,17 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         //DebuggerUtility::var_dump($valArray);
                
         $monatsnamen = array();
-        for($i=1;$i<13;$i++) {
+        for($i=1;$i<=12;$i++) {
             $monatsnamen[$i] = date("M", mktime(0, 0, 0, $i, 1, date('Y')));
+            if($jahrselected != 0) {
+                $monatsnamen[$i] = $monatsnamen[$i]." ".$jahrselected;
+            } else {
+                if($i <= idate('m')) {
+                    $monatsnamen[$i] = $monatsnamen[$i]." ".idate('Y');
+                } else {
+                    $monatsnamen[$i] = $monatsnamen[$i]." ".idate('Y') - 1;
+                }
+            }
         }
         
         $jahrarray = array();
@@ -296,14 +305,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             array_unshift($rows[5], "durchschn. Tage Wartezeit");
             $rows[6] = $days4beratung;
             array_unshift($rows[6], "durchschn. Tage Beratungsdauer");
-            $rows[7] = $beratungfk22;
-            array_unshift($rows[7], "Beratungen/Folgekontakte von Ratsuchenden alte Föpha.");
-            
             
             // XLSX
-            $filename = 'statistik_'.date('Y-m-d_H-i', time()).'.xlsx';
+            $filename = 'statistik_'.date('Y-m-d_H-i-s', time()).'.xlsx';
             $headerblatt1 = [
-                'Statistik ' => 'string',
+                'Statistik '.($jahrselected != 0 ? $jahrselected : 'letzte 12 Monate') => 'string',
             ];
             
             $writer = new \XLSXWriter();
@@ -317,22 +323,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             header('Cache-Control: max-age=0');
             $writer->writeToStdOut();
             exit;
-            /*
-            $filename = 'stats_' . date('Y-m-d_H-i', time()) . '.csv';
-            header('Content-Encoding: UTF-8');
-            header('Content-type: text/csv; charset=UTF-8');
-            header('Content-Disposition: attachment;filename=' . $filename);
-            echo "\xEF\xBB\xBF";
-            $fp = fopen('php://output', 'w');
-            
-            for($i=0; $i < count($rows); $i++) {
-                fputcsv($fp, $rows[$i]);
-            }
-            fclose($fp);
-            exit;
-            */
-        }
-        
+        }        
         
         // ******************** EXPORT Statistik bis hier ****************************
         
@@ -368,8 +359,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'niqbid' => $this->niqbid,
                 'username' => $this->user['username'],
                 'neuanmeldungen7tage' => $neuanmeldungen7tage,
-                'diesesjahr' => date('Y'),
-                'headerjahrweiteremonate' => $jahrselected != 0 ? $jahrselected : idate('Y') - 1,
                 'bstellevonplz' => $plzgroup ?? ''
             ]
             );

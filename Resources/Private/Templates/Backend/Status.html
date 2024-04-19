@@ -71,14 +71,14 @@
 	<f:form.select name="jahrauswahl" id="selectjahr" options="{jahrauswahl}" prependOptionValue="0" prependOptionLabel="-letzte 12 Monate-" value="{jahrselected}"/>
 	
 	<f:form.button id="linkloadoverlay-export" type="submit" name="showstats">Statistik anzeigen</f:form.button>
-	<f:form.button type="submit" class="linkbuttons" id="savebutton1" name="statsexport">Statistik exportieren</f:form.button>
+	<f:form.button type="submit" class="linkbuttons" name="statsexport">Statistik exportieren</f:form.button>
 </f:form>
 
 <table class="uebersicht-statistik">
 	<tr>
 		<th></th>
 		<f:for each="{monatsnamen}" as="monat" iteration="iter">
-			<th {f:if(condition: '{iter.index} == {aktmonat}', then: 'style="background-color: #ffcaf2;"')}> {monat} {f:if(condition: '{iter.index} > {aktmonat}', then: '{headerjahrweiteremonate}', else: '{diesesjahr}')}</th>
+			<th {f:if(condition: '{iter.index} == {aktmonat}', then: 'style="background-color: #ffcaf2;"')}> {monat}</th>
 		</f:for>
 		<th>Summe</th>
 	</tr>

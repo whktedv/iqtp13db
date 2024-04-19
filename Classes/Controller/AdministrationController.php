@@ -21,6 +21,8 @@ use TYPO3\CMS\Core\Resource\StorageRepository;
 use Ud\Iqtp13db\Domain\Repository\BerufeRepository;
 use Ud\Iqtp13db\Domain\Repository\StaatenRepository;
 
+require_once(Environment::getPublicPath() . '/' . 'typo3conf/ext/iqtp13db/Resources/Private/Libraries/xlsxwriter.class.php');
+
 /***
  *
  * This file is part of the "IQ Webapp Anerkennungserstberatung" Extension for TYPO3 CMS.
@@ -98,10 +100,6 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
             $this->groupbccmail = $this->settings['standardbccmail'];
         }
         
-        //if($this->user['username'] == 'admin') {
-        //DebuggerUtility::var_dump($days4wartezeit);
-        //}
-        
     }
     
     /**
@@ -144,9 +142,20 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         
         $allebundeslaender = $this->userGroupRepository->findAllBundeslaender();
         
-        for($i=1;$i<13;$i++) {
+        $monatsnamen = array();
+        for($i=1;$i<=12;$i++) {
             $monatsnamen[$i] = date("M", mktime(0, 0, 0, $i, 1, date('Y')));
+            if($jahrselected != 0) {
+                $monatsnamen[$i] = $monatsnamen[$i]." ".$jahrselected;
+            } else {
+                if($i <= idate('m')) {
+                    $monatsnamen[$i] = $monatsnamen[$i]." ".idate('Y');
+                } else {
+                    $monatsnamen[$i] = $monatsnamen[$i]." ".idate('Y') - 1;
+                }
+            }
         }
+        
         $jahrarray = array();
         for($j=2023;$j<=date('Y');$j++){
             $jahrarray[$j] = $j;
@@ -269,7 +278,6 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
             $lebensalteranmeldungen = $this->teilnehmerRepository->showAlter(0, $jahrselected, $bundeslandselected, $staatselected);
             $lebensalterberatungabgeschl = $this->teilnehmerRepository->showAlter(4, $jahrselected, $bundeslandselected, $staatselected);
             
-            //DebuggerUtility::var_dump($abschlussartanmeldungen);
         }
         
         // *****************************************************************
@@ -294,6 +302,141 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         }
         // ******************************************************************
         
+        // ******************** EXPORT Statistik ****************************
+        if (isset($valArray['statsexport']) && $jahrselected != 0) {
+            
+            // XLSX
+            $filename = 'adminstatistik_'.date('Y-m-d_H-i-s', time()).'.xlsx';
+            $writer = new \XLSXWriter();
+            $writer->setAuthor('IQ Webapp');
+            
+            // Statistik Jahr allgemein
+            $rows[0] = $monatsnamen;
+            array_unshift($rows[0], " ");
+            $rows[1] = $angemeldeteTN;
+            array_unshift($rows[1], "Anmeldungen");
+            $rows[2] = $erstberatung;
+            array_unshift($rows[2], "Erstberatungen");
+            $rows[3] = $qfolgekontakte;
+            array_unshift($rows[3], "Folgekontakte");
+            $rows[4] = $beratungfertig;
+            array_unshift($rows[4], "Beratungen fertig");
+            $rows[5] = $days4wartezeit;
+            array_unshift($rows[5], "durchschn. Tage Wartezeit");
+            $rows[6] = $days4beratung;
+            array_unshift($rows[6], "durchschn. Tage Beratungsdauer");
+            
+            $headerblatt1 = [
+                'Statistik '.($jahrselected != 0 ? $jahrselected : 'letzte 12 Monate') => 'string',
+                'Bundesland: '.($bundeslandselected == '%' ? 'Alle' : $bundeslandselected)  => 'string',
+                'Staatsangehörigkeit: '.($staatselected == '%' ? 'Alle' : $staatenarr[$staatselected]) => 'string',
+            ];
+            
+            // Abschlussart
+            $rowsabschla[0] = array("Abschlussart alle Anmeldungen ".$jahrselected, "Anzahl");                        
+            $i=1;
+            foreach($abschlussartanmeldungen as $abschlussart) {
+                $rowsabschla[$i] = array($arrabschlussart[$abschlussart['abschlussart']], $abschlussart['anz']);
+                $i++;
+            }           
+            $rowsabschla[$i] = array(" ", " ");
+            $i++;
+            $rowsabschla[$i] = array("Abschlussart alle Beratungen ".$jahrselected, "Anzahl");
+            $i++;
+            foreach($abschlussartberatungabgeschl as $abschlussart) {
+                $rowsabschla[$i] = array($arrabschlussart[$abschlussart['abschlussart']], $abschlussart['anz']);
+                $i++;
+            }
+            
+            // Herkunft
+            $rowsherkunft[0] = array("Herkunft alle Anmeldungen ".$jahrselected, "Anzahl");
+            $i=1;
+            foreach($herkunftanmeldungen as $herkunft) {
+                $rowsherkunft[$i] = array($herkunft['titel'], $herkunft['anz']);
+                $i++;
+            }
+            $rowsherkunft[$i] = array(" ", " ");
+            $i++;
+            $rowsherkunft[$i] = array("Herkunft alle Beratungen ".$jahrselected, "Anzahl");
+            $i++;
+            foreach($herkunftberatungabgeschl as $herkunft) {
+                $rowsherkunft[$i] = array($herkunft['titel'], $herkunft['anz']);
+                $i++;
+            }
+            
+            // Berufe
+            $rowsberufe[0] = array("Berufe/Abschlüsse alle Anmeldungen ".$jahrselected, "Anzahl");
+            $i=1;
+            foreach($berufeanmeldungen as $beruf) {
+                $beruftitel = $beruf['titel'] == '' ? 'kein Beruf/Abschluss eingetragen' : $beruf['titel'];
+                $rowsberufe[$i] = array($beruftitel, $beruf['anz']);
+                $i++;
+            }
+            $rowsberufe[$i] = array(" ", " ");
+            $i++;
+            $rowsberufe[$i] = array("Berufe/Abschlüsse alle Beratungen ".$jahrselected, "Anzahl");
+            $i++;
+            foreach($berufeberatungabgeschl as $beruf) {
+                $beruftitel = $beruf['titel'] == '' ? 'kein Beruf/Abschluss eingetragen' : $beruf['titel'];
+                $rowsberufe[$i] = array($beruftitel, $beruf['anz']);
+                $i++;
+            }
+            
+            // Geschlecht
+            $rowsgeschlecht[0] = array("Geschlecht alle Anmeldungen ".$jahrselected, "Anzahl");
+            $i=1;
+            foreach($geschlechtartanmeldungen as $geschlecht) {
+                $rowsgeschlecht[$i] = array($arrgeschlecht[$geschlecht['geschlecht']], $geschlecht['anz']);
+                $i++;
+            }
+            $rowsgeschlecht[$i] = array(" ", " ");
+            $i++;
+            $rowsgeschlecht[$i] = array("Geschlecht alle Beratungen ".$jahrselected, "Anzahl");
+            $i++;
+            foreach($geschlechtberatungabgeschl as $geschlecht) {
+                $rowsgeschlecht[$i] = array($arrgeschlecht[$geschlecht['geschlecht']], $geschlecht['anz']);
+                $i++;
+            }
+            
+            // Lebensalter
+            $rowsalter[0] = array("Lebensalter alle Anmeldungen ".$jahrselected, "Anzahl");
+            $i=1;
+            foreach($lebensalteranmeldungen as $alter) {
+                if($alter['lebensalter'] == '-1000') $keyalter = 'keine Angabe';
+                elseif($alter['lebensalter'] == '-1') $keyalter = 'nichts eingetragen';
+                else $keyalter = $alter['lebensalter'];
+                $rowsalter[$i] = array($keyalter , $alter['anz']);
+                $i++;
+            }
+            $rowsalter[$i] = array(" ", " ");
+            $i++;
+            $rowsalter[$i] = array("Lebensalter alle Beratungen ".$jahrselected, "Anzahl");
+            $i++;
+            foreach($lebensalterberatungabgeschl as $alter) {
+                if($alter['lebensalter'] == '-1000') $keyalter = 'keine Angabe';
+                elseif($alter['lebensalter'] == '-1') $keyalter = 'nichts eingetragen';
+                else $keyalter = $alter['lebensalter'];
+                $rowsalter[$i] = array($keyalter, $alter['anz']);
+                $i++;
+            }
+            
+            $writer->writeSheet($rows, 'Statistik', $headerblatt1);
+            $writer->writeSheet($rowsabschla, 'Abschlussart');
+            $writer->writeSheet($rowsherkunft, 'Herkunft');
+            $writer->writeSheet($rowsberufe, 'Berufe');
+            $writer->writeSheet($rowsgeschlecht, 'Geschlecht');
+            $writer->writeSheet($rowsalter, 'Lebensalter');
+            
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment;filename="'.$filename.'"');
+            header('Cache-Control: max-age=0');
+            $writer->writeToStdOut();
+            exit;
+        } elseif(isset($valArray['statsexport']) && $jahrselected == 0) {
+            $this->addFlashMessage("Bitte Jahr auswählen!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+        }
+        
+        // ******************** EXPORT Statistik bis hier ****************************
         
         $this->view->assignMultiple(
             [
@@ -336,8 +479,6 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 'statsgesamtfertigberaten' => $statsgesamtfertigberaten,
                 'statsgesamtarchiviert' => $statsgesamtarchiviert,
                 'neuanmeldungen7tage' => $neuanmeldungen7tage,
-                'diesesjahr' => date('y'),
-                'letztesjahr' => idate('y') - 1,
                 'niqbidselected' => $niqbidselected,
                 'beratungsstelle' => $thisberatungsstelle,
                 'niqbid' => $thisniqbid,

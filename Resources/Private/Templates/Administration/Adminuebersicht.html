@@ -118,15 +118,17 @@
 <br>
 <div class="filterframe">
 	<h2>Jahres-Statistik</h2>
-	<f:form class="filterform" method="post" controller="Administration" action="adminuebersicht" name="switchbundesland" enctype="multipart/form-data" >
+	<f:form class="filterform" method="post" controller="Administration" action="adminuebersicht" name="switchbundesland" enctype="multipart/form-data" >		
 			Auswahl Bundesland:
 			<f:form.select name="bundeslandauswahl" options="{allebundeslaender}" optionValueField="bundesland" optionLabelField="bundesland" prependOptionValue="%" prependOptionLabel="-alle-" value="{bundeslandselected}"/>
 			Auswahl Jahr:
 			<f:form.select name="jahrauswahl" options="{jahrauswahl}" prependOptionValue="0" prependOptionLabel="-letzte 12 Monate-" value="{jahrselected}"/>
 			Auswahl Erste Staatsangehörigkeit: 
 			<f:form.select name="filterstaat" options="{staatenarr}" optionValueField="key" optionLabelField="value" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterstaat}"/>
-			
-			<f:form.button id="linkloadoverlay-export" type="submit" name="showstats">Statistik anzeigen</f:form.button>
+			<div style=" ">
+				<f:form.button id="linkloadoverlay-export" type="submit" name="showstats">Statistik anzeigen</f:form.button>
+				<f:form.button id="linkloadoverlay-export" type="submit" name="statsexport">Statistik exportieren</f:form.button>
+			</div>		
 	</f:form>
 </div>
 
@@ -134,7 +136,7 @@
 	<tr>
 		<th></th>
 		<f:for each="{monatsnamen}" as="monat" iteration="iter">
-			<th {f:if(condition: '{iter.index} == {aktmonat}', then: 'style="background-color: #ffcaf2;"')}> {monat} {f:if(condition: '{iter.index} > {aktmonat}', then: '{letztesjahr}', else: '{diesesjahr}')}</th>
+			<th {f:if(condition: '{iter.index} == {aktmonat}', then: 'style="background-color: #ffcaf2;"')}> {monat}</th>
 		</f:for>
 		<th>Summe</th>
 	</tr>
