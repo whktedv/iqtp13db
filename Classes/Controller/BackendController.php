@@ -292,13 +292,32 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             array_unshift($rows[3], "Folgekontakte");
             $rows[4] = $beratungfertig;
             array_unshift($rows[4], "Beratungen fertig");
-            $rows[6] = $days4wartezeit;
-            array_unshift($rows[6], "durchschn. Tage Wartezeit");
-            $rows[7] = $days4beratung;
-            array_unshift($rows[7], "durchschn. Tage Beratungsdauer");
-            $rows[8] = $beratungfk22;
-            array_unshift($rows[8], "Beratungen/Folgekontakte von Ratsuchenden alte Föpha.");
+            $rows[5] = $days4wartezeit;
+            array_unshift($rows[5], "durchschn. Tage Wartezeit");
+            $rows[6] = $days4beratung;
+            array_unshift($rows[6], "durchschn. Tage Beratungsdauer");
+            $rows[7] = $beratungfk22;
+            array_unshift($rows[7], "Beratungen/Folgekontakte von Ratsuchenden alte Föpha.");
             
+            
+            // XLSX
+            $filename = 'statistik_'.date('Y-m-d_H-i', time()).'.xlsx';
+            $headerblatt1 = [
+                'Statistik ' => 'string',
+            ];
+            
+            $writer = new \XLSXWriter();
+            $writer->setAuthor('IQ Webapp');
+            
+            $writer->writeSheet($rows, 'Statistik', $headerblatt1);
+            // $writer->writeSheet($rowsfk, 'Folgekontakte', $headerblatt2);
+            
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment;filename="'.$filename.'"');
+            header('Cache-Control: max-age=0');
+            $writer->writeToStdOut();
+            exit;
+            /*
             $filename = 'stats_' . date('Y-m-d_H-i', time()) . '.csv';
             header('Content-Encoding: UTF-8');
             header('Content-type: text/csv; charset=UTF-8');
@@ -311,7 +330,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             }
             fclose($fp);
             exit;
+            */
         }
+        
         
         // ******************** EXPORT Statistik bis hier ****************************
         
@@ -415,6 +436,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         for($j=0; $j < count($teilnehmerpag); $j++) {
             $anz = $this->teilnehmerRepository->findDublette4Angemeldet($teilnehmerpag[$j]->getNachname(), $teilnehmerpag[$j]->getVorname(), $this->niqbid);
             if($anz > 1) $teilnehmerpag[$j]->setDublette(TRUE);
+            
             $abschluesse[$j] = $this->abschlussRepository->findByTeilnehmer($teilnehmerpag[$j]);
             
             $plzberatungsstelle = array();
@@ -2314,14 +2336,14 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             if($deleted == 1) {
                 $teilnehmers = $this->teilnehmerRepository->findhidden4list($orderby, $order, $this->niqbid);
             } else {
-                $teilnehmers = $this->teilnehmerRepository->findAllOrder4List($type, $orderby, $order, $this->niqbid, $beraterdiesergruppe, $this->usergroup);
+                $teilnehmers = $this->teilnehmerRepository->findAllOrder4List($type, $orderby, $order, $this->niqbid);
             }
         } else {
             $berufearr = $this->berufeRepository->findAll();
             if($limit > 0) {
-                $teilnehmers = $this->teilnehmerRepository->searchTeilnehmer($type, $f, $deleted, $this->niqbid, $berufearr, $orderby, $order, $beraterdiesergruppe, $this->usergroup, $limit);
+                $teilnehmers = $this->teilnehmerRepository->searchTeilnehmer($type, $f, $deleted, $this->niqbid, $berufearr, $orderby, $order, $this->usergroup, $limit);
             } else {
-                $teilnehmers = $this->teilnehmerRepository->searchTeilnehmer($type, $f, $deleted, $this->niqbid, $berufearr, $orderby, $order, $beraterdiesergruppe, $this->usergroup, $limit);
+                $teilnehmers = $this->teilnehmerRepository->searchTeilnehmer($type, $f, $deleted, $this->niqbid, $berufearr, $orderby, $order, $this->usergroup, $limit);
             }            
             //if($this->user['username'] == 'admin') DebuggerUtility::var_dump($teilnehmers);
             $this->view->assign('filteruid', $f['uid']);

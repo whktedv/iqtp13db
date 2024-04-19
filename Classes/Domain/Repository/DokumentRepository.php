@@ -17,4 +17,24 @@ namespace Ud\Iqtp13db\Domain\Repository;
  */
 class DokumentRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
+    
+    /**
+     * @param $dokname
+     * @param $teilnehmer
+     */
+    public function findDublette($dokname, $teilnehmeruid)
+    {
+        $query = $this->createQuery();
+        $query->matching($query->logicalAnd(
+            $query->like('name', $dokname),
+            $query->like('teilnehmer', $teilnehmeruid),
+            ));
+        $query = $query->execute();
+        if(count($query) > 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
     }

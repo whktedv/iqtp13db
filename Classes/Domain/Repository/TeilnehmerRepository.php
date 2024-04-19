@@ -30,7 +30,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      * Finds Teilnehmer by the specified name, ort and/or geburtsland
      */
-    public function searchTeilnehmer($type, $filterArray, $verstecktundgelöscht, $niqbid, $berufearr, $orderby, $order, $beraterdiesergruppe, $thisusergroup, $limit)
+    public function searchTeilnehmer($type, $filterArray, $verstecktundgelöscht, $niqbid, $berufearr, $orderby, $order, $thisusergroup, $limit)
     {
         $uid = $filterArray['uid'];
         $name = $filterArray['name'];
@@ -175,13 +175,9 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     
     /**
      */    
-    public function findAllOrder4List($beratungsstatus, $orderby, $order, $niqbid, $beraterdiesergruppe, $thisusergroup)
+    public function findAllOrder4List($beratungsstatus, $orderby, $order, $niqbid)
     {
         $query = $this->createQuery();
-        
-        $berateruidarray = array();
-        
-        foreach($beraterdiesergruppe as $oneberater) $berateruidarray[] = $oneberater->getUid();
         
         if($beratungsstatus == 0 || $beratungsstatus == 1) {
             $query->matching(

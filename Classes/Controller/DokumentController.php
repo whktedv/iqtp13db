@@ -257,6 +257,11 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      */
     public function deleteFileTeilnehmer(\Ud\Iqtp13db\Domain\Model\Dokument $dokument, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     { 
+        if($this->dokumentRepository->findDublette($dokument->getName(), $teilnehmer->getUid())) {
+            $this->addFlashMessage('Fehler: D-1. Datei mit ID '.$dokument->getUid().' konnte nicht gelöscht werden!', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            return false;
+        }
+        
         $storage = $this->generalhelper->getTP13Storage($this->storageRepository->findAll());
         
         $fullpath = $storage->getConfiguration()['basePath'].'/'.$dokument->getPfad().$dokument->getName();

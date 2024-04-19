@@ -63,5 +63,8 @@ Updates 12.04.2024
 Update 15.04.2024
 - Suche wieder wie vor 12.04., aber angepasst (nicht mehr Filtermodus)
  
+Update 18.04.2024
+- Prüfe beim Löschen von Dokumenten, ob Dokument mit gleichem Namen des gleichen Teilnehmers vorhanden ist -> dann mit Fehlermeldung abbrechen, damit nicht alle mit gleichen Namen gelöscht werden -> Problem wegen image_r.jpg
+- Bugfixes
 
 Neu:
