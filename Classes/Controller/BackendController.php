@@ -1889,6 +1889,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function undeleteAction($tnuid)
     {
         $valArray = $this->request->getArguments();
+        $searchparams  = array();
         if(array_key_exists("searchparams", $valArray)) {
             $searchparams = $valArray['searchparams'];
         }

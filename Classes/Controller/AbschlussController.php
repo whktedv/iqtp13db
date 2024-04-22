@@ -275,6 +275,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      */
     public function initializeCreateWebappAction() {
         $this->exists_teilnehmer($this->request->getArguments());
+        $this->exists_abschluss($this->request->getArguments());
     }
     /**
      * action createWebapp
@@ -312,7 +313,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      */
     public function initializeEditWebappAction() {
         $this->exists_teilnehmer($this->request->getArguments());
-        $this->exists_abschluss($this->request->getArguments());
+        //$this->exists_abschluss($this->request->getArguments());
     }
     /**
      * action editWebapp
@@ -363,7 +364,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      */
     public function initializeUpdateWebappAction() {
         $this->exists_teilnehmer($this->request->getArguments());
-        $this->exists_abschluss($this->request->getArguments());
+       // 
     }
     /**
      * action updateWebapp
@@ -389,7 +390,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      */
     public function initializeDeleteWebappAction() {
         $this->exists_teilnehmer($this->request->getArguments());
-        $this->exists_abschluss($this->request->getArguments());
+       // $this->exists_abschluss($this->request->getArguments());
     }
     /**
      * action deleteWebapp
@@ -427,21 +428,15 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         }
     }
     
+    
     /*
-     * Checks if teilnehmer exists
+     * Checks if abschluss exists
      */
-    /*
+    
     protected function exists_abschluss($valArray) {
-        DebuggerUtility::var_dump($valArray);
-        
         $valarrabschluss = $valArray['abschluss'] ?? '';
         
-        if(is_string($valarrabschluss)) $abuid = $valarrabschluss;
-        else $abuid = $valarrabschluss['__identity'];
-        
-        $thisab = $this->abschlussRepository->findByUid($abuid);
-        
-        if($thisab == null) {
+        if($valarrabschluss == '') {
             // TN ist (nicht) mehr vorhanden (gelöscht z.B. durch Task)
             $this->addFlashMessage("ERROR: Session expired or data not found. Please restart registration.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnseite1', null);
@@ -450,5 +445,5 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
             $this->forward('startseite', 'Teilnehmer', 'Iqtp13db');
         }
     }
-    */
+    
 }

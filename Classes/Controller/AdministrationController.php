@@ -262,6 +262,8 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
             $abschlussartanmeldungen = $this->teilnehmerRepository->showAbschlussart(0, $jahrselected, $bundeslandselected, $staatselected);
             $abschlussartberatungabgeschl = $this->teilnehmerRepository->showAbschlussart(4, $jahrselected, $bundeslandselected, $staatselected);
             
+            $herkunftanmeldungen = array();
+            $herkunftberatungabgeschl = array();
             if($staatselected == '%') {
                 $herkunftanmeldungen = $this->teilnehmerRepository->showHerkunft(0, $jahrselected, $bundeslandselected);
                 $herkunftberatungabgeschl = $this->teilnehmerRepository->showHerkunft(4, $jahrselected, $bundeslandselected);

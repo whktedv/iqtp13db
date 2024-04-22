@@ -60,7 +60,7 @@
 				</f:for>
 			</td>
 			<td>{teilnehmer.kooperationgruppe}</td>
-			<td><f:link.action action="undelete" arguments="{tnuid : teilnehmer.uid}" onclick="return confirm('Wirklich wiederherstellen?');" title="Wiederherstellen"><img src="/fileadmin/template/images/iq-webapp_wiederherstellen.svg" alt="Wiederherstellen" width="30" height="30"/></f:link.action></td>
+			<td><f:link.action action="undelete" arguments="{tnuid : teilnehmer.uid, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" onclick="return confirm('Wirklich wiederherstellen?');" title="Wiederherstellen"><img src="/fileadmin/template/images/iq-webapp_wiederherstellen.svg" alt="Wiederherstellen" width="30" height="30"/></f:link.action></td>
 		</tr>
 	</f:for>
 </table>
