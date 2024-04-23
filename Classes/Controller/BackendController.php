@@ -884,15 +884,13 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $fberatungsstatus = isset($valArray['filterberatungsstatus']) ? $valArray['filterberatungsstatus'] : '';
         
         $del = 0;
-        if($fberatungsstatus == 13) {
-            $type = 4;
+        if($fberatungsstatus == 11) {
+            $type = 1;
         } elseif($fberatungsstatus == 12) {
             $type = 2;
-        } elseif($fberatungsstatus == 11) {
-            $type = 1;
-        } elseif($fberatungsstatus == 10) {
-            $type = 0;
-        } else {
+        } elseif($fberatungsstatus == 13) {
+            $type = 3;
+        } elseif($fberatungsstatus == 14) {
             $type = 0;
             $del = 1;
         }

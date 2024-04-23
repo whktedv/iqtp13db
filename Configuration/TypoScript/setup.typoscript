@@ -30,20 +30,27 @@ plugin.tx_iqtp13db.settings {
 	}
 	
 	filterberatungsstatus {
-		10 = alle nicht gelöschten
-		11 = mind. angemeldet (bestätigt)
-		12 = Beraten
-		13 = Archiviert
+		11 = Anmeldungen
+		12 = Erstberatungen
+		13 = Beratungen fertig
 		14 = Gelöscht
 	}
 	
 	filterberatungsstatus4admin {
-		10 = alle nicht gelöschten
-		11 = mind. angemeldet (bestätigt)
-		12 = Beraten
-		13 = Archiviert
-		14 = Erstberatung abgeschlossen
+		11 = Anmeldungen
+		12 = Erstberatungen
+		13 = Beratungen fertig
+		14 = Gelöscht
 	} 
+
+	# ALT:
+	#filterberatungsstatus4admin {
+	#	10 = alle nicht gelöschten
+	#	11 = mind. angemeldet (bestätigt)
+	#	12 = Beraten
+	#	13 = Archiviert
+	#	14 = Erstberatung abgeschlossen
+	#} 
 }
 
 plugin.tx_iqtp13db_iqtp13dbadmin {

@@ -150,6 +150,12 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 'a',
                 $queryBuilder->expr()->eq('a.teilnehmer',$queryBuilder->quoteIdentifier('tx_iqtp13db_domain_model_teilnehmer.uid'))
             )
+            ->leftJoin(
+                'tx_iqtp13db_domain_model_teilnehmer',
+                'fe_users',
+                'berater',
+                $queryBuilder->expr()->eq('berater.uid',$queryBuilder->quoteIdentifier('tx_iqtp13db_domain_model_teilnehmer.berater'))
+                )
             ->where(
                 $queryBuilder->expr()->or(...$orwhereExpressionsName),
                 $queryBuilder->expr()->or(...$orwhereExpressionsOrt),
@@ -354,24 +360,14 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      */
     public function search4exportTeilnehmer($type, $verstecktundgelöscht, $filtervon, $filterbis, $niqbid, $bundesland, $staat)
     {
-        $orderby = 'verification_date';
-        
-        if($bundesland != '%') $niqbid = "%";
-        
-        if($type == 0) {
-            $sqlberatungsstatus = " beratungsstatus >= 0 ";
-            $filternach = "FROM_UNIXTIME(verification_date)";
-        } elseif($type == 1) {
-            $sqlberatungsstatus = " beratungsstatus >= 1 ";
+        if($type == 1) {
             $filternach = "FROM_UNIXTIME(verification_date)";
         } elseif($type == 2) {
-            $sqlberatungsstatus = " (beratungsstatus = 2 OR beratungsstatus = 3) ";
             $filternach = "beratungdatum";
-        } elseif($type == 4) {
-            $sqlberatungsstatus = " beratungsstatus = 4 ";
+        } elseif($type == 3) {
             $filternach = "erstberatungabgeschlossen";
         } else {
-            // fehler!
+            $filternach = "FROM_UNIXTIME(verification_date)";            
         }
         
         $query = $this->createQuery();
@@ -381,7 +377,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             $query->getQuerySettings()->setEnableFieldsToBeIgnored(array('disabled', 'hidden'));
             $hidden = " AND t.hidden = 1 ";
         } else {
-            $hidden = " AND t.hidden = 0 ";
+            $hidden = " AND t.hidden = 0 AND t.deleted = 0 ";
         }
         
         $sql = "SELECT t.* FROM tx_iqtp13db_domain_model_teilnehmer t
@@ -390,11 +386,14 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 WHERE
                 DATEDIFF(STR_TO_DATE('$filtervon', '%d.%m.%Y'),$filternach) <= 0 AND
 				DATEDIFF(STR_TO_DATE('$filterbis', '%d.%m.%Y'),$filternach) >= 0
-                AND $sqlberatungsstatus $hidden
+                $hidden 
                 AND niqidberatungsstelle LIKE '$niqbid'
                 AND b.bundesland LIKE '$bundesland'
                 AND t.erste_staatsangehoerigkeit LIKE '$staat'
-                GROUP BY t.uid ORDER BY $orderby ASC";
+                GROUP BY t.uid ORDER BY verification_date ASC";
+        
+        //DebuggerUtility::var_dump($sql);
+        //die;
         
         $query->statement($sql);
         

@@ -71,4 +71,8 @@ Update 19.04.2024
 - Export Statistik in Admin-Übersicht als xlsx
 - Bugfixes
 
+Update 23.04.2024
+- Korrektur Export-Modul
+- Bugfixes
+
 Neu:

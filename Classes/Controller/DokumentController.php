@@ -459,7 +459,6 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      **/
     function file_already_uploaded($pfad) {
         
-    }
-    
+    }   
     
 }
