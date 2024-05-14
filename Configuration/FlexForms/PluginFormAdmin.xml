@@ -46,7 +46,10 @@
       				<numIndex index="0">Admin-Übersicht</numIndex>
      				<numIndex index="1">adminuebersicht</numIndex>
    				</numIndex>		  
-   						  	  
+   				<numIndex index="9" type="array">
+      				<numIndex index="0">Einstellungen</numIndex>
+     				<numIndex index="1">einstellungen</numIndex>
+   				</numIndex>		  	  
    				</items>
 				</config>
             </TCEforms>

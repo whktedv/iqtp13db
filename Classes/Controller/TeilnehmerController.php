@@ -295,11 +295,22 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 $zugewieseneberatungsstelle = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $bstid);
                 $zugewieseneberatungsstelle = $zugewieseneberatungsstelle[0];
                 
+                $startseitetext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('tx_iqtp13db_domain_model_teilnehmer.startseitetext', 'Iqtp13db');
+                $startseitetextcustom = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('tx_iqtp13db_domain_model_teilnehmer.startseitetextcustom', 'Iqtp13db');
+                
+                $beratungsstelle = $this->userGroupRepository->findOneByNiqbid($bstid);
+                $custominfotextstart = $beratungsstelle->getCustominfotextstart();
+                if($custominfotextstart != '') {
+                    $startseitetextcustom = $custominfotextstart;
+                }
+                
                 $this->view->assign('beratungsstelle', $bstid);
                 $this->view->assign('wohnsitzDeutschland', $valarrwohnsitzdeutschland);
                 $this->view->assign('plz', $valArray['plz'] ?? '');
                 $this->view->assign('direkt', $valArray['direkt'] ?? '');
                 $this->view->assign('logourl', $zugewieseneberatungsstelle->getCustomlogourl());
+                $this->view->assign('startseitetext', $startseitetext);
+                $this->view->assign('startseitetextcustom', $startseitetextcustom);
             } else {
                 $uri = $uriBuilder->setTargetPageUid($this->settings['anmeldungnichtwebapppageuid'])->build();
                 $this->redirectToUri($uri, 0, 303);
@@ -959,7 +970,12 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $anrede = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('anredemail', 'Iqtp13db');
         $mailtext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtext', 'Iqtp13db');
         $mailtext = str_replace("WARTEZEITWOCHEN", $this->settings['wartezeitwochen'], $mailtext);
+        $mailtextcustom = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtextcustom', 'Iqtp13db');
         $grcinfotext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('grcinfotext', 'Iqtp13db');
+        
+        if($custommailtext == '') {
+            $custommailtext = $mailtextcustom;
+        }
         
         $datenberatungsstelle = $zugewieseneberatungsstelle != NULL ? $zugewieseneberatungsstelle[0]->getDescription() : '';
         if($datenberatungsstelle != '') $kontaktlabel = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('kontaktberatungsstelle', 'Iqtp13db');

@@ -149,9 +149,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * @return void
      */
     public function startAction()
-    {
-        $GLOBALS['TSFE']->fe_user->setKey('ses', 'filtermodus', '0');
-        
+    {        
         $wartungvon = new DateTime($this->settings['wartungvon'] == '' ? '01.01.2020 01:00' : $this->settings['wartungvon']);
         $wartungbis = new DateTime($this->settings['wartungbis'] == '' ? '01.01.2020 02:00' : $this->settings['wartungbis']);
         
@@ -180,6 +178,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         if ($this->settings['modtyp'] == 'adminuebersicht') {
             $this->forward('adminuebersicht', 'Administration', 'Iqtp13db');
+        }
+        if ($this->settings['modtyp'] == 'einstellungen') {
+            $this->forward('editsettings', 'Backend', 'Iqtp13db');
         }
      
     }
@@ -407,7 +408,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $teilnehmer = $this->setfilter(0, $valArray, $orderby, $order, 0, 0);
         
         // Wegen Bug in Paginator, der nicht mit Custom SQL Queryresults funktioniert, werden hier alle gefilterten Einträge auf einer Seite dargestellt. Queryresultpaginator hat dann keine Auswahl an Datensätzen, sondern alle.
-        $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 100 : 20;
+        $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 20 : 20;
         $currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : $currentPage;
                 
         if($GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' && is_array($teilnehmer)) {
@@ -505,7 +506,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $teilnehmer = $this->setfilter(3, $valArray, $orderby, $order, 0, 0);
         
         // Wegen Bug in Paginator, der nicht mit Custom SQL Queryresults funktioniert, werden hier alle gefilterten Einträge auf einer Seite dargestellt. Queryresultpaginator hat dann keine Auswahl an Datensätzen, sondern alle.
-        $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 100 : 20;
+        $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 20 : 20;
         
         $currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : $currentPage;
         if($GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' && is_array($teilnehmer)) {
@@ -611,7 +612,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $teilnehmer = $this->setfilter(4, $valArray, $orderby, $order, 0, 0);
         
         // Wegen Bug in Paginator, der nicht mit Custom SQL Queryresults funktioniert, werden hier alle gefilterten Einträge auf einer Seite dargestellt. Queryresultpaginator hat dann keine Auswahl an Datensätzen, sondern alle.
-        $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 250 : 25;
+        $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 25 : 25;
         
         $currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : $currentPage;
         if($GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' && is_array($teilnehmer)) {
@@ -700,7 +701,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $teilnehmer = $this->setfilter(999, $valArray, $orderby, $order, 1, 0);
         
         // Wegen Bug in Paginator, der nicht mit Custom SQL Queryresults funktioniert, werden hier alle gefilterten Einträge auf einer Seite dargestellt. Queryresultpaginator hat dann keine Auswahl an Datensätzen, sondern alle.
-        $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 250 : 25;
+        $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 25 : 25;
         
         $currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : $currentPage;
         if($GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' && is_array($teilnehmer)) {
@@ -2266,6 +2267,57 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         die;        
     }
     
+    /**
+     * action editsettings
+     *
+     * @return void
+     */
+    public function editsettingsAction() {
+        $valArray = $this->request->getArguments();
+        
+        $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
+        
+        $currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : 1;
+        $paginator = new QueryResultPaginator($berater, $currentPage, 25);
+        $pagination = new SimplePagination($paginator);
+        
+        $this->view->assignMultiple(
+            [
+                'callerpage' => $currentPage,
+                'paginator' => $paginator,
+                'pagination' => $pagination,
+                'pages' => range(1, $pagination->getLastPageNumber()),
+                'berater' => $berater,
+                'thisuser' => $this->user,
+                'niqbid' => $this->usergroup->getNiqbid(),
+                'custominfotextstart' => $this->usergroup->getCustominfotextstart() ?? '',
+                'custominfotextmail'=> $this->usergroup->getCustominfotextmail() ?? ''
+            ]
+        );
+    }
+    
+    /**
+     * action updatesettings
+     *
+     * @return void
+     */
+    public function updatesettingsAction() {
+        $valArray = $this->request->getArguments();
+
+        $this->usergroup->setCustominfotextstart($valArray['custominfotextstart']);
+        $this->usergroup->setCustominfotextmail($valArray['custominfotextmail']);
+        
+        $this->userGroupRepository->update($this->usergroup);
+        
+        // Daten sofort in die Datenbank schreiben
+        $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+        $persistenceManager->persistAll();
+        
+        $this->addFlashMessage("Einstellungen gespeichert.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+        
+        $this->forward('editsettings', 'Backend', 'Iqtp13db');
+    }
+    
     /*************************************************************************/
     /********** NO ACTION FUNCTIONS - TODO: in Hilfsklasse auslagern **********/
     /*************************************************************************/
@@ -2283,11 +2335,15 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', $searchparams['ort'] ?? '');
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', $searchparams['beruf'] ?? '');
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', $searchparams['land'] ?? '');
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberater', $searchparams['berater'] ?? '');
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberater', $searchparams['berater'] ?? '');            
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberatername', $searchparams['berater'] ?? '');            
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fgruppe', $searchparams['gruppe'] ?? '');
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fbescheid', $searchparams['bescheid'] ?? ''); // antragstellungvorher
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'filtermodus', '1');
-        } else {
+        } 
+        $filtermodus = $searchparams['filtermodus'] ?? '1';
+        if($filtermodus == '0') 
+        {
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fuid', NULL);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', NULL);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', NULL);
@@ -2296,7 +2352,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberater', NULL);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fgruppe', NULL);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fbescheid', NULL); // antragstellungvorher
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'filtermodus', NULL);            
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'filtermodus', NULL);          
         }
         
         $f['uid'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fuid');
@@ -2308,16 +2364,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $f['gruppe'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fgruppe');
         $f['bescheid'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fbescheid'); // antragstellungvorher
         
-        /*
-        $f['uid'] = $searchparams['uid'] ?? '';
-        $f['name'] = $searchparams['name'] ?? '';
-        $f['ort'] = $searchparams['ort'] ?? '';
-        $f['beruf'] = $searchparams['beruf'] ?? '';
-        $f['land'] = $searchparams['land'] ?? '';
-        $f['berater'] = $searchparams['berater'] ?? '';
-        $f['gruppe'] = $searchparams['gruppe'] ?? '';
-        $f['bescheid'] = $searchparams['bescheid'] ?? ''; // antragstellungvorher
-*/
         if($f['land'] == '-1000' || $f['land'] == NULL) $f['land'] = '';
         if($f['berater'] == 0 || $f['berater'] == NULL) $f['berater'] = '';
         if($f['uid'] == '' && $f['name'] == '' && $f['ort'] == '' && $f['beruf'] == '' && $f['land'] == '' && $f['berater'] == '' && $f['gruppe'] == '' && $f['bescheid'] == '') {
@@ -2339,7 +2385,15 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $this->view->assign('filterort', $f['ort']);
             $this->view->assign('filterberuf', $f['beruf']);
             $this->view->assign('filterland', $f['land']);
+            if($f['land'] != '') {
+                $land = $this->staatenRepository->findStaatname($f['land']);                
+                $this->view->assign('filterlandname', $land[0]->getTitel());
+            }
             $this->view->assign('filterberater', $f['berater']);
+            if($f['berater'] != '') {
+                $berater = $this->beraterRepository->findByUid($f['berater']);
+                $this->view->assign('filterberatername', $berater->getUsername());
+            }
             $this->view->assign('filtergruppe', $f['gruppe']);
             $this->view->assign('filterbescheid', $f['bescheid']); // antragstellungvorher
             $this->view->assign('filteron', $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus'));

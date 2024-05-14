@@ -9,6 +9,7 @@
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.startseitetext">
 		<target> <![CDATA[ <p>Stimate doamne,<br> stimaţi domni, &nbsp;</p><p>Consiliem, asistăm şi susţinem persoanele care au nevoie de consiliere pentru recunoașterea calificărilor profesionale obţinute în străinătate în demersurile şi procedurile de recunoaştere.</p><p>Pentru a vă putea consilia în mod adecvat, ne este de ajutor dacă ne oferiți câteva informaţii despre dumneavoastră şi despre calificările şi experienţa dumneavoastră profesională.</p><p>De aceea vă rugăm să completați următorul chestionar cât se poate de complet. Întrebările pot fi afişate în diverse limbi. Vă rugăm să selectaţi în acest scop, de la început, o limbă. Răspundeţi la întrebări numai în <span style="font-weight: 500;">germană sau engleză</span>. Altminteri nu putem procesa solicitarea dumneavoastră. &nbsp;</p><p>Datele dumneavoastră pot fi prelucrare numai dacă trimiteţi întregul formular completat.</p><p>De obicei acordăm consiliere cu privire la recunoașterea calificărilor prin e-mail. În caz de întrebări suplimentare vă vom contacta telefonic.</p><p>Cu stimă,</p><p>IQ Anerkennungs- und Qualifizierungsberatung</p><p>Consiliere calificare şi recunoaştere IQ</p> ]]></target>
 	</trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.startseitetextcustom"><target></target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.linkanmeldeseitetext">
 		<target>Înregistrare la recunoaștere-consultare</target>
 	</trans-unit>    
@@ -135,6 +136,7 @@
   
 	<trans-unit id="anredemail"><target>Bună ziua</target></trans-unit>
 	<trans-unit id="mailtext"><target><![CDATA[<p>Vă mulțumim pentru informații.</p><p>Sunteți acum înregistrat pentru consultare. Vă vom contacta de îndată ce vă va veni rândul. <br><br>Consultanța este oferită prin e-mail, telefon sau videochat, la cerere. </p> Ne propunem să procesăm cererea dumneavoastră în termen de WARTEZEITWOCHEN săptămâni. Vă rugăm să aveți înțelegere și răbdare. </p><p>Cu stimă</p>Serviciul dumneavoastră de consultanță pentru recunoaștere și calificare IQ]]></target></trans-unit>
+	<trans-unit id="mailtextcustom"><target></target></trans-unit>
 			<trans-unit id="grcinfotext"><target><![CDATA[ <p>Dorim să subliniem faptul că serviciul de consiliere este pus în aplicare în conformitate cu Carta drepturilor fundamentale a Uniunii Europene. Avem nevoie de un acord reciproc pentru a ne conforma Cartei pentru recunoașterea și calificarea consilierii.</p><p>Carta drepturilor fundamentale a Uniunii Europene (PDF, engleză): <a href="https://www.europarl.europa.eu/charter/pdf/text_en.pdf" target="_blank">https://www.europarl.europa.eu/charter/pdf/text_en.pdf</a></p> ]]></target></trans-unit>
 	<trans-unit id="subject"><target>Înregistrarea dvs. pentru consultarea inițială de recunoaștere</target></trans-unit>
 	<trans-unit id="confirmlinktext"><target><![CDATA[Confirmare de înregistrare - Confirm registration]]></target></trans-unit>

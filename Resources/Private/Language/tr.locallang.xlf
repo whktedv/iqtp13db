@@ -9,6 +9,7 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.startseitetext">
 		<target> <![CDATA[ <p>Sevgili Tavsiye arayan, &nbsp;</p><p>Biz yurtdışında edinilen mesleki niteliklerin tanınma sürecinde tavsiye arayanlara danışmanlık yapıyor, eşlik ediyor ve destek veriyoruz.</p><p>Size iyi bir danışmanlık hizmeti verebilmek için, sizin hakkınızda ve mesleki yeterlilik ve deneyimleriniz hakkında bazı bilgileri almamız çok yararlı olacaktır.</p><p>Bu nedenle, bizler mümkün olduğu kadar aşağıdaki anketi tamamen doldurmanızı rica ediyoruz. Farklı dillerde görüntülenen soruları görüntüleyebilirsiniz. En başta dili seçiniz. <span style="font-weight: 500;">Soruları sadece Almanca veya İngilizce yanıtlayabilirsiniz.</span> Aksi takdirde talebiniz işleme alınmaz. Eğer bu form tamamen doldurulursa verileriniz işleme alınır.</p><p>Diploma tanınması ile ilgili tavsiyeler genellikle. e-posta yoluyla gerçekleşir.</p><p>Bunun dışındaki sorularınız için bizimle telefonla irtibata geçebilirsiniz.</p><p>Saygılarımızla</p><p>IQ Diploma tanınması ve yeterlilik danışmanlığı</p> ]]> </target>
 	</trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.startseitetextcustom"><target></target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.linkanmeldeseitetext">
 		<target>Diploma kabuletme danışmanlık kayıtı</target>
 	</trans-unit>
@@ -130,6 +131,7 @@
   <trans-unit id="anredemail"><target>İyi günler</target></trans-unit>
 	<trans-unit id="mailtext"><target><![CDATA[<p>Verdiğiniz bilgiler için çok teşekkürler.</p><p<&nbsp;</p><p> Danışmanlık hizmeti almak için kaydedildiniz. Sıranız geldiğinde Sizinle irtibata geçeceğiz.<br><br> Danışmanlık hizmeti isteğe bağlı olarak E-Mail, Telefon yada Video üzerinden online’da verilir.</p><p> Başvurunuzu WARTEZEITWOCHEN hafta içerisinde işleme koymak için çaba sarfedeceğiz. Sizden anlayış ve sabır bekliyoruz. </p><p<&nbsp;</p><p> En içten selamlarımızla</p> Sizin Mobil IQ Yeterlilik ve denklik için Danışmanlığınız
 	]]></target></trans-unit>
+	<trans-unit id="mailtextcustom"><target></target></trans-unit>
 				<trans-unit id="grcinfotext"><target><![CDATA[ <p>Danışmanlık hizmetinin Avrupa Birliği Temel Haklar Şartı'na uygun olarak yürütüldüğünü belirtmek isteriz. Tanınma ve yeterlilik danışmanlığı için Şart'a uymak üzere karşılıklı mutabakata ihtiyacımız var.</p><p>Avrupa Birliği Temel Haklar Şartı (PDF, İngilizce): <a href="https://www.europarl.europa.eu/charter/pdf/text_en.pdf" target="_blank">https://www.europarl.europa.eu/charter/pdf/text_en.pdf</a></p> ]]></target></trans-unit>
 	<trans-unit id="subject"><target>Yeterlilik ve denklik için danışmanlık (Kuzey Ren Vestfalya Eyaleti) başvurunuz</target></trans-unit>
 	<trans-unit id="confirmlinktext"><target>Başvuru onayı</target></trans-unit>

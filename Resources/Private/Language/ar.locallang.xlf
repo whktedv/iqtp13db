@@ -14,6 +14,7 @@
 		<target>تسجيل استشارة الاعتراف </target>
 	</trans-unit>
 	
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.startseitetextcustom"><target></target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungtext1"><target><![CDATA[ أوافق على استخدام بياناتي لغرض معالجة طلبي<a href="]]></target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungtext2"><target><![CDATA[" target="_blank">كيفية معالجة البيانات معروفة عندي</a>]]></target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.schonberaten"><target>	هل حدث وحصلت على استشارة حول تعديل شهاداتك المهنية الأجنبية؟	</target></trans-unit>
@@ -148,6 +149,7 @@
 	مشورة الاعتراف والتأهيل في  IQ 
 	
 	]]></target></trans-unit>
+	<trans-unit id="mailtextcustom"><target></target></trans-unit>
 	<trans-unit id="subject"><target>	تسجيلك لاستشارة الاعتراف الأولي في  	</target></trans-unit>
 	<trans-unit id="confirmlinktext"><target>	تأكيد التسجيل	</target></trans-unit>
 	<trans-unit id="confirmmailtext1"><target><![CDATA[<p>

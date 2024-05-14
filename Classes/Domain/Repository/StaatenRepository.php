@@ -17,5 +17,14 @@ namespace Ud\Iqtp13db\Domain\Repository;
  */
 class StaatenRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
-   
+    public function findStaatname($staatid)
+    {
+        $query = $this->createQuery();
+        $query->matching($query->logicalAnd(
+            $query->like('langisocode', 'de'),
+            $query->like('staatid', $staatid)
+            ));
+        $query = $query->execute();
+        return $query;
+    }
 }

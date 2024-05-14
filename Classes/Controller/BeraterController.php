@@ -99,7 +99,8 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $berater->setPassword(password_hash($berater->getPassword(), PASSWORD_ARGON2I));
                 
         $this->beraterRepository->update($berater);
-        $this->redirect('list');
+        //$this->redirect('list');
+        $this->redirect('editsettings', 'Backend', 'Iqtp13db', null);
     }
     
     /**
@@ -112,7 +113,8 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     {
         $this->addFlashMessage('Berater*in gelöscht.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
         $this->beraterRepository->remove($berater);
-        $this->redirect('list');
+        //$this->redirect('list');
+        $this->redirect('editsettings', 'Backend', 'Iqtp13db', null);
     }   
     
 }

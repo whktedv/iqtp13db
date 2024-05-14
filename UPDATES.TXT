@@ -75,4 +75,11 @@ Update 23.04.2024
 - Korrektur Export-Modul
 - Bugfixes
 
+Update 14.05.2024
+- Suche / Filter bleibt wieder bei Aufruf von anderen Modulen/Datensätzen bestehen
+- individueller Text für Startseite vor dem Anmeldeformular und individuelles Logo werden nun angezeigt (beides nur sofern vorhanden)
+- Modul "BeraterInnen" umbenannt in "Einstellungen". Hier nun Möglichkeit, individuellen Text in der Startseite vor dem Anmeldeformular und der abschließenden Bestätigungsmail einzufügen 
+- div. Performanceverbesserungen
+- Bugfixes
+
 Neu:

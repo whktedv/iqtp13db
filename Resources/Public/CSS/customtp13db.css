@@ -556,6 +556,12 @@ form.filterform div {
 	top: -1px;
 }
 
+.customtextstartseite0 {
+	background-color: #f1f1f7;
+	padding: 1rem;
+	margin-bottom: 1rem;
+}
+
 @media print {
   body {
   	font-size: 0.6em;

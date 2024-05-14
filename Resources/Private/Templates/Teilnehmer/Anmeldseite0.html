@@ -24,7 +24,8 @@
 	<div class="iq-teaser-weiss-integrationsbetriebe frame-type-text frame-layout-0 frame-no-backgroundimage frame-space-before-none frame-space-after-none">
 		<div class="defaultframe">
 			<div class="frame-inner">
-				<f:format.html><f:translate key="tx_iqtp13db_domain_model_teilnehmer.startseitetext" /></f:format.html>
+				<f:format.html>{startseitetext}</f:format.html>
+				<f:format.html>{startseitetextcustom}</f:format.html>
 				
 				<f:link.action class="linkbuttons frontend" action="anmeldseite1" arguments="{beratungsstelle: beratungsstelle, wohnsitzDeutschland : wohnsitzDeutschland, plz : plz, direkt : direkt}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.linkanmeldeseitetext" /></f:link.action>		
 			</div>

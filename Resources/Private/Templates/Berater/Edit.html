@@ -10,7 +10,7 @@
 
 <f:render partial="FormErrors" arguments="{object:Berater}" />
 
-<f:form action="update" name="berater" object="{berater}" >
+<f:form action="update" name="berater" controller="Berater" object="{berater}" >
 	<f:render partial="Berater/FormFields" arguments="{_all}" />
 	<f:form.button type="submit" class="linkbuttons" id="savebutton1">{f:translate(key:'speichern')}</f:form.button>
 </f:form>

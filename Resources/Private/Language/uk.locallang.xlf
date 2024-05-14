@@ -5,9 +5,11 @@
     <body>    
     <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.start0intro"><target>Для того, щоб перенаправити ваш запит до потрібного консультаційного центру, будь ласка, спочатку вкажіть ваше місце проживання</target></trans-unit>
     <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.start0wohnsitz"><target>Ви зараз живете в Німеччині?</target></trans-unit>
-    <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.start0plz"><target>Який поштовий індекс вашого місця проживання в Німеччині (5 цифр)?</target></trans-unit>  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.startseitetext">
+    <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.start0plz"><target>Який поштовий індекс вашого місця проживання в Німеччині (5 цифр)?</target></trans-unit>  
+    <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.startseitetext">
 		<target> <![CDATA[ <p>Шановні шукачі порад, дорогі шукачі порад,</p><p>ми консультуємо, супроводжуємо та підтримуємо тих, хто потребує консультації щодо процеса визнання іноземної професійної кваліфікації.</p><p>Для того щоб ми могли добре проконсультувати вас, буде дуже корисно, якщо ми отримаємо від вас деяку інформацію про вас, вашу професійну кваліфікацію та досвід.</p><p>Тому ми хотіли б попросити вас якомога повніше заповнити наступну анкету. Ви можете відображати запитання різними мовами. Будь ласка, виберіть мову на початку. <span style="font-weight: 500;">Будь ласка, відповідайте на запитання лише німецькою або англійською мовою.</span> Інакше ваш запит не може бути оброблений.</p><p>Ваші дані можуть бути оброблені, лише якщо ви заповните всю форму та надішлете її.</p><p>Поради щодо визнання кваліфікації зазвичай надаються електронною поштою. Якщо у нас виникнуть запитання, ми зв’яжемося з вами по телефону.</p><p>З повагою</p><p>Ваша консультаційна установа з визнання професійної кваліфікації IQ</p> ]]> </target>
 	</trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.startseitetextcustom"><target></target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.linkanmeldeseitetext"><target>Реєстрація для консультації щодо визнання</target></trans-unit>
     <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungtext1"><target><![CDATA[Я даю згоду на використання моїх даних з метою обробки мого запиту. Я взяла до відома <a href="]]></target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligungtext2"><target><![CDATA["  target="_blank">iнформацію про обробку даних</a>я взяла до відомаю]]></target></trans-unit>
@@ -117,6 +119,7 @@
 
   <trans-unit id="anredemail"><target>Доброго дня</target></trans-unit>
 	<trans-unit id="mailtext"><target><![CDATA[<p>Дякуємо за інформацію.</p> <p>&nbsp</p> <p>Тепер Ви зареєстровані на консультацію. Ми зв’яжемося з Вами, як тільки настане Ваша черга. <br><br>Консультація буде надаватися електронною поштою, телефоном або відеочатом за запитом.</p> <p>Ми намагатимемося обробити ваш запит протягом WARTEZEITWOCHEN тижнів. Просимо вашого розуміння та терпіння.</p><p>&nbsp</p> <p>З повагою</p>Ваша консультаційна установа по визнанню професійних дипломів та кваліфікацій]]></target></trans-unit>
+	<trans-unit id="mailtextcustom"><target></target></trans-unit>
 				<trans-unit id="grcinfotext"><target><![CDATA[ <p>Ми хотіли б зазначити, що послуга консультування реалізується відповідно до Хартії основних прав Європейського Союзу. Ми вимагаємо взаємної згоди на дотримання Хартії для визнання та кваліфікаційного консультування.</p><p>Хартія основних прав Європейського Союзу (PDF, англійською): <a href="https://www.europarl.europa.eu/charter/pdf/text_en.pdf" target="_blank">https://www.europarl.europa.eu/charter/pdf/text_en.pdf</a></p> ]]></target></trans-unit>
 	<trans-unit id="subject"><target>Ваша реєстрація для консультації по визнанню професійної кваліфікації в мережі IQ</target></trans-unit>
 	<trans-unit id="confirmlinktext"><target><![CDATA[Підтвердити реєстрацію - Confirm registration]]></target></trans-unit>

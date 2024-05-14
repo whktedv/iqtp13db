@@ -384,17 +384,19 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     			LEFT JOIN tx_iqtp13db_domain_model_abschluss a ON a.teilnehmer = t.uid
                 LEFT JOIN fe_groups as b on t.niqidberatungsstelle = b.niqbid
                 WHERE
-                DATEDIFF(STR_TO_DATE('$filtervon', '%d.%m.%Y'),$filternach) <= 0 AND
-				DATEDIFF(STR_TO_DATE('$filterbis', '%d.%m.%Y'),$filternach) >= 0
+                $filternach BETWEEN STR_TO_DATE('$filtervon', '%d.%m.%Y') AND STR_TO_DATE('$filterbis', '%d.%m.%Y')                
                 $hidden 
-                AND niqidberatungsstelle LIKE '$niqbid'
-                AND b.bundesland LIKE '$bundesland'
-                AND t.erste_staatsangehoerigkeit LIKE '$staat'
-                GROUP BY t.uid ORDER BY verification_date ASC";
-        
+                AND niqidberatungsstelle LIKE '$niqbid'";
+        if($bundesland != '%') $sql .= " AND b.bundesland LIKE '$bundesland'";
+        if($staat != '%') $sql .= " AND t.erste_staatsangehoerigkeit LIKE '$staat'";
+        $sql .= " GROUP BY t.uid ORDER BY verification_date ASC";
+                
+        //DATEDIFF(STR_TO_DATE('$filtervon', '%d.%m.%Y'),$filternach) <= 0 AND
+        //DATEDIFF(STR_TO_DATE('$filterbis', '%d.%m.%Y'),$filternach) >= 0
+                
         //DebuggerUtility::var_dump($sql);
         //die;
-        
+
         $query->statement($sql);
         
         return $query->execute();
@@ -433,10 +435,14 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         }
         
         $query = $this->createQuery();        
-        $query->statement("SELECT count(*) as anzahl FROM tx_iqtp13db_domain_model_teilnehmer WHERE
-				DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),$field) <= 0 AND
-				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),$field) >= 0 $addfield
+        $query->statement("SELECT count(*) as anzahl FROM tx_iqtp13db_domain_model_teilnehmer 
+                WHERE 
+                $field BETWEEN STR_TO_DATE('$datum1', '%d.%m.%Y') AND STR_TO_DATE('$datum2', '%d.%m.%Y') 
+				$addfield 
 				AND deleted = 0 AND hidden = 0 AND niqidberatungsstelle LIKE '$niqbid'");
+        
+        	 //DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),$field) <= 0 AND
+        	 //DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),$field) >= 0
               
         $query = $query->execute(true);
         return $query;
@@ -738,8 +744,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                     LEFT JOIN tx_iqtp13db_domain_model_berufe as c ON b.referenzberufzugewiesen = c.berufid
                     LEFT JOIN fe_groups as d ON niqidberatungsstelle = d.niqbid
                     WHERE
-                    DATEDIFF(STR_TO_DATE('$filtervon', '%d.%m.%Y'),$filternach) <= 0 AND
-				    DATEDIFF(STR_TO_DATE('$filterbis', '%d.%m.%Y'),$filternach) >= 0
+                    $filternach BETWEEN STR_TO_DATE('$filtervon', '%d.%m.%Y') AND STR_TO_DATE('$filterbis', '%d.%m.%Y') 
                     AND $sqlberatungsstatus
                     AND d.bundesland LIKE '$bundesland'
                     AND d.niqbid LIKE '$beratungsstelle' 
@@ -750,12 +755,11 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             // Ausgabe Liste Staatsangehörigkeit
             $sql = "SELECT c.titel, count(erste_staatsangehoerigkeit) as anz
                     FROM  tx_iqtp13db_domain_model_teilnehmer as a
-                    LEFT JOIN  tx_iqtp13db_domain_model_abschluss as b ON a.uid = b.teilnehmer
+                    LEFT JOIN tx_iqtp13db_domain_model_abschluss as b ON a.uid = b.teilnehmer
                     LEFT JOIN tx_iqtp13db_domain_model_staaten as c ON erste_staatsangehoerigkeit = c.staatid
                     LEFT JOIN fe_groups as d ON niqidberatungsstelle = d.niqbid
                     WHERE
-                    DATEDIFF(STR_TO_DATE('$filtervon', '%d.%m.%Y'),$filternach) <= 0 AND
-				    DATEDIFF(STR_TO_DATE('$filterbis', '%d.%m.%Y'),$filternach) >= 0
+                    $filternach BETWEEN STR_TO_DATE('$filtervon', '%d.%m.%Y') AND STR_TO_DATE('$filterbis', '%d.%m.%Y') 
                     AND $sqlberatungsstatus
                     AND d.bundesland LIKE '$bundesland'
                     AND d.niqbid LIKE '$beratungsstelle'
@@ -767,12 +771,11 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             // Ausgabe Liste Bundesland
             $sql = "SELECT d.bundesland as titel, count(d.bundesland) as anz
                     FROM  tx_iqtp13db_domain_model_teilnehmer as a
-                    LEFT JOIN  tx_iqtp13db_domain_model_abschluss as b ON a.uid = b.teilnehmer
+                    LEFT JOIN tx_iqtp13db_domain_model_abschluss as b ON a.uid = b.teilnehmer
                     LEFT JOIN tx_iqtp13db_domain_model_berufe as c ON b.referenzberufzugewiesen = c.berufid
                     LEFT JOIN fe_groups as d ON niqidberatungsstelle = d.niqbid
                     WHERE
-                    DATEDIFF(STR_TO_DATE('$filtervon', '%d.%m.%Y'),$filternach) <= 0 AND
-				    DATEDIFF(STR_TO_DATE('$filterbis', '%d.%m.%Y'),$filternach) >= 0
+                    $filternach BETWEEN STR_TO_DATE('$filtervon', '%d.%m.%Y') AND STR_TO_DATE('$filterbis', '%d.%m.%Y') 
                     AND $sqlberatungsstatus
                     AND b.referenzberufzugewiesen LIKE '$beruf'
                     AND erste_staatsangehoerigkeit LIKE '$staat'
@@ -788,13 +791,12 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                     )
                     SELECT e.val as titel, count(*) as anz
                     FROM tx_iqtp13db_domain_model_teilnehmer as a
-                    LEFT JOIN  tx_iqtp13db_domain_model_abschluss as b ON a.uid = b.teilnehmer
+                    LEFT JOIN tx_iqtp13db_domain_model_abschluss as b ON a.uid = b.teilnehmer
                     LEFT JOIN tx_iqtp13db_domain_model_berufe as c ON b.referenzberufzugewiesen = c.berufid
                     LEFT JOIN fe_groups as d ON niqidberatungsstelle = d.niqbid
                     LEFT JOIN temptable_gender as e ON a.geschlecht = e.id
                     WHERE
-                    DATEDIFF(STR_TO_DATE('$filtervon', '%d.%m.%Y'),$filternach) <= 0 AND
-				    DATEDIFF(STR_TO_DATE('$filterbis', '%d.%m.%Y'),$filternach) >= 0
+                    $filternach BETWEEN STR_TO_DATE('$filtervon', '%d.%m.%Y') AND STR_TO_DATE('$filterbis', '%d.%m.%Y') 
                     AND $sqlberatungsstatus
                     AND d.bundesland LIKE '$bundesland'
                     AND b.referenzberufzugewiesen LIKE '$beruf'

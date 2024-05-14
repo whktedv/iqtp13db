@@ -9,6 +9,7 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.startseitetext">
 		<target> <![CDATA[ <p>Chère demandeuse,<br> cher demandeur, &nbsp;</p><p>nous conseillons, accompagnons et soutenons les personnes qui cherchent conseil ayant des qualifications professionnelles étrangère dans leurs démarches visant à en obtenir la reconnaissance. &nbsp;</p><p>Pour pouvoir bien vous conseiller, il est très utile pour nous d'obtenir de votre part quelques informations sur vous et vos qualifications ainsi vos expériences professionnelles.</p><p>Ainsi, nous vous prions de remplir le questionnaire suivant de la manière la plus complète possible. Vous pouvez obtenir l'affichage des questions dans diverses langues. Veuillez choisir au début une langue à cet effet. Veuillez ne répondre aux questions qu'en <span style="font-weight: 500;">allemand ou en anglais</span>. Faute de quoi votre demande ne peut pas être traitée.</p><p>Vos données ne peuvent être traitées que si tout le questionnaire est envoyé rempli.</p><p>Les conseils concernant la reconnaissance a lieu généralement par E-mail. Veuillez nous contacter par téléphone en cas de questions complémentaires.</p><p>Sincères salutations</p><p>Votre conseil à la reconnaissance et à la qualification IQ.</p> ]]> </target>
 	</trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.startseitetextcustom"><target></target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.linkanmeldeseitetext">
 		<target>Inscription pour consultation de reconnaissance</target>
 	</trans-unit>
@@ -136,7 +137,8 @@
 	<trans-unit id="mailtext"><target> <![CDATA[
 						 <p>Merci pour votre information.</p>  <p>Vous êtes désormais inscrit à la consultation. Nous vous contacterons dès que ce sera votre tour. <br><br>La consultation se fera par courriel, téléphone ou chat vidéo selon la demande.</p> <p>Nous nous efforcerons de traiter votre demande dans un délai de WARTEZEITWOCHEN semaines. Nous vous demandons de bien vouloir faire preuve de compréhension et de patience.</p> <p>Meilleures salutations</p>Votre IQ service-conseil en reconnaissance et qualification.
 						  ]]></target></trans-unit>
-				<trans-unit id="grcinfotext"><target><![CDATA[ <p>Nous attirons votre attention sur le fait que l'offre de conseil est mise en œuvre conformément à la Charte des droits fondamentaux de l'Union européenne. Nous supposons le consentement mutuel du respect de la charte pour le conseil en reconnaissance et qualification.</p><p>Charte des droits fondamentaux de l'Union européenne: <a href="https://www.europarl.europa.eu/charter/pdf/text_fr.pdf" target="_blank">https://www.europarl.europa.eu/charter/pdf/text_fr.pdf</a></p> ]]></target></trans-unit>
+	<trans-unit id="mailtextcustom"><target></target></trans-unit>
+	<trans-unit id="grcinfotext"><target><![CDATA[ <p>Nous attirons votre attention sur le fait que l'offre de conseil est mise en œuvre conformément à la Charte des droits fondamentaux de l'Union européenne. Nous supposons le consentement mutuel du respect de la charte pour le conseil en reconnaissance et qualification.</p><p>Charte des droits fondamentaux de l'Union européenne: <a href="https://www.europarl.europa.eu/charter/pdf/text_fr.pdf" target="_blank">https://www.europarl.europa.eu/charter/pdf/text_fr.pdf</a></p> ]]></target></trans-unit>
 	<trans-unit id="subject"><target>Votre inscription au conseil en reconnaissance NRW</target></trans-unit>
 	<trans-unit id="confirmlinktext"><target>
 						 Confirmer l'inscription - Confirmer l'inscription

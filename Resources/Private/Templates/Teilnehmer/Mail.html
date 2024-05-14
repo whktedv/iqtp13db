@@ -397,10 +397,8 @@
 
                                     <f:format.html>
 	                                    {anrede}
-	                                    <br>{mailtext}
-	                                    <f:if condition="{custommailtext} != ''">
-	                                    	{custommailtext}
-	                                    </f:if>           
+	                                    {mailtext}
+	                                    {custommailtext}
 	                                </f:format.html>                                    
 									
 									<div style="background-color: #dedede; padding: 10px; border: 1px solid #222; margin-top: 15px;">
@@ -410,8 +408,10 @@
 										</div>
 									</div>
 									
-									<div style="font-size: 10px;">
-										<f:format.html>{grcinfotext}</f:format.html>  
+									<div style="padding: 10px; border: 1px solid #222; margin-top: 5px;">
+										<div style="font-size: 10px;">
+											<f:format.html>{grcinfotext}</f:format.html>  
+										</div>
 									</div>
 								</td>                           
 							</tr> 

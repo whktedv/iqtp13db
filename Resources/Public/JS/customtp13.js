@@ -242,6 +242,46 @@ $(document).ready(function() {
 		.catch( err => {
 			console.error( err.stack );
 		} );
+		
+	ClassicEditor
+		.create( document.querySelector( '#textareacustomtext1' ), {
+			toolbar: {
+			    items: [
+			        'undo', 'redo',
+			        '|', 'bold', 'italic', 
+			        '|', 'link', 'blockQuote',
+			        '|', 'numberedList', 'outdent', 'indent'
+			    ],
+			    shouldNotGroupWhenFull: true
+			}
+
+		} )
+		.then( editor => {
+			window.editor = editor;
+		} )
+		.catch( err => {
+			console.error( err.stack );
+		} );
+		
+	ClassicEditor
+		.create( document.querySelector( '#textareacustomtext2' ), {
+			toolbar: {
+			    items: [
+			        'undo', 'redo',
+			        '|', 'bold', 'italic', 
+			        '|', 'link', 'blockQuote',
+			        '|', 'numberedList', 'outdent', 'indent'
+			    ],
+			    shouldNotGroupWhenFull: true
+			}
+
+		} )
+		.then( editor => {
+			window.editor = editor;
+		} )
+		.catch( err => {
+			console.error( err.stack );
+		} );
 	
 });
 

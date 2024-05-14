@@ -1,0 +1,63 @@
+
+<f:layout name="Default" />
+<f:section name="HeaderAssets">
+  		<link rel="stylesheet" href="{f:uri.resource(path: 'CSS/customtp13dbadmin.css')}"/>  		
+</f:section>
+<f:section name="main">
+
+<f:flashMessages />
+
+<h1>Liste Berater:innen</h1>
+
+<f:render partial="Paginator" arguments="{pagination: pagination, pages: pages, paginator: paginator, action: calleraction}" />
+ 
+<table  class="tx_iqtp13db" >
+	<tr>
+		<th>Username</th>
+		<th>Nachname</th>
+		<th>Vorname</th>
+		<th>E-Mail</th>
+		<th>Letzter Login</th>
+		<th>Benutzergruppe</th>
+		<th></th>
+		<th></th>
+	</tr>
+
+		<f:for each="{paginator.paginatedItems}" as="berat" iteration="it">
+		<tr>
+			<td>{berat.username}</td>
+			<td>{berat.lastname}</td>
+			<td>{berat.firstname}</td>
+			<td>{berat.email}</td>
+			<td><f:format.date format="d.m.Y - H:i">{berat.lastlogin}</f:format.date> Uhr</td>
+			<td><f:for each="{berat.usergroup}" as="group">{group.title} </f:for></td>
+			<td>
+				<f:if condition="{thisuser.username} == {berat.username}">
+					<f:then>
+						<f:link.action action="edit" controller="Berater" class="linkbuttons" arguments="{berater : berat}">Bearbeiten</f:link.action>
+					</f:then>
+				</f:if>
+			</td>
+		</tr>
+		
+	</f:for>
+</table>
+
+<h1>Einstellungen</h1>
+<div class="fframe" style="background: #6060601c;">
+<f:form class="" method="post" controller="Backend" action="updatesettings" name="settings" >
+	<div class="customtexteditor1"><h3>Individueller Info-Text <a href="https://www.iq-webapp.de/frontend-iq-webapp/anmeldung?tx_iqtp13db_iqtp13dbwebapp[beratung]={niqbid}&tx_iqtp13db_iqtp13dbwebapp[direkt]=1&tx_iqtp13db_iqtp13dbwebapp[wohnsitzDeutschland]=2" target="_blank">Startseite</a> (max. 800 Zeichen):</h3>
+		<f:form.textarea name="custominfotextstart" id="textareacustomtext1" value="{custominfotextstart}" />
+	</div>
+	<br>
+	<div class="customtexteditor1"><h3>Individueller Info-Text E-Mail (max. 400 Zeichen): </h3>
+		<f:form.textarea name="custominfotextmail" id="textareacustomtext2" value="{custominfotextmail}" />
+	</div>
+	<div style="margin-top: 1rem;">
+		<f:form.button type="submit" class="linkbuttons" id="savebutton1">{f:translate(key:'speichern')}</f:form.button>
+	</div>
+</f:form>
+</div>
+</f:section>
+
+
