@@ -105,8 +105,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         foreach($berufe as $beruf) {
             $berufearr[$beruf->getBerufid()] = $beruf->getTitel();
         }
-        $staaten = $this->staatenRepository->findByLangisocode('de');
-        unset($staaten[200]);
+        $staaten = $this->staatenRepository->findAll4Abschluss('de');
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
         }
@@ -165,8 +164,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         foreach($berufe as $beruf) {
             $berufearr[$beruf->getBerufid()] = $beruf->getTitel();
         }
-        $staaten = $this->staatenRepository->findByLangisocode('de');
-        unset($staaten[200]);
+        $staaten = $this->staatenRepository->findAll4Abschluss('de');
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
         }
@@ -248,8 +246,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         foreach($berufe as $beruf) {
             $berufearr[$beruf->getBerufid()] = $beruf->getTitel();
         }
-        $staaten = $this->staatenRepository->findByLangisocode('de');
-        unset($staaten[200]);
+        $staaten = $this->staatenRepository->findAll4Abschluss('de');
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
         }
@@ -337,11 +334,11 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         foreach($berufe as $beruf) {
             $berufearr[$beruf->getBerufid()] = $beruf->getTitel();
         }
-        $staaten = $this->staatenRepository->findByLangisocode('de');
-        unset($staaten[200]);
+        $staaten = $this->staatenRepository->findAll4Abschluss('de');        
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
         }
+        
         
         $this->view->assignMultiple(
             [

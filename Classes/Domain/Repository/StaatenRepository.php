@@ -27,4 +27,18 @@ class StaatenRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $query = $query->execute();
         return $query;
     }
+   
+    public function findAll4Abschluss($langisocode)
+    {
+        $query = $this->createQuery();
+        $query->matching($query->logicalAnd(
+            $query->like('langisocode', $langisocode),
+            $query->logicalNot($query->equals('staatid', '-1')),
+            $query->logicalNot($query->equals('staatid', '201'))
+            ));
+        $query->setOrderings(array('titel' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING));
+        
+        $query = $query->execute();
+        return $query;
+    }
 }

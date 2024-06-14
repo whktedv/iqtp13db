@@ -348,6 +348,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         
         $staaten = $this->staatenRepository->findByLangisocode($langCode);
         if(count($staaten) == 0) $staaten = $this->staatenRepository->findByLangisocode('en');
+        unset($staaten[201]);
         
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
@@ -688,8 +689,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             
             $staaten = $this->staatenRepository->findByLangisocode($langCode);
             if(count($staaten) == 0) $staaten = $this->staatenRepository->findByLangisocode('en');
-            unset($staaten[200]);
-            
+                        
             $this->view->assignMultiple(
                 [
                     'settings' => $this->settings,

@@ -435,7 +435,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         
         $staaten = $this->staatenRepository->findByLangisocode('de');
-        unset($staaten[200]);
+        unset($staaten[201]);
+        
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
         }
@@ -537,7 +538,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         
         $staaten = $this->staatenRepository->findByLangisocode('de');
-        unset($staaten[200]);
+        unset($staaten[201]);
+        
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
         }
@@ -641,7 +643,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $berufeliste = $this->berufeRepository->findAll();
         $staaten = $this->staatenRepository->findByLangisocode('de');
-        unset($staaten[200]);
+        unset($staaten[201]);
+        
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
         }
@@ -721,7 +724,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         
         $staaten = $this->staatenRepository->findByLangisocode('de');
-        unset($staaten[200]);
+        unset($staaten[201]);
+        
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
         }
@@ -811,7 +815,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $berufeliste = $this->berufeRepository->findAll();
         $staaten = $this->staatenRepository->findByLangisocode('de');
-        unset($staaten[200]);
+        unset($staaten[201]);
+        
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
         }
@@ -844,7 +849,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function exportAction(int $currentPage = 1)
     {
         $valArray = $this->request->getArguments();
-        
+         
         $filtervon = isset($valArray['filtervon']) ? $valArray['filtervon'] : '';
         $filterbis = isset($valArray['filtervon']) ? $valArray['filterbis'] : '';
         
@@ -852,15 +857,24 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $allebundeslaender = $this->userGroupRepository->findAllBundeslaender();
         $staatselected = $valArray['filterstaat'] ?? '%';
         //DebuggerUtility::var_dump($valArray);
+        $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->usergroup);
+        foreach($berater as $currber) {
+            $arrberater[$currber->getUid()] = $currber->getUsername();
+        }
+        
+        $beraterselected = $valArray['filterberater'] ?? '%';
+        
+        //DebuggerUtility::var_dump($alleberater); 
         
         $arrjanein = array(0 => '', 1 => 'ja', 2 => 'nein', 3 => 'keine Angabe');
         $arrerwerbsstatus = $this->settings['erwerbsstatus'];
         $arrleistungsbezug = $this->settings['leistungsbezug'];
         $staaten = $this->staatenRepository->findByLangisocode('de');
+        unset($staaten[201]);
         foreach($staaten as $staat) {
             $arrstaaten[$staat->getStaatid()] = $staat->getTitel();
         }
-        
+                
         $orte = $this->ortRepository->findByBundesland($bundeslandselected);
         foreach($orte as $ort) {
             $arrorte[$ort->getPlz()] = $ort->getLandkreis();
@@ -898,7 +912,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $anzteilnehmers = 0;
         if($filtervon != '' && $filterbis != '') {
-            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer($type, $del, $filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected);
+            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer($type, $del, $filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected, $beraterselected);
             $anzteilnehmers = count($teilnehmers);
         }
          
@@ -916,6 +930,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                         'filterberatungsstatus' => $fberatungsstatus,
                         'filterbundesland' => $bundeslandselected,
                         'filterstaat' => $staatselected,
+                        'filterberater' => $beraterselected,
                         'filteron' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus')
                     ]
                     );
@@ -1229,6 +1244,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     'filterberatungsstatus' => $fberatungsstatus,
                     'filterbundesland' => $bundeslandselected,
                     'filterstaat' => $staatselected,
+                    'filterberater' => $beraterselected,
                     'filteron' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus')
                 ]
                 );
@@ -1254,7 +1270,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     'allebundeslaender' => $allebundeslaender,
                     'filterbundesland' => $bundeslandselected,
                     'filterstaat' => $staatselected,
-                    'staatenarr' => $staatenarr
+                    'staatenarr' => $staatenarr,
+                    'alleberater' => $arrberater ?? '',
+                    'filterberater' => $beraterselected
                 ]
                 );
         }
@@ -1372,10 +1390,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
         
         $staaten = $this->staatenRepository->findByLangisocode('de');
+        unset($staaten[201]);
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
         }
-        
+                
         $altervonbis[-1000] = '-';
         $altervonbis[-1] = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('ka', 'iqtp13db');
         for ($i = 15; $i <= 80; $i++) {
@@ -1588,9 +1607,10 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $berufe = $this->berufeRepository->findAll();
         $staaten = $this->staatenRepository->findByLangisocode('de');
+        unset($staaten[201]);
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
-        }
+        }        
         
         $altervonbis[-1000] = '-';
         $altervonbis[-1] = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('ka', 'iqtp13db');

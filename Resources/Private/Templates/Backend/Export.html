@@ -31,6 +31,8 @@ Das Datum von/bis bezieht sich bei den Optionen Angemeldet und Gelöscht auf das
 						<f:form.select id="exportfilterselectstaat" name="filterstaat" options="{staatenarr}" optionValueField="key" optionLabelField="value" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterstaat}"/>	
 					</f:then>
 				</f:security.ifHasRole>
+				Auswahl Berater*in:
+				<f:form.select id="exportfilterselectberater" name="filterberater" options="{alleberater}" optionValueField="key" optionLabelField="value" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterberater}"/>									
 	</f:form>
 
 	<f:form method="post" controller="Backend" action="export" name="export" id="exportformdata" enctype="multipart/form-data" >
@@ -39,6 +41,7 @@ Das Datum von/bis bezieht sich bei den Optionen Angemeldet und Gelöscht auf das
 		<f:form.hidden value="{filterbis}" name="filterbis" />
 		<f:form.hidden value="{filterbundesland}" name="filterbundesland" />
 		<f:form.hidden value="{filterstaat}" name="filterstaat" />
+		<f:form.hidden value="{filterberater}" name="filterberater" />
 		<f:if condition="{anzgesamt} > 500"><f:then>
 			<f:form.button id="linkloadoverlay-export" type="submit" name="export" disabled="disabled" style="background-color: #9A9CA2;">Ratsuchende exportieren</f:form.button>
 			<span style="color: #cd0000; font-weight: bold;">Export nicht möglich, da zuviele Datensätze. Bitte Zeitraum eingrenzen.</span>

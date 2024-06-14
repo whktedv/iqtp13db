@@ -71,7 +71,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             ];
         }
         if($land != '') {
-            $whereExpressions[] = $queryBuilder->expr()->like('geburtsland', $queryBuilder->createNamedParameter('%' . $queryBuilder->escapeLikeWildcards($land) . '%'));
+            $whereExpressions[] = $queryBuilder->expr()->eq('geburtsland', $queryBuilder->escapeLikeWildcards($land, Connection::PARAM_INT));
         }
         if($berater != '') {
             $whereExpressions[] = $queryBuilder->expr()->eq('tx_iqtp13db_domain_model_teilnehmer.berater', $queryBuilder->createNamedParameter($berater, Connection::PARAM_INT));
@@ -108,11 +108,11 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         
         // Antragstellungvorher / Bescheid
         if($fbescheid != '') {
-            $andwhereExpressionAntrag[] = [
-                $queryBuilder->expr()->gt('a.antragstellungvorher', $queryBuilder->createNamedParameter(0, Connection::PARAM_INT)),
-                $queryBuilder->expr()->lt('a.antragstellungvorher', $queryBuilder->createNamedParameter(4, Connection::PARAM_INT))
+            $andwhereExpressionAntrag = [
+                $queryBuilder->expr()->eq('a.antragstellungvorher', $queryBuilder->createNamedParameter(intval($fbescheid), Connection::PARAM_INT))
             ];
-        }    
+        }
+        
         
         // Beratungsstatus        
         if($type == 0 || $type == 1) {
@@ -358,7 +358,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      *
      */
-    public function search4exportTeilnehmer($type, $verstecktundgelöscht, $filtervon, $filterbis, $niqbid, $bundesland, $staat)
+    public function search4exportTeilnehmer($type, $verstecktundgelöscht, $filtervon, $filterbis, $niqbid, $bundesland, $staat, $berater)
     {
         if($type == 1) {
             $filternach = "FROM_UNIXTIME(verification_date)";
@@ -389,10 +389,8 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 AND niqidberatungsstelle LIKE '$niqbid'";
         if($bundesland != '%') $sql .= " AND b.bundesland LIKE '$bundesland'";
         if($staat != '%') $sql .= " AND t.erste_staatsangehoerigkeit LIKE '$staat'";
+        if($berater != '%') $sql .= " AND t.berater LIKE '$berater'";
         $sql .= " GROUP BY t.uid ORDER BY verification_date ASC";
-                
-        //DATEDIFF(STR_TO_DATE('$filtervon', '%d.%m.%Y'),$filternach) <= 0 AND
-        //DATEDIFF(STR_TO_DATE('$filterbis', '%d.%m.%Y'),$filternach) >= 0
                 
         //DebuggerUtility::var_dump($sql);
         //die;
@@ -436,14 +434,12 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         
         $query = $this->createQuery();        
         $query->statement("SELECT count(*) as anzahl FROM tx_iqtp13db_domain_model_teilnehmer 
-                WHERE 
-                $field BETWEEN STR_TO_DATE('$datum1', '%d.%m.%Y') AND STR_TO_DATE('$datum2', '%d.%m.%Y') 
+                  WHERE 
+        	    DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),$field) <= 0 AND
+        	    DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),$field) >= 0
 				$addfield 
 				AND deleted = 0 AND hidden = 0 AND niqidberatungsstelle LIKE '$niqbid'");
-        
-        	 //DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),$field) <= 0 AND
-        	 //DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),$field) >= 0
-              
+                
         $query = $query->execute(true);
         return $query;
     }

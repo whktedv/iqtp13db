@@ -82,4 +82,7 @@ Update 14.05.2024
 - div. Performanceverbesserungen
 - Bugfixes
 
+
 Neu:
+- Export: Filter nach Berater*in
+- Nordzypern als Land f. Abschluss aufgenommen

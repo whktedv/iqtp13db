@@ -180,7 +180,10 @@ $(document).ready(function() {
 		$("#overlay").show();
 	  $("#exportfilterform").submit(); 
 	});
-	
+	$('#exportfilterselectberater').change(function() {
+		$("#overlay").show();
+	  $("#exportfilterform").submit(); 
+	});
 		
 	
 	// ############ Loading Overlay u.a. bei Submit-Click #############
