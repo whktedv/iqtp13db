@@ -769,7 +769,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function showsearchresultAction(int $currentPage = 1)
     {        
         $valArray = $this->request->getArguments();
-        //DebuggerUtility::var_dump($valArray);
         if($valArray['searchparams']['berater'] == '0' && $valArray['searchparams']['beruf'] == '' && $valArray['searchparams']['bescheid'] == '' && $valArray['searchparams']['gruppe'] == '' && $valArray['searchparams']['land'] == '-1000' && $valArray['searchparams']['name'] == '' && $valArray['searchparams']['ort'] == '' && $valArray['searchparams']['uid'] == '') {
             $this->addFlashMessage("FEHLER: Bitte Suchkriterium angeben.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             $this->redirect($valArray['searchparameter']['action'] ?? 'listangemeldet', 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1'));
@@ -843,7 +842,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'anzfolgekontakte' => $anzfolgekontakte,
                 'folgekontakte' => $folgekontakte,
                 'summeberatungsdauer' => $summeberatungsdauer ?? 0,
-                'calleraction' => 'showsearchresult',
+                'calleraction' => $valArray['searchparameter']['action'],
                 'callercontroller' => 'Backend',
                 'staatenarr' => $staatenarr,
                 'beratungsstelle' => $this->usergroup->getTitle(),

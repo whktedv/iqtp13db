@@ -167,6 +167,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             ->groupBy('tx_iqtp13db_domain_model_teilnehmer.uid')            
             ->orderBy($orderby, $order)
             ->addOrderBy('uid', 'DESC')
+            ->setMaxResults($limit)
             ->executeQuery();
 
            //DebuggerUtility::var_dump($queryBuilder->getSQL());
@@ -393,7 +394,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         if($berater != '%') $sql .= " AND t.berater LIKE '$berater'";
         if($landkreis != '%') $sql .= " AND o.landkreis LIKE '$landkreis'";
         if($beruf != '%') $sql .= " AND a.referenzberufzugewiesen LIKE '$beruf'";
-        $sql .= " GROUP BY t.uid ORDER BY verification_date ASC";
+        $sql .= " GROUP BY t.uid ORDER BY verification_date ASC LIMIT 500";
                 
         //DebuggerUtility::var_dump($sql);
         
