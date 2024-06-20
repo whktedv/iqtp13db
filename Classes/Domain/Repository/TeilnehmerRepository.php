@@ -358,7 +358,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      *
      */
-    public function search4exportTeilnehmer($type, $verstecktundgelöscht, $filtervon, $filterbis, $niqbid, $bundesland, $staat, $berater)
+    public function search4exportTeilnehmer($type, $verstecktundgelöscht, $filtervon, $filterbis, $niqbid, $bundesland, $staat, $berater, $landkreis, $beruf)
     {
         if($type == 1) {
             $filternach = "FROM_UNIXTIME(verification_date)";
@@ -382,18 +382,21 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         
         $sql = "SELECT t.* FROM tx_iqtp13db_domain_model_teilnehmer t
     			LEFT JOIN tx_iqtp13db_domain_model_abschluss a ON a.teilnehmer = t.uid
-                LEFT JOIN fe_groups as b on t.niqidberatungsstelle = b.niqbid
-                WHERE
+                LEFT JOIN fe_groups as b on t.niqidberatungsstelle = b.niqbid 
+                LEFT JOIN tx_iqtp13db_domain_model_ort o ON t.plz = o.plz ";
+        $sql .= "WHERE
                 $filternach BETWEEN STR_TO_DATE('$filtervon', '%d.%m.%Y') AND STR_TO_DATE('$filterbis', '%d.%m.%Y')                
                 $hidden 
                 AND niqidberatungsstelle LIKE '$niqbid'";
         if($bundesland != '%') $sql .= " AND b.bundesland LIKE '$bundesland'";
         if($staat != '%') $sql .= " AND t.erste_staatsangehoerigkeit LIKE '$staat'";
         if($berater != '%') $sql .= " AND t.berater LIKE '$berater'";
+        if($landkreis != '%') $sql .= " AND o.landkreis LIKE '$landkreis'";
+        if($beruf != '%') $sql .= " AND a.referenzberufzugewiesen LIKE '$beruf'";
         $sql .= " GROUP BY t.uid ORDER BY verification_date ASC";
                 
         //DebuggerUtility::var_dump($sql);
-        //die;
+        
 
         $query->statement($sql);
         

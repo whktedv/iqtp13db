@@ -17,5 +17,12 @@ namespace Ud\Iqtp13db\Domain\Repository;
  */
 class OrtRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
-   
+
+    public function findLandkreiseByBundesland($bundesland)
+    {
+        $query = $this->createQuery();
+        $query->statement("SELECT DISTINCT landkreis FROM tx_iqtp13db_domain_model_ort WHERE bundesland LIKE '$bundesland' ORDER BY landkreis");
+        $query = $query->execute(true);
+        return $query;
+    }
 }

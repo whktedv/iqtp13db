@@ -281,7 +281,7 @@ CREATE TABLE tx_iqtp13db_domain_model_staaten (
 );
 
 #
-# Table structure for table 'tx_iqtp13db_domain_model_ortedb'
+# Table structure for table 'tx_iqtp13db_domain_model_ort'
 #
 CREATE TABLE tx_iqtp13db_domain_model_ort (
     uid int(11) NOT NULL,

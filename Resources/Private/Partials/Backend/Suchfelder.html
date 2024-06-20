@@ -1,27 +1,29 @@
-<div>UID:<f:form.textfield size="3" value="{filteruid}" name="uid" /></div>
-<div>Name: <f:form.textfield size="20" value="{filtername}" name="name" /></div>
-<div>Ort/PLZ: <f:form.textfield size="10" value="{filterort}" name="ort" /></div>
-<div>Beruf: <f:form.textfield size="20" value="{filterberuf}" name="beruf" /></div>
-<div>Geburtsland: <f:form.select value="{filterland}" name="land" options="{staatenarr}" optionValueField="value" optionLabelField="value" /></div>
-<div>Berater*in: <f:form.select value="{filterberater}" name="berater" options="{alleberater}" optionValueField="uid" optionLabelField="username" prependOptionLabel="-" prependOptionValue="0" sortByOptionLabel="1"/></div>
-<div>Gruppe: <f:form.textfield size="20" value="{filtergruppe}" name="gruppe" /></div>
-<div>Bescheid: <f:form.checkbox value="1" name="bescheid" checked="{filterbescheid} == 1" /></div>
-<div><f:form.button type="submit" name="filteran">Suchen</f:form.button></div>
-<f:if condition="{filteron}">
-	<f:then>
-		<span style="margin-bottom: 5px;"> 
-			<f:link.action action="{calleraction}" arguments="{filtermodus : 0}">
-			<span class="suchfelder">✖ 
-				{f:if(condition:'{filteruid} != ""', then: 'UID: {filteruid} ', else: '' )}
-				{f:if(condition:'{filtername} != ""', then: 'Name: {filtername} ', else: '' )}
-				{f:if(condition:'{filterort} != ""', then: 'Ort/PLZ: {filterort} ', else: '' )}
-				{f:if(condition:'{filterberuf} != ""', then: 'Beruf: {filterberuf} ', else: '' )}
-				{f:if(condition:'{filterland} != ""', then: 'Geburtsland: {filterlandname} ', else: '' )}
-				{f:if(condition:'{filterberater} != ""', then: 'Berater*in: {filterberatername} ', else: '' )}
-				{f:if(condition:'{filtergruppe} != ""', then: 'Gruppe: {filtergruppe} ', else: '' )}
-				{f:if(condition:'{filterbescheid} != ""', then: 'Bescheid: {filterbescheid}', else: '' )}
-			</span>
-			</f:link.action>
-		</span>
-	</f:then>
-</f:if>
+
+		<div>UID:<f:form.textfield size="3" value="{filteruid}" name="uid" /></div>
+		<div>Name: <f:form.textfield size="20" value="{filtername}" name="name" /></div>
+		<div>Ort/PLZ: <f:form.textfield size="10" value="{filterort}" name="ort" /></div>
+		<div>Beruf: <f:form.textfield size="20" value="{filterberuf}" name="beruf" /></div>
+		<div>Geburtsland: <f:form.select value="{filterland}" name="land" options="{staatenarr}" optionValueField="value" optionLabelField="value" /></div>
+		<div>Berater*in: <f:form.select value="{filterberater}" name="berater" options="{alleberater}" optionValueField="uid" optionLabelField="username" prependOptionLabel="-" prependOptionValue="0" sortByOptionLabel="1"/></div>
+		<div>Gruppe: <f:form.textfield size="20" value="{filtergruppe}" name="gruppe" /></div>
+		<div>Bescheid: <f:form.checkbox value="1" name="bescheid" checked="{filterbescheid} == 1" /></div>
+		<div class="divfilterallemodule">alle&nbsp;Module: <f:form.checkbox value="1" name="allemodule" checked="{filterallemodule} == 1" /></div>
+		<div><f:form.button type="submit" name="filteran">Suchen</f:form.button></div>
+		<f:if condition="{filteron}">
+			<f:then>
+				<span style="margin-bottom: 5px;"> 
+					<f:link.action action="{calleraction}" arguments="{filtermodus : 0}">
+					<span class="suchfelder">✖ 
+						{f:if(condition:'{filteruid} != ""', then: 'UID: {filteruid} ', else: '' )}
+						{f:if(condition:'{filtername} != ""', then: 'Name: {filtername} ', else: '' )}
+						{f:if(condition:'{filterort} != ""', then: 'Ort/PLZ: {filterort} ', else: '' )}
+						{f:if(condition:'{filterberuf} != ""', then: 'Beruf: {filterberuf} ', else: '' )}
+						{f:if(condition:'{filterland} != ""', then: 'Geburtsland: {filterlandname} ', else: '' )}
+						{f:if(condition:'{filterberater} != ""', then: 'Berater*in: {filterberatername} ', else: '' )}
+						{f:if(condition:'{filtergruppe} != ""', then: 'Gruppe: {filtergruppe} ', else: '' )}
+						{f:if(condition:'{filterbescheid} != ""', then: 'Bescheid: {filterbescheid}', else: '' )}
+					</span>
+					</f:link.action>
+				</span>
+			</f:then>
+		</f:if>

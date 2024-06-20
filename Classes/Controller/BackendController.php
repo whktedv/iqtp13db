@@ -375,6 +375,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     {
         $valArray = $this->request->getArguments();
         
+        if($valArray['allemodule'] == '1') {
+            $this->redirect('showsearchresult', 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $valArray));
+        }
         // zuletzt bearbeiteten User zurücksetzen
         if(isset($valArray['tn'])) {
             $editedteilnehmer = $this->teilnehmerRepository->findByUid($valArray['tn']);
@@ -473,7 +476,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function listerstberatungAction(int $currentPage = 1)
     {
         $valArray = $this->request->getArguments();
-        
+        if($valArray['allemodule'] == '1') {
+            $this->redirect('showsearchresult', 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $valArray));
+        }
         // zuletzt bearbeiteten User zurücksetzen
         if(isset($valArray['tn'])) {
             $editedteilnehmer = $this->teilnehmerRepository->findByUid($valArray['tn']);
@@ -580,7 +585,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function listarchivAction(int $currentPage = 1)
     {
         $valArray = $this->request->getArguments();
-        
+        if($valArray['allemodule'] == '1') {
+            $this->redirect('showsearchresult', 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $valArray));
+        }
         // zuletzt bearbeiteten User zurücksetzen
         if(isset($valArray['tn'])) {
             $editedteilnehmer = $this->teilnehmerRepository->findByUid($valArray['tn']);
@@ -685,6 +692,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function listdeletedAction(int $currentPage = 1)
     {
         $valArray = $this->request->getArguments();
+        if($valArray['allemodule'] == '1') {
+            $this->redirect('showsearchresult', 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $valArray));
+        }
         if(!empty($valArray['callerpage'])) $currentPage = $valArray['callerpage'];
         
         if(empty($valArray['orderby'])) {
@@ -759,6 +769,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function showsearchresultAction(int $currentPage = 1)
     {        
         $valArray = $this->request->getArguments();
+        //DebuggerUtility::var_dump($valArray);
+        if($valArray['searchparams']['berater'] == '0' && $valArray['searchparams']['beruf'] == '' && $valArray['searchparams']['bescheid'] == '' && $valArray['searchparams']['gruppe'] == '' && $valArray['searchparams']['land'] == '-1000' && $valArray['searchparams']['name'] == '' && $valArray['searchparams']['ort'] == '' && $valArray['searchparams']['uid'] == '') {
+            $this->addFlashMessage("FEHLER: Bitte Suchkriterium angeben.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->redirect($valArray['searchparameter']['action'] ?? 'listangemeldet', 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1'));
+        }
         
         if(array_key_exists("searchparams", $valArray)) {
             $searchparams = $valArray['searchparams'];
@@ -849,22 +864,30 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function exportAction(int $currentPage = 1)
     {
         $valArray = $this->request->getArguments();
-         
-        $filtervon = isset($valArray['filtervon']) ? $valArray['filtervon'] : '';
-        $filterbis = isset($valArray['filtervon']) ? $valArray['filterbis'] : '';
+        
+        $current_quarter = ceil(date('n') / 3);
+        $first_day_of_this_quarter = date('d.m.Y', strtotime(date('Y').'-'.(($current_quarter*3)-2).'-01'));
+        $last_day_of_this_quarter = date('d.m.Y', strtotime(date('Y').'-'.($current_quarter*3).'-'.(date("t",strtotime(date('Y').'-'.($current_quarter*3).'-01')))));
+        
+        $today = date("d.m.Y");
+        
+        $filtervon = isset($valArray['filtervon']) ? $valArray['filtervon'] : ($valArray['filtervon'] == null ? $first_day_of_this_quarter : $valArray['filtervon']);
+        $filterbis = isset($valArray['filtervon']) ? $valArray['filterbis'] : ($valArray['filterbis'] == null ? $today : $valArray['filterbis']);
         
         $bundeslandselected = $valArray['filterbundesland'] ?? $this->usergroup->getBundesland();
         $allebundeslaender = $this->userGroupRepository->findAllBundeslaender();
         $staatselected = $valArray['filterstaat'] ?? '%';
+        $landkreisselected = $valArray['filterlandkreis'] ?? '%';
+        $berufselected = $valArray['filterreferenzberuf'] ?? '%';
+        
         //DebuggerUtility::var_dump($valArray);
+        
         $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->usergroup);
         foreach($berater as $currber) {
             $arrberater[$currber->getUid()] = $currber->getUsername();
         }
         
         $beraterselected = $valArray['filterberater'] ?? '%';
-        
-        //DebuggerUtility::var_dump($alleberater); 
         
         $arrjanein = array(0 => '', 1 => 'ja', 2 => 'nein', 3 => 'keine Angabe');
         $arrerwerbsstatus = $this->settings['erwerbsstatus'];
@@ -875,10 +898,16 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $arrstaaten[$staat->getStaatid()] = $staat->getTitel();
         }
                 
-        $orte = $this->ortRepository->findByBundesland($bundeslandselected);
+        $orte = $this->ortRepository->findByBundesland($bundeslandselected);        
         foreach($orte as $ort) {
             $arrorte[$ort->getPlz()] = $ort->getLandkreis();
         }
+        
+        $arrlandkreise = array();
+        $arrlandkreise = $this->ortRepository->findLandkreiseByBundesland($bundeslandselected);
+        
+        //DebuggerUtility::var_dump($arrlandkreise);
+        
         $arraufenthaltsstatus = $this->settings['aufenthaltsstatus'];
         $arrberatungsart = $this->settings['beratungsart'];
         $arrberatungsformfolgeberatung = $this->settings['beratungsformfolgeberatung'];
@@ -912,7 +941,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $anzteilnehmers = 0;
         if($filtervon != '' && $filterbis != '') {
-            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer($type, $del, $filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected, $beraterselected);
+            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer($type, $del, $filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected, $beraterselected, $landkreisselected, $berufselected);
             $anzteilnehmers = count($teilnehmers);
         }
          
@@ -931,11 +960,13 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                         'filterbundesland' => $bundeslandselected,
                         'filterstaat' => $staatselected,
                         'filterberater' => $beraterselected,
+                        'filterlandkreis' => $landkreisselected,
+                        'filterreferenzberuf' => $berufselected,
                         'filteron' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus')
                     ]
                     );
             } else {
-            
+                
                 $rows = array();
                 $rowsfk = array();
                 $summedauerfk = array();
@@ -1245,6 +1276,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     'filterbundesland' => $bundeslandselected,
                     'filterstaat' => $staatselected,
                     'filterberater' => $beraterselected,
+                    'filterlandkreis' => $landkreisselected,
+                    'filterberuf' => $berufselected,
                     'filteron' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus')
                 ]
                 );
@@ -1253,8 +1286,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $staatenarr[$staat->getStaatid()] = $staat->getTitel();
             }
             
-            $filtervon = isset($valArray['filtervon']) ? $valArray['filtervon'] : '';
-            $filterbis = isset($valArray['filterbis']) ? $valArray['filterbis'] : '';
+            //$filtervon = isset($valArray['filtervon']) ? $valArray['filtervon'] : '';
+            //$filterbis = isset($valArray['filterbis']) ? $valArray['filterbis'] : '';
             $this->view->assignMultiple(
                 [
                     'anzgesamt' => $anzteilnehmers,
@@ -1272,7 +1305,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     'filterstaat' => $staatselected,
                     'staatenarr' => $staatenarr,
                     'alleberater' => $arrberater ?? '',
-                    'filterberater' => $beraterselected
+                    'alleberufe' => $arrberufe,
+                    'gewlandkreise' => $arrlandkreise,
+                    'filterberater' => $beraterselected,
+                    'filterlandkreis' => $landkreisselected,
+                    'filterberuf' => $berufselected
                 ]
                 );
         }

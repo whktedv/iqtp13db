@@ -88,18 +88,46 @@ form.filterform {
     padding-left: 10px;
 padding-right: 10px;
 padding-top: 10px;
-padding-bottom: 00px;
+padding-bottom: 10px;
 justify-content: space-between;
 }
 
 form.filterform div {
-  margin: 0 8px;
+  margin: 0 3px;
   width: min-content;
   max-width: 100%;
   font-size: 0.75rem;
   text-transform: uppercase;
   color: #3c5381;
 
+}
+
+.divfilterallemodule {
+	border-left: 1px solid #4E638D;
+	padding-left: 15px;
+}
+
+.filterframe-inner div {
+	display: flex;
+	flex-direction: row;
+}
+
+.filterframe-inner .filterframe-inner-row {
+	margin-bottom: 1rem;	
+}
+
+.filterframe-inner-row {
+	justify-content: normal;
+}
+
+.filterframe-inner-row div {
+	margin-right: 1.5rem;
+}
+
+.filterframe-inner-row label {
+	margin-right: 0.5rem;
+	font-weight: 300;
+	padding-top: 0px;
 }
 
 form.filterform select, .exportfilterform select {
@@ -134,11 +162,11 @@ form.filterform select, .exportfilterform select {
   line-height: inherit;
   width: auto;
   margin-top: 0rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0rem;
   font-family: roboto;
-font-weight: 300;
-font-size: 0.90rem;
-height: 24px;
+  font-weight: 300;
+  font-size: 0.90rem;
+  height: 24px;
   border: 1px solid #4e638d;
   border-radius: 0;
 }

@@ -84,5 +84,6 @@ Update 14.05.2024
 
 
 Neu:
-- Export: Filter nach Berater*in
-- Nordzypern als Land f. Abschluss aufgenommen
+- Export erweitert: Filter nach Berater*in, Staatsangehörigkeit, Landkreis, Beruf möglich
+- "Zypern (Nord)" als Land f. Abschluss aufgenommen
+- Suchfunktion: Über Checkbox nun Suche in allen Modulen möglich

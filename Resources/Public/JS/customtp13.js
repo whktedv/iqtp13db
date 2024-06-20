@@ -184,6 +184,14 @@ $(document).ready(function() {
 		$("#overlay").show();
 	  $("#exportfilterform").submit(); 
 	});
+	$('#exportfilterselectlandkreis').change(function() {
+		$("#overlay").show();
+	  $("#exportfilterform").submit(); 
+	});
+	$('#exportfilterreferenzberuf').change(function() {
+		$("#overlay").show();
+	  $("#exportfilterform").submit(); 
+	});
 		
 	
 	// ############ Loading Overlay u.a. bei Submit-Click #############
