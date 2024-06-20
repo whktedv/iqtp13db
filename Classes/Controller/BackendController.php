@@ -375,7 +375,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     {
         $valArray = $this->request->getArguments();
         
-        if($valArray['allemodule'] == '1') {
+        if(($valArray['allemodule'] ?? '') == '1') {
             $this->redirect('showsearchresult', 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $valArray));
         }
         // zuletzt bearbeiteten User zurücksetzen
@@ -476,7 +476,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function listerstberatungAction(int $currentPage = 1)
     {
         $valArray = $this->request->getArguments();
-        if($valArray['allemodule'] == '1') {
+        if(($valArray['allemodule'] ?? '') == '1') {
             $this->redirect('showsearchresult', 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $valArray));
         }
         // zuletzt bearbeiteten User zurücksetzen
@@ -585,7 +585,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function listarchivAction(int $currentPage = 1)
     {
         $valArray = $this->request->getArguments();
-        if($valArray['allemodule'] == '1') {
+        if(($valArray['allemodule'] ?? '') == '1') {
             $this->redirect('showsearchresult', 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $valArray));
         }
         // zuletzt bearbeiteten User zurücksetzen
@@ -692,7 +692,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function listdeletedAction(int $currentPage = 1)
     {
         $valArray = $this->request->getArguments();
-        if($valArray['allemodule'] == '1') {
+        if(($valArray['allemodule'] ?? '') == '1') {
             $this->redirect('showsearchresult', 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $valArray));
         }
         if(!empty($valArray['callerpage'])) $currentPage = $valArray['callerpage'];
@@ -936,6 +936,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         } elseif($fberatungsstatus == 14) {
             $type = 0;
             $del = 1;
+        } else {
+            $type = 1;
         }
         
         $anzteilnehmers = 0;
