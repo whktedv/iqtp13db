@@ -82,8 +82,9 @@ Update 14.05.2024
 - div. Performanceverbesserungen
 - Bugfixes
 
-
-Neu:
+Update 20.06.2024
 - Export erweitert: Filter nach Berater*in, Staatsangehörigkeit, Landkreis, Beruf möglich
 - "Zypern (Nord)" als Land f. Abschluss aufgenommen
 - Suchfunktion: Über Checkbox nun Suche in allen Modulen möglich
+
+Neu:

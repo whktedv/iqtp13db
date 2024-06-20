@@ -769,9 +769,17 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function showsearchresultAction(int $currentPage = 1)
     {        
         $valArray = $this->request->getArguments();
-        if($valArray['searchparams']['berater'] == '0' && $valArray['searchparams']['beruf'] == '' && $valArray['searchparams']['bescheid'] == '' && $valArray['searchparams']['gruppe'] == '' && $valArray['searchparams']['land'] == '-1000' && $valArray['searchparams']['name'] == '' && $valArray['searchparams']['ort'] == '' && $valArray['searchparams']['uid'] == '') {
-            $this->addFlashMessage("FEHLER: Bitte Suchkriterium angeben.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-            $this->redirect($valArray['searchparameter']['action'] ?? 'listangemeldet', 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1'));
+        
+        if(isset($valArray['searchparams']) && $valArray['searchparams']['berater'] == '0' &&
+            $valArray['searchparams']['beruf'] == '' &&
+            $valArray['searchparams']['bescheid'] == '' &&
+            $valArray['searchparams']['gruppe'] == '' &&
+            $valArray['searchparams']['land'] == '-1000' &&
+            $valArray['searchparams']['name'] == '' &&
+            $valArray['searchparams']['ort'] == '' &&
+            $valArray['searchparams']['uid'] == '') {
+                $this->addFlashMessage("FEHLER: Bitte Suchkriterium angeben.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                $this->redirect($valArray['searchparameter']['action'] ?? 'listangemeldet', 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1'));
         }
         
         if(array_key_exists("searchparams", $valArray)) {
@@ -842,7 +850,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'anzfolgekontakte' => $anzfolgekontakte,
                 'folgekontakte' => $folgekontakte,
                 'summeberatungsdauer' => $summeberatungsdauer ?? 0,
-                'calleraction' => $valArray['searchparameter']['action'],
+                'calleraction' => $valArray['searchparameter']['action'] ?? 'listangemeldet',
                 'callercontroller' => 'Backend',
                 'staatenarr' => $staatenarr,
                 'beratungsstelle' => $this->usergroup->getTitle(),
@@ -870,8 +878,17 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $today = date("d.m.Y");
         
-        $filtervon = isset($valArray['filtervon']) ? $valArray['filtervon'] : ($valArray['filtervon'] == null ? $first_day_of_this_quarter : $valArray['filtervon']);
-        $filterbis = isset($valArray['filtervon']) ? $valArray['filterbis'] : ($valArray['filterbis'] == null ? $today : $valArray['filterbis']);
+        if(isset($valArray['filtervon'])) {
+            $filtervon = $valArray['filtervon'];
+        } else {
+            $filtervon = $first_day_of_this_quarter;
+        }
+        
+        if(isset($valArray['filterbis'])) {
+            $filterbis = $valArray['filterbis'];
+        } else {
+            $filterbis = $today;
+        }
         
         $bundeslandselected = $valArray['filterbundesland'] ?? $this->usergroup->getBundesland();
         $allebundeslaender = $this->userGroupRepository->findAllBundeslaender();
