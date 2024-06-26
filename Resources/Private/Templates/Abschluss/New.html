@@ -14,7 +14,7 @@
 	<f:form.button type="submit" class="linkbuttons" id="savebutton1">{f:translate(key:'speichern')}</f:form.button>
 	<f:link.action id="linkloadoverlay-back" class="linkbuttons" action="{thisaction}" controller="{callercontroller}" arguments="{teilnehmer: teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, showabschluesse : 1}">Zurück</f:link.action>
 	
-	<f:render partial="Abschluss/FormFields" arguments="{abschlussjahre:abschlussjahre, staatenarr:staatenarr, berufearr:berufearr}" />
+	<f:render partial="Abschluss/FormFields" arguments="{abschlussjahre:abschlussjahre, staatenarr:staatenarr, berufearr:berufearr, abschlussartarr : abschlussartarr}" />
 	
 	<f:form.button type="submit" class="linkbuttons" id="savebutton2">{f:translate(key:'speichern')}</f:form.button>
 	<f:link.action id="linkloadoverlay-edit" class="linkbuttons" action="{thisaction}" controller="{callercontroller}" arguments="{teilnehmer: teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, showabschluesse : 1}">Zurück</f:link.action>

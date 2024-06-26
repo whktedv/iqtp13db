@@ -178,36 +178,27 @@ class Abschluss extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var \Ud\Iqtp13db\Domain\Model\Teilnehmer
      */
     protected $teilnehmer = null;
-    
-    /**
-     * initializes this object
-     *
-     * @param array $abschlussart
-     */
-    public function __construct(array $abschlussart = array()) {
-        $this->setAbschlussart($abschlussart);
-    }
-    
+      
     
     /**
      * Returns the abschlussart
      *
-     * @return array $abschlussart
+     * @return string $abschlussart
      */
     public function getAbschlussart()
     {
-        return explode(',', $this->abschlussart);
+        return $this->abschlussart;
     }
     
     /**
      * Sets the abschlussart
      *
-     * @param array $abschlussart
+     * @param string $abschlussart
      * @return void
      */
-    public function setAbschlussart(array $abschlussart)
+    public function setAbschlussart(string $abschlussart)
     {
-        $this->abschlussart =  implode(',', $abschlussart);
+        $this->abschlussart = $abschlussart;
     }
     
     /**

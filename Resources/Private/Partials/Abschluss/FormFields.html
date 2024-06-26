@@ -6,11 +6,7 @@
         <span id="infolab" title="<f:translate key='infoAbschluss' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_abschluss.abschlussart" />
         <span class="niqfield" />
        </label>
-        <div class="tp13_formdivwebappmultiradio">			
-        		<div class="tp13_formdivwebappradio"><f:form.checkbox property="abschlussart" value="-1" multiple="1"/><f:translate key="ka" /></div>
-				<div class="tp13_formdivwebappradio"><f:form.checkbox property="abschlussart" value="1" multiple="1"/><f:translate key="abschlussart.1" /></div>
-				<div class="tp13_formdivwebappradio"><f:form.checkbox property="abschlussart" value="2" multiple="1"/><f:translate key="abschlussart.2" /></div>
-		</div>
+        <f:form.select property="abschlussart" value="{abschluss.abschlussart}" options="{abschlussartarr}" optionValueField="key" optionLabelField="value" />
 	</div>
 	<div class="tp13_formdivwebapp">
 	      <label for="erwerbsland">

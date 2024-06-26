@@ -247,7 +247,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         
         // *********** Stats Bundesland/Beruf/Staatsangehörigkeit *************
         
-        $berufe = $this->berufeRepository->findAll();
+        $berufe = $this->berufeRepository->findAllOrdered('de')
         foreach($berufe as $beruf) {
             $berufearr[$beruf->getBerufid()] = $beruf->getTitel();
         }

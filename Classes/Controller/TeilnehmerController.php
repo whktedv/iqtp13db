@@ -513,13 +513,16 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $abschlussjahre[$jahr] = (String)$jahr;
         }
         
+        $abschlussartarr = $this->settings['abschlussart'];
+        unset($abschlussartarr[2]);
         $this->view->assignMultiple(
             [
                 'settings' => $this->settings,
                 'abschluesse' => $abschluesse,
                 'teilnehmer' => $teilnehmer,
                 'beratungsstelle' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid'),
-                'abschlussjahre' => $abschlussjahre
+                'abschlussjahre' => $abschlussjahre,
+                'abschlussartarr' => $abschlussartarr
             ]
             );
     }
@@ -689,7 +692,10 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             
             $staaten = $this->staatenRepository->findByLangisocode($langCode);
             if(count($staaten) == 0) $staaten = $this->staatenRepository->findByLangisocode('en');
-                        
+            
+            $abschlussartarr = $this->settings['abschlussart'];
+            unset($abschlussartarr[2]);
+            
             $this->view->assignMultiple(
                 [
                     'settings' => $this->settings,
@@ -698,7 +704,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     'teilnehmer' => $teilnehmer,
                     'dokumente' => $dokumente,
                     'foldersize' =>  100-(intval(($foldersize/30000)*100)),
-                    'staaten' => $staaten
+                    'staaten' => $staaten,
+                    'abschlussartarr' => $abschlussartarr
                 ]
                 );
         } else {

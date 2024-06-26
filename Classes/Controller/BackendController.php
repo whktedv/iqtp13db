@@ -86,10 +86,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
          * Annehmen eines String-Arrays, das im Setter und Getter des Models je per implode/explode wieder in Strings bzw. Array (of Strings) konvertiert wird
          */
         
-        if ($this->arguments->hasArgument('abschluss')) {
-            $this->arguments->getArgument('abschluss')->getPropertyMappingConfiguration()->allowProperties('abschlussart');
-            $this->arguments->getArgument('abschluss')->getPropertyMappingConfiguration()->setTargetTypeForSubProperty('abschlussart', 'array');
-        }
         
         if ($this->arguments->hasArgument('teilnehmer')) {
             $this->arguments->getArgument('teilnehmer')->getPropertyMappingConfiguration()->allowProperties('sonstigerstatus');
@@ -408,7 +404,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'listangemeldetorder', $order);
         }
         
-        $teilnehmer = $this->setfilter(0, $valArray, $orderby, $order, 0, 0);
+        $teilnehmer = $this->setfilter(0, $valArray, $orderby, $order, 0, 9999);
         
         // Wegen Bug in Paginator, der nicht mit Custom SQL Queryresults funktioniert, werden hier alle gefilterten Einträge auf einer Seite dargestellt. Queryresultpaginator hat dann keine Auswahl an Datensätzen, sondern alle.
         $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 20 : 20;
@@ -509,7 +505,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'listerstberatungorder', $order);
         }
         
-        $teilnehmer = $this->setfilter(3, $valArray, $orderby, $order, 0, 0);
+        $teilnehmer = $this->setfilter(3, $valArray, $orderby, $order, 0, 9999);
         
         // Wegen Bug in Paginator, der nicht mit Custom SQL Queryresults funktioniert, werden hier alle gefilterten Einträge auf einer Seite dargestellt. Queryresultpaginator hat dann keine Auswahl an Datensätzen, sondern alle.
         $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 20 : 20;
@@ -529,7 +525,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $abschluesse = array();
         
         $folgekontakte = $this->folgekontaktRepository->findAll4List($this->niqbid);
-        $berufeliste = $this->berufeRepository->findAll();
+        $berufeliste = $this->berufeRepository->findAllOrdered('de');
         
         foreach ($teilnehmerpag as $key => $tn) {
             $fk4tn = $this->folgekontaktRepository->findByTeilnehmer($tn->getUid());
@@ -618,7 +614,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'listarchivorder', $order);
         }
         
-        $teilnehmer = $this->setfilter(4, $valArray, $orderby, $order, 0, 0);
+        $teilnehmer = $this->setfilter(4, $valArray, $orderby, $order, 0, 9999);
         
         // Wegen Bug in Paginator, der nicht mit Custom SQL Queryresults funktioniert, werden hier alle gefilterten Einträge auf einer Seite dargestellt. Queryresultpaginator hat dann keine Auswahl an Datensätzen, sondern alle.
         $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 25 : 25;
@@ -648,7 +644,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         $folgekontakte = $this->folgekontaktRepository->findAll4List($this->niqbid);
         
-        $berufeliste = $this->berufeRepository->findAll();
+        $berufeliste = $this->berufeRepository->findAllOrdered('de');
         $staaten = $this->staatenRepository->findByLangisocode('de');
         unset($staaten[201]);
         
@@ -711,7 +707,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'listdeletedorder', $order);
         }
                
-        $teilnehmer = $this->setfilter(999, $valArray, $orderby, $order, 1, 0);
+        $teilnehmer = $this->setfilter(999, $valArray, $orderby, $order, 1, 9999);
         
         // Wegen Bug in Paginator, der nicht mit Custom SQL Queryresults funktioniert, werden hier alle gefilterten Einträge auf einer Seite dargestellt. Queryresultpaginator hat dann keine Auswahl an Datensätzen, sondern alle.
         $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 25 : 25;
@@ -833,9 +829,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $summeberatungsdauer[$teilnehmer->getUid()] = str_replace('.',',',floatval(str_replace(',','.',$teilnehmer->getBeratungsdauer())) + $summebdauerfk);
             }
         }
-        //DebuggerUtility::var_dump($valArray);
+        DebuggerUtility::var_dump($valArray);
         
-        $berufeliste = $this->berufeRepository->findAll();
+        $berufeliste = $this->berufeRepository->findAllOrdered('de');
         $staaten = $this->staatenRepository->findByLangisocode('de');
         unset($staaten[201]);
         
@@ -932,7 +928,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $arrberatungsstelle = $this->settings['beratungsstelle'];
         //$arrberatungzu = $this->settings['beratungzu'];
         $arrzertifikatlevel = $this->settings['zertifikatlevel'];
-        $berufeliste = $this->berufeRepository->findAll();
+        $berufeliste = $this->berufeRepository->findAllOrdered('de');
         foreach($berufeliste as $beruf) {
             $arrberufe[$beruf->getBerufid()] = $beruf->getTitel();
         }
@@ -1063,6 +1059,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     $zertifikatsprachniveau = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'zertifikat_sprachniveau ');
                     $rows[$x]['ZertifikatSprachniveau'] = $zertifikatsprachniveau == '' ? '-' : $arrzertifikatlevel[$zertifikatsprachniveau];
                     
+                    $rows[$x]['WeitereSprachkenntnisse'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'weiteresprachkenntnisse');
+                    
                     $rows[$x]['Sonstigerstatus'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'sonstigerstatus');
                     
                     $tnerwerbsstatus = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'erwerbsstatus');
@@ -1178,6 +1176,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     'WohnsitzNeinIn' => 'string',
                     'Deutschkenntnisse' => 'string',
                     'ZertifikatSprachniveau' => 'string',
+                    'Weitere Sprachkenntnisse' => 'string',
                     'SonstigerStatus' => 'string',
                     'Erwerbsstatus' => 'string',
                     'Leistungsbezug ja/nein' => 'string',
@@ -1393,7 +1392,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $berufeliste = $this->berufeRepository->findAll();
         $staaten = $this->staatenRepository->findByLangisocode('de');
-     
+        $abschlussartarr = $this->settings['abschlussart'];
+        unset($abschlussartarr[2]);
+        
         $backenduser = $this->beraterRepository->findByUid($this->user['uid']);
         $this->view->assignMultiple(
             [
@@ -1412,7 +1413,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'berufe' => $berufeliste,
                 'filesizes' => $filesizes,
                 'speicherbelegung' => $speicherbelegung,
-                'searchparams' => $searchparams ?? ''
+                'searchparams' => $searchparams ?? '',
+                'abschlussartarr' => $abschlussartarr
             ]
             );
     }
@@ -1660,7 +1662,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         $speicherbelegung = intval(($filesizesum/31457280)*100);
         
-        $berufe = $this->berufeRepository->findAll();
+        $berufe = $this->berufeRepository->findAllOrdered('de');
         $staaten = $this->staatenRepository->findByLangisocode('de');
         unset($staaten[201]);
         foreach($staaten as $staat) {
@@ -1709,6 +1711,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         if($teilnehmer->getNacherfassung() == 1) {
             $nacherfassung = 1;
         }
+        $abschlussartarr = $this->settings['abschlussart'];
+        unset($abschlussartarr[2]);
         
         $backenduser = $this->beraterRepository->findByUid($this->user['uid']);
         $this->view->assignMultiple(
@@ -1738,7 +1742,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'urleinwilligung' => $urleinwilligung,
                 'newnacherfassung' => $nacherfassung,
                 'niqbid' => $teilnehmer->getNiqidberatungsstelle(),
-                'searchparams' => $searchparams ?? ''
+                'searchparams' => $searchparams ?? '',
+                'abschlussartarr' => $abschlussartarr
             ]
             );
     }
@@ -1845,6 +1850,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $this->createHistory($teilnehmer, "sonstigerstatus");
         $this->createHistory($teilnehmer, "deutschkenntnisse");
         $this->createHistory($teilnehmer, "zertifikatSprachniveau");
+        $this->createHistory($teilnehmer, "weiteresprachkenntnisse");
 
         // Stammdaten (im Fragebogen Seite 3)
         $this->createHistory($teilnehmer, "erwerbsstatus");
@@ -1931,6 +1937,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * action delete
      *
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("teilnehmer")
      * @return void
      */
     public function deleteAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
@@ -1951,7 +1958,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         } else {
             $this->addFlashMessage('Bereits in NIQ übertragene Datensätze können nicht gelöscht werden.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
         }
-        $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'], 'searchparams' => $searchparams ?? ''));
+        $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $searchparams ?? ''));
     }
     
     /**
@@ -2004,7 +2011,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
         
-        $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'], 'searchparams' => $searchparams ?? ''));
+        $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $searchparams ?? ''));
     }
     
     /**
@@ -2170,7 +2177,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $thisdate = new DateTime();
         $zeitstempel = $thisdate->format('d.m.Y - H:i:s');
         $zeitstempel4filename = $thisdate->format('dmY-His');
-        $berufeliste = $this->berufeRepository->findAll();
+        $berufeliste = $this->berufeRepository->findAllOrdered('de');
         $staaten = $this->staatenRepository->findByLangisocode('de');
                
         $this->view->assign('teilnehmer', $teilnehmer);
@@ -2448,7 +2455,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $teilnehmers = $this->teilnehmerRepository->findAllOrder4List($type, $orderby, $order, $this->niqbid);
             }
         } else {
-            $berufearr = $this->berufeRepository->findAll();
+            $berufearr = $this->berufeRepository->findAllOrdered('de');
             if($limit > 0) {
                 $teilnehmers = $this->teilnehmerRepository->searchTeilnehmer($type, $f, $deleted, $this->niqbid, $berufearr, $orderby, $order, $this->usergroup, $limit);
             } else {

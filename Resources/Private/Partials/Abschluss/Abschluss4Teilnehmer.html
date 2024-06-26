@@ -24,17 +24,8 @@
 					<tr>
 						<td>
 							<f:link.action action="show" controller="Abschluss" arguments="{abschluss : abschluss, teilnehmer : teilnehmer, calleraction : calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : thisaction}">
-								<f:for each="{abschluss.abschlussart}" as="abschlussart" iteration="iter">
-									{f:if(condition: '{iter.index} > 0', then: ',', else: '')}
-									<f:if condition="{abschlussart} == -1"><f:then>
-										<f:translate key="ka"/>
-									</f:then></f:if>
-									<f:if condition="{abschlussart} == 1"><f:then>
-										<f:translate key="abschlussart.1"/>
-									</f:then></f:if>
-									<f:if condition="{abschlussart} == 2"><f:then>
-										<f:translate key="abschlussart.2"/>
-									</f:then></f:if>										
+								<f:for each="{abschlussartarr}" as="abschlussart" key="wert">
+									<span class="propdat"><f:format.crop maxCharacters="50" append="...">{f:if(condition: '{abschluss.abschlussart} == {wert}', then: '{abschlussart}')}</f:format.crop></span>
 								</f:for>
 							</f:link.action>
 						</td>

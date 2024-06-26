@@ -32,11 +32,12 @@
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus"><target>Aufenthaltsstatus</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatusfreitext"><target>Anmerkung zum Aufenthaltsstatus</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><target>Deutsch als Muttersprache?</target></trans-unit>
-			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Wenn Zertifikat vorhanden, auf welchem Sprachniveau?</target></trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Deutschkenntnisse auf welchem Sprachniveau?</target></trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.weiteresprachkenntnisse"><target>Weitere Sprachkenntnisse</target></trans-unit>
 			<trans-unit id="keinabschlussbisher"><target><![CDATA[ Noch keinen Berufsabschluss angegeben. Bitte tragen Sie hier Informationen zu Ihrem Berufsabschluss (Universität oder Ausbildung) ein. Sie können auch mehrere Abschlüsse (Diplome, Zeugnisse) angeben.]]></target></trans-unit>
 			
 			<trans-unit id="tx_iqtp13db_domain_model_abschluss"><target>Abschluss</target></trans-unit>
-			<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Abschlussart</target></trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Mein höchster Berufsabschluss ist</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_abschluss.erwerbsland"><target>Erwerbsland</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_abschluss.dauer_berufsausbildung"><target>Dauer Berufsausbildung</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussjahr"><target>Abschlussjahr</target></trans-unit>
@@ -86,8 +87,6 @@
 			<trans-unit id="abschlusshinzu"><target>Abschluss hinzufügen</target></trans-unit>
 			<trans-unit id="weitererabschlusshinzu"><target>Weiteren Abschluss hinzufügen</target></trans-unit>
 			<trans-unit id="abschlussloeschen"><target>Abschluss löschen</target></trans-unit>
-		    <trans-unit id="abschlussart.1"><target>Ausbildungsabschluss</target></trans-unit>
-		    <trans-unit id="abschlussart.2"><target>Universitätsabschluss</target></trans-unit>
 			<trans-unit id="abschluesse"><target>Abschlüsse</target></trans-unit>			
 			<trans-unit id="datenabschluss"><target>Daten Abschluss</target></trans-unit>
 			<trans-unit id="neuerabschluss"><target>Neuer Berufsabschluss</target></trans-unit>
@@ -110,7 +109,8 @@
 			<trans-unit id="infoStaatsangehoerigkeit"><target>Sofern Sie zwei verschiedene Staatsangehörigkeiten/Nationalitäten haben, geben Sie bitte beide an.</target></trans-unit>
 			<trans-unit id="infoJahrEinreise"><target>Bitte geben Sie das Jahr an, in dem Sie nach Deutschland eingereist sind.</target></trans-unit>
 			<trans-unit id="infoWohnsitzinDeutschlandNein"><target>Bitte geben Sie an, in welchem Land Sie aktuell leben.</target></trans-unit>
-			<trans-unit id="infoAbschlussart"><target>Ein Ausbildungsabschluss ist ein Abschluss einer beruflichen Ausbildung. Ein Universitätsabschluss ist ein akademischer Abschluss der nach einem Studium an einer Hochschule/Universität erworben wurde. Das Studium hat in der Regel mindestens 3 Jahre gedauert. Bitte geben Sie an welchen Abschluss Sie erworben haben.</target></trans-unit>
+			<trans-unit id="infoAbschlussart_ALT"><target>Ein Ausbildungsabschluss ist ein Abschluss einer beruflichen Ausbildung. Ein Universitätsabschluss ist ein akademischer Abschluss der nach einem Studium an einer Hochschule/Universität erworben wurde. Das Studium hat in der Regel mindestens 3 Jahre gedauert. Bitte geben Sie an welchen Abschluss Sie erworben haben.</target></trans-unit>
+			<trans-unit id="infoAbschlussart"><target>Falls der Berufsabschluss im Ausland erworben wurde: Wählen Sie bitte einen gleichwertigen Abschluss in der Liste aus.</target></trans-unit>			
 			<trans-unit id="infoAbschluss">z.B. Bachelor of Arts, Master of Science, ...<target></target></trans-unit>
 			<trans-unit id="infoAusbildungsort"><target>Bitte geben Sie die Stadt an, in der Sie Ihren Abschluss gemacht haben.</target></trans-unit>
 			<trans-unit id="infoBerufserfahrung"><target>Bitte geben Sie an, wie lange Sie schon im Beruf der Ausbildung/des Studiums gearbeitet haben (Monate/Jahre).</target></trans-unit>
@@ -164,7 +164,7 @@
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.beratungnotizen"><target>Notizen</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.erstberatungabgeschlossen"><target>Erstberatung abgeschlossen</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligunginfo"><target>Einwilligung Info Qualiangebote (optional)</target></trans-unit>
-			<trans-unit id="tx_iqtp13db_domain_model_abschluss.referenzberufzugewiesen"><target>Zugewiesener Referenzberuf</target></trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_abschluss.referenzberufzugewiesen"><target>Empfehlung Referenzberuf</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_abschluss.sonstigerberuf"><target>Sonstiger Beruf</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_abschluss.nregberuf"><target>Nicht reglementierter Beruf</target></trans-unit>			
 			<trans-unit id="tx_iqtp13db_domain_model_abschluss.antragstellungerfolgt"><target>Antragstellung</target></trans-unit>

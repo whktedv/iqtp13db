@@ -117,7 +117,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
             
         $this->view->assign('calleraction', $valArray['calleraction']);
         $this->view->assign('callercontroller', $valArray['callercontroller']);
-        $this->view->assign('callerpage', $valArray['callerpage']);
+        $this->view->assign('callerpage', $valArray['callerpage'] ?? '1');
         $this->view->assign('settings', $this->settings);
         $this->view->assign('datum', date("d.m.Y"));
     }
@@ -175,7 +175,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $this->view->assign('folgekontakt', $folgekontakt);
         $this->view->assign('teilnehmer', $teilnehmer);
         
-        $this->view->assign('callerpage', $valArray['callerpage']);
+        $this->view->assign('callerpage', $valArray['callerpage']  ?? '1');
         $this->view->assign('calleraction', $valArray['calleraction']);
         $this->view->assign('callercontroller', $valArray['callercontroller']);
         $this->view->assign('settings', $this->settings);

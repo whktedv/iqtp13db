@@ -35,7 +35,7 @@
 	<f:render partial="Teilnehmer/PropertiesAnmeldung" arguments="{teilnehmer:teilnehmer, staaten:staaten}" />
 	
 	<f:for each="{abschluesse}" as="abschluss" iteration="iter">
-		<f:render partial="Abschluss/PropertiesAnmeldung" arguments="{abschluss:abschluss, iter: iter, staaten:staaten}" />
+		<f:render partial="Abschluss/PropertiesAnmeldung" arguments="{abschluss:abschluss, iter: iter, staaten:staaten, abschlussartarr : abschlussartarr}" />
 	</f:for>
 	
 	<f:form.button type="submit" id="zurueckbutton" name="btnzurueck"><f:translate key="zurueck" /></f:form.button>

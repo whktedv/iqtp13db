@@ -109,7 +109,7 @@ return [
                 'type' => 'input',
                 'size' => 4,
                 'eval' => 'int'
-            ]
+            ],
         ],
         'niqchiffre' => [
             'exclude' => true,
@@ -127,7 +127,7 @@ return [
                 'type' => 'input',
                 'size' => 4,
                 'eval' => 'int'
-            ]
+            ],
         ],
         'schonberaten' => [
             'exclude' => true,
@@ -136,7 +136,7 @@ return [
                 'type' => 'input',
                 'size' => 4,
                 'eval' => 'int'
-            ]
+            ],
         ],
         'schonberatenvon' => [
             'exclude' => true,
@@ -145,7 +145,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim'
-            ]
+            ],
         ],
         'nachname' => [
             'exclude' => true,
@@ -190,7 +190,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'nospace,email'
-            ]
+            ],
         ],
         'confirmemail' => [
             'exclude' => true,
@@ -199,7 +199,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'nospace,email'
-            ]
+            ],
         ],
         'telefon' => [
             'exclude' => true,
@@ -235,7 +235,7 @@ return [
                 'type' => 'input',
                 'size' => 4,
                 'eval' => 'int'
-            ]
+            ],
         ],
         'erste_staatsangehoerigkeit' => [
             'exclude' => true,
@@ -271,7 +271,7 @@ return [
                 'type' => 'input',
                 'size' => 4,
                 'eval' => 'int'
-            ]
+            ],
         ],
         'wohnsitz_nein_in' => [
             'exclude' => true,
@@ -289,7 +289,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim'
-            ]
+            ],
         ],
         'deutschkenntnisse' => [
             'exclude' => true,
@@ -298,7 +298,7 @@ return [
                 'type' => 'input',
                 'size' => 4,
                 'eval' => 'int'
-            ]
+            ],
         ],
         'zertifikat_sprachniveau' => [
             'exclude' => true,
@@ -309,6 +309,15 @@ return [
                 'eval' => 'trim'
             ],
         ],
+        'weiteresprachkenntnisse' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.weiteresprachkenntnisse',
+            'config' => [
+                'type' => 'input',
+                'size' => 60,
+                'eval' => 'trim'
+            ],
+        ],
         'erwerbsstatus' => [
             'exclude' => true,
             'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.erwerbsstatus',
@@ -316,7 +325,7 @@ return [
                 'type' => 'input',
                 'size' => 4,
                 'eval' => 'int'
-            ]
+            ],
         ],
         'leistungsbezugjanein' => [
             'exclude' => true,
@@ -325,7 +334,7 @@ return [
                 'type' => 'input',
                 'size' => 4,
                 'eval' => 'int'
-            ]
+            ],
         ],
         'leistungsbezug' => [
             'exclude' => true,
@@ -370,7 +379,7 @@ return [
                 'type' => 'input',
                 'size' => 4,
                 'eval' => 'int'
-            ]
+            ],
         ],
         'einw_anerkstelledatum' => [
             'exclude' => true,
@@ -388,7 +397,7 @@ return [
                 'type' => 'input',
                 'size' => 4,
                 'eval' => 'int'
-            ]
+            ],
         ],
         'einw_anerkstellename' => [
             'exclude' => true,
@@ -415,7 +424,7 @@ return [
                 'type' => 'input',
                 'size' => 4,
                 'eval' => 'int'
-            ]
+            ],
         ],
         'einw_persondatum' => [
             'exclude' => true,
@@ -433,7 +442,7 @@ return [
                 'type' => 'input',
                 'size' => 4,
                 'eval' => 'int'
-            ]
+            ],
         ],
         'einw_personname' => [
             'exclude' => true,
@@ -460,8 +469,8 @@ return [
                 'type' => 'input',
                 'size' => 4,
                 'eval' => 'int'
-            ] 
-				],
+            ],
+		],
 		'aufenthaltsstatusfreitext' => [ 
 				'exclude' => true,
 				'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatusfreitext',
@@ -470,7 +479,7 @@ return [
 						'cols' => 40,
 						'rows' => 15,
 						'eval' => 'trim' 
-				] 
+			], 
 		],
         'name_beratungsstelle' => [
             'exclude' => true,
@@ -498,7 +507,7 @@ return [
                 'type' => 'input',
                 'size' => 4,
                 'eval' => 'int'
-            ]
+            ],
         ],
         'nacherfassung' => [
             'exclude' => true,
@@ -507,7 +516,7 @@ return [
                 'type' => 'input',
                 'size' => 4,
                 'eval' => 'int'
-            ]
+            ],
         ],
         'anonym' => [
             'exclude' => true,
@@ -516,7 +525,7 @@ return [
                 'type' => 'input',
                 'size' => 4,
                 'eval' => 'int'
-            ]
+            ],
         ],
         'verification_code' => [
             'exclude' => true,
@@ -534,7 +543,7 @@ return [
                 'type' => 'input',
                 'size' => 4,
                 'eval' => 'int'
-            ]
+            ],
         ],
         'verification_ip' => [
             'exclude' => true,
@@ -552,7 +561,7 @@ return [
                 'type' => 'input',
                 'size' => 4,
                 'eval' => 'trim'
-            ]
+            ],
         ],
         'wieberaten' => [
             'exclude' => true,
@@ -588,7 +597,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim'
-            ]
+            ],
         ],
         'beratungsartfreitext' => [
             'exclude' => true,
@@ -597,7 +606,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim'
-            ]
+            ],
         ],
         'beratungsort' => [
             'exclude' => true,
@@ -606,7 +615,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim'
-            ]
+            ],
         ],
         'beratungsdauer' => [
             'exclude' => true,
@@ -615,7 +624,7 @@ return [
                 'type' => 'input',
                 'size' => 8,
                 'eval' => 'trim'
-            ]
+            ],
         ],
         'beratungzu' => [
             'exclude' => true,
@@ -634,7 +643,7 @@ return [
                 'cols' => 40,
                 'rows' => 15,
                 'eval' => 'trim'
-            ]
+            ],
         ],
         'anerkennungsberatung' => [
             'exclude' => true,
@@ -653,7 +662,7 @@ return [
                 'cols' => 40,
                 'rows' => 15,
                 'eval' => 'trim'
-            ]
+            ],
         ],
         'qualifizierungsberatung' => [
             'exclude' => true,
@@ -672,7 +681,7 @@ return [
                 'cols' => 40,
                 'rows' => 15,
                 'eval' => 'trim'
-            ]
+            ],
         ],
         'beratungnotizen' => [
             'exclude' => true,
@@ -682,7 +691,7 @@ return [
                 'cols' => 40,
                 'rows' => 15,
                 'eval' => 'trim'
-            ]
+            ],
         ],
         'erstberatungabgeschlossen' => [
             'exclude' => true,
@@ -691,7 +700,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim'
-            ]
+            ],
         ],       
         'berater' => [
             'exclude' => true,
@@ -732,7 +741,7 @@ return [
                 'type' => 'input',
                 'size' => 4,
                 'eval' => 'int'
-            ]
+            ],
         ],      
        
         

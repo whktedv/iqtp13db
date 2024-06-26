@@ -170,6 +170,13 @@ class TNSeite1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	protected $zertifikatSprachniveau = '';
 	
 	/**
+	 * Weitere Sprachkenntnisse
+	 *
+	 * @var string
+	 */
+	protected $weiteresprachkenntnisse = '';
+	
+	/**
 	 * sonstigerstatus
 	 *
 	 * @var string
@@ -645,6 +652,25 @@ class TNSeite1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 */
 	public function setZertifikatSprachniveau($zertifikatSprachniveau) {
 	    $this->zertifikatSprachniveau = $zertifikatSprachniveau;
+	}
+	
+	/**
+	 * Returns the weiteresprachkenntnisse
+	 *
+	 * @return string $weiteresprachkenntnisse
+	 */
+	public function getWeiteresprachkenntnisse() {
+	    return $this->weiteresprachkenntnisse;
+	}
+	
+	/**
+	 * Sets the weiteresprachkenntnisse
+	 *
+	 * @param string $weiteresprachkenntnisse
+	 * @return void
+	 */
+	public function setWeiteresprachkenntnisse($weiteresprachkenntnisse) {
+	    $this->weiteresprachkenntnisse = $weiteresprachkenntnisse;
 	}
 	
 

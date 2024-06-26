@@ -33,6 +33,7 @@
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatusfreitext"><source>Note on residence status</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><source>German as a native language?</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><source>If German certificate, what language level</source></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.weiteresprachkenntnisse"><source>Further language skills</source></trans-unit>
 		<trans-unit id="keinabschlussbisher"><source><![CDATA[ No foreign educational qualification specified yet. Please enter information about your educational qualification (university or training) here. You can also enter several qualifications (diplomas, certificates).]]></source></trans-unit>
 		
 		<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><source>Type of educational qualification</source></trans-unit>
@@ -85,8 +86,6 @@
 		<trans-unit id="abschlusshinzu"><source>Add foreign educational qualification</source></trans-unit>
 		<trans-unit id="weitererabschlusshinzu"><source>Add further foreign educational qualification</source></trans-unit>
 		<trans-unit id="abschlussloeschen"><source>Delete this qualification</source></trans-unit>
-		<trans-unit id="abschlussart.1"><source>vocational education</source></trans-unit>
-		<trans-unit id="abschlussart.2"><source>university degree</source></trans-unit>
 		<trans-unit id="abschluesse"><source>Foreign educational qualification</source></trans-unit>
 		<trans-unit id="datenabschluss"><source>Data for foreign educational qualification</source></trans-unit>
 		<trans-unit id="neuerabschluss"><source>New foreign educational qualification</source></trans-unit>

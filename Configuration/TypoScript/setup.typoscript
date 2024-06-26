@@ -260,6 +260,16 @@ plugin.tx_iqtp13db.settings {
 		0 = ohne Zertifikat
    }
    
+   abschlussart {
+   		-1 = keine Angabe
+   		 1 = eine (außer) betriebliche Lehre/ Ausbildung, Berufsfachschule, sonstige schulische Berufsausbildung
+   		 2 = Fachhochschul- und Universitätsabschluss (alte Angabe bis Juli 2024)
+   		 3 = ein (Fach)Hochschulabschluss Bachelor, Diplom- Fachhochschulstudiengang, Meisterbrief oder ein gleichwertiges Zertifikat
+   		 4 = ein (Fach)Hochschulabschluss Master oder Diplom- Universitätsstudiengang
+   		 5 = Promotion (Doktortitel)
+   		 6 = Ich habe (noch) keine abgeschlossene Berufsausbildung
+   }
+   
    berufserfahrung {
 		-1000 = -
 		-1 = keine Angabe
@@ -380,6 +390,16 @@ plugin.tx_iqtp13db.settings {
 		6 = C1
 		7 = C2
 		0 = no certificate
+   }
+   
+   abschlussart {
+   		-1 = no specification
+   		 1 = an (extra) company-based apprenticeship/training, vocational school, other school-based vocational training
+   		 2 = Fachhochschul- und Universitätsabschluss (alte Angabe bis Juli 2024)
+   		 3 = a (polytechnic) Bachelor's degree, a diploma from a university of applied sciences, a master craftsman's certificate or an equivalent certificate
+   		 4 = a (polytechnic) university degree Master or diploma university course of studies
+   		 5 = Doctorate (PhD)
+   		 6 = I have not (yet) completed any vocational training
    }
    
    berufserfahrung {

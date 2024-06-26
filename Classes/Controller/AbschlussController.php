@@ -43,22 +43,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $this->staatenRepository = $staatenRepository;
     }
     
-    /**
-     * action init
-     *
-     * @param void
-     */
-    public function initializeAction()
-    {
-        /*
-         * PropertyMapping für die multiple ankreuzbaren Checkboxen.
-         * Annehmen eines String-Arrays, das im Setter und Getter des Models je per implode/explode wieder in Strings bzw. Array (of Strings) konvertiert wird
-         */        
-        if ($this->arguments->hasArgument('abschluss')) {
-            $this->arguments->getArgument('abschluss')->getPropertyMappingConfiguration()->allowProperties('abschlussart');
-            $this->arguments->getArgument('abschluss')->getPropertyMappingConfiguration()->setTargetTypeForSubProperty('abschlussart', 'array');
-        }        
-    }
+    
 
     /**
      * action show
@@ -71,9 +56,12 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $valArray = $this->request->getArguments();
         
         $teilnehmer = $this->teilnehmerRepository->findByUid($valArray['teilnehmer']);
-        $berufe = $this->berufeRepository->findAll();
+        $berufe = $this->berufeRepository->findAllOrdered('de');
         $staaten = $this->staatenRepository->findByLangisocode('de');
-         
+        $abschlussartarr = $this->settings['abschlussart'];
+        unset($abschlussartarr[2]);
+        
+        $this->view->assign('abschlussartarr', $abschlussartarr);
         $this->view->assign('abschluss', $abschluss);
         $this->view->assign('teilnehmer', $teilnehmer);
         $this->view->assign('calleraction', $valArray['calleraction'] ?? 'edit');
@@ -101,7 +89,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         for($jahr = $aktuellesJahr; $jahr > $aktuellesJahr-60; $jahr--) {
             $abschlussjahre[$jahr] = (String)$jahr;
         }
-        $berufe = $this->berufeRepository->findAll();
+        $berufe = $this->berufeRepository->findAllOrdered('de');
         foreach($berufe as $beruf) {
             $berufearr[$beruf->getBerufid()] = $beruf->getTitel();
         }
@@ -109,7 +97,11 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
         }
+        $abschlussartarr = $this->settings['abschlussart'];
+        unset($abschlussartarr[2]);
+        //DebuggerUtility::var_dump($abschlussartarr);
         
+        $this->view->assign('abschlussartarr', $abschlussartarr);
         $this->view->assign('abschlussjahre', $abschlussjahre);
         $this->view->assign('teilnehmer', $teilnehmer);
         $this->view->assign('calleraction', $valArray['calleraction'] ?? 'edit');
@@ -117,7 +109,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $this->view->assign('callerpage', $valArray['callerpage'] ?? '1');
         $this->view->assign('thisaction', $valArray['thisaction']);
         $this->view->assign('berufearr', $berufearr);
-        $this->view->assign('staatenarr', $staatenarr);
+        $this->view->assign('staatenarr', $staatenarr);        
     }
 
     /**
@@ -160,7 +152,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         for($jahr = $aktuellesJahr; $jahr > $aktuellesJahr-60; $jahr--) {
             $abschlussjahre[$jahr] = (String)$jahr;
         }
-        $berufe = $this->berufeRepository->findAll();
+        $berufe = $this->berufeRepository->findAllOrdered('de');
         foreach($berufe as $beruf) {
             $berufearr[$beruf->getBerufid()] = $beruf->getTitel();
         }
@@ -168,7 +160,10 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
         }
+        $abschlussartarr = $this->settings['abschlussart'];
+        unset($abschlussartarr[2]);
         
+        $this->view->assign('abschlussartarr', $abschlussartarr);
         $this->view->assign('abschlussjahre', $abschlussjahre);
         $this->view->assign('teilnehmer', $teilnehmer);             
         $this->view->assign('abschluss', $abschluss);
@@ -242,7 +237,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         for($jahr = $aktuellesJahr; $jahr > $aktuellesJahr-60; $jahr--) {
             $abschlussjahre[$jahr] = (String)$jahr;
         }
-        $berufe = $this->berufeRepository->findAll();
+        $berufe = $this->berufeRepository->findAllOrdered('de');
         foreach($berufe as $beruf) {
             $berufearr[$beruf->getBerufid()] = $beruf->getTitel();
         }
@@ -250,6 +245,8 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
         }
+        $abschlussartarr = $this->settings['abschlussart'];
+        unset($abschlussartarr[2]);
         
         $this->view->assignMultiple(
             [
@@ -259,7 +256,8 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
                 'beratungsstelle' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid'),
                 'abschlussjahre' => $abschlussjahre,
                 'berufearr' => $berufearr,
-                'staatenarr' => $staatenarr
+                'staatenarr' => $staatenarr,
+                'abschlussartarr' => $abschlussartarr
             ]
         );
     }
@@ -330,7 +328,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         for($jahr = $aktuellesJahr; $jahr > $aktuellesJahr-60; $jahr--) {
             $abschlussjahre[$jahr] = (String)$jahr;
         }
-        $berufe = $this->berufeRepository->findAll();
+        $berufe = $this->berufeRepository->findAllOrdered('de');
         foreach($berufe as $beruf) {
             $berufearr[$beruf->getBerufid()] = $beruf->getTitel();
         }
@@ -338,7 +336,9 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
         }
-        
+        $abschlussartarr = $this->settings['abschlussart'];
+        unset($abschlussartarr[2]);
+       
         
         $this->view->assignMultiple(
             [
@@ -349,7 +349,8 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
                 'beratungsstelle' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid'),
                 'abschlussjahre' => $abschlussjahre,
                 'berufearr' => $berufearr,
-                'staatenarr' => $staatenarr
+                'staatenarr' => $staatenarr,
+                'abschlussartarr' => $abschlussartarr
             ]
             );
     }
