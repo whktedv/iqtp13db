@@ -76,6 +76,16 @@ return [
                 'default' => ''
             ],
         ],
+        'branche' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_abschluss.branche',
+            'config' => [
+                'type' => 'input',
+                'size' => 10,
+                'eval' => 'trim',
+                'default' => '0'
+            ],
+        ],
         'erwerbsland' => [
             'exclude' => true,
             'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_abschluss.erwerbsland',

@@ -39,7 +39,8 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Almanca zertifikası varsa, hangi  seviyede?</target></trans-unit>
   <trans-unit id="keinabschlussbisher"><target><![CDATA[ No foreign educational qualification specified yet. Please enter information about your educational qualification (university or training) here. You can also enter several qualifications (diplomas, certificates).]]></target></trans-unit>
 
-	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Mezuniyet olduğunuz Bölüm (yada akademik derece)</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Aldığım en üst derece meslek eğitim diploması</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branche"><target>Lütfen mesleki yeterliliğinizi/yeterliliklerinizi elde ettiğini branşları bildirin</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.erwerbsland"><target>Mezuniyet diplomasının alındığı ülke</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.dauer_berufsausbildung"><target>Meslek eğitiminin süresi</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussjahr"><target>Bitirdiği sene</target></trans-unit>
@@ -69,6 +70,7 @@
   <trans-unit id="ja"><target>Evet</target></trans-unit>
 	<trans-unit id="nein"><target>Hayır</target></trans-unit>
   <trans-unit id="ka"><target>Bilgi yok</target></trans-unit>
+  <trans-unit id="bw"><target>- lütfen seç -</target></trans-unit>
 	<trans-unit id="maennlich"><target>Erkek</target></trans-unit>
 	<trans-unit id="weiblich"><target>Kadın</target></trans-unit>
 	<trans-unit id="divers"><target>Diğer</target></trans-unit>

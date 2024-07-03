@@ -44,7 +44,8 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Si un certificat est disponible, à quel niveau de langue ?</target></trans-unit>
 	<trans-unit id="keinabschlussbisher"><source><![CDATA[ Aucun diplôme étranger n'est indiqué. Veuillez saisir ici les informations relatives à votre diplôme (université ou formation). Vous pouvez également saisir plusieurs qualifications (diplômes, certificats).]]></source></trans-unit>
 		
-	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Type de diplôme</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Mon diplôme professionnel le plus élevé est</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branche"><target>Veuillez indiquer le secteur dans lequel vous avez obtenu votre/vos qualification(s)</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.erwerbsland"><target>Pays de formation </target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.dauer_berufsausbildung"><target>Durée de la formation professionnelle</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussjahr"><target>Année d'obtention du diplôme</target></trans-unit>
@@ -74,6 +75,7 @@
 	<trans-unit id="ja"><target>Oui</target></trans-unit>
 	<trans-unit id="nein"><target>Non</target></trans-unit>
 	<trans-unit id="ka"><target>Non spécifié</target></trans-unit>
+	<trans-unit id="bw"><target>- Choisissez s'il vous plaît -</target></trans-unit>
 	<trans-unit id="maennlich"><target>Homme</target></trans-unit>
 	<trans-unit id="weiblich"><target>femme</target></trans-unit>
 	<trans-unit id="divers"><target>divers</target></trans-unit>

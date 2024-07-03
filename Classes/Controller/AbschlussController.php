@@ -11,6 +11,7 @@ use Ud\Iqtp13db\Domain\Repository\TeilnehmerRepository;
 use Ud\Iqtp13db\Domain\Repository\AbschlussRepository;
 use Ud\Iqtp13db\Domain\Repository\BerufeRepository;
 use Ud\Iqtp13db\Domain\Repository\StaatenRepository;
+use Ud\Iqtp13db\Domain\Repository\BrancheRepository;
 
 /***
  *
@@ -34,13 +35,15 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     protected $abschlussRepository;
     protected $berufeRepository;
     protected $staatenRepository;
+    protected $brancheRepository;
     
-    public function __construct(TeilnehmerRepository $teilnehmerRepository, AbschlussRepository $abschlussRepository, BerufeRepository $berufeRepository, StaatenRepository $staatenRepository)
+    public function __construct(TeilnehmerRepository $teilnehmerRepository, AbschlussRepository $abschlussRepository, BerufeRepository $berufeRepository, StaatenRepository $staatenRepository, BrancheRepository $brancheRepository)
     {
         $this->teilnehmerRepository = $teilnehmerRepository;
         $this->abschlussRepository = $abschlussRepository;
         $this->berufeRepository = $berufeRepository;
         $this->staatenRepository = $staatenRepository;
+        $this->brancheRepository = $brancheRepository;
     }
     
     
@@ -54,10 +57,12 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     public function showAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss)
     {
         $valArray = $this->request->getArguments();
+        $language = $this->request->getAttribute('language');
+        $isocode= $language->getTwoLetterIsoCode();
         
         $teilnehmer = $this->teilnehmerRepository->findByUid($valArray['teilnehmer']);
-        $berufe = $this->berufeRepository->findAllOrdered('de');
-        $staaten = $this->staatenRepository->findByLangisocode('de');
+        $berufe = $this->berufeRepository->findAllOrdered($isocode);
+        $staaten = $this->staatenRepository->findByLangisocode($isocode);
         $abschlussartarr = $this->settings['abschlussart'];
         unset($abschlussartarr[2]);
         
@@ -80,26 +85,35 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     public function newAction()
     {
         $valArray = $this->request->getArguments();
-
+        $language = $this->request->getAttribute('language');
+        $isocode= $language->getTwoLetterIsoCode();
+        
         $teilnehmer = $this->teilnehmerRepository->findByUid($valArray['teilnehmer']);
+        
+        $kastring = LocalizationUtility::translate('ka', 'iqtp13db');
         
         $aktuellesJahr = (int)date("Y");
         $abschlussjahre = array();
-        $abschlussjahre[-1] = 'k.A.';
+        $abschlussjahre[-1] = $kastring;
         for($jahr = $aktuellesJahr; $jahr > $aktuellesJahr-60; $jahr--) {
             $abschlussjahre[$jahr] = (String)$jahr;
         }
-        $berufe = $this->berufeRepository->findAllOrdered('de');
+        $berufe = $this->berufeRepository->findAllOrdered($isocode);
         foreach($berufe as $beruf) {
             $berufearr[$beruf->getBerufid()] = $beruf->getTitel();
         }
-        $staaten = $this->staatenRepository->findAll4Abschluss('de');
+        $staaten = $this->staatenRepository->findAll4Abschluss($isocode);
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
         }
         $abschlussartarr = $this->settings['abschlussart'];
         unset($abschlussartarr[2]);
-        //DebuggerUtility::var_dump($abschlussartarr);
+        
+        $brancheokarr = $this->brancheRepository->findAllOberkategorie($isocode);
+        foreach($brancheokarr as $brok) {
+            $brancheoberkat[$brok['brancheid']] = $brok['titel'];
+        }        
+        $brancheunterkat = $this->brancheRepository->findAllUnterkategorie($isocode);
         
         $this->view->assign('abschlussartarr', $abschlussartarr);
         $this->view->assign('abschlussjahre', $abschlussjahre);
@@ -109,7 +123,9 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $this->view->assign('callerpage', $valArray['callerpage'] ?? '1');
         $this->view->assign('thisaction', $valArray['thisaction']);
         $this->view->assign('berufearr', $berufearr);
-        $this->view->assign('staatenarr', $staatenarr);        
+        $this->view->assign('staatenarr', $staatenarr);
+        $this->view->assign('brancheoberkat', $brancheoberkat);
+        $this->view->assign('brancheunterkat', $brancheunterkat);                
     }
 
     /**
@@ -143,26 +159,36 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     public function editAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss)
     {
         $valArray = $this->request->getArguments();
-
+        $language = $this->request->getAttribute('language');
+        $isocode= $language->getTwoLetterIsoCode();
+        
         $teilnehmer = $this->teilnehmerRepository->findByUid($valArray['teilnehmer']);
+        
+        $kastring = LocalizationUtility::translate('ka', 'iqtp13db');
         
         $aktuellesJahr = (int)date("Y");
         $abschlussjahre = array();
-        $abschlussjahre[-1] = 'k.A.';
+        $abschlussjahre[-1] = $kastring;
         for($jahr = $aktuellesJahr; $jahr > $aktuellesJahr-60; $jahr--) {
             $abschlussjahre[$jahr] = (String)$jahr;
         }
-        $berufe = $this->berufeRepository->findAllOrdered('de');
+        $berufe = $this->berufeRepository->findAllOrdered($isocode);
         foreach($berufe as $beruf) {
             $berufearr[$beruf->getBerufid()] = $beruf->getTitel();
         }
-        $staaten = $this->staatenRepository->findAll4Abschluss('de');
+        $staaten = $this->staatenRepository->findAll4Abschluss($isocode);
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
         }
         $abschlussartarr = $this->settings['abschlussart'];
         unset($abschlussartarr[2]);
         
+        $brancheokarr = $this->brancheRepository->findAllOberkategorie($isocode);
+        foreach($brancheokarr as $brok) {
+            $brancheoberkat[$brok['brancheid']] = $brok['titel'];
+        }
+        $brancheunterkat = $this->brancheRepository->findAllUnterkategorie($isocode);
+                
         $this->view->assign('abschlussartarr', $abschlussartarr);
         $this->view->assign('abschlussjahre', $abschlussjahre);
         $this->view->assign('teilnehmer', $teilnehmer);             
@@ -173,6 +199,8 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $this->view->assign('thisaction', $valArray['thisaction']);
         $this->view->assign('berufearr', $berufearr);
         $this->view->assign('staatenarr', $staatenarr);
+        $this->view->assign('brancheoberkat', $brancheoberkat);
+        $this->view->assign('brancheunterkat', $brancheunterkat);        
     }
 
     /**
@@ -227,27 +255,37 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     public function newWebappAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
         $valArray = $this->request->getArguments();
-
+        $language = $this->request->getAttribute('language');
+        $isocode= $language->getTwoLetterIsoCode();
+        
         $abschluesse = new \Ud\Iqtp13db\Domain\Model\Abschluss();
         $abschluesse = $this->abschlussRepository->findByTeilnehmer($teilnehmer);
         
+        $kastring = LocalizationUtility::translate('ka', 'iqtp13db');
+        
         $aktuellesJahr = (int)date("Y");
         $abschlussjahre = array();
-        $abschlussjahre[-1] = 'k.A.';
+        $abschlussjahre[-1] = $kastring;
         for($jahr = $aktuellesJahr; $jahr > $aktuellesJahr-60; $jahr--) {
             $abschlussjahre[$jahr] = (String)$jahr;
         }
-        $berufe = $this->berufeRepository->findAllOrdered('de');
+        $berufe = $this->berufeRepository->findAllOrdered($isocode);
         foreach($berufe as $beruf) {
             $berufearr[$beruf->getBerufid()] = $beruf->getTitel();
         }
-        $staaten = $this->staatenRepository->findAll4Abschluss('de');
+        $staaten = $this->staatenRepository->findAll4Abschluss($isocode);
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
         }
         $abschlussartarr = $this->settings['abschlussart'];
         unset($abschlussartarr[2]);
         
+        $brancheokarr = $this->brancheRepository->findAllOberkategorie($isocode);
+        foreach($brancheokarr as $brok) {
+            $brancheoberkat[$brok['brancheid']] = $brok['titel'];
+        }
+        $brancheunterkat = $this->brancheRepository->findAllUnterkategorie($isocode);
+                
         $this->view->assignMultiple(
             [
                 'settings' => $this->settings,
@@ -257,7 +295,9 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
                 'abschlussjahre' => $abschlussjahre,
                 'berufearr' => $berufearr,
                 'staatenarr' => $staatenarr,
-                'abschlussartarr' => $abschlussartarr
+                'abschlussartarr' => $abschlussartarr,
+                'brancheoberkat'=> $brancheoberkat,
+                'brancheunterkat' => $brancheunterkat
             ]
         );
     }
@@ -321,24 +361,33 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     {
         $abschluesse = new \Ud\Iqtp13db\Domain\Model\Abschluss();
         $abschluesse = $this->abschlussRepository->findByTeilnehmer($teilnehmer);
+        $language = $this->request->getAttribute('language');
+        $isocode= $language->getTwoLetterIsoCode();
+        
+        $kastring = LocalizationUtility::translate('ka', 'iqtp13db');
         
         $aktuellesJahr = (int)date("Y");
         $abschlussjahre = array();
-        $abschlussjahre[-1] = 'k.A.';
+        $abschlussjahre[-1] = $kastring;
         for($jahr = $aktuellesJahr; $jahr > $aktuellesJahr-60; $jahr--) {
             $abschlussjahre[$jahr] = (String)$jahr;
         }
-        $berufe = $this->berufeRepository->findAllOrdered('de');
+        $berufe = $this->berufeRepository->findAllOrdered($isocode);
         foreach($berufe as $beruf) {
             $berufearr[$beruf->getBerufid()] = $beruf->getTitel();
         }
-        $staaten = $this->staatenRepository->findAll4Abschluss('de');        
+        $staaten = $this->staatenRepository->findAll4Abschluss($isocode);        
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
         }
         $abschlussartarr = $this->settings['abschlussart'];
         unset($abschlussartarr[2]);
        
+        $brancheokarr = $this->brancheRepository->findAllOberkategorie($isocode);
+        foreach($brancheokarr as $brok) {
+            $brancheoberkat[$brok['brancheid']] = $brok['titel'];
+        }
+        $brancheunterkat = $this->brancheRepository->findAllUnterkategorie($isocode);
         
         $this->view->assignMultiple(
             [
@@ -350,7 +399,9 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
                 'abschlussjahre' => $abschlussjahre,
                 'berufearr' => $berufearr,
                 'staatenarr' => $staatenarr,
-                'abschlussartarr' => $abschlussartarr
+                'abschlussartarr' => $abschlussartarr,
+                'brancheoberkat'=> $brancheoberkat,
+                'brancheunterkat' => $brancheunterkat
             ]
             );
     }

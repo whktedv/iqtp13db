@@ -116,6 +116,7 @@ CREATE TABLE tx_iqtp13db_domain_model_abschluss (
 	teilnehmer int(11) unsigned DEFAULT '0',
 	
 	abschlussart varchar(255) DEFAULT '' NOT NULL,
+	branche int(11) DEFAULT '0' NOT NULL,
 	erwerbsland varchar(255) DEFAULT '' NOT NULL,
 	dauer_berufsausbildung varchar(255) DEFAULT '' NOT NULL,
 	abschlussjahr varchar(255) DEFAULT '' NOT NULL,
@@ -293,5 +294,18 @@ CREATE TABLE tx_iqtp13db_domain_model_ort (
     landkreis varchar(255) DEFAULT '' NOT NULL,
     lat varchar(20) DEFAULT '' NOT NULL,
     lon varchar(20) DEFAULT '' NOT NULL,
+    PRIMARY KEY (uid)
+);
+
+#
+# Table structure for table 'tx_iqtp13db_domain_model_branche'
+#
+CREATE TABLE tx_iqtp13db_domain_model_branche (
+    uid int(11) NOT NULL,
+    pid int(11) DEFAULT '0' NOT NULL,
+    brancheid int(11) DEFAULT '0' NOT NULL,
+    brancheok int(11) DEFAULT '0' NOT NULL,
+    titel varchar(255) DEFAULT '' NOT NULL,
+    langisocode varchar(2) DEFAULT '' NOT NULL,
     PRIMARY KEY (uid)
 );

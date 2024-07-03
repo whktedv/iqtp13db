@@ -4,6 +4,24 @@
        </label>
         <f:form.select property="abschlussart" value="{abschluss.abschlussart}" options="{abschlussartarr}" optionValueField="key" optionLabelField="value" />
 	</div>
+	
+	<div class="tp13_formdivwebapp">
+	      <label for="brancheoberkat">
+	        <f:translate key="tx_iqtp13db_domain_model_abschluss.branche" />
+	       </label>
+	       <f:form.select property="branche" prependOptionValue="" prependOptionLabel="{f:translate(key:'bw')}">
+					<f:groupedFor each="{brancheunterkat}" as="branche" groupBy="brancheok" groupKey="brok">
+	       				<f:form.select.optgroup label="{brancheoberkat.{brok}}">
+			       			<f:for each="{branche}" as="ok">
+			       				<f:form.select.option value="{ok.brancheid}">
+          							{ok.titel}
+        						</f:form.select.option>     				
+			       			</f:for>
+		       			</f:form.select.optgroup>
+	       		 </f:groupedFor>
+	       	</f:form.select>	     
+	</div>
+	
 	<div class="tp13_formdivwebapp">
 	      <label for="erwerbsland">
 	        <f:translate key="tx_iqtp13db_domain_model_abschluss.erwerbsland" />

@@ -524,9 +524,19 @@ plugin.tx_iqtp13db.settings {
 		5 = B2
 		6 = C1
 		7 = C2
-		0 = no certificate
+		0 = لا شهادة
 	}
 	
+	abschlussart {
+   		-1 = لا توجد معلومات
+   		 1 = تدريب مهني / تدريب مهني (غير) قائم على الشركة، أو مدرسة مهنية، أو تدريب مهني آخر قائم على المدرسة 
+   		 2 = Fachhochschul- und Universitätsabschluss (alte Angabe bis Juli 2024)
+   		 3 = درجة البكالوريوس، أو دبلوم من جامعة العلوم التطبيقية، أو شهادة حرفي رئيسي أو شهادة معادلة 
+   		 4 = شهادة جامعية (تقنية) شهادة ماجستير أو دبلوم برنامج شهادة جامعية دبلوم
+   		 5 = دكتوراه (دكتوراه)
+   		 6 = لم أكمل (حتى الآن) أي تدريب مهني
+    }
+   
 	berufserfahrung {
 		-1000 = -
 		-1 = لا توجد معلومات
@@ -649,9 +659,19 @@ plugin.tx_iqtp13db.settings {
 		5 = B2
 		6 = C1
 		7 = C2
-		0 = no certificate
+		0 = بدون گواهی
 	}
 	
+	abschlussart {
+   		-1 = اعلام نمی‌کنم
+   		 1 = کاراموزی / اموزش (فوق العاده) در شرکت، مدرسه حرفه ای، سایر اموزش های حرفه ای مبتنی بر مدرسه 
+   		 2 = Fachhochschul- und Universitätsabschluss (alte Angabe bis Juli 2024)
+   		 3 = مدرک لیسانس، دیپلم یا دوره دانشگاهی، گواهینامه کارشناسی ارشد صنعتگر یا گواهینامه معادل ان 
+   		 4 = مدرک دانشگاهی (فنی)، مدرک کارشناسی ارشد یا دیپلم دانشگاهی 
+   		 5 = دکتری (دکترا)
+   		 6 = من (هنوز) اموزش حرفه ای را تمام نکرده ام
+    }
+   
 	berufserfahrung {
 		-1000 = -
 		-1 = نمی‌دانم
@@ -773,6 +793,16 @@ plugin.tx_iqtp13db.settings {
 		0 = pas de certificat
 	}
 	
+	abschlussart {
+   		-1 = pas d'indication
+   		 1 = un apprentissage ou une formation (hors entreprise), une école professionnelle, une autre formation professionnelle scolaire
+   		 2 = Fachhochschul- und Universitätsabschluss (alte Angabe bis Juli 2024)
+   		 3 = un diplôme (spécialisé) de bachelier, un diplôme d'études supérieures spécialisées, un lettre de maîtrise ou un certificat équivalent
+   		 4 = un diplôme (spécialisé) de master ou de diplôme équivalent
+   		 5 = Doctorat (titre de docteur)
+   		 6 = Je n'ai pas (encore) terminé ma formation professionnelle
+    }
+	
 	berufserfahrung {
 		-1000 = -
 		-1 = pas d'indication
@@ -863,7 +893,7 @@ plugin.tx_iqtp13db.settings {
 plugin.tx_iqtp13db.settings {
 	
 	aufenthaltsstatus {
-	    1 = brak informacji
+	    1 = Brak informacji
 	    6 = Zezwolenie na pobyt w celu poszukiwania pracy dla wykwalifikowanych pracowników (§20 AufenthG))
 	    11 = Zezwolenie na pobyt dla rezydentów długoterminowych innych państw członkowskich UE (§38a AufenthG)  
 	    12 = Zezwolenie na pobyt w trakcie trwania postępowania o udzielenie azylu (§55 Abs. 1 AsylG)  
@@ -891,9 +921,19 @@ plugin.tx_iqtp13db.settings {
 		5 = B2
 		6 = C1
 		7 = C2
-		0 = no certificate
+		0 = brak certyfikatu
 	}
 	
+	abschlussart {
+   		-1 = Brak informacji
+   		 1 = praktyka zawodowa/szkolenie zawodowe, szkoła zawodowa, inne szkolne szkolenie zawodowe 
+   		 2 = Fachhochschul- und Universitätsabschluss (alte Angabe bis Juli 2024)
+   		 3 = ytuł licencjata, dyplom uniwersytetu nauk stosowanych, dyplom mistrza rzemiosła lub równoważny certyfikat 
+   		 4 = dyplom uniwersytecki (techniczny) tytuł magistra lub dyplom ukończenia studiów program studiów uniwersyteckich 
+   		 5 = Doktorat (PhD)
+   		 6 = Nie ukończyłem (jeszcze) szkolenia zawodowego
+    }
+   
 	berufserfahrung {
 		-1000 = -
 		-1 = Brak informacji
@@ -1013,8 +1053,18 @@ plugin.tx_iqtp13db.settings {
 		5 = B2
 		6 = C1
 		7 = C2
-		0 = no certificate
+		0 = nici un certificat
 	}
+	
+	abschlussart {
+   		-1 = Lipsă date
+   		 1 = o ucenicie/formare profesională (non) în cadrul unei întreprinderi, școală profesională, altă formare profesională în cadrul unei școli 
+   		 2 = Fachhochschul- und Universitätsabschluss (alte Angabe bis Juli 2024)
+   		 3 = o diplomă de bacalaureat, o diplomă de la o universitate de științe aplicate, un certificat de maestru meseriaș sau un certificat echivalent 
+   		 4 = o diplomă universitară (tehnică) un program de masterat sau o diplomă de studii universitare de licență 
+   		 5 = Doctorat (PhD)
+   		 6 = Nu am absolvit (încă) o formare profesională 
+    }
 
 	berufserfahrung {
 		-1000 = -
@@ -1135,9 +1185,19 @@ plugin.tx_iqtp13db.settings {
 		5 = B2
 		6 = C1
 		7 = C2
-		0 = no certificate
+		0 = нет сертификата
 	}
 
+    abschlussart {
+   		-1 = Информация отсутствует
+   		 1 = ученичество/обучение (не на предприятии), профессиональное училище, другое профессиональное обучение на базе школы 
+   		 2 = Fachhochschul- und Universitätsabschluss (alte Angabe bis Juli 2024)
+   		 3 = степень бакалавра, диплом университета прикладных наук, сертификат мастера или эквивалентный сертификат 
+   		 4 = (техническая) университетская степень Магистерская или дипломная университетская программа
+   		 5 = докторская степень (PhD)
+   		 6 = Я не прошел (еще не прошел) профессиональное обучение
+    }
+   
 	berufserfahrung {
 		-1000 = -
 		-1 = Информация отсутствует
@@ -1258,9 +1318,19 @@ plugin.tx_iqtp13db.settings {
 		5 = B2
 		6 = C1
 		7 = C2
-		0 = no certificate
+		0 = sin certificado
 	}
-		
+	
+	abschlussart {
+   		-1 = No se especifica
+   		 1 = un aprendizaje/formación (no) en una empresa, una escuela de formación profesional, otra formación profesional en una escuela 
+   		 2 = Fachhochschul- und Universitätsabschluss (alte Angabe bis Juli 2024)
+   		 3 = una licenciatura, un diploma de una universidad de ciencias aplicadas, un certificado de maestría artesanal o un certificado equivalente 
+   		 4 = un título universitario (técnico) Máster o diplomatura universitaria
+   		 5 = Doctorado (PhD)
+   		 6 = No he terminado (aún) la formación professional
+    }
+   
 	berufserfahrung {
 		-1000 = - 
 		-1 = No se especifica
@@ -1372,7 +1442,7 @@ plugin.tx_iqtp13db.settings {
 	}
 	
 	zertifikatlevel {
-		-1 = no specification
+		-1 = B.y.
 		1 = -
 		2 = A1
 		3 = A2
@@ -1380,9 +1450,19 @@ plugin.tx_iqtp13db.settings {
 		5 = B2
 		6 = C1
 		7 = C2
-		0 = no certificate
+		0 = sertifika yok
 	}
 	
+	abschlussart {
+   		-1 = B.y.
+   		 1 = İşletmede (veya işletme dışında) görülen meslek eğitim, meslek okulu, başka bir okulda tamamlanmış meslek eğitimi 
+   		 2 = Fachhochschul- und Universitätsabschluss (alte Angabe bis Juli 2024)
+   		 3 = Lisans düzeyinde üniversite/Meslek yüksek okulu diploması, Lisans öğrenimi [Diplom- Fachhochschulstudiengang], ustalık belgesi veya dengi sertifika 
+   		 4 = Yüksek lisans düzeyinde Üniversite/Meslek Yüksek okulu diploması veya lisansüstü öğrenim [Diplom- Universitätsstudiengang] 
+   		 5 = Doktora eğitimi (Doktora)
+   		 6 = (Henüz) Bir meslek eğitimi diplomasına sahip değilim 
+    }
+    
 	berufserfahrung {
 		-1000 = -
 		-1 = B.y.
@@ -1503,9 +1583,19 @@ plugin.tx_iqtp13db.settings {
 		5 = B2
 		6 = C1
 		7 = C2
-		0 = no certificate
+		0 = немає сертифіката
 	}
 	
+	abschlussart {
+   		-1 = без відповіді
+   		 1 = (зовнішнє) стажування/навчання на виробництві, професійно-технічне училище, інша професійна підготовка на базі школи
+   		 2 = Fachhochschul- und Universitätsabschluss (alte Angabe bis Juli 2024)
+   		 3 = ступінь бакалавра, диплом (спец)внз, свідоцтво майстра або еквівалентний сертифікат
+   		 4 = ступінь магістра (спец)внз або університетський диплом 
+   		 5 = захист дисертації (докторський ступінь) 
+   		 6 = ще) не закінчив професійну освіту
+    }
+    
 	berufserfahrung {
 		-1000 = -
 		-1 = без відповіді

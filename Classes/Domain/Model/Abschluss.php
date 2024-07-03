@@ -1,6 +1,7 @@
 <?php
 namespace Ud\Iqtp13db\Domain\Model;
 
+use TYPO3\CMS\Extbase\Annotation\Validate;
 /***
  *
  * This file is part of the "IQ Webapp Anerkennungserstberatung" Extension for TYPO3 CMS.
@@ -24,6 +25,13 @@ class Abschluss extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var string
      */
     protected $abschlussart = '';
+    
+    /**
+     * Branche
+     * @Validate("NotEmpty")
+     * @var int
+     */
+    protected $branche = 0;
     
     /**
      * erwerbsland
@@ -199,6 +207,27 @@ class Abschluss extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setAbschlussart(string $abschlussart)
     {
         $this->abschlussart = $abschlussart;
+    }
+    
+    /**
+     * Returns the branche
+     *
+     * @return int $branche
+     */
+    public function getBranche()
+    {
+        return $this->branche;
+    }
+    
+    /**
+     * Sets the branche
+     *
+     * @param int $branche
+     * @return void
+     */
+    public function setBranche($branche)
+    {
+        $this->branche = $branche;
     }
     
     /**

@@ -37,7 +37,8 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Jeśli tak, to na jakim poziomie językowym?</target></trans-unit>
     <trans-unit id="keinabschlussbisher"><target><![CDATA[ No foreign educational qualification specified yet. Please enter information about your educational qualification (university or training) here. You can also enter several qualifications (diplomas, certificates).]]></target></trans-unit>
   
-	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Rodzaj dyplomu</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Moje najwyższe kwalifikacje zawodowe to</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branche"><target>Wskaż sektor, w którym uzyskałeś(-aś) kwalifikacje</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.erwerbsland"><target>Kraj uzyskania kwalifikacji zawodowych</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.dauer_berufsausbildung"><target>Czas trwania wykształcenia zawodowego</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussjahr"><target>Rok ukończenia</target></trans-unit>
@@ -67,6 +68,7 @@
 	<trans-unit id="ja"><target>Tak</target></trans-unit>
 	<trans-unit id="nein"><target>Nie</target></trans-unit>
   <trans-unit id="ka"><target>brak informacji</target></trans-unit>
+  <trans-unit id="bw"><target>- proszę wybrać -</target></trans-unit>
 	<trans-unit id="maennlich"><target>Mężczyzna</target></trans-unit>
 	<trans-unit id="weiblich"><target>Kobieta</target></trans-unit>
 	<trans-unit id="divers"><target>Divers </target></trans-unit>

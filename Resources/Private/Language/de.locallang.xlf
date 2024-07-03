@@ -38,6 +38,7 @@
 			
 			<trans-unit id="tx_iqtp13db_domain_model_abschluss"><target>Abschluss</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Mein höchster Berufsabschluss ist</target></trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_abschluss.branche"><target>Bitte geben Sie die Branche an, in der Sie Ihre Qualifikation(en) erworben haben</target></trans-unit>			
 			<trans-unit id="tx_iqtp13db_domain_model_abschluss.erwerbsland"><target>Erwerbsland</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_abschluss.dauer_berufsausbildung"><target>Dauer Berufsausbildung</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussjahr"><target>Abschlussjahr</target></trans-unit>
@@ -68,6 +69,7 @@
 			<trans-unit id="ja"><target>Ja</target></trans-unit>
 			<trans-unit id="nein"><target>Nein</target></trans-unit>
 			<trans-unit id="ka"><target>keine Angabe</target></trans-unit>
+			<trans-unit id="bw"><target>- bitte wählen -</target></trans-unit>
 			<trans-unit id="maennlich"><target>männlich</target></trans-unit>
 			<trans-unit id="weiblich"><target>weiblich</target></trans-unit>
 			<trans-unit id="divers"><target>divers</target></trans-unit>

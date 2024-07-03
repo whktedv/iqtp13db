@@ -37,7 +37,8 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Якщо є сертифікат, то на якому рівні володіння мовою?</target></trans-unit>
   	<trans-unit id="keinabschlussbisher"><target><![CDATA[ Іноземна освітня кваліфікація ще не вказана. Будь ласка, введіть тут інформацію про вашу освітню кваліфікацію (університет або тренінг). Ви також можете вказати декілька кваліфікацій (дипломів, сертифікатів).]]></target></trans-unit>
 	
-	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Вид/ступінь закінченої професійної або вищої освіти</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Мій найвищий рівень професійної освіти</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branche"><target>Будь ласка, вкажіть галузь, з якої Ви отримали кваліфікацію(ї)</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.erwerbsland"><target>Країна здобуття освітньої кваліфікації</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.dauer_berufsausbildung"><target>Тривалість професійного навчання</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussjahr"><target>Рік завершення освіти</target></trans-unit>
@@ -67,6 +68,7 @@
 	<trans-unit id="ja"><target>Так</target></trans-unit>
 	<trans-unit id="nein"><target>Ні</target></trans-unit>
 	<trans-unit id="ka"><target>Без відповіді</target></trans-unit>
+	<trans-unit id="bw"><target>- будь-ласка оберіть -</target></trans-unit>
 	<trans-unit id="maennlich"><target>чоловіча</target></trans-unit>
 	<trans-unit id="weiblich"><target>жіноча</target></trans-unit>
 	<trans-unit id="divers"><target>діверс</target></trans-unit>

@@ -44,7 +44,8 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Dacă certificatul este disponibil, la ce nivel de limbă?</target></trans-unit>
   <trans-unit id="keinabschlussbisher"><target><![CDATA[ No foreign educational qualification specified yet. Please enter information about your educational qualification (university or training) here. You can also enter several qualifications (diplomas, certificates).]]></target></trans-unit>
 
-	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Tipul calificării obținute</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Cea mai înaltă calificare profesională a mea este</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branche"><target>Vă rugăm să indicați sectorul în care v-ați obținut calificarea (calificările)</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.erwerbsland"><target>Țară de dobândire</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.dauer_berufsausbildung"><target>Durată de pregătire profesională</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussjahr"><target>Anul absolvirii</target></trans-unit>
@@ -74,6 +75,7 @@
 	<trans-unit id="ja"><target>Da</target></trans-unit>
 	<trans-unit id="nein"><target>Nu</target></trans-unit>
 	<trans-unit id="ka"><target>Lipsă date</target></trans-unit>
+	<trans-unit id="bw"><target>- vă rugăm să alegeți -</target></trans-unit>
 	<trans-unit id="maennlich"><target>masculin</target></trans-unit>
 	<trans-unit id="weiblich"><target>feminin</target></trans-unit>
 	<trans-unit id="divers"><target>divers</target></trans-unit>

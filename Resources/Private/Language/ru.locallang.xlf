@@ -39,7 +39,8 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Если есть сертификат, на каком уровне языка?</target></trans-unit>
   <trans-unit id="keinabschlussbisher"><target><![CDATA[ No foreign educational qualification specified yet. Please enter information about your educational qualification (university or training) here. You can also enter several qualifications (diplomas, certificates).]]></target></trans-unit>
 
-	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>тип степени</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Моя высшая профессиональная квалификация</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branche"><target>Пожалуйста, укажите отрасль, в которой вы получили свою квалификацию (квалификации)</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.erwerbsland"><target>Страна приобретения</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.dauer_berufsausbildung"><target>Продолжительность профессионального обучения </target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussjahr"><target>Год выпуска</target></trans-unit>
@@ -69,6 +70,7 @@
   <trans-unit id="ja"><target>Да  (Согласен/а)</target></trans-unit>
 	<trans-unit id="nein"><target>Нет</target></trans-unit>
   <trans-unit id="ka"><target>Информация отсутствет</target></trans-unit>
+  <trans-unit id="bw"><target>- пожалуйста, выбери -</target></trans-unit>
   <trans-unit id="maennlich"><target>мужской</target></trans-unit>
 	<trans-unit id="weiblich"><target>женский</target></trans-unit>
 	<trans-unit id="divers"><target>различный</target></trans-unit>

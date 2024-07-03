@@ -36,7 +36,8 @@
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.weiteresprachkenntnisse"><source>Further language skills</source></trans-unit>
 		<trans-unit id="keinabschlussbisher"><source><![CDATA[ No foreign educational qualification specified yet. Please enter information about your educational qualification (university or training) here. You can also enter several qualifications (diplomas, certificates).]]></source></trans-unit>
 		
-		<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><source>Type of educational qualification</source></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><source>My highest professional qualification is</source></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_abschluss.branche"><source>Please indicate the sector in which you acquired your qualification(s):</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_abschluss.erwerbsland"><source>Country of acquisition of the educational qualification</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_abschluss.dauer_berufsausbildung"><source>Duration of vocational training/studies</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussjahr"><source>Graduation year</source></trans-unit>
@@ -67,6 +68,7 @@
 		<trans-unit id="ja"><source>Yes</source></trans-unit>
 		<trans-unit id="nein"><source>No</source></trans-unit>
 		<trans-unit id="ka"><source>No specification</source></trans-unit>
+		<trans-unit id="bw"><source>- please choose -</source></trans-unit>
 		<trans-unit id="maennlich"><source>Male</source></trans-unit>
 		<trans-unit id="weiblich"><source>Female</source></trans-unit>
 		<trans-unit id="divers"><source>Diverse</source></trans-unit>

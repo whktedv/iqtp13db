@@ -41,8 +41,8 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>	في حالة وجود شهادة لغة ألمانية، في أي مستوى؟	</target></trans-unit>
 	<trans-unit id="keinabschlussbisher"><target><![CDATA[ No foreign educational qualification specified. Please enter information about your educational qualification (university or training) here. You can also enter several qualifications (diplomas, certificates).]]></target></trans-unit>
 	
-	<trans-unit id="tx_iqtp13db_domain_model_abschluss"><target> الشهادة المحصل عليها</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>نوع الشهادة المحصل عليها</target></trans-unit>
+<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>أعلى مؤهل مهني لدي هو </target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branche"><target>يُرجى الإشارة إلى القطاع الذي حصلت فيه على مؤهل (مؤهلات)</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.erwerbsland"><target>	بلد التخرج 	</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.dauer_berufsausbildung"><target>	مدة التحصيل المهني / العلمي	</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussjahr"><target>	سنة التخرح 	</target></trans-unit>
@@ -72,6 +72,7 @@
 	<trans-unit id="ja"><target>	نعم	</target></trans-unit>
 	<trans-unit id="nein"><target>	لا	</target></trans-unit>
   <trans-unit id="ka"><target>لا معلومة</target></trans-unit>
+  <trans-unit id="bw"><target>- اختر من فضلك -</target></trans-unit>
 	<trans-unit id="maennlich"><target>	ذكر	</target></trans-unit>
 	<trans-unit id="weiblich"><target>	أنثى	</target></trans-unit>
 	<trans-unit id="divers"><target>	متنوع 	</target></trans-unit>
