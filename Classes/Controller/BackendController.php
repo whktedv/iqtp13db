@@ -7,6 +7,7 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Extbase\Annotation\Validate;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3\CMS\Core\Pagination\ArrayPaginator;
@@ -24,6 +25,7 @@ use TYPO3\CMS\Core\Resource\StorageRepository;
 use Ud\Iqtp13db\Domain\Repository\BerufeRepository;
 use Ud\Iqtp13db\Domain\Repository\StaatenRepository;
 use Ud\Iqtp13db\Domain\Repository\OrtRepository;
+use Ud\Iqtp13db\Domain\Repository\BrancheRepository;
 
 require_once(Environment::getPublicPath() . '/' . 'typo3conf/ext/iqtp13db/Resources/Private/Libraries/xlsxwriter.class.php');
 
@@ -57,8 +59,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     protected $berufeRepository;
     protected $staatenRepository;
     protected $ortRepository;
+    protected $brancheRepository;
     
-    public function __construct(UserGroupRepository $userGroupRepository, TeilnehmerRepository $teilnehmerRepository, FolgekontaktRepository $folgekontaktRepository, DokumentRepository $dokumentRepository, HistorieRepository $historieRepository, BeraterRepository $beraterRepository, AbschlussRepository $abschlussRepository, StorageRepository $storageRepository, BerufeRepository $berufeRepository, StaatenRepository $staatenRepository, OrtRepository $ortRepository)
+    public function __construct(UserGroupRepository $userGroupRepository, TeilnehmerRepository $teilnehmerRepository, FolgekontaktRepository $folgekontaktRepository, DokumentRepository $dokumentRepository, HistorieRepository $historieRepository, BeraterRepository $beraterRepository, AbschlussRepository $abschlussRepository, StorageRepository $storageRepository, BerufeRepository $berufeRepository, StaatenRepository $staatenRepository, OrtRepository $ortRepository, BrancheRepository $brancheRepository)
     {
         $this->userGroupRepository = $userGroupRepository;
         $this->teilnehmerRepository = $teilnehmerRepository;
@@ -71,6 +74,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $this->berufeRepository = $berufeRepository;
         $this->staatenRepository = $staatenRepository;
         $this->ortRepository = $ortRepository;
+        $this->brancheRepository = $brancheRepository;
     }
     
     /**
@@ -1368,7 +1372,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function showAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
         $valArray = $this->request->getArguments();
-        
+        $language = $this->request->getAttribute('language');
+        $isocode= $language->getTwoLetterIsoCode();
+                
         if(array_key_exists("searchparams", $valArray)) {
             $searchparams = $valArray['searchparams'];
         }
@@ -1391,11 +1397,14 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $speicherbelegung = intval(($filesizesum/31457280)*100);
         
         $berufeliste = $this->berufeRepository->findAll();
-        $staaten = $this->staatenRepository->findByLangisocode('de');
+        $staaten = $this->staatenRepository->findByLangisocode($isocode);
         $abschlussartarr = $this->settings['abschlussart'];
         unset($abschlussartarr[2]);
         
         $backenduser = $this->beraterRepository->findByUid($this->user['uid']);
+        
+        $brancheunterkat = $this->brancheRepository->findAllUnterkategorie($isocode);
+        
         $this->view->assignMultiple(
             [
                 'dokumente' => $dokumente,
@@ -1414,7 +1423,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'filesizes' => $filesizes,
                 'speicherbelegung' => $speicherbelegung,
                 'searchparams' => $searchparams ?? '',
-                'abschlussartarr' => $abschlussartarr
+                'abschlussartarr' => $abschlussartarr,
+                'brancheunterkat' => $brancheunterkat
             ]
             );
     }
@@ -1622,6 +1632,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function editAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer, \Ud\Iqtp13db\Domain\Model\Abschluss $abschluss = NULL)
     {
         $valArray = $this->request->getArguments();
+        $language = $this->request->getAttribute('language');
+        $isocode= $language->getTwoLetterIsoCode();        
         
         if(array_key_exists("searchparams", $valArray)) {
             $searchparams = $valArray['searchparams'];
@@ -1662,8 +1674,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         $speicherbelegung = intval(($filesizesum/31457280)*100);
         
-        $berufe = $this->berufeRepository->findAllOrdered('de');
-        $staaten = $this->staatenRepository->findByLangisocode('de');
+        $berufe = $this->berufeRepository->findAllOrdered($isocode);
+        $staaten = $this->staatenRepository->findByLangisocode($isocode);
         unset($staaten[201]);
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
@@ -1715,6 +1727,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         unset($abschlussartarr[2]);
         
         $backenduser = $this->beraterRepository->findByUid($this->user['uid']);
+        $brancheunterkat = $this->brancheRepository->findAllUnterkategorie($isocode);
         $this->view->assignMultiple(
             [
                 'alleberatungsstellen' => $alleberatungsstellen,
@@ -1743,7 +1756,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'newnacherfassung' => $nacherfassung,
                 'niqbid' => $teilnehmer->getNiqidberatungsstelle(),
                 'searchparams' => $searchparams ?? '',
-                'abschlussartarr' => $abschlussartarr
+                'abschlussartarr' => $abschlussartarr,
+                'brancheunterkat' => $brancheunterkat
             ]
             );
     }

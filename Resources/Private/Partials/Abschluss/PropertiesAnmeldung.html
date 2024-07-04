@@ -7,6 +7,14 @@
 
 		</div>
 		<div class="tp13_formdivwebapp">
+			<label for="branche">
+				<f:translate key="tx_iqtp13db_domain_model_abschluss.branche" />
+			</label>
+			<f:for each="{brancheunterkat}" as="branche">
+				{f:if(condition: '{abschluss.branche} == {branche.brancheid}', then: '<span class="propdat">{branche.titel}</span>')}
+			</f:for>		    
+		</div>		
+		<div class="tp13_formdivwebapp">
 			<label for="erwerbsland">
 				<f:translate key="tx_iqtp13db_domain_model_abschluss.erwerbsland" />
 			</label>

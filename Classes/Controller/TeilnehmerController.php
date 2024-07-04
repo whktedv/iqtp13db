@@ -8,6 +8,7 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Extbase\Annotation\Validate;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 use Psr\Http\Message\ResponseInterface;
 use Ud\Iqtp13db\Domain\Repository\UserGroupRepository;
@@ -17,6 +18,7 @@ use Ud\Iqtp13db\Domain\Repository\BeraterRepository;
 use Ud\Iqtp13db\Domain\Repository\AbschlussRepository;
 use TYPO3\CMS\Core\Resource\StorageRepository;
 use Ud\Iqtp13db\Domain\Repository\StaatenRepository;
+use Ud\Iqtp13db\Domain\Repository\BrancheRepository;
 
 /***
  *
@@ -43,8 +45,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     protected $abschlussRepository;
     protected $storageRepository;
     protected $staatenRepository;
+    protected $brancheRepository;
     
-    public function __construct(UserGroupRepository $userGroupRepository, TeilnehmerRepository $teilnehmerRepository, DokumentRepository $dokumentRepository, BeraterRepository $beraterRepository, AbschlussRepository $abschlussRepository, StorageRepository $storageRepository, StaatenRepository $staatenRepository)
+    public function __construct(UserGroupRepository $userGroupRepository, TeilnehmerRepository $teilnehmerRepository, DokumentRepository $dokumentRepository, BeraterRepository $beraterRepository, AbschlussRepository $abschlussRepository, StorageRepository $storageRepository, StaatenRepository $staatenRepository, BrancheRepository $brancheRepository)
     {
         $this->userGroupRepository = $userGroupRepository;
         $this->teilnehmerRepository = $teilnehmerRepository;
@@ -53,6 +56,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $this->abschlussRepository = $abschlussRepository;
         $this->storageRepository = $storageRepository;
         $this->staatenRepository = $staatenRepository;
+        $this->brancheRepository = $brancheRepository;
     }
     
     /**
@@ -545,6 +549,12 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     {
         $valArray = $this->request->getArguments();
         
+        $cntabschluesse = $this->abschlussRepository->countByTeilnehmer($teilnehmer);
+        if(isset($valArray['btnweiter']) && $cntabschluesse == 0) {
+            $this->addFlashMessage("Mindestens ein Abschluss muss eingetragen sein./At least one qualification entry required.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR); // TODO: Localization
+            $this->redirect('anmeldseite2', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+        }        
+        
         if (isset($valArray['btnabschlusshinzu'])) {
             $this->redirect('newWebapp', 'Abschluss', null, array('teilnehmer' => $teilnehmer));
         } elseif (isset($valArray['btnzurueck'])) {
@@ -672,6 +682,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function anmeldungcompleteAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
         $valArray = $this->request->getArguments();
+        $language = $this->request->getAttribute('language');
+        $isocode= $language->getTwoLetterIsoCode();
+        
         $tnarr = $this->teilnehmerRepository->findByUid($teilnehmer->getUid());
         if($tnarr != NULL) {
             $niqbid = $teilnehmer->getNiqidberatungsstelle();
@@ -696,6 +709,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $abschlussartarr = $this->settings['abschlussart'];
             unset($abschlussartarr[2]);
             
+            $brancheunterkat = $this->brancheRepository->findAllUnterkategorie($isocode);
+            
             $this->view->assignMultiple(
                 [
                     'settings' => $this->settings,
@@ -705,7 +720,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     'dokumente' => $dokumente,
                     'foldersize' =>  100-(intval(($foldersize/30000)*100)),
                     'staaten' => $staaten,
-                    'abschlussartarr' => $abschlussartarr
+                    'abschlussartarr' => $abschlussartarr,
+                    'brancheunterkat' => $brancheunterkat
                 ]
                 );
         } else {

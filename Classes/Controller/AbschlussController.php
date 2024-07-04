@@ -66,6 +66,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $abschlussartarr = $this->settings['abschlussart'];
         unset($abschlussartarr[2]);
         
+        $brancheunterkat = $this->brancheRepository->findAllUnterkategorie($isocode);
         $this->view->assign('abschlussartarr', $abschlussartarr);
         $this->view->assign('abschluss', $abschluss);
         $this->view->assign('teilnehmer', $teilnehmer);
@@ -75,6 +76,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $this->view->assign('thisaction', $valArray['thisaction']);
         $this->view->assign('berufe', $berufe);
         $this->view->assign('staaten', $staaten);
+        $this->view->assign('brancheunterkat', $brancheunterkat);
     }
 
     /**
@@ -246,6 +248,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     public function initializeNewWebappAction() {
         $this->exists_teilnehmer($this->request->getArguments());
     }
+    
     /**
      * action newWebapp
      * 
@@ -312,6 +315,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $this->exists_teilnehmer($this->request->getArguments());
         $this->exists_abschluss($this->request->getArguments());
     }
+
     /**
      * action createWebapp
      *
@@ -348,8 +352,8 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      */
     public function initializeEditWebappAction() {
         $this->exists_teilnehmer($this->request->getArguments());
-        //$this->exists_abschluss($this->request->getArguments());
     }
+    
     /**
      * action editWebapp
      *
@@ -412,6 +416,14 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      * @return void
      */
     public function initializeUpdateWebappAction() {
+        $valArray = $this->request->getArguments();
+        if(array_key_exists('abschluss', $valArray)) {
+            if($valArray['abschluss']['branche'] == '') {
+                $this->addFlashMessage("FEHLER: Branche ist Pflichtangabe.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR); // TODO: Localization
+                $this->redirect('editWebapp', 'Abschluss', null, array('teilnehmer' => $valArray['teilnehmer'], 'abschluss' => $valArray['abschluss']['__identity']));
+            }
+        }
+        
         $this->exists_teilnehmer($this->request->getArguments());
        // 
     }
@@ -439,8 +451,8 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      */
     public function initializeDeleteWebappAction() {
         $this->exists_teilnehmer($this->request->getArguments());
-       // $this->exists_abschluss($this->request->getArguments());
     }
+
     /**
      * action deleteWebapp
      *
