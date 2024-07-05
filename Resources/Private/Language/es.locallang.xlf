@@ -34,7 +34,7 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus"><target>Titulo de residencia</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatusfreitext"><target>Nota a titulo de residencia</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><target>¿Alemán como lengua materna?</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Si el certificado está disponible, ¿en qué nivel de idioma?</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>¿Qué nivel de conocimientos del idioma alemán?</target></trans-unit>
   <trans-unit id="keinabschlussbisher"><target><![CDATA[ Aún no se ha especificado ningún título educativo extranjero. Por favor, introduzca aquí información sobre su titulación educativa (universidad o formación). También puede introducir varias titulaciones (diplomas, certificados). ]]></target></trans-unit>
 
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Mi cualificación profesional más alta es</target></trans-unit>
@@ -147,6 +147,7 @@
 	<trans-unit id="errormailnotvalid"><target>Dirección de correo electrónico no válida, por favor, compruebe.</target></trans-unit>
 	<trans-unit id="errordomainnotvalid"><target>Dominio no encontrado, por favor, compruebe.</target></trans-unit>
 	<trans-unit id="errortndatanotvalid"><target>Datos no válidos, por favor, compruebe los datos introducidos.</target></trans-unit>
+	<trans-unit id="errornoqualification"><target>Debes ingresar al menos una calificación.</target></trans-unit>
     </body>
   </file>
 </xliff>

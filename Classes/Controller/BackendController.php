@@ -896,8 +896,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $landkreisselected = $valArray['filterlandkreis'] ?? '%';
         $berufselected = $valArray['filterreferenzberuf'] ?? '%';
         
-        //DebuggerUtility::var_dump($valArray);
-        
         $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->usergroup);
         foreach($berater as $currber) {
             $arrberater[$currber->getUid()] = $currber->getUsername();
@@ -913,7 +911,12 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         foreach($staaten as $staat) {
             $arrstaaten[$staat->getStaatid()] = $staat->getTitel();
         }
-                
+        
+        $brancheunterkat = $this->brancheRepository->findAllUnterkategorie('de');
+        foreach($brancheunterkat as $branche) {
+            $arrbranchen[$branche->getBrancheid()] = $branche->getTitel();
+        }
+                        
         $orte = $this->ortRepository->findByBundesland($bundeslandselected);        
         foreach($orte as $ort) {
             $arrorte[$ort->getPlz()] = $ort->getLandkreis();
@@ -930,13 +933,14 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $arranerkennungsberatung = $this->settings['anerkennungsberatung'];
         $arrqualifizierungsberatung = $this->settings['qualifizierungsberatung'];
         $arrberatungsstelle = $this->settings['beratungsstelle'];
-        //$arrberatungzu = $this->settings['beratungzu'];
+                
         $arrzertifikatlevel = $this->settings['zertifikatlevel'];
         $berufeliste = $this->berufeRepository->findAllOrdered('de');
         foreach($berufeliste as $beruf) {
             $arrberufe[$beruf->getBerufid()] = $beruf->getTitel();
         }
-        $arrabschlussart =  array('-1' => 'keine Angabe', '1' => 'Ausbildungsabschluss', '2' => 'Universitätsabschluss');
+        $arrabschlussart = $this->settings['abschlussart'];  
+        //array('-1' => 'keine Angabe', '1' => 'Ausbildungsabschluss', '2' => 'Universitätsabschluss');
         $arrantragstellungerfolgt = $this->settings['antragstellungerfolgt'];
         
         $orderby = 'crdate';
@@ -1136,8 +1140,19 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                         $rows[$x]['Abschluss'.$y.' SonstigerBeruf'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'sonstigerberuf');
                         $rows[$x]['Abschluss'.$y.' NichtreglementierterBeruf'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'nregberuf');
                         
-                        $rows[$x]['Abschluss'.$y.' Abschlussart'] = '';
-                        foreach (\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'abschlussart') as $atn) $rows[$x]['Abschluss'.$y.' Abschlussart'] .= $atn == '' ? '' : $arrabschlussart[$atn]." ";
+                        
+                        //TODO: wenn alte Variante (beide Angaben möglich mit Komma getrennt), dann hier alte Variante ODER die Datenbank anpassen, sodass bei allen jeweils der höchste Abschluss angezeigt wird.
+                        // Das Auslesen des Feldes "abschlussart" muss in allen Controllern und dem Model angepasst werden
+                        //$rows[$x]['Abschluss'.$y.' Abschlussart'] = '';
+                        //foreach (\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'abschlussart') as $atn) $rows[$x]['Abschluss'.$y.' Abschlussart'] .= $atn == '' ? '' : $arrabschlussart[$atn]." ";
+                        
+                        $abschlussart = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'abschlussart');
+                        $rows[$x]['Abschluss'.$y.' Abschlussart'] = $abschlussart == '' ? '-' : $arrabschlussart[$abschlussart];
+                        
+                        
+                        
+                        $abbranche = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'branche');
+                        $rows[$x]['Abschluss'.$y.' Branche'] = $abbranche == '' ? '-' : $arrbranchen[$abbranche];
                         
                         $aberwerbsland = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'erwerbsland');
                         $rows[$x]['Abschluss'.$y.' Erwerbsland'] = $aberwerbsland == '' ? '-' : $arrstaaten[$aberwerbsland];
@@ -1208,6 +1223,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     'Abschluss1 Referenzberuf - sonstiger Beruf' => 'string',
                     'Abschluss1 Referenzberuf - nicht reglementierter Beruf' => 'string',                    
                     'Abschluss1 Abschlussart' => 'string',
+                    'Abschluss1 Branche' => 'string',
                     'Abschluss1 Erwerbsland' => 'string',
                     'Abschluss1 Abschlussjahr' => 'string',
                     'Abschluss1 Ausbildungsort' => 'string',
@@ -1222,6 +1238,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     'Abschluss2 Referenzberuf - sonstiger Beruf' => 'string',
                     'Abschluss2 Referenzberuf - nicht reglementierter Beruf' => 'string',
                     'Abschluss2 Abschlussart' => 'string',
+                    'Abschluss2 Branche' => 'string',
                     'Abschluss2 Erwerbsland' => 'string',
                     'Abschluss2 Abschlussjahr' => 'string',
                     'Abschluss2 Ausbildungsort' => 'string',
@@ -1236,6 +1253,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     'Abschluss3 Referenzberuf - sonstiger Beruf' => 'string',
                     'Abschluss3 Referenzberuf - nicht reglementierter Beruf' => 'string',
                     'Abschluss3 Abschlussart' => 'string',
+                    'Abschluss3 Branche' => 'string',
                     'Abschluss3 Erwerbsland' => 'string',
                     'Abschluss3 Abschlussjahr' => 'string',
                     'Abschluss3 Ausbildungsort' => 'string',
@@ -1250,6 +1268,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     'Abschluss4 Referenzberuf - sonstiger Beruf' => 'string',
                     'Abschluss4 Referenzberuf - nicht reglementierter Beruf' => 'string',
                     'Abschluss4 Abschlussart' => 'string',
+                    'Abschluss4 Branche' => 'string',
                     'Abschluss4 Erwerbsland' => 'string',
                     'Abschluss4 Abschlussjahr' => 'string',
                     'Abschluss4 Ausbildungsort' => 'string',

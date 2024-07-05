@@ -43,14 +43,6 @@ plugin.tx_iqtp13db.settings {
 		14 = Gelöscht
 	} 
 
-	# ALT:
-	#filterberatungsstatus4admin {
-	#	10 = alle nicht gelöschten
-	#	11 = mind. angemeldet (bestätigt)
-	#	12 = Beraten
-	#	13 = Archiviert
-	#	14 = Erstberatung abgeschlossen
-	#} 
 }
 
 plugin.tx_iqtp13db_iqtp13dbadmin {
@@ -257,7 +249,7 @@ plugin.tx_iqtp13db.settings {
 		5 = B2
 		6 = C1
 		7 = C2
-		0 = ohne Zertifikat
+		0 = ohne Zertifikat		
    }
    
    abschlussart {

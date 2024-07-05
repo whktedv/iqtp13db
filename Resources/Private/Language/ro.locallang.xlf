@@ -41,7 +41,7 @@
   <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus"><target>Statut de rezidență</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatusfreitext"><target>Notă privind statutul de rezidență</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><target>Germana ca limbă maternă?</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Dacă certificatul este disponibil, la ce nivel de limbă?</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Ce nivel de cunoștințe de limba germană?</target></trans-unit>
   <trans-unit id="keinabschlussbisher"><target><![CDATA[ No foreign educational qualification specified yet. Please enter information about your educational qualification (university or training) here. You can also enter several qualifications (diplomas, certificates).]]></target></trans-unit>
 
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Cea mai înaltă calificare profesională a mea este</target></trans-unit>
@@ -153,6 +153,7 @@
 	<trans-unit id="errormailnotvalid"><target>Adresă de e-mail invalidă, vă rugăm să verificați.</target></trans-unit>
 	<trans-unit id="errordomainnotvalid"><target>Domeniul nu a fost găsit, vă rugăm să verificați.</target></trans-unit>
 	<trans-unit id="errortndatanotvalid"><target>Date nevalide, vă rugăm să verificați datele introduse.</target></trans-unit>
+	<trans-unit id="errornoqualification"><target>Trebuie să introduceți cel puțin o calificare.</target></trans-unit>
     </body>
   </file>
 </xliff>

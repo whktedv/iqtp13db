@@ -1,103 +1,3 @@
-/* -------- für Display-Größen bis 767 Pixel Breite (Smartphones/MOBILE) -------- */
-@media (max-width: 767px) {
-	.tp13_formdivwebapp label {
-		width: 100%;
-	}
-
-	.tp13_formdivwebapp input[type="text"] {
-		width: 100%;
-	}
-
-	.tx-iqtp13db button {
-		width: 100%;
-		height: 40px;
-		margin-bottom: 10px;
-	}
-
-	.chooselang {
-		display: none;
-	}
-
-	.chooselangmobile {
-		color: #000;
-	}
-}
-
-/* -------- für Display-Größen über 768 Pixel Breite -------- */
-@media (min-width: 768px) {
-	.tp13_formdivwebapp label {
-		width: 20%;
-	}
-
-	.tp13_formdivwebapp input[type="text"] {
-		width: 50%;
-		height: 35px;
-	}
-	
-	.formabschluss .tp13_formdivwebapp input[type="text"] {
-		width: 50%;
-		height: 35px;
-	}
-
-	.tx-iqtp13db input[type="text"].plztextfield {
-		width: 10%;
-		margin-right: 14px;
-	}
-
-	.tx-iqtp13db input[type="text"].orttextfield {
-		width: 39%;
-	}
-	
-	.tx-iqtp13db input[type="text"].datumtextfield {
-		width: 10%;
-	}	
-
-	.tx-iqtp13db input[type="text"].datumtextfieldberatung {
-		width: 10%;
-	}	
-
-	.tx-iqtp13db input[type="text"].smallertextfield, .tx-iqtp13db select.smallertextfield {
-		width: 23%;
-		margin-left: 14px;
-	}
-
-	.tx-iqtp13db input[type="text"].smallertextfield2, .tx-iqtp13db select.smallertextfield2 {
-		width: 23%;
-		margin-left: 14px;
-		display: none;
-	}
-
-	.tx-iqtp13db button {
-		/*width: 150px;
-		height: 40px;*/
-	}
-
-	.headabschlusslinks, .headabschlussrechts {
-		width: 50%;
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		margin: 5px;
-	}
-
-	.chooselang {
-		display: block;
-	}
-	
-	.navbar-toggle {
-		display: none;
-	}
-	
-	.navbar-nav {
-		display: flex;
-		flex-direction: row;
-		margin-left: 0 !important;
-	}
-	
-	.navbar-nav li {
-    	padding-right: 5px;
-	}
-}
 
 /* ---- Allgemein ------ */
 
@@ -115,22 +15,6 @@
 	border: 1px solid #ababab;
 	padding: 15px;
 	margin: 15px 0px;
-}
-
-.frameabschluesse {
-	
-}
-
-.frameabschluesse .tp13_formdivwebapp label {
-	
-}
-
-.frameabschluesse .tp13_formdivwebapp input[type="text"] {
-	
-}
-	
-.tx-iqtp13db .formabschluss {
-
 }
 
 .tx-iqtp13db a {
@@ -179,8 +63,6 @@
 }
 
 .tx-iqtp13db .einwilligungtext {
-	/* display: flex;
-	width: 90%;*/
     font-weight: 400;
     font-size: 1.1em;
 }
@@ -244,15 +126,12 @@
 	display: none;
 }
 
-
-
 .tx-iqtp13db input[type="radio"], .tx-iqtp13db input[type="checkbox"] {
-	height: 1.5em;
-	width: 1.5em;
+	height: 1.3em;
+	width: auto;
     display: inline;
     line-height: normal;
     margin: 3px 10px 0 0;
-    width: auto;
      -ms-transform: scale(1.5); 
     -webkit-transform: scale(1.5);
     transform: scale(1.5);
@@ -325,11 +204,9 @@
 	border-bottom: 1px solid #dfdfdf;
 }
 
-
 button.abbruchbtn {
 	background-color: #e69b9b;
 }
-
 
 .abbruchlink {
 	background-color: #e69b9b !important;
@@ -560,6 +437,119 @@ form.filterform div {
 	background-color: #f1f1f7;
 	padding: 1rem;
 	margin-bottom: 1rem;
+}
+
+/* -------- für Display-Größen bis 767 Pixel Breite (Smartphones/MOBILE) -------- */
+@media (max-width: 767px) {
+	.tp13_formdivwebapp label {
+		width: 100%;
+	}
+
+	.tp13_formdivwebapp input[type="text"] {
+		width: 100%;
+	}
+
+	.tx-iqtp13db button {
+		width: 100%;
+		height: 40px;
+		margin-bottom: 10px;
+	}
+
+	.chooselang {
+		display: none;
+	}
+
+	.chooselangmobile {
+		color: #000;
+	}	
+	
+	.tx-iqtp13db input[type="radio"], .tx-iqtp13db input[type="checkbox"] {
+		width: 1.3em;
+	}
+	
+	#chooselang {
+		width: 100%;
+  		height: 2rem;
+	}
+	
+	.tx-iqtp13db .infolabel {
+		background-size: 1.4em;
+	}
+	
+	#weiterbutton, #zurueckbutton, #newabschlusszurueckbutton, #abbruchbutton {
+		margin-bottom: 15px;
+	}
+}
+
+/* -------- für Display-Größen über 768 Pixel Breite -------- */
+@media (min-width: 768px) {
+	.tp13_formdivwebapp label {
+		width: 20%;
+	}
+
+	.tp13_formdivwebapp input[type="text"] {
+		width: 50%;
+		height: 35px;
+	}
+	
+	.formabschluss .tp13_formdivwebapp input[type="text"] {
+		width: 50%;
+		height: 35px;
+	}
+
+	.tx-iqtp13db input[type="text"].plztextfield {
+		width: 10%;
+		margin-right: 14px;
+	}
+
+	.tx-iqtp13db input[type="text"].orttextfield {
+		width: 39%;
+	}
+	
+	.tx-iqtp13db input[type="text"].datumtextfield {
+		width: 10%;
+	}	
+
+	.tx-iqtp13db input[type="text"].datumtextfieldberatung {
+		width: 10%;
+	}	
+
+	.tx-iqtp13db input[type="text"].smallertextfield, .tx-iqtp13db select.smallertextfield {
+		width: 23%;
+		margin-left: 14px;
+	}
+
+	.tx-iqtp13db input[type="text"].smallertextfield2, .tx-iqtp13db select.smallertextfield2 {
+		width: 23%;
+		margin-left: 14px;
+		display: none;
+	}
+
+	.headabschlusslinks, .headabschlussrechts {
+		width: 50%;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		margin: 5px;
+	}
+
+	.chooselang {
+		display: block;
+	}
+	
+	.navbar-toggle {
+		display: none;
+	}
+	
+	.navbar-nav {
+		display: flex;
+		flex-direction: row;
+		margin-left: 0 !important;
+	}
+	
+	.navbar-nav li {
+    	padding-right: 5px;
+	}
 }
 
 @media print {

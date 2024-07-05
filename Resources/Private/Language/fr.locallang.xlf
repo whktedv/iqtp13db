@@ -41,7 +41,7 @@
   <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus"><target>Statut de séjour</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatusfreitext"><target>Commentaire sur le statut de séjour</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><target>L'allemand comme langue maternelle ?</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Si un certificat est disponible, à quel niveau de langue ?</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Quel niveau de maîtrise de la langue allemande ?</target></trans-unit>
 	<trans-unit id="keinabschlussbisher"><source><![CDATA[ Aucun diplôme étranger n'est indiqué. Veuillez saisir ici les informations relatives à votre diplôme (université ou formation). Vous pouvez également saisir plusieurs qualifications (diplômes, certificats).]]></source></trans-unit>
 		
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Mon diplôme professionnel le plus élevé est</target></trans-unit>
@@ -160,6 +160,7 @@
 	<trans-unit id="errormailnotvalid"><target>Adresse e-mail invalide, veuillez vérifier.</target></trans-unit>
 	<trans-unit id="errordomainnotvalid"><target>Domaine introuvable, veuillez vérifier.</target></trans-unit>
 	<trans-unit id="errortndatanotvalid"><target>Données non valides, veuillez vérifier les données saisies.</target></trans-unit>
+	<trans-unit id="errornoqualification"><target>Vous devez saisir au moins un diplôme.</target></trans-unit>
 
     </body>
   </file>

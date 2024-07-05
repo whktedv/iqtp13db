@@ -32,7 +32,7 @@
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus"><source>Residence status</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatusfreitext"><source>Note on residence status</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><source>German as a native language?</source></trans-unit>
-		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><source>If German certificate, what language level</source></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><source>What level of German language skills?</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.weiteresprachkenntnisse"><source>Further language skills</source></trans-unit>
 		<trans-unit id="keinabschlussbisher"><source><![CDATA[ No foreign educational qualification specified yet. Please enter information about your educational qualification (university or training) here. You can also enter several qualifications (diplomas, certificates).]]></source></trans-unit>
 		
@@ -135,6 +135,7 @@
 		<trans-unit id="errormailnotvalid"><source>Not a valid E-Mail address, please check.</source></trans-unit>
 		<trans-unit id="errordomainnotvalid"><source>Domain not found, please check.</source></trans-unit>
 		<trans-unit id="errortndatanotvalid"><source>Data not valid, please check the entered data.</source></trans-unit>
+		<trans-unit id="errornoqualification"><source>You must enter at least one qualification.</source></trans-unit>
 		
 	</body>
   </file>

@@ -105,9 +105,12 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
             $berufearr[$beruf->getBerufid()] = $beruf->getTitel();
         }
         $staaten = $this->staatenRepository->findAll4Abschluss($isocode);
+        if(count($staaten) == 0) $staaten = $this->staatenRepository->findByLangisocode('en');
+        unset($staaten[201]);
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
         }
+       
         $abschlussartarr = $this->settings['abschlussart'];
         unset($abschlussartarr[2]);
         
@@ -179,6 +182,8 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
             $berufearr[$beruf->getBerufid()] = $beruf->getTitel();
         }
         $staaten = $this->staatenRepository->findAll4Abschluss($isocode);
+        if(count($staaten) == 0) $staaten = $this->staatenRepository->findByLangisocode('en');
+        unset($staaten[201]);        
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
         }
@@ -277,6 +282,8 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
             $berufearr[$beruf->getBerufid()] = $beruf->getTitel();
         }
         $staaten = $this->staatenRepository->findAll4Abschluss($isocode);
+        if(count($staaten) == 0) $staaten = $this->staatenRepository->findByLangisocode('en');
+        unset($staaten[201]);        
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
         }
@@ -507,4 +514,17 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         }
     }
     
+    /**
+     * A template method for displaying custom error flash messages, or to
+     * display no flash message at all on errors.
+     * Override this to customize
+     * the flash message in your action controller.
+     *
+     * @api
+     *
+     * @return string boolean flash message or FALSE if no flash message should be set
+     */
+    protected function getErrorFlashMessage() {
+        return FALSE;
+    }
 }

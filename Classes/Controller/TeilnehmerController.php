@@ -111,31 +111,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $this->generalhelper = new \Ud\Iqtp13db\Helper\Generalhelper();
         
     }
-    
-    
-    /*
-     * API-Funktion, um die Zahlen als JSON zwecks Abruf für den Counter auf der IQ-Webseite zu generieren.
-     * 
-     * Folgendes muss ins Typoscript der IQ Webapp eingetragen werden, damit ein Aufruf der API über 
-     * https://www.iq-webapp.de/frontend-iq-webapp/anmeldung?type=112233
-     * möglich ist.
-     * 
-     * myJson = PAGE
-     *   myJson {
-     *   	typeNum = 112233
-     *   	config {
-     *          additionalHeaders = Content-Type: application/json
-     *           additionalHeaders.10.header = Content-Type: application/json
-     *           no_cache = 1
-     *           disableAllHeaderCode = 1
-     *           disablePrefixComment = 1
-     *           xhtml_cleaning = 0
-     *           admPanel = 0
-     *           debug = 0
-     *       }
-     *       10 < tt_content.list.20.iqtp13db_json
-     *   }
-     */
+
     public function showAction(): ResponseInterface
     {
         $reftag = date("d.m.Y");
@@ -344,13 +320,10 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $this->redirect('startseite', 'Teilnehmer', 'Iqtp13db', null);
         }
         
-        $context = GeneralUtility::makeInstance(Context::class);
-        $site = $GLOBALS['TYPO3_REQUEST']->getAttribute('site');
-        $langId = $context->getPropertyFromAspect('language', 'id');
-        $language = $site->getLanguageById($langId);
-        $langCode = $language->getTwoLetterIsoCode();
+        $language = $this->request->getAttribute('language');
+        $isocode= $language->getTwoLetterIsoCode();
         
-        $staaten = $this->staatenRepository->findByLangisocode($langCode);
+        $staaten = $this->staatenRepository->findByLangisocode($isocode);
         if(count($staaten) == 0) $staaten = $this->staatenRepository->findByLangisocode('en');
         unset($staaten[201]);
         
@@ -551,7 +524,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         
         $cntabschluesse = $this->abschlussRepository->countByTeilnehmer($teilnehmer);
         if(isset($valArray['btnweiter']) && $cntabschluesse == 0) {
-            $this->addFlashMessage("Mindestens ein Abschluss muss eingetragen sein./At least one qualification entry required.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR); // TODO: Localization
+            $this->addFlashMessage(\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('errornoqualification', 'iqtp13db'), '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR); // TODO: Localization
             $this->redirect('anmeldseite2', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
         }        
         
@@ -697,13 +670,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $abschluesse = new \Ud\Iqtp13db\Domain\Model\Abschluss();
             $abschluesse = $this->abschlussRepository->findByTeilnehmer($teilnehmer);
             
-            $context = GeneralUtility::makeInstance(Context::class);
-            $site = $GLOBALS['TYPO3_REQUEST']->getAttribute('site');
-            $langId = $context->getPropertyFromAspect('language', 'id');
-            $language = $site->getLanguageById($langId);
-            $langCode = $language->getTwoLetterIsoCode();
-            
-            $staaten = $this->staatenRepository->findByLangisocode($langCode);
+            $staaten = $this->staatenRepository->findByLangisocode($isocode);
             if(count($staaten) == 0) $staaten = $this->staatenRepository->findByLangisocode('en');
             
             $abschlussartarr = $this->settings['abschlussart'];
@@ -1102,6 +1069,5 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     protected function getErrorFlashMessage() {
         return FALSE;
     }
-    
-    
+        
 }

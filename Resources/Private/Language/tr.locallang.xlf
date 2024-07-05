@@ -36,7 +36,7 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus"><target>Yerleşim durumu</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatusfreitext"><target>İkamet durumu</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><target>Almanca ana dilinizmi?</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Almanca zertifikası varsa, hangi  seviyede?</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Almanca dil becerileri ne düzeyde?</target></trans-unit>
   <trans-unit id="keinabschlussbisher"><target><![CDATA[ No foreign educational qualification specified yet. Please enter information about your educational qualification (university or training) here. You can also enter several qualifications (diplomas, certificates).]]></target></trans-unit>
 
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Aldığım en üst derece meslek eğitim diploması</target></trans-unit>
@@ -149,6 +149,7 @@
 	<trans-unit id="errormailnotvalid"><target>Geçersiz bir E-posta adresi, lütfen kontrol edin.</target></trans-unit>
 	<trans-unit id="errordomainnotvalid"><target>Alan adı bulunamadı, lütfen kontrol edin.</target></trans-unit>
 	<trans-unit id="errortndatanotvalid"><target>Geçersiz veriler, lütfen girilen verileri kontrol edin.</target></trans-unit>
+	<trans-unit id="errornoqualification"><target>En az bir yeterlilik girmelisiniz.</target></trans-unit>
     </body>
   </file>
 </xliff>

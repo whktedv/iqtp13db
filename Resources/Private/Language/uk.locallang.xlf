@@ -34,7 +34,7 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus"><target>Cтатус проживання</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatusfreitext"><target>Примітка до статусу проживання</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><target>Німецька мова як рідна?</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Якщо є сертифікат, то на якому рівні володіння мовою?</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Який рівень знання німецької мови?</target></trans-unit>
   	<trans-unit id="keinabschlussbisher"><target><![CDATA[ Іноземна освітня кваліфікація ще не вказана. Будь ласка, введіть тут інформацію про вашу освітню кваліфікацію (університет або тренінг). Ви також можете вказати декілька кваліфікацій (дипломів, сертифікатів).]]></target></trans-unit>
 	
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Мій найвищий рівень професійної освіти</target></trans-unit>
@@ -136,6 +136,7 @@
 	<trans-unit id="errormailnotvalid"><target>Недійсна адреса електронної пошти, будь ласка, перевірте.</target></trans-unit>
 	<trans-unit id="errordomainnotvalid"><target>Домен не знайдено, будь ласка, перевірте.</target></trans-unit>
 	<trans-unit id="errortndatanotvalid"><target>Неправильні дані, будь ласка, перевірте введені дані.</target></trans-unit>
+	<trans-unit id="errornoqualification"><target>Ви повинні ввести принаймні одну кваліфікацію.</target></trans-unit>
     </body>
   </file>
 </xliff>

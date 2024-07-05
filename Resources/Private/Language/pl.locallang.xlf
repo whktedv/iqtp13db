@@ -34,7 +34,7 @@
   <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus"><target>Status uprawnienia do pobytu w kraju</target></trans-unit>
   <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatusfreitext"><target>Uwagi odnośnie statusu uprawnienia do pobytu w kraju</target></trans-unit>
   <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><target>Niemiecki jako jezyk ojczysty?  </target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Jeśli tak, to na jakim poziomie językowym?</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Jaki poziom znajomości języka niemieckiego?</target></trans-unit>
     <trans-unit id="keinabschlussbisher"><target><![CDATA[ No foreign educational qualification specified yet. Please enter information about your educational qualification (university or training) here. You can also enter several qualifications (diplomas, certificates).]]></target></trans-unit>
   
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Moje najwyższe kwalifikacje zawodowe to</target></trans-unit>
@@ -145,6 +145,7 @@
 	<trans-unit id="errormailnotvalid"><target>Nieprawidłowy adres e-mail, proszę sprawdzić.</target></trans-unit>
 	<trans-unit id="errordomainnotvalid"><target>Domena nie znaleziona, proszę sprawdzić.</target></trans-unit>
 	<trans-unit id="errortndatanotvalid"><target>Dane nieprawidłowe, proszę sprawdzić wprowadzone dane.</target></trans-unit>
+	<trans-unit id="errornoqualification"><target>Musisz wprowadzić co najmniej jedną kwalifikację.</target></trans-unit>
     </body>
   </file>
 </xliff>

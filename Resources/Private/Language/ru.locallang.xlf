@@ -36,7 +36,7 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus"><target>Вид на жительство</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatusfreitext"><target>Справка о статусе проживания</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><target>Немецкий как родной язык?</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Если есть сертификат, на каком уровне языка?</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Какой уровень владения немецким языком?</target></trans-unit>
   <trans-unit id="keinabschlussbisher"><target><![CDATA[ No foreign educational qualification specified yet. Please enter information about your educational qualification (university or training) here. You can also enter several qualifications (diplomas, certificates).]]></target></trans-unit>
 
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Моя высшая профессиональная квалификация</target></trans-unit>
@@ -146,6 +146,7 @@
 	<trans-unit id="errormailnotvalid"><target>Неправильный адрес электронной почты, пожалуйста, проверьте.</target></trans-unit>
 	<trans-unit id="errordomainnotvalid"><target>Домен не найден, пожалуйста, проверьте.</target></trans-unit>
 	<trans-unit id="errortndatanotvalid"><target>Неверные данные, пожалуйста, проверьте введенные данные.</target></trans-unit>
+	<trans-unit id="errornoqualification"><target>Вы должны ввести хотя бы одну квалификацию.</target></trans-unit>
     </body>
   </file>
 </xliff>

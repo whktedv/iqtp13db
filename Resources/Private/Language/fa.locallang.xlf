@@ -41,7 +41,7 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus"><target>وضعیت اقامت</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatusfreitext"><target>توضیح مربوط به مجوز اقامت</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><target>	آلمانی به عنوان زبان مادری؟</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>	اگر گواهینامه زبان وجود دارد، در چه سطح است؟</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>مهارت زبان آلمانی در چه سطحی است؟</target></trans-unit>
   
   <trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>بالاترین مدرک حرفه ای من این است معادل را در لیست انتخاب کنید‌</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branche"><target>لطفا صنعتی را که در ان صلاحیت (های) خود را بدست اورده اید را مشخص کنید</target></trans-unit>
@@ -167,6 +167,7 @@
 	<trans-unit id="errormailnotvalid"><source>آدرس ایمیل معتبر نیست، لطفا بررسی کنید.</source></trans-unit>
 	<trans-unit id="errordomainnotvalid"><source>دامنه یافت نشد، لطفا بررسی کنید.</source></trans-unit>
 	<trans-unit id="errortndatanotvalid"><source>داده ها معتبر نیستند، لطفا داده های وارد شده را بررسی کنید.</source></trans-unit>
+	<trans-unit id="errornoqualification"><target>شما باید حداقل یک مدرک را وارد کنید</target></trans-unit>
     </body>
   </file>
 </xliff>
