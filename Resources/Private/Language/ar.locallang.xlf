@@ -44,6 +44,7 @@
 	
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>أعلى مؤهل مهني لدي هو </target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branche"><target>يُرجى الإشارة إلى القطاع الذي حصلت فيه على مؤهل (مؤهلات)</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branchekurz"><target>صناعة</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.erwerbsland"><target>	بلد التخرج 	</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.dauer_berufsausbildung"><target>	مدة التحصيل المهني / العلمي	</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussjahr"><target>	سنة التخرح 	</target></trans-unit>

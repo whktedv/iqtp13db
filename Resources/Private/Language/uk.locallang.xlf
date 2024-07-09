@@ -39,6 +39,7 @@
 	
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Мій найвищий рівень професійної освіти</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branche"><target>Будь ласка, вкажіть галузь, з якої Ви отримали кваліфікацію(ї)</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branchekurz"><target>Промисловість</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.erwerbsland"><target>Країна здобуття освітньої кваліфікації</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.dauer_berufsausbildung"><target>Тривалість професійного навчання</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussjahr"><target>Рік завершення освіти</target></trans-unit>

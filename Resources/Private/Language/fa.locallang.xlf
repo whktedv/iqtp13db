@@ -45,6 +45,7 @@
   
   <trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>بالاترین مدرک حرفه ای من این است معادل را در لیست انتخاب کنید‌</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branche"><target>لطفا صنعتی را که در ان صلاحیت (های) خود را بدست اورده اید را مشخص کنید</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branchekurz"><target>صنعت</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.erwerbsland"><target>	کشور محل دریافت </target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.dauer_berufsausbildung"><target>	مدت آموزش حرفه‌ای </target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussjahr"><target>	سال دریافت گواهینامه</target></trans-unit>

@@ -477,11 +477,14 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function anmeldseite2Action(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
-        $tnarr = $this->teilnehmerRepository->findByUid($teilnehmer->getUid());
+        $tnarr = $this->teilnehmerRepository->findByUid($teilnehmer->getUid());        
         if($tnarr != NULL) {
             $abschluesse = new \Ud\Iqtp13db\Domain\Model\Abschluss();
             $abschluesse = $this->abschlussRepository->findByTeilnehmer($teilnehmer->getUid());
         }
+        
+        $language = $this->request->getAttribute('language');
+        $isocode= $language->getTwoLetterIsoCode();
         
         $aktuellesJahr = (int)date("Y");
         $abschlussjahre = array();
@@ -492,6 +495,13 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         
         $abschlussartarr = $this->settings['abschlussart'];
         unset($abschlussartarr[2]);
+        
+        $brancheunterkat = $this->brancheRepository->findAllUnterkategorie($isocode);
+        $arrbranche = array();
+        foreach ($brancheunterkat as $branche) {
+            $arrbranche[$branche->getBrancheid()] = $branche->getTitel();
+        }
+        
         $this->view->assignMultiple(
             [
                 'settings' => $this->settings,
@@ -499,7 +509,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 'teilnehmer' => $teilnehmer,
                 'beratungsstelle' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid'),
                 'abschlussjahre' => $abschlussjahre,
-                'abschlussartarr' => $abschlussartarr
+                'abschlussartarr' => $abschlussartarr,
+                'arrbranche' => $arrbranche
             ]
             );
     }

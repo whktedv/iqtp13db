@@ -41,6 +41,7 @@
 
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Моя высшая профессиональная квалификация</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branche"><target>Пожалуйста, укажите отрасль, в которой вы получили свою квалификацию (квалификации)</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branchekurz"><target>Промышленность</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.erwerbsland"><target>Страна приобретения</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.dauer_berufsausbildung"><target>Продолжительность профессионального обучения </target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussjahr"><target>Год выпуска</target></trans-unit>

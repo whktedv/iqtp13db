@@ -39,6 +39,7 @@
 
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Mi cualificación profesional más alta es</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branche"><target>Indique el sector en el que obtuvo su(s) cualificación(es)</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branchekurz"><target>Industria</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.erwerbsland"><target>País de formación</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.dauer_berufsausbildung"><target>Duración de la formación profesional</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussjahr"><target>Año de finalización</target></trans-unit>

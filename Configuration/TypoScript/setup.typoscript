@@ -1,50 +1,3 @@
-plugin.tx_iqtp13db.settings {
-	standardniqidberatungsstelle =
-	sender = 
-	standardbccmail = 
-	mailattacheinwilligung = 
-	startseitelink = 
-	logolink = 	 
-	registrationpageuid = 
-	standardberatungort =
-	beraterstoragepid = 0
-	wartezeitwochen = 10-12
-	anmeldungzsbapageuid =
-	anmeldungnichtwebapppageuid = 
-	datenschutzeinwilligungurluid = 
-	
-	# für Wartungsmodus
-	wartungvon = 01.01.2021 08:00
-	wartungbis = 01.02.2021 12:00
-	wartungtext = <h1>Wartungsarbeiten. Dieser Dienst ist vorübergehend nicht verfügbar. Danke für Ihr Verständnis.</h1><h1>&nbsp;</h1><h1>Maintenance. This service is temporarily not available. Thanks for your patience.</h1>
-	
-	niqapiurl = https://niq-datenbank.de/hsp1/save_json_app.php
-	
-	beratungsstatus {
-		0 = angemeldet
-		1 = Anmeldung bestätigt
-		2 = Erstberatung Start
-		3 = Erstberatung abgeschlossen		
-		4 = NIQ erfasst
-		99 = Anmeldung (noch) nicht beendet
-	}
-	
-	filterberatungsstatus {
-		11 = Anmeldungen
-		12 = Erstberatungen
-		13 = Beratungen fertig
-		14 = Gelöscht
-	}
-	
-	filterberatungsstatus4admin {
-		11 = Anmeldungen
-		12 = Erstberatungen
-		13 = Beratungen fertig
-		14 = Gelöscht
-	} 
-
-}
-
 plugin.tx_iqtp13db_iqtp13dbadmin {
   view {
     templateRootPaths.0 = EXT:iqtp13db/Resources/Private/Templates/
@@ -138,8 +91,52 @@ page {
 }
 
 
-
 plugin.tx_iqtp13db.settings {
+	
+	standardniqidberatungsstelle =
+	sender = 
+	standardbccmail = 
+	mailattacheinwilligung = 
+	startseitelink = 
+	logolink = 	 
+	registrationpageuid = 
+	standardberatungort =
+	beraterstoragepid = 0
+	wartezeitwochen = 10-12
+	anmeldungzsbapageuid =
+	anmeldungnichtwebapppageuid = 
+	datenschutzeinwilligungurluid = 
+	
+	# für Wartungsmodus
+	wartungvon = 01.01.2021 08:00
+	wartungbis = 01.02.2021 12:00
+	wartungtext = <h1>Wartungsarbeiten. Dieser Dienst ist vorübergehend nicht verfügbar. Danke für Ihr Verständnis.</h1><h1>&nbsp;</h1><h1>Maintenance. This service is temporarily not available. Thanks for your patience.</h1>
+	
+	niqapiurl = https://niq-datenbank.de/hsp1/save_json_app.php
+	
+	beratungsstatus {
+		0 = angemeldet
+		1 = Anmeldung bestätigt
+		2 = Erstberatung Start
+		3 = Erstberatung abgeschlossen		
+		4 = NIQ erfasst
+		99 = Anmeldung (noch) nicht beendet
+	}
+	
+	filterberatungsstatus {
+		11 = Anmeldungen
+		12 = Erstberatungen
+		13 = Beratungen fertig
+		14 = Gelöscht
+	}
+	
+	filterberatungsstatus4admin {
+		11 = Anmeldungen
+		12 = Erstberatungen
+		13 = Beratungen fertig
+		14 = Gelöscht
+	} 
+
 
    ### Beratung ###	
 

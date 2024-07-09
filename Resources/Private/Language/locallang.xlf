@@ -38,6 +38,7 @@
 		
 		<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><source>My highest professional qualification is</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_abschluss.branche"><source>Please indicate the sector in which you acquired your qualification(s):</source></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_abschluss.branchekurz"><source>Sector</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_abschluss.erwerbsland"><source>Country of acquisition of the educational qualification</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_abschluss.dauer_berufsausbildung"><source>Duration of vocational training/studies</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussjahr"><source>Graduation year</source></trans-unit>

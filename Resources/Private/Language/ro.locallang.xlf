@@ -46,6 +46,7 @@
 
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Cea mai înaltă calificare profesională a mea este</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branche"><target>Vă rugăm să indicați sectorul în care v-ați obținut calificarea (calificările)</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branchekurz"><target>Industrie</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.erwerbsland"><target>Țară de dobândire</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.dauer_berufsausbildung"><target>Durată de pregătire profesională</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussjahr"><target>Anul absolvirii</target></trans-unit>

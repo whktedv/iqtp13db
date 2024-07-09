@@ -46,6 +46,7 @@
 		
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Mon diplôme professionnel le plus élevé est</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branche"><target>Veuillez indiquer le secteur dans lequel vous avez obtenu votre/vos qualification(s)</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branchekurz"><target>Industrie</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.erwerbsland"><target>Pays de formation </target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.dauer_berufsausbildung"><target>Durée de la formation professionnelle</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussjahr"><target>Année d'obtention du diplôme</target></trans-unit>

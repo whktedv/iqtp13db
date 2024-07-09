@@ -16,11 +16,11 @@ window.onbeforeunload = function() {
 
 document.addEventListener("DOMContentLoaded", function() {
     var form1 = document.getElementById("teilnehmerform");
-	var form2 = document.getElementById("dokumenteform1");
+	//var form2 = document.getElementById("dokumenteform1");
 	var form3 = document.getElementById("dokumenteform2");
 	
 	prepareformelements(form1);
-	prepareformelements(form2);
+	//prepareformelements(form2);
 	prepareformelements(form3);
 });
 
@@ -251,7 +251,7 @@ $(document).ready(function() {
 			window.editor = editor;
 		} )
 		.catch( err => {
-			console.error( err.stack );
+			//console.error( err.stack );
 		} );
 		
 	ClassicEditor
@@ -271,7 +271,7 @@ $(document).ready(function() {
 			window.editor = editor;
 		} )
 		.catch( err => {
-			console.error( err.stack );
+			//console.error( err.stack );
 		} );
 		
 	ClassicEditor
@@ -291,12 +291,34 @@ $(document).ready(function() {
 			window.editor = editor;
 		} )
 		.catch( err => {
-			console.error( err.stack );
+			//console.error( err.stack );
 		} );
+	
+	
+	// ******************** AJAX Calls ***************************
+
+    $(document).on('blur', '#dokdescrinput1', function () {
+    	var inputField = document.getElementById('dokdescrinput1');
+    	var inputValue = inputField.value;
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'index.php?eID=doksave', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById('response').innerHTML = xhr.responseText;
+            }
+        };
+
+        xhr.send('dokdescrinput1=' + encodeURIComponent(inputValue));
+	});
+   
+	// ***********************************************************
 	
 });
 
-
+    
 $(function ($) {
     $.datepicker.setDefaults($.datepicker.regional["de"]);
 });

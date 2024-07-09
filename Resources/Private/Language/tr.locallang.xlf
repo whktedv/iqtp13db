@@ -41,6 +41,7 @@
 
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Aldığım en üst derece meslek eğitim diploması</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branche"><target>Lütfen mesleki yeterliliğinizi/yeterliliklerinizi elde ettiğini branşları bildirin</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branchekurz"><target>Endüstri</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.erwerbsland"><target>Mezuniyet diplomasının alındığı ülke</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.dauer_berufsausbildung"><target>Meslek eğitiminin süresi</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussjahr"><target>Bitirdiği sene</target></trans-unit>

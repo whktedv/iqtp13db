@@ -39,7 +39,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     protected $teilnehmerRepository;
     protected $dokumentRepository;
     protected $storageRepository;
-    
+    /*
     public function __construct(UserGroupRepository $userGroupRepository, TeilnehmerRepository $teilnehmerRepository, DokumentRepository $dokumentRepository, StorageRepository $storageRepository)
     {
         $this->userGroupRepository = $userGroupRepository;
@@ -47,7 +47,40 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $this->dokumentRepository = $dokumentRepository;
         $this->storageRepository = $storageRepository;
     }
-        
+      */  
+    /**
+     *
+     * @param UserGroupRepository $userGroupRepository
+     */
+    public function injectUserGroupRepository(UserGroupRepository $userGroupRepository)
+    {
+        $this->userGroupRepository = $userGroupRepository;
+    }
+    /**
+     *
+     * @param TeilnehmerRepository $teilnehmerRepository
+     */
+    public function injectTeilnehmerRepository(TeilnehmerRepository $teilnehmerRepository)
+    {
+        $this->teilnehmerRepository = $teilnehmerRepository;
+    }
+    /**
+     *
+     * @param DokumentRepository $dokumentRepository
+     */
+    public function injectDokumentRepository(DokumentRepository $dokumentRepository)
+    {
+        $this->dokumentRepository = $dokumentRepository;
+    }
+    /**
+     *
+     * @param StorageRepository $storageRepository
+     */
+    public function injectStorageRepository(StorageRepository $storageRepository)
+    {
+        $this->storageRepository = $storageRepository;
+    }
+    
     /**
      * action init
      *
@@ -81,23 +114,59 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     
     /**
      * action updateBackendAction
-     *
-     * @param \Ud\Iqtp13db\Domain\Model\Dokument $dokument
+     * 
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return void
      */
-    public function updateBackendAction(\Ud\Iqtp13db\Domain\Model\Dokument $dokument, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    public function updateBackendAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
     {
         $valArray = $this->request->getArguments();
-
-        $this->dokumentRepository->update($dokument);
-        //Daten sofort in die Datenbank schreiben
-        $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
-        $persistenceManager->persistAll();
         
+        if(array_key_exists('Dokument', $valArray)) {
+            $dokid = $valArray['Dokument']['__identity'];
+            $thisdok = $this->dokumentRepository->findByUid($dokid);
+            $thisdok->setBeschreibung($valArray['Dokument']['beschreibung']);
+            
+            $this->dokumentRepository->update($thisdok);
+            //Daten sofort in die Datenbank schreiben
+            $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+            $persistenceManager->persistAll();
+        }
+         
         $this->redirect($valArray['thisaction'], 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'] ?? 'edit', 'callercontroller' => $valArray['callercontroller'] ?? 'Backend', 'callerpage' => $valArray['callerpage'] ?? '1', 'showdokumente' => '1'));
     }
         
+    /**
+     * AJAX request doksave
+     *
+     */
+    public function doksaveAction()  
+    {
+        //$valArray = $this->request->getArguments();
+        
+        $inputField = $this->request->getArgument('dokdescrinput1');
+        
+        
+        return 'Input saved: ' . htmlspecialchars($inputField);
+        
+    /*
+        $valArray = $this->request->getArguments();
+               
+        if(array_key_exists('Dokument', $valArray)) {
+            
+            $dokid = $valArray['Dokument']['__identity'];
+            $thisdok = $this->dokumentRepository->findByUid($dokid);
+            $thisdok->setBeschreibung($valArray['Dokument']['beschreibung']);
+            
+            $this->dokumentRepository->update($thisdok);
+            //Daten sofort in die Datenbank schreiben
+            $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+            $persistenceManager->persistAll();
+        }
+        */
+        //$this->redirect($valArray['thisaction'], 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'] ?? 'edit', 'callercontroller' => $valArray['callercontroller'] ?? 'Backend', 'callerpage' => $valArray['callerpage'] ?? '1', 'showdokumente' => '1'));
+    }
+    
     /**
      * action deleteFileBackend
      *

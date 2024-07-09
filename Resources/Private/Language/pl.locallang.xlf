@@ -39,6 +39,7 @@
   
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Moje najwyższe kwalifikacje zawodowe to</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branche"><target>Wskaż sektor, w którym uzyskałeś(-aś) kwalifikacje</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branchekurz"><target>Przemysł</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.erwerbsland"><target>Kraj uzyskania kwalifikacji zawodowych</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.dauer_berufsausbildung"><target>Czas trwania wykształcenia zawodowego</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussjahr"><target>Rok ukończenia</target></trans-unit>

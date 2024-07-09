@@ -21,14 +21,17 @@
 							</f:if>
 						</td>
 						<td>{filesizes.{iter.index}}</td>
-						<f:form id="dokumenteform1" method="post" action="updateBackend" controller="Dokument" arguments="{teilnehmer:teilnehmer, calleraction : calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : thisaction}" name="dokument" object="{dokument}" enctype="multipart/form-data" >
-							<td><f:form.textfield property="beschreibung" value="{dokument.beschreibung}" size="50" /></td>
+						
+						<f:form id="dokumenteform1">
+							<td><f:form.textfield id="dokdescrinput1" property="beschreibung" value="{dokument.beschreibung}" size="50" /></td>
+							
 							<td><f:form.button type="submit" class="linkbuttons updatebutton" id="savebutton1" >Kurzbeschreibung speichern</f:form.button></td>
 						</f:form>						
 						<td><f:link.action class="iconbuttons" action="deleteFileBackend" controller="Dokument" arguments="{dokument : dokument, teilnehmer : teilnehmer, calleraction : calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : thisaction}" onclick="return confirm('Wirklich löschen?');" ><img src="/typo3conf/ext/iqtp13db/Resources/Public/Icons/delete-640.png" width="32" height="32" alt="Löschen" /></f:link.action></td>
 					</tr>		
 			</f:for>
 		</table>
+		<div id="response"></div>
 		<div style="font-size: 0.8rem;">Speichergröße: 30 MB, Auslastung: {speicherbelegung} %</div>
 	</f:then></f:if>
 	
