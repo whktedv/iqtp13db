@@ -293,29 +293,7 @@ $(document).ready(function() {
 		.catch( err => {
 			//console.error( err.stack );
 		} );
-	
-	
-	// ******************** AJAX Calls ***************************
-
-    $(document).on('blur', '#dokdescrinput1', function () {
-    	var inputField = document.getElementById('dokdescrinput1');
-    	var inputValue = inputField.value;
-
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'index.php?eID=doksave', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                document.getElementById('response').innerHTML = xhr.responseText;
-            }
-        };
-
-        xhr.send('dokdescrinput1=' + encodeURIComponent(inputValue));
-	});
-   
-	// ***********************************************************
-	
+		
 });
 
     
@@ -382,3 +360,24 @@ function showFolgekontakt(uid) {
     $('table#fkt' + uid).toggle();
 }
 
+function asyncupdatedokdescription(inputField, uidField) {
+	var inputValue = inputField.value;
+	var uidValue = uidField.value;
+	
+	var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'index.php?eID=doksave', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+    xhr.onreadystatechange = function() {			
+        if (xhr.readyState == 4 && xhr.status == 200) {
+			//var jsonresponse = JSON.parse(xhr.responseText);
+            //document.getElementById('response').innerHTML = jsonresponse.message;
+			document.getElementById('response').innerHTML = "";
+        }
+		if (xhr.readyState == 4 && xhr.status == 500) {
+			document.getElementById('response').innerHTML = "<span style='color: red; font-weight: bold;'>Error " + xhr.status + " - Beschreibung konnte nicht gespeichert werden. Sollte dieser Fehler erneut erscheinen, bitte Support kontaktieren.</span>";
+		}
+    };
+
+    xhr.send('dokdescr=' + encodeURIComponent(inputValue) + '&dokuid=' + encodeURIComponent(uidValue));
+}

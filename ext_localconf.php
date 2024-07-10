@@ -65,7 +65,7 @@ call_user_func(
             );
         
         // Register eID call
-        $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['doksave'] = \Ud\Iqtp13db\Controller\DokumentController::class . '::doksaveAction';
+        $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['doksave'] = \Ud\Iqtp13db\Controller\RequestController::class . '::doksaveEidAction';
         
         
         // Only include page.tsconfig if TYPO3 version is below 12 so that it is not imported twice.

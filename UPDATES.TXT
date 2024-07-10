@@ -92,3 +92,7 @@ Neu:
 - Anpassung Feld Abschlussart bei Abschluss, um diese besser differenzieren zu können
 - Erweiterung/Korrekturen Übersetzungen
 - Optimierungen für responsive Ansicht auf Smartphones
+- Feld "Kurzbeschreibung Dokument" wird nun automatisch gespeichert
+- Mehrere Beratungsstellen je User-Account möglich - Auswahl der Beratungsstelle über Dropdown-Menü in Modul Übersicht
+- kleinere Verbesserungen an diversen Stellen
+- Bugfixes

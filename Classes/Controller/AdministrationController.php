@@ -90,11 +90,13 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
             $this->usergroup = $this->userGroupRepository->findByIdentifier($this->user['usergroup']);
             
             if($this->usergroup != NULL) {
-                $userniqidbstelle = $this->usergroup->getNiqbid();
+                $userniqidbstelle = $this->usergroup->getNiqbid() ?? $standardniqidberatungsstelle;
                 $userbccmail = $this->usergroup->getGeneralmail();
             }
             
-            $this->niqbid = $userniqidbstelle == '' ? $standardniqidberatungsstelle : $userniqidbstelle;
+            $sesniqbid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'currentusergroup') ?? '';
+            $this->niqbid = $sesniqbid != '' ? $sesniqbid : $userniqidbstelle;    
+            
             $this->groupbccmail = $userbccmail == '' ? $standardbccmail : $userbccmail;
         } else {
             $this->groupbccmail = $this->settings['standardbccmail'];
@@ -114,8 +116,31 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         $bundeslandselected = $valArray['bundeslandauswahl'] ?? '';
         $staatselected = $valArray['filterstaat'] ?? '%';
         
-        // Admin Gruppenwechsel Beratungsstelle
+        
         $backenduser = $this->beraterRepository->findByUid($this->user['uid']);
+        $backendusergroups = array();
+        $backendusergroups = $backenduser->getUsergroup();
+        $niqbidaktuellegruppe = $this->usergroup->getNiqbid();
+        if(isset($valArray['remove'])) {
+            $thisberatungsstelle = $backenduser->getUsergroup()[0]->getTitle();
+            $thisniqbid = $backenduser->getUsergroup()[0]->getNiqbid();
+            $niqbidgruppeselected = $thisniqbid;
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'currentusergroup', $niqbidgruppeselected);
+            $this->niqbid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'currentusergroup');
+        }elseif(isset($valArray['bstellen']) && $valArray['bstellen'] != '') {
+            $niqbidgruppeselected = $valArray['bstellen'];
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'currentusergroup', $niqbidgruppeselected);
+            $this->niqbid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'currentusergroup');
+        }
+        $thisgroup = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $this->niqbid);
+        $thisberatungsstelle = $thisgroup[0]->getTitle();
+        
+                
+        /* Admin Gruppenwechsel Beratungsstelle
+        $backenduser = $this->beraterRepository->findByUid($this->user['uid']);
+        $backendusergroups = array();
+        $backendusergroups = $backenduser->getUsergroup();
+        $niqbidaktuellegruppe = $this->usergroup->getNiqbid();
         if(isset($valArray['remove'])) {
             $backenduser->removeUsergroup($backenduser->getUsergroup()[1]);
             $this->beraterRepository->update($backenduser);
@@ -138,7 +163,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
             $thisberatungsstelle = $currentbackendusergroup->getTitle();
             $niqbidselected = $thisniqbid;
         }
-        //
+        */
         
         $allebundeslaender = $this->userGroupRepository->findAllBundeslaender();
         
@@ -481,9 +506,8 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 'statsgesamtfertigberaten' => $statsgesamtfertigberaten,
                 'statsgesamtarchiviert' => $statsgesamtarchiviert,
                 'neuanmeldungen7tage' => $neuanmeldungen7tage,
-                'niqbidselected' => $niqbidselected,
                 'beratungsstelle' => $thisberatungsstelle,
-                'niqbid' => $thisniqbid,
+                'niqbid' => $this->niqbid,
                 'letzteanmeldungen' => $letzteanmeldungen,
                 'allebundeslaender' => $allebundeslaender,
                 'bundeslandselected' => $bundeslandselected,

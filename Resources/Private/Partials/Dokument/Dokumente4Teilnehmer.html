@@ -7,7 +7,6 @@
 				<th>Dateigröße</th>
 				<th>Kurzbeschreibung</th>
 				<th></th>
-				<th></th>
 			</thead>
 			
 			<f:for each="{dokumente}" as="dokument" iteration="iter">
@@ -23,9 +22,17 @@
 						<td>{filesizes.{iter.index}}</td>
 						
 						<f:form id="dokumenteform1">
-							<td><f:form.textfield id="dokdescrinput1" property="beschreibung" value="{dokument.beschreibung}" size="50" /></td>
+							<f:form.hidden id="dokid{iter.index}" name="dokid{iter.index}" value="{dokument.uid}" />
+							<td><f:form.textfield id="dokdescrinput{iter.index}" name="dokdescrinput{iter.index}" property="beschreibung" value="{dokument.beschreibung}" size="50" /></td>
 							
-							<td><f:form.button type="submit" class="linkbuttons updatebutton" id="savebutton1" >Kurzbeschreibung speichern</f:form.button></td>
+							<script type="text/javascript">
+								<f:format.raw>
+									$(document).on('blur', '#dokdescrinput{iter.index}', function () {
+										asyncupdatedokdescription(document.getElementById('dokdescrinput{iter.index}'),document.getElementById('dokid{iter.index}'));
+									});
+								</f:format.raw>									
+							</script>
+
 						</f:form>						
 						<td><f:link.action class="iconbuttons" action="deleteFileBackend" controller="Dokument" arguments="{dokument : dokument, teilnehmer : teilnehmer, calleraction : calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : thisaction}" onclick="return confirm('Wirklich löschen?');" ><img src="/typo3conf/ext/iqtp13db/Resources/Public/Icons/delete-640.png" width="32" height="32" alt="Löschen" /></f:link.action></td>
 					</tr>		
@@ -34,7 +41,7 @@
 		<div id="response"></div>
 		<div style="font-size: 0.8rem;">Speichergröße: 30 MB, Auslastung: {speicherbelegung} %</div>
 	</f:then></f:if>
-	
+  
 	<f:form id="dokumenteform2" method="post" action="saveFileBackend" name="dokument" controller="Dokument" arguments="{teilnehmer:teilnehmer, calleraction : calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : thisaction}" object="{dokument}" enctype="multipart/form-data" ><br />
 		<div class="tp13_formdiv100 dokupload">
 				<f:form.upload name="file" />

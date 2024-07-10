@@ -5,11 +5,11 @@
 </noscript>
 
 <div class="tx-iqtp13db">
-	<f:security.ifHasRole role="2">
+	<f:if condition="{anzbstellen} > 1">
 		<div class="uebersicht-beratungsstelle-admin">
 			<div><span class="label-beratungsstelle">Beratungsstelle:</span> <span class="value-beratungsstelle">{beratungsstelle}</span></div>
 			<div><span class="label-beratungsstelle">Beratungsstellen-ID:</span> <span class="value-beratungsstelle">{niqbid}</span></div>
-		</div>
-	</f:security.ifHasRole>
+		</div>	
+	</f:if>
 	<f:render section="main" />
 </div>

@@ -9,9 +9,9 @@
 <f:flashMessages />
 <br />
 <h1>Daten Ratsuchende exportieren</h1>
-Nach Klick auf den Button werden die Daten in eine Excel-Datei zum Download exportiert.<br>
-Das Datum von/bis bezieht sich bei den Optionen Angemeldet und Gelöscht auf das Bestätigungsdatum der Anmeldung und bei der Option Archiviert auf das Datum 'Erstberatung abgeschlossen'.<br>
-
+Nach Klick auf den Button werden die Daten in eine Excel-Datei zum Download exportiert. Das Datum von/bis bezieht sich bei den Optionen Angemeldet und Gelöscht auf das Bestätigungsdatum der Anmeldung, bei der Option Erstberatungen auf das Datum 'Datum Erstberatung' und bei der Option Beratung fertig auf das Datum 'Erstberatung abgeschlossen'.<br>
+Bitte beachten Sie, dass die im Export auf dem zweiten Tabellenblatt angegebenen Folgekontakte die Folgekontakte der auf dem ersten Tabellenblatt angegebenen Ratsuchenden sind und <b>nicht</b> die Folgekontakte, die im gewählten Zeitraum stattgefunden haben.<br>
+<strong>Ein Export der Folgekontakte über einen bestimmten Zeitraum ist derzeit noch nicht möglich.</strong><br>
 <div class="filterframe">
 	<f:form class="exportfilterform" id="exportfilterform" method="post" controller="Backend" action="export" name="export" >
 	<div class="filterframe-inner">

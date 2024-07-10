@@ -46,7 +46,7 @@ require_once(Environment::getPublicPath() . '/' . 'typo3conf/ext/iqtp13db/Resour
 class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
     
-    protected $generalhelper, $usergroup, $niqbid;
+    protected $generalhelper, $usergroup, $niqbid, $beratungsstellenname, $anzbstellen;
     
     protected $userGroupRepository;
     protected $teilnehmerRepository;
@@ -84,13 +84,10 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      */
     public function initializeAction()
     {
-        
         /*
          * PropertyMapping für die multiple ankreuzbaren Checkboxen.
          * Annehmen eines String-Arrays, das im Setter und Getter des Models je per implode/explode wieder in Strings bzw. Array (of Strings) konvertiert wird
-         */
-        
-        
+         */        
         if ($this->arguments->hasArgument('teilnehmer')) {
             $this->arguments->getArgument('teilnehmer')->getPropertyMappingConfiguration()->allowProperties('sonstigerstatus');
             $this->arguments->getArgument('teilnehmer')->getPropertyMappingConfiguration()->setTargetTypeForSubProperty('sonstigerstatus', 'array');
@@ -113,8 +110,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $this->arguments->getArgument('teilnehmer')->getPropertyMappingConfiguration()->allowProperties('wieberaten');
             $this->arguments->getArgument('teilnehmer')->getPropertyMappingConfiguration()->setTargetTypeForSubProperty('wieberaten', 'array');
             
-        }
-             
+        }             
         /* Propertymapping bis hier */
         
         $this->generalhelper = new \Ud\Iqtp13db\Helper\Generalhelper();
@@ -132,12 +128,20 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $standardbccmail = $this->settings['standardbccmail'];
             
             $ugroupsarray = explode(",",$this->user['usergroup']);
-            $this->usergroup = $this->userGroupRepository->findByIdentifier(array_pop($ugroupsarray));
+            
+            $this->anzbstellen = count($ugroupsarray);
+            
+            $thisusrgrpid = array_pop($ugroupsarray);
+            $this->usergroup = $this->userGroupRepository->findByIdentifier($thisusrgrpid);
             
             if($this->usergroup != NULL) {
-                $userniqidbstelle = $this->usergroup->getNiqbid();
+                $userniqidbstelle = $this->usergroup->getNiqbid() ?? $standardniqidberatungsstelle;
             }
-            $this->niqbid = $userniqidbstelle == '' ? $standardniqidberatungsstelle : $userniqidbstelle;
+            //$this->niqbid = $userniqidbstelle == '' ? $standardniqidberatungsstelle : $userniqidbstelle;
+            $sesniqbid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'currentusergroup') ?? '';
+            $this->niqbid = $sesniqbid != '' ? $sesniqbid : $userniqidbstelle;
+            $thisgroup = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $this->niqbid);            
+            $this->beratungsstellenname = $thisgroup[0]->getTitle();
         } else {
             // FEHLER oder Frontend für Ratsuchende
         }
@@ -194,10 +198,24 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function statusAction(int $currentPage = 1)
     {
         $valArray = $this->request->getArguments();
-       
-        $jahrselected = $valArray['jahrauswahl'] ?? 0;
         
-        //DebuggerUtility::var_dump($valArray);
+        // Gruppenwechsel Beratungsstelle, wenn ein User mehreren Beratungsstellen zugeordnet ist
+        $backenduser = $this->beraterRepository->findByUid($this->user['uid']);
+        $backendusergroups = array();
+        $backendusergroups = $backenduser->getUsergroup();
+        $niqbidaktuellegruppe = $this->usergroup->getNiqbid();        
+        if(isset($valArray['bstellen']) && $valArray['bstellen'] != '') {            
+            $niqbidgruppeselected = $valArray['bstellen'];            
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'currentusergroup', $niqbidgruppeselected);
+            $this->niqbid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'currentusergroup');
+        }
+        
+        // Gruppenwechsel bis hier 
+        
+        $thisgroup = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $this->niqbid);
+        $this->beratungsstellenname = $thisgroup[0]->getTitle();
+        
+        $jahrselected = $valArray['jahrauswahl'] ?? 0;
                
         $monatsnamen = array();
         for($i=1;$i<=12;$i++) {
@@ -356,11 +374,13 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'pagination' => $pagination,
                 'pages' => range(1, $pagination->getLastPageNumber()),
                 'historie' => $historie,
-                'beratungsstelle' => $this->usergroup->getTitle(),
+                'beratungsstelle' => $this->beratungsstellenname,
                 'niqbid' => $this->niqbid,
                 'username' => $this->user['username'],
                 'neuanmeldungen7tage' => $neuanmeldungen7tage,
-                'bstellevonplz' => $plzgroup ?? ''
+                'bstellevonplz' => $plzgroup ?? '',
+                'backendusergroups' => $backendusergroups,
+                'anzbstellen' => $this->anzbstellen
             ]
             );
     }
@@ -461,9 +481,10 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'orderchar' => $orderchar,
                 'staatenarr' => $staatenarr,
                 'plzberatungsstelle4tn' => $plzberatungsstelle4tn,
-                'beratungsstelle' => $this->usergroup->getTitle(),
+                'beratungsstelle' => $this->beratungsstellenname,
                 'niqbid' => $this->niqbid,
-                'alleberater' => $alleberater
+                'alleberater' => $alleberater,
+                'anzbstellen' => $this->anzbstellen
             ]);
     }
     
@@ -569,9 +590,10 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'orderchar' => $orderchar,
                 'staatenarr' => $staatenarr,
                 'berufe' => $berufeliste,
-                'beratungsstelle' => $this->usergroup->getTitle(),
+                'beratungsstelle' => $this->beratungsstellenname,
                 'niqbid' => $this->niqbid,
-                'alleberater' => $alleberater
+                'alleberater' => $alleberater,
+                'anzbstellen' => $this->anzbstellen
             ]
             );
     }
@@ -676,9 +698,10 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'orderchar' => $orderchar,
                 'staatenarr' => $staatenarr,
                 'berufe' => $berufeliste,
-                'beratungsstelle' => $this->usergroup->getTitle(),
+                'beratungsstelle' => $this->beratungsstellenname,
                 'niqbid' => $this->niqbid,
-                'alleberater' => $alleberater
+                'alleberater' => $alleberater,
+                'anzbstellen' => $this->anzbstellen
             ]
             );
     }
@@ -755,8 +778,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'orderby' => $orderby,
                 'orderchar' => $orderchar,
                 'staatenarr' => $staatenarr,
-                'beratungsstelle' => $this->usergroup->getTitle(),
-                'niqbid' => $this->niqbid
+                'beratungsstelle' => $this->beratungsstellenname,
+                'niqbid' => $this->niqbid,
+                'anzbstellen' => $this->anzbstellen
             ]
             );
     }
@@ -853,11 +877,12 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'calleraction' => $valArray['searchparameter']['action'] ?? 'listangemeldet',
                 'callercontroller' => 'Backend',
                 'staatenarr' => $staatenarr,
-                'beratungsstelle' => $this->usergroup->getTitle(),
+                'beratungsstelle' => $this->beratungsstellenname,
                 'niqbid' => $this->niqbid,
                 'berufe' => $berufeliste,
                 'searchparams' => $searchparams,
-                'alleteilnehmer' => $alleteilnehmer
+                'alleteilnehmer' => $alleteilnehmer,
+                'anzbstellen' => $this->anzbstellen
             ]
         );
     }
@@ -1139,8 +1164,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                         $rows[$x]['Abschluss'.$y.' Referenzberufzugewiesen'] = $abreferenzberufzugewiesen == '' ? '-' : $arrberufe[$abreferenzberufzugewiesen];
                         $rows[$x]['Abschluss'.$y.' SonstigerBeruf'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'sonstigerberuf');
                         $rows[$x]['Abschluss'.$y.' NichtreglementierterBeruf'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'nregberuf');
-                        
-                        
+                                                
                         //TODO: wenn alte Variante (beide Angaben möglich mit Komma getrennt), dann hier alte Variante ODER die Datenbank anpassen, sodass bei allen jeweils der höchste Abschluss angezeigt wird.
                         // Das Auslesen des Feldes "abschlussart" muss in allen Controllern und dem Model angepasst werden
                         //$rows[$x]['Abschluss'.$y.' Abschlussart'] = '';
@@ -1295,7 +1319,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $writer->setAuthor('IQ Webapp');
     
                 $writer->writeSheet($rows, 'Ratsuchende', $headerblatt1);
-                $writer->writeSheet($rowsfk, 'Folgekontakte', $headerblatt2);
+                $writer->writeSheet($rowsfk, 'Zugehörige Folgekontakte', $headerblatt2);
                 
                 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
                 header('Content-Disposition: attachment;filename="'.$filename.'"');
@@ -1318,7 +1342,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     'filterberater' => $beraterselected,
                     'filterlandkreis' => $landkreisselected,
                     'filterberuf' => $berufselected,
-                    'filteron' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus')
+                    'filteron' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus')                    
                 ]
                 );
         } else {
@@ -1326,8 +1350,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $staatenarr[$staat->getStaatid()] = $staat->getTitel();
             }
             
-            //$filtervon = isset($valArray['filtervon']) ? $valArray['filtervon'] : '';
-            //$filterbis = isset($valArray['filterbis']) ? $valArray['filterbis'] : '';
             $this->view->assignMultiple(
                 [
                     'anzgesamt' => $anzteilnehmers,
@@ -1338,7 +1360,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     'filteron' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus'),
                     'filtervon' => $filtervon,
                     'filterbis' => $filterbis,
-                    'beratungsstelle' => $this->usergroup->getTitle(),
+                    'beratungsstelle' => $this->beratungsstellenname,
                     'niqbid' => $this->niqbid,
                     'allebundeslaender' => $allebundeslaender,
                     'filterbundesland' => $bundeslandselected,
@@ -1349,7 +1371,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     'gewlandkreise' => $arrlandkreise,
                     'filterberater' => $beraterselected,
                     'filterlandkreis' => $landkreisselected,
-                    'filterberuf' => $berufselected
+                    'filterberuf' => $berufselected,
+                    'anzbstellen' => $this->anzbstellen
                 ]
                 );
         }
@@ -1436,14 +1459,16 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'abschluesse' => $abschluesse,
                 'showabschluesse' => $valArray['showabschluesse'] ?? '0',
                 'showdokumente' => $valArray['showdokumente'] ?? '0',
-                'niqbid' => $backenduser->getUsergroup()[0]->getNiqbid(),
+                'beratungsstelle' => $this->beratungsstellenname,
+                'niqbid' => $this->niqbid,
                 'staaten' => $staaten,
                 'berufe' => $berufeliste,
                 'filesizes' => $filesizes,
                 'speicherbelegung' => $speicherbelegung,
                 'searchparams' => $searchparams ?? '',
                 'abschlussartarr' => $abschlussartarr,
-                'brancheunterkat' => $brancheunterkat
+                'brancheunterkat' => $brancheunterkat,
+                'anzbstellen' => $this->anzbstellen
             ]
             );
     }
@@ -1535,7 +1560,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'urleinwilligung' => $urleinwilligung,
                 'newnacherfassung' => $valArray['newnacherfassung'] ?? '0',
                 'newanonymeberatung' => $valArray['newanonymeberatung'] ?? '0',
-                'niqbid' => $backenduser->getUsergroup()[0]->getNiqbid()
+                'beratungsstelle' => $this->beratungsstellenname,
+                'niqbid' => $this->niqbid,
+                'anzbstellen' => $this->anzbstellen
             ]
             );
     }
@@ -1773,10 +1800,12 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'edittstampfield' => $edittstampfield ?? '0',
                 'urleinwilligung' => $urleinwilligung,
                 'newnacherfassung' => $nacherfassung,
-                'niqbid' => $teilnehmer->getNiqidberatungsstelle(),
+                'beratungsstelle' => $this->beratungsstellenname,
+                'niqbid' => $this->niqbid,
                 'searchparams' => $searchparams ?? '',
                 'abschlussartarr' => $abschlussartarr,
-                'brancheunterkat' => $brancheunterkat
+                'brancheunterkat' => $brancheunterkat,
+                'anzbstellen' => $this->anzbstellen
             ]
             );
     }
@@ -2404,9 +2433,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'pages' => range(1, $pagination->getLastPageNumber()),
                 'berater' => $berater,
                 'thisuser' => $this->user,
-                'niqbid' => $this->usergroup->getNiqbid(),
+                'beratungsstelle' => $this->beratungsstellenname,
+                'niqbid' => $this->niqbid,
                 'custominfotextstart' => $this->usergroup->getCustominfotextstart() ?? '',
-                'custominfotextmail'=> $this->usergroup->getCustominfotextmail() ?? ''
+                'custominfotextmail'=> $this->usergroup->getCustominfotextmail() ?? '',
+                'anzbstellen' => $this->anzbstellen
             ]
         );
     }

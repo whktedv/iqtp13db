@@ -5,6 +5,25 @@
 <f:layout name="DefaultBackend" />
  
 <f:section name="main">
+
+<f:security.ifHasRole role="Webapp Admin">
+<f:then>
+</f:then>
+<f:else>
+	<f:if condition="{anzbstellen} > 1">
+		<h1>Beratungsstellen-Ansicht wechseln</h1>
+		<div class="beratungsstellenwechsel">
+			<f:form method="post" controller="Backend" action="status" name="switchberatungsstelle" enctype="multipart/form-data" >
+				<label for="beratungsstellenauswahl">
+					Auswahl Beratungsstelle
+				</label>
+				<f:form.select name="bstellen" id="selectbstelle" options="{backendusergroups}" optionValueField="niqbid" optionLabelField="title" prependOptionLabel="-bitte wählen-" prependOptionValue="" value="{niqbid}"/>				
+			</f:form>
+		</div>
+	</f:if>
+</f:else>
+</f:security.ifHasRole>
+
 <div class="uebersicht-beratungsstelle">
 	<div><span class="label-beratungsstelle">Beratungsstelle:</span> <span class="value-beratungsstelle">{beratungsstelle}</span></div>
 	<div><span class="label-beratungsstelle">Beratungsstellen-ID:</span> <span class="value-beratungsstelle">{niqbid}</span></div>

@@ -10,7 +10,7 @@ use Ud\Iqtp13db\Domain\Repository\BeraterRepository;
  */
 class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
-    protected $niqbid, $usergroup;
+    protected $usergroup;
     protected $userGroupRepository;
     protected $beraterRepository;
     
@@ -34,10 +34,7 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         
         if($this->user != NULL) {
-            $standardniqidberatungsstelle = $this->settings['standardniqidberatungsstelle'];
             $this->usergroup = $this->userGroupRepository->findByUid($this->user['usergroup']);
-            $userniqidbstelle = $this->usergroup->getNiqbid();
-            $this->niqbid = $userniqidbstelle == '' ? $standardniqidberatungsstelle : $userniqidbstelle;
         }
         
     }
@@ -99,7 +96,6 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $berater->setPassword(password_hash($berater->getPassword(), PASSWORD_ARGON2I));
                 
         $this->beraterRepository->update($berater);
-        //$this->redirect('list');
         $this->redirect('editsettings', 'Backend', 'Iqtp13db', null);
     }
     
@@ -113,7 +109,6 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     {
         $this->addFlashMessage('Berater*in gelöscht.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
         $this->beraterRepository->remove($berater);
-        //$this->redirect('list');
         $this->redirect('editsettings', 'Backend', 'Iqtp13db', null);
     }   
     

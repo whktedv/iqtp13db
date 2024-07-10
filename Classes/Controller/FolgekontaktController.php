@@ -27,7 +27,7 @@ use Ud\Iqtp13db\Domain\Repository\AbschlussRepository;
 class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
     
-    protected $generalhelper, $niqinterface, $niqbid, $niqapiurl, $usergroup;
+    protected $generalhelper, $usergroup;
     
     protected $userGroupRepository;
     protected $teilnehmerRepository;
@@ -58,14 +58,8 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         }
         
         if($this->user != NULL) {
-            $standardniqidberatungsstelle = $this->settings['standardniqidberatungsstelle'];
             $this->usergroup = $this->userGroupRepository->findByIdentifier($this->user['usergroup']);
-            $userniqidbstelle = $this->usergroup->getNiqbid();
-            $this->niqbid = $userniqidbstelle == '' ? $standardniqidberatungsstelle : $userniqidbstelle;
         }
-        
-        $this->niqapiurl = $this->settings['niqapiurl'];
-        $this->niqinterface = new \Ud\Iqtp13db\Helper\NiqInterface();
     }
     
     /**

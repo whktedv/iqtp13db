@@ -29,7 +29,7 @@ use Ud\Iqtp13db\Domain\Repository\BrancheRepository;
  */
 class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
-    protected $generalhelper, $niqinterface, $niqapiurl, $allusergroups, $usergroup, $niqbid, $groupbccmail;
+    protected $generalhelper, $allusergroups, $usergroup, $groupbccmail;
     
     protected $teilnehmerRepository;
     protected $abschlussRepository;
