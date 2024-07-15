@@ -40,7 +40,7 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 	    if($jahr == 0) {
 	        $query->statement("SELECT MONTH(STR_TO_DATE(a.datum, '%d.%m.%Y')) as monat, count(*) as anzahl
                 FROM tx_iqtp13db_domain_model_folgekontakt as a
-                LEFT JOIN tx_iqtp13db_domain_model_teilnehmer as b ON a.teilnehmer = b.uid 
+                INNER JOIN tx_iqtp13db_domain_model_teilnehmer as b ON a.teilnehmer = b.uid 
                 LEFT JOIN fe_groups as g on b.niqidberatungsstelle = g.niqbid 
                 WHERE YEAR(STR_TO_DATE(a.datum, '%d.%m.%Y')) = YEAR(CURRENT_DATE())
                 AND a.deleted = 0 AND niqidberatungsstelle LIKE '$niqbid' AND g.bundesland LIKE '$bundesland' AND erste_staatsangehoerigkeit LIKE '$staat'
@@ -48,7 +48,7 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 UNION
                 SELECT MONTH(STR_TO_DATE(a.datum, '%d.%m.%Y')) as monat, count(*) as anzahl
                 FROM tx_iqtp13db_domain_model_folgekontakt as a
-                LEFT JOIN tx_iqtp13db_domain_model_teilnehmer as b ON a.teilnehmer = b.uid 
+                INNER JOIN tx_iqtp13db_domain_model_teilnehmer as b ON a.teilnehmer = b.uid 
                 LEFT JOIN fe_groups as g on b.niqidberatungsstelle = g.niqbid 
                 WHERE YEAR(STR_TO_DATE(a.datum, '%d.%m.%Y')) = YEAR(CURRENT_DATE())-1 AND MONTH(STR_TO_DATE(a.datum, '%d.%m.%Y')) > MONTH(CURRENT_DATE())
                 AND a.deleted = 0 AND niqidberatungsstelle LIKE '$niqbid' AND g.bundesland LIKE '$bundesland' AND erste_staatsangehoerigkeit LIKE '$staat'
@@ -56,7 +56,7 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 	    } else {
 	        $query->statement("SELECT MONTH(STR_TO_DATE(a.datum, '%d.%m.%Y')) as monat, count(*) as anzahl
                 FROM tx_iqtp13db_domain_model_folgekontakt as a
-                LEFT JOIN tx_iqtp13db_domain_model_teilnehmer as b ON a.teilnehmer = b.uid 
+                INNER JOIN tx_iqtp13db_domain_model_teilnehmer as b ON a.teilnehmer = b.uid 
                 LEFT JOIN fe_groups as g on b.niqidberatungsstelle = g.niqbid 
                 WHERE YEAR(STR_TO_DATE(a.datum, '%d.%m.%Y')) = $jahr
                 AND a.deleted = 0 AND niqidberatungsstelle LIKE '$niqbid' AND g.bundesland LIKE '$bundesland' AND erste_staatsangehoerigkeit LIKE '$staat'
@@ -93,6 +93,38 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 	    
 	    $query = $query->execute();
 	    return $query;
+	}
+	
+	/**
+	 *
+	 */
+	public function fksearch4export($filtervon, $filterbis, $niqbid, $bundesland, $staat, $berater, $landkreis, $beruf)
+	{
+	    
+	    $niqbid = $niqbid == '12345' ? '%' : $niqbid; // Admin? dann Beratungsstelle ignorieren
+	    
+	    $query = $this->createQuery();
+	    
+	    $sql = "SELECT * FROM tx_iqtp13db_domain_model_folgekontakt as f
+                INNER JOIN tx_iqtp13db_domain_model_teilnehmer as t ON f.teilnehmer = t.uid
+                LEFT JOIN tx_iqtp13db_domain_model_abschluss as a ON f.teilnehmer = a.teilnehmer
+                LEFT JOIN fe_groups as b on t.niqidberatungsstelle = b.niqbid
+                LEFT JOIN tx_iqtp13db_domain_model_ort o ON t.plz = o.plz ";
+	    $sql .= "WHERE
+                STR_TO_DATE(f.datum, '%d.%m.%Y') BETWEEN STR_TO_DATE('$filtervon', '%d.%m.%Y') AND STR_TO_DATE('$filterbis', '%d.%m.%Y')
+                AND niqidberatungsstelle LIKE '$niqbid' AND t.hidden = 0 AND t.deleted = 0";
+                if($bundesland != '%') $sql .= " AND b.bundesland LIKE '$bundesland'";
+                if($staat != '%') $sql .= " AND t.erste_staatsangehoerigkeit LIKE '$staat'";
+                if($berater != '%') $sql .= " AND t.berater LIKE '$berater'";
+                if($landkreis != '%') $sql .= " AND o.landkreis LIKE '$landkreis'";
+                if($beruf != '%') $sql .= " AND a.referenzberufzugewiesen LIKE '$beruf'";
+        $sql .= " GROUP BY t.uid ORDER BY f.datum ASC LIMIT 500";
+                  
+        //(\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($sql);
+        //die;
+        $query->statement($sql);
+        
+        return $query->execute();
 	}
 	
 }

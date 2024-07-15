@@ -857,7 +857,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $summeberatungsdauer[$teilnehmer->getUid()] = str_replace('.',',',floatval(str_replace(',','.',$teilnehmer->getBeratungsdauer())) + $summebdauerfk);
             }
         }
-        DebuggerUtility::var_dump($valArray);
+        //DebuggerUtility::var_dump($valArray);
         
         $berufeliste = $this->berufeRepository->findAllOrdered('de');
         $staaten = $this->staatenRepository->findByLangisocode('de');
@@ -949,9 +949,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $arrlandkreise = array();
         $arrlandkreise = $this->ortRepository->findLandkreiseByBundesland($bundeslandselected);
-        
-        //DebuggerUtility::var_dump($arrlandkreise);
-        
+               
         $arraufenthaltsstatus = $this->settings['aufenthaltsstatus'];
         $arrberatungsart = $this->settings['beratungsart'];
         $arrberatungsformfolgeberatung = $this->settings['beratungsformfolgeberatung'];
@@ -993,7 +991,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
          
         // ******************** EXPORT ****************************
-        if (isset($valArray['export']) && $fberatungsstatus != '') {
+        
+        if (isset($valArray['export']) && $fberatungsstatus != '' && $fberatungsstatus != '15') {
             
             if($anzteilnehmers == 0) {
                 $this->addFlashMessage("Keine Einträge, bitte Suchparameter anpassen.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
@@ -1165,16 +1164,15 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                         $rows[$x]['Abschluss'.$y.' SonstigerBeruf'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'sonstigerberuf');
                         $rows[$x]['Abschluss'.$y.' NichtreglementierterBeruf'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'nregberuf');
                                                 
-                        //TODO: wenn alte Variante (beide Angaben möglich mit Komma getrennt), dann hier alte Variante ODER die Datenbank anpassen, sodass bei allen jeweils der höchste Abschluss angezeigt wird.
+                        // wenn alte Variante (beide Angaben möglich mit Komma getrennt), dann hier alte Variante ODER die Datenbank anpassen, sodass bei allen jeweils der höchste Abschluss angezeigt wird.
                         // Das Auslesen des Feldes "abschlussart" muss in allen Controllern und dem Model angepasst werden
                         //$rows[$x]['Abschluss'.$y.' Abschlussart'] = '';
                         //foreach (\TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'abschlussart') as $atn) $rows[$x]['Abschluss'.$y.' Abschlussart'] .= $atn == '' ? '' : $arrabschlussart[$atn]." ";
                         
                         $abschlussart = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'abschlussart');
+                        if(strstr($abschlussart, ',')) $abschlussart = '2';
                         $rows[$x]['Abschluss'.$y.' Abschlussart'] = $abschlussart == '' ? '-' : $arrabschlussart[$abschlussart];
-                        
-                        
-                        
+                   
                         $abbranche = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'branche');
                         $rows[$x]['Abschluss'.$y.' Branche'] = $abbranche == '' ? '-' : $arrbranchen[$abbranche];
                         
@@ -1327,7 +1325,74 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $writer->writeToStdOut();
                 exit;
             }
-        } elseif(isset($valArray['export']) && $valArray['export'] && $fberatungsstatus == '') {
+        }elseif(isset($valArray['export']) && $fberatungsstatus == '15') {
+            
+            // nur Folgekontakte exportieren
+            $folgekontakte = $this->folgekontaktRepository->fksearch4export($filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected, $beraterselected, $landkreisselected, $berufselected);
+            $anzfolgekontakte = count($folgekontakte);
+            
+            if($anzfolgekontakte == 0) {
+                $this->addFlashMessage("Keine Einträge, bitte Suchparameter anpassen.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                $this->view->assignMultiple(
+                    [
+                        'anzgesamt' => $anzfolgekontakte,
+                        'calleraction' => 'export',
+                        'callercontroller' => 'Backend',
+                        'callerpage' => $currentPage,
+                        'filterberatungsstatus' => $fberatungsstatus,
+                        'filterbundesland' => $bundeslandselected,
+                        'filterstaat' => $staatselected,
+                        'filterberater' => $beraterselected,
+                        'filterlandkreis' => $landkreisselected,
+                        'filterreferenzberuf' => $berufselected,
+                        'filteron' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus')
+                    ]
+                    );
+            } else {
+                $rowsfk = array();
+                foreach($folgekontakte as $x => $fk) {
+                    
+                    $beraterfk = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'berater');
+                    $teilnehmerfk = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'teilnehmer');
+                    
+                    $rowsfk[$x]['folgekontaktuid'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'uid');                   
+                    $rowsfk[$x]['teilnehmernachname'] = $teilnehmerfk == NULL ? '-nicht vorhanden-' : \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($teilnehmerfk, 'nachname');
+                    $rowsfk[$x]['teilnehmervorname'] = $teilnehmerfk == NULL ? '-nicht vorhanden-' : \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($teilnehmerfk, 'vorname');
+                    $rowsfk[$x]['datum'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'datum');
+                    if($beraterfk != NULL) $rowsfk[$x]['beraterin'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($beraterfk, 'username');
+                    else $rowsfk[$x]['beraterin'] = '-';
+                    $rowsfk[$x]['notizen'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'notizen');
+                    $bform = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'beratungsform');
+                    $rowsfk[$x]['beratungsform'] = $bform == '-1000' ? '-' : $arrberatungsformfolgeberatung[$bform];
+                    $rowsfk[$x]['beratungsdauer'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'beratungsdauer');
+                }
+                
+                // XLSX
+                $filename = 'export_folgekontakte_'.date('Y-m-d_H-i', time()).'.xlsx';
+                $headerblatt = [
+                    'FolgekontaktUID' => 'string',
+                    'Nachname' => 'string',
+                    'Vorname' => 'string',
+                    'Datum' => 'string',
+                    'BeraterIn' => 'string',
+                    'Notizen' => 'string',
+                    'Beratungsorm' => 'string',
+                    'Beratungsdauer' => 'string'
+                ];
+                
+                $writer = new \XLSXWriter();
+                $writer->setAuthor('IQ Webapp');
+                
+                $writer->writeSheet($rowsfk, 'Folgekontakte', $headerblatt);
+                
+                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                header('Content-Disposition: attachment;filename="'.$filename.'"');
+                header('Cache-Control: max-age=0');
+                $writer->writeToStdOut();
+                exit;
+
+            }
+        }elseif(isset($valArray['export']) && $valArray['export'] && $fberatungsstatus == '') {
             
             $this->addFlashMessage("Bitte Status für Export auswählen.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             $this->view->assignMultiple(
@@ -1349,10 +1414,17 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             foreach($staaten as $staat) {
                 $staatenarr[$staat->getStaatid()] = $staat->getTitel();
             }
-            
+             
+            if($fberatungsstatus == '15') {
+                // nur Folgekontakte exportieren
+                $folgekontakte = $this->folgekontaktRepository->fksearch4export($filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected, $beraterselected, $landkreisselected, $berufselected);
+                $anzgesamt = count($folgekontakte);
+            } else {
+                $anzgesamt = $anzteilnehmers;
+            }
             $this->view->assignMultiple(
                 [
-                    'anzgesamt' => $anzteilnehmers,
+                    'anzgesamt' => $anzgesamt,
                     'calleraction' => 'export',
                     'callercontroller' => 'Backend',
                     'callerpage' => $currentPage,
@@ -1422,6 +1494,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
                 
         $abschluesse = $this->abschlussRepository->findByTeilnehmer($teilnehmer);
+        foreach($abschluesse as $abschl) {
+            if(strstr($abschl->getAbschlussart(), ',')) $abschl->setAbschlussart(2);
+        }
         $historie = $this->historieRepository->findByTeilnehmerOrdered($teilnehmer->getUid());
         $dokumente = $this->dokumentRepository->findByTeilnehmer($teilnehmer);
         $dokumentpfad = $this->generalhelper->sanitizeFileFolderName($teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid(). '/');
@@ -1441,7 +1516,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $berufeliste = $this->berufeRepository->findAll();
         $staaten = $this->staatenRepository->findByLangisocode($isocode);
         $abschlussartarr = $this->settings['abschlussart'];
-        unset($abschlussartarr[2]);
         
         $backenduser = $this->beraterRepository->findByUid($this->user['uid']);
         
@@ -1702,7 +1776,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         
         $abschluesse = $this->abschlussRepository->findByTeilnehmer($teilnehmer);
-        
+        foreach($abschluesse as $abschl) {
+            if(strstr($abschl->getAbschlussart(), ',')) $abschl->setAbschlussart(2);
+        }
         $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
         
         $dokumente = $this->dokumentRepository->findByTeilnehmer($teilnehmer);
@@ -1770,7 +1846,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $nacherfassung = 1;
         }
         $abschlussartarr = $this->settings['abschlussart'];
-        unset($abschlussartarr[2]);
         
         $backenduser = $this->beraterRepository->findByUid($this->user['uid']);
         $brancheunterkat = $this->brancheRepository->findAllUnterkategorie($isocode);

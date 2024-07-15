@@ -64,8 +64,9 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $berufe = $this->berufeRepository->findAllOrdered($isocode);
         $staaten = $this->staatenRepository->findByLangisocode($isocode);
         $abschlussartarr = $this->settings['abschlussart'];
-        unset($abschlussartarr[2]);
         
+        if(strstr($abschluss->getAbschlussart(), ',')) $abschluss->setAbschlussart(2);
+        //DebuggerUtility::var_dump($abschluss);
         $brancheunterkat = $this->brancheRepository->findAllUnterkategorie($isocode);
         $this->view->assign('abschlussartarr', $abschlussartarr);
         $this->view->assign('abschluss', $abschluss);
@@ -188,14 +189,14 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
         }
         $abschlussartarr = $this->settings['abschlussart'];
-        unset($abschlussartarr[2]);
-        
+                
         $brancheokarr = $this->brancheRepository->findAllOberkategorie($isocode);
         foreach($brancheokarr as $brok) {
             $brancheoberkat[$brok['brancheid']] = $brok['titel'];
         }
         $brancheunterkat = $this->brancheRepository->findAllUnterkategorie($isocode);
-                
+            
+        if(strstr($abschluss->getAbschlussart(), ',')) $abschluss->setAbschlussart(2);
         $this->view->assign('abschlussartarr', $abschlussartarr);
         $this->view->assign('abschlussjahre', $abschlussjahre);
         $this->view->assign('teilnehmer', $teilnehmer);             
@@ -203,11 +204,34 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $this->view->assign('calleraction', $valArray['calleraction'] ?? 'edit');
         $this->view->assign('callercontroller', $valArray['callercontroller'] ?? 'Backend');
         $this->view->assign('callerpage', $valArray['callerpage'] ?? '1');
-        $this->view->assign('thisaction', $valArray['thisaction']);
+        $this->view->assign('thisaction', $valArray['thisaction'] ?? '');
         $this->view->assign('berufearr', $berufearr);
         $this->view->assign('staatenarr', $staatenarr);
         $this->view->assign('brancheoberkat', $brancheoberkat);
         $this->view->assign('brancheunterkat', $brancheunterkat);        
+    }
+    
+    /**
+     * action initializeUpdate
+     *
+     * @return void
+     */
+    public function initializeUpdateAction()
+    {
+        $valArray = $this->request->getArguments();
+        if(array_key_exists('abschluss', $valArray)) {
+            if($valArray['abschluss']['abschlussart'] == '2') {
+                $this->addFlashMessage("FEHLER: Abschlussart aktualisieren - alte Angabe nicht mehr möglich.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR); // TODO: Localization
+                $this->redirect('edit', 'Abschluss', null, array('teilnehmer' => $valArray['teilnehmer'], 'abschluss' => $valArray['abschluss']['__identity']));
+            }            
+            
+            if($valArray['abschluss']['branche'] == '') {
+                $this->addFlashMessage("FEHLER: Branche ist Pflichtangabe.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR); // TODO: Localization
+                $this->redirect('edit', 'Abschluss', null, array('teilnehmer' => $valArray['teilnehmer'], 'abschluss' => $valArray['abschluss']['__identity']));
+            }
+        }
+        
+        $this->exists_teilnehmer($this->request->getArguments());
     }
 
     /**
@@ -227,7 +251,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $teilnehmer = $this->teilnehmerRepository->findByUid($valArray['teilnehmer']);
         
         $this->abschlussRepository->update($abschluss);
-        $this->redirect($valArray['thisaction'], 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'], 'showabschluesse' => '1'));
+        $this->redirect($valArray['thisaction'] ?? '', 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'], 'showabschluesse' => '1'));
     }
 
     /**

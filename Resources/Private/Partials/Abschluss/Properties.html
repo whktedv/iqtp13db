@@ -1,7 +1,7 @@
 
 		<div class="tp13_formdivwebapp">
 		  <label><f:translate key="tx_iqtp13db_domain_model_abschluss.abschlussart" />
-		  <span class="niqfield" /></label>
+		  <span class="niqfield" /></label>		  
 			<f:for each="{abschlussartarr}" as="abschlussart" key="wert">
 				{f:if(condition: '{abschluss.abschlussart} == {wert}', then: '<span class="propdat">{abschlussart}</span>')}
 			</f:for>

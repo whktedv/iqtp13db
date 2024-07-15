@@ -535,7 +535,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         
         $cntabschluesse = $this->abschlussRepository->countByTeilnehmer($teilnehmer);
         if(isset($valArray['btnweiter']) && $cntabschluesse == 0) {
-            $this->addFlashMessage(\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('errornoqualification', 'iqtp13db'), '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR); // TODO: Localization
+            $this->addFlashMessage(\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('errornoqualification', 'iqtp13db'), '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR); 
             $this->redirect('anmeldseite2', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
         }        
         

@@ -128,6 +128,7 @@ plugin.tx_iqtp13db.settings {
 		12 = Erstberatungen
 		13 = Beratungen fertig
 		14 = Gelöscht
+		15 = Folgeberatungen
 	}
 	
 	filterberatungsstatus4admin {
