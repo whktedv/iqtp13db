@@ -151,6 +151,7 @@
 	<trans-unit id="errordomainnotvalid"><target>Alan adı bulunamadı, lütfen kontrol edin.</target></trans-unit>
 	<trans-unit id="errortndatanotvalid"><target>Geçersiz veriler, lütfen girilen verileri kontrol edin.</target></trans-unit>
 	<trans-unit id="errornoqualification"><target>En az bir yeterlilik girmelisiniz.</target></trans-unit>
+	<trans-unit id="errornosector"><target>Sektör zorunludur.</target></trans-unit>
     </body>
   </file>
 </xliff>

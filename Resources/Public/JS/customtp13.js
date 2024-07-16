@@ -192,7 +192,10 @@ $(document).ready(function() {
 		$("#overlay").show();
 	  $("#exportfilterform").submit(); 
 	});
-		
+	$('#exportfiltercheckanonym').change(function() {
+			$("#overlay").show();
+		  $("#exportfilterform").submit(); 
+	});
 	
 	// ############ Loading Overlay u.a. bei Submit-Click #############
 	

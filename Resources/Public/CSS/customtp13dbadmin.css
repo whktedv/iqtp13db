@@ -238,10 +238,6 @@ form.filterform select, .exportfilterform select {
 	display: none;
 }
 
-.farbbalken_outer {
-	margin-top: 2rem; 
-}
-
 .navbar-mainnavigation .navbar-brand {
     height: 50px;
 }

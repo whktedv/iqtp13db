@@ -148,6 +148,7 @@
 	<trans-unit id="errordomainnotvalid"><target>Домен не найден, пожалуйста, проверьте.</target></trans-unit>
 	<trans-unit id="errortndatanotvalid"><target>Неверные данные, пожалуйста, проверьте введенные данные.</target></trans-unit>
 	<trans-unit id="errornoqualification"><target>Вы должны ввести хотя бы одну квалификацию.</target></trans-unit>
+	<trans-unit id="errornosector"><target>Сектор является обязательным.</target></trans-unit>
     </body>
   </file>
 </xliff>

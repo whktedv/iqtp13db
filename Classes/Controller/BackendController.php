@@ -897,6 +897,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     {
         $valArray = $this->request->getArguments();
         
+        $fanonym = isset($valArray['filteranonym']) ? $valArray['filteranonym'] : '';
+        
         $current_quarter = ceil(date('n') / 3);
         $first_day_of_this_quarter = date('d.m.Y', strtotime(date('Y').'-'.(($current_quarter*3)-2).'-01'));
         $last_day_of_this_quarter = date('d.m.Y', strtotime(date('Y').'-'.($current_quarter*3).'-'.(date("t",strtotime(date('Y').'-'.($current_quarter*3).'-01')))));
@@ -983,13 +985,13 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         } else {
             $type = 1;
         }
-        
+                
         $anzteilnehmers = 0;
         if($filtervon != '' && $filterbis != '') {
             $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer($type, $del, $filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected, $beraterselected, $landkreisselected, $berufselected);
             $anzteilnehmers = count($teilnehmers);
         }
-         
+        
         // ******************** EXPORT ****************************
         
         if (isset($valArray['export']) && $fberatungsstatus != '' && $fberatungsstatus != '15') {
@@ -1014,6 +1016,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             } else {
                 
                 $rows = array();
+                $rowsanonym = array();
                 $rowsfk = array();
                 $summedauerfk = array();
                 $fkcnt = 0;
@@ -1051,19 +1054,25 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     $rows[$x] = array();
                     $rows[$x]['uid'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'uid');
                     $rows[$x]['verificationDate'] = date('d.m.Y H:i:s', \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'verificationDate'));
+                    $rowsanonym[$x]['verificationDate'] = $rows[$x]['verificationDate'];
                     $rows[$x]['Nachname'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'nachname');
                     $rows[$x]['Vorname'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'vorname');
                     $rows[$x]['PLZ'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'plz');
+                    $rowsanonym[$x]['PLZ'] = $rows[$x]['PLZ'];
                     $rows[$x]['Ort'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'ort');
+                    $rowsanonym[$x]['Ort'] = $rows[$x]['Ort'];
                     $rows[$x]['Email'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'email');
                     $rows[$x]['Telefon'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'telefon');
                     $rows[$x]['Lebensalter'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'lebensalter');
+                    $rowsanonym[$x]['Lebensalter'] = $rows[$x]['Lebensalter'];
                     
                     $tn1staatsangehoerigkeit = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'erste_staatsangehoerigkeit');
                     $rows[$x]['ErsteStaatsangehoerigkeit'] = $tn1staatsangehoerigkeit == '' ? '-' : $arrstaaten[$tn1staatsangehoerigkeit];
+                    $rowsanonym[$x]['ErsteStaatsangehoerigkeit'] = $rows[$x]['ErsteStaatsangehoerigkeit'];
                     
                     $tn2staatsangehoerigkeit = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'zweite_staatsangehoerigkeit');
                     $rows[$x]['ZweiteStaatsangehoerigkeit'] = $tn2staatsangehoerigkeit == '' ? '-' : $arrstaaten[$tn2staatsangehoerigkeit];
+                    $rowsanonym[$x]['ZweiteStaatsangehoerigkeit'] = $rows[$x]['ZweiteStaatsangehoerigkeit'];
                     
                     $wohnsitzdeutschland = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'wohnsitz_deutschland ');
                     if($wohnsitzdeutschland == 1) $wohnsitzdeutschland = 'ja';
@@ -1076,8 +1085,10 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     } else {
                         $rows[$x]['Landkreis'] = '';
                     }
+                    $rowsanonym[$x]['Landkreis'] = $rows[$x]['Landkreis'];
                     
                     $rows[$x]['Einreisejahr'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'einreisejahr');
+                    $rowsanonym[$x]['Einreisejahr'] = $rows[$x]['Einreisejahr'];
                     
                     $wohnsitzneinin = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'wohnsitz_nein_in ');
                     $rows[$x]['WohnsitzNeinIn'] = $wohnsitzneinin == '' ? '-' : $arrstaaten[$wohnsitzneinin];
@@ -1087,9 +1098,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     if($deutschkenntnisse == 2) $deutschkenntnisse = 'nein';
                     if($deutschkenntnisse == -1) $deutschkenntnisse = 'k.a.';
                     $rows[$x]['Deutschkenntnisse'] = $deutschkenntnisse ?? '';
+                    $rowsanonym[$x]['Deutschkenntnisse'] = $rows[$x]['Deutschkenntnisse'];
                     
                     $zertifikatsprachniveau = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'zertifikat_sprachniveau ');
                     $rows[$x]['ZertifikatSprachniveau'] = $zertifikatsprachniveau == '' ? '-' : $arrzertifikatlevel[$zertifikatsprachniveau];
+                    $rowsanonym[$x]['ZertifikatSprachniveau'] = $rows[$x]['ZertifikatSprachniveau'];
                     
                     $rows[$x]['WeitereSprachkenntnisse'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'weiteresprachkenntnisse');
                     
@@ -1106,6 +1119,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     
                     $tngeburtsland = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'geburtsland');
                     $rows[$x]['Geburtsland'] = $tngeburtsland == '' ? '-' : $arrstaaten[$tngeburtsland];
+                    $rowsanonym[$x]['Geburtsland'] = $rows[$x]['Geburtsland'];
                     
                     $tnaufenthaltsstatus = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'aufenthaltsstatus');
                     $rows[$x]['aufenthaltsstatus'] = $tnaufenthaltsstatus == 0 ? '-' : $arraufenthaltsstatus[$tnaufenthaltsstatus];
@@ -1115,6 +1129,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     if($geschlecht == 2) $geschlecht = 'm';
                     if($geschlecht == 3) $geschlecht = 'd';
                     $rows[$x]['Geschlecht'] = $geschlecht;
+                    $rowsanonym[$x]['Geschlecht'] = $rows[$x]['Geschlecht'];
                     
                     $rows[$x]['notizen'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'notizen');
                     
@@ -1146,12 +1161,14 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     $rows[$x]['beratungzuschulabschluss'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungzu');
                     
                     $rows[$x]['AnzFolgekontakte'] = $anzfolgekontakte[$x];
+                    $rowsanonym[$x]['AnzFolgekontakte'] = $rows[$x]['AnzFolgekontakte'];
                     $rows[$x]['sumDauerFolgekontakte'] = str_replace('.', ',', $summedauerfk[$x]);
                     
                     $rows[$x]['kooperationgruppe'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'kooperationgruppe');
                     $rows[$x]['beratungsdauer'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungsdauer');
                     $rows[$x]['beratungdatum'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'beratungdatum');
                     $rows[$x]['erstberatungabgeschlossen'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'erstberatungabgeschlossen');
+                    $rowsanonym[$x]['erstberatungabgeschlossen'] = $rows[$x]['erstberatungabgeschlossen'];
                     $einwilligunginfo = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'einwilligunginfo');
                     if($einwilligunginfo == 1) $rows[$x]['einwilligunginfo'] = 'ja';
                     else $rows[$x]['einwilligunginfo'] = 'nein';
@@ -1161,6 +1178,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                         
                         $abreferenzberufzugewiesen = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'referenzberufzugewiesen');
                         $rows[$x]['Abschluss'.$y.' Referenzberufzugewiesen'] = $abreferenzberufzugewiesen == '' ? '-' : $arrberufe[$abreferenzberufzugewiesen];
+                        $rowsanonym[$x]['Abschluss'.$y.' Referenzberufzugewiesen'] = $rows[$x]['Abschluss'.$y.' Referenzberufzugewiesen'];
                         $rows[$x]['Abschluss'.$y.' SonstigerBeruf'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'sonstigerberuf');
                         $rows[$x]['Abschluss'.$y.' NichtreglementierterBeruf'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'nregberuf');
                                                 
@@ -1172,12 +1190,14 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                         $abschlussart = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'abschlussart');
                         if(strstr($abschlussart, ',')) $abschlussart = '2';
                         $rows[$x]['Abschluss'.$y.' Abschlussart'] = $abschlussart == '' ? '-' : $arrabschlussart[$abschlussart];
+                        $rowsanonym[$x]['Abschluss'.$y.' Abschlussart'] = $rows[$x]['Abschluss'.$y.' Abschlussart'];
                    
                         $abbranche = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'branche');
                         $rows[$x]['Abschluss'.$y.' Branche'] = $abbranche == '' ? '-' : $arrbranchen[$abbranche];
                         
                         $aberwerbsland = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'erwerbsland');
                         $rows[$x]['Abschluss'.$y.' Erwerbsland'] = $aberwerbsland == '' ? '-' : $arrstaaten[$aberwerbsland];
+                        $rowsanonym[$x]['Abschluss'.$y.' Erwerbsland'] = $rows[$x]['Abschluss'.$y.' Erwerbsland'];
                         
                         $rows[$x]['Abschluss'.$y.' Abschlussjahr'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'abschlussjahr');
                         $rows[$x]['Abschluss'.$y.' Ausbildungsort'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'ausbildungsort');
@@ -1188,6 +1208,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                         $rows[$x]['Abschluss'.$y.' Berufserfahrung'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'berufserfahrung');
                         $rows[$x]['Abschluss'.$y.' Wunschberuf'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'wunschberuf');
                         $rows[$x]['Abschluss'.$y.' DeutscherReferenzberuf'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'deutscher_referenzberuf');
+                        $rowsanonym[$x]['Abschluss'.$y.' DeutscherReferenzberuf'] = $rows[$x]['Abschluss'.$y.' DeutscherReferenzberuf'];
                         
                         $abantragstellungerfolgt = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'antragstellungerfolgt');
                         $rows[$x]['Abschluss'.$y.' Antragstellungerfolgt'] = $abantragstellungerfolgt == 0 ? '-' : $arrantragstellungerfolgt[$abantragstellungerfolgt];
@@ -1198,7 +1219,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $bezbstatus = $this->settings['filterberatungsstatus'][$fberatungsstatus];
                 
                 // XLSX
-                $filename = 'export_'.$bezbstatus.'_'.date('Y-m-d_H-i', time()).'.xlsx';
+                
                 $headerblatt1 = [
                     'UID' => 'string',
                     'Bestätigungsdatum' => 'string',
@@ -1313,11 +1334,51 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     'Beratungsform' => 'string',
                     'Beratungsdauer' => 'string',
                 ];
+                
+                $headerblattanonym = [
+                    'Bestätigungsdatum' => 'string',
+                    'PLZ' => 'string',
+                    'Ort' => 'string',
+                    'Lebensalter' => 'string',
+                    'Erste Staatsangehoerigkeit' => 'string',
+                    'Zweite Staatsangehoerigkeit' => 'string',
+                    'Landkreis' => 'string',
+                    'Einreisejahr' => 'string',
+                    'Deutschkenntnisse' => 'string',
+                    'ZertifikatSprachniveau' => 'string',
+                    'Geburtsland' => 'string',
+                    'Geschlecht' => 'string',
+                    'Anz. Folgekontakte' => 'string',
+                    'Erstberatungabgeschlossen' => 'string',
+                    'Abschluss1 Referenzberuf zugewiesen' => 'string',
+                    'Abschluss1 Abschlussart' => 'string',
+                    'Abschluss1 Erwerbsland' => 'string',
+                    'Abschluss1 Deutscher Referenzberuf' => 'string',
+                    'Abschluss2 Referenzberuf zugewiesen' => 'string',
+                    'Abschluss2 Abschlussart' => 'string',
+                    'Abschluss2 Erwerbsland' => 'string',
+                    'Abschluss2 Deutscher Referenzberuf' => 'string',
+                    'Abschluss3 Referenzberuf zugewiesen' => 'string',
+                    'Abschluss3 Abschlussart' => 'string',
+                    'Abschluss3 Erwerbsland' => 'string',
+                    'Abschluss3 Deutscher Referenzberuf' => 'string',
+                    'Abschluss4 Referenzberuf zugewiesen' => 'string',
+                    'Abschluss4 Abschlussart' => 'string',
+                    'Abschluss4 Erwerbsland' => 'string',
+                    'Abschluss4 Deutscher Referenzberuf' => 'string',
+                ];
+                
                 $writer = new \XLSXWriter();
                 $writer->setAuthor('IQ Webapp');
-    
-                $writer->writeSheet($rows, 'Ratsuchende', $headerblatt1);
-                $writer->writeSheet($rowsfk, 'Zugehörige Folgekontakte', $headerblatt2);
+                
+                if($fanonym  == '1') {
+                    $filename = 'export_anonym_'.$bezbstatus.'_'.date('Y-m-d_H-i', time()).'.xlsx';
+                    $writer->writeSheet($rowsanonym, 'Ratsuchende', $headerblattanonym);
+                } else {
+                    $filename = 'export_'.$bezbstatus.'_'.date('Y-m-d_H-i', time()).'.xlsx';
+                    $writer->writeSheet($rows, 'Ratsuchende', $headerblatt1);
+                    $writer->writeSheet($rowsfk, 'Zugehörige Folgekontakte', $headerblatt2);                    
+                }
                 
                 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
                 header('Content-Disposition: attachment;filename="'.$filename.'"');
@@ -1339,6 +1400,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                         'calleraction' => 'export',
                         'callercontroller' => 'Backend',
                         'callerpage' => $currentPage,
+                        'filteranonym' => $fanonym,
                         'filterberatungsstatus' => $fberatungsstatus,
                         'filterbundesland' => $bundeslandselected,
                         'filterstaat' => $staatselected,
@@ -1401,6 +1463,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     'calleraction' => 'export',
                     'callercontroller' => 'Backend',
                     'callerpage' => $currentPage,
+                    'filteranonym' => $fanonym,
                     'filterberatungsstatus' => $fberatungsstatus,
                     'filterbundesland' => $bundeslandselected,
                     'filterstaat' => $staatselected,
@@ -1428,6 +1491,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     'calleraction' => 'export',
                     'callercontroller' => 'Backend',
                     'callerpage' => $currentPage,
+                    'filteranonym' => $fanonym,
                     'filterberatungsstatus' => $fberatungsstatus,
                     'filteron' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus'),
                     'filtervon' => $filtervon,

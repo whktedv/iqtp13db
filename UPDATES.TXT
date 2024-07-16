@@ -96,5 +96,6 @@ Neu:
 - Optimierungen für responsive Ansicht auf Smartphones
 - Feld "Kurzbeschreibung Dokument" wird nun automatisch gespeichert
 - Mehrere Beratungsstellen je User-Account möglich - Auswahl der Beratungsstelle über Dropdown-Menü in Modul Übersicht
+- Export-Modul: Option anonymisierte Exporte mit reduzierter Ausgabe hinzugefügt
 - kleinere Verbesserungen an diversen Stellen
 - Bugfixes

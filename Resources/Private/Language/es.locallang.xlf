@@ -149,6 +149,7 @@
 	<trans-unit id="errordomainnotvalid"><target>Dominio no encontrado, por favor, compruebe.</target></trans-unit>
 	<trans-unit id="errortndatanotvalid"><target>Datos no válidos, por favor, compruebe los datos introducidos.</target></trans-unit>
 	<trans-unit id="errornoqualification"><target>Debes ingresar al menos una calificación.</target></trans-unit>
+	<trans-unit id="errornosector"><target>El sector es obligatorio.</target></trans-unit>
     </body>
   </file>
 </xliff>

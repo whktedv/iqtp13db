@@ -197,6 +197,7 @@
 			<trans-unit id="errordomainnotvalid"><target>Domain nicht gefunden, bitte E-Mail-Adresse prüfen.</target></trans-unit>
 			<trans-unit id="errortndatanotvalid"><target>Die eingebenen Daten sind ungültig. Bitte prüfen Sie die eingebenenen Daten.</target></trans-unit>
 			<trans-unit id="errornoqualification"><target>Sie müssen mindestens einen Abschluss eingeben.</target></trans-unit>
+			<trans-unit id="errornosector"><target>Angabe Branche ist Pflichtfeld.</target></trans-unit>
 		</body>
 	</file>
 </xliff>

@@ -177,6 +177,7 @@
 	<trans-unit id="errordomainnotvalid"><source>النطاق غير موجود، يرجى التحقق.</source></trans-unit>
 	<trans-unit id="errortndatanotvalid"><source>البيانات غير صالحة، يرجى التحقق من البيانات المدخلة.</source></trans-unit>
 	<trans-unit id="errornoqualification"><target>يجب عليك إدخال مؤهل واحد على الأقل</target></trans-unit>
+	<trans-unit id="errornosector"><target>القطاع إلزامي</target></trans-unit>
     </body>
   </file>
 </xliff>

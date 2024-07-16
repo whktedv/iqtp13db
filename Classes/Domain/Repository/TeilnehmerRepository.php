@@ -9,8 +9,6 @@ use \TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
 use \TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
-
 /***
  *
  * This file is part of the "IQ Webapp Anerkennungserstberatung" Extension for TYPO3 CMS.
@@ -397,10 +395,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         if($landkreis != '%') $sql .= " AND o.landkreis LIKE '$landkreis'";
         if($beruf != '%') $sql .= " AND a.referenzberufzugewiesen LIKE '$beruf'";
         $sql .= " GROUP BY t.uid ORDER BY verification_date ASC LIMIT 500";
-                
-        //DebuggerUtility::var_dump($sql);
-        
-
+ 
         $query->statement($sql);
         
         return $query->execute();
@@ -576,7 +571,6 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                     AND a.hidden = 0 and a.deleted = 0
                     AND b.teilnehmer IS NOT NULL 
                     GROUP BY abschlussart ORDER BY anz DESC";
-        //DebuggerUtility::var_dump($sql);
         
         $query->statement($sql);
         $query = $query->execute(true);

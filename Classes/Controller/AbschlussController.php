@@ -221,12 +221,12 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $valArray = $this->request->getArguments();
         if(array_key_exists('abschluss', $valArray)) {
             if($valArray['abschluss']['abschlussart'] == '2') {
-                $this->addFlashMessage("FEHLER: Abschlussart aktualisieren - alte Angabe nicht mehr möglich.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR); // TODO: Localization
+                $this->addFlashMessage("FEHLER: Abschlussart aktualisieren - alte Angabe nicht mehr möglich.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
                 $this->redirect('edit', 'Abschluss', null, array('teilnehmer' => $valArray['teilnehmer'], 'abschluss' => $valArray['abschluss']['__identity']));
             }            
             
             if($valArray['abschluss']['branche'] == '') {
-                $this->addFlashMessage("FEHLER: Branche ist Pflichtangabe.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR); // TODO: Localization
+                $this->addFlashMessage("FEHLER: Branche ist Pflichtangabe.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
                 $this->redirect('edit', 'Abschluss', null, array('teilnehmer' => $valArray['teilnehmer'], 'abschluss' => $valArray['abschluss']['__identity']));
             }
         }
@@ -450,7 +450,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $valArray = $this->request->getArguments();
         if(array_key_exists('abschluss', $valArray)) {
             if($valArray['abschluss']['branche'] == '') {
-                $this->addFlashMessage("FEHLER: Branche ist Pflichtangabe.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR); // TODO: Localization
+                $this->addFlashMessage(\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('errornosector', 'iqtp13db'), '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
                 $this->redirect('editWebapp', 'Abschluss', null, array('teilnehmer' => $valArray['teilnehmer'], 'abschluss' => $valArray['abschluss']['__identity']));
             }
         }

@@ -119,8 +119,8 @@ class Generalhelper
         $clean_name = preg_replace(array('/\s/', '/\.[\.]+/', '/[^\w_\.\-]/'), array('_', '.', ''), $fileName);
         */
         // Statt oben einzelne Buchstaben zu konvertieren, nutze die Funktion transliterate, um alle Schritzeichen in lateinische Buchstaben zu konvertieren (auch kyrillische, arabische, farsi Schriftzeichen)
-        $clean_name = transliterator_transliterate('Any-Latin; Latin-ASCII;', $name);
-        
+        $fileName = transliterator_transliterate('Any-Latin; Latin-ASCII;', $name);
+        $clean_name = preg_replace(array('/\s/', '/\.[\.]+/', '/[^\w_\.\-]/'), array('_', '.', ''), $fileName);
         return $clean_name;
     }
     

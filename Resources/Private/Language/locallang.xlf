@@ -137,6 +137,7 @@
 		<trans-unit id="errordomainnotvalid"><source>Domain not found, please check.</source></trans-unit>
 		<trans-unit id="errortndatanotvalid"><source>Data not valid, please check the entered data.</source></trans-unit>
 		<trans-unit id="errornoqualification"><source>You must enter at least one qualification.</source></trans-unit>
+		<trans-unit id="errornosector"><source>Sector is mandatory.</source></trans-unit>
 		
 	</body>
   </file>

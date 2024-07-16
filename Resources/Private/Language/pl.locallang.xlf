@@ -147,6 +147,7 @@
 	<trans-unit id="errordomainnotvalid"><target>Domena nie znaleziona, proszę sprawdzić.</target></trans-unit>
 	<trans-unit id="errortndatanotvalid"><target>Dane nieprawidłowe, proszę sprawdzić wprowadzone dane.</target></trans-unit>
 	<trans-unit id="errornoqualification"><target>Musisz wprowadzić co najmniej jedną kwalifikację.</target></trans-unit>
+	<trans-unit id="errornosector"><target>Sektor jest obowiązkowy.</target></trans-unit>
     </body>
   </file>
 </xliff>

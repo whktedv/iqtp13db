@@ -155,6 +155,7 @@
 	<trans-unit id="errordomainnotvalid"><target>Domeniul nu a fost găsit, vă rugăm să verificați.</target></trans-unit>
 	<trans-unit id="errortndatanotvalid"><target>Date nevalide, vă rugăm să verificați datele introduse.</target></trans-unit>
 	<trans-unit id="errornoqualification"><target>Trebuie să introduceți cel puțin o calificare.</target></trans-unit>
+	<trans-unit id="errornosector"><target>Sectorul este obligatoriu.</target></trans-unit>
     </body>
   </file>
 </xliff>

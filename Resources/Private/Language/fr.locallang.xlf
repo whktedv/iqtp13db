@@ -162,7 +162,7 @@
 	<trans-unit id="errordomainnotvalid"><target>Domaine introuvable, veuillez vérifier.</target></trans-unit>
 	<trans-unit id="errortndatanotvalid"><target>Données non valides, veuillez vérifier les données saisies.</target></trans-unit>
 	<trans-unit id="errornoqualification"><target>Vous devez saisir au moins un diplôme.</target></trans-unit>
-
+	<trans-unit id="errornosector"><target>Le secteur est obligatoire.</target></trans-unit>
     </body>
   </file>
 </xliff>

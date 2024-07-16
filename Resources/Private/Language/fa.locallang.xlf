@@ -169,6 +169,7 @@
 	<trans-unit id="errordomainnotvalid"><source>دامنه یافت نشد، لطفا بررسی کنید.</source></trans-unit>
 	<trans-unit id="errortndatanotvalid"><source>داده ها معتبر نیستند، لطفا داده های وارد شده را بررسی کنید.</source></trans-unit>
 	<trans-unit id="errornoqualification"><target>شما باید حداقل یک مدرک را وارد کنید</target></trans-unit>
+	<trans-unit id="errornosector"><target>بخش اجباری است</target></trans-unit>
     </body>
   </file>
 </xliff>
