@@ -220,11 +220,12 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     {
         $valArray = $this->request->getArguments();
         if(array_key_exists('abschluss', $valArray)) {
-            if($valArray['abschluss']['abschlussart'] == '2') {
+            /*
+             if($valArray['abschluss']['abschlussart'] == '2') {
                 $this->addFlashMessage("FEHLER: Abschlussart aktualisieren - alte Angabe nicht mehr möglich.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
                 $this->redirect('edit', 'Abschluss', null, array('teilnehmer' => $valArray['teilnehmer'], 'abschluss' => $valArray['abschluss']['__identity']));
             }            
-            
+            */
             if($valArray['abschluss']['branche'] == '') {
                 $this->addFlashMessage("FEHLER: Branche ist Pflichtangabe.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
                 $this->redirect('edit', 'Abschluss', null, array('teilnehmer' => $valArray['teilnehmer'], 'abschluss' => $valArray['abschluss']['__identity']));
@@ -301,10 +302,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         for($jahr = $aktuellesJahr; $jahr > $aktuellesJahr-60; $jahr--) {
             $abschlussjahre[$jahr] = (String)$jahr;
         }
-        $berufe = $this->berufeRepository->findAllOrdered($isocode);
-        foreach($berufe as $beruf) {
-            $berufearr[$beruf->getBerufid()] = $beruf->getTitel();
-        }
+
         $staaten = $this->staatenRepository->findAll4Abschluss($isocode);
         if(count($staaten) == 0) $staaten = $this->staatenRepository->findByLangisocode('en');
         unset($staaten[201]);        
@@ -327,7 +325,6 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
                 'teilnehmer' => $teilnehmer,
                 'beratungsstelle' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid'),
                 'abschlussjahre' => $abschlussjahre,
-                'berufearr' => $berufearr,
                 'staatenarr' => $staatenarr,
                 'abschlussartarr' => $abschlussartarr,
                 'brancheoberkat'=> $brancheoberkat,
@@ -407,11 +404,8 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         for($jahr = $aktuellesJahr; $jahr > $aktuellesJahr-60; $jahr--) {
             $abschlussjahre[$jahr] = (String)$jahr;
         }
-        $berufe = $this->berufeRepository->findAllOrdered($isocode);
-        foreach($berufe as $beruf) {
-            $berufearr[$beruf->getBerufid()] = $beruf->getTitel();
-        }
-        $staaten = $this->staatenRepository->findAll4Abschluss($isocode);        
+        $staaten = $this->staatenRepository->findAll4Abschluss($isocode);
+        if(count($staaten) == 0) $staaten = $this->staatenRepository->findByLangisocode('en');
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
         }
@@ -432,7 +426,6 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
                 'teilnehmer' => $teilnehmer,
                 'beratungsstelle' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid'),
                 'abschlussjahre' => $abschlussjahre,
-                'berufearr' => $berufearr,
                 'staatenarr' => $staatenarr,
                 'abschlussartarr' => $abschlussartarr,
                 'brancheoberkat'=> $brancheoberkat,

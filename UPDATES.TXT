@@ -87,7 +87,7 @@ Update 20.06.2024
 - "Zypern (Nord)" als Land f. Abschluss aufgenommen
 - Suchfunktion: Über Checkbox nun Suche in allen Modulen möglich
 
-Neu:
+Update 16.07.2024
 - Angabe mindestens eines Abschlusses ist nun verpflichtend
 - Neues (Pflicht-)Feld "Branche" bei Abschluss zur besseren Auswertung für statistische Zwecke
 - Anpassung Feld Abschlussart bei Abschluss, um diese besser differenzieren zu können
@@ -99,3 +99,5 @@ Neu:
 - Export-Modul: Option anonymisierte Exporte mit reduzierter Ausgabe hinzugefügt
 - kleinere Verbesserungen an diversen Stellen
 - Bugfixes
+
+Neu:

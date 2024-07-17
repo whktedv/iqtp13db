@@ -1193,7 +1193,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                         $rowsanonym[$x]['Abschluss'.$y.' Abschlussart'] = $rows[$x]['Abschluss'.$y.' Abschlussart'];
                    
                         $abbranche = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'branche');
-                        $rows[$x]['Abschluss'.$y.' Branche'] = $abbranche == '' ? '-' : $arrbranchen[$abbranche];
+                        $rows[$x]['Abschluss'.$y.' Branche'] = $abbranche == 0 ? '-' : $arrbranchen[$abbranche];
                         
                         $aberwerbsland = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($abschluss, 'erwerbsland');
                         $rows[$x]['Abschluss'.$y.' Erwerbsland'] = $aberwerbsland == '' ? '-' : $arrstaaten[$aberwerbsland];

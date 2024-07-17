@@ -25,11 +25,11 @@
 		<f:if condition="{abschluesse-> f:count()} > 0">
 			<h2><f:translate key="datenabschluss" /></h2>
 		</f:if>
-		<f:render partial="Abschluss/AbschlussListe4Anmeldung" arguments="{teilnehmer : teilnehmer, abschluesse: abschluesse}" />
+		<f:render partial="Abschluss/AbschlussListe4Anmeldung" arguments="{teilnehmer : teilnehmer, abschluesse: abschluesse, abschlussartarr : abschlussartarr}" />
 	
 		<f:form id="teilnehmerform" action="createWebapp" name="abschluss" object="{abschluss}" arguments="{teilnehmer: teilnehmer}">
 			<div class="fframeabschluss-inner"><h2><f:translate key="neuerabschluss" /></h2>
-				<f:render partial="Abschluss/FormFieldsAnmeldung" arguments="{abschlussjahre:abschlussjahre, staatenarr:staatenarr, berufearr:berufearr, abschlussartarr : abschlussartarr, brancheoberkat : brancheoberkat, brancheunterkat : brancheunterkat}" />
+				<f:render partial="Abschluss/FormFieldsAnmeldung" arguments="{abschlussjahre:abschlussjahre, staatenarr:staatenarr, abschlussartarr : abschlussartarr, brancheoberkat : brancheoberkat, brancheunterkat : brancheunterkat}" />
 			</div>
 			<f:form.button id="newabschlusszurueckbutton" name="btnzurueck"><f:translate key="zurueck" /></f:form.button>
 			<f:form.button type="submit" id="savebutton1">{f:translate(key:'speichern')}</f:form.button>
