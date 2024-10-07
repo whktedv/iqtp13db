@@ -87,7 +87,7 @@ Update 20.06.2024
 - "Zypern (Nord)" als Land f. Abschluss aufgenommen
 - Suchfunktion: Über Checkbox nun Suche in allen Modulen möglich
 
-Update 16.07.2024
+Update 16.07.2024:
 - Angabe mindestens eines Abschlusses ist nun verpflichtend
 - Neues (Pflicht-)Feld "Branche" bei Abschluss zur besseren Auswertung für statistische Zwecke
 - Anpassung Feld Abschlussart bei Abschluss, um diese besser differenzieren zu können
@@ -96,8 +96,11 @@ Update 16.07.2024
 - Optimierungen für responsive Ansicht auf Smartphones
 - Feld "Kurzbeschreibung Dokument" wird nun automatisch gespeichert
 - Mehrere Beratungsstellen je User-Account möglich - Auswahl der Beratungsstelle über Dropdown-Menü in Modul Übersicht
-- Export-Modul: Option anonymisierte Exporte mit reduzierter Ausgabe hinzugefügt
 - kleinere Verbesserungen an diversen Stellen
 - Bugfixes
 
-Neu:
+Update 07.10.2024
+- Performance-Optimierungen
+- Bugfix: Reihenfolge in Anmeldeliste beim ersten Aufruf von Folgeseiten korrigiert
+
+Neu: 

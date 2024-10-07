@@ -228,7 +228,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         
         $query = $query->execute();
         return $query;
-    }
+    }   
     
     /**
      * @param $uid
@@ -295,6 +295,30 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             ));
         $query = $query->execute();
         return count($query);
+    }
+    
+    /**
+     * Findet potenzielle Dubletten auf Basis von Nachname, Vorname und E-Mail
+     *
+     * @return array
+     */
+    public function findDubletten4Angemeldetneu($niqbid) {
+        // Zugriff auf den QueryBuilder
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_iqtp13db_domain_model_teilnehmer');
+                          
+        $queryBuilder
+        ->select('nachname', 'vorname', 'email')
+        ->addSelectLiteral('COUNT(*) AS count')
+        ->from('tx_iqtp13db_domain_model_teilnehmer')
+        ->where(
+            $queryBuilder->expr()->eq('niqidberatungsstelle', $queryBuilder->createNamedParameter($niqbid, Connection::PARAM_INT)),
+        )
+        ->groupBy('nachname', 'vorname', 'email')
+        ->having('count > 1');
+        
+        $duplicates = $queryBuilder->executeQuery()->fetchAll();
+        
+        return $duplicates;
     }
     
     /**

@@ -85,7 +85,7 @@ call_user_func(
         ];
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][TYPO3\CMS\Extbase\Domain\Model\FrontendUser::class] = [
             'className' => \Ud\Iqtp13db\Domain\Model\Berater::class,
-        ];
+        ];        
         
         // Register extended domain class
         GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\Container\Container::class)
