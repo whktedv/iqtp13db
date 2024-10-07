@@ -569,6 +569,29 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $folgekontakte = $this->folgekontaktRepository->findAll4List($this->niqbid);
         $berufeliste = $this->berufeRepository->findAllOrdered('de');
         
+        
+        $tnuidarray = array();
+        foreach($teilnehmerpag as $tn) {
+            $tnuidarray[] = $tn->getUid();
+        }
+        $abschluesserepo = $this->abschlussRepository->findByTnByUidarray($tnuidarray);
+        
+        $abschluesse = array();
+        for($j=0; $j < count($teilnehmerpag); $j++) {
+            $fk4tn = $this->folgekontaktRepository->findByTeilnehmer($tn->getUid());
+            $anzfolgekontakte[$j] = count($fk4tn);
+            $summebdauerfk = 0;
+            foreach($fk4tn as $singlefk) $summebdauerfk = $summebdauerfk + floatval(str_replace(',','.',$singlefk->getBeratungsdauer()));
+            $summeberatungsdauer[$j] = str_replace('.',',',floatval(str_replace(',','.',$tn->getBeratungsdauer())) + $summebdauerfk);
+                
+            foreach($abschluesserepo as $ab) {
+                if($ab->getTeilnehmer()->getUid() == $teilnehmerpag[$j]->getUid()) {
+                    $abschluesse[$j][] = $ab;
+                }
+            }  
+        }
+        
+        /*         
         foreach ($teilnehmerpag as $key => $tn) {
             $fk4tn = $this->folgekontaktRepository->findByTeilnehmer($tn->getUid());
             $anzfolgekontakte[$key] = count($fk4tn);
@@ -578,7 +601,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             
             $abschluesse[$key] = $this->abschlussRepository->findByTeilnehmer($tn);
         }
-        
+         */
         
         $staaten = $this->staatenRepository->findByLangisocode('de');
         
@@ -673,17 +696,28 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $anzfolgekontakte = array();
         $summeberatungsdauer = array();
+        
+        $tnuidarray = array();
+        foreach($teilnehmerpag as $tn) {
+            $tnuidarray[] = $tn->getUid();
+        }
+        $abschluesserepo = $this->abschlussRepository->findByTnByUidarray($tnuidarray);
+        
         $abschluesse = array();
-        foreach ($teilnehmerpag as $key => $tn) {
+        for($j=0; $j < count($teilnehmerpag); $j++) {
             $fk4tn = $this->folgekontaktRepository->findByTeilnehmer($tn->getUid());
-            $anzfolgekontakte[$key] = count($fk4tn);
-            
+            $anzfolgekontakte[$j] = count($fk4tn);
             $summebdauerfk = 0;
             foreach($fk4tn as $singlefk) $summebdauerfk = $summebdauerfk + floatval(str_replace(',','.',$singlefk->getBeratungsdauer()));
-            $summeberatungsdauer[$key] = str_replace('.',',',floatval(str_replace(',','.',$tn->getBeratungsdauer())) + $summebdauerfk);
+            $summeberatungsdauer[$j] = str_replace('.',',',floatval(str_replace(',','.',$tn->getBeratungsdauer())) + $summebdauerfk);
             
-            $abschluesse[$key] = $this->abschlussRepository->findByTeilnehmer($tn);
+            foreach($abschluesserepo as $ab) {
+                if($ab->getTeilnehmer()->getUid() == $teilnehmerpag[$j]->getUid()) {
+                    $abschluesse[$j][] = $ab;
+                }
+            }
         }
+        
         $folgekontakte = $this->folgekontaktRepository->findAll4List($this->niqbid);
         
         $berufeliste = $this->berufeRepository->findAllOrdered('de');
@@ -850,6 +884,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $tnuiddublette = $this->teilnehmerRepository->findDubletten4Angemeldetneu($this->niqbid);
         
+        $j = 0;
         foreach($alleteilnehmer as $key => $teilnehmer) {
             // Dublettenprüfung
             // $anz = $this->teilnehmerRepository->findDublette4Angemeldet($teilnehmer->getNachname(),$teilnehmer->getVorname(), $this->niqbid);
@@ -876,6 +911,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 foreach($fk4tn as $singlefk) $summebdauerfk = $summebdauerfk + floatval(str_replace(',','.',$singlefk->getBeratungsdauer()));
                 $summeberatungsdauer[$teilnehmer->getUid()] = str_replace('.',',',floatval(str_replace(',','.',$teilnehmer->getBeratungsdauer())) + $summebdauerfk);
             }
+            $j++;
         }
         //DebuggerUtility::var_dump($valArray);
         

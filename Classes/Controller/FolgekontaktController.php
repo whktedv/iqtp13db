@@ -196,7 +196,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
         
-        $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'] ?? ''));       
+        $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'] ?? '1'));       
     }
     
     /**
@@ -215,7 +215,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
                 
-        $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
+        $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'] ?? '1'));
         
     }
     

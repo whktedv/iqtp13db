@@ -100,7 +100,8 @@ Update 16.07.2024:
 - Bugfixes
 
 Update 07.10.2024
-- Performance-Optimierungen
+- Performance-Optimierungen Modul Anmeldung
 - Bugfix: Reihenfolge in Anmeldeliste beim ersten Aufruf von Folgeseiten korrigiert
 
 Neu: 
+- Bugfixes
