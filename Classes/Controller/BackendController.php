@@ -578,11 +578,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $abschluesse = array();
         for($j=0; $j < count($teilnehmerpag); $j++) {
-            $fk4tn = $this->folgekontaktRepository->findByTeilnehmer($tn->getUid());
+            $fk4tn = $this->folgekontaktRepository->findByTeilnehmer($teilnehmerpag[$j]->getUid());
             $anzfolgekontakte[$j] = count($fk4tn);
             $summebdauerfk = 0;
             foreach($fk4tn as $singlefk) $summebdauerfk = $summebdauerfk + floatval(str_replace(',','.',$singlefk->getBeratungsdauer()));
-            $summeberatungsdauer[$j] = str_replace('.',',',floatval(str_replace(',','.',$tn->getBeratungsdauer())) + $summebdauerfk);
+            $summeberatungsdauer[$j] = str_replace('.',',',floatval(str_replace(',','.',$teilnehmerpag[$j]->getBeratungsdauer())) + $summebdauerfk);
                 
             foreach($abschluesserepo as $ab) {
                 if($ab->getTeilnehmer()->getUid() == $teilnehmerpag[$j]->getUid()) {
@@ -590,18 +590,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 }
             }  
         }
-        
-        /*         
-        foreach ($teilnehmerpag as $key => $tn) {
-            $fk4tn = $this->folgekontaktRepository->findByTeilnehmer($tn->getUid());
-            $anzfolgekontakte[$key] = count($fk4tn);
-            $summebdauerfk = 0;
-            foreach($fk4tn as $singlefk) $summebdauerfk = $summebdauerfk + floatval(str_replace(',','.',$singlefk->getBeratungsdauer()));
-            $summeberatungsdauer[$key] = str_replace('.',',',floatval(str_replace(',','.',$tn->getBeratungsdauer())) + $summebdauerfk);
-            
-            $abschluesse[$key] = $this->abschlussRepository->findByTeilnehmer($tn);
-        }
-         */
         
         $staaten = $this->staatenRepository->findByLangisocode('de');
         
@@ -705,11 +693,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $abschluesse = array();
         for($j=0; $j < count($teilnehmerpag); $j++) {
-            $fk4tn = $this->folgekontaktRepository->findByTeilnehmer($tn->getUid());
+            $fk4tn = $this->folgekontaktRepository->findByTeilnehmer($teilnehmerpag[$j]->getUid());
             $anzfolgekontakte[$j] = count($fk4tn);
             $summebdauerfk = 0;
             foreach($fk4tn as $singlefk) $summebdauerfk = $summebdauerfk + floatval(str_replace(',','.',$singlefk->getBeratungsdauer()));
-            $summeberatungsdauer[$j] = str_replace('.',',',floatval(str_replace(',','.',$tn->getBeratungsdauer())) + $summebdauerfk);
+            $summeberatungsdauer[$j] = str_replace('.',',',floatval(str_replace(',','.',$teilnehmerpag[$j]->getBeratungsdauer())) + $summebdauerfk);
             
             foreach($abschluesserepo as $ab) {
                 if($ab->getTeilnehmer()->getUid() == $teilnehmerpag[$j]->getUid()) {
