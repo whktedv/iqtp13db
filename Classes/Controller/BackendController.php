@@ -411,7 +411,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $persistenceManager->persistAll();
             }
         }
-                
+
         if(!empty($valArray['callerpage'])) $currentPage = $valArray['callerpage'];
         
         if(empty($valArray['orderby'])) {            
@@ -419,7 +419,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listangemeldetorder') ?? 'DESC';
         } else {
             $orderby = $valArray['orderby'];
-            $order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listangemeldetorder');
+            $order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listangemeldetorder') ?? 'DESC';
         }        
         if(isset($valArray['changeorder']) && $valArray['changeorder'] == 1) {
             $orderby = $valArray['orderby'];
@@ -429,36 +429,53 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         
         $teilnehmer = $this->setfilter(0, $valArray, $orderby, $order, 0, 9999);
+        //DebuggerUtility::var_dump($teilnehmer);
         
         // Wegen Bug in Paginator, der nicht mit Custom SQL Queryresults funktioniert, werden hier alle gefilterten Einträge auf einer Seite dargestellt. Queryresultpaginator hat dann keine Auswahl an Datensätzen, sondern alle.
         $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 20 : 20;
         $currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : $currentPage;
                 
-        if($GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' && is_array($teilnehmer)) {
+        //if($GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' && is_array($teilnehmer)) {
+        if($GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' || is_array($teilnehmer)) {
             $paginator = new ArrayPaginator($teilnehmer, $currentPage, $anzperpag);
         } else {
             $paginator = new QueryResultPaginator($teilnehmer, $currentPage, $anzperpag);
         }
-        
         $pagination = new SimplePagination($paginator);
-        
         $teilnehmerpag = $paginator->getPaginatedItems();
         
-        $plzberatungsstelle4tn = array();
+        $tnuiddublette = $this->teilnehmerRepository->findDubletten4Angemeldetneu($this->niqbid);
+        
+        $tnuidarray = array();
+        foreach($teilnehmerpag as $tn) {
+            $tnuidarray[] = $tn->getUid();   
+        }
+        $abschluesserepo = $this->abschlussRepository->findByTnByUidarray($tnuidarray);
+        
+        $plzarray = $this->userGroupRepository->getallplzarray();
+        
         $abschluesse = array();
+        $plzberatungsstelle4tn = array();
         for($j=0; $j < count($teilnehmerpag); $j++) {
-            $anz = $this->teilnehmerRepository->findDublette4Angemeldet($teilnehmerpag[$j]->getNachname(), $teilnehmerpag[$j]->getVorname(), $this->niqbid);
-            if($anz > 1) $teilnehmerpag[$j]->setDublette(TRUE);
+            foreach($tnuiddublette as $tnuid) {
+                if($teilnehmerpag[$j]->getNachname() == $tnuid['nachname'] && $teilnehmerpag[$j]->getVorname() == $tnuid['vorname'] && $teilnehmerpag[$j]->getEmail() == $tnuid['email']) $teilnehmerpag[$j]->setDublette(TRUE);
+            }
             
-            $abschluesse[$j] = $this->abschlussRepository->findByTeilnehmer($teilnehmerpag[$j]);
+            foreach($abschluesserepo as $ab) {
+                if($ab->getTeilnehmer()->getUid() == $teilnehmerpag[$j]->getUid()) {
+                    $abschluesse[$j][] = $ab;
+                }
+            }
             
-            $plzberatungsstelle = array();
-            $plzberatungsstelle = $this->userGroupRepository->getBeratungsstelle4PLZ($teilnehmerpag[$j]->getPlz(), $this->settings['beraterstoragepid']);
-            $plzberatungsstelle4tn[$j] = count($plzberatungsstelle) > 0 ? $plzberatungsstelle[0]->getNiqbid() : '';
+            foreach($plzarray as $bid) {                
+                $bidplz = explode(',', $bid['plzlist']);
+                if(in_array($teilnehmerpag[$j]->getPlz(), $bidplz)) {
+                    $plzberatungsstelle4tn[$j] = $bid['niqbid'];
+                }
+            }
         }
         
         $staaten = $this->staatenRepository->findByLangisocode('de');
-        unset($staaten[201]);
         
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
@@ -489,7 +506,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $this->view->assignMultiple(
             [
                 'anzgesamt' => count($teilnehmer),
-                'abschluesse' => $abschluesse,
                 'calleraction' => 'listangemeldet',
                 'callercontroller' => 'Backend',
                 'callerpage' => $currentPage,
@@ -503,7 +519,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'beratungsstelle' => $this->beratungsstellenname,
                 'niqbid' => $this->niqbid,
                 'alleberater' => $arrberater,
-                'anzbstellen' => $this->anzbstellen
+                'anzbstellen' => $this->anzbstellen,
+                'abschluesse' => $abschluesse
             ]);
     }
     
@@ -571,19 +588,29 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $folgekontakte = $this->folgekontaktRepository->findAll4List($this->niqbid);
         $berufeliste = $this->berufeRepository->findAllOrdered('de');
         
-        foreach ($teilnehmerpag as $key => $tn) {
-            $fk4tn = $this->folgekontaktRepository->findByTeilnehmer($tn->getUid());
-            $anzfolgekontakte[$key] = count($fk4tn);
+        
+        $tnuidarray = array();
+        foreach($teilnehmerpag as $tn) {
+            $tnuidarray[] = $tn->getUid();
+        }
+        $abschluesserepo = $this->abschlussRepository->findByTnByUidarray($tnuidarray);
+        
+        $abschluesse = array();
+        for($j=0; $j < count($teilnehmerpag); $j++) {
+            $fk4tn = $this->folgekontaktRepository->findByTeilnehmer($teilnehmerpag[$j]->getUid());
+            $anzfolgekontakte[$j] = count($fk4tn);
             $summebdauerfk = 0;
             foreach($fk4tn as $singlefk) $summebdauerfk = $summebdauerfk + floatval(str_replace(',','.',$singlefk->getBeratungsdauer()));
-            $summeberatungsdauer[$key] = str_replace('.',',',floatval(str_replace(',','.',$tn->getBeratungsdauer())) + $summebdauerfk);
-            
-            $abschluesse[$key] = $this->abschlussRepository->findByTeilnehmer($tn);
+            $summeberatungsdauer[$j] = str_replace('.',',',floatval(str_replace(',','.',$teilnehmerpag[$j]->getBeratungsdauer())) + $summebdauerfk);
+                
+            foreach($abschluesserepo as $ab) {
+                if($ab->getTeilnehmer()->getUid() == $teilnehmerpag[$j]->getUid()) {
+                    $abschluesse[$j][] = $ab;
+                }
+            }  
         }
         
-        
         $staaten = $this->staatenRepository->findByLangisocode('de');
-        unset($staaten[201]);
         
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
@@ -694,22 +721,32 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $anzfolgekontakte = array();
         $summeberatungsdauer = array();
+        
+        $tnuidarray = array();
+        foreach($teilnehmerpag as $tn) {
+            $tnuidarray[] = $tn->getUid();
+        }
+        $abschluesserepo = $this->abschlussRepository->findByTnByUidarray($tnuidarray);
+        
         $abschluesse = array();
-        foreach ($teilnehmerpag as $key => $tn) {
-            $fk4tn = $this->folgekontaktRepository->findByTeilnehmer($tn->getUid());
-            $anzfolgekontakte[$key] = count($fk4tn);
-            
+        for($j=0; $j < count($teilnehmerpag); $j++) {
+            $fk4tn = $this->folgekontaktRepository->findByTeilnehmer($teilnehmerpag[$j]->getUid());
+            $anzfolgekontakte[$j] = count($fk4tn);
             $summebdauerfk = 0;
             foreach($fk4tn as $singlefk) $summebdauerfk = $summebdauerfk + floatval(str_replace(',','.',$singlefk->getBeratungsdauer()));
-            $summeberatungsdauer[$key] = str_replace('.',',',floatval(str_replace(',','.',$tn->getBeratungsdauer())) + $summebdauerfk);
+            $summeberatungsdauer[$j] = str_replace('.',',',floatval(str_replace(',','.',$teilnehmerpag[$j]->getBeratungsdauer())) + $summebdauerfk);
             
-            $abschluesse[$key] = $this->abschlussRepository->findByTeilnehmer($tn);
+            foreach($abschluesserepo as $ab) {
+                if($ab->getTeilnehmer()->getUid() == $teilnehmerpag[$j]->getUid()) {
+                    $abschluesse[$j][] = $ab;
+                }
+            }
         }
+        
         $folgekontakte = $this->folgekontaktRepository->findAll4List($this->niqbid);
         
         $berufeliste = $this->berufeRepository->findAllOrdered('de');
         $staaten = $this->staatenRepository->findByLangisocode('de');
-        unset($staaten[201]);
         
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
@@ -813,7 +850,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         
         $staaten = $this->staatenRepository->findByLangisocode('de');
-        unset($staaten[201]);
         
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
@@ -911,10 +947,17 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $abschluesse = array();
         $anzfolgekontakte = array();
         
+        $tnuiddublette = $this->teilnehmerRepository->findDubletten4Angemeldetneu($this->niqbid);
+        
+        $j = 0;
         foreach($alleteilnehmer as $key => $teilnehmer) {
             // Dublettenprüfung
-            $anz = $this->teilnehmerRepository->findDublette4Angemeldet($teilnehmer->getNachname(),$teilnehmer->getVorname(), $this->niqbid);
-            if($anz > 1) $alleteilnehmer[$key]->setDublette(TRUE);
+            // $anz = $this->teilnehmerRepository->findDublette4Angemeldet($teilnehmer->getNachname(),$teilnehmer->getVorname(), $this->niqbid);
+            // if($anz > 1) $alleteilnehmer[$key]->setDublette(TRUE);
+                        
+            foreach($tnuiddublette as $tnuid) {
+                if($teilnehmer[$j]->getNachname() == $tnuid['nachname'] && $teilnehmer[$j]->getVorname() == $tnuid['vorname'] && $teilnehmer[$j]->getEmail() == $tnuid['email']) $alleteilnehmer[$key]->setDublette(TRUE);
+            }
             
             // Modul
             $beratungsstatus = $teilnehmer->getBeratungsstatus();
@@ -933,12 +976,12 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 foreach($fk4tn as $singlefk) $summebdauerfk = $summebdauerfk + floatval(str_replace(',','.',$singlefk->getBeratungsdauer()));
                 $summeberatungsdauer[$teilnehmer->getUid()] = str_replace('.',',',floatval(str_replace(',','.',$teilnehmer->getBeratungsdauer())) + $summebdauerfk);
             }
+            $j++;
         }
         //DebuggerUtility::var_dump($valArray);
         
         $berufeliste = $this->berufeRepository->findAllOrdered('de');
         $staaten = $this->staatenRepository->findByLangisocode('de');
-        unset($staaten[201]);
         
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
@@ -1026,7 +1069,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $arrerwerbsstatus = $this->settings['erwerbsstatus'];
         $arrleistungsbezug = $this->settings['leistungsbezug'];
         $staaten = $this->staatenRepository->findByLangisocode('de');
-        unset($staaten[201]);
         foreach($staaten as $staat) {
             $arrstaaten[$staat->getStaatid()] = $staat->getTitel();
         }
@@ -1732,7 +1774,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
         
         $staaten = $this->staatenRepository->findByLangisocode('de');
-        unset($staaten[201]);
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
         }
@@ -1916,6 +1957,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $searchparams = $valArray['searchparams'];
         }
         
+        
         $edituserfield = '';
         
         if($teilnehmer->getEdittstamp() == 0 || $teilnehmer->getEdituser() == $this->user['uid'] || (time() - $teilnehmer->getEdittstamp()) > 10) {
@@ -1955,7 +1997,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $berufe = $this->berufeRepository->findAllOrdered($isocode);
         $staaten = $this->staatenRepository->findByLangisocode($isocode);
-        unset($staaten[201]);
+        unset($staaten[200]); // entfernt 'staatenlos'
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
         }        
@@ -2766,7 +2808,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             if($deleted == 1) {
                 $teilnehmers = $this->teilnehmerRepository->findhidden4list($orderby, $order, $this->niqbid);
             } else {
-                $teilnehmers = $this->teilnehmerRepository->findAllOrder4List($type, $orderby, $order, $this->niqbid);
+                //if($type == 0) {
+                    //$teilnehmers = $this->tn4ListeRepository->findTN4Anmeldung($this->niqbid, $orderby, $order);                    
+                //} else {
+                    $teilnehmers = $this->teilnehmerRepository->findAllOrder4List($type, $orderby, $order, $this->niqbid);
+                //}
             }
         } else {
             $berufearr = $this->berufeRepository->findAllOrdered('de');

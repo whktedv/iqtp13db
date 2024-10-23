@@ -23,7 +23,7 @@ class RequestController
     {
         // Argumente aus dem POST-Request holen
         $uid = GeneralUtility::trimExplode('=', GeneralUtility::_POST('dokuid'), true)[0];
-        $beschreibung = GeneralUtility::trimExplode('=', GeneralUtility::_POST('dokdescr'), true)[0];
+        $beschreibung = GeneralUtility::trimExplode('=', GeneralUtility::_POST('dokdescr'), true)[0] ?? '';
         
         // Daten speichern
         $dokument = $this->dokumentRepository->findByUid($uid);        
