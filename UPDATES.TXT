@@ -100,4 +100,8 @@ Update 16.07.2024
 - kleinere Verbesserungen an diversen Stellen
 - Bugfixes
 
+Update 23.10.2024
+- Bugfixing Admin- und Exportmodul
+- Bugfixing Filter
+
 Neu:

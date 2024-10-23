@@ -465,8 +465,27 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         
         $orderchar = $order == 'ASC' ? "↓" : "↑";        
-        $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->usergroup);
         
+        // ************ Start - Beraterarray bestimmen *****************
+        $arrberater = array();
+        $usergroups4berater = explode(",", $this->user['usergroup']);
+        if($this->niqbid == '12345' || $this->niqbid == '10002') { // Admin
+            $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected);
+            foreach($usergroups4bundesland as $ug) {
+                $ugberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $ug);
+                foreach($ugberater as $currber) {
+                    $arrberater[$currber->getUid()] = $currber->getUsername();
+                }
+            }
+        } else {
+            $thisug = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $this->niqbid);
+            $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $thisug[0]);
+            foreach($berater as $currber) {
+                $arrberater[$currber->getUid()] = $currber->getUsername();
+            }
+        }
+        // ***************** Ende - Beraterarray bestimmen *****************
+                
         $this->view->assignMultiple(
             [
                 'anzgesamt' => count($teilnehmer),
@@ -483,7 +502,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'plzberatungsstelle4tn' => $plzberatungsstelle4tn,
                 'beratungsstelle' => $this->beratungsstellenname,
                 'niqbid' => $this->niqbid,
-                'alleberater' => $alleberater,
+                'alleberater' => $arrberater,
                 'anzbstellen' => $this->anzbstellen
             ]);
     }
@@ -571,8 +590,26 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         
         $orderchar = $order == 'ASC' ? "↓" : "↑";
-        $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->usergroup);
         
+        // ************ Start - Beraterarray bestimmen *****************
+        $arrberater = array();
+        $usergroups4berater = explode(",", $this->user['usergroup']);
+        if($this->niqbid == '12345' || $this->niqbid == '10002') { // Admin
+            $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected);
+            foreach($usergroups4bundesland as $ug) {
+                $ugberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $ug);
+                foreach($ugberater as $currber) {
+                    $arrberater[$currber->getUid()] = $currber->getUsername();
+                }
+            }
+        } else {
+            $thisug = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $this->niqbid);
+            $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $thisug[0]);
+            foreach($berater as $currber) {
+                $arrberater[$currber->getUid()] = $currber->getUsername();
+            }
+        }
+        // ***************** Ende - Beraterarray bestimmen *****************
         $this->view->assignMultiple(
             [
                 'anzgesamt' => count($teilnehmer),
@@ -592,7 +629,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'berufe' => $berufeliste,
                 'beratungsstelle' => $this->beratungsstellenname,
                 'niqbid' => $this->niqbid,
-                'alleberater' => $alleberater,
+                'alleberater' => $arrberater,
                 'anzbstellen' => $this->anzbstellen
             ]
             );
@@ -679,7 +716,26 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
                 
         $orderchar = $order == 'ASC' ? "↓" : "↑";
-        $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->usergroup);
+        
+        // ************ Start - Beraterarray bestimmen *****************
+        $arrberater = array();
+        $usergroups4berater = explode(",", $this->user['usergroup']);
+        if($this->niqbid == '12345' || $this->niqbid == '10002') { // Admin
+            $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected);
+            foreach($usergroups4bundesland as $ug) {
+                $ugberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $ug);
+                foreach($ugberater as $currber) {
+                    $arrberater[$currber->getUid()] = $currber->getUsername();
+                }
+            }
+        } else {
+            $thisug = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $this->niqbid);
+            $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $thisug[0]);
+            foreach($berater as $currber) {
+                $arrberater[$currber->getUid()] = $currber->getUsername();
+            }
+        }
+        // ***************** Ende - Beraterarray bestimmen *****************
         
         $this->view->assignMultiple(
             [
@@ -700,7 +756,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'berufe' => $berufeliste,
                 'beratungsstelle' => $this->beratungsstellenname,
                 'niqbid' => $this->niqbid,
-                'alleberater' => $alleberater,
+                'alleberater' => $arrberater,
                 'anzbstellen' => $this->anzbstellen
             ]
             );
@@ -765,6 +821,26 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $orderchar = $order == 'ASC' ? "↓" : "↑";
         
+        // ************ Start - Beraterarray bestimmen *****************
+        $arrberater = array();
+        $usergroups4berater = explode(",", $this->user['usergroup']);
+        if($this->niqbid == '12345' || $this->niqbid == '10002') { // Admin
+            $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected);
+            foreach($usergroups4bundesland as $ug) {
+                $ugberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $ug);
+                foreach($ugberater as $currber) {
+                    $arrberater[$currber->getUid()] = $currber->getUsername();
+                }
+            }
+        } else {
+            $thisug = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $this->niqbid);
+            $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $thisug[0]);
+            foreach($berater as $currber) {
+                $arrberater[$currber->getUid()] = $currber->getUsername();
+            }
+        }
+        // ***************** Ende - Beraterarray bestimmen *****************
+        
         $this->view->assignMultiple(
             [
                 'anzgesamt' => count($teilnehmer),
@@ -780,6 +856,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'staatenarr' => $staatenarr,
                 'beratungsstelle' => $this->beratungsstellenname,
                 'niqbid' => $this->niqbid,
+                'alleberater' => $arrberater,
                 'anzbstellen' => $this->anzbstellen
             ]
             );
@@ -923,10 +1000,25 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $landkreisselected = $valArray['filterlandkreis'] ?? '%';
         $berufselected = $valArray['filterreferenzberuf'] ?? '%';
         
-        $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->usergroup);
-        foreach($berater as $currber) {
-            $arrberater[$currber->getUid()] = $currber->getUsername();
+        // ************ Start - Beraterarray bestimmen *****************
+        $arrberater = array();
+        $usergroups4berater = explode(",", $this->user['usergroup']);
+        if($this->niqbid == '12345' || $this->niqbid == '10002') { // Admin
+            $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected);
+            foreach($usergroups4bundesland as $ug) {
+                $ugberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $ug);
+                foreach($ugberater as $currber) {
+                    $arrberater[$currber->getUid()] = $currber->getUsername();
+                }
+            }
+        } else {
+            $thisug = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $this->niqbid);
+            $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $thisug[0]);
+            foreach($berater as $currber) {
+                $arrberater[$currber->getUid()] = $currber->getUsername();
+            }
         }
+        // ***************** Ende - Beraterarray bestimmen *****************
         
         $beraterselected = $valArray['filterberater'] ?? '%';
         
@@ -1081,7 +1173,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     $rows[$x]['WohnsitzDeutschland'] = $wohnsitzdeutschland ?? '';
                     
                     if($wohnsitzdeutschland == 'ja') {
-                        $rows[$x]['Landkreis'] = (preg_match("/[0-9]{5}/", $rows[$x]['PLZ']) && array_key_exists($rows[$x]['PLZ'], $arrorte)) ? $arrorte[$rows[$x]['PLZ']] : '-';
+                        $thisplz = trim($rows[$x]['PLZ']);
+                        $rows[$x]['Landkreis'] = (preg_match("/[0-9]{5}/", $thisplz) && array_key_exists($thisplz, $arrorte)) ? $arrorte[$thisplz] : '-';
                     } else {
                         $rows[$x]['Landkreis'] = '';
                     }
@@ -2558,10 +2651,28 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function editsettingsAction() {
         $valArray = $this->request->getArguments();
         
-        $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
+        // ************ Start - Beraterarray bestimmen *****************
+        $arrberater = array();
+        $usergroups4berater = explode(",", $this->user['usergroup']);
+        if($this->niqbid == '12345' || $this->niqbid == '10002') { // Admin
+            $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected);
+            foreach($usergroups4bundesland as $ug) {
+                $ugberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $ug);
+                foreach($ugberater as $currber) {
+                    $arrberater[] = $currber;
+                }
+            }
+        } else {
+            $thisug = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $this->niqbid);
+            $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $thisug[0]);
+            foreach($berater as $currber) {
+                $arrberater[] = $currber;
+            }
+        }
+        // ***************** Ende - Beraterarray bestimmen *****************
         
-        $currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : 1;
-        $paginator = new QueryResultPaginator($berater, $currentPage, 25);
+        $currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : 1;        
+        $paginator = new ArrayPaginator($arrberater, $currentPage, 25);
         $pagination = new SimplePagination($paginator);
         
         $this->view->assignMultiple(
@@ -2570,7 +2681,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'paginator' => $paginator,
                 'pagination' => $pagination,
                 'pages' => range(1, $pagination->getLastPageNumber()),
-                'berater' => $berater,
+                'berater' => $arrberater,
                 'thisuser' => $this->user,
                 'beratungsstelle' => $this->beratungsstellenname,
                 'niqbid' => $this->niqbid,

@@ -369,7 +369,9 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             $filternach = "FROM_UNIXTIME(verification_date)";            
         }
         
-        $niqbid = $niqbid == '12345' ? '%' : $niqbid; // Admin? dann Beratungsstelle ignorieren
+        if($niqbid == '12345' || $niqbid = '100002') { // Admin oder RP Admin? dann Beratungsstelle ignorieren
+            $niqbid = '%';
+        }
         
         $query = $this->createQuery();
         

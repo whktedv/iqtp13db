@@ -4,7 +4,7 @@
 		<div>Ort/PLZ: <f:form.textfield size="10" value="{filterort}" name="ort" /></div>
 		<div>Beruf: <f:form.textfield size="20" value="{filterberuf}" name="beruf" /></div>
 		<div>Geburtsland: <f:form.select value="{filterland}" name="land" options="{staatenarr}" optionValueField="value" optionLabelField="value" /></div>
-		<div>Berater*in: <f:form.select value="{filterberater}" name="berater" options="{alleberater}" optionValueField="uid" optionLabelField="username" prependOptionLabel="-" prependOptionValue="0" sortByOptionLabel="1"/></div>
+		<div>Berater*in: <f:form.select value="{filterberater}" name="berater" options="{alleberater}" optionValueField="key" optionLabelField="value" prependOptionLabel="-" prependOptionValue="0" sortByOptionLabel="1"/></div>
 		<div>Gruppe: <f:form.textfield size="20" value="{filtergruppe}" name="gruppe" /></div>
 		<div>Bescheid: <f:form.checkbox value="1" name="bescheid" checked="{filterbescheid} == 1" /></div>
 		<div class="divfilterallemodule">alle&nbsp;Module: <f:form.checkbox value="1" name="allemodule" checked="{filterallemodule} == 1" /></div>

@@ -22,10 +22,14 @@ Bitte beachten Sie, dass die im Export auf dem zweiten Tabellenblatt angegebenen
 				</f:security.ifHasRole>
 				<f:security.ifHasRole role="Webapp Admin RP"> 
 				<f:then>
-					<div><f:form.select name="filterbundesland" id="exportfilterselectbundesland" options="0" optionValueField="bundesland" optionLabelField="bundesland" prependOptionValue="Rheinland-Pfalz" prependOptionLabel="Rheinland-Pfalz" value="{filterbundesland}"/></div>	
+					<div><f:form.select name="filterbundesland" id="exportfilterselectbundesland" options="0" optionValueField="bundesland" optionLabelField="bundesland" prependOptionValue="Rheinland-Pfalz" prependOptionLabel="Rheinland-Pfalz" value="{filterbundesland}"/></div>
+					<f:form.hidden value="1" name="filteranonym" />
 				</f:then>
+				<f:else>
+					<div><label>Anonym und gekürzt: </label><f:form.checkbox id="exportfiltercheckanonym" value="1" name="filteranonym" checked="{filteranonym} == 1" /></div>	
+				</f:else>
 				</f:security.ifHasRole>
-				<div><label>Anonym und gekürzt: </label><f:form.checkbox id="exportfiltercheckanonym" value="1" name="filteranonym" checked="{filteranonym} == 1" /></div> 
+				 
 				<div><label>von:</label> <f:form.textfield size="10" id="datepickerfiltervon" value="{filtervon}" name="filtervon" /></div>
 				<div><label>bis:</label> <f:form.textfield size="10" id="datepickerfilterbis" value="{filterbis}" name="filterbis" /></div>				
 				<div><label>Status:</label> <f:form.select id="exportfilterselect" value="{filterberatungsstatus}" name="filterberatungsstatus" options="{settings.filterberatungsstatus}" optionValueField="key" optionLabelField="value" /></div>

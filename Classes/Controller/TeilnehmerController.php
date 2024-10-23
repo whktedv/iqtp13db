@@ -396,7 +396,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             if(isset($valArray['btnweiter'])) {
                 $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite1', serialize($tnseite1));
                 
-                $bstid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid');
+                $bstid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid') ?? '';
                 
                 if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid') == NULL) {
                     $teilnehmer = $this->getTeilnehmerFromSession();
@@ -442,6 +442,14 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     }
                 }
                 
+                if($bstid == '' || $bstid == null) {
+                    $this->addFlashMessage("ERROR: Session expired or data not found. Please restart registration.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                    if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid') != NULL) {
+                        $this->cancelregistration($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid'));
+                    } else {
+                        $this->cancelregistration(null);
+                    }
+                }
                 if($direkt == '1') $teilnehmer->setKooperationgruppe('Direktlink: '. $bstid);
                 
                 // Daten sofort in die Datenbank schreiben

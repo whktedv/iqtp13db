@@ -282,8 +282,10 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         }
         
         if($jahrselected != 0) {
-            $arrabschlussart =  array('' => 'nichts eingetragen', '-1' => 'keine Angabe', '1' => 'Ausbildungsabschluss', '2' => 'Universitätsabschluss', '1,2' => 'sowohl Uni, als auch Ausbildungsabschluss', '-1,1' => 'k.A. und Ausbildungsabschluss', '-1,2' => 'k.A. und Universitätsabschluss', '-1,1,2'  => 'Eintrag fehlerhaft');
-            
+            $arrabschlussart1 = $this->settings['abschlussart'];  
+            $arrabschlussart2 = array("" => 'nichts eingetragen', -1 => 'keine Angabe', '1,2' => 'Alte Angabe: sowohl Uni, als auch Ausbildungsabschluss', '-1,1' => 'Alte Angabe: k.A. und Ausbildungsabschluss', '-1,2' => 'Alte Angabe: k.A. und Universitätsabschluss', '-1,1,2'  => 'Eintrag fehlerhaft');
+            $arrabschlussart = array_merge($arrabschlussart1, $arrabschlussart2);
+
             $abschlussartanmeldungen = $this->teilnehmerRepository->showAbschlussart(0, $jahrselected, $bundeslandselected, $staatselected);
             $abschlussartberatungabgeschl = $this->teilnehmerRepository->showAbschlussart(4, $jahrselected, $bundeslandselected, $staatselected);
             
