@@ -381,7 +381,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      *
      */
-    public function search4exportTeilnehmer($type, $verstecktundgelöscht, $filtervon, $filterbis, $niqbid, $bundesland, $staat, $berater, $landkreis, $beruf)
+    public function search4exportTeilnehmer($type, $verstecktundgelöscht, $filtervon, $filterbis, $niqbid, $bundesland, $staat, $berater, $landkreis, $beruf, $branche)
     {
         if($type == 1) {
             $filternach = "FROM_UNIXTIME(verification_date)";
@@ -420,6 +420,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         if($berater != '%') $sql .= " AND t.berater LIKE '$berater'";
         if($landkreis != '%') $sql .= " AND o.landkreis LIKE '$landkreis'";
         if($beruf != '%') $sql .= " AND a.referenzberufzugewiesen LIKE '$beruf'";
+        if($branche != '%') $sql .= " AND a.branche LIKE '$branche'";
         $sql .= " GROUP BY t.uid ORDER BY verification_date ASC LIMIT 500";
  
         $query->statement($sql);

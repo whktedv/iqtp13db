@@ -106,5 +106,6 @@ Update 07.10.2024
 Update 23.10.2024
 - Bugfixing Admin- und Exportmodul
 - Bugfixing Filter
+- Erweiterung Export um Berufsgruppe
 
 Neu: 

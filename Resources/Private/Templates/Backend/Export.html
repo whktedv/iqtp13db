@@ -44,6 +44,9 @@ Bitte beachten Sie, dass die im Export auf dem zweiten Tabellenblatt angegebenen
 				<div><label>Landkreis:</label>	<f:form.select id="exportfilterselectlandkreis" name="filterlandkreis" options="{gewlandkreise}" optionValueField="landkreis" optionLabelField="landkreis" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterlandkreis}"/></div>
 				<div><label>Abschluss:</label>	<f:form.select id="exportfilterreferenzberuf" name="filterreferenzberuf" options="{alleberufe}" optionValueField="key" optionLabelField="value" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterberuf}"/></div>
 			</div>
+			<div class="filterframe-inner-row">
+				<div><label>Berufgruppe:</label>	<f:form.select id="exportfilterbranche" name="filterbranche" options="{allebranchen}" optionValueField="key" optionLabelField="value" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterbranche}"/></div>				
+			</div>
 			
 	</f:form>
 
@@ -56,6 +59,7 @@ Bitte beachten Sie, dass die im Export auf dem zweiten Tabellenblatt angegebenen
 		<f:form.hidden value="{filterberater}" name="filterberater" />
 		<f:form.hidden value="{filterlandkreis}" name="filterlandkreis" />
 		<f:form.hidden value="{filterberuf}" name="filterreferenzberuf" />
+		<f:form.hidden value="{filterbranche}" name="filterbranche" />
 		<f:form.hidden value="{filteranonym}" name="filteranonym" />
 		<f:if condition="{anzgesamt} > 500"><f:then>
 			<f:form.button id="linkloadoverlay-export" type="submit" name="export" disabled="disabled" style="background-color: #9A9CA2;">Ratsuchende exportieren</f:form.button>

@@ -192,6 +192,10 @@ $(document).ready(function() {
 		$("#overlay").show();
 	  $("#exportfilterform").submit(); 
 	});
+	$('#exportfilterbranche').change(function() {
+			$("#overlay").show();
+		  $("#exportfilterform").submit(); 
+		});
 	$('#exportfiltercheckanonym').change(function() {
 			$("#overlay").show();
 		  $("#exportfilterform").submit(); 

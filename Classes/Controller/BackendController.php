@@ -436,7 +436,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : $currentPage;
                 
         //if($GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' && is_array($teilnehmer)) {
-        if($GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' || is_array($teilnehmer)) {
+        if(is_array($teilnehmer)) {
             $paginator = new ArrayPaginator($teilnehmer, $currentPage, $anzperpag);
         } else {
             $paginator = new QueryResultPaginator($teilnehmer, $currentPage, $anzperpag);
@@ -487,7 +487,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $arrberater = array();
         $usergroups4berater = explode(",", $this->user['usergroup']);
         if($this->niqbid == '12345' || $this->niqbid == '10002') { // Admin
-            $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected);
+            $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected ?? '%');
             foreach($usergroups4bundesland as $ug) {
                 $ugberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $ug);
                 foreach($ugberater as $currber) {
@@ -572,7 +572,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 20 : 20;
         
         $currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : $currentPage;
-        if($GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' && is_array($teilnehmer)) {
+        if(is_array($teilnehmer)) {
             $paginator = new ArrayPaginator($teilnehmer, $currentPage, $anzperpag);
         } else {
             $paginator = new QueryResultPaginator($teilnehmer, $currentPage, $anzperpag);
@@ -622,7 +622,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $arrberater = array();
         $usergroups4berater = explode(",", $this->user['usergroup']);
         if($this->niqbid == '12345' || $this->niqbid == '10002') { // Admin
-            $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected);
+            $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected ?? '%');
             foreach($usergroups4bundesland as $ug) {
                 $ugberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $ug);
                 foreach($ugberater as $currber) {
@@ -710,7 +710,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 25 : 25;
         
         $currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : $currentPage;
-        if($GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' && is_array($teilnehmer)) {
+        if(is_array($teilnehmer)) {
             $paginator = new ArrayPaginator($teilnehmer, $currentPage, $anzperpag);
         } else {
             $paginator = new QueryResultPaginator($teilnehmer, $currentPage, $anzperpag);
@@ -758,7 +758,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $arrberater = array();
         $usergroups4berater = explode(",", $this->user['usergroup']);
         if($this->niqbid == '12345' || $this->niqbid == '10002') { // Admin
-            $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected);
+            $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected ?? '%');
             foreach($usergroups4bundesland as $ug) {
                 $ugberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $ug);
                 foreach($ugberater as $currber) {
@@ -833,7 +833,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 25 : 25;
         
         $currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : $currentPage;
-        if($GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' && is_array($teilnehmer)) {
+        if(is_array($teilnehmer)) {
             $paginator = new ArrayPaginator($teilnehmer, $currentPage, $anzperpag);
         } else {
             $paginator = new QueryResultPaginator($teilnehmer, $currentPage, $anzperpag);
@@ -861,7 +861,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $arrberater = array();
         $usergroups4berater = explode(",", $this->user['usergroup']);
         if($this->niqbid == '12345' || $this->niqbid == '10002') { // Admin
-            $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected);
+            $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected ?? '%');
             foreach($usergroups4bundesland as $ug) {
                 $ugberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $ug);
                 foreach($ugberater as $currber) {
@@ -956,7 +956,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             // if($anz > 1) $alleteilnehmer[$key]->setDublette(TRUE);
                         
             foreach($tnuiddublette as $tnuid) {
-                if($teilnehmer[$j]->getNachname() == $tnuid['nachname'] && $teilnehmer[$j]->getVorname() == $tnuid['vorname'] && $teilnehmer[$j]->getEmail() == $tnuid['email']) $alleteilnehmer[$key]->setDublette(TRUE);
+                if($teilnehmer->getNachname() == $tnuid['nachname'] && $teilnehmer->getVorname() == $tnuid['vorname'] && $teilnehmer->getEmail() == $tnuid['email'] && $teilnehmer->getAnonym() == '0') $alleteilnehmer[$key]->setDublette(TRUE);
             }
             
             // Modul
@@ -1042,6 +1042,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $staatselected = $valArray['filterstaat'] ?? '%';
         $landkreisselected = $valArray['filterlandkreis'] ?? '%';
         $berufselected = $valArray['filterreferenzberuf'] ?? '%';
+		$brancheselected = $valArray['filterbranche'] ?? '%';
         
         // ************ Start - Beraterarray bestimmen *****************
         $arrberater = array();
@@ -1078,7 +1079,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $arrbranchen[$branche->getBrancheid()] = $branche->getTitel();
         }
                         
-        $orte = $this->ortRepository->findByBundesland($bundeslandselected);        
+        $orte = $this->ortRepository->findByBundesland($bundeslandselected);
+		$arrorte = array();        
         foreach($orte as $ort) {
             $arrorte[$ort->getPlz()] = $ort->getLandkreis();
         }
@@ -1122,7 +1124,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 
         $anzteilnehmers = 0;
         if($filtervon != '' && $filterbis != '') {
-            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer($type, $del, $filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected, $beraterselected, $landkreisselected, $berufselected);
+            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer($type, $del, $filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected, $beraterselected, $landkreisselected, $berufselected, $brancheselected);
             $anzteilnehmers = count($teilnehmers);
         }
         
@@ -1524,7 +1526,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }elseif(isset($valArray['export']) && $fberatungsstatus == '15') {
             
             // nur Folgekontakte exportieren
-            $folgekontakte = $this->folgekontaktRepository->fksearch4export($filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected, $beraterselected, $landkreisselected, $berufselected);
+            $folgekontakte = $this->folgekontaktRepository->fksearch4export($filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected, $beraterselected, $landkreisselected, $berufselected, $brancheselected);
             $anzfolgekontakte = count($folgekontakte);
             
             if($anzfolgekontakte == 0) {
@@ -1542,6 +1544,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                         'filterberater' => $beraterselected,
                         'filterlandkreis' => $landkreisselected,
                         'filterreferenzberuf' => $berufselected,
+						'filterbranche' => $brancheselected,
                         'filteron' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus')
                     ]
                     );
@@ -1605,6 +1608,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     'filterberater' => $beraterselected,
                     'filterlandkreis' => $landkreisselected,
                     'filterberuf' => $berufselected,
+					'filterbranche' => $brancheselected,
                     'filteron' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus')                    
                 ]
                 );
@@ -1615,7 +1619,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
              
             if($fberatungsstatus == '15') {
                 // nur Folgekontakte exportieren
-                $folgekontakte = $this->folgekontaktRepository->fksearch4export($filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected, $beraterselected, $landkreisselected, $berufselected);
+                $folgekontakte = $this->folgekontaktRepository->fksearch4export($filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected, $beraterselected, $landkreisselected, $berufselected, $brancheselected);
                 $anzgesamt = count($folgekontakte);
             } else {
                 $anzgesamt = $anzteilnehmers;
@@ -1639,10 +1643,12 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     'staatenarr' => $staatenarr,
                     'alleberater' => $arrberater ?? '',
                     'alleberufe' => $arrberufe,
+					'allebranchen' => $arrbranchen,
                     'gewlandkreise' => $arrlandkreise,
                     'filterberater' => $beraterselected,
                     'filterlandkreis' => $landkreisselected,
                     'filterberuf' => $berufselected,
+					'filterbranche' => $brancheselected,
                     'anzbstellen' => $this->anzbstellen
                 ]
                 );
@@ -2697,7 +2703,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $arrberater = array();
         $usergroups4berater = explode(",", $this->user['usergroup']);
         if($this->niqbid == '12345' || $this->niqbid == '10002') { // Admin
-            $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected);
+            $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected ?? '%');
             foreach($usergroups4bundesland as $ug) {
                 $ugberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $ug);
                 foreach($ugberater as $currber) {
