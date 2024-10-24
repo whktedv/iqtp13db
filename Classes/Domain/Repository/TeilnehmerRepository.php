@@ -311,7 +311,10 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         ->addSelectLiteral('COUNT(*) AS count')
         ->from('tx_iqtp13db_domain_model_teilnehmer')
         ->where(
-            $queryBuilder->expr()->eq('niqidberatungsstelle', $queryBuilder->createNamedParameter($niqbid, Connection::PARAM_INT)),
+            $queryBuilder->expr()->and(
+                $queryBuilder->expr()->eq('niqidberatungsstelle', $queryBuilder->createNamedParameter($niqbid, Connection::PARAM_INT)),
+                $queryBuilder->expr()->neq('beratungsstatus', $queryBuilder->createNamedParameter(99, Connection::PARAM_INT))
+                ),
         )
         ->groupBy('nachname', 'vorname', 'email')
         ->having('count > 1');
@@ -393,7 +396,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             $filternach = "FROM_UNIXTIME(verification_date)";            
         }
         
-        if($niqbid == '12345' || $niqbid = '100002') { // Admin oder RP Admin? dann Beratungsstelle ignorieren
+        if($niqbid == '12345' || $niqbid == '100002') { // Admin oder RP Admin? dann Beratungsstelle ignorieren
             $niqbid = '%';
         }
         
