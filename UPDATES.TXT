@@ -108,4 +108,9 @@ Update 23.10.2024
 - Bugfixing Filter
 - Erweiterung Export um Berufsgruppe
 
+Update 25.10.2024
+- Bugfixes
+- Übersicht für Länder-Admins angepasst
+- Beschreibung "grauer Kasten" in E-Mail in Einstellungen änderbar
+
 Neu: 

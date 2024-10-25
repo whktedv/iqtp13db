@@ -248,7 +248,7 @@ $(document).ready(function() {
 			        'undo', 'redo',
 			        '|', 'bold', 'italic', 
 			        '|', 'link', 'blockQuote',
-			        '|', 'numberedList', 'outdent', 'indent'
+			        '|', 'numberedList', 'bulletedList', 'outdent', 'indent'
 			    ],
 			    shouldNotGroupWhenFull: true
 			}
@@ -268,7 +268,7 @@ $(document).ready(function() {
 			        'undo', 'redo',
 			        '|', 'bold', 'italic', 
 			        '|', 'link', 'blockQuote',
-			        '|', 'numberedList', 'outdent', 'indent'
+			        '|', 'numberedList', 'bulletedList', 'outdent', 'indent'
 			    ],
 			    shouldNotGroupWhenFull: true
 			}
@@ -288,7 +288,27 @@ $(document).ready(function() {
 			        'undo', 'redo',
 			        '|', 'bold', 'italic', 
 			        '|', 'link', 'blockQuote',
-			        '|', 'numberedList', 'outdent', 'indent'
+			        '|', 'numberedList', 'bulletedList', 'outdent', 'indent'
+			    ],
+			    shouldNotGroupWhenFull: true
+			}
+
+		} )
+		.then( editor => {
+			window.editor = editor;
+		} )
+		.catch( err => {
+			//console.error( err.stack );
+		} );
+	
+	ClassicEditor
+		.create( document.querySelector( '#textareacustomtext3' ), {
+			toolbar: {
+			    items: [
+			        'undo', 'redo',
+			        '|', 'bold', 'italic', 
+			        '|', 'link',
+			        '|', 'numberedList', 'bulletedList', 'outdent', 'indent'
 			    ],
 			    shouldNotGroupWhenFull: true
 			}

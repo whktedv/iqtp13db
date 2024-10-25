@@ -288,10 +288,10 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         ksort($days4beratung);
         ksort($days4wartezeit);
         
-        $aktuelleanmeldungen = $this->teilnehmerRepository->countAllOrder4Status(0, $this->niqbid)[0]['anzahl'] + $this->teilnehmerRepository->countAllOrder4Status(1, $this->niqbid)[0]['anzahl'];
-        $aktuellerstberatungen = $this->teilnehmerRepository->countAllOrder4Status(2, $this->niqbid)[0]['anzahl'];
-        $aktuellberatungenfertig = $this->teilnehmerRepository->countAllOrder4Status(3, $this->niqbid)[0]['anzahl'];
-        $archivierttotal = $this->teilnehmerRepository->countAllOrder4Status(4, $this->niqbid)[0]['anzahl'];
+        $aktuelleanmeldungen = $this->teilnehmerRepository->countAllOrder4Status(0, $this->niqbid, $thisbundesland)[0]['anzahl'] + $this->teilnehmerRepository->countAllOrder4Status(1, $this->niqbid, $thisbundesland)[0]['anzahl'];
+        $aktuellerstberatungen = $this->teilnehmerRepository->countAllOrder4Status(2, $this->niqbid, $thisbundesland)[0]['anzahl'];
+        $aktuellberatungenfertig = $this->teilnehmerRepository->countAllOrder4Status(3, $this->niqbid, $thisbundesland)[0]['anzahl'];
+        $archivierttotal = $this->teilnehmerRepository->countAllOrder4Status(4, $this->niqbid, $thisbundesland)[0]['anzahl'];
         
         // keine Berater vorhanden?
         $alleberater = $this->beraterRepository->findAllBerater($this->settings['beraterstoragepid']);
@@ -2739,6 +2739,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'niqbid' => $this->niqbid,
                 'custominfotextstart' => $this->usergroup->getCustominfotextstart() ?? '',
                 'custominfotextmail'=> $this->usergroup->getCustominfotextmail() ?? '',
+                'beschreibunggrauerkasten' => $this->usergroup->getDescription() ?? '',
                 'anzbstellen' => $this->anzbstellen
             ]
         );
@@ -2754,6 +2755,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 
         $this->usergroup->setCustominfotextstart($valArray['custominfotextstart']);
         $this->usergroup->setCustominfotextmail($valArray['custominfotextmail']);
+        $this->usergroup->setDescription($valArray['beschreibunggrauerkasten']);
         
         $this->userGroupRepository->update($this->usergroup);
         

@@ -438,11 +438,14 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      * @param $beratungsstatus
      */
-    public function countAllOrder4Status($beratungsstatus, $niqbid)
+    public function countAllOrder4Status($beratungsstatus, $niqbid, $bundesland)
     {
         $query = $this->createQuery();
-        $query->statement("SELECT count(*) as anzahl FROM tx_iqtp13db_domain_model_teilnehmer WHERE
-				beratungsstatus = '$beratungsstatus' AND deleted = 0 AND hidden = 0 AND niqidberatungsstelle LIKE '$niqbid'");
+        $query->statement("SELECT count(*) as anzahl 
+                            FROM tx_iqtp13db_domain_model_teilnehmer as t 
+                            LEFT JOIN fe_groups as g ON t.niqidberatungsstelle = g.niqbid 
+                            WHERE
+				            beratungsstatus = '$beratungsstatus' AND t.deleted = 0 AND t.hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND g.bundesland LIKE '$bundesland'");
         
         $query = $query->execute(true);
         return $query;
