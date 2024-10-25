@@ -451,7 +451,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         return $query;
     }
     
-    public function count4Status($datum1, $datum2, $niqbid, $bstatus)
+    public function count4Status($datum1, $datum2, $niqbid, $bstatus, $bundesland)
     {
         $addfield = '';
         if($bstatus == 1) $field = 'FROM_UNIXTIME(verification_date)';
@@ -467,12 +467,13 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         }
         
         $query = $this->createQuery();        
-        $query->statement("SELECT count(*) as anzahl FROM tx_iqtp13db_domain_model_teilnehmer 
-                  WHERE 
-        	    DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),$field) <= 0 AND
-        	    DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),$field) >= 0
-				$addfield 
-				AND deleted = 0 AND hidden = 0 AND niqidberatungsstelle LIKE '$niqbid'");
+        $query->statement("SELECT count(*) as anzahl FROM tx_iqtp13db_domain_model_teilnehmer as t 
+                            LEFT JOIN fe_groups as g ON t.niqidberatungsstelle = g.niqbid 
+                          WHERE 
+                	    DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),$field) <= 0 AND
+                	    DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),$field) >= 0
+        				$addfield 
+        				AND t.deleted = 0 AND t.hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND g.bundesland LIKE '$bundesland'");
                 
         $query = $query->execute(true);
         return $query;

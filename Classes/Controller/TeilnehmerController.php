@@ -115,7 +115,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function showAction(): ResponseInterface
     {
         $reftag = date("d.m.Y");
-        $neuanmeldungenheute = $this->teilnehmerRepository->count4Status($reftag, $reftag, '%', 1)[0]['anzahl'];
+        $neuanmeldungenheute = $this->teilnehmerRepository->count4Status($reftag, $reftag, '%', 1, '%')[0]['anzahl'];
         
         $aktuelleanmeldungenunbestaetigt = $this->teilnehmerRepository->countAllOrder4Status(0, '%', '%')[0]['anzahl'];
         $aktuelleanmeldungenbestaetigt = $this->teilnehmerRepository->countAllOrder4Status(1, '%', '%')[0]['anzahl'];
@@ -124,7 +124,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $aktuellerstberatungen = $this->teilnehmerRepository->countAllOrder4Status(2, '%', '%')[0]['anzahl'];
         $aktuellberatungenfertig = $this->teilnehmerRepository->countAllOrder4Status(3, '%', '%')[0]['anzahl'];
         
-        $statsgesamtfertigberaten = $this->teilnehmerRepository->count4Status("01.1.1970", "31.12.".date('Y'), '%', 3)[0]['anzahl'];
+        $statsgesamtfertigberaten = $this->teilnehmerRepository->count4Status("01.1.1970", "31.12.".date('Y'), '%', 3, '%')[0]['anzahl'];
         
         $data = [
             'anmeldungenheute' => $neuanmeldungenheute,

@@ -288,10 +288,10 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         ksort($days4beratung);
         ksort($days4wartezeit);
         
-        $aktuelleanmeldungen = $this->teilnehmerRepository->countAllOrder4Status(0, $this->niqbid, $thisbundesland)[0]['anzahl'] + $this->teilnehmerRepository->countAllOrder4Status(1, $this->niqbid, $thisbundesland)[0]['anzahl'];
-        $aktuellerstberatungen = $this->teilnehmerRepository->countAllOrder4Status(2, $this->niqbid, $thisbundesland)[0]['anzahl'];
-        $aktuellberatungenfertig = $this->teilnehmerRepository->countAllOrder4Status(3, $this->niqbid, $thisbundesland)[0]['anzahl'];
-        $archivierttotal = $this->teilnehmerRepository->countAllOrder4Status(4, $this->niqbid, $thisbundesland)[0]['anzahl'];
+        $aktuelleanmeldungen = $this->teilnehmerRepository->countAllOrder4Status(0, $thisniqbid, $thisbundesland)[0]['anzahl'] + $this->teilnehmerRepository->countAllOrder4Status(1, $thisniqbid, $thisbundesland)[0]['anzahl'];
+        $aktuellerstberatungen = $this->teilnehmerRepository->countAllOrder4Status(2, $thisniqbid, $thisbundesland)[0]['anzahl'];
+        $aktuellberatungenfertig = $this->teilnehmerRepository->countAllOrder4Status(3, $thisniqbid, $thisbundesland)[0]['anzahl'];
+        $archivierttotal = $this->teilnehmerRepository->countAllOrder4Status(4, $thisniqbid, $thisbundesland)[0]['anzahl'];
         
         // keine Berater vorhanden?
         $alleberater = $this->beraterRepository->findAllBerater($this->settings['beraterstoragepid']);
@@ -308,7 +308,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         for($i = 7; $i >= 0; $i--) {
             $reftag = date("d.m.Y", strtotime( '-'.$i.' days' ));
             $neuanmeldungen7tage[$i]["tag"] = date("l, d.m.Y", strtotime( '-'.$i.' days' ));
-            $neuanmeldungen7tage[$i]["wert"] = $this->teilnehmerRepository->count4Status($reftag, $reftag, $this->niqbid, 1)[0]['anzahl'];
+            $neuanmeldungen7tage[$i]["wert"] = $this->teilnehmerRepository->count4Status($reftag, $reftag, $thisniqbid, 1, '%')[0]['anzahl'];
         }
         
         // ******************** EXPORT Statistik ****************************
