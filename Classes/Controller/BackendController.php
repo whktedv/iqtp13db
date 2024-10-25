@@ -209,7 +209,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'currentusergroup', $niqbidgruppeselected);
             $this->niqbid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'currentusergroup');
         }
-        
         // Gruppenwechsel bis hier 
         
         $thisgroup = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $this->niqbid);
@@ -258,22 +257,27 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $days4beratung = $emptystatusarray;
         $days4wartezeit = $emptystatusarray;
         
-        $ergarrayangemeldete = $this->teilnehmerRepository->countTNby($this->niqbid,'%', 1, $jahrselected, '%');
+        // (Bundesland-)Admin? Ja, dann Landes-Statistik anzeigen
+        $thisniqbid = intval($this->niqbid) < 999 ? '%' : $this->niqbid;
+        $thisbundesland = intval($this->niqbid) < 999 ? $thisgroup[0]->getBundesland() : '%';
+        
+        
+        $ergarrayangemeldete = $this->teilnehmerRepository->countTNby($thisniqbid, $thisbundesland, 1, $jahrselected, '%');
         foreach($ergarrayangemeldete as $erg) $angemeldeteTN[$erg['monat']] = $erg['anzahl'];
         
-        $ergarrayerstberatung = $this->teilnehmerRepository->countTNby($this->niqbid, '%', 2, $jahrselected, '%');
+        $ergarrayerstberatung = $this->teilnehmerRepository->countTNby($thisniqbid, $thisbundesland, 2, $jahrselected, '%');
         foreach($ergarrayerstberatung as $erg) $erstberatung[$erg['monat']] = $erg['anzahl'];
         
-        $ergarrayberatungfertig = $this->teilnehmerRepository->countTNby($this->niqbid, '%', 3, $jahrselected, '%');
+        $ergarrayberatungfertig = $this->teilnehmerRepository->countTNby($thisniqbid, $thisbundesland, 3, $jahrselected, '%');
         foreach($ergarrayberatungfertig as $erg) $beratungfertig[$erg['monat']] = $erg['anzahl'];
         
-        $ergarrayfolgekontakte = $this->folgekontaktRepository->countFKby($this->niqbid, '%', $jahrselected, '%');
+        $ergarrayfolgekontakte = $this->folgekontaktRepository->countFKby($thisniqbid, $thisbundesland, $jahrselected, '%');
         foreach($ergarrayfolgekontakte as $erg) $qfolgekontakte[$erg['monat']] = $erg['anzahl'];
         
-        $ergarraywartezeitanmeldung = $this->teilnehmerRepository->calcwaitingdays($this->niqbid, '%', 'anmeldung', $jahrselected, '%');
+        $ergarraywartezeitanmeldung = $this->teilnehmerRepository->calcwaitingdays($thisniqbid, $thisbundesland, 'anmeldung', $jahrselected, '%');
         foreach($ergarraywartezeitanmeldung as $erg) $days4wartezeit[$erg['monat']] = $erg['wert'];
         
-        $ergarraywartezeitberatung = $this->teilnehmerRepository->calcwaitingdays($this->niqbid, '%', 'beratung', $jahrselected, '%');
+        $ergarraywartezeitberatung = $this->teilnehmerRepository->calcwaitingdays($thisniqbid, $thisbundesland, 'beratung', $jahrselected, '%');
         foreach($ergarraywartezeitberatung as $erg) $days4beratung[$erg['monat']] = $erg['wert'];
         
         ksort($angemeldeteTN);
@@ -486,7 +490,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         // ************ Start - Beraterarray bestimmen *****************
         $arrberater = array();
         $usergroups4berater = explode(",", $this->user['usergroup']);
-        if($this->niqbid == '12345' || $this->niqbid == '10002') { // Admin
+        if($this->niqbid == '12345' || intval($this->niqbid) < 999) { // Admin
             $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected ?? '%');
             foreach($usergroups4bundesland as $ug) {
                 $ugberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $ug);
@@ -621,7 +625,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         // ************ Start - Beraterarray bestimmen *****************
         $arrberater = array();
         $usergroups4berater = explode(",", $this->user['usergroup']);
-        if($this->niqbid == '12345' || $this->niqbid == '10002') { // Admin
+        if($this->niqbid == '12345' || intval($this->niqbid) < 999) { // Admin
             $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected ?? '%');
             foreach($usergroups4bundesland as $ug) {
                 $ugberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $ug);
@@ -757,7 +761,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         // ************ Start - Beraterarray bestimmen *****************
         $arrberater = array();
         $usergroups4berater = explode(",", $this->user['usergroup']);
-        if($this->niqbid == '12345' || $this->niqbid == '10002') { // Admin
+        if($this->niqbid == '12345' || intval($this->niqbid) < 999) { // Admin
             $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected ?? '%');
             foreach($usergroups4bundesland as $ug) {
                 $ugberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $ug);
@@ -860,7 +864,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         // ************ Start - Beraterarray bestimmen *****************
         $arrberater = array();
         $usergroups4berater = explode(",", $this->user['usergroup']);
-        if($this->niqbid == '12345' || $this->niqbid == '10002') { // Admin
+        if($this->niqbid == '12345' || intval($this->niqbid) < 999) { // Admin
             $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected ?? '%');
             foreach($usergroups4bundesland as $ug) {
                 $ugberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $ug);
@@ -1047,7 +1051,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         // ************ Start - Beraterarray bestimmen *****************
         $arrberater = array();
         $usergroups4berater = explode(",", $this->user['usergroup']);
-        if($this->niqbid == '12345' || $this->niqbid == '10002') { // Admin
+        if($this->niqbid == '12345' || intval($this->niqbid) < 999) { // Admin
             $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected);
             foreach($usergroups4bundesland as $ug) {
                 $ugberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $ug);
@@ -2702,7 +2706,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         // ************ Start - Beraterarray bestimmen *****************
         $arrberater = array();
         $usergroups4berater = explode(",", $this->user['usergroup']);
-        if($this->niqbid == '12345' || $this->niqbid == '10002') { // Admin
+        if($this->niqbid == '12345' || intval($this->niqbid) < 999) { // Admin
             $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected ?? '%');
             foreach($usergroups4bundesland as $ug) {
                 $ugberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $ug);

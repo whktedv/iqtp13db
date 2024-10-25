@@ -135,35 +135,6 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         $thisgroup = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $this->niqbid);
         $thisberatungsstelle = $thisgroup[0]->getTitle();
         
-                
-        /* Admin Gruppenwechsel Beratungsstelle
-        $backenduser = $this->beraterRepository->findByUid($this->user['uid']);
-        $backendusergroups = array();
-        $backendusergroups = $backenduser->getUsergroup();
-        $niqbidaktuellegruppe = $this->usergroup->getNiqbid();
-        if(isset($valArray['remove'])) {
-            $backenduser->removeUsergroup($backenduser->getUsergroup()[1]);
-            $this->beraterRepository->update($backenduser);
-            
-            $thisberatungsstelle = $backenduser->getUsergroup()[0]->getTitle();
-            $thisniqbid = $backenduser->getUsergroup()[0]->getNiqbid();
-            $niqbidselected = $thisniqbid;
-        }elseif(isset($valArray['bstellen'])) {
-            if(count($backenduser->getUsergroup()) > 1) $backenduser->removeUsergroup($backenduser->getUsergroup()[1]); 
-            $niqbidselected = $valArray['bstellen'];
-            $selectedgroup = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $niqbidselected);
-            $backenduser->addUserGroup($selectedgroup[0]);
-            $this->beraterRepository->update($backenduser);
-                        
-            $thisberatungsstelle = $selectedgroup[0] != NULL ? $selectedgroup[0]->getTitle() : $this->usergroup->getTitle();
-            $thisniqbid = $selectedgroup[0] != NULL ? $selectedgroup[0]->getNiqbid() : $this->niqbid;
-        } else {
-            $currentbackendusergroup = count($backenduser->getUsergroup()) > 1 ? $backenduser->getUsergroup()[1] : $backenduser->getUsergroup()[0];
-            $thisniqbid = $currentbackendusergroup->getNiqbid();
-            $thisberatungsstelle = $currentbackendusergroup->getTitle();
-            $niqbidselected = $thisniqbid;
-        }
-        */
         
         $allebundeslaender = $this->userGroupRepository->findAllBundeslaender();
         

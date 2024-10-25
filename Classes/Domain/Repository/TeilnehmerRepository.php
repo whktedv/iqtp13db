@@ -396,7 +396,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             $filternach = "FROM_UNIXTIME(verification_date)";            
         }
         
-        if($niqbid == '12345' || $niqbid == '100002') { // Admin oder RP Admin? dann Beratungsstelle ignorieren
+        if($niqbid == '12345' || intval($niqbid) < 999) { // (Bundesland-)Admin dann Beratungsstelle ignorieren
             $niqbid = '%';
         }
         
