@@ -308,7 +308,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         for($i = 7; $i >= 0; $i--) {
             $reftag = date("d.m.Y", strtotime( '-'.$i.' days' ));
             $neuanmeldungen7tage[$i]["tag"] = date("l, d.m.Y", strtotime( '-'.$i.' days' ));
-            $neuanmeldungen7tage[$i]["wert"] = $this->teilnehmerRepository->count4Status($reftag, $reftag, $thisniqbid, 1, '%')[0]['anzahl'];
+            $neuanmeldungen7tage[$i]["wert"] = $this->teilnehmerRepository->count4Status($reftag, $reftag, $thisniqbid, 1, $thisbundesland)[0]['anzahl'];
         }
         
         // ******************** EXPORT Statistik ****************************

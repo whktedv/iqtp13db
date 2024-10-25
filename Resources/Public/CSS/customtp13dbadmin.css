@@ -171,6 +171,13 @@ form.filterform select, .exportfilterform select {
   border-radius: 0;
 }
 
+.exporthinweis {
+	border: 1px solid #444; 
+	background-color: #dedede; 
+	margin-bottom: 1rem; 
+	padding: 0.5rem;
+}
+
 .filterframe button[type="submit"], .filterframe button[type="submit"], .uebersicht-beratungsstelle .linkbuttons {
   background-color: #4E638D;
   border: 0px solid transparent;

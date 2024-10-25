@@ -304,24 +304,35 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      */
     public function findDubletten4Angemeldetneu($niqbid) {
         // Zugriff auf den QueryBuilder
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_iqtp13db_domain_model_teilnehmer');
-                          
-        $queryBuilder
-        ->select('nachname', 'vorname', 'email')
-        ->addSelectLiteral('COUNT(*) AS count')
-        ->from('tx_iqtp13db_domain_model_teilnehmer')
-        ->where(
-            $queryBuilder->expr()->and(
-                $queryBuilder->expr()->eq('niqidberatungsstelle', $queryBuilder->createNamedParameter($niqbid, Connection::PARAM_INT)),
-                $queryBuilder->expr()->neq('beratungsstatus', $queryBuilder->createNamedParameter(99, Connection::PARAM_INT))
-                ),
-        )
-        ->groupBy('nachname', 'vorname', 'email')
-        ->having('count > 1');
+        /*
+         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_iqtp13db_domain_model_teilnehmer');
+         
+         $queryBuilder
+         ->select('nachname', 'vorname', 'email')
+         ->addSelectLiteral('COUNT(*) AS count')
+         ->from('tx_iqtp13db_domain_model_teilnehmer')
+         ->where(
+         $queryBuilder->expr()->and(
+         $queryBuilder->expr()->eq('niqidberatungsstelle', $queryBuilder->createNamedParameter($niqbid, Connection::PARAM_INT)),
+         $queryBuilder->expr()->neq('beratungsstatus', $queryBuilder->createNamedParameter(99, Connection::PARAM_INT))
+         ),
+         )
+         ->groupBy('nachname', 'vorname', 'email')
+         ->having('count > 1');
+         
+         $duplicates = $queryBuilder->executeQuery()->fetchAll();
+         
+         return $duplicates;
+         */
+        $query = $this->createQuery();
+        $query->statement("SELECT nachname, vorname, email, count(*) as anzahl
+                            FROM tx_iqtp13db_domain_model_teilnehmer as t
+                            WHERE t.deleted = 0 AND t.hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND beratungsstatus != 99
+                            GROUP BY SOUNDEX(nachname), SOUNDEX(vorname), email
+                            HAVING anzahl > 1");
         
-        $duplicates = $queryBuilder->executeQuery()->fetchAll();
-        
-        return $duplicates;
+        $query = $query->execute(true);
+        return $query;
     }
     
     /**
