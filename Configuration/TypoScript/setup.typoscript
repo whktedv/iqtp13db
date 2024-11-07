@@ -607,6 +607,7 @@ plugin.tx_iqtp13db.settings {
 	   	4 = face-to-face
 	}
 }
+[global]
 
 # ****************************
 # ********* FARSI ************

@@ -8,6 +8,7 @@ use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Extbase\Annotation\Validate;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use TYPO3\CMS\Extbase\Http\ForwardResponse;
 
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3\CMS\Core\Pagination\ArrayPaginator;
@@ -152,7 +153,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      *
      * @return void
      */
-    public function startAction()
+    public function startAction(): ResponseInterface
     {        
         $wartungvon = new DateTime($this->settings['wartungvon'] == '' ? '01.01.2020 01:00' : $this->settings['wartungvon']);
         $wartungbis = new DateTime($this->settings['wartungbis'] == '' ? '01.01.2020 02:00' : $this->settings['wartungbis']);
@@ -160,31 +161,31 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $datum = strtotime("now");
         
         if ($this->settings['modtyp'] == 'uebersicht') {
-            $this->forward('status', 'Backend', 'Iqtp13db');
+            return (new ForwardResponse('status'))->withControllerName('Backend')->withExtensionName('Iqtp13db');
         }
         if ($this->settings['modtyp'] == 'angemeldet') {
-            $this->forward('listangemeldet', 'Backend', 'Iqtp13db');
+            return (new ForwardResponse('listangemeldet'))->withControllerName('Backend')->withExtensionName('Iqtp13db');
         }
         if ($this->settings['modtyp'] == 'erstberatung') {
-            $this->forward('listerstberatung', 'Backend', 'Iqtp13db');
+            return (new ForwardResponse('listerstberatung'))->withControllerName('Backend')->withExtensionName('Iqtp13db');
         }
         if ($this->settings['modtyp'] == 'archiv') {
-            $this->forward('listarchiv', 'Backend', 'Iqtp13db');
+            return (new ForwardResponse('listarchiv'))->withControllerName('Backend')->withExtensionName('Iqtp13db');
         }
         if ($this->settings['modtyp'] == 'export') {
-            $this->forward('export', 'Backend', 'Iqtp13db');
+            return (new ForwardResponse('export'))->withControllerName('Backend')->withExtensionName('Iqtp13db');
         }
         if ($this->settings['modtyp'] == 'berater') {
-            $this->forward('list', 'Berater', 'Iqtp13db');
+            return (new ForwardResponse('list'))->withControllerName('Berater')->withExtensionName('Iqtp13db');
         }
         if ($this->settings['modtyp'] == 'deleted') {
-            $this->forward('listdeleted', 'Backend', 'Iqtp13db');
+            return (new ForwardResponse('listdeleted'))->withControllerName('Backend')->withExtensionName('Iqtp13db');
         }
         if ($this->settings['modtyp'] == 'adminuebersicht') {
-            $this->forward('adminuebersicht', 'Administration', 'Iqtp13db');
+            return (new ForwardResponse('adminuebersicht'))->withControllerName('Administration')->withExtensionName('Iqtp13db');
         }
         if ($this->settings['modtyp'] == 'einstellungen') {
-            $this->forward('editsettings', 'Backend', 'Iqtp13db');
+            return (new ForwardResponse('editsettings'))->withControllerName('Backend')->withExtensionName('Iqtp13db');
         }
      
     }
@@ -195,7 +196,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * @param int $currentPage
      * @return void
      */
-    public function statusAction(int $currentPage = 1)
+    public function statusAction(int $currentPage = 1): ResponseInterface
     {
         $valArray = $this->request->getArguments();
         
@@ -296,7 +297,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         // keine Berater vorhanden?
         $alleberater = $this->beraterRepository->findAllBerater($this->settings['beraterstoragepid']);
         if(count($alleberater) == 0) {
-            $this->addFlashMessage('Es sind noch keine Berater:innen vorhanden. Bitte im Menü Berater*innen anlegen.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->addFlashMessage('Es sind noch keine Berater:innen vorhanden. Bitte im Menü Berater*innen anlegen.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
         }
         
         $historie = $this->historieRepository->findAllDesc($this->niqbid);
@@ -387,6 +388,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'anzbstellen' => $this->anzbstellen
             ]
             );
+        return $this->htmlResponse();
     }
     
     /**
@@ -395,12 +397,12 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * @param int $currentPage
      * @return void
      */
-    public function listangemeldetAction(int $currentPage = 1)
+    public function listangemeldetAction(int $currentPage = 1): ResponseInterface
     {
         $valArray = $this->request->getArguments();
         
         if(($valArray['allemodule'] ?? '') == '1') {
-            $this->redirect('showsearchresult', 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $valArray));
+            return $this->redirect('showsearchresult', 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $valArray));
         }
         // zuletzt bearbeiteten User zurücksetzen
         if(isset($valArray['tn'])) {
@@ -526,6 +528,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'anzbstellen' => $this->anzbstellen,
                 'abschluesse' => $abschluesse
             ]);
+        return $this->htmlResponse();
     }
     
     /**
@@ -534,11 +537,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * @param int $currentPage
      * @return void
      */
-    public function listerstberatungAction(int $currentPage = 1)
+    public function listerstberatungAction(int $currentPage = 1): ResponseInterface
     {
         $valArray = $this->request->getArguments();
         if(($valArray['allemodule'] ?? '') == '1') {
-            $this->redirect('showsearchresult', 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $valArray));
+            return $this->redirect('showsearchresult', 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $valArray));
         }
         // zuletzt bearbeiteten User zurücksetzen
         if(isset($valArray['tn'])) {
@@ -664,6 +667,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'anzbstellen' => $this->anzbstellen
             ]
             );
+        return $this->htmlResponse();
     }
     
     /**
@@ -672,11 +676,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * @param int $currentPage
      * @return void
      */
-    public function listarchivAction(int $currentPage = 1)
+    public function listarchivAction(int $currentPage = 1): ResponseInterface
     {
         $valArray = $this->request->getArguments();
         if(($valArray['allemodule'] ?? '') == '1') {
-            $this->redirect('showsearchresult', 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $valArray));
+            return $this->redirect('showsearchresult', 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $valArray));
         }
         // zuletzt bearbeiteten User zurücksetzen
         if(isset($valArray['tn'])) {
@@ -801,6 +805,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'anzbstellen' => $this->anzbstellen
             ]
             );
+        return $this->htmlResponse();
     }
     
     /**
@@ -809,11 +814,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * @param int $currentPage
      * @return void
      */
-    public function listdeletedAction(int $currentPage = 1)
+    public function listdeletedAction(int $currentPage = 1): ResponseInterface
     {
         $valArray = $this->request->getArguments();
         if(($valArray['allemodule'] ?? '') == '1') {
-            $this->redirect('showsearchresult', 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $valArray));
+            return $this->redirect('showsearchresult', 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $valArray));
         }
         if(!empty($valArray['callerpage'])) $currentPage = $valArray['callerpage'];
         
@@ -900,6 +905,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'anzbstellen' => $this->anzbstellen
             ]
             );
+        return $this->htmlResponse();
     }
     
     /**
@@ -907,7 +913,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * @param int $currentPage
      * @return void
      */
-    public function showsearchresultAction(int $currentPage = 1)
+    public function showsearchresultAction(int $currentPage = 1): ResponseInterface
     {        
         $valArray = $this->request->getArguments();
         
@@ -919,8 +925,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $valArray['searchparams']['name'] == '' &&
             $valArray['searchparams']['ort'] == '' &&
             $valArray['searchparams']['uid'] == '') {
-                $this->addFlashMessage("FEHLER: Bitte Suchkriterium angeben.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-                $this->redirect($valArray['searchparameter']['action'] ?? 'listangemeldet', 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1'));
+                $this->addFlashMessage("FEHLER: Bitte Suchkriterium angeben.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+                return $this->redirect($valArray['searchparameter']['action'] ?? 'listangemeldet', 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1'));
         }
         
         if(array_key_exists("searchparams", $valArray)) {
@@ -929,7 +935,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             if($valArray['action'] == 'showsearchresult') {
                 if(!isset($valArray['filteran'])) {
                     // Filterfelder sind leer, weil z.B. Abschlüsse geöffnet wurden, dann ist die Suche nicht mehr aktiv und das aktive Standardmodul kann aufgerufen werden
-                    $this->redirect('start');
+                    return $this->redirect('start');
                 } else {
                     $searchparams['uid'] = $valArray['uid'];
                     $searchparams['name'] = $valArray['name'];
@@ -1009,6 +1015,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'anzbstellen' => $this->anzbstellen
             ]
         );
+        return $this->htmlResponse();
     }
     
     /**
@@ -1017,7 +1024,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * @param int $currentPage
      * @return void
      */
-    public function exportAction(int $currentPage = 1)
+    public function exportAction(int $currentPage = 1): ResponseInterface
     {
         $valArray = $this->request->getArguments();
         
@@ -1137,7 +1144,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         if (isset($valArray['export']) && $fberatungsstatus != '' && $fberatungsstatus != '15') {
             
             if($anzteilnehmers == 0) {
-                $this->addFlashMessage("Keine Einträge, bitte Suchparameter anpassen.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                $this->addFlashMessage("Keine Einträge, bitte Suchparameter anpassen.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
                 $this->view->assignMultiple(
                     [
                         'anzgesamt' => $anzteilnehmers,
@@ -1534,7 +1541,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $anzfolgekontakte = count($folgekontakte);
             
             if($anzfolgekontakte == 0) {
-                $this->addFlashMessage("Keine Einträge, bitte Suchparameter anpassen.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                $this->addFlashMessage("Keine Einträge, bitte Suchparameter anpassen.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
                 $this->view->assignMultiple(
                     [
                         'anzgesamt' => $anzfolgekontakte,
@@ -1598,7 +1605,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             }
         }elseif(isset($valArray['export']) && $valArray['export'] && $fberatungsstatus == '') {
             
-            $this->addFlashMessage("Bitte Status für Export auswählen.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->addFlashMessage("Bitte Status für Export auswählen.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
             $this->view->assignMultiple(
                 [
                     'anzgesamt' => count($teilnehmers),
@@ -1657,6 +1664,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 ]
                 );
         }
+        return $this->htmlResponse();
     }
     
      /**
@@ -1677,12 +1685,12 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $tnanonym = $thistn->getAnonym();
             $anonymeberatung = $valArray['newanonymeberatung'] ?? '';
             if($anonymeberatung == '1' || $tnanonym == '1') {
-                $this->addFlashMessage("Bitte beachten: Für anonyme Beratungen ist zur Wahrung des Datenschutzes kein Dokumentenupload möglich!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+                $this->addFlashMessage("Bitte beachten: Für anonyme Beratungen ist zur Wahrung des Datenschutzes kein Dokumentenupload möglich!", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
             }            
         } else {
             // TN ist (nicht) mehr vorhanden (gelöscht z.B. durch Task)
-            $this->addFlashMessage("FEHLER: Datensatz mit ID $tnuid nicht vorhanden.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-            $this->redirect($valArray['calleraction'] ?? 'listangemeldet', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1'));
+            $this->addFlashMessage("FEHLER: Datensatz mit ID $tnuid nicht vorhanden.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+            return $this->redirect($valArray['calleraction'] ?? 'listangemeldet', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1'));
         }
     }
     
@@ -1692,12 +1700,12 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return void
      */
-    public function showAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    public function showAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
     {
         $valArray = $this->request->getArguments();
         $language = $this->request->getAttribute('language');
-        $isocode= $language->getTwoLetterIsoCode();
-                
+        $isocode  = $language->getLocale()->getLanguageCode();
+        
         if(array_key_exists("searchparams", $valArray)) {
             $searchparams = $valArray['searchparams'];
         }
@@ -1754,6 +1762,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'anzbstellen' => $this->anzbstellen
             ]
             );
+        return $this->htmlResponse();
     }
     
     /**
@@ -1766,7 +1775,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $anonymeberatung = $valArray['newanonymeberatung'] ?? '';
         if($anonymeberatung == '1') {
-            $this->addFlashMessage("Bitte beachten: Für anonyme Beratungen ist zur Wahrung des Datenschutzes kein Dokumentenupload möglich!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+            $this->addFlashMessage("Bitte beachten: Für anonyme Beratungen ist zur Wahrung des Datenschutzes kein Dokumentenupload möglich!", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
         }
     }
     
@@ -1775,7 +1784,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      *
      * @return void
      */
-    public function newAction()
+    public function newAction(): ResponseInterface
     {
         $valArray = $this->request->getArguments();
         
@@ -1813,7 +1822,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $jahre[$jahr] = (String)$jahr;
         }
      
-        $uriBuilder = $this->controllerContext->getUriBuilder();
+        $uriBuilder = $this->uriBuilder;
         $uriBuilder->reset();
         if($group->getEinwilligungserklaerungsseite() != 0) {
             $uriBuilder->setTargetPageUid($group->getEinwilligungserklaerungsseite());
@@ -1847,6 +1856,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'anzbstellen' => $this->anzbstellen
             ]
             );
+        return $this->htmlResponse();
     }
     
     /**
@@ -1860,12 +1870,12 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $erstberatungabgeschlossen = $valArray['teilnehmer']['erstberatungabgeschlossen'] ?? '';
         
         if($beratungdatum != '' && !$this->generalhelper->validateDateYmd($beratungdatum)) {
-            $this->addFlashMessage("FEHLER: Datensatz NICHT gespeichert. 'Beratung Datum' ungültige Eingabe. Datum im Format JJJJ-MM-TT eintragen!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-            $this->redirect($valArray['calleraction'] ?? 'new', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
+            $this->addFlashMessage("FEHLER: Datensatz NICHT gespeichert. 'Beratung Datum' ungültige Eingabe. Datum im Format JJJJ-MM-TT eintragen!", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+            return $this->redirect($valArray['calleraction'] ?? 'new', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
         }
         if($erstberatungabgeschlossen != '' && !$this->generalhelper->validateDateYmd($erstberatungabgeschlossen)) {
-            $this->addFlashMessage("FEHLER: Datensatz NICHT gespeichert. 'Erstberatung abgeschlossen' ungültige Eingabe. Datum im Format JJJJ-MM-TT eintragen!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-            $this->redirect($valArray['calleraction'] ?? 'new', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
+            $this->addFlashMessage("FEHLER: Datensatz NICHT gespeichert. 'Erstberatung abgeschlossen' ungültige Eingabe. Datum im Format JJJJ-MM-TT eintragen!", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+            return $this->redirect($valArray['calleraction'] ?? 'new', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
         }
     }
     
@@ -1875,23 +1885,23 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return void
      */
-    public function createAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    public function createAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
     {
         $valArray = $this->request->getArguments();
         
         if($teilnehmer->getVerificationDate() == 0 && $teilnehmer->getNacherfassung() == 0 && ($this->generalhelper->validateDateYmd($teilnehmer->getErstberatungabgeschlossen()) || $this->generalhelper->validateDateYmd($teilnehmer->getBeratungdatum()))) {
-            $this->addFlashMessage("HINWEIS: Bitte unmittelbar nach Eintragung Einwilligung anfordern!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->addFlashMessage("HINWEIS: Bitte unmittelbar nach Eintragung Einwilligung anfordern!", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
         }
         
         if($valArray['newnacherfassung'] == '1' && $teilnehmer->getNacherfassung() == '') {
             $teilnehmer->setBeratungsstatus(99);
-            $this->addFlashMessage("Datensatz NICHT gespeichert. Feld 'Nacherfassung' muss angekreuzt sein!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);            
+            $this->addFlashMessage("Datensatz NICHT gespeichert. Feld 'Nacherfassung' muss angekreuzt sein!", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);            
         } elseif($this->generalhelper->validateDateYmd($teilnehmer->getErstberatungabgeschlossen()) && !$this->generalhelper->validateDateYmd($teilnehmer->getBeratungdatum())) {
             $teilnehmer->setBeratungsstatus(99);
-            $this->addFlashMessage("Datensatz NICHT gespeichert. 'Datum Erstberatung' muss eingetragen sein, wenn 'Erstberatung abgeschlossen' ausgefüllt ist.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->addFlashMessage("Datensatz NICHT gespeichert. 'Datum Erstberatung' muss eingetragen sein, wenn 'Erstberatung abgeschlossen' ausgefüllt ist.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
         } elseif($teilnehmer->getNacherfassung() == 1 && (!$this->generalhelper->validateDateYmd($teilnehmer->getBeratungdatum()) || !$this->generalhelper->validateDateYmd($teilnehmer->getErstberatungabgeschlossen()))) {
             $teilnehmer->setBeratungsstatus(99);
-            $this->addFlashMessage("Datensatz NICHT gespeichert. Bei Nacherfassungen müssen -Datum Erstberatung– und -Erstberatung abgeschlossen- ausgefüllt sein.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->addFlashMessage("Datensatz NICHT gespeichert. Bei Nacherfassungen müssen -Datum Erstberatung– und -Erstberatung abgeschlossen- ausgefüllt sein.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
         } else {
             $teilnehmer->setBeratungsstatus(0);
         }
@@ -1920,7 +1930,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         // 07.06.2023 auskommentiert, weil ggf. nicht notwendig: $tfolder = $this->generalhelper->createFolder($teilnehmer, $this->storageRepository->findAll());
         
-        $this->redirect('edit', 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'], 'newnacherfassung' => $valArray['newnacherfassung']));
+        return $this->redirect('edit', 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'], 'newnacherfassung' => $valArray['newnacherfassung']));
     }
     
     /**
@@ -1942,7 +1952,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $anonymeberatung = $valArray['newanonymeberatung'] ?? '';
                 
                 if($anonymeberatung == '1' || $tnanonym == '1') {
-                    $this->addFlashMessage("Bitte beachten: Für anonyme Beratungen ist zur Wahrung des Datenschutzes kein Dokumentenupload möglich!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+                    $this->addFlashMessage("Bitte beachten: Für anonyme Beratungen ist zur Wahrung des Datenschutzes kein Dokumentenupload möglich!", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
                 }
             }
         }
@@ -1957,11 +1967,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("teilnehmer")
      * @return void
      */
-    public function editAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer, \Ud\Iqtp13db\Domain\Model\Abschluss $abschluss = NULL)
+    public function editAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer, \Ud\Iqtp13db\Domain\Model\Abschluss $abschluss = NULL): ResponseInterface
     {
         $valArray = $this->request->getArguments();
         $language = $this->request->getAttribute('language');
-        $isocode= $language->getTwoLetterIsoCode();        
+        $isocode  = $language->getLocale()->getLanguageCode();
         
         if(array_key_exists("searchparams", $valArray)) {
             $searchparams = $valArray['searchparams'];
@@ -2042,7 +2052,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $alleberatungsstellen = $this->userGroupRepository->findAllBeratungsstellen($this->settings['beraterstoragepid']);
         
         if($group->getEinwilligungserklaerungsseite() != '') {
-            $uriBuilder = $this->controllerContext->getUriBuilder();
+            $uriBuilder = $this->uriBuilder;
             $uriBuilder->reset();
             $uriBuilder->setTargetPageUid($group->getEinwilligungserklaerungsseite());
             $urleinwilligung = $uriBuilder->build();
@@ -2092,6 +2102,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'anzbstellen' => $this->anzbstellen
             ]
             );
+        return $this->htmlResponse();
     }
     
     /**
@@ -2111,20 +2122,20 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $confirmemail = $valArray['teilnehmer']['confirmemail'] ?? '';
             
             if($email == '' || $confirmemail == '' || $email != $confirmemail) {
-                $this->addFlashMessage("FEHLER: E-Mail-Adressen stimmen nicht überein!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-                $this->redirect('edit', 'Backend', null, array('teilnehmer' => $valArray['teilnehmer']['__identity'], 'callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
+                $this->addFlashMessage("FEHLER: E-Mail-Adressen stimmen nicht überein!", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+                return $this->redirect('edit', 'Backend', null, array('teilnehmer' => $valArray['teilnehmer']['__identity'], 'callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
             }
             if($beratungdatum != '' && !$this->generalhelper->validateDateYmd($beratungdatum)) {
-                $this->addFlashMessage("FEHLER: Datensatz NICHT gespeichert. 'Beratung Datum' ungültige Eingabe. Datum im Format JJJJ-MM-TT eintragen!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-                $this->redirect($valArray['calleraction'] ?? 'edit', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
+                $this->addFlashMessage("FEHLER: Datensatz NICHT gespeichert. 'Beratung Datum' ungültige Eingabe. Datum im Format JJJJ-MM-TT eintragen!", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+                return $this->redirect($valArray['calleraction'] ?? 'edit', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
             }
             if($erstberatungabgeschlossen != '' && !$this->generalhelper->validateDateYmd($erstberatungabgeschlossen)) {
-                $this->addFlashMessage("FEHLER: Datensatz NICHT gespeichert. 'Erstberatung abgeschlossen' ungültige Eingabe. Datum im Format JJJJ-MM-TT eintragen!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-                $this->redirect($valArray['calleraction'] ?? 'edit', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
+                $this->addFlashMessage("FEHLER: Datensatz NICHT gespeichert. 'Erstberatung abgeschlossen' ungültige Eingabe. Datum im Format JJJJ-MM-TT eintragen!", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+                return $this->redirect($valArray['calleraction'] ?? 'edit', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
             }
         } else {
-            $this->addFlashMessage("FEHLER in initializeUpdateAction.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-            $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
+            $this->addFlashMessage("FEHLER in initializeUpdateAction.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+            return $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
         }
     }
     
@@ -2135,7 +2146,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * @Validate("Ud\Iqtp13db\Domain\Validator\TeilnehmerValidator", param="teilnehmer")
      * @return void
      */
-    public function updateAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    public function updateAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
     {
         $valArray = $this->request->getArguments();
         if(array_key_exists("searchparams", $valArray)) {
@@ -2144,31 +2155,31 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         if(is_numeric($teilnehmer->getLebensalter())) {
             if($teilnehmer->getLebensalter() > 0 && ($teilnehmer->getLebensalter() < 15 || $teilnehmer->getLebensalter() > 80)) {
-                $this->addFlashMessage("Datensatz NICHT gespeichert. Lebensalter muss zwischen 15 und 80 oder k.A. sein.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-                $this->redirect($valArray['calleraction'] ?? 'edit', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung'], 'searchparams' => $searchparams));
+                $this->addFlashMessage("Datensatz NICHT gespeichert. Lebensalter muss zwischen 15 und 80 oder k.A. sein.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+                return $this->redirect($valArray['calleraction'] ?? 'edit', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung'], 'searchparams' => $searchparams));
             }
         }        
         $nacherfassung = $valArray['newnacherfassung'] ?? '0';
         if($nacherfassung == '1' && $teilnehmer->getNacherfassung() == '') {
-            $this->addFlashMessage("Datensatz NICHT gespeichert. Feld 'Nacherfassung' muss angekreuzt sein!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-            $this->redirect('edit', 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung'], 'searchparams' => $searchparams));
+            $this->addFlashMessage("Datensatz NICHT gespeichert. Feld 'Nacherfassung' muss angekreuzt sein!", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+            return $this->redirect('edit', 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung'], 'searchparams' => $searchparams));
         }
         
         if($teilnehmer->getNacherfassung() == 1 && (!$this->generalhelper->validateDateYmd($teilnehmer->getBeratungdatum()) || !$this->generalhelper->validateDateYmd($teilnehmer->getErstberatungabgeschlossen()))) {
-            $this->addFlashMessage("Datensatz NICHT gespeichert. Bei Nacherfassungen müssen 'Datum Erstberatung' und 'Erstberatung abgeschlossen' ausgefüllt sein.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-            $this->redirect('edit', 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung'], 'searchparams' => $searchparams));
+            $this->addFlashMessage("Datensatz NICHT gespeichert. Bei Nacherfassungen müssen 'Datum Erstberatung' und 'Erstberatung abgeschlossen' ausgefüllt sein.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+            return $this->redirect('edit', 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung'], 'searchparams' => $searchparams));
         }
         
         if($teilnehmer->getNacherfassung() != 1 && $teilnehmer->getVerificationDate() == 0 && ($this->generalhelper->validateDateYmd($teilnehmer->getErstberatungabgeschlossen()) || $this->generalhelper->validateDateYmd($teilnehmer->getBeratungdatum()))) {
-            $this->addFlashMessage("Datensatz NICHT gespeichert. Vor Eintragung von 'Datum Erstberatung' oder 'Erstberatung abgeschlossen' muss die Anmeldung bestätigt werden!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-            $this->redirect('edit', 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung'], 'searchparams' => $searchparams));
+            $this->addFlashMessage("Datensatz NICHT gespeichert. Vor Eintragung von 'Datum Erstberatung' oder 'Erstberatung abgeschlossen' muss die Anmeldung bestätigt werden!", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+            return $this->redirect('edit', 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung'], 'searchparams' => $searchparams));
         }
         
         if($this->generalhelper->validateDateYmd($teilnehmer->getErstberatungabgeschlossen()) && !$this->generalhelper->validateDateYmd($teilnehmer->getBeratungdatum())) {
             $teilnehmer->setBeratungdatum($teilnehmer->getErstberatungabgeschlossen());
             
-            $this->addFlashMessage("Datensatz gespeichert. Für 'Datum Erstberatung' wurde automatisch das Datum 'Erstberatung abgeschlossen' eingetragen.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
-            //$this->redirect($valArray['calleraction'] ?? 'edit', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
+            $this->addFlashMessage("Datensatz gespeichert. Für 'Datum Erstberatung' wurde automatisch das Datum 'Erstberatung abgeschlossen' eingetragen.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
+            //return $this->redirect($valArray['calleraction'] ?? 'edit', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
         }
 
         // Stammdaten (im Fragebogen Seite 1)
@@ -2240,7 +2251,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $bstatus = $this->checkberatungsstatus($teilnehmer);
         if($bstatus == 999) {
-            $this->addFlashMessage("Fehler in Update-Routine -> beratungsstatus = 999. Bitte Admin informieren.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->addFlashMessage("Fehler in Update-Routine -> beratungsstatus = 999. Bitte Admin informieren.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
         }
         
         $teilnehmer->setBeratungsstatus($bstatus);
@@ -2256,7 +2267,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
         
-        $this->redirect('edit', $valArray['callercontroller'] ?? 'Backend', null, array('teilnehmer'=> $teilnehmer, 'callerpage' => $valArray['callerpage'] ?? '1', 'calleraction' => $valArray['calleraction'] ?? 'listangemeldet', 'newnacherfassung' => $nacherfassung, 'searchparams' => $searchparams));
+        return $this->redirect('edit', $valArray['callercontroller'] ?? 'Backend', null, array('teilnehmer'=> $teilnehmer, 'callerpage' => $valArray['callerpage'] ?? '1', 'calleraction' => $valArray['calleraction'] ?? 'listangemeldet', 'newnacherfassung' => $nacherfassung, 'searchparams' => $searchparams));
     }
     
     /**
@@ -2274,8 +2285,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         if($thistn == null) {
             // TN ist (nicht) mehr vorhanden (gelöscht z.B. durch Task)
-            $this->addFlashMessage("FEHLER: Datensatz mit ID $tnuid nicht vorhanden.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-            $this->redirect($valArray['calleraction'] ?? 'listangemeldet', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1'));
+            $this->addFlashMessage("FEHLER: Datensatz mit ID $tnuid nicht vorhanden.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+            return $this->redirect($valArray['calleraction'] ?? 'listangemeldet', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1'));
         }
     }
     
@@ -2286,7 +2297,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("teilnehmer")
      * @return void
      */
-    public function deleteAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    public function deleteAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
     {
         $valArray = $this->request->getArguments();
         if(array_key_exists("searchparams", $valArray)) {
@@ -2302,9 +2313,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
             $persistenceManager->persistAll();
         } else {
-            $this->addFlashMessage('Bereits in NIQ übertragene Datensätze können nicht gelöscht werden.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->addFlashMessage('Bereits in NIQ übertragene Datensätze können nicht gelöscht werden.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
         }
-        $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $searchparams ?? ''));
+        return $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $searchparams ?? ''));
     }
     
     /**
@@ -2313,7 +2324,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * @param int $tnuid
      * @return void
      */
-    public function undeleteAction($tnuid)
+    public function undeleteAction($tnuid): ResponseInterface
     {
         $valArray = $this->request->getArguments();
         $searchparams  = array();
@@ -2330,7 +2341,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
         
-        $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'], 'searchparams' => $searchparams));
+        return $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'], 'searchparams' => $searchparams));
     }
     
     
@@ -2340,7 +2351,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return void
      */
-    public function takeoverAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    public function takeoverAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
     {
         $valArray = $this->request->getArguments();
         
@@ -2357,7 +2368,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
         
-        $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $searchparams ?? ''));
+        return $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $searchparams ?? ''));
     }
     
     /**
@@ -2366,7 +2377,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return void
      */
-    public function setBeratungsstellebyPLZAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    public function setBeratungsstellebyPLZAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
     {
         $valArray = $this->request->getArguments();
         
@@ -2375,10 +2386,10 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $bstid = count($plzberatungsstelle) > 0 ? $plzberatungsstelle[0]->getNiqbid() : '';
         
         if($bstid == '') {
-            $this->addFlashMessage('Keine der PLZ zugehörige Beratungsstelle vorhanden.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->addFlashMessage('Keine der PLZ zugehörige Beratungsstelle vorhanden.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
         } else {
             if($bstid == $teilnehmer->getNiqidberatungsstelle()) {
-                $this->addFlashMessage('Keine Änderung der Beratungsstelle, da die PLZ dieser Beratungsstelle zugewiesen ist.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                $this->addFlashMessage('Keine Änderung der Beratungsstelle, da die PLZ dieser Beratungsstelle zugewiesen ist.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
             } else {
                 $teilnehmer->setNiqidberatungsstelle($bstid);
                 $teilnehmer->setBerater(null);
@@ -2389,11 +2400,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
                 $persistenceManager->persistAll();
                 
-                $this->addFlashMessage('Datensatz zu Beratungsstelle '.$plzberatungsstelle[0]->getTitle(). ' verschoben.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+                $this->addFlashMessage('Datensatz zu Beratungsstelle '.$plzberatungsstelle[0]->getTitle(). ' verschoben.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
             }
         }
         
-        $this->redirect('listangemeldet', 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer, 'callerpage' => $valArray['callerpage'] ?? '1'));
+        return $this->redirect('listangemeldet', 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer, 'callerpage' => $valArray['callerpage'] ?? '1'));
     }
     
     /**
@@ -2403,7 +2414,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return void
      */
-    public function askconsentAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    public function askconsentAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
     {
         $valArray = $this->request->getArguments();
         
@@ -2414,19 +2425,16 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $bcc = '';
         $sender = $this->settings['sender'];
         if($sender == '') {
-            $this->addFlashMessage('Error 101 in askconsent.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-            $this->redirect('listangemeldet', 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+            $this->addFlashMessage('Error 101 in askconsent.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+            return $this->redirect('listangemeldet', 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
         } else {
             $recipient = $teilnehmer->getEmail();
             if($recipient == '') {
-                $this->addFlashMessage('Keine E-Mail-Adresse eingetragen.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-                $this->redirect('listangemeldet', 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+                $this->addFlashMessage('Keine E-Mail-Adresse eingetragen.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+                return $this->redirect('listangemeldet', 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
             }
-            if($teilnehmer->getTstamp() < 1672527600) {
-                $templateName = 'Mailtoconfirm2022';
-            } else {
-                $templateName = 'Mailtoconfirm';
-            }
+
+            $templateName = 'Mailtoconfirm';
             $confirmmailtext1 = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmmailtext1', 'Iqtp13db');
             $confirmmailtext1 = str_replace("VORNAMENACHNAME", $teilnehmer->getVorname().' '.$teilnehmer->getNachname(), $confirmmailtext1);
             $confirmlinktext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmlinktext', 'Iqtp13db');
@@ -2437,6 +2445,10 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $datenberatungsstelle = $zugewieseneberatungsstelle != NULL ? $zugewieseneberatungsstelle[0]->getDescription() : '';
             if($datenberatungsstelle != '') $kontaktlabel = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('kontaktberatungsstelle', 'Iqtp13db');
             else $kontaktlabel = '';
+            
+            $request = $GLOBALS['TYPO3_REQUEST'];
+            $normalizedParams = $request->getAttribute('normalizedParams');
+            $baseUri = $normalizedParams->getSiteUrl();
             
             $variables = array(
                 'teilnehmer' => $teilnehmer,
@@ -2449,15 +2461,18 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'logolink' => $this->settings['logolink'],
                 'registrationpageuid' => $this->settings['registrationpageuid'],
                 'askconsent' => '1',
-                'baseurl' => $this->request->getBaseUri()
+                'baseurl' => $baseUri
             );
             
+            $emailview = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
+            $emailview->setRequest($this->request);
+            
             $extbaseFrameworkConfiguration = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
-            $this->generalhelper->sendTemplateEmail(array($recipient), array($bcc), array($sender), $subject, $templateName, $variables, $this->objectManager->get('TYPO3\\CMS\\Fluid\\View\\StandaloneView'), $this->controllerContext->getUriBuilder(), $extbaseFrameworkConfiguration);
+            $this->generalhelper->sendTemplateEmail(array($recipient), array($bcc), array($sender), $subject, $templateName, $variables, $emailview, $this->uriBuilder, $extbaseFrameworkConfiguration);
             
-            $this->addFlashMessage('Einwilligungsanforderung versendet.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+            $this->addFlashMessage('Einwilligungsanforderung versendet.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
             
-            $this->redirect('listangemeldet', 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer, 'callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $searchparams ?? ''));
+            return $this->redirect('listangemeldet', 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer, 'callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $searchparams ?? ''));
         }
     }     
         
@@ -2467,12 +2482,12 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return void
      */
-    public function sendtoarchivAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    public function sendtoarchivAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
     {
         $valArray = $this->request->getArguments();
         
         if($teilnehmer->getVerificationDate() == 0) {
-            $this->addFlashMessage('FEHLER: Einwilligung noch nicht eingeholt.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->addFlashMessage('FEHLER: Einwilligung noch nicht eingeholt.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
         } else {
             $teilnehmer->setBeratungsstatus(4);
             
@@ -2481,10 +2496,10 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
             $persistenceManager->persistAll();
             
-            $this->addFlashMessage('Archiviert.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+            $this->addFlashMessage('Archiviert.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
         }
         
-        $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'] ?? '1'), null);
+        return $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'] ?? '1'), null);
     }
     
     /**
@@ -2493,7 +2508,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return void
      */
-    public function savedatenblattpdfAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    public function savedatenblattpdfAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
     {
         $valArray = $this->request->getArguments();
         
@@ -2512,8 +2527,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 require_once($mpdfAutoload);
             } else {
                 // PDF erstellen nicht möglich
-                $this->addFlashMessage('Datenblatt kann nicht erstellt werden, da MPDF nicht installiert. Bitte Admin kontaktieren.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-                $this->redirect('show', 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+                $this->addFlashMessage('Datenblatt kann nicht erstellt werden, da MPDF nicht installiert. Bitte Admin kontaktieren.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+                return $this->redirect('show', 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
             }
         }
         
@@ -2585,14 +2600,14 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
             $persistenceManager->persistAll();
             
-            $this->addFlashMessage('Datenblatt wurde in '.$pfad->getIdentifier().' erstellt.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+            $this->addFlashMessage('Datenblatt wurde in '.$pfad->getIdentifier().' erstellt.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
             
         } else {
-            $this->addFlashMessage('Datenblatt mit diesem Zeitstempel schon vorhanden.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+            $this->addFlashMessage('Datenblatt mit diesem Zeitstempel schon vorhanden.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
         }
         //********************************************************************
         
-        $this->redirect('show', 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer, 'callerpage' => $valArray['callerpage'] ?? '1', 'showdokumente' => '1', 'searchparams' => $searchparams ?? ''));
+        return $this->redirect('show', 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer, 'callerpage' => $valArray['callerpage'] ?? '1', 'showdokumente' => '1', 'searchparams' => $searchparams ?? ''));
     }
     
     /**
@@ -2600,7 +2615,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      *
      * @return void
      */
-    public function saveAVpdfAction()
+    public function saveAVpdfAction(): ResponseInterface
     {
         $valArray = $this->request->getArguments();
         
@@ -2616,8 +2631,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 require_once($mpdfAutoload);
             } else {
                 // PDF erstellen nicht möglich
-                $this->addFlashMessage('AV kann nicht erstellt werden, da MPDF nicht installiert. Bitte Admin kontaktieren.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-                $this->redirect('show', 'Backend', 'Iqtp13db', null);
+                $this->addFlashMessage('AV kann nicht erstellt werden, da MPDF nicht installiert. Bitte Admin kontaktieren.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+                return $this->redirect('show', 'Backend', 'Iqtp13db', null);
             }
         }
         
@@ -2700,7 +2715,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      *
      * @return void
      */
-    public function editsettingsAction() {
+    public function editsettingsAction(): ResponseInterface {
         $valArray = $this->request->getArguments();
         
         // ************ Start - Beraterarray bestimmen *****************
@@ -2743,6 +2758,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'anzbstellen' => $this->anzbstellen
             ]
         );
+        return $this->htmlResponse();
     }
     
     /**
@@ -2750,7 +2766,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      *
      * @return void
      */
-    public function updatesettingsAction() {
+    public function updatesettingsAction(): ResponseInterface {
         $valArray = $this->request->getArguments();
 
         $this->usergroup->setCustominfotextstart($valArray['custominfotextstart']);
@@ -2763,9 +2779,10 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
         
-        $this->addFlashMessage("Einstellungen gespeichert.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+        $this->addFlashMessage("Einstellungen gespeichert.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
+                
+        return (new ForwardResponse('editsettings'))->withControllerName('Backend')->withExtensionName('Iqtp13db');
         
-        $this->forward('editsettings', 'Backend', 'Iqtp13db');
     }
     
     /*************************************************************************/

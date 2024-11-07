@@ -4,7 +4,7 @@ namespace Ud\Iqtp13db\Domain\Validator;
 
 class DatumValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
 {
-	public function isValid($value)
+	public function isValid(mixed $value):void
 	{
 	    if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/",$value)) {
 	        return;

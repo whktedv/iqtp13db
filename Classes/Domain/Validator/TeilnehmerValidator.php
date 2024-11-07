@@ -4,7 +4,7 @@ namespace Ud\Iqtp13db\Domain\Validator;
 
 class TeilnehmerValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
 {
-    public function isValid($teilnehmer)
+    public function isValid(mixed $teilnehmer):void
 	{
 	    if (! $teilnehmer instanceof \Ud\Iqtp13db\Domain\Model\Teilnehmer) {
 	        $errormsg = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('errortndatanotvalid', 'iqtp13db');
