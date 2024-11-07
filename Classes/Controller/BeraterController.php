@@ -89,7 +89,7 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      */
     public function updateAction(\Ud\Iqtp13db\Domain\Model\Berater $berater)
     {
-        $this->addFlashMessage('Berater*in aktualisiert.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+        $this->addFlashMessage('Berater*in aktualisiert.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
         
         $valArray = $this->request->getArguments();
         
@@ -107,7 +107,7 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      */
     public function deleteAction(\Ud\Iqtp13db\Domain\Model\Berater $berater)
     {
-        $this->addFlashMessage('Berater*in gelöscht.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+        $this->addFlashMessage('Berater*in gelöscht.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
         $this->beraterRepository->remove($berater);
         $this->redirect('editsettings', 'Backend', 'Iqtp13db', null);
     }   

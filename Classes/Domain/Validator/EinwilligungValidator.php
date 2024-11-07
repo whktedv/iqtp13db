@@ -15,15 +15,15 @@ namespace Ud\Iqtp13db\Domain\Validator;
 
 class EinwilligungValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
 {
-	public function isValid($value)
+	public function isValid(mixed $value):void
 	{
 		if($value != true)
 		{
 		    $errormsg = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('errorconsent', 'iqtp13db');
 		    $this->addError($errormsg, 40213131);
-		    return FALSE;
+		    return;
 		}
-		return true;
+		return;
 	}
 }
 

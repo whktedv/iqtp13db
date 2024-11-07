@@ -4,15 +4,15 @@ namespace Ud\Iqtp13db\Domain\Validator;
 
 class KommazahlValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
 {
-	public function isValid($value)
+	public function isValid(mixed $value):void
 	{
 	    $value = str_replace(",",".",$value);
 	    
 	    if (is_numeric($value)) {
-	        return true;
+	        return;
 	    } else {
 	        $this->addError('Die Beratungsdauer in Stunden muss in ganzen Zahlen oder Kommazahlen angegeben werden.', 40213131);
-	        return false;
+	        return;
 	    }		
 	}
 }

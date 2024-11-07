@@ -40,13 +40,13 @@ call_user_func(
             'Iqtp13db',
             'Iqtp13dbwebapp',
             [
-                \Ud\Iqtp13db\Controller\TeilnehmerController::class => 'start, startseite, startseiteplz, anmeldseite0, anmeldseite1, anmeldseite1redirect, anmeldseite2, anmeldseite2redirect, anmeldseite3, anmeldseite3redirect, anmeldseite4, anmeldseite4redirect, anmeldungcomplete, anmeldungcompleteredirect, confirm, validationFailed, wartung, bereitsberaten',
+                \Ud\Iqtp13db\Controller\TeilnehmerController::class => 'start, startseite, startseiteplz, anmeldseite0, anmeldseite1, anmeldseite1redirect, anmeldseite2, anmeldseite2redirect, anmeldseite3, anmeldseite3redirect, anmeldseite4, anmeldseite4redirect, anmeldungcomplete, anmeldungcompleteredirect, confirm, validationFailed, wartung, bereitsberaten, cancelregistration',
                 \Ud\Iqtp13db\Controller\DokumentController::class => 'saveFileWebapp, deleteFileWebapp',
                 \Ud\Iqtp13db\Controller\AbschlussController::class => 'newWebapp, createWebapp, editWebapp, updateWebapp, deleteWebapp'
             ],
             // non-cacheable actions
             [
-                \Ud\Iqtp13db\Controller\TeilnehmerController::class => 'start, startseite, startseiteplz, anmeldseite0, anmeldseite1, anmeldseite1redirect, anmeldseite2, anmeldseite2redirect, anmeldseite3, anmeldseite3redirect, anmeldseite4, anmeldseite4redirect, anmeldungcomplete, anmeldungcompleteredirect, confirm, validationFailed, wartung, bereitsberaten',
+                \Ud\Iqtp13db\Controller\TeilnehmerController::class => 'start, startseite, startseiteplz, anmeldseite0, anmeldseite1, anmeldseite1redirect, anmeldseite2, anmeldseite2redirect, anmeldseite3, anmeldseite3redirect, anmeldseite4, anmeldseite4redirect, anmeldungcomplete, anmeldungcompleteredirect, confirm, validationFailed, wartung, bereitsberaten, cancelregistration',
                 \Ud\Iqtp13db\Controller\DokumentController::class => 'saveFileWebapp, deleteFileWebapp',
                 \Ud\Iqtp13db\Controller\AbschlussController::class => 'newWebapp, createWebapp, editWebapp, updateWebapp, deleteWebapp'
             ]
@@ -75,11 +75,11 @@ call_user_func(
                  @import "EXT:iqtp13db/Configuration/page.tsconfig"
             ');
         }
-        
-        
+                
         /************************************************************************
          * XCLASS (Extending Classes) für FrontendUsergroup Klasse
          ************************************************************************/
+        /* --------------------- Deprecated mit Typo3 12 ---------------------
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][TYPO3\CMS\Extbase\Domain\Model\FrontendUserGroup::class] = [
             'className' => \Ud\Iqtp13db\Domain\Model\UserGroup::class,
         ];
@@ -99,6 +99,7 @@ call_user_func(
             TYPO3\CMS\Extbase\Domain\Model\FrontendUser::class,
             \Ud\Iqtp13db\Domain\Model\Berater::class
             );
+        */
         
         /****************
          * Scheduler TASK to delete old/deleted entries

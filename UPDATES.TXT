@@ -113,4 +113,7 @@ Update 25.10.2024
 - Übersicht für Länder-Admins angepasst
 - Beschreibung "grauer Kasten" in E-Mail in Einstellungen änderbar
 
+Update 05.11.2024
+- Anpassungen für Typo3 12
+
 Neu: 

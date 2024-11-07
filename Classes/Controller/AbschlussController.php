@@ -1,12 +1,14 @@
 <?php
 namespace Ud\Iqtp13db\Controller;
+
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-
+use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use Psr\Http\Message\ResponseInterface;
+
 use Ud\Iqtp13db\Domain\Repository\TeilnehmerRepository;
 use Ud\Iqtp13db\Domain\Repository\AbschlussRepository;
 use Ud\Iqtp13db\Domain\Repository\BerufeRepository;
@@ -54,11 +56,11 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      * @param \Ud\Iqtp13db\Domain\Model\Abschluss $abschluss
      * @return void
      */
-    public function showAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss)
+    public function showAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss): ResponseInterface
     {
         $valArray = $this->request->getArguments();
         $language = $this->request->getAttribute('language');
-        $isocode= $language->getTwoLetterIsoCode();
+        $isocode  = $language->getLocale()->getLanguageCode();
         
         $teilnehmer = $this->teilnehmerRepository->findByUid($valArray['teilnehmer']);
         $berufe = $this->berufeRepository->findAllOrdered($isocode);
@@ -78,6 +80,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $this->view->assign('berufe', $berufe);
         $this->view->assign('staaten', $staaten);
         $this->view->assign('brancheunterkat', $brancheunterkat);
+        return $this->htmlResponse();
     }
 
     /**
@@ -85,11 +88,11 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      *
      * @return void
      */
-    public function newAction()
+    public function newAction(): ResponseInterface
     {
         $valArray = $this->request->getArguments();
         $language = $this->request->getAttribute('language');
-        $isocode= $language->getTwoLetterIsoCode();
+        $isocode  = $language->getLocale()->getLanguageCode();
         
         $teilnehmer = $this->teilnehmerRepository->findByUid($valArray['teilnehmer']);
         
@@ -131,7 +134,8 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $this->view->assign('berufearr', $berufearr);
         $this->view->assign('staatenarr', $staatenarr);
         $this->view->assign('brancheoberkat', $brancheoberkat);
-        $this->view->assign('brancheunterkat', $brancheunterkat);                
+        $this->view->assign('brancheunterkat', $brancheunterkat);  
+        return $this->htmlResponse();
     }
 
     /**
@@ -140,7 +144,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      * @param \Ud\Iqtp13db\Domain\Model\Abschluss $abschluss
      * @return void
      */
-    public function createAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss)
+    public function createAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss): ResponseInterface
     {
         $valArray = $this->request->getArguments();
         
@@ -152,7 +156,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
         
-        $this->redirect($valArray['thisaction'], 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'], 'showabschluesse' => '1'));
+        return $this->redirect($valArray['thisaction'], 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'], 'showabschluesse' => '1'));
     }
 
     /**
@@ -162,11 +166,11 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("Abschluss")
      * @return void
      */
-    public function editAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss)
+    public function editAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss): ResponseInterface
     {
         $valArray = $this->request->getArguments();
         $language = $this->request->getAttribute('language');
-        $isocode= $language->getTwoLetterIsoCode();
+        $isocode  = $language->getLocale()->getLanguageCode();
         
         $teilnehmer = $this->teilnehmerRepository->findByUid($valArray['teilnehmer']);
         
@@ -208,7 +212,8 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $this->view->assign('berufearr', $berufearr);
         $this->view->assign('staatenarr', $staatenarr);
         $this->view->assign('brancheoberkat', $brancheoberkat);
-        $this->view->assign('brancheunterkat', $brancheunterkat);        
+        $this->view->assign('brancheunterkat', $brancheunterkat);
+        return $this->htmlResponse();
     }
     
     /**
@@ -220,15 +225,9 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     {
         $valArray = $this->request->getArguments();
         if(array_key_exists('abschluss', $valArray)) {
-            /*
-             if($valArray['abschluss']['abschlussart'] == '2') {
-                $this->addFlashMessage("FEHLER: Abschlussart aktualisieren - alte Angabe nicht mehr möglich.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-                $this->redirect('edit', 'Abschluss', null, array('teilnehmer' => $valArray['teilnehmer'], 'abschluss' => $valArray['abschluss']['__identity']));
-            }            
-            */
             if($valArray['abschluss']['branche'] == '') {
-                $this->addFlashMessage("FEHLER: Branche ist Pflichtangabe.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-                $this->redirect('edit', 'Abschluss', null, array('teilnehmer' => $valArray['teilnehmer'], 'abschluss' => $valArray['abschluss']['__identity']));
+                $this->addFlashMessage("FEHLER: Branche ist Pflichtangabe.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+                return $this->redirect('edit', 'Abschluss', null, array('teilnehmer' => $valArray['teilnehmer'], 'abschluss' => $valArray['abschluss']['__identity']));
             }
         }
         
@@ -242,7 +241,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return void
      */
-    public function updateAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    public function updateAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
     {
         $valArray = $this->request->getArguments();
 
@@ -252,7 +251,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $teilnehmer = $this->teilnehmerRepository->findByUid($valArray['teilnehmer']);
         
         $this->abschlussRepository->update($abschluss);
-        $this->redirect($valArray['thisaction'] ?? '', 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'], 'showabschluesse' => '1'));
+        return $this->redirect($valArray['thisaction'] ?? '', 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'], 'showabschluesse' => '1'));
     }
 
     /**
@@ -262,12 +261,12 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return void
      */
-    public function deleteAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    public function deleteAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
     {
         $valArray = $this->request->getArguments();
         
         $this->abschlussRepository->remove($abschluss);
-        $this->redirect($valArray['thisaction'], 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'], 'showabschluesse' => '1'));
+        return $this->redirect($valArray['thisaction'], 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'], 'showabschluesse' => '1'));
     }    
     
     /**
@@ -285,11 +284,11 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return void
      */
-    public function newWebappAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    public function newWebappAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
     {
         $valArray = $this->request->getArguments();
         $language = $this->request->getAttribute('language');
-        $isocode= $language->getTwoLetterIsoCode();
+        $isocode  = $language->getLocale()->getLanguageCode();
         
         $abschluesse = new \Ud\Iqtp13db\Domain\Model\Abschluss();
         $abschluesse = $this->abschlussRepository->findByTeilnehmer($teilnehmer);
@@ -331,6 +330,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
                 'brancheunterkat' => $brancheunterkat
             ]
         );
+        return $this->htmlResponse();
     }
     
     
@@ -351,14 +351,14 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return void
      */
-    public function createWebappAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss = NULL, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    public function createWebappAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss = NULL, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
     {
         $valArray = $this->request->getArguments();
         
         $tnarr = $this->teilnehmerRepository->findByUid($teilnehmer->getUid());
         if($tnarr == NULL) {
             // TN ist (nicht) mehr vorhanden (gelöscht z.B. durch Task)
-            $this->redirect('anmeldseite2', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
+            return $this->redirect('anmeldseite2', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
         }
         
         if (!isset($valArray['btnzurueck'])) {
@@ -370,7 +370,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
             $this->abschlussRepository->add($abschluss);
             
         }
-        $this->redirect('anmeldseite2', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
+        return $this->redirect('anmeldseite2', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
     }
     
     /**
@@ -389,12 +389,12 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return void
      */
-    public function editWebappAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    public function editWebappAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
     {
         $abschluesse = new \Ud\Iqtp13db\Domain\Model\Abschluss();
         $abschluesse = $this->abschlussRepository->findByTeilnehmer($teilnehmer);
         $language = $this->request->getAttribute('language');
-        $isocode= $language->getTwoLetterIsoCode();
+        $isocode  = $language->getLocale()->getLanguageCode();
         
         $kastring = LocalizationUtility::translate('ka', 'iqtp13db');
         
@@ -432,6 +432,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
                 'brancheunterkat' => $brancheunterkat
             ]
             );
+        return $this->htmlResponse();
     }
     
     /**
@@ -443,8 +444,8 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $valArray = $this->request->getArguments();
         if(array_key_exists('abschluss', $valArray)) {
             if($valArray['abschluss']['branche'] == '') {
-                $this->addFlashMessage(\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('errornosector', 'iqtp13db'), '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-                $this->redirect('editWebapp', 'Abschluss', null, array('teilnehmer' => $valArray['teilnehmer'], 'abschluss' => $valArray['abschluss']['__identity']));
+                $this->addFlashMessage(\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('errornosector', 'iqtp13db'), '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+                return $this->redirect('editWebapp', 'Abschluss', null, array('teilnehmer' => $valArray['teilnehmer'], 'abschluss' => $valArray['abschluss']['__identity']));
             }
         }
         
@@ -458,14 +459,14 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return void
      */
-    public function updateWebappAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    public function updateWebappAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
     {
         $valArray = $this->request->getArguments();
         
         if (!isset($valArray['btnzurueck'])) {
             $this->abschlussRepository->update($abschluss);
         }
-        $this->redirect('anmeldseite2', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
+        return $this->redirect('anmeldseite2', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
     }
     
     /**
@@ -484,11 +485,11 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return void
      */
-    public function deleteWebappAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    public function deleteWebappAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
     {        
         $this->abschlussRepository->remove($abschluss);
         
-        $this->redirect('anmeldseite2', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
+        return $this->redirect('anmeldseite2', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
     }
         
     /*
@@ -505,12 +506,12 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         
         if($thistn == null) {
             // TN ist (nicht) mehr vorhanden (gelöscht z.B. durch Task)
-            $this->addFlashMessage("ERROR: Session expired or data not found. Please restart registration.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->addFlashMessage("ERROR: Session expired or data not found. Please restart registration.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
             $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnseite1', null);
             $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnuid', null);
-            $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('ses', null);
-            $this->forward('startseite', 'Teilnehmer', 'Iqtp13db');
-        }
+            $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('ses', null);            
+            return $this->redirect('startseite', 'Teilnehmer', null, null);
+        } 
     }
     
     
@@ -523,11 +524,11 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         
         if($valarrabschluss == '') {
             // TN ist (nicht) mehr vorhanden (gelöscht z.B. durch Task)
-            $this->addFlashMessage("ERROR: Session expired or data not found. Please restart registration.", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->addFlashMessage("ERROR: Session expired or data not found. Please restart registration.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
             $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnseite1', null);
             $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnuid', null);
             $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('ses', null);
-            $this->forward('startseite', 'Teilnehmer', 'Iqtp13db');
+            return $this->redirect('startseite', 'Teilnehmer', null, null);
         }
     }
     

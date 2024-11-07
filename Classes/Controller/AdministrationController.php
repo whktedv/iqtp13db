@@ -109,7 +109,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
      *
      * @return void
      */
-    public function adminuebersichtAction()
+    public function adminuebersichtAction(): ResponseInterface
     {       
         $valArray = $this->request->getArguments();
         $jahrselected = $valArray['jahrauswahl'] ?? 0;
@@ -200,7 +200,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         // keine Berater vorhanden?
         $alleberater = $this->beraterRepository->findAllBerater($this->settings['beraterstoragepid']);
         if(count($alleberater) == 0) {
-            $this->addFlashMessage('Es sind noch keine Berater:innen vorhanden. Bitte im Menü Berater*innen anlegen.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->addFlashMessage('Es sind noch keine Berater:innen vorhanden. Bitte im Menü Berater*innen anlegen.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
         }
         $alleberatungsstellen = $this->userGroupRepository->findAllBeratungsstellen($this->settings['beraterstoragepid']);
         $alleberatungsstellensortiert = $this->userGroupRepository->findAllBeratungsstellenABC($this->settings['beraterstoragepid']);
@@ -433,7 +433,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
             $writer->writeToStdOut();
             exit;
         } elseif(isset($valArray['statsexport']) && $jahrselected == 0) {
-            $this->addFlashMessage("Bitte Jahr auswählen!", '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+            $this->addFlashMessage("Bitte Jahr auswählen!", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
         }
         
         // ******************** EXPORT Statistik bis hier ****************************
@@ -507,6 +507,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 
             ]
             );
+        return $this->htmlResponse();
     }
    
 }

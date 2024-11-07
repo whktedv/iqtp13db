@@ -4,7 +4,7 @@ namespace Ud\Iqtp13db\Domain\Validator;
 
 class TNSeite1Validator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
 {
-    public function isValid($tnseite1)
+    public function isValid(mixed $tnseite1):void
 	{
 	    if (! $tnseite1 instanceof \Ud\Iqtp13db\Domain\Model\TNSeite1) {
 	       $this->addError('The given object is not a teilnehmer.', 1262341470);
@@ -13,14 +13,14 @@ class TNSeite1Validator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstract
 	       
 	        $errormsg = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('errormailnotmatch', 'iqtp13db');
 	        $this->addError($errormsg, 1262341707);
-	        return FALSE;
+	        return;
 	    }
 	    	    
 	    /* Validate the E-mail-address. */
 	    if (!filter_var($tnseite1->getEmail(), FILTER_VALIDATE_EMAIL)) {
 	        $errormsg = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('errormailnotvalid', 'iqtp13db');
 	        $this->addError($errormsg, 1262341707);
-	        return FALSE;
+	        return;
 	    }
 	    /* Check the domain. */
 	    $atPos = mb_strpos($tnseite1->getEmail(), '@');
@@ -28,7 +28,7 @@ class TNSeite1Validator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstract
 	    if (!checkdnsrr($domain . '.', 'MX') || $domain == 'gmial.com' || $domain == 'gamil.com' || $domain == 'gmail.co' ) {
 	        $errormsg = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('errordomainnotvalid', 'iqtp13db');
 	        $this->addError('@'.$domain.': '.$errormsg, 1262341707);
-	        return FALSE;
+	        return;
 	    }
 	    
 	}

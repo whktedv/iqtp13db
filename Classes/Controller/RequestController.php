@@ -2,9 +2,10 @@
 namespace Ud\Iqtp13db\Controller;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use Psr\Http\Message\ServerRequestInterface;
+
 use Ud\Iqtp13db\Domain\Repository\DokumentRepository;
 
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 class RequestController
 {
@@ -19,11 +20,14 @@ class RequestController
         $this->dokumentRepository = $dokumentRepository;
     }
 
-    public function doksaveEidAction()
+    public function doksaveEidAction(ServerRequestInterface $request)
     {
         // Argumente aus dem POST-Request holen
-        $uid = GeneralUtility::trimExplode('=', GeneralUtility::_POST('dokuid'), true)[0];
-        $beschreibung = GeneralUtility::trimExplode('=', GeneralUtility::_POST('dokdescr'), true)[0] ?? '';
+        //alt typo3-11: $uid = GeneralUtility::trimExplode('=', GeneralUtility::_POST('dokuid'), true)[0];
+        //alt typo3-11: $beschreibung = GeneralUtility::trimExplode('=', GeneralUtility::_POST('dokdescr'), true)[0] ?? '';
+        
+        $uid = GeneralUtility::trimExplode('=', $request->getParsedBody()['dokuid'], true)[0];
+        $beschreibung = GeneralUtility::trimExplode('=', $request->getParsedBody()['dokdescr'], true)[0] ?? '';
         
         // Daten speichern
         $dokument = $this->dokumentRepository->findByUid($uid);        

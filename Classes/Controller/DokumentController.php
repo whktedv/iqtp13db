@@ -5,7 +5,6 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Core\Core\Environment;
-
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
 
@@ -67,17 +66,17 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return void
      */
-    public function saveFileBackendAction(\Ud\Iqtp13db\Domain\Model\Dokument $dokument, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    public function saveFileBackendAction(\Ud\Iqtp13db\Domain\Model\Dokument $dokument, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
     {
         $valArray = $this->request->getArguments();
         
         if ($_FILES['tx_iqtp13db_iqtp13dbadmin']['tmp_name']['file'] == '') {
-            $this->addFlashMessage('Error in saveFileWebapp: maximum filesize exceeded or permission error', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->addFlashMessage('Error in saveFileWebapp: maximum filesize exceeded or permission error', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
         } else {            
             $this->saveFileTeilnehmer($dokument, $teilnehmer, $_FILES['tx_iqtp13db_iqtp13dbadmin']);
         }
         
-        $this->redirect($valArray['thisaction'], 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'] ?? 'edit', 'callercontroller' => $valArray['callercontroller'] ?? 'Backend', 'callerpage' => $valArray['callerpage'] ?? '1', 'showdokumente' => '1'));
+        return $this->redirect($valArray['thisaction'], 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'] ?? 'edit', 'callercontroller' => $valArray['callercontroller'] ?? 'Backend', 'callerpage' => $valArray['callerpage'] ?? '1', 'showdokumente' => '1'));
     }
     
     /**
@@ -86,7 +85,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return void
      */
-    public function updateBackendAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    public function updateBackendAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
     {
         $valArray = $this->request->getArguments();
         
@@ -101,7 +100,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
             $persistenceManager->persistAll();
         }
          
-        $this->redirect($valArray['thisaction'], 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'] ?? 'edit', 'callercontroller' => $valArray['callercontroller'] ?? 'Backend', 'callerpage' => $valArray['callerpage'] ?? '1', 'showdokumente' => '1'));
+        return $this->redirect($valArray['thisaction'], 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'] ?? 'edit', 'callercontroller' => $valArray['callercontroller'] ?? 'Backend', 'callerpage' => $valArray['callerpage'] ?? '1', 'showdokumente' => '1'));
     }
     
     
@@ -127,7 +126,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return void
      */
-    public function openfileAction(\Ud\Iqtp13db\Domain\Model\Dokument $dokument, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    public function openfileAction(\Ud\Iqtp13db\Domain\Model\Dokument $dokument, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
     {
         $storage = $this->generalhelper->getTP13Storage($this->storageRepository->findAll());
         $beratenepath = $dokument->getPfad();
@@ -138,8 +137,8 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
                 $folder = $storage->getFolder($beratenepath);
                 $targetfile = $folder->getStorage()->getFileInFolder($tmpName, $folder);
             } else {
-                $this->addFlashMessage('Datei wurde nicht gefunden. ', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-                $this->redirect($valArray['thisaction'], 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'] ?? 'edit', 'callercontroller' => $valArray['callercontroller'] ?? 'Backend', 'callerpage' => $valArray['callerpage'] ?? '1', 'showdokumente' => '1'));
+                $this->addFlashMessage('Datei wurde nicht gefunden. ', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+                return $this->redirect($valArray['thisaction'], 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'] ?? 'edit', 'callercontroller' => $valArray['callercontroller'] ?? 'Backend', 'callerpage' => $valArray['callerpage'] ?? '1', 'showdokumente' => '1'));
             }
         } else {
             $targetfile = $storage->getFile($beratenepath . $tmpName);
@@ -151,7 +150,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $publicUrl = GeneralUtility::locationHeaderUrl(PathUtility::getAbsoluteWebPath(Environment::getPublicPath() . '/index.php'));
         $publicUrl .= '?' . http_build_query($queryParameterArray, '', '&', PHP_QUERY_RFC3986);
         
-        $this->redirectToURI($publicUrl, $delay=0, $statusCode=303);
+        return $this->redirectToURI($publicUrl, $delay=0, $statusCode=303);
     }
     
     
@@ -161,16 +160,16 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return void
      */
-    public function saveFileWebappAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    public function saveFileWebappAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
     {
         $valArray = $this->request->getArguments();
         if($_FILES == NULL) {
-            $this->addFlashMessage('Error in saveFileWebapp: File does not meet policy.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->addFlashMessage('Error in saveFileWebapp: File does not meet policy.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
         } else {
             if ($_FILES['tx_iqtp13db_iqtp13dbwebapp']['tmp_name']['file'] == '') {
-                $this->addFlashMessage('Error in saveFileWebapp: permission error or maximum filesize exceeded.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                $this->addFlashMessage('Error in saveFileWebapp: permission error or maximum filesize exceeded.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
             } elseif (filesize($_FILES['tx_iqtp13db_iqtp13dbwebapp']['tmp_name']['file']) > 10485760) {
-                $this->addFlashMessage('Error in saveFileWebapp: Maximum filesize exceeded (10 MB). Please reduce filesize.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                $this->addFlashMessage('Error in saveFileWebapp: Maximum filesize exceeded (10 MB). Please reduce filesize.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
             } else {
                 $dokument = new \Ud\Iqtp13db\Domain\Model\Dokument();
                 $dokument->setBeschreibung($valArray['beschreibung']);
@@ -178,7 +177,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
             }
             
         }
-        $this->redirect('anmeldungcomplete', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
+        return $this->redirect('anmeldungcomplete', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
     }
     
     
@@ -208,7 +207,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return void
      */
-    public function deleteFileWebappAction(\Ud\Iqtp13db\Domain\Model\Dokument $dokument, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    public function deleteFileWebappAction(\Ud\Iqtp13db\Domain\Model\Dokument $dokument, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
     {
         $retval = $this->deleteFileTeilnehmer($dokument, $teilnehmer);
         return (new ForwardResponse('anmeldungcomplete'))->withControllerName('Teilnehmer');
@@ -232,14 +231,14 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $fullpath = $storage->getConfiguration()['basePath'] . $beratenepath . $tmpName;
         
         if($this->generalhelper->getFolderSize($storage->getConfiguration()['basePath'] . $beratenepath) > 40000) {
-    	    $this->addFlashMessage('Maximum total filesize of 40 MB exceeded, please reduce filesize. Maximale Dateigröße aller Dateien zusammen ist 40 MB. Bitte Dateigröße verringern.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+    	    $this->addFlashMessage('Maximum total filesize of 40 MB exceeded, please reduce filesize. Maximale Dateigröße aller Dateien zusammen ist 40 MB. Bitte Dateigröße verringern.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
     	} else {
     	    if ($files['name']['file']) {
     	        
     	        $dokument = $this->savefile($dokument->getBeschreibung(), $beratenepath, $files);
     	        
     	        if($dokument == null) {
-    	            $this->addFlashMessage('File already uploaded. Datei wurde schon hochgeladen.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+    	            $this->addFlashMessage('File already uploaded. Datei wurde schon hochgeladen.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
     	        } else {
     	            $dokument->setTeilnehmer($teilnehmer);
     	            $this->dokumentRepository->update($dokument);
@@ -266,7 +265,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     { 
         
         if($this->dokumentRepository->findDublette($dokument->getName(), $teilnehmer->getUid())) {
-            $this->addFlashMessage('Fehler: D-1. Datei mit ID '.$dokument->getUid().' konnte nicht gelöscht werden!', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->addFlashMessage('Fehler: D-1. Datei mit ID '.$dokument->getUid().' konnte nicht gelöscht werden!', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
             return false;
         }
         
@@ -280,14 +279,14 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
                 $anzdokumente = count($this->dokumentRepository->findByTeilnehmer($teilnehmer->getUid()));
                 $this->teilnehmerRepository->update($teilnehmer);
                 
-                $this->addFlashMessage('Dokument wurde gelöscht.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+                $this->addFlashMessage('Dokument wurde gelöscht.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
                 return true;
             } else {
-                $this->addFlashMessage('Dokument konnte nicht gelöscht werden!', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                $this->addFlashMessage('Dokument konnte nicht gelöscht werden!', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
                 return false;
             }
         } else {
-            $this->addFlashMessage('Datei mit ID '.$dokument->getUid().' nicht gefunden. Pfad: '.$fullpath, '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->addFlashMessage('Datei mit ID '.$dokument->getUid().' nicht gefunden. Pfad: '.$fullpath, '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
             return false;
         }
     }

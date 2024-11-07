@@ -2,6 +2,7 @@
 namespace Ud\Iqtp13db\Controller;
 use \Datetime;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+use TYPO3\CMS\Extbase\Http\ForwardResponse;
 
 use Psr\Http\Message\ResponseInterface;
 use Ud\Iqtp13db\Domain\Repository\UserGroupRepository;
@@ -68,7 +69,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      * @param \Ud\Iqtp13db\Domain\Model\Folgekontakt $folgekontakt
      * @return void
      */
-    public function showAction(\Ud\Iqtp13db\Domain\Model\Folgekontakt $folgekontakt)
+    public function showAction(\Ud\Iqtp13db\Domain\Model\Folgekontakt $folgekontakt): ResponseInterface
     {
         $this->view->assign('folgekontakt', $folgekontakt);
         
@@ -79,6 +80,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $this->view->assign('calleraction', $valArray['calleraction']);
         $this->view->assign('callercontroller', $valArray['callercontroller']);
         $this->view->assign('callerpage', $valArray['callerpage'] ?? '1');
+        return $this->htmlResponse();
     }
     
     
@@ -99,7 +101,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return void
      */
-    public function newAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer)
+    public function newAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
     {
         $valArray = $this->request->getArguments();
         
@@ -114,6 +116,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $this->view->assign('callerpage', $valArray['callerpage'] ?? '1');
         $this->view->assign('settings', $this->settings);
         $this->view->assign('datum', date("d.m.Y"));
+        return $this->htmlResponse();
     }
     
     
@@ -123,7 +126,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      * @param \Ud\Iqtp13db\Domain\Model\Folgekontakt $folgekontakt
      * @return void
      */
-    public function createAction(\Ud\Iqtp13db\Domain\Model\Folgekontakt $folgekontakt)
+    public function createAction(\Ud\Iqtp13db\Domain\Model\Folgekontakt $folgekontakt): ResponseInterface
     {
         $valArray = $this->request->getArguments();
         $teilnehmer = $this->teilnehmerRepository->findByUid($valArray['folgekontakt']['teilnehmer']);
@@ -134,16 +137,16 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $letzterfolgekontakttimestamp = $letzterfolgekontakt != NULL ? DateTime::createFromFormat("d.m.Y", $letzterfolgekontakt->getDatum()) : DateTime::createFromFormat("d.m.Y", '01.01.1970');
         
         if($folgekontakttimestamp == FALSE) {
-            $this->addFlashMessage('Falsches Format Datum Folgekontakt.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-            $this->redirect('new', 'Folgekontakt', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'],'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage']));
+            $this->addFlashMessage('Falsches Format Datum Folgekontakt.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+            return $this->redirect('new', 'Folgekontakt', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'],'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage']));
         }
                 
         if($folgekontakttimestamp->getTimestamp() < $beratungtimestamp->getTimestamp()) {
-            $this->addFlashMessage('Datum Folgekontakt muss nach Datum Erstberatung sein.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-            $this->redirect('new', 'Folgekontakt', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'],'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage']));
+            $this->addFlashMessage('Datum Folgekontakt muss nach Datum Erstberatung sein.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+            return $this->redirect('new', 'Folgekontakt', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'],'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage']));
         } elseif($folgekontakttimestamp->getTimestamp() < $letzterfolgekontakttimestamp->getTimestamp()) {
-            $this->addFlashMessage('Datum Folgekontakt muss nach letztem Folgekontakt sein.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-            $this->redirect('new', 'Folgekontakt', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'],'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage']));
+            $this->addFlashMessage('Datum Folgekontakt muss nach letztem Folgekontakt sein.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+            return $this->redirect('new', 'Folgekontakt', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'],'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage']));
         } else {
             $this->folgekontaktRepository->add($folgekontakt);
             
@@ -151,7 +154,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
             $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
             $persistenceManager->persistAll();
             
-            $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
+            return $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
         }           
     }
     
@@ -162,7 +165,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("folgekontakt")
      * @return void
      */
-    public function editAction(\Ud\Iqtp13db\Domain\Model\Folgekontakt $folgekontakt)
+    public function editAction(\Ud\Iqtp13db\Domain\Model\Folgekontakt $folgekontakt): ResponseInterface
     {
         $valArray = $this->request->getArguments();
         $teilnehmer = $folgekontakt->getTeilnehmer();
@@ -178,6 +181,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $this->view->assign('calleraction', $valArray['calleraction']);
         $this->view->assign('callercontroller', $valArray['callercontroller']);
         $this->view->assign('settings', $this->settings);
+        return $this->htmlResponse();
     }
     
     /**
@@ -186,7 +190,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      * @param \Ud\Iqtp13db\Domain\Model\Folgekontakt $folgekontakt
      * @return void
      */
-    public function updateAction(\Ud\Iqtp13db\Domain\Model\Folgekontakt $folgekontakt)
+    public function updateAction(\Ud\Iqtp13db\Domain\Model\Folgekontakt $folgekontakt): ResponseInterface
     {
         $valArray = $this->request->getArguments();
         
@@ -196,7 +200,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
         
-        $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'] ?? '1'));       
+        return $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'] ?? '1'));       
     }
     
     /**
@@ -205,7 +209,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      * @param \Ud\Iqtp13db\Domain\Model\Folgekontakt $folgekontakt
      * @return void
      */
-    public function deleteAction(\Ud\Iqtp13db\Domain\Model\Folgekontakt $folgekontakt)
+    public function deleteAction(\Ud\Iqtp13db\Domain\Model\Folgekontakt $folgekontakt): ResponseInterface
     {
         $valArray = $this->request->getArguments();
         
@@ -215,7 +219,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
                 
-        $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'] ?? '1'));
+        return $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'] ?? '1'));
         
     }
     

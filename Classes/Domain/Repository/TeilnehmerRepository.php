@@ -381,7 +381,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         );
         
         $query->matching(
-            $query->logicalAnd($constraints)
+            $query->logicalAnd(...array_values($constraints))
             );
         
         $result = $query->execute()->toArray();
