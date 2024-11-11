@@ -11,6 +11,13 @@
 
 <f:render partial="FormErrors" arguments="{object:Teilnehmer}" />
 
+<!-- Modal - HTML -->
+	<dialog id="infomodal">
+	  <h3>Info</h3>
+	  <div id="modaltext"></div>
+	  <button id="okModal">OK</button>
+	</dialog>
+	
 <f:form id="teilnehmerform" action="create" controller="Backend" name="teilnehmer" object="{teilnehmer}" arguments="{calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, newnacherfassung : newnacherfassung, newanonymeberatung : newanonymeberatung}">
 	
 	<div class="buttonmenu">
@@ -29,5 +36,27 @@
 	</div>
 	
 </f:form>
+<script>
+	
+	// Modal - JavaScript
+	const modal = document.getElementById("infomodal");
+	const modaltext = document.getElementById("modaltext");
+	const okModal = document.getElementById("okModal");
+	
+	var dellink = '';
+	var cancellink = '';
 
+	function showModal(elem) {		
+		title = elem.getAttribute("title");
+		modaltext.innerHTML = "<p>" + title + "</p>";
+		modal.showModal();
+		return false;
+	}
+	
+
+	okModal.addEventListener("click", () => {
+		modal.close();	    
+	});
+	
+</script>
 </f:section>

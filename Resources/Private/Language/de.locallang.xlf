@@ -15,11 +15,13 @@
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.schonberatenvon"><target>Von wem wurden Sie beraten?</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.nachname"><target>Nachname</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.vorname"><target>Vorname</target></trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.strasse"><target>Strasse, Nr.</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.plz"><target>PLZ</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ort"><target>Wohnort</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.email"><target>E-Mail</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.confirmemail"><target>E-Mail bestätigen</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.telefon"><target>Telefon</target></trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.gebdat"><target>Geburtsdatum</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.lebensalter"><target>Alter</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geburtsland"><target>Geburtsland</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geschlecht"><target>Geschlecht</target></trans-unit>
@@ -34,6 +36,18 @@
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><target>Deutsch als Muttersprache?</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Deutschkenntnisse auf welchem Sprachniveau?</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.weiteresprachkenntnisse"><target>Weitere Sprachkenntnisse</target></trans-unit>
+			
+			<trans-unit id="tx_iqtp13db_domain_model_tnseite1.einwilligung"><target>Einwilligung</target></trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_tnseite1.nachname"><target>Nachname</target></trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_tnseite1.vorname"><target>Vorname</target></trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_tnseite1.strasse"><target>Strasse, Nr.</target></trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_tnseite1.plz"><target>PLZ</target></trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_tnseite1.ort"><target>Wohnort</target></trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_tnseite1.email"><target>E-Mail</target></trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_tnseite1.confirmemail"><target>E-Mail bestätigen</target></trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_tnseite1.telefon"><target>Telefon</target></trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_tnseite1.gebdat"><target>Geburtsdatum</target></trans-unit>
+						
 			<trans-unit id="keinabschlussbisher"><target><![CDATA[ Noch keinen Berufsabschluss angegeben. Bitte tragen Sie hier Informationen zu Ihrem Berufsabschluss (Universität oder Ausbildung) ein. Sie können auch mehrere Abschlüsse (Diplome, Zeugnisse) angeben.]]></target></trans-unit>
 			
 			<trans-unit id="tx_iqtp13db_domain_model_abschluss"><target>Abschluss</target></trans-unit>
@@ -130,6 +144,8 @@
 			<trans-unit id="confirmmailtext2"><target> <![CDATA[ <p>Mit freundlichem Gruß</p> <p>Ihre Anerkennungs- und Qualifizierungsberatung beim IQ Netzwerk</p>]]></target></trans-unit>
 			<trans-unit id="confirmsubject"><target>Bitte bestätigen Sie Ihre Anmeldung zur Anerkennungsberatung beim IQ Netzwerk</target></trans-unit>	
 			<trans-unit id="kontaktberatungsstelle"><target>Das ist Ihre Beratungsstelle:</target></trans-unit>			
+			<trans-unit id="mailtextedit"><target> <![CDATA[ <p>Über diesen Link können Sie Ihre Daten ändern oder ergänzen:</p> ]]></target></trans-unit>
+			<trans-unit id="linktitleeditregistration"><target>Anmeldung bearbeiten</target></trans-unit>
 			
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer"><target>Teilnehmer</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligung"><target>Einwilligung</target></trans-unit>
@@ -190,6 +206,7 @@
 			<trans-unit id="tx_iqtp13db_domain_model_dokument.teilnehmer"><target>Ratsuchende*r</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_historie"><target>Historie</target></trans-unit>
 			
+			<trans-unit id="error"><target>Fehler</target></trans-unit>
 			<trans-unit id="errormessage"><target>Bitte prüfen Sie die rot markierten Felder.</target></trans-unit>
 			<trans-unit id="errorconsent"><target>Um fortzufahren, müssen Sie in die Übermittlung Ihrer Daten einwilligen.</target></trans-unit>
 			<trans-unit id="errormailnotmatch"><target>Die E-Mail-Bestätigung ist nicht korrekt. Bitte E-Mail-Adresse prüfen.</target></trans-unit>
@@ -198,6 +215,8 @@
 			<trans-unit id="errortndatanotvalid"><target>Die eingebenen Daten sind ungültig. Bitte prüfen Sie die eingebenenen Daten.</target></trans-unit>
 			<trans-unit id="errornoqualification"><target>Sie müssen mindestens einen Abschluss eingeben.</target></trans-unit>
 			<trans-unit id="errornosector"><target>Angabe Branche ist Pflichtfeld.</target></trans-unit>
+			
+			<trans-unit id="editexternauthenticatelabel"><target>Zur Authentifizierung bitte Geburtsdatum eingeben und auf den Weiter-Button klicken.</target></trans-unit>
 		</body>
 	</file>
 </xliff>

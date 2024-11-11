@@ -21,11 +21,13 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.schonberatenvon"><target>	من قبل من تم تقديم المشورة لك؟	</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.nachname"><target>	إسم العائلة / الكنية	</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.vorname"><target>	الإسم الأول	</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.strasse"><target>الشارع، رقم المنزل</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.plz"><target>	الرمز البريدي	</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ort"><target>	المكان	</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.email"><target>	البريد الإلكتروني	</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.confirmemail"><target>	تأكيد البريد الإلكتروني	</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.telefon"><target>	التلفون	</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.gebdat"><target>تاريخ الميلاد</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.lebensalter"><target>	العمر	</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geburtsland"><target>	بلد الولادة	</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geschlecht"><target>	الجنس	</target></trans-unit>
@@ -39,6 +41,16 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatusfreitext"><target>ملحوظة بخصوص نوعية الإقامة</target></trans-unit>
   <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><target>	اللغة الألمانية كلغة الأم؟	</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>	في حالة وجود شهادة لغة ألمانية، في أي مستوى؟	</target></trans-unit>
+	
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.einwilligung"><target>موافقة</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.nachname"><target>	إسم العائلة / الكنية	</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.vorname"><target>	الإسم الأول	</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.strasse"><target>الشارع، رقم المنزل</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.plz"><target>	الرمز البريدي	</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.ort"><target>	المكان	</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.email"><target>	البريد الإلكتروني	</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.confirmemail"><target>	تأكيد البريد الإلكتروني	</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.telefon"><target>	التلفون	</target></trans-unit>
 	
 	<trans-unit id="keinabschlussbisher"><target><![CDATA[ No foreign educational qualification specified. Please enter information about your educational qualification (university or training) here. You can also enter several qualifications (diplomas, certificates).]]></target></trans-unit>
 	
@@ -170,12 +182,13 @@
 	<trans-unit id="confirmsubject"><target>	يرجى تأكيد تسجيلك للاستشارة الأولية للاعتراف في 	</target></trans-unit>
 	<trans-unit id="kontaktberatungsstelle"><target>This is your counselling center:</target></trans-unit>
 	
-	<trans-unit id="errormessage"><source>يرجى التحقق من الحقول المميزة باللون الأحمر.</source></trans-unit>
-	<trans-unit id="errorconsent"><source>للمتابعة، يجب أن توافق على نقل بياناتك.</source></trans-unit>
-	<trans-unit id="errormailnotmatch"><source>عناوين البريد الإلكتروني غير متطابقة، يرجى التحقق.</source></trans-unit>
-	<trans-unit id="errormailnotvalid"><source>عنوان بريد إلكتروني غير صالح، يرجى التحقق.</source></trans-unit>
-	<trans-unit id="errordomainnotvalid"><source>النطاق غير موجود، يرجى التحقق.</source></trans-unit>
-	<trans-unit id="errortndatanotvalid"><source>البيانات غير صالحة، يرجى التحقق من البيانات المدخلة.</source></trans-unit>
+	<trans-unit id="error"><target>خطأ</target></trans-unit>
+	<trans-unit id="errormessage"><target>يرجى التحقق من الحقول المميزة باللون الأحمر.</target></trans-unit>
+	<trans-unit id="errorconsent"><target>للمتابعة، يجب أن توافق على نقل بياناتك.</target></trans-unit>
+	<trans-unit id="errormailnotmatch"><target>عناوين البريد الإلكتروني غير متطابقة، يرجى التحقق.</target></trans-unit>
+	<trans-unit id="errormailnotvalid"><target>عنوان بريد إلكتروني غير صالح، يرجى التحقق.</target></trans-unit>
+	<trans-unit id="errordomainnotvalid"><target>النطاق غير موجود، يرجى التحقق.</target></trans-unit>
+	<trans-unit id="errortndatanotvalid"><target>البيانات غير صالحة، يرجى التحقق من البيانات المدخلة.</target></trans-unit>
 	<trans-unit id="errornoqualification"><target>يجب عليك إدخال مؤهل واحد على الأقل</target></trans-unit>
 	<trans-unit id="errornosector"><target>القطاع إلزامي</target></trans-unit>
     </body>

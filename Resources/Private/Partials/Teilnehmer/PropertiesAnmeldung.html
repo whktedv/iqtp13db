@@ -22,6 +22,12 @@
 				<span class="propdat">{teilnehmer.vorname}</span>
 		</div>
 		<div class="tp13_formdivwebapp">
+			<label for="strasse">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.strasse" />
+			</label>
+				<span class="propdat">{teilnehmer.strasse}</span>
+		</div>
+		<div class="tp13_formdivwebapp">
 			<label for="vorname">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.plz" />
 			</label>
@@ -46,10 +52,10 @@
 				<span class="propdat">{teilnehmer.telefon}</span>
 		</div>
 		<div class="tp13_formdivwebapp">
-			<label for="geburtsjahr">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.lebensalter" />
+			<label for="gebdat">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.gebdat" />
 			</label>
-				<span class="propdat">{f:if(condition: '{teilnehmer.lebensalter} == -1000', then: '-', else: '{teilnehmer.lebensalter}')}</span>
+				<span class="propdat"><f:if condition="{teilnehmer.gebdat} != '0000-00-00' && {teilnehmer.gebdat} != ''">{teilnehmer.gebdat -> f:format.date(format: 'd.m.Y')}</f:if></span>
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="geburtsland">

@@ -24,10 +24,12 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.schonberatenvon"><target>	از چه کسی مشاوره دریافت کردید؟</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.nachname"><target>	نام خانوادگی</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.vorname"><target>	نام</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.strasse"><target>خیابان، شماره خانه</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.plz"><target>	کد پستی</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ort"><target>	محل</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.email"><target>	ایمیل</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.confirmemail"><target>	تایید ایمیل</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.gebdat"><target>تاریخ تولد</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.telefon"><target>	تلفن</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.lebensalter"><target>	سن</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geburtsland"><target>	کشور محل تولد</target></trans-unit>
@@ -43,6 +45,17 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><target>	آلمانی به عنوان زبان مادری؟</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>مهارت زبان آلمانی در چه سطحی است؟</target></trans-unit>
   
+    <trans-unit id="tx_iqtp13db_domain_model_tnseite1.einwilligung"><target>رضایت</target></trans-unit>
+    <trans-unit id="tx_iqtp13db_domain_model_tnseite1.nachname"><target>	نام خانوادگی</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.vorname"><target>	نام</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.strasse"><target>خیابان، شماره خانه</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.plz"><target>	کد پستی</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.ort"><target>	محل</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.email"><target>	ایمیل</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.confirmemail"><target>	تایید ایمیل</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.gebdat"><target>تاریخ تولد</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.telefon"><target>	تلفن</target></trans-unit>
+	
   <trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>بالاترین مدرک حرفه ای من این است معادل را در لیست انتخاب کنید‌</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branche"><target>لطفا صنعتی را که در ان صلاحیت (های) خود را بدست اورده اید را مشخص کنید</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branchekurz"><target>صنعت</target></trans-unit>
@@ -162,12 +175,13 @@
 	<trans-unit id="confirmsubject"><target>	لطفا نام‌نویسی خود را برای مشاوره تایید نورد-راین‌ وست‌فالن تایید کنید</target></trans-unit>
 	<trans-unit id="kontaktberatungsstelle"><target>This is your counselling center:</target></trans-unit>
 	
-	<trans-unit id="errormessage"><source>لطفا فیلدهای مشخص شده با رنگ قرمز را بررسی کنید.</source></trans-unit>
-	<trans-unit id="errorconsent"><source>برای ادامه، شما باید به انتقال داده های خود موافقت دهید.</source></trans-unit>
-	<trans-unit id="errormailnotmatch"><source>آدرس های ایمیل مطابقت ندارند، لطفا بررسی کنید.</source></trans-unit>
-	<trans-unit id="errormailnotvalid"><source>آدرس ایمیل معتبر نیست، لطفا بررسی کنید.</source></trans-unit>
-	<trans-unit id="errordomainnotvalid"><source>دامنه یافت نشد، لطفا بررسی کنید.</source></trans-unit>
-	<trans-unit id="errortndatanotvalid"><source>داده ها معتبر نیستند، لطفا داده های وارد شده را بررسی کنید.</source></trans-unit>
+	<trans-unit id="error"><target>خطا</target></trans-unit>
+	<trans-unit id="errormessage"><target>لطفا فیلدهای مشخص شده با رنگ قرمز را بررسی کنید.</target></trans-unit>
+	<trans-unit id="errorconsent"><target>برای ادامه، شما باید به انتقال داده های خود موافقت دهید.</target></trans-unit>
+	<trans-unit id="errormailnotmatch"><target>آدرس های ایمیل مطابقت ندارند، لطفا بررسی کنید.</target></trans-unit>
+	<trans-unit id="errormailnotvalid"><target>آدرس ایمیل معتبر نیست، لطفا بررسی کنید.</target></trans-unit>
+	<trans-unit id="errordomainnotvalid"><target>دامنه یافت نشد، لطفا بررسی کنید.</target></trans-unit>
+	<trans-unit id="errortndatanotvalid"><target>داده ها معتبر نیستند، لطفا داده های وارد شده را بررسی کنید.</target></trans-unit>
 	<trans-unit id="errornoqualification"><target>شما باید حداقل یک مدرک را وارد کنید</target></trans-unit>
 	<trans-unit id="errornosector"><target>بخش اجباری است</target></trans-unit>
     </body>

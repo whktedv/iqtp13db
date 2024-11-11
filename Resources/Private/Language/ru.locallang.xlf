@@ -19,11 +19,13 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.schonberatenvon"><target>Кто вам посоветовал?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.nachname"><target>Фамилия</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.vorname"><target>Имя</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.strasse"><target>Улица, номер дома</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.plz"><target>Индекс</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ort"><target>место</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.email"><target>электронная почта</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.confirmemail"><target>Подтвердите адрес электронной почты</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.telefon"><target>Телефон</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.gebdat"><target>Дата рождения</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.lebensalter"><target>Возраст</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geburtsland"><target>Страна рождения</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geschlecht"><target>Пол</target></trans-unit>
@@ -37,6 +39,17 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatusfreitext"><target>Справка о статусе проживания</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><target>Немецкий как родной язык?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Какой уровень владения немецким языком?</target></trans-unit>
+
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.einwilligung"><target>согласие</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.nachname"><target>Фамилия</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.vorname"><target>Имя</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.strasse"><target>Улица, номер дома</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.plz"><target>Индекс</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.ort"><target>место</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.email"><target>электронная почта</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.confirmemail"><target>Подтвердите адрес электронной почты</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.telefon"><target>Телефон</target></trans-unit>
+
   <trans-unit id="keinabschlussbisher"><target><![CDATA[ No foreign educational qualification specified yet. Please enter information about your educational qualification (university or training) here. You can also enter several qualifications (diplomas, certificates).]]></target></trans-unit>
 
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Моя высшая профессиональная квалификация</target></trans-unit>
@@ -141,6 +154,7 @@
 	<trans-unit id="confirmsubject"><target>Пожалуйста, подтвердите свою регистрацию для первичной консультации по признанию NRW</target></trans-unit>
 	<trans-unit id="kontaktberatungsstelle"><target>This is your counselling center:</target></trans-unit>
   
+ 	<trans-unit id="error"><target>Ошибка</target></trans-unit>
  	<trans-unit id="errormessage"><target>Пожалуйста, проверьте красным выделенные поля.</target></trans-unit>
 	<trans-unit id="errorconsent"><target>Чтобы продолжить, вы должны согласиться на передачу ваших данных.</target></trans-unit>
 	<trans-unit id="errormailnotmatch"><target>Адреса электронной почты не совпадают, пожалуйста, проверьте.</target></trans-unit>

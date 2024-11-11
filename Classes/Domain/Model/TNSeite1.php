@@ -48,6 +48,13 @@ class TNSeite1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	protected $vorname = '';
 	
 	/**
+	 * strasse
+	 * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
+	 * @var string
+	 */
+	protected $strasse = '';
+	
+	/**
 	 * PLZ
 	 *
 	 * @var string
@@ -85,6 +92,14 @@ class TNSeite1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 */
 	protected $telefon = '';
 
+	/**
+	 * gebdat
+	 * 
+	 * @var string
+	 * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty"), @TYPO3\CMS\Extbase\Annotation\Validate("\Ud\Iqtp13db\Domain\Validator\GebdatValidator")
+	 */
+	protected $gebdat = '';
+	
 	/**
 	 * lebensalter
 	 *
@@ -281,6 +296,27 @@ class TNSeite1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 	
 	/**
+	 * Returns the strasse
+	 *
+	 * @return string $strasse
+	 */
+	public function getStrasse()
+	{
+	    return $this->strasse;
+	}
+	
+	/**
+	 * Sets the strasse
+	 *
+	 * @param string $strasse
+	 * @return void
+	 */
+	public function setStrasse($strasse)
+	{
+	    $this->strasse = $strasse;
+	}
+	
+	/**
 	 * Returns the plz
 	 *
 	 * @return string $plz
@@ -375,6 +411,27 @@ class TNSeite1 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 		$this->telefon = $telefon;
 	}
 
+	/**
+	 * Returns the gebdat
+	 *
+	 * @return string $gebdat
+	 */
+	public function getGebdat()
+	{
+	    return $this->gebdat;
+	}
+	
+	/**
+	 * Sets the gebdat
+	 *
+	 * @param string $gebdat
+	 * @return void
+	 */
+	public function setGebdat($gebdat)
+	{
+	    $this->gebdat = $gebdat;
+	}
+	
 	/**
 	 * Returns the lebensalter
 	 *

@@ -17,11 +17,13 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.schonberatenvon"><target>Хто Вас консультував?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.nachname"><target>Прізвище</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.vorname"><target>Ім'я </target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.strasse"><target>Вулиця, номер будинку</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.plz"><target>Поштовий індекс </target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ort"><target>Mісце проживання</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.email"><target>Електронна пошта</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.confirmemail"><target>Підтвердити електронну пошту</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.telefon"><target>Номер телефону</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.gebdat"><target>дата народження</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.lebensalter"><target>Вік</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geburtsland"><target>Країна народження </target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geschlecht"><target>Стать</target></trans-unit>
@@ -35,6 +37,17 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatusfreitext"><target>Примітка до статусу проживання</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><target>Німецька мова як рідна?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Який рівень знання німецької мови?</target></trans-unit>
+
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.einwilligung"><target>згода</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.nachname"><target>Прізвище</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.vorname"><target>Ім'я </target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.strasse"><target>Вулиця, номер будинку</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.plz"><target>Поштовий індекс </target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.ort"><target>Mісце проживання</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.email"><target>Електронна пошта</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.confirmemail"><target>Підтвердити електронну пошту</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.telefon"><target>Номер телефону</target></trans-unit>
+
   	<trans-unit id="keinabschlussbisher"><target><![CDATA[ Іноземна освітня кваліфікація ще не вказана. Будь ласка, введіть тут інформацію про вашу освітню кваліфікацію (університет або тренінг). Ви також можете вказати декілька кваліфікацій (дипломів, сертифікатів).]]></target></trans-unit>
 	
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Мій найвищий рівень професійної освіти</target></trans-unit>
@@ -131,6 +144,7 @@
 	<trans-unit id="confirmsubject"><target>Будь ласка, підтвердьте Вашу реєстрацію в консультаційній установі по визнанню професійної кваліфікації мережі IQ</target></trans-unit>
   <trans-unit id="kontaktberatungsstelle"><target>This is your counselling center:</target></trans-unit>
  
+ 	<trans-unit id="error"><target>помилка</target></trans-unit>
 	<trans-unit id="errormessage"><target>Будь ласка, перевірте червоні підсвічені поля.</target></trans-unit>
 	<trans-unit id="errorconsent"><target>Щоб продовжити, ви повинні дати згоду на передачу ваших даних.</target></trans-unit>
 	<trans-unit id="errormailnotmatch"><target>Адреси електронної пошти не співпадають, будь ласка, перевірте.</target></trans-unit>

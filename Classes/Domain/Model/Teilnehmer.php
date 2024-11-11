@@ -90,6 +90,13 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $vorname = '';
     
     /**
+     * strasse
+     * @Validate("NotEmpty")
+     * @var string
+     */
+    protected $strasse = '';
+    
+    /**
      * plz
      * @Validate("NotEmpty")
      * @var string
@@ -126,6 +133,13 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var string
      */
     protected $telefon = '';
+    
+    /**
+     * gebdat
+     * @var string
+     * @Validate("NotEmpty"), @Validate("\Ud\Iqtp13db\Domain\Validator\GebdatValidator")
+     */
+    protected $gebdat = '';
     
     /**
      * lebensalter
@@ -810,6 +824,27 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
     
     /**
+     * Returns the strasse
+     *
+     * @return string $strasse
+     */
+    public function getStrasse()
+    {
+        return $this->strasse;
+    }
+    
+    /**
+     * Sets the strasse
+     *
+     * @param string $strasse
+     * @return void
+     */
+    public function setStrasse($strasse)
+    {
+        $this->strasse = $strasse;
+    }
+    
+    /**
      * Returns the plz
      *
      * @return string $plz
@@ -910,6 +945,27 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setTelefon($telefon)
     {
         $this->telefon = $telefon;
+    }
+    
+    /**
+     * Returns the gebdat
+     *
+     * @return string $gebdat
+     */
+    public function getGebdat()
+    {
+        return $this->gebdat;
+    }
+    
+    /**
+     * Sets the gebdat
+     *
+     * @param string $gebdat
+     * @return void
+     */
+    public function setGebdat($gebdat)
+    {
+        $this->gebdat = $gebdat;
     }
     
     /**

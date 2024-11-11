@@ -17,11 +17,15 @@
 	    			<numIndex index="0" type="array">
 	      				<numIndex index="0">Anmeldung</numIndex>
 	     				<numIndex index="1">anmeldung</numIndex>
-	   				</numIndex>
+	   				</numIndex>	   				
 	   				<numIndex index="1" type="array">
       					<numIndex index="0">Anmeldung nur PLZ</numIndex>
      					<numIndex index="1">anmeldungplz</numIndex>
    					</numIndex>
+   					<numIndex index="2" type="array">
+	      				<numIndex index="0">Bearbeiten von Extern</numIndex>
+	     				<numIndex index="1">bearbeiten</numIndex>
+	   				</numIndex>
    				</items>
 				</config>
             </TCEforms>
@@ -53,7 +57,21 @@
 				<show_thumbs>1</show_thumbs>
 				</config>
             </TCEforms>
-          </settings.anmeldendeseiteaskconsent>          
+          </settings.anmeldendeseiteaskconsent>  
+           <settings.anmeldeditseite>
+            <TCEforms>
+              <label>Seite 'Anmeldung bearbeiten'</label>
+				<config>
+  				<type>group</type>
+  				<internal_type>db</internal_type>
+				<allowed>pages</allowed>
+				<size>1</size>
+				<maxitems>1</maxitems>
+				<minitems>0</minitems>
+				<show_thumbs>1</show_thumbs>
+				</config>
+            </TCEforms>
+          </settings.anmeldeditseite>        
           <settings.mailattacheinwilligung>
                     <TCEforms>
                          <label>Pfad zum Dateianhang (optional)</label>

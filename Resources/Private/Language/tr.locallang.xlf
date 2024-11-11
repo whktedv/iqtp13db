@@ -19,11 +19,13 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.schonberatenvon"><target>Kimden danışmanlık hizmeti aldınız?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.nachname"><target>Soyad</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.vorname"><target>İsim</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.strasse"><target>Sokak, ev numarası</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.plz"><target>Şehir kodu</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ort"><target>Şehir / Yer</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.email"><target>E-Mail adresiniz</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.confirmemail"><target>E-Mail adresinizin onayı</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.telefon"><target>Telefonnumarası</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.gebdat"><target>Doğum tarihi</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.lebensalter"><target>Yaş</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geburtsland"><target>Doğduğu ülke</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geschlecht"><target>Cinsiyet</target></trans-unit>
@@ -37,6 +39,17 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatusfreitext"><target>İkamet durumu</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><target>Almanca ana dilinizmi?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Almanca dil becerileri ne düzeyde?</target></trans-unit>
+
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.einwilligung"><target>Onay</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.nachname"><target>Soyad</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.vorname"><target>İsim</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.strasse"><target>Sokak, ev numarası</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.plz"><target>Şehir kodu</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.ort"><target>Şehir / Yer</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.email"><target>E-Mail adresiniz</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.confirmemail"><target>E-Mail adresinizin onayı</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.telefon"><target>Telefonnumarası</target></trans-unit>
+
   <trans-unit id="keinabschlussbisher"><target><![CDATA[ No foreign educational qualification specified yet. Please enter information about your educational qualification (university or training) here. You can also enter several qualifications (diplomas, certificates).]]></target></trans-unit>
 
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Aldığım en üst derece meslek eğitim diploması</target></trans-unit>
@@ -144,6 +157,7 @@
 	<trans-unit id="confirmsubject"><target>Yeterlilik ve denklik için danışmanlık (Kuzey Ren Vestfalya Eyaleti) başvurunuzu onaylayınız</target></trans-unit>
 	<trans-unit id="kontaktberatungsstelle"><target>This is your counselling center:</target></trans-unit>
 
+	<trans-unit id="error"><target>Hata</target></trans-unit>
 	<trans-unit id="errormessage"><target>Lütfen kırmızı renkte vurgulanan alanları kontrol edin.</target></trans-unit>
 	<trans-unit id="errorconsent"><target>Devam etmek için verilerinizin transferine onay vermeniz gerekiyor.</target></trans-unit>
 	<trans-unit id="errormailnotmatch"><target>E-posta adresleri uyuşmuyor, lütfen kontrol edin.</target></trans-unit>

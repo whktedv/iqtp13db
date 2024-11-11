@@ -19,7 +19,7 @@ return [
         'iconfile' => 'EXT:iqtp13db/Resources/Public/Icons/tx_iqtp13db_domain_model_teilnehmer.gif'
     ],
     'types' => [
-        '1' => ['showitem' => 'hidden, niqidberatungsstelle, beratungsstatus, nachname, vorname, plz, ort, email, confirmemail, telefon, lebensalter, geschlecht, einwilligung, beratungdatum, erstberatungabgeschlossen, berater, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+        '1' => ['showitem' => 'hidden, niqidberatungsstelle, beratungsstatus, nachname, vorname, strasse, plz, ort, email, confirmemail, telefon, gebdat, lebensalter, geschlecht, einwilligung, beratungdatum, erstberatungabgeschlossen, berater, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
     'columns' => [
         't3ver_label' => [
@@ -165,6 +165,15 @@ return [
                 'eval' => 'trim'
             ],
         ],
+        'strasse' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.strasse',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim'
+            ],
+        ],
         'plz' => [
             'exclude' => true,
             'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.plz',
@@ -204,6 +213,15 @@ return [
         'telefon' => [
             'exclude' => true,
             'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.telefon',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim'
+            ],
+        ],
+        'gebdat' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.gebdat',
             'config' => [
                 'type' => 'input',
                 'size' => 30,

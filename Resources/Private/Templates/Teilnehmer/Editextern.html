@@ -1,0 +1,22 @@
+
+<f:layout name="Default" />
+
+<f:section name="main">
+<h1>IQ Beratungsportal</h1>
+
+<f:render partial="FormErrors" arguments="{object:Teilnehmer}" />
+
+<f:flashMessages />
+
+<f:form action="editexternredirect" name="teilnehmer" object="{teilnehmer}" arguments="{code : code}" >
+		<b><f:translate key="editexternauthenticatelabel" /></b>
+		<br><br>
+		<div class="dt_formdivwebapp2">
+			<label for="sfrage"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.gebdat" /></label>
+			<f:form.textfield type="date" name="authfrage" type="date" required="required" />			
+		</div>
+		
+		<f:form.button name="btnAbsenden"><f:translate key="weiter" /></f:form.button>
+</f:form>
+
+</f:section>

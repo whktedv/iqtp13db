@@ -8,14 +8,15 @@
   <p><span class="ui-icon ui-icon-alert"></span><f:translate key="dialoganmeldungabbrechen" /></p>
 </div>
 
-<f:form.validationResults for="{object}">
-	<f:if condition="{validationResults.flattenedErrors}">
-		<div class="errormessage">
-			&nbsp;<b><f:translate key="errormessage" /></b>
-		</div>
-	</f:if>
-</f:form.validationResults>
+<f:render partial="FormErrors" arguments="{object:Teilnehmer}" />
 
+<!-- Modal - HTML -->
+	<dialog id="infomodal">
+	  <h3>Info</h3>
+	  <div id="modaltext"></div>
+	  <button id="okModal">OK</button>
+	</dialog>
+	
 <f:form id="teilnehmerform" action="anmeldseite1redirect" name="tnseite1" object="{tnseite1}" arguments="{direkt : direkt, wohnsitzDeutschland : wohnsitzDeutschland}">
 		<f:render partial="Teilnehmer/FormFieldsAnmeldung1" arguments="{_all}" />
 		<f:form.button type="submit" id="weiterbutton" name="btnweiter"><f:translate key="weiter" /></f:form.button>
@@ -23,4 +24,28 @@
 </f:form>
 <span style="color: #efefef; font-size: 0.8rem; float: right;">{beratungsstelle}</span>
 
+
+<script>
+	
+	// Modal - JavaScript
+	const modal = document.getElementById("infomodal");
+	const modaltext = document.getElementById("modaltext");
+	const okModal = document.getElementById("okModal");
+	
+	var dellink = '';
+	var cancellink = '';
+
+	function showModal(elem) {		
+		title = elem.getAttribute("title");
+		modaltext.innerHTML = "<p>" + title + "</p>";
+		modal.showModal();
+		return false;
+	}
+	
+
+	okModal.addEventListener("click", () => {
+		modal.close();	    
+	});
+	
+</script>
 </f:section>

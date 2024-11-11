@@ -24,11 +24,13 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.schonberatenvon"><target>De cine ați fost consiliat?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.nachname"><target>Nume de familie</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.vorname"><target>Prenume</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.strasse"><target>Strada, numărul casei</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.plz"><target>Codul poștal</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ort"><target>Localitate</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.email"><target>E-mail</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.confirmemail"><target>Confirmați e-mail</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.telefon"><target>Telefon</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.gebdat"><target>Data de naștere</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.lebensalter"><target>Vârstă </target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geburtsland"><target>Țara de origine</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geschlecht"><target>Sex</target></trans-unit>
@@ -42,6 +44,17 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatusfreitext"><target>Notă privind statutul de rezidență</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><target>Germana ca limbă maternă?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Ce nivel de cunoștințe de limba germană?</target></trans-unit>
+ 
+ 	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.einwilligung"><target>Consimţământ</target></trans-unit>
+ 	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.nachname"><target>Nume de familie</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.vorname"><target>Prenume</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.strasse"><target>Strada, numărul casei</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.plz"><target>Codul poștal</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.ort"><target>Localitate</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.email"><target>E-mail</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.confirmemail"><target>Confirmați e-mail</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.telefon"><target>Telefon</target></trans-unit>
+ 
   <trans-unit id="keinabschlussbisher"><target><![CDATA[ No foreign educational qualification specified yet. Please enter information about your educational qualification (university or training) here. You can also enter several qualifications (diplomas, certificates).]]></target></trans-unit>
 
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Cea mai înaltă calificare profesională a mea este</target></trans-unit>
@@ -148,6 +161,7 @@
 	<trans-unit id="confirmsubject"><target>Vă rugăm să confirmați înregistrarea dumneavoastră pentru consilierea de recunoaștere</target></trans-unit>
 	<trans-unit id="kontaktberatungsstelle"><target>This is your counselling center:</target></trans-unit>
 	
+	<trans-unit id="error"><target>Greşeală</target></trans-unit>
 	<trans-unit id="errormessage"><target>Vă rugăm să verificați câmpurile marcate cu roșu.</target></trans-unit>
 	<trans-unit id="errorconsent"><target>Pentru a continua, trebuie să fiți de acord cu transferul datelor dvs.</target></trans-unit>
 	<trans-unit id="errormailnotmatch"><target>Adresele de e-mail nu se potrivesc, vă rugăm să verificați.</target></trans-unit>

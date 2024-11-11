@@ -36,6 +36,18 @@
 				</div>
 		</div>
 		<div class="tp13_formdivwebapp">
+			<label for="strasse">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.strasse" />
+				<span class="niqfield" />
+			</label>
+				<span class="propdat">{teilnehmer.strasse}</span>
+				<div class="historie">
+				<f:for each="{historie}" as="hist" key="wert">
+					{f:if(condition: '{hist.property} == "strasse"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
+				</f:for>
+				</div>
+		</div>
+		<div class="tp13_formdivwebapp">
 			<label for="vorname">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.plz" />
 			</label>
@@ -78,6 +90,13 @@
 					{f:if(condition: '{hist.property} == "telefon"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
 				</f:for>
 				</div>
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="gebdat">
+				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.gebdat" />
+				<span class="niqfield" />
+			</label>
+				<span class="propdat"><f:if condition="{teilnehmer.gebdat} != '0000-00-00' && {teilnehmer.gebdat} != ''">{teilnehmer.gebdat -> f:format.date(format: 'd.m.Y')}</f:if></span>
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="geburtsjahr">

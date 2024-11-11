@@ -1204,12 +1204,14 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     $rowsanonym[$x]['verificationDate'] = $rows[$x]['verificationDate'];
                     $rows[$x]['Nachname'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'nachname');
                     $rows[$x]['Vorname'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'vorname');
+                    $rows[$x]['Strasse'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'strasse');
                     $rows[$x]['PLZ'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'plz');
                     $rowsanonym[$x]['PLZ'] = $rows[$x]['PLZ'];
                     $rows[$x]['Ort'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'ort');
                     $rowsanonym[$x]['Ort'] = $rows[$x]['Ort'];
                     $rows[$x]['Email'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'email');
                     $rows[$x]['Telefon'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'telefon');
+                    $rows[$x]['Geburtsdatum'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'gebdat');
                     $rows[$x]['Lebensalter'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'lebensalter');
                     $rowsanonym[$x]['Lebensalter'] = $rows[$x]['Lebensalter'];
                     
@@ -1373,10 +1375,12 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     'Bestätigungsdatum' => 'string',
                     'Nachname' => 'string',
                     'Vorname' => 'string',
+                    'Strasse' => 'string',
                     'PLZ' => 'string',
                     'Ort' => 'string',
                     'E-Mail' => 'string',
                     'Telefon' => 'string',
+                    'Geburtsdatum' => 'string',
                     'Lebensalter' => 'string',
                     'Erste Staatsangehoerigkeit' => 'string',
                     'Zweite Staatsangehoerigkeit' => 'string',
@@ -1796,11 +1800,12 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
         }
-                
-        $altervonbis[-1000] = '-';
-        $altervonbis[-1] = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('ka', 'iqtp13db');
-        for ($i = 15; $i <= 80; $i++) {
-            $altervonbis[$i] = $i;
+        
+        $aktuellesJahr = (int)date("Y");
+        $jahre = array();
+        $jahre[-1] = 'k.A.';
+        for($jahr = $aktuellesJahr; $jahr > $aktuellesJahr-60; $jahr--) {
+            $jahre[$jahr] = (String)$jahr;
         }
         
         $group = $this->userGroupRepository->findByUid($this->user['usergroup']);
@@ -1815,13 +1820,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $this->view->assign('wieberatenarr', $this->settings['wieberaten']);
         }
         
-        $aktuellesJahr = (int)date("Y");
-        $jahre = array();
-        $jahre[-1] = 'k.A.';
-        for($jahr = $aktuellesJahr; $jahr > $aktuellesJahr-60; $jahr--) {
-            $jahre[$jahr] = (String)$jahr;
-        }
-     
         $uriBuilder = $this->uriBuilder;
         $uriBuilder->reset();
         if($group->getEinwilligungserklaerungsseite() != 0) {
@@ -1838,7 +1836,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $this->view->assignMultiple(
             [
                 'alleberatungsstellen' => $alleberatungsstellen,
-                'altervonbis' => $altervonbis,
                 'calleraction' => $valArray['calleraction'] ?? 'listangemeldet',
                 'callercontroller' => $valArray['callercontroller'] ?? 'Backend',
                 'callerpage' => $valArray['callerpage'] ?? '1',
@@ -1847,36 +1844,16 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'alleberater' => $alleberater,
                 'berater' => $this->user,
                 'settings' => $this->settings,
-                'jahre' => $jahre,
                 'urleinwilligung' => $urleinwilligung,
                 'newnacherfassung' => $valArray['newnacherfassung'] ?? '0',
                 'newanonymeberatung' => $valArray['newanonymeberatung'] ?? '0',
                 'beratungsstelle' => $this->beratungsstellenname,
                 'niqbid' => $this->niqbid,
-                'anzbstellen' => $this->anzbstellen
+                'anzbstellen' => $this->anzbstellen,
+                'jahre' => $jahre
             ]
             );
         return $this->htmlResponse();
-    }
-    
-    /**
-     * action initcreate
-     *
-     * @return void
-     */
-    public function initializeCreateAction() {        
-        $valArray = $this->request->getArguments();
-        $beratungdatum = $valArray['teilnehmer']['beratungdatum'] ?? '';
-        $erstberatungabgeschlossen = $valArray['teilnehmer']['erstberatungabgeschlossen'] ?? '';
-        
-        if($beratungdatum != '' && !$this->generalhelper->validateDateYmd($beratungdatum)) {
-            $this->addFlashMessage("FEHLER: Datensatz NICHT gespeichert. 'Beratung Datum' ungültige Eingabe. Datum im Format JJJJ-MM-TT eintragen!", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
-            return $this->redirect($valArray['calleraction'] ?? 'new', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
-        }
-        if($erstberatungabgeschlossen != '' && !$this->generalhelper->validateDateYmd($erstberatungabgeschlossen)) {
-            $this->addFlashMessage("FEHLER: Datensatz NICHT gespeichert. 'Erstberatung abgeschlossen' ungültige Eingabe. Datum im Format JJJJ-MM-TT eintragen!", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
-            return $this->redirect($valArray['calleraction'] ?? 'new', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
-        }
     }
     
     /**
@@ -2022,10 +1999,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
         }        
         
-        $altervonbis[-1000] = '-';
-        $altervonbis[-1] = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('ka', 'iqtp13db');
-        for ($i = 15; $i <= 80; $i++) {
-            $altervonbis[$i] = $i;
+        $aktuellesJahr = (int)date("Y");
+        $jahre = array();
+        $jahre[-1] = 'k.A.';
+        for($jahr = $aktuellesJahr; $jahr > $aktuellesJahr-60; $jahr--) {
+            $jahre[$jahr] = (String)$jahr;
         }
         
         $group = $this->userGroupRepository->findByUid($this->user['usergroup']);
@@ -2039,14 +2017,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         } else {
             $this->view->assign('wieberatenarr', $this->settings['wieberaten']);
         }
-        
-        $aktuellesJahr = (int)date("Y");
-        $jahre = array();
-        $jahre[-1] = 'k.A.';
-        for($jahr = $aktuellesJahr; $jahr > $aktuellesJahr-60; $jahr--) {
-            $jahre[$jahr] = (String)$jahr;
-        }
-        
+       
         $abschlusshinzu = isset($valArray['abschlusshinzu']) ? $valArray['abschlusshinzu'] : '';
         
         $alleberatungsstellen = $this->userGroupRepository->findAllBeratungsstellen($this->settings['beraterstoragepid']);
@@ -2071,7 +2042,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $this->view->assignMultiple(
             [
                 'alleberatungsstellen' => $alleberatungsstellen,
-                'altervonbis' => $altervonbis,
                 'calleraction' => $valArray['calleraction'] ?? 'listangemeldet',
                 'callercontroller' => $valArray['callercontroller'] ?? 'Backend',
                 'callerpage' => $valArray['callerpage'] ?? '1',
@@ -2082,12 +2052,12 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'berufe' => $berufe,
                 'staaten' => $staaten,
                 'teilnehmer' => $teilnehmer,
+                'jahre' => $jahre,
                 'dokumente' => $dokumente,
                 'dokumentpfad' => $dokumentpfad,
                 'filesizes' => $filesizes,
                 'speicherbelegung' => $speicherbelegung,
                 'abschlusshinzu' => $abschlusshinzu,
-                'jahre' => $jahre,
                 'showabschluesse' => $valArray['showabschluesse'] ?? '0',
                 'showdokumente' => $valArray['showdokumente'] ?? '0',
                 'edituserfield' => $edituserfield ?? '0',
@@ -2125,14 +2095,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $this->addFlashMessage("FEHLER: E-Mail-Adressen stimmen nicht überein!", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
                 return $this->redirect('edit', 'Backend', null, array('teilnehmer' => $valArray['teilnehmer']['__identity'], 'callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
             }
-            if($beratungdatum != '' && !$this->generalhelper->validateDateYmd($beratungdatum)) {
-                $this->addFlashMessage("FEHLER: Datensatz NICHT gespeichert. 'Beratung Datum' ungültige Eingabe. Datum im Format JJJJ-MM-TT eintragen!", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
-                return $this->redirect($valArray['calleraction'] ?? 'edit', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
-            }
-            if($erstberatungabgeschlossen != '' && !$this->generalhelper->validateDateYmd($erstberatungabgeschlossen)) {
-                $this->addFlashMessage("FEHLER: Datensatz NICHT gespeichert. 'Erstberatung abgeschlossen' ungültige Eingabe. Datum im Format JJJJ-MM-TT eintragen!", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
-                return $this->redirect($valArray['calleraction'] ?? 'edit', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
-            }
         } else {
             $this->addFlashMessage("FEHLER in initializeUpdateAction.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
             return $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
@@ -2152,13 +2114,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         if(array_key_exists("searchparams", $valArray)) {
             $searchparams = $valArray['searchparams'];
         }
-        
-        if(is_numeric($teilnehmer->getLebensalter())) {
-            if($teilnehmer->getLebensalter() > 0 && ($teilnehmer->getLebensalter() < 15 || $teilnehmer->getLebensalter() > 80)) {
-                $this->addFlashMessage("Datensatz NICHT gespeichert. Lebensalter muss zwischen 15 und 80 oder k.A. sein.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
-                return $this->redirect($valArray['calleraction'] ?? 'edit', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung'], 'searchparams' => $searchparams));
-            }
-        }        
+                 
         $nacherfassung = $valArray['newnacherfassung'] ?? '0';
         if($nacherfassung == '1' && $teilnehmer->getNacherfassung() == '') {
             $this->addFlashMessage("Datensatz NICHT gespeichert. Feld 'Nacherfassung' muss angekreuzt sein!", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
@@ -2182,6 +2138,13 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             //return $this->redirect($valArray['calleraction'] ?? 'edit', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
         }
 
+        if($teilnehmer->getGebdat() != '') {
+            $birthdate = \DateTime::createFromFormat('Y-m-d', $teilnehmer->getGebdat());
+            $today = new \DateTime();
+            $age = $today->diff($birthdate)->y;
+            $teilnehmer->setLebensalter($age);
+        }
+        
         // Stammdaten (im Fragebogen Seite 1)
         $this->createHistory($teilnehmer, "niqidberatungsstelle");
         $this->createHistory($teilnehmer, "einwilligung");
@@ -2189,12 +2152,13 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $this->createHistory($teilnehmer, "schonberatenvon");
         $this->createHistory($teilnehmer, "nachname");
         $this->createHistory($teilnehmer, "vorname");
+        $this->createHistory($teilnehmer, "strasse");
         $this->createHistory($teilnehmer, "plz");
         $this->createHistory($teilnehmer, "ort");
         $this->createHistory($teilnehmer, "email");
         $this->createHistory($teilnehmer, "confirmemail");
         $this->createHistory($teilnehmer, "telefon");
-        $this->createHistory($teilnehmer, "lebensalter");
+        $this->createHistory($teilnehmer, "gebdat");
         $this->createHistory($teilnehmer, "geburtsland");
         $this->createHistory($teilnehmer, "geschlecht");
         $this->createHistory($teilnehmer, "ersteStaatsangehoerigkeit");

@@ -91,44 +91,7 @@ if (document.getElementById("abschlusshinzubutton")) {
 
 		
 $(document).ready(function() {
-			
-	$('.datumtextfield').each(function(){
-	    $(this).datepicker({
-	        showButtonPanel : true,
-	        firstDay: 1,
-	        dateFormat : "dd.mm.yy"        
-	    });
-	});	
-
-	$('.datumtextfieldberatung').each(function(){
-	    $(this).datepicker({
-	        showButtonPanel : true,
-	        firstDay: 1,
-	        dateFormat : "yy-mm-dd"        
-	    });
-	});	
-		
-	$('#datepicker1').datepicker({
-        showButtonPanel : true,
-        firstDay: 1,
-        dateFormat : "dd.mm.yy"        
-    });
-    $('#datepicker2').datepicker({
-        showButtonPanel : true,
-        firstDay: 1,
-        dateFormat : "dd.mm.yy"
-    });
-    $('#datepicker3').datepicker({
-        showButtonPanel : true,
-        firstDay: 1,
-        dateFormat : "dd.mm.yy"
-    }); 
-    $('#datepicker4').datepicker({
-        showButtonPanel : true,
-        firstDay: 1,
-        dateFormat : "dd.mm.yy"
-    });
-
+	
     $('#datepickerfiltervon').datepicker({
         showButtonPanel : true,
         firstDay: 1,

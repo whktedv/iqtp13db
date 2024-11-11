@@ -117,3 +117,5 @@ Update 05.11.2024
 - Anpassungen für Typo3 12
 
 Neu: 
+- Feld "Strasse + Hausnr."
+- Feld Geburtsdatum statt Alter (Alter bei Anmeldung wird berechnet und in DB-Feld eingetragen)

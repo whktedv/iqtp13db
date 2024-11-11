@@ -17,11 +17,13 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.schonberatenvon"><target>Kto udzielił Panu/Pani konsultacji?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.nachname"><target>Nazwisko</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.vorname"><target>Imie</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.strasse"><target>Ulica, numer domu</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.plz"><target>Kod pocztowy</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ort"><target>Miejscowość</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.email"><target>E-mail</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.confirmemail"><target>Potwierdź e-mail</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.telefon"><target>Numer telefonu</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.gebdat"><target>Data urodzenia</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.lebensalter"><target>Wiek</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geburtsland"><target>Miejsce urodzenia (państwo) </target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geschlecht"><target>Płeć</target></trans-unit>
@@ -37,6 +39,16 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Jaki poziom znajomości języka niemieckiego?</target></trans-unit>
     <trans-unit id="keinabschlussbisher"><target><![CDATA[ No foreign educational qualification specified yet. Please enter information about your educational qualification (university or training) here. You can also enter several qualifications (diplomas, certificates).]]></target></trans-unit>
   
+  	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.einwilligung"><target>Zgoda</target></trans-unit>
+  	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.nachname"><target>Nazwisko</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.vorname"><target>Imie</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.strasse"><target>Ulica, numer domu</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.plz"><target>Kod pocztowy</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.ort"><target>Miejscowość</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.email"><target>E-mail</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.confirmemail"><target>Potwierdź e-mail</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.telefon"><target>Numer telefonu</target></trans-unit>
+	
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Moje najwyższe kwalifikacje zawodowe to</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branche"><target>Wskaż sektor, w którym uzyskałeś(-aś) kwalifikacje</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branchekurz"><target>Przemysł</target></trans-unit>
@@ -140,6 +152,7 @@
 	<trans-unit id="confirmsubject"><target>Proszę potwierdzić rejestrację na konsultację w dotyczącą uznania kwalifikacji </target></trans-unit>
 	<trans-unit id="kontaktberatungsstelle"><target>This is your counselling center:</target></trans-unit>
   
+  	<trans-unit id="error"><target>Błąd</target></trans-unit>
 	<trans-unit id="errormessage"><target>Proszę sprawdzić pola oznaczone na czerwono.</target></trans-unit>
 	<trans-unit id="errorconsent"><target>Aby kontynuować, musisz zgodzić się na przesłanie swoich danych.</target></trans-unit>
 	<trans-unit id="errormailnotmatch"><target>Adresy e-mail nie pasują, proszę sprawdzić.</target></trans-unit>

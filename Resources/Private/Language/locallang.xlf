@@ -15,11 +15,13 @@
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.schonberatenvon"><source>By whom were you advised</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.nachname"><source>Last name, Family name</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.vorname"><source>First name</source></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.strasse"><source>Street and house number</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.plz"><source>Postal code</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ort"><source>Place of residence, town</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.email"><source>E-mail address</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.confirmemail"><source>Confirm email address</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.telefon"><source>Mobile number</source></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.gebdat"><source>Date of birth</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.lebensalter"><source>Age</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geburtsland"><source>Country of birth</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geschlecht"><source>Gender, Sex</source></trans-unit>
@@ -34,6 +36,18 @@
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><source>German as a native language?</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><source>What level of German language skills?</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.weiteresprachkenntnisse"><source>Further language skills</source></trans-unit>
+		
+		<trans-unit id="tx_iqtp13db_domain_model_tnseite1.einwilligung"><source>Consent</source></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_tnseite1.nachname"><source>Last name, Family name</source></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_tnseite1.vorname"><source>First name</source></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_tnseite1.strasse"><source>Street and house number</source></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_tnseite1.plz"><source>Postal code</source></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_tnseite1.ort"><source>Place of residence, town</source></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_tnseite1.email"><source>E-mail address</source></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_tnseite1.confirmemail"><source>Confirm email address</source></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_tnseite1.telefon"><source>Mobile number</source></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_tnseite1.gebdat"><source>Date of birth</source></trans-unit>
+		
 		<trans-unit id="keinabschlussbisher"><source><![CDATA[ No foreign educational qualification specified yet. Please enter information about your educational qualification (university or training) here. You can also enter several qualifications (diplomas, certificates).]]></source></trans-unit>
 		
 		<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><source>My highest professional qualification is</source></trans-unit>
@@ -119,7 +133,7 @@
 		<trans-unit id="infoBezug"><source>From which institution/authority/office do you currently receive money for your living expenses? Please indicate this institution/authority/office here.</source></trans-unit>
 		<trans-unit id="infoBezugsart"><source> <![CDATA[ What type of benefit (money for living expenses) do you currently receive?<br>SGB II: Basic income support for job-seekers (Hartz IV)<br>SGB III: Unemployment insurance benefits and employment promotion benefits	<br>Asylbewerberleistungsbezug: Basic benefits for asylum seekers, tolerated persons and foreigners who are under an enforceable obligation to leave the country.<br>Please enter one of the reference types ]]></source></trans-unit>
 
-		<trans-unit id="anredemail"><source>Hello </source></trans-unit>
+		<trans-unit id="anredemail"><source>Hello </source></trans-unit>		
 		<trans-unit id="mailtext"><source> <![CDATA[ <p>Thank you for your information.</p> <p>You are now registered for counselling. </p> ]]></source></trans-unit>
 		<trans-unit id="mailtext"><source> <![CDATA[ <p>We will contact you as soon as it is your turn. <p>We ask for your understanding and patience.</p><p>Regards</p>Your recognition counselling ]]></source></trans-unit>
 		<trans-unit id="grcinfotext"><source><![CDATA[ <p>We would like to point out that the counselling service is implemented in accordance with the Charter of Fundamental Rights of the European Union. We require mutual agreement to comply with the Charter for recognition and qualification counselling.</p><p>Charter of Fundamental Rights of the European Union: <a href="https://www.europarl.europa.eu/charter/pdf/text_en.pdf" target="_blank">https://www.europarl.europa.eu/charter/pdf/text_en.pdf</a></p> ]]></source></trans-unit>
@@ -129,7 +143,10 @@
 		<trans-unit id="confirmmailtext2"><source>Yours recognition counselling</source></trans-unit>
 		<trans-unit id="confirmsubject"><source>Please confirm your registration for the initial recognition counselling</source></trans-unit>
 		<trans-unit id="kontaktberatungsstelle"><source>This is your counselling center:</source></trans-unit>
+		<trans-unit id="mailtextedit"><source> <![CDATA[ <p>You can change or add your data using this link:</p> ]]></source></trans-unit>
+		<trans-unit id="linktitleeditregistration"><source>Edit registration</source></trans-unit>
 		
+		<trans-unit id="error"><source>Error</source></trans-unit>
 		<trans-unit id="errormessage"><source>Please check the red highlighted fields.</source></trans-unit>
 		<trans-unit id="errorconsent"><source>To proceed, you have to agree to transfer your data.</source></trans-unit>
 		<trans-unit id="errormailnotmatch"><source>E-Mail addresses do not match, please check.</source></trans-unit>
@@ -139,6 +156,7 @@
 		<trans-unit id="errornoqualification"><source>You must enter at least one qualification.</source></trans-unit>
 		<trans-unit id="errornosector"><source>Sector is mandatory.</source></trans-unit>
 		
+		<trans-unit id="editexternauthenticatelabel"><target>To authenticate, please enter your date of birth and click the Forward button.</target></trans-unit>
 	</body>
   </file>
 </xliff>

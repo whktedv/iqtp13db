@@ -16,6 +16,13 @@
 	</f:if>
 </f:form.validationResults>
 
+<!-- Modal - HTML -->
+	<dialog id="infomodal">
+	  <h3>Info</h3>
+	  <div id="modaltext"></div>
+	  <button id="okModal">OK</button>
+	</dialog>
+	
 <f:flashMessages />
 <f:form id="teilnehmerform" action="anmeldseite3redirect" name="teilnehmer" object="{teilnehmer}">
 		<f:render partial="Teilnehmer/FormFieldsAnmeldung3" arguments="{_all}" />
@@ -23,5 +30,29 @@
 		<f:form.button type="submit" id="weiterbutton" name="btnweiter"><f:translate key="weiter" /></f:form.button>
 		<f:form.button type="submit" name="btncancel" class="abbruchbtn frontend" onclick="return btncancel_Click(0);"><f:translate key="abbruch" /></f:form.button>
 </f:form>
+
+<script>
+	
+	// Modal - JavaScript
+	const modal = document.getElementById("infomodal");
+	const modaltext = document.getElementById("modaltext");
+	const okModal = document.getElementById("okModal");
+	
+	var dellink = '';
+	var cancellink = '';
+
+	function showModal(elem) {		
+		title = elem.getAttribute("title");
+		modaltext.innerHTML = "<p>" + title + "</p>";
+		modal.showModal();
+		return false;
+	}
+	
+
+	okModal.addEventListener("click", () => {
+		modal.close();	    
+	});
+	
+</script>
 
 </f:section>

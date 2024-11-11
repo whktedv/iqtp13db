@@ -17,11 +17,13 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.schonberatenvon"><target>¿Quién le ha aconsejado?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.nachname"><target>Apellido</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.vorname"><target>Nombre</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.strasse"><target>Calle, número de casa</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.plz"><target>Su código postal</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.ort"><target>Lugar</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.email"><target>Su correo electrónico</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.confirmemail"><target>Confirmar el correo electrónico</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.telefon"><target>Su número de teléfono</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.gebdat"><target>fecha de nacimiento</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.lebensalter"><target>Edad</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geburtsland"><target>País natal</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.geschlecht"><target>Su sexo</target></trans-unit>
@@ -37,6 +39,16 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>¿Qué nivel de conocimientos del idioma alemán?</target></trans-unit>
   <trans-unit id="keinabschlussbisher"><target><![CDATA[ Aún no se ha especificado ningún título educativo extranjero. Por favor, introduzca aquí información sobre su titulación educativa (universidad o formación). También puede introducir varias titulaciones (diplomas, certificados). ]]></target></trans-unit>
 
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.einwilligung"><target>Consentir</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.nachname"><target>Apellido</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.vorname"><target>Nombre</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.strasse"><target>Calle, número de casa</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.plz"><target>Su código postal</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.ort"><target>Lugar</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.email"><target>Su correo electrónico</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.confirmemail"><target>Confirmar el correo electrónico</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.telefon"><target>Su número de teléfono</target></trans-unit>
+	
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Mi cualificación profesional más alta es</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branche"><target>Indique el sector en el que obtuvo su(s) cualificación(es)</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branchekurz"><target>Industria</target></trans-unit>
@@ -142,6 +154,7 @@
 	<trans-unit id="confirmsubject"><target>Por favor, confirme su inscripción para la asesoramiento de reconocimiento inicial</target></trans-unit>
 	<trans-unit id="kontaktberatungsstelle"><target>Este es tu centro de asesoramiento:</target></trans-unit>	 
 	
+	<trans-unit id="error"><target>Error</target></trans-unit>
 	<trans-unit id="errormessage"><target>Por favor, compruebe los campos resaltados en rojo.</target></trans-unit>
 	<trans-unit id="errorconsent"><target>Para continuar, debe aceptar la transferencia de sus datos.</target></trans-unit>
 	<trans-unit id="errormailnotmatch"><target>Las direcciones de correo electrónico no coinciden, por favor, compruebe.</target></trans-unit>

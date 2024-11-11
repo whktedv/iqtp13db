@@ -339,19 +339,6 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
         }
         
-        $altervonbis[-1000] = '-';
-        $altervonbis[-1] = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('ka', 'iqtp13db');
-        for ($i = 15; $i <= 80; $i++) {
-            $altervonbis[$i] = $i;
-        }
-        
-        $aktuellesJahr = (int)date("Y");
-        $jahre = array();
-        $jahre[-1] = 'k.A.';
-        for($jahr = $aktuellesJahr; $jahr > $aktuellesJahr-60; $jahr--) {
-            $jahre[$jahr] = (String)$jahr;
-        }
-        
         if($GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid') == '') {
             $bstid = $valArray['beratungsstelle'] ?? '';
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'beratungsstellenid', $bstid);
@@ -370,16 +357,22 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         }
         $urleinwilligung = $uriBuilder->build();
         
+        $aktuellesJahr = (int)date("Y");
+        $jahre = array();
+        $jahre[-1] = 'k.A.';
+        for($jahr = $aktuellesJahr; $jahr > $aktuellesJahr-60; $jahr--) {
+            $jahre[$jahr] = (String)$jahr;
+        }
+        
         $this->view->assignMultiple(
             [
-                'altervonbis' => $altervonbis,
                 'staatenarr' => $staatenarr,
+                'jahre' => $jahre,
                 'tnseite1' => $tnseite1,
                 'settings' => $this->settings,
                 'beratungsstelle' => $bstid,
                 'wohnsitzDeutschland' => $valArray['wohnsitzDeutschland'] ?? '',
                 'plz' => $valArray['plz'] ?? '',
-                'jahre' => $jahre,
                 'urleinwilligung' => $urleinwilligung,
                 'direkt' => $valArray['direkt'] ?? ''
             ]
@@ -428,6 +421,12 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     
                     $teilnehmer->setBeratungsstatus(99);
                     $teilnehmer->setCrdate(time());
+                    if($teilnehmer->getGebdat() != '') {
+                        $birthdate = \DateTime::createFromFormat('Y-m-d', $teilnehmer->getGebdat());
+                        $today = new \DateTime();
+                        $age = $today->diff($birthdate)->y;
+                        $teilnehmer->setLebensalter($age);                        
+                    }
                     
                     if($direkt != '1' && ($bstid == '' || $bstid == '12345')) {
                         $plzberatungsstelle = array();
@@ -1002,6 +1001,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $mailtextcustom = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtextcustom', 'Iqtp13db');
         $grcinfotext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('grcinfotext', 'Iqtp13db');
         
+        $mailtextedit = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtextedit', 'Iqtp13db');
+        $linktitleeditregistration = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('linktitleeditregistration', 'Iqtp13db');
+        
         if($custommailtext == '') {
             $custommailtext = $mailtextcustom;
         }
@@ -1018,9 +1020,12 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             'anrede' => $anrede . $teilnehmer->getVorname(). ' ' . $teilnehmer->getNachname() . ',',
             'mailtext' => $mailtext,
             'custommailtext' => $custommailtext,
+            'mailtextedit' => $mailtextedit,
+            'linktitleeditregistration' => $linktitleeditregistration,
             'datenberatungsstelle' => $datenberatungsstelle,
             'kontaktlabel' => $kontaktlabel,
             'startseitelink' => $this->settings['startseitelink'],
+            'anmeldeditseite' => $this->settings['anmeldeditseite'],
             'logolink' => $this->settings['logolink'],
             'baseurl' => $baseUri,
             'grcinfotext' => $grcinfotext 
@@ -1033,7 +1038,66 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $this->generalhelper->sendTemplateEmail(array($recipient), array($bcc), array($sender), $subject, $templateName, $variables, $emailview, $this->uriBuilder, $extbaseFrameworkConfiguration);
     }
     
+    /**
+     * action editextern
+     *
+     * @return void
+     */
+    public function editexternAction(): ResponseInterface
+    {
+        if($this->request->hasArgument('code')) {
+            $teilnehmer = $this->teilnehmerRepository->findOneByVerificationCode($this->request->getArgument('code'));
+            
+            if($teilnehmer) {
+                $this->view->assign('teilnehmer', $teilnehmer);
+                $this->view->assign('code', $this->request->getArgument('code'));
+            } else {
+                $this->addFlashMessage('Link ungültig, Datensatz nicht vorhanden.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                $this->redirect('validationFailed');
+            }
+        }
+        return $this->htmlResponse();
+    }
     
+    /**
+     * action editexternauthok
+     *
+     * @return void
+     */
+    public function editexternredirectAction(): ResponseInterface
+    {
+        $valArray = $this->request->getArguments();
+        DebuggerUtility::var_dump($valArray);
+        die;
+        
+        
+        if($this->request->hasArgument('code')) {
+            $teilnehmer = $this->teilnehmerRepository->findOneByVerificationCode($this->request->getArgument('code'));
+            
+            
+            
+            if($teilnehmer->getGebdat() != '') {
+                $tngebdat = \DateTime::createFromFormat('Y-m-d', $teilnehmer->getGebdat());
+                $authfragegebdat = DateTime::createFromFormat('Y-m-d', $this->request->getArgument('authfrage'));                
+            } else {
+                $this->addFlashMessage('Geburtsdatum für diesen Datensatz nicht eingetragen.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                $this->redirect('validationFailed');
+            }
+ 
+            
+            
+            if($tngebdat == $authfragegebdat) {
+                return $this->redirect('anmeldseite1', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'plz' => $teilnehmer->getPlz(), 'wohnsitzDeutschland' => $teilnehmer->getWohnsitzdeutschland()));
+                
+            } else {
+                $this->addFlashMessage('Eingegebenes Geburtsdatum ist nicht korrekt.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                $this->redirect('validationFailed');
+            }
+        } else {
+            $this->addFlashMessage('Link ungültig.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->redirect('validationFailed');
+        }
+    }
     
     /**
      * Collects the Teilnehmer from the multiple steps form stored in session variables
@@ -1055,11 +1119,13 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $teilnehmer->setSchonberatenvon($tnseite1->getSchonberatenvon());
             $teilnehmer->setNachname(trim($tnseite1->getNachname()));
             $teilnehmer->setVorname(trim($tnseite1->getVorname()));
+            $teilnehmer->setStrasse(trim($tnseite1->getStrasse()));
             $teilnehmer->setPlz(trim($tnseite1->getPlz()));
             $teilnehmer->setOrt(trim($tnseite1->getOrt()));
             $teilnehmer->setEmail(trim($tnseite1->getEmail()));
             $teilnehmer->setConfirmemail(trim($tnseite1->getConfirmemail()));
             $teilnehmer->setTelefon(trim($tnseite1->getTelefon()));
+            $teilnehmer->setGebdat($tnseite1->getGebdat());
             $teilnehmer->setLebensalter($tnseite1->getLebensalter());
             $teilnehmer->setGeburtsland($tnseite1->getGeburtsland());
             $teilnehmer->setGeschlecht($tnseite1->getGeschlecht());
