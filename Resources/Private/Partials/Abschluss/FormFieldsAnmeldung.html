@@ -1,6 +1,6 @@
 	<div class="tp13_formdivwebapp" class="tp13_options">
       <label for="abschlussart">
-        <span id="infolab" title="<f:translate key='infoAbschlussart' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_abschluss.abschlussart" />
+        <span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoAbschlussart' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_abschluss.abschlussart" />
        </label>
         <f:form.select property="abschlussart" value="{abschluss.abschlussart}" options="{abschlussartarr}" optionValueField="key" optionLabelField="value" />
 	</div>
@@ -54,7 +54,7 @@
 	</div>
 	<div class="tp13_formdivwebapp">
 	      <label for="abschluss">
-	        <span id="infolab" title="<f:translate key='infoAbschluss' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_abschluss.abschluss" />
+	        <span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoAbschluss' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_abschluss.abschluss" />
 	       </label>
 	        <f:form.textfield property="abschluss" pattern="\p{Latin}|[0-9]|[[:space:]]|\:|\,|\.|\(|\)|\-|\\|\/|\+|\@|\`|\.|\&" /> 
 	</div>

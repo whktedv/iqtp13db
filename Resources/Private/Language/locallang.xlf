@@ -143,7 +143,7 @@
 		<trans-unit id="confirmmailtext2"><source>Yours recognition counselling</source></trans-unit>
 		<trans-unit id="confirmsubject"><source>Please confirm your registration for the initial recognition counselling</source></trans-unit>
 		<trans-unit id="kontaktberatungsstelle"><source>This is your counselling center:</source></trans-unit>
-		<trans-unit id="mailtextedit"><source> <![CDATA[ <p>You can change or add your data using this link:</p> ]]></source></trans-unit>
+		<trans-unit id="mailtextedit"><source> <![CDATA[ <p>You can change your data or cancel your registration by using this link:</p> ]]></source></trans-unit>
 		<trans-unit id="linktitleeditregistration"><source>Edit registration</source></trans-unit>
 		
 		<trans-unit id="error"><source>Error</source></trans-unit>

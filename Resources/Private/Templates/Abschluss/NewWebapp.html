@@ -15,7 +15,12 @@
 	</f:if>
 </f:form.validationResults>
 
-
+<!-- Modal - HTML -->
+	<dialog id="infomodal">
+	  <h3>Info</h3>
+	  <div id="modaltext"></div>
+	  <button id="okModal">OK</button>
+	</dialog>
 
 <div class="frameabschluesse">
 	
@@ -38,4 +43,29 @@
 
 </div>
 <span style="color: #efefef; font-size: 0.8rem; float: right;">{beratungsstelle}</span>
+
+
+<script>
+	
+	// Modal - JavaScript
+	const modal = document.getElementById("infomodal");
+	const modaltext = document.getElementById("modaltext");
+	const okModal = document.getElementById("okModal");
+	
+	var dellink = '';
+	var cancellink = '';
+
+	function showModal(elem) {		
+		title = elem.getAttribute("title");
+		modaltext.innerHTML = "<p>" + title + "</p>";
+		modal.showModal();
+		return false;
+	}
+	
+
+	okModal.addEventListener("click", () => {
+		modal.close();	    
+	});
+	
+</script>
 </f:section>

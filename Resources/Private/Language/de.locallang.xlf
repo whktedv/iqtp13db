@@ -59,7 +59,7 @@
 			<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussjahr"><target>Abschlussjahr</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_abschluss.ausbildungsinstitution"><target>Ausbildungsinstitution</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_abschluss.ausbildungsort"><target>Ausbildungsort</target></trans-unit>
-			<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschluss"><target>Abschluss</target></trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschluss"><target>Abschlussfach</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_abschluss.berufserfahrung"><target>Berufserfahrung</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_abschluss.deutscher_referenzberuf"><target>Möglicher deutscher Beruf</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_abschluss.wunschberuf"><target>Wunschberuf</target></trans-unit>
@@ -128,7 +128,7 @@
 			<trans-unit id="infoWohnsitzinDeutschlandNein"><target>Bitte geben Sie an, in welchem Land Sie aktuell leben.</target></trans-unit>
 			<trans-unit id="infoAbschlussart_ALT"><target>Ein Ausbildungsabschluss ist ein Abschluss einer beruflichen Ausbildung. Ein Universitätsabschluss ist ein akademischer Abschluss der nach einem Studium an einer Hochschule/Universität erworben wurde. Das Studium hat in der Regel mindestens 3 Jahre gedauert. Bitte geben Sie an welchen Abschluss Sie erworben haben.</target></trans-unit>
 			<trans-unit id="infoAbschlussart"><target>Falls der Berufsabschluss im Ausland erworben wurde: Wählen Sie bitte einen gleichwertigen Abschluss in der Liste aus.</target></trans-unit>			
-			<trans-unit id="infoAbschluss">z.B. Bachelor of Arts, Master of Science, ...<target></target></trans-unit>
+			<trans-unit id="infoAbschluss"><target></target></trans-unit>
 			<trans-unit id="infoAusbildungsort"><target>Bitte geben Sie die Stadt an, in der Sie Ihren Abschluss gemacht haben.</target></trans-unit>
 			<trans-unit id="infoBerufserfahrung"><target>Bitte geben Sie an, wie lange Sie schon im Beruf der Ausbildung/des Studiums gearbeitet haben (Monate/Jahre).</target></trans-unit>
 			<trans-unit id="infoBezug"><target>Von welcher Institution/Behörde/Amt erhalten Sie aktuell Geld für Ihren Lebensunterhalt? Bitte geben Sie diese Institution/Behörde/Amt hier an.</target></trans-unit>
@@ -144,7 +144,7 @@
 			<trans-unit id="confirmmailtext2"><target> <![CDATA[ <p>Mit freundlichem Gruß</p> <p>Ihre Anerkennungs- und Qualifizierungsberatung beim IQ Netzwerk</p>]]></target></trans-unit>
 			<trans-unit id="confirmsubject"><target>Bitte bestätigen Sie Ihre Anmeldung zur Anerkennungsberatung beim IQ Netzwerk</target></trans-unit>	
 			<trans-unit id="kontaktberatungsstelle"><target>Das ist Ihre Beratungsstelle:</target></trans-unit>			
-			<trans-unit id="mailtextedit"><target> <![CDATA[ <p>Über diesen Link können Sie Ihre Daten ändern oder ergänzen:</p> ]]></target></trans-unit>
+			<trans-unit id="mailtextedit"><target> <![CDATA[ <p>Über diesen Link können Sie Ihre Daten ändern oder Ihre Anmeldung zurückziehen:</p> ]]></target></trans-unit>
 			<trans-unit id="linktitleeditregistration"><target>Anmeldung bearbeiten</target></trans-unit>
 			
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer"><target>Teilnehmer</target></trans-unit>
