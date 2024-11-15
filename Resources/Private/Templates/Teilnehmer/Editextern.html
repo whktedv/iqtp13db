@@ -13,7 +13,8 @@
 		<br><br>
 		<div class="dt_formdivwebapp2">
 			<label for="sfrage"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.gebdat" /></label>
-			<f:form.textfield type="date" name="authfrage" type="date" required="required" />			
+			<f:form.textfield type="date" name="authfrage" type="date" required="required" />
+			<f:form.hidden value="{code}" name="code"/>		
 		</div>
 		
 		<f:form.button name="btnAbsenden"><f:translate key="weiter" /></f:form.button>

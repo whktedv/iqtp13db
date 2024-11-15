@@ -398,20 +398,23 @@
                                     <f:format.html>
 	                                    {anrede}
 	                                    {mailtext}
-	                                    {custommailtext}
-	                                </f:format.html>                                    
-									
-									<f:format.html>{mailtextedit}</f:format.html>
+	                                </f:format.html>
+	                                
+	                                <f:format.html>{mailtextedit}</f:format.html>
 							         <f:link.action
 							        extensionName="iqtp13db"
 							        pluginName="Iqtp13dbwebapp"
 							        controller="Teilnehmer"
 							        action="editextern"
-							        arguments="{code:teilnehmer.verificationCode}"
+							        arguments="{code:verificationcode}"
 							        absolute="true"
 							        pageUid="{anmeldeditseite}"
 							        >{linktitleeditregistration}</f:link.action>
-							        
+	                                
+	                                <f:format.html>
+	                                    {custommailtext}
+	                                </f:format.html>                                    
+									
 									<div style="background-color: #dedede; padding: 10px; border: 1px solid #222; margin-top: 15px;">
 										<div style="font-size: 14px; color:#222222;">
 											<b>{kontaktlabel}</b><br>

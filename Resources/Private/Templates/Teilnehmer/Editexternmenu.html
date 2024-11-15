@@ -1,0 +1,12 @@
+<f:layout name="Default" />
+
+<f:section name="main">
+<h1>IQ Beratungsportal</h1>
+
+<f:render partial="FormErrors" arguments="{object:Teilnehmer}" />
+
+<f:flashMessages />
+
+Menü:
+<f:link.action class="linkbuttons" action="editexternmenu" arguments="{thisaction : anmeldung}">Daten Bearbeiten</f:link.action>
+</f:section>

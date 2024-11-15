@@ -106,6 +106,7 @@ plugin.tx_iqtp13db.settings {
 	anmeldungzsbapageuid =
 	anmeldungnichtwebapppageuid = 
 	datenschutzeinwilligungurluid = 
+	editexternsaved =
 	
 	# für Wartungsmodus
 	wartungvon = 01.01.2021 08:00
