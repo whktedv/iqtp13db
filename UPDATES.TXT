@@ -119,3 +119,6 @@ Update 05.11.2024
 Neu: 
 - Feld "Strasse + Hausnr."
 - Feld Geburtsdatum statt Alter (Alter bei Anmeldung wird berechnet und in DB-Feld eingetragen)
+- Nachträgliches Bearbeiten von Daten durch Ratsuchende über Bearbeiten-Link in E-Mail
+
+

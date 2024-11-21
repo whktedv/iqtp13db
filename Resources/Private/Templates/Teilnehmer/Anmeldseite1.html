@@ -19,8 +19,18 @@
 	
 <f:form id="teilnehmerform" action="anmeldseite1redirect" name="tnseite1" object="{tnseite1}" arguments="{direkt : direkt, wohnsitzDeutschland : wohnsitzDeutschland}">
 		<f:render partial="Teilnehmer/FormFieldsAnmeldung1" arguments="{_all}" />
+		<f:if condition="{iseditextern} != 0">
+			<f:form.button type="submit" id="zurueckbutton" name="btnzurueck"><f:translate key="zurueck" /></f:form.button>
+		</f:if>
 		<f:form.button type="submit" id="weiterbutton" name="btnweiter"><f:translate key="weiter" /></f:form.button>
-		<f:form.button type="submit" formmethod="post" formnovalidate="formnovalidate" name="btncancel" class="abbruchbtn frontend" onclick="return btncancel_Click();"><f:translate key="abbruch" /></f:form.button>
+		
+		<f:if condition="{iseditextern} != 0">
+			<f:then>
+				
+			</f:then><f:else>
+				<f:form.button type="submit" formmethod="post" formnovalidate="formnovalidate" name="btncancel" class="abbruchbtn frontend" onclick="return btncancel_Click();"><f:translate key="abbruch" /></f:form.button>
+			</f:else>
+		</f:if>
 </f:form>
 <span style="color: #efefef; font-size: 0.8rem; float: right;">{beratungsstelle}</span>
 

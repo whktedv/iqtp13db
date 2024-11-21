@@ -28,15 +28,14 @@
 <f:form id="teilnehmerform" action="anmeldungcompleteredirect" name="teilnehmer" object="{teilnehmer}" arguments="{iseditextern : iseditextern}">
 	
 	<f:form.button type="submit" id="zurueckbutton" name="btnzurueck"><f:translate key="zurueck" /></f:form.button>
-	<f:form.button type="submit" id="abbruchbutton" name="btncancel" class="abbruchbtn frontend" onclick="return btncancel_Click(0);"><f:translate key="abbruch" /></f:form.button>
-	<f:form.button type="submit" id="savebutton1" name="btnAbsenden">
-			<f:if condition="{iseditextern != NULL}"><f:then>
-			<f:translate key="speichern" />
-		</f:then><f:else>
-			<f:translate key="absenden" />
-		</f:else>
-		</f:if>
-	</f:form.button>
+	<f:if condition="{iseditextern} != 0"><f:then>
+		<f:form.button type="submit" id="savebutton1" name="btnAbsenden"><f:translate key="speichern" /></f:form.button>
+	</f:then><f:else>
+		<f:form.button type="submit" id="abbruchbutton" name="btncancel" class="abbruchbtn frontend" onclick="return btncancel_Click(0);"><f:translate key="abbruch" /></f:form.button>
+		<f:form.button type="submit" id="savebutton1" name="btnAbsenden"><f:translate key="absenden" /></f:form.button>
+	</f:else>
+	</f:if>
+	
 	
 	<f:translate key="hinweisdatenueberpruefen" /> 
 	<f:render partial="Teilnehmer/PropertiesAnmeldung" arguments="{teilnehmer:teilnehmer, staaten:staaten}" />
@@ -46,15 +45,13 @@
 	</f:for>
 	
 	<f:form.button type="submit" id="zurueckbutton" name="btnzurueck"><f:translate key="zurueck" /></f:form.button>
-	<f:form.button type="submit" id="abbruchbutton" name="btncancel" class="abbruchbtn frontend" onclick="return btncancel_Click(0);"><f:translate key="abbruch" /></f:form.button>
-	<f:form.button type="submit" name="btnAbsenden">
-		<f:if condition="{iseditextern != NULL}"><f:then>
-			<f:translate key="speichern" />
-		</f:then><f:else>
-			<f:translate key="absenden" />
-		</f:else>
-		</f:if>
-	</f:form.button>
+	<f:if condition="{iseditextern} != 0"><f:then>
+		<f:form.button type="submit" id="savebutton1" name="btnAbsenden"><f:translate key="speichern" /></f:form.button>
+	</f:then><f:else>
+		<f:form.button type="submit" id="abbruchbutton" name="btncancel" class="abbruchbtn frontend" onclick="return btncancel_Click(0);"><f:translate key="abbruch" /></f:form.button>
+		<f:form.button type="submit" id="savebutton1" name="btnAbsenden"><f:translate key="absenden" /></f:form.button>
+	</f:else>
+	</f:if>
 </f:form>
 
 </f:section>

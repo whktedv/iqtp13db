@@ -1229,12 +1229,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     if($wohnsitzdeutschland == -1) $wohnsitzdeutschland = 'k.a.';
                     $rows[$x]['WohnsitzDeutschland'] = $wohnsitzdeutschland ?? '';
                     
-                    if($wohnsitzdeutschland == 'ja') {
-                        $thisplz = trim($rows[$x]['PLZ']);
-                        $rows[$x]['Landkreis'] = (preg_match("/[0-9]{5}/", $thisplz) && array_key_exists($thisplz, $arrorte)) ? $arrorte[$thisplz] : '-';
-                    } else {
-                        $rows[$x]['Landkreis'] = '';
-                    }
+                    $thisplz = trim($rows[$x]['PLZ']);
+                    $rows[$x]['Landkreis'] = (preg_match("/[0-9]{5}/", $thisplz) && array_key_exists($thisplz, $arrorte)) ? $arrorte[$thisplz] : '-';
+
                     $rowsanonym[$x]['Landkreis'] = $rows[$x]['Landkreis'];
                     
                     $rows[$x]['Einreisejahr'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'einreisejahr');
@@ -1807,8 +1804,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         for($jahr = $aktuellesJahr; $jahr > $aktuellesJahr-60; $jahr--) {
             $jahre[$jahr] = (String)$jahr;
         }
+                
+        $group = $this->userGroupRepository->findOneByNiqbid($this->niqbid);
         
-        $group = $this->userGroupRepository->findByUid($this->user['usergroup']);
         $beratungsartenarray = $group->getBeratungsarten();
         $newwieberatenarray = array();
         foreach($this->settings['wieberaten'] as $key => $wieber){
@@ -1954,7 +1952,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $searchparams = $valArray['searchparams'];
         }
         
-        
         $edituserfield = '';
         
         if($teilnehmer->getEdittstamp() == 0 || $teilnehmer->getEdituser() == $this->user['uid'] || (time() - $teilnehmer->getEdittstamp()) > 10) {
@@ -2006,7 +2003,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $jahre[$jahr] = (String)$jahr;
         }
         
-        $group = $this->userGroupRepository->findByUid($this->user['usergroup']);
+        $group = $this->userGroupRepository->findOneByNiqbid($this->niqbid);
+        
         $beratungsartenarray = $group->getBeratungsarten();
         $newwieberatenarray = array();
         foreach($this->settings['wieberaten'] as $key => $wieber){

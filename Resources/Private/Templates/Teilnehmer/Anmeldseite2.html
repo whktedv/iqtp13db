@@ -49,7 +49,14 @@
 	<f:form id="teilnehmerform" action="anmeldseite2redirect" name="teilnehmer" object="{teilnehmer}">
 			<f:form.button type="submit" id="zurueckbutton" name="btnzurueck"><f:translate key="zurueck" /></f:form.button>
 			<f:form.button type="submit" id="weiterbutton" name="btnweiter"><f:translate key="weiter" /></f:form.button> 
-			<f:form.button type="submit" class="abbruchbtn frontend" onclick="return btncancel_Click(0);"><f:translate key="abbruch" /></f:form.button>			
+			
+			<f:if condition="{iseditextern} != 0">
+				<f:then>
+					
+				</f:then><f:else>
+					<f:form.button type="submit" class="abbruchbtn frontend" onclick="return btncancel_Click(0);"><f:translate key="abbruch" /></f:form.button>
+				</f:else>
+			</f:if>			
 	</f:form>
 			
 </div>

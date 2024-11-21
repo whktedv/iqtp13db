@@ -7,6 +7,14 @@
 
 <f:flashMessages />
 
-Menü:
-<f:link.action class="linkbuttons" action="editexternmenu" arguments="{thisaction : anmeldung}">Daten Bearbeiten</f:link.action>
+<p>Hallo {teilnehmer.vorname} {teilnehmer.nachname},<br>
+hier haben Sie die Möglichkeit, Ihre bei der Anmeldung angegebenen Daten zu bearbeiten:</p>
+
+<f:link.action class="linkbuttons" action="editexternmenu" arguments="{thisaction : 'anmeldung'}">Daten bearbeiten</f:link.action><br>
+
+<f:link.action class="linkbuttons" action="editexternmenu" arguments="{thisaction : 'protokolldownload'}">Beratungsprotokoll herunterladen</f:link.action><br>
+
+<f:link.action class="linkbuttons" action="editexternmenu" arguments="{thisaction : 'abmelden'}">Logout</f:link.action><br>
+	
+
 </f:section>
