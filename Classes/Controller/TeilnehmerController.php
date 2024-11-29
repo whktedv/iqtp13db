@@ -401,7 +401,6 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnseite1', serialize($tnseite1));
                 
                 $bstid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid') ?? '';
-                $iseditextern = $GLOBALS['TSFE']->fe_user->getKey('ses', 'editextern') ?? '';
                                 
                 if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid') == NULL) {
                     $teilnehmer = $this->getTeilnehmerFromSession();
@@ -422,7 +421,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                         return $this->redirect('anmeldseite1', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
                     } 
                     
-                    if($iseditextern == '') {
+                    if($iseditextern == 0) {
                         $teilnehmer->setBeratungsstatus(99);
                     }
                     $teilnehmer->setCrdate(time());
@@ -446,7 +445,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     
                     if($teilnehmer != NULL) {
                         $teilnehmer = $this->getTeilnehmerFromSession($teilnehmer);
-                        if($iseditextern == '') {
+                        if($iseditextern == 0) {
                             $teilnehmer->setBeratungsstatus(99);
                         }
                         $this->teilnehmerRepository->update($teilnehmer);
@@ -671,6 +670,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             } elseif(isset($valArray['btnweiter'])) {
                 $this->teilnehmerRepository->update($teilnehmer);
                 return $this->redirect('anmeldungcomplete', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+            }elseif(isset($valArray['btnspeichern'])) {
+                $this->addFlashMessage('Daten gespeichert.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
+                return $this->redirect('editexternmenu', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));            
             } else {
                 if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid') != NULL) {
                     return $this->redirect('cancelregistration', 'Teilnehmer', 'Iqtp13db', ['tnuid' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid')]);
@@ -732,7 +734,6 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     'staaten' => $staaten,
                     'abschlussartarr' => $abschlussartarr,
                     'brancheunterkat' => $brancheunterkat,
-                    'iseditextern' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'editextern') ?? 0
                 ]
                 );
         } else {                        
@@ -805,60 +806,54 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
                 $persistenceManager->persistAll();
                 
-                $iseditextern = $valArray['iseditextern'];
                 
-                if($iseditextern == NULL) {
-                    $bcc = '';
-                    $sender = $this->settings['sender'];
-                    if($sender == '') {
-                        $this->addFlashMessage('Error 403.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
-                        return $this->redirect('anmeldungcomplete', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
-                    } else {
-                        $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnseite1', null);
-                        $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnuid', null);
-                        
-                        $recipient = $teilnehmer->getEmail();
-                        $templateName = 'Mailtoconfirm';
-                        $confirmmailtext1 = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmmailtext1', 'Iqtp13db');
-                        $confirmmailtext1 = str_replace("VORNAMENACHNAME", $teilnehmer->getVorname().' '.$teilnehmer->getNachname(), $confirmmailtext1);
-                        $confirmlinktext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmlinktext', 'Iqtp13db');
-                        $confirmmailtext2 = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmmailtext2', 'Iqtp13db');
-                        $subject = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmsubject', 'Iqtp13db');
-                        
-                        $datenberatungsstelle = $tnberatungsstelle[0]->getDescription() ?? '';
-                        if($datenberatungsstelle != '') $kontaktlabel = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('kontaktberatungsstelle', 'Iqtp13db');
-                        else $kontaktlabel = '';
-                        
-                        $request = $GLOBALS['TYPO3_REQUEST'];
-                        $normalizedParams = $request->getAttribute('normalizedParams');
-                        $baseUri = $normalizedParams->getSiteUrl();
-                        
-                        $variables = array(
-                            'teilnehmer' => $teilnehmer,
-                            'confirmmailtext1' => $confirmmailtext1,
-                            'confirmlinktext' => $confirmlinktext,
-                            'confirmmailtext2' => $confirmmailtext2,
-                            'datenberatungsstelle' => $datenberatungsstelle,
-                            'kontaktlabel' => $kontaktlabel,
-                            'startseitelink' => $this->settings['startseitelink'],
-                            'logolink' => $this->settings['logolink'],
-                            'registrationpageuid' => $this->settings['registrationpageuid'],
-                            'askconsent' => '0',
-                            'baseurl' => $baseUri
-                        );
-                        
-                        $emailview = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Fluid\\View\\StandaloneView');                    
-                        $emailview->setRequest($this->request);
-                        
-                        $extbaseFrameworkConfiguration = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
-                        $this->generalhelper->sendTemplateEmail(array($recipient), array($bcc), array($sender), $subject, $templateName, $variables, $emailview, $this->uriBuilder, $extbaseFrameworkConfiguration);
-                        
-                        return $this->redirect(null, null, null, null, $this->settings['redirectValidationInitiated']);
-                    }
+                $bcc = '';
+                $sender = $this->settings['sender'];
+                if($sender == '') {
+                    $this->addFlashMessage('Error 403.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+                    return $this->redirect('anmeldungcomplete', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
                 } else {
-                    $this->addFlashMessage('Daten gespeichert.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
-                    return $this->redirect('editexternmenu', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
-                }
+                    $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnseite1', null);
+                    $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnuid', null);
+                    
+                    $recipient = $teilnehmer->getEmail();
+                    $templateName = 'Mailtoconfirm';
+                    $confirmmailtext1 = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmmailtext1', 'Iqtp13db');
+                    $confirmmailtext1 = str_replace("VORNAMENACHNAME", $teilnehmer->getVorname().' '.$teilnehmer->getNachname(), $confirmmailtext1);
+                    $confirmlinktext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmlinktext', 'Iqtp13db');
+                    $confirmmailtext2 = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmmailtext2', 'Iqtp13db');
+                    $subject = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('confirmsubject', 'Iqtp13db');
+                    
+                    $datenberatungsstelle = $tnberatungsstelle[0]->getDescription() ?? '';
+                    if($datenberatungsstelle != '') $kontaktlabel = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('kontaktberatungsstelle', 'Iqtp13db');
+                    else $kontaktlabel = '';
+                    
+                    $request = $GLOBALS['TYPO3_REQUEST'];
+                    $normalizedParams = $request->getAttribute('normalizedParams');
+                    $baseUri = $normalizedParams->getSiteUrl();
+                    
+                    $variables = array(
+                        'teilnehmer' => $teilnehmer,
+                        'confirmmailtext1' => $confirmmailtext1,
+                        'confirmlinktext' => $confirmlinktext,
+                        'confirmmailtext2' => $confirmmailtext2,
+                        'datenberatungsstelle' => $datenberatungsstelle,
+                        'kontaktlabel' => $kontaktlabel,
+                        'startseitelink' => $this->settings['startseitelink'],
+                        'logolink' => $this->settings['logolink'],
+                        'registrationpageuid' => $this->settings['registrationpageuid'],
+                        'askconsent' => '0',
+                        'baseurl' => $baseUri
+                    );
+                    
+                    $emailview = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Fluid\\View\\StandaloneView');                    
+                    $emailview->setRequest($this->request);
+                    
+                    $extbaseFrameworkConfiguration = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+                    $this->generalhelper->sendTemplateEmail(array($recipient), array($bcc), array($sender), $subject, $templateName, $variables, $emailview, $this->uriBuilder, $extbaseFrameworkConfiguration);
+                    
+                    return $this->redirect(null, null, null, null, $this->settings['redirectValidationInitiated']);
+                }                
             } else {
                 if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid') != NULL) {
                     return $this->redirect('cancelregistration', 'Teilnehmer', 'Iqtp13db', ['tnuid' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid')]);
@@ -1132,6 +1127,17 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         //die;
         $tnuid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'editextern');
         $teilnehmer = $this->teilnehmerRepository->findByUid($tnuid);
+        $dokumente = $this->dokumentRepository->findByTeilnehmer($teilnehmer);
+        $storage = $this->generalhelper->getTP13Storage($this->storageRepository->findAll());
+        $folder = $storage->getConfiguration()['basePath'].'/';
+        $filesizes = array();
+        $filesizesum = 0;
+        foreach($dokumente as $key => $dok) {
+            $dokfs = $dok->getFilesize($folder) ?? 0;
+            $filesizes[$key] = $dokfs == 0 ? 0 : $this->generalhelper->human_filesize($dokfs, 1);
+            $filesizesum += $dokfs;
+        }
+        $speicherbelegung = intval(($filesizesum/31457280)*100);
         
         if($valArray['thisaction'] == "anmeldung") {            
 
@@ -1142,22 +1148,17 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             //$GLOBALS['TSFE']->fe_user->setKey('ses', 'editextern', $teilnehmer->getUid());
             
             return $this->redirect('anmeldseite1', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'plz' => $teilnehmer->getPlz(), 'wohnsitzDeutschland' => $teilnehmer->getWohnsitzdeutschland()));            
-        }elseif($valArray['thisaction'] == "protokolldownload"){
-            $tnuid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'editextern');
-            $teilnehmer = $this->teilnehmerRepository->findByUid($tnuid);
-            $dokumente = $this->dokumentRepository->findByTeilnehmer($teilnehmer);
-            $dokumentpfad = $this->generalhelper->sanitizeFileFolderName($teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid(). '/');
-            
-            $storage = $this->generalhelper->getTP13Storage($this->storageRepository->findAll());
-            $folder = $storage->getConfiguration()['basePath'].'/';
-            
         }elseif($valArray['thisaction'] == "abmelden"){
-            $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnuid', null);              
+            $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnuid', null);
             $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnseite1', null);
             $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('ses', null);
             return $this->redirect('startseite', 'Teilnehmer', null, null);
         }
         $this->view->assign('teilnehmer', $teilnehmer);
+        $this->view->assign('dokumente', $dokumente);
+        $this->view->assign('speicherbelegung', $speicherbelegung);
+        $this->view->assign('filesizes', $filesizes);      
+        
         return $this->htmlResponse();        
     }
     

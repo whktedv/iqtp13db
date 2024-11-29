@@ -200,6 +200,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         }
       
     }
+    
     /**
      * action deleteFileWebapp
      *
@@ -290,7 +291,80 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
             return false;
         }
     }
-
+    
+    /**
+     * action openfileextern
+     *
+     * @param \Ud\Iqtp13db\Domain\Model\Dokument $dokument
+     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
+     * @return void
+     */
+    public function openfileexternAction(\Ud\Iqtp13db\Domain\Model\Dokument $dokument, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
+    {
+        $storage = $this->generalhelper->getTP13Storage($this->storageRepository->findAll());
+        $beratenepath = $dokument->getPfad();
+        $tmpName = $dokument->getName();
+        
+        if($storage->getConfiguration()['pathType'] == 'relative') {
+            if($folder->getStorage()->hasFileInFolder($tmpName, $folder)) {
+                $folder = $storage->getFolder($beratenepath);
+                $targetfile = $folder->getStorage()->getFileInFolder($tmpName, $folder);
+            } else {
+                $this->addFlashMessage('Datei wurde nicht gefunden. ', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+                return $this->redirect('editexternmenu', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+            }
+        } else {
+            $targetfile = $storage->getFile($beratenepath . $tmpName);
+        }
+        
+        $queryParameterArray = ['eID' => 'dumpFile', 't' => 'f'];
+        $queryParameterArray['f'] = $targetfile->getUid();
+        $queryParameterArray['token'] = GeneralUtility::hmac(implode('|', $queryParameterArray), 'resourceStorageDumpFile');
+        $publicUrl = GeneralUtility::locationHeaderUrl(PathUtility::getAbsoluteWebPath(Environment::getPublicPath() . '/index.php'));
+        $publicUrl .= '?' . http_build_query($queryParameterArray, '', '&', PHP_QUERY_RFC3986);
+        
+        return $this->redirectToURI($publicUrl, $delay=0, $statusCode=303);
+    }
+    
+    /**
+     * action deletefileextern
+     *
+     * @param \Ud\Iqtp13db\Domain\Model\Dokument $dokument
+     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
+     * @return void
+     */
+    public function deletefileexternAction(\Ud\Iqtp13db\Domain\Model\Dokument $dokument, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
+    {
+        $retval = $this->deleteFileTeilnehmer($dokument, $teilnehmer);
+        return $this->redirect('editexternmenu', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+    }
+    
+    /**
+     * action uploadfileextern
+     *
+     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
+     * @return void
+     */
+    public function uploadfileexternAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
+    {
+        $valArray = $this->request->getArguments();
+        if($_FILES == NULL) {
+            $this->addFlashMessage('Error in saveFileWebapp: File does not meet policy.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+        } else {
+            if ($_FILES['tx_iqtp13db_iqtp13dbwebapp']['tmp_name']['file'] == '') {
+                $this->addFlashMessage('Error in saveFileWebapp: permission error or maximum filesize exceeded.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+            } elseif (filesize($_FILES['tx_iqtp13db_iqtp13dbwebapp']['tmp_name']['file']) > 10485760) {
+                $this->addFlashMessage('Error in saveFileWebapp: Maximum filesize exceeded (10 MB). Please reduce filesize.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+            } else {
+                $dokument = new \Ud\Iqtp13db\Domain\Model\Dokument();
+                $dokument->setBeschreibung($valArray['beschreibung']);
+                $this->saveFileTeilnehmer($dokument, $teilnehmer, $_FILES['tx_iqtp13db_iqtp13dbwebapp']);
+            }
+            
+        }
+        return $this->redirect('editexternmenu', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+    }
+    
     /**
      * adds file
      *
