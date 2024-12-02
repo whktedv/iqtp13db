@@ -2436,7 +2436,69 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             
             return $this->redirect('listangemeldet', 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer, 'callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $searchparams ?? ''));
         }
-    }     
+    }   
+    
+    /**
+     * action mail4editextern
+     * E-Mail mit Link für nachträgliches Bearbeiten an RS senden
+     *
+     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
+     * @return void
+     */
+    public function mail4editexternAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
+    {
+        $valArray = $this->request->getArguments();
+        
+        $bcc = '';
+        $sender = $this->settings['sender'];
+        if($sender == '') {
+            $this->addFlashMessage('Error 101 in mail4editextern.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+            return $this->redirect('listangemeldet', 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+        } else {
+            $recipient = $teilnehmer->getEmail();
+            if($recipient == '') {
+                $this->addFlashMessage('Keine E-Mail-Adresse eingetragen.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+                return $this->redirect('listangemeldet', 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+            }
+            
+            $templateName = 'MailEditExtern';
+            $subject = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('subject', 'Iqtp13db');
+            
+            $zugewieseneberatungsstelle = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $teilnehmer->getNiqidberatungsstelle());
+            $datenberatungsstelle = $zugewieseneberatungsstelle != NULL ? $zugewieseneberatungsstelle[0]->getDescription() : '';
+            if($datenberatungsstelle != '') $kontaktlabel = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('kontaktberatungsstelle', 'Iqtp13db');
+            else $kontaktlabel = '';
+            
+            $request = $GLOBALS['TYPO3_REQUEST'];
+            $normalizedParams = $request->getAttribute('normalizedParams');
+            $baseUri = $normalizedParams->getSiteUrl();
+            
+            $mailtextedit = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtextedit', 'Iqtp13db');
+            $linktitleeditregistration = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('linktitleeditregistration', 'Iqtp13db');
+            
+            $variables = array(
+                'teilnehmer' => $teilnehmer,
+                'anrede' => $anrede . $teilnehmer->getVorname(). ' ' . $teilnehmer->getNachname() . ',',
+                'mailtextedit' => $mailtextedit,
+                'linktitleeditregistration' => $linktitleeditregistration,
+                'datenberatungsstelle' => $datenberatungsstelle,
+                'kontaktlabel' => $kontaktlabel,
+                'logolink' => $this->settings['logolink'],
+                'anmeldeditseite' => $this->settings['anmeldeditseite'],
+                'baseurl' => $baseUri
+            );
+            
+            $emailview = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
+            $emailview->setRequest($this->request);
+            
+            $extbaseFrameworkConfiguration = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+            $this->generalhelper->sendTemplateEmail(array($recipient), array($bcc), array($sender), $subject, $templateName, $variables, $emailview, $this->uriBuilder, $extbaseFrameworkConfiguration);
+            
+            $this->addFlashMessage('E-Mail zum nachträglichen Bearbeiten an '.$recipient.' versendet.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
+            
+            return $this->redirect('listangemeldet', 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer, 'callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $searchparams ?? ''));
+        }
+    }   
         
     /**
      * action sendtoarchiv

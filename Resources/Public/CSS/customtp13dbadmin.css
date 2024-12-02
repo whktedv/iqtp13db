@@ -373,6 +373,9 @@ form.filterform select, .exportfilterform select {
   height: 25px;
 }
 
+.actionbuttons img {
+	margin-right: 5px;
+}
 
 .pagination .current {
 	font-weight: bold;

@@ -10,6 +10,7 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Extbase\Annotation\Validate;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
+use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
 
 use Psr\Http\Message\ResponseInterface;
 use Ud\Iqtp13db\Domain\Repository\UserGroupRepository;
@@ -475,7 +476,11 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 
                 $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnuid', $teilnehmer->getUid());
                 
-                return $this->redirect('anmeldseite2', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+                if($iseditextern != 0) {
+                    return $this->redirect('anmeldseite3', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+                } else {
+                    return $this->redirect('anmeldseite2', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+                }
             } elseif(isset($valArray['btnzurueck']) && $iseditextern != 0) {
                 return $this->redirect('editexternmenu', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
             } else {            
@@ -650,6 +655,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function anmeldseite3redirectAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer = NULL): ResponseInterface
     {
+        $iseditextern = $GLOBALS['TSFE']->fe_user->getKey('ses', 'editextern') ?? 0;
+        
         if($teilnehmer == NULL) {
             return $this->redirect('anmeldseite3', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
         } else {
@@ -666,7 +673,11 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             
             if (isset($valArray['btnzurueck'])) {
                 $this->teilnehmerRepository->update($teilnehmer);
-                return $this->redirect('anmeldseite2', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+                if($iseditextern != 0) {
+                    return $this->redirect('anmeldseite1', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+                } else {
+                    return $this->redirect('anmeldseite2', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));                                      
+                }                
             } elseif(isset($valArray['btnweiter'])) {
                 $this->teilnehmerRepository->update($teilnehmer);
                 return $this->redirect('anmeldungcomplete', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
@@ -1018,9 +1029,6 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $mailtextcustom = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtextcustom', 'Iqtp13db');
         $grcinfotext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('grcinfotext', 'Iqtp13db');
         
-        $mailtextedit = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtextedit', 'Iqtp13db');
-        $linktitleeditregistration = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('linktitleeditregistration', 'Iqtp13db');
-        
         if($custommailtext == '') {
             $custommailtext = $mailtextcustom;
         }
@@ -1036,13 +1044,10 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $variables = array(
             'anrede' => $anrede . $teilnehmer->getVorname(). ' ' . $teilnehmer->getNachname() . ',',
             'mailtext' => $mailtext,
-            'custommailtext' => $custommailtext,
-            'mailtextedit' => $mailtextedit,
-            'linktitleeditregistration' => $linktitleeditregistration,
+            'custommailtext' => $custommailtext,            
             'datenberatungsstelle' => $datenberatungsstelle,
             'kontaktlabel' => $kontaktlabel,
-            'startseitelink' => $this->settings['startseitelink'],
-            'anmeldeditseite' => $this->settings['anmeldeditseite'],
+            'startseitelink' => $this->settings['startseitelink'],            
             'logolink' => $this->settings['logolink'],
             'baseurl' => $baseUri,
             'grcinfotext' => $grcinfotext,
@@ -1104,6 +1109,18 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             
             if($tngebdat == $authfragegebdat) {
                 $GLOBALS['TSFE']->fe_user->setKey('ses', 'editextern', $teilnehmer->getUid());
+                
+                
+                $newUserId = $this->createTemporaryFrontendUser([
+                    'username' => 'temp_user'.$teilnehmer->getUid(),
+                    'password' => $valArray['code'],
+                    'email' => $teilnehmer->getEmail(),
+                    'pid' => 90, // Speicherort im Seitenbaum !!!!!! TODO: Aus Settings holen!!!!!!!!!
+                    'usergroup' => 19,
+                    'endtime' => time() + 3600 // 1 Stunde gültig
+                ]);
+                $GLOBALS['TSFE']->fe_user->setKey('ses', 'tempfeuserid', $newUserId);
+                
                 return $this->redirect('editexternmenu', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));                
             } else {
                 $this->addFlashMessage('Eingegebenes Geburtsdatum ist nicht korrekt.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
@@ -1138,7 +1155,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $filesizesum += $dokfs;
         }
         $speicherbelegung = intval(($filesizesum/31457280)*100);
-        
+                      
         if($valArray['thisaction'] == "anmeldung") {            
 
             $tnseite1 = GeneralUtility::makeInstance('Ud\\Iqtp13db\\Domain\\Model\\TNSeite1');
@@ -1152,12 +1169,50 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnuid', null);
             $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnseite1', null);
             $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('ses', null);
+            
+            $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('fe_users');
+            $tempfeuserid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'tempfeuserid');
+            $connection->delete('fe_users', ['uid' => $tempfeuserid]);
+            
             return $this->redirect('startseite', 'Teilnehmer', null, null);
         }
-        $this->view->assign('teilnehmer', $teilnehmer);
-        $this->view->assign('dokumente', $dokumente);
-        $this->view->assign('speicherbelegung', $speicherbelegung);
-        $this->view->assign('filesizes', $filesizes);      
+        
+        $abschluesse = new \Ud\Iqtp13db\Domain\Model\Abschluss();
+        $abschluesse = $this->abschlussRepository->findByTeilnehmer($teilnehmer->getUid());
+        
+        $language = $this->request->getAttribute('language');
+        $isocode  = $language->getLocale()->getLanguageCode();
+        
+        $aktuellesJahr = (int)date("Y");
+        $abschlussjahre = array();
+        $abschlussjahre[-1] = 'k.A.';
+        for($jahr = $aktuellesJahr; $jahr > $aktuellesJahr-60; $jahr--) {
+            $abschlussjahre[$jahr] = (String)$jahr;
+        }
+        
+        $abschlussartarr = $this->settings['abschlussart'];
+        unset($abschlussartarr[2]);
+        
+        $brancheunterkat = $this->brancheRepository->findAllUnterkategorie($isocode);
+        $arrbranche = array();
+        foreach ($brancheunterkat as $branche) {
+            $arrbranche[$branche->getBrancheid()] = $branche->getTitel();
+        }
+        
+        $this->view->assignMultiple(
+            [
+                'settings' => $this->settings,
+                'abschluesse' => $abschluesse,
+                'teilnehmer' => $teilnehmer,
+                'dokumente' => $dokumente,
+                'beratungsstelle' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid'),
+                'abschlussjahre' => $abschlussjahre,
+                'abschlussartarr' => $abschlussartarr,
+                'arrbranche' => $arrbranche,
+                'speicherbelegung' => $speicherbelegung, 
+                'filesizes' => $filesizes
+            ]
+        );
         
         return $this->htmlResponse();        
     }
@@ -1286,5 +1341,33 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     protected function getErrorFlashMessage() {
         return FALSE;
     }
+    
+    
+    protected function createTemporaryFrontendUser(array $userData)
+    {
+        // Passwort hashen
+        $passwordHashFactory = GeneralUtility::makeInstance(PasswordHashFactory::class);
+        $passwordHash = $passwordHashFactory->getDefaultHashInstance('FE');
+        $hashedPassword = $passwordHash->getHashedPassword($userData['password']);
         
+        // Benutzer-Daten vorbereiten
+        $userRecord = [
+            'username' => $userData['username'],
+            'password' => $hashedPassword,
+            'email' => $userData['email'],
+            'pid' => $userData['pid'], // Storage PID für FE-User
+            'disable' => 0, // Benutzer aktiv
+            'tstamp' => time(),
+            'crdate' => time(),
+            'starttime' => time(), // Startzeit (optional)
+            'endtime' => $userData['endtime'] ?? 0, // Endzeit für temporäre User
+        ];
+        
+        // Einfügen in die Datenbank
+        $connection = GeneralUtility::makeInstance(ConnectionPool::class)
+        ->getConnectionForTable('fe_users');
+        $connection->insert('fe_users', $userRecord);
+        
+        return $connection->lastInsertId('fe_users');
+    }
 }

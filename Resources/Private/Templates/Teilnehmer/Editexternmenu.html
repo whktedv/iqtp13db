@@ -1,19 +1,69 @@
 <f:layout name="Default" />
 
 <f:section name="main">
-<h1>IQ Beratungsportal</h1>
 
-<f:render partial="FormErrors" arguments="{object:Teilnehmer}" />
 
-<f:flashMessages />
+<div class="anmeldstart-frame">
+	<div class="iq-teaser-logo-ohne-rand frame-type-text frame-layout-0 frame-no-backgroundimage frame-space-before-none frame-space-after-none">
+		<div class="defaultframe">
+			<div class="frame-inner head-links">
+				
+			</div>
+			<div class="frame-inner head-mitte">
+				<h1 class="text-center">IQ Beratungsportal</h1>
+			</div>
+			<div class="frame-inner head-rechts">
+				<a href="https://www.charta-der-vielfalt.de/" target="_blank"><img class="head-logo-charta" src="/fileadmin/template/images/charta-der-vielfalt.svg" width="180" height="53" alt="Logo Charta der Vielfalt"></a>
+			</div>
+		</div>
+	</div>
+	<div class="defaultframe">
+		<div class="frame-inner editexterninner">
 
-<p>Hallo {teilnehmer.vorname} {teilnehmer.nachname},<br>
-hier haben Sie die Möglichkeit, Ihre bei der Anmeldung angegebenen Daten zu bearbeiten:</p>
-
-<f:link.action class="linkbuttons" action="editexternmenu" arguments="{thisaction : 'abmelden'}">Logout</f:link.action><br>
-<br>
-<f:link.action class="linkbuttons" action="editexternmenu" arguments="{thisaction : 'anmeldung'}">Daten bearbeiten</f:link.action><br>
-<br>
-<f:render partial="Dokument/Dokumente4Editextern" arguments="{teilnehmer : teilnehmer, dokumente : dokumente, speicherbelegung : speicherbelegung, filesizes : filesizes}" />
+			<f:render partial="FormErrors" arguments="{object:Teilnehmer}" />
+			
+			<f:flashMessages />
+			
+			<div class="fframe">
+				<p>Guten Tag {teilnehmer.vorname} {teilnehmer.nachname},</p>
+				<p>Sie haben hier die Möglichkeit, Ihre Daten zu bearbeiten oder Dokumente hochzuladen.</p>
+				<p>Wir setzen uns mit Ihnen in Verbindung, sobald Sie an der Reihe sind. Wir bitten um Ihr Verständnis und Ihre Geduld.</p>
+				<p><i>... weiterer Text hier??</i></p>	
+			</div>
+			
+			<div class="fframe">
+				<h2><f:translate key="persdaten" /></h2>
+				<f:link.action class="linkbuttons frontend" action="editexternmenu" arguments="{thisaction : 'anmeldung'}">bearbeiten</f:link.action><br>
+			</div>
+			
+			<div id="AnkerAbschluesse" class="fframe formabschluss">
+					<h2><f:translate key="datenabschluss" /></h2>
+					<f:if condition="{abschluesse -> f:count()} == 0">
+						<div class="keinabschlussbisher"><f:translate key="keinabschlussbisher" /></div>
+					</f:if>
+					<f:render partial="Abschluss/AbschlussListe4Anmeldung" arguments="{teilnehmer : teilnehmer, abschluesse: abschluesse, abschlussartarr : abschlussartarr, arrbranche : arrbranche}" />
+					<f:if condition="{abschluesse -> f:count()} < 4">
+						<f:if condition="{abschluesse -> f:count()} > 0">
+							<f:then>
+								<f:link.action id="abschlusshinzubutton" class="linkbuttons frontend" name="btnabschlusshinzu" action="newWebapp" controller="Abschluss" arguments="{teilnehmer : teilnehmer}"><f:translate key='weitererabschlusshinzu' /></f:link.action>
+							</f:then>
+							<f:else>
+								<f:link.action id="abschlusshinzubutton" class="linkbuttons frontend" name="btnabschlusshinzu" action="newWebapp" controller="Abschluss" arguments="{teilnehmer : teilnehmer}"><f:translate key='abschlusshinzu' /></f:link.action>
+							</f:else>
+						</f:if>
+						
+					</f:if>
+						
+			</div>
+			
+			
+			<f:render partial="Dokument/Dokumente4Editextern" arguments="{teilnehmer : teilnehmer, dokumente : dokumente, speicherbelegung : speicherbelegung, filesizes : filesizes}" />
+			 
+			<div class="fframe">
+			 <f:link.action class="linkbuttons frontend" action="editexternmenu" arguments="{thisaction : 'abmelden'}">Logout</f:link.action><br>
+			</div>
+		</div>
+	</div>
+</div>
 
 </f:section>

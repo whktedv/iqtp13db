@@ -354,11 +354,16 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     public function createWebappAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss = NULL, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
     {
         $valArray = $this->request->getArguments();
+        $iseditextern = $GLOBALS['TSFE']->fe_user->getKey('ses', 'editextern') ?? 0;
         
         $tnarr = $this->teilnehmerRepository->findByUid($teilnehmer->getUid());
         if($tnarr == NULL) {
             // TN ist (nicht) mehr vorhanden (gelöscht z.B. durch Task)
-            return $this->redirect('anmeldseite2', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
+            if($iseditextern != 0) {
+                return $this->redirect('editexternmenu', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
+            } else {
+                return $this->redirect('anmeldseite2', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
+            }
         }
         
         if (!isset($valArray['btnzurueck'])) {
@@ -370,7 +375,12 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
             $this->abschlussRepository->add($abschluss);
             
         }
-        return $this->redirect('anmeldseite2', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
+        
+        if($iseditextern != 0) {
+            return $this->redirect('editexternmenu', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
+        } else {
+            return $this->redirect('anmeldseite2', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
+        }
     }
     
     /**
@@ -462,11 +472,16 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     public function updateWebappAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
     {
         $valArray = $this->request->getArguments();
+        $iseditextern = $GLOBALS['TSFE']->fe_user->getKey('ses', 'editextern') ?? 0;
         
         if (!isset($valArray['btnzurueck'])) {
             $this->abschlussRepository->update($abschluss);
         }
-        return $this->redirect('anmeldseite2', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
+        if($iseditextern != 0) {
+            return $this->redirect('editexternmenu', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
+        } else {
+            return $this->redirect('anmeldseite2', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
+        }
     }
     
     /**
@@ -486,10 +501,16 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      * @return void
      */
     public function deleteWebappAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
-    {        
+    {   
+        $iseditextern = $GLOBALS['TSFE']->fe_user->getKey('ses', 'editextern') ?? 0;
+        
         $this->abschlussRepository->remove($abschluss);
         
-        return $this->redirect('anmeldseite2', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
+        if($iseditextern != 0) {
+            return $this->redirect('editexternmenu', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
+        } else {
+            return $this->redirect('anmeldseite2', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
+        }
     }
         
     /*

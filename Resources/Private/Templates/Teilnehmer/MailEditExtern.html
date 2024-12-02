@@ -397,25 +397,25 @@
 
                                     <f:format.html>
 	                                    {anrede}
-	                                    {mailtext}
-	                                </f:format.html>
-	                                
-	                                <f:format.html>
-	                                    {custommailtext}
-	                                </f:format.html>                                    
-									
+	                                 {mailtextedit}</f:format.html>
+	                                 
+							         <f:link.action
+							        extensionName="iqtp13db"
+							        pluginName="Iqtp13dbwebapp"
+							        controller="Teilnehmer"
+							        action="editextern"
+							        arguments="{code:teilnehmer.verificationCode}"
+							        absolute="true"
+							        pageUid="{anmeldeditseite}"
+							        >{linktitleeditregistration}</f:link.action>
+	                                	                                
 									<div style="background-color: #dedede; padding: 10px; border: 1px solid #222; margin-top: 15px;">
 										<div style="font-size: 14px; color:#222222;">
 											<b>{kontaktlabel}</b><br>
 											<f:format.raw>{datenberatungsstelle}</f:format.raw>
 										</div>
 									</div>
-									
-									<div style="padding: 10px; border: 1px solid #222; margin-top: 5px;">
-										<div style="font-size: 10px;">
-											<f:format.html>{grcinfotext}</f:format.html>  
-										</div>
-									</div>
+																		
 								</td>                           
 							</tr> 
                             </tbody>

@@ -439,6 +439,46 @@ form.filterform div {
 	margin-bottom: 1rem;
 }
 
+.editexterninner {
+	padding: 1.5rem;
+}
+
+
+.diveditexternlogin {
+	margin: 3rem 0 0 0;
+	text-align: center;
+}
+
+.tx-iqtp13db .diveditexternlogin button[type="submit"], .tx-iqtp13db .editexterninner .linkbuttons {
+  background-color: #46878730;
+  border: 0px solid transparent;
+  white-space: nowrap;
+  font-weight: 500 !important;
+  text-align: center;
+  font-size: 0.9rem;
+  line-height: 1.42857;
+  padding-top: 5px;
+  padding-right: 10px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  color: #468787;
+  cursor: pointer;
+  display: inline-block;
+  -moz-user-select: none;
+  text-decoration: none;
+  text-transform: uppercase;
+  border-radius: 0;
+    border-bottom-right-radius: 0px;
+  border-bottom-right-radius: 10px;
+  box-shadow: 1px 2px 3px #494949;
+  
+}
+
+.tx-iqtp13db .diveditexternlogin button[type="submit"] {
+	width: 100%;
+	margin: 3rem 0;
+}
+
 #errormodal, #infomodal {
 	position: absolute;
 	inset-inline-start: 0;
