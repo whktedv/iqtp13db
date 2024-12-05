@@ -245,13 +245,13 @@ CREATE TABLE fe_groups (
         nichtiq int(11) unsigned DEFAULT '0',
         bundesland varchar(255) DEFAULT '' NOT NULL,
         generalmail varchar(255) DEFAULT '' NOT NULL,
-        plzlist text NOT NULL,
-        keywordlist text NOT NULL,
+        plzlist text DEFAULT '' NOT NULL,
+        keywordlist text DEFAULT '' NOT NULL,
         beratungsarten varchar(255) DEFAULT '' NOT NULL,
         einwilligungserklaerungsseite int(11) DEFAULT '0',
-        avadresse text NOT NULL,
-        custominfotextmail text NOT NULL,
-        custominfotextstart text NOT NULL,
+        avadresse text DEFAULT '' NOT NULL,
+        custominfotextmail text DEFAULT '' NOT NULL,
+        custominfotextstart text DEFAULT '' NOT NULL,
         customlogourl varchar(255) DEFAULT '' NOT NULL
 );
 

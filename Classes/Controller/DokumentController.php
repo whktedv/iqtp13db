@@ -132,17 +132,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $beratenepath = $dokument->getPfad();
         $tmpName = $dokument->getName();
         
-        if($storage->getConfiguration()['pathType'] == 'relative') {
-            if($folder->getStorage()->hasFileInFolder($tmpName, $folder)) {
-                $folder = $storage->getFolder($beratenepath);
-                $targetfile = $folder->getStorage()->getFileInFolder($tmpName, $folder);
-            } else {
-                $this->addFlashMessage('Datei wurde nicht gefunden. ', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
-                return $this->redirect($valArray['thisaction'], 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'] ?? 'edit', 'callercontroller' => $valArray['callercontroller'] ?? 'Backend', 'callerpage' => $valArray['callerpage'] ?? '1', 'showdokumente' => '1'));
-            }
-        } else {
-            $targetfile = $storage->getFile($beratenepath . $tmpName);
-        }
+        $targetfile = $storage->getFile($beratenepath . $tmpName);
         
         $queryParameterArray = ['eID' => 'dumpFile', 't' => 'f'];
         $queryParameterArray['f'] = $targetfile->getUid();
@@ -305,17 +295,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $beratenepath = $dokument->getPfad();
         $tmpName = $dokument->getName();
         
-        if($storage->getConfiguration()['pathType'] == 'relative') {
-            if($folder->getStorage()->hasFileInFolder($tmpName, $folder)) {
-                $folder = $storage->getFolder($beratenepath);
-                $targetfile = $folder->getStorage()->getFileInFolder($tmpName, $folder);
-            } else {
-                $this->addFlashMessage('Datei wurde nicht gefunden. ', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
-                return $this->redirect('editexternmenu', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
-            }
-        } else {
-            $targetfile = $storage->getFile($beratenepath . $tmpName);
-        }
+        $targetfile = $storage->getFile($beratenepath . $tmpName);
         
         $queryParameterArray = ['eID' => 'dumpFile', 't' => 'f'];
         $queryParameterArray['f'] = $targetfile->getUid();

@@ -199,6 +199,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function statusAction(int $currentPage = 1): ResponseInterface
     {
         $valArray = $this->request->getArguments();
+
         
         // Gruppenwechsel Beratungsstelle, wenn ein User mehreren Beratungsstellen zugeordnet ist
         $backenduser = $this->beraterRepository->findByUid($this->user['uid']);

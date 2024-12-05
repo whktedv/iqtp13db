@@ -11,6 +11,7 @@ use TYPO3\CMS\Extbase\Annotation\Validate;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
+use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
 use Psr\Http\Message\ResponseInterface;
 use Ud\Iqtp13db\Domain\Repository\UserGroupRepository;
@@ -1107,19 +1108,46 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 return $this->redirect('editextern', 'Teilnehmer', null, array('code' => $valArray['code']));
             }
             
-            if($tngebdat == $authfragegebdat) {
-                $GLOBALS['TSFE']->fe_user->setKey('ses', 'editextern', $teilnehmer->getUid());
+            if($tngebdat == $authfragegebdat) {                
                 
+                $groupId = $this->createTemporaryFrontendGroup('temp_user'.$teilnehmer->getUid(), $this->settings['tempuserstoragepid'], time() + 7200);
                 
-                $newUserId = $this->createTemporaryFrontendUser([
+                $newfefUserId = $this->createTemporaryFrontendUser([
                     'username' => 'temp_user'.$teilnehmer->getUid(),
                     'password' => $valArray['code'],
                     'email' => $teilnehmer->getEmail(),
-                    'pid' => 90, // Speicherort im Seitenbaum !!!!!! TODO: Aus Settings holen!!!!!!!!!
-                    'usergroup' => 19,
-                    'endtime' => time() + 3600 // 1 Stunde gültig
+                    'pid' => $this->settings['tempuserstoragepid'], // Speicherort im Seitenbaum 
+                    'usergroup' => $groupId,
+                    'endtime' => time() + 7200 // 2 Stunden gültig
                 ]);
-                $GLOBALS['TSFE']->fe_user->setKey('ses', 'tempfeuserid', $newUserId);
+                
+                $storage = $this->generalhelper->getTP13Storage($this->storageRepository->findAll());                
+                $storagerec = $storage->getStorageRecord(); // ID des File-Storage
+                
+                $pfad = $this->generalhelper->createFolder($teilnehmer, $this->storageRepository->findAll());
+                $beratenepath = '/'.ltrim($pfad->getIdentifier(), '/');
+                
+                $newPermissionId = $this->addFolderPermission($storagerec['uid'], $beratenepath, $pfad, $groupId);
+               
+                // frontend User --------------------
+                $frontendUser = GeneralUtility::makeInstance(FrontendUserAuthentication::class);
+                $frontendUser->lockIP = 0;
+                
+                // Benutzer direkt aus der Datenbank holen
+                $queryBuilder = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ConnectionPool::class)
+                ->getQueryBuilderForTable('fe_users');
+                
+                $userData = $queryBuilder
+                ->select('*')
+                ->from('fe_users')
+                ->where($queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($newfefUserId, \PDO::PARAM_INT)))
+                ->executeQuery()
+                ->fetchAssociative();
+                
+                if ($userData) {
+                    $frontendUser->loginUser = true;
+                    $frontendUser->user = $userData;                    
+                }
                 
                 return $this->redirect('editexternmenu', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));                
             } else {
@@ -1140,9 +1168,11 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function editexternmenuAction(): ResponseInterface
     {
         $valArray = $this->request->getArguments();
-        //DebuggerUtility::var_dump($valArray);
-        //die;
-        $tnuid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'editextern');
+        
+        $tnuid = $valArray['teilnehmer'];
+        $GLOBALS['TSFE']->fe_user->setKey('ses', 'editextern', $tnuid);
+       
+         
         $teilnehmer = $this->teilnehmerRepository->findByUid($tnuid);
         $dokumente = $this->dokumentRepository->findByTeilnehmer($teilnehmer);
         $storage = $this->generalhelper->getTP13Storage($this->storageRepository->findAll());
@@ -1156,7 +1186,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         }
         $speicherbelegung = intval(($filesizesum/31457280)*100);
                       
-        if($valArray['thisaction'] == "anmeldung") {            
+        if(isset($valArray['thisaction']) && $valArray['thisaction'] == "anmeldung") {            
 
             $tnseite1 = GeneralUtility::makeInstance('Ud\\Iqtp13db\\Domain\\Model\\TNSeite1');
             $tnseite1 = $this->getTnseite1FromTeilnehmer($teilnehmer);
@@ -1165,7 +1195,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             //$GLOBALS['TSFE']->fe_user->setKey('ses', 'editextern', $teilnehmer->getUid());
             
             return $this->redirect('anmeldseite1', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'plz' => $teilnehmer->getPlz(), 'wohnsitzDeutschland' => $teilnehmer->getWohnsitzdeutschland()));            
-        }elseif($valArray['thisaction'] == "abmelden"){
+        }elseif(isset($valArray['thisaction']) && $valArray['thisaction'] == "abmelden"){
             $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnuid', null);
             $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnseite1', null);
             $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('ses', null);
@@ -1366,8 +1396,83 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         // Einfügen in die Datenbank
         $connection = GeneralUtility::makeInstance(ConnectionPool::class)
         ->getConnectionForTable('fe_users');
-        $connection->insert('fe_users', $userRecord);
         
-        return $connection->lastInsertId('fe_users');
+        // Prüfen, ob der Eintrag bereits existiert
+        $existingEntry = $connection->select(
+            ['uid'],
+            'fe_users',
+            ['username' => $userData['username']]
+            )->fetchOne();
+            
+        if (!$existingEntry) {                
+            $connection->insert('fe_users', $userRecord);                
+            return $connection->lastInsertId('fe_users');
+        }
+            
+        return $existingEntry; // Eintrag existiert bereits
     }
+    
+    protected function createTemporaryFrontendGroup(string $title, int $pid, int $endtime = 0)
+    {
+        $connection = GeneralUtility::makeInstance(ConnectionPool::class)
+        ->getConnectionForTable('fe_groups');
+        
+        // Prüfen, ob der Eintrag bereits existiert
+        $existingEntry = $connection->select(
+            ['uid'],
+            'fe_groups',
+            ['title' => $title]
+            )->fetchOne();
+            
+        if (!$existingEntry) {
+            $groupRecord = [
+                'title' => $title,
+                'pid' => $pid,
+                'tstamp' => time(),
+                'crdate' => time(),
+                'hidden' => 0
+            ];
+            
+            $connection->insert('fe_groups', $groupRecord);
+            
+            return $connection->lastInsertId('fe_groups');
+        }
+
+        return $existingEntry; // Eintrag existiert bereits
+    }
+    
+    protected function addFolderPermission(int $storageId, string $folderPath, $pfadobject, int $feGroupId)
+    {
+        // Berechnung des Folder-Hashes
+        $folderHash = $pfadobject->getHashedIdentifier();
+              
+        // Datenbankverbindung
+        $connection = GeneralUtility::makeInstance(ConnectionPool::class)
+        ->getConnectionForTable('tx_falsecuredownload_folder');
+        
+        // Prüfen, ob der Eintrag bereits existiert
+        $existingEntry = $connection->select(
+            ['uid'],
+            'tx_falsecuredownload_folder',
+            ['folder_hash' => $folderHash, 'fe_groups' => $feGroupId]
+            )->fetchOne();
+            
+            if (!$existingEntry) {
+                // Berechtigung hinzufügen
+                $connection->insert('tx_falsecuredownload_folder', [
+                    'folder_hash' => $folderHash,
+                    'fe_groups' => $feGroupId,
+                    'storage' => $storageId,
+                    'folder' => $folderPath,
+                    'tstamp' => time(),
+                    'crdate' => time(),
+                ]);
+                
+                return $connection->lastInsertId('tx_falsecuredownload_folder');
+            }
+            
+            return null; // Eintrag existiert bereits
+    }
+    
+    
 }
