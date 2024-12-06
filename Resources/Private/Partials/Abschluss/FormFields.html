@@ -13,7 +13,7 @@
 	      <label for="brancheoberkat">
 	        <f:translate key="tx_iqtp13db_domain_model_abschluss.branche" />
 	       </label>
-	       <f:form.select property="branche" prependOptionValue="" prependOptionLabel="{f:translate(key:'bw')}">
+	       <f:form.select id="selectbranche" property="branche" prependOptionValue="0" prependOptionLabel="{f:translate(key:'bw')}">
 					<f:groupedFor each="{brancheunterkat}" as="branche" groupBy="brancheok" groupKey="brok">
 	       				<f:form.select.optgroup label="{brancheoberkat.{brok}}">
 			       			<f:for each="{branche}" as="ok">

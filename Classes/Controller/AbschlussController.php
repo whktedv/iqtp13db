@@ -225,7 +225,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     {
         $valArray = $this->request->getArguments();
         if(array_key_exists('abschluss', $valArray)) {
-            if($valArray['abschluss']['branche'] == '') {
+            if($valArray['abschluss']['branche'] == '0') {
                 $this->addFlashMessage("FEHLER: Branche ist Pflichtangabe.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
                 return $this->redirect('edit', 'Abschluss', null, array('teilnehmer' => $valArray['teilnehmer'], 'abschluss' => $valArray['abschluss']['__identity']));
             }

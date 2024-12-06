@@ -9,16 +9,28 @@
 <f:flashMessages />
 
 <f:render partial="FormErrors" arguments="{object:Abschluss}" />
-
+	
 <f:form action="update" name="abschluss" object="{abschluss}" arguments="{teilnehmer: teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : thisaction}">
-	<f:form.button type="submit" class="linkbuttons" id="savebutton1">{f:translate(key:'speichern')}</f:form.button>
+	<f:form.button type="submit" class="linkbuttons" onclick="return cancelsubmit();" id="savebutton1">{f:translate(key:'speichern')}</f:form.button>
 	<f:link.action id="linkloadoverlay-back" class="linkbuttons" action="{thisaction}" controller="{callercontroller}" arguments="{teilnehmer: teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, showabschluesse : '1'}">Zurück</f:link.action>
 
 	<f:render partial="Abschluss/FormFields" arguments="{abschlussjahre:abschlussjahre, staatenarr:staatenarr, berufearr:berufearr, abschlussartarr : abschlussartarr, brancheoberkat : brancheoberkat, brancheunterkat : brancheunterkat}" />
 	
-	<f:form.button type="submit" class="linkbuttons" id="savebutton2">{f:translate(key:'speichern')}</f:form.button>
+	<f:form.button type="submit" class="linkbuttons" onclick="return cancelsubmit();" id="savebutton2">{f:translate(key:'speichern')}</f:form.button>
 	<f:link.action id="linkloadoverlay-edit" class="linkbuttons" action="{thisaction}" controller="{callercontroller}" arguments="{teilnehmer: teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, showabschluesse : '1'}">Zurück</f:link.action>
 </f:form>
 
+<script>
+	
+	const selectbranche = document.getElementById("selectbranche");
+
+	function cancelsubmit() {
+		if(selectbranche.value == '0') {
+			alert("Branche ist Pfichtfeld!");
+			return false;
+		}		
+    }
+	
+</script>
 </f:section>
 
