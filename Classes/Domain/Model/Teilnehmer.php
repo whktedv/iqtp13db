@@ -137,7 +137,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * gebdat
      * @var string
-     * @Validate("NotEmpty"), @Validate("\Ud\Iqtp13db\Domain\Validator\GebdatValidator")
+     * @Validate("\Ud\Iqtp13db\Domain\Validator\GebdatValidator")
      */
     protected $gebdat = '';
     

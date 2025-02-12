@@ -1706,6 +1706,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * action show
      *
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("teilnehmer")
      * @return void
      */
     public function showAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface

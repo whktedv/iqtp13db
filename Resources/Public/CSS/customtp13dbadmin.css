@@ -373,6 +373,10 @@ form.filterform select, .exportfilterform select {
   height: 25px;
 }
 
+.actionbuttons {
+	display: flex;
+}
+
 .actionbuttons img {
 	margin-right: 5px;
 }
