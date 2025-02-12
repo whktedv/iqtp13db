@@ -102,7 +102,7 @@
 		<th>Summe</th>
 	</tr>
 	<tr>
-		<th>Anmeldungen<br>(wartend)</th>
+		<th>Anmeldungen</th>
 		<f:for each="{angemeldeteTN}" as="tn" iteration="iter">
 			<td {f:if(condition: '{iter.index} == {aktmonat}', then: 'style="background-color: #ffcaf2;"')}>{tn}</td>
 		</f:for>
@@ -146,7 +146,6 @@
 		<f:for each="{totalavgmonthw}" as="avgw" iteration="iter">
 			<td {f:if(condition: '{iter.index} == {aktmonat}', then: 'style="background-color: #ffcaf2;"')}><f:format.number>{avgw}</f:format.number></td>
 		</f:for>
-		<td><f:format.number>{SUMtotalavgmonthw}</f:format.number></td>
 	</tr>
 	</tr>
 		<tr>
@@ -154,7 +153,6 @@
 		<f:for each="{totalavgmonthb}" as="avgb" iteration="iter">
 			<td {f:if(condition: '{iter.index} == {aktmonat}', then: 'style="background-color: #ffcaf2;"')}><f:format.number>{avgb}</f:format.number></td>
 		</f:for>
-		<td><f:format.number>{SUMtotalavgmonthb}</f:format.number></td>
 	</tr>
 </table>
 

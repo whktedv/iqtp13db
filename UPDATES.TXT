@@ -116,9 +116,17 @@ Update 25.10.2024
 Update 05.11.2024
 - Anpassungen für Typo3 12
 
-Neu: 
+Update 12.02.2025: 
 - Feld "Strasse + Hausnr."
 - Feld Geburtsdatum statt Alter (Alter bei Anmeldung wird berechnet und in DB-Feld eingetragen)
-- Nachträgliches Bearbeiten von Daten durch Ratsuchende über Bearbeiten-Link in E-Mail
+- Nachträgliches Bearbeiten von Daten durch Ratsuchende über Bearbeiten-Link in E-Mail (noch nicht aktiv)
+- Eingabe nur von lateinischen Buchstaben (und Umlauten, Akzent-Buchstaben) in Eingabefelder möglich
+- Fehler behoben, wodurch im Modul "Einstellungen" die Daten des eigenen Beratenden-Accounts nicht geändert werden konnte
+- Modul Übersicht: Summe "Tage Wartezeit" entfernt, da wenig aussagekräftig. Bei Bedarf können eigene Berechnungen mithilfe des Excel-Exports erstellt werden. Berechnung: Summe (Anzahl der Tage zwischen Anmeldung und Beratung) für alle Ratsuchenden geteilt durch die Anzahl der Ratsuchenden. Die Berechnung bezieht sich auf den Monat, in dem die Beratung stattgefunden hat. Es werden nur Ratsuchende berücksichtigt, bei denen ein Beratungsdatum eingetragen wurde. Berechnung Beratungszeit erfolgt analog mit den Feldern "Datum Erstberatung" und "Erstberatung abgeschlossen".
+- Berufeliste bei Referenzberufen aktualisiert
+- Im Suchformular kann bei Berater auch 'nicht zugeordnet' ausgewählt werden, um alle noch nicht einem Beratenden zugewiesenen Datensätze zu finden
+- Fehler im Suchformular korrigiert: führende/nachfolgende Leerzeichen und doppelte Leerzeichen in der Eingabe werden ignoriert
+- Fehler im Modul Gelöscht korrigiert: Suchformular war hier ohne Funktion
 
+Neu:
 

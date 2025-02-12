@@ -8,6 +8,8 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use \TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
 use \TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
+use \TYPO3\CMS\Core\Database\Query\Restriction\LimitToTablesRestrictionContainer;
+use \TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
 
 /***
  *
@@ -139,6 +141,17 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         
         //$limitsql = $limit == 0 ? '' : ' LIMIT '.$limit;
         
+        
+        if($type == 999) {
+            $queryBuilder->getRestrictions()
+            ->removeByType(HiddenRestriction::class)
+            ->add(
+                GeneralUtility::makeInstance(LimitToTablesRestrictionContainer::class)
+                ->addForTables(GeneralUtility::makeInstance(HiddenRestriction::class), ['tt'])
+                );
+        }
+        
+        
         $result = $queryBuilder
             ->select('tx_iqtp13db_domain_model_teilnehmer.*')
             ->from('tx_iqtp13db_domain_model_teilnehmer')
@@ -167,7 +180,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             ->addOrderBy('uid', 'DESC')
             ->setMaxResults($limit)
             ->executeQuery();
-
+        
            //DebuggerUtility::var_dump($queryBuilder->getSQL());
            //DebuggerUtility::var_dump($queryBuilder->getParameters());
            //die;
@@ -250,7 +263,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     {
         $query = $this->createQuery();
         $query->getQuerySettings()->setIgnoreEnableFields(TRUE);
-        $query->getQuerySettings()->setEnableFieldsToBeIgnored(array('disabled', 'hidden'));
+        $query->getQuerySettings()->setEnableFieldsToBeIgnored(array('disabled', 'hidden', 'deleted'));
         $query->matching($query->logicalAnd($query->like('hidden', '1'), $query->like('niqidberatungsstelle', $niqbid)));
         if($order == 'DESC') {
             $query->setOrderings(array($orderby => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING));

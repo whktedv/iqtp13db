@@ -1,4 +1,3 @@
-
 <div class="fframe" id="AnkerDokumente"><h2><f:translate key="dokumente" /> in '{dokumentpfad}'</h2>
 	<f:if condition="{dokumente}"><f:then>
 		<table>
@@ -37,7 +36,7 @@
 						<td><f:link.action class="iconbuttons" action="deleteFileBackend" controller="Dokument" arguments="{dokument : dokument, teilnehmer : teilnehmer, calleraction : calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : thisaction}" onclick="return confirm('Wirklich löschen?');" ><img src="/typo3conf/ext/iqtp13db/Resources/Public/Icons/delete-640.png" width="32" height="32" alt="Löschen" /></f:link.action></td>
 					</tr>		
 			</f:for>
-		</table>
+		</table>	
 		<div id="response"></div>
 		<div style="font-size: 0.8rem;">Speichergröße: 30 MB, Auslastung: {speicherbelegung} %</div>
 	</f:then></f:if>

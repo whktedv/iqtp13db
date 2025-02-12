@@ -369,9 +369,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'beratungfertig'=> $beratungfertig,
                 'SUMberatungfertig'=> array_sum($beratungfertig),
                 'totalavgmonthb'=> $days4beratung,
-                'SUMtotalavgmonthb'=> array_sum($days4beratung)/count($days4beratung),
                 'totalavgmonthw'=> $days4wartezeit,
-                'SUMtotalavgmonthw'=> array_sum($days4wartezeit)/count($days4beratung),
                 'aktuelleanmeldungen'=> $aktuelleanmeldungen,
                 'aktuellerstberatungen'=> $aktuellerstberatungen,
                 'aktuellberatungenfertig'=> $aktuellberatungenfertig,
@@ -491,7 +489,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $orderchar = $order == 'ASC' ? "↓" : "↑";        
         
         // ************ Start - Beraterarray bestimmen *****************
-        $arrberater = array();
+        $arrberater = array();    
+        $arrberater[0] = '- nicht zugeordnet -';
         $usergroups4berater = explode(",", $this->user['usergroup']);
         if($this->niqbid == '12345' || intval($this->niqbid) < 999) { // Admin
             $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected ?? '%');
@@ -508,6 +507,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $arrberater[$currber->getUid()] = $currber->getUsername();
             }
         }
+        asort($arrberater);
         // ***************** Ende - Beraterarray bestimmen *****************
                 
         $this->view->assignMultiple(
@@ -628,6 +628,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         // ************ Start - Beraterarray bestimmen *****************
         $arrberater = array();
+        $arrberater[0] = '- nicht zugeordnet -';
         $usergroups4berater = explode(",", $this->user['usergroup']);
         if($this->niqbid == '12345' || intval($this->niqbid) < 999) { // Admin
             $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected ?? '%');
@@ -644,6 +645,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $arrberater[$currber->getUid()] = $currber->getUsername();
             }
         }
+        asort($arrberater);
         // ***************** Ende - Beraterarray bestimmen *****************
         $this->view->assignMultiple(
             [
@@ -765,6 +767,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         // ************ Start - Beraterarray bestimmen *****************
         $arrberater = array();
+        $arrberater[0] = '- nicht zugeordnet -';
         $usergroups4berater = explode(",", $this->user['usergroup']);
         if($this->niqbid == '12345' || intval($this->niqbid) < 999) { // Admin
             $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected ?? '%');
@@ -781,6 +784,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $arrberater[$currber->getUid()] = $currber->getUsername();
             }
         }
+        asort($arrberater);
         // ***************** Ende - Beraterarray bestimmen *****************
         
         $this->view->assignMultiple(
@@ -869,6 +873,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         // ************ Start - Beraterarray bestimmen *****************
         $arrberater = array();
+        $arrberater[0] = '- nicht zugeordnet -';
         $usergroups4berater = explode(",", $this->user['usergroup']);
         if($this->niqbid == '12345' || intval($this->niqbid) < 999) { // Admin
             $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected ?? '%');
@@ -885,6 +890,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $arrberater[$currber->getUid()] = $currber->getUsername();
             }
         }
+        asort($arrberater);
         // ***************** Ende - Beraterarray bestimmen *****************
         
         $this->view->assignMultiple(
@@ -2848,16 +2854,16 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         
         $f['uid'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fuid');
-        $f['name'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fname');
-        $f['ort'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fort');
-        $f['beruf'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fberuf');
+        $f['name'] = preg_replace('/\s+/', ' ', trim($GLOBALS['TSFE']->fe_user->getKey('ses', 'fname')));
+        $f['ort'] = preg_replace('/\s+/', ' ', trim($GLOBALS['TSFE']->fe_user->getKey('ses', 'fort')));
+        $f['beruf'] = preg_replace('/\s+/', ' ', trim($GLOBALS['TSFE']->fe_user->getKey('ses', 'fberuf')));
         $f['land'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fland');
         $f['berater'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fberater');
         $f['gruppe'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fgruppe');
         $f['bescheid'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fbescheid'); // antragstellungvorher
         
         if($f['land'] == '-1000' || $f['land'] == NULL) $f['land'] = '';
-        if($f['berater'] == 0 || $f['berater'] == NULL) $f['berater'] = '';
+        if($f['berater'] == -1 || $f['berater'] == NULL) $f['berater'] = '';
         if($f['uid'] == '' && $f['name'] == '' && $f['ort'] == '' && $f['beruf'] == '' && $f['land'] == '' && $f['berater'] == '' && $f['gruppe'] == '' && $f['bescheid'] == '') {
             if($deleted == 1) {
                 $teilnehmers = $this->teilnehmerRepository->findhidden4list($orderby, $order, $this->niqbid);
@@ -2886,7 +2892,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $this->view->assign('filterlandname', $land[0]->getTitel());
             }
             $this->view->assign('filterberater', $f['berater']);
-            if($f['berater'] != '') {
+            if($f['berater'] != '' && $f['berater'] != 0) {
                 $berater = $this->beraterRepository->findByUid($f['berater']);
                 $this->view->assign('filterberatername', $berater->getUsername());
             }

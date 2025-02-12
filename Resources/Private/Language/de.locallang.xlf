@@ -128,7 +128,7 @@
 			<trans-unit id="infoWohnsitzinDeutschlandNein"><target>Bitte geben Sie an, in welchem Land Sie aktuell leben.</target></trans-unit>
 			<trans-unit id="infoAbschlussart_ALT"><target>Ein Ausbildungsabschluss ist ein Abschluss einer beruflichen Ausbildung. Ein Universitätsabschluss ist ein akademischer Abschluss der nach einem Studium an einer Hochschule/Universität erworben wurde. Das Studium hat in der Regel mindestens 3 Jahre gedauert. Bitte geben Sie an welchen Abschluss Sie erworben haben.</target></trans-unit>
 			<trans-unit id="infoAbschlussart"><target>Falls der Berufsabschluss im Ausland erworben wurde: Wählen Sie bitte einen gleichwertigen Abschluss in der Liste aus.</target></trans-unit>			
-			<trans-unit id="infoAbschluss"><target></target></trans-unit>
+			<trans-unit id="infoAbschluss"><target>z.B. Bachelor of Arts in Erziehung, Master of Science Elektronik, Maurer, Bäcker, ...</target></trans-unit>
 			<trans-unit id="infoAusbildungsort"><target>Bitte geben Sie die Stadt an, in der Sie Ihren Abschluss gemacht haben.</target></trans-unit>
 			<trans-unit id="infoBerufserfahrung"><target>Bitte geben Sie an, wie lange Sie schon im Beruf der Ausbildung/des Studiums gearbeitet haben (Monate/Jahre).</target></trans-unit>
 			<trans-unit id="infoBezug"><target>Von welcher Institution/Behörde/Amt erhalten Sie aktuell Geld für Ihren Lebensunterhalt? Bitte geben Sie diese Institution/Behörde/Amt hier an.</target></trans-unit>

@@ -17,7 +17,7 @@
 			<label for="schonberatenvon">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.schonberatenvon" />
 			</label>
-				<f:form.textfield id="txtschonberatenvon" pattern="\p{Latin}|[0-9]|[[:space:]]|\:|\,|\.|\(|\)|\-|\\|\/|\+|\@|\`|\.|\&" property="schonberatenvon" />
+				<f:form.textfield id="txtschonberatenvon" pattern="[A-Za-zÀ-ÿ0-9 ,;\(\)\-=\?`´*+.:&§%\/#@!_\[\]\{\}<>]*" property="schonberatenvon" />
 		</div>
 </div>
 <div class="fframe"><h2><f:translate key="persdaten" /></h2>
@@ -25,19 +25,19 @@
 			<label for="nachname">
 				<span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoNachname' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" />
 			</label>
-				<f:form.textfield property="nachname" pattern="\p{Latin}|[0-9]|[[:space:]]|\:|\,|\.|\(|\)|\-|\\|\/|\+|\@|\`|\.|\&" />
+				<f:form.textfield property="nachname" pattern="[A-Za-zÀ-ÿ0-9 ,;\(\)\-=\?`´*+.:&§%\/#@!_\[\]\{\}<>]*" />
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="vorname">
 				<span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoVorname' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" />
 			</label>
-				<f:form.textfield property="vorname" pattern="\p{Latin}|[0-9]|[[:space:]]|\:|\,|\.|\(|\)|\-|\\|\/|\+|\@|\`|\.|\&" />
+				<f:form.textfield property="vorname" pattern="[A-Za-zÀ-ÿ0-9 ,;\(\)\-=\?`´*+.:&§%\/#@!_\[\]\{\}<>]*" />
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="strasse">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.strasse" />
 			</label>
-				<f:form.textfield property="strasse" pattern="\p{Latin}|[0-9]|[[:space:]]|\:|\,|\.|\(|\)|\-|\\|\/|\+|\@|\`|\.|\&" />
+				<f:form.textfield property="strasse" pattern="[A-Za-zÀ-ÿ0-9 ,;\(\)\-=\?`´*+.:&§%\/#@!_\[\]\{\}<>]*" />
 		</div>		
 		<div class="tp13_formdivwebapp">
 			<label for="plz">
@@ -46,18 +46,18 @@
 				<f:if condition="{plz}"><f:then>
 						<f:form.hidden name="tnseite1[plz]" value="{plz}" />
 						<span class="plzprefilled">{plz}</span>
-						<f:form.textfield class="orttextfield" property="ort" pattern="\p{Latin}|[0-9]|[[:space:]]|\:|\,|\.|\(|\)|\-|\\|\/|\+|\@|\`|\.|\&" placeholder="<f:translate key='tx_iqtp13db_domain_model_teilnehmer.ort'/>"/>
+						<f:form.textfield class="orttextfield" property="ort" pattern="[A-Za-zÀ-ÿ0-9 ,;\(\)\-=\?`´*+.:&§%\/#@!_\[\]\{\}<>]*" placeholder="<f:translate key='tx_iqtp13db_domain_model_teilnehmer.ort'/>"/>
 					</f:then>
 					<f:else>
 						<f:if condition="{direkt} == '1' && {wohnsitzDeutschland} != '2'">
 							<f:then>
-								<f:form.textfield class="plztextfield" property="plz" pattern="\p{Latin}|[0-9]|[[:space:]]|\:|\,|\.|\(|\)|\-|\\|\/|\+|\@|\`|\.|\&" placeholder="" required="1"/>
+								<f:form.textfield class="plztextfield" property="plz" pattern="[A-Za-zÀ-ÿ0-9 ,;\(\)\-=\?`´*+.:&§%\/#@!_\[\]\{\}<>]*" placeholder="" required="1"/>
 							</f:then>
 							<f:else>
-								<f:form.textfield class="plztextfield" property="plz" pattern="\p{Latin}|[0-9]|[[:space:]]|\:|\,|\.|\(|\)|\-|\\|\/|\+|\@|\`|\.|\&" value="00000"/>
+								<f:form.textfield class="plztextfield" property="plz" pattern="[A-Za-zÀ-ÿ0-9 ,;\(\)\-=\?`´*+.:&§%\/#@!_\[\]\{\}<>]*" value="00000"/>
 							</f:else>
 						</f:if>
-						<f:form.textfield class="orttextfield" property="ort" pattern="\p{Latin}|[0-9]|[[:space:]]|\:|\,|\.|\(|\)|\-|\\|\/|\+|\@|\`|\.|\&" placeholder="<f:translate key='tx_iqtp13db_domain_model_teilnehmer.ort'/>"/>											
+						<f:form.textfield class="orttextfield" property="ort" pattern="[A-Za-zÀ-ÿ0-9 ,;\(\)\-=\?`´*+.:&§%\/#@!_\[\]\{\}<>]*" placeholder="<f:translate key='tx_iqtp13db_domain_model_teilnehmer.ort'/>"/>											
 					</f:else>
 				</f:if>
 		</div>
@@ -91,7 +91,7 @@
 			<label for="telefon">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.telefon" />
 			</label>
-				<f:form.textfield property="telefon" />
+				<f:form.textfield property="telefon" pattern="[A-Za-zÀ-ÿ0-9 ,;\(\)\-=\?`´*+.:&§%\/#@!_\[\]\{\}<>]*" />
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="gebdat">

@@ -10,7 +10,7 @@
 
 <f:render partial="FormErrors" arguments="{object:Abschluss}" />
 	
-<f:form action="update" name="abschluss" object="{abschluss}" arguments="{teilnehmer: teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : thisaction}">
+<f:form id="abschlussform" action="update" name="abschluss" object="{abschluss}" arguments="{teilnehmer: teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : thisaction}">
 	<f:form.button type="submit" class="linkbuttons" onclick="return cancelsubmit();" id="savebutton1">{f:translate(key:'speichern')}</f:form.button>
 	<f:link.action id="linkloadoverlay-back" class="linkbuttons" action="{thisaction}" controller="{callercontroller}" arguments="{teilnehmer: teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, showabschluesse : '1'}">Zurück</f:link.action>
 

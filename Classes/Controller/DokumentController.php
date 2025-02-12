@@ -143,7 +143,6 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         return $this->redirectToURI($publicUrl, $delay=0, $statusCode=303);
     }
     
-    
     /**
      * action saveFileWebapp
      *

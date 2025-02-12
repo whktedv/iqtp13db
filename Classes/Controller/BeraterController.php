@@ -5,6 +5,8 @@ use TYPO3\CMS\Core\Pagination\SimplePagination;
 use Ud\Iqtp13db\Domain\Repository\UserGroupRepository;
 use Ud\Iqtp13db\Domain\Repository\BeraterRepository;
 
+use Psr\Http\Message\ResponseInterface;
+
 /**
  * BeraterController
  */
@@ -45,7 +47,7 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * @param int $currentPage
      * @return void
      */
-    public function listAction(int $currentPage = 1)
+    public function listAction(int $currentPage = 1): ResponseInterface
     {
         $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
         
@@ -63,6 +65,7 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     	        'thisuser' => $this->user
     	    ]
    	    );
+    	return $this->htmlResponse();
     }
     
     /**
@@ -72,13 +75,14 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("berater")
      * @return void
      */
-    public function editAction(\Ud\Iqtp13db\Domain\Model\Berater $berater)
+    public function editAction(\Ud\Iqtp13db\Domain\Model\Berater $berater): ResponseInterface
     {
         $usergroups = $this->userGroupRepository->findAll();
         
         $this->view->assign('berater', $berater);
         $this->view->assign('usergroups', $usergroups);
         $this->view->assign('thisuser', $this->user);
+        return $this->htmlResponse();
     }
     
     /**
@@ -87,7 +91,7 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * @param \Ud\Iqtp13db\Domain\Model\Berater $berater
      * @return void
      */
-    public function updateAction(\Ud\Iqtp13db\Domain\Model\Berater $berater)
+    public function updateAction(\Ud\Iqtp13db\Domain\Model\Berater $berater): ResponseInterface
     {
         $this->addFlashMessage('Berater*in aktualisiert.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
         
@@ -96,7 +100,7 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $berater->setPassword(password_hash($berater->getPassword(), PASSWORD_ARGON2I));
                 
         $this->beraterRepository->update($berater);
-        $this->redirect('editsettings', 'Backend', 'Iqtp13db', null);
+        return $this->redirect('editsettings', 'Backend', 'Iqtp13db', null);
     }
     
     /**
@@ -105,11 +109,11 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * @param \Ud\Iqtp13db\Domain\Model\Berater $berater
      * @return void
      */
-    public function deleteAction(\Ud\Iqtp13db\Domain\Model\Berater $berater)
+    public function deleteAction(\Ud\Iqtp13db\Domain\Model\Berater $berater): ResponseInterface
     {
         $this->addFlashMessage('Berater*in gelöscht.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
         $this->beraterRepository->remove($berater);
-        $this->redirect('editsettings', 'Backend', 'Iqtp13db', null);
+        return $this->redirect('editsettings', 'Backend', 'Iqtp13db', null);
     }   
     
 }

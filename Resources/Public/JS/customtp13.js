@@ -16,11 +16,11 @@ window.onbeforeunload = function() {
 
 document.addEventListener("DOMContentLoaded", function() {
     var form1 = document.getElementById("teilnehmerform");
-	//var form2 = document.getElementById("dokumenteform1");
+	var form2 = document.getElementById("abschlussform");
 	var form3 = document.getElementById("dokumenteform2");
 	
 	prepareformelements(form1);
-	//prepareformelements(form2);
+	prepareformelements(form2);
 	prepareformelements(form3);
 });
 
