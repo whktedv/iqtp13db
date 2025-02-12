@@ -1,13 +1,13 @@
 # Installationsanweisungen Webapp Anerkennungsberatung des IQ Netzwerks
-URL: https://www.iq-netzwerk-nrw.de<br>
+URL: https://www.anerkennungsberatung-iq.de<br>
 Author: Ulrich Dohmen<br>
 Mail: udohmen@whkt.de<br>
  
-<h3>Version 6.0.1 </h3>
+<h3>Version 7.0.1 </h3>
 
 <h2>Systemvoraussetzung</h2>
 <ul>
- <li>TYPO3 10.4.99 - 11.5.99</li>
+ <li>TYPO3 12.4</li>
  <li>ausreichend Speicherplatz für die Anhänge der Ratsuchenden; im Schnitt je Ratsuchenden etwa 5 MB</li>
  <li>der Webserver muss E-Mails versenden können</li>
  <li>TYPO3 Extension lib_jquery (oder alternativ jQuery händisch einbinden)</li>
