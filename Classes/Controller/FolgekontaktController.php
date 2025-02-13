@@ -67,6 +67,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      * action show
      *
      * @param \Ud\Iqtp13db\Domain\Model\Folgekontakt $folgekontakt
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("folgekontakt")
      * @return void
      */
     public function showAction(\Ud\Iqtp13db\Domain\Model\Folgekontakt $folgekontakt): ResponseInterface
@@ -99,6 +100,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      * action new
      *
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("teilnehmer")
      * @return void
      */
     public function newAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
@@ -124,6 +126,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      * action create
      *
      * @param \Ud\Iqtp13db\Domain\Model\Folgekontakt $folgekontakt
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("folgekontakt")
      * @return void
      */
     public function createAction(\Ud\Iqtp13db\Domain\Model\Folgekontakt $folgekontakt): ResponseInterface
@@ -195,6 +198,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      * action update
      *
      * @param \Ud\Iqtp13db\Domain\Model\Folgekontakt $folgekontakt
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("folgekontakt")
      * @return void
      */
     public function updateAction(\Ud\Iqtp13db\Domain\Model\Folgekontakt $folgekontakt): ResponseInterface
@@ -214,6 +218,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      * action delete
      *
      * @param \Ud\Iqtp13db\Domain\Model\Folgekontakt $folgekontakt
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("folgekontakt")
      * @return void
      */
     public function deleteAction(\Ud\Iqtp13db\Domain\Model\Folgekontakt $folgekontakt): ResponseInterface
