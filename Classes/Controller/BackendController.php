@@ -2075,7 +2075,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'searchparams' => $searchparams ?? '',
                 'abschlussartarr' => $abschlussartarr,
                 'brancheunterkat' => $brancheunterkat,
-                'anzbstellen' => $this->anzbstellen
+                'anzbstellen' => $this->anzbstellen,
+                'jahraltereintraglebensalter' => (intval(date('Y', $teilnehmer->getCrdate()))-intval($teilnehmer->getLebensalter()))
             ]
             );
         return $this->htmlResponse();

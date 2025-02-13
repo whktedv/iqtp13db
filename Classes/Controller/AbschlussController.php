@@ -54,6 +54,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      * action show
      *
      * @param \Ud\Iqtp13db\Domain\Model\Abschluss $abschluss
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("abschluss")
      * @return void
      */
     public function showAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss): ResponseInterface
@@ -142,6 +143,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      * action create
      *     
      * @param \Ud\Iqtp13db\Domain\Model\Abschluss $abschluss
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("abschluss")
      * @return void
      */
     public function createAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss): ResponseInterface
@@ -163,7 +165,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      * action edit
      *
      * @param \Ud\Iqtp13db\Domain\Model\Abschluss $abschluss
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("Abschluss")
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("abschluss")
      * @return void
      */
     public function editAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss): ResponseInterface
@@ -239,6 +241,8 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      *
      * @param \Ud\Iqtp13db\Domain\Model\Abschluss $abschluss
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("abschluss")
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("teilnehmer")
      * @return void
      */
     public function updateAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
@@ -259,6 +263,8 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      *     
      * @param \Ud\Iqtp13db\Domain\Model\Abschluss $abschluss
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("abschluss")
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("teilnehmer")
      * @return void
      */
     public function deleteAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface

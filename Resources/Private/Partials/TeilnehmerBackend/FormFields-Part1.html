@@ -153,7 +153,8 @@
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.gebdat" />
 				<span class="niqfield" /> 
 			</label>
-				<f:form.textfield type="date" class="datumtextfieldberatung" name="teilnehmer[gebdat]" value="{teilnehmer.gebdat}" />&nbsp;<span class="hintdatumformat">(JJJJ-MM-TT)</span>
+				<f:form.textfield type="date" class="datumtextfieldberatung" name="teilnehmer[gebdat]" value="{teilnehmer.gebdat}" />&nbsp;
+				<span style="font-color: #cecece;"><f:if condition="{teilnehmer.gebdat} == ''"><f:then>berechnetes Geburtsjahr = {jahraltereintraglebensalter}</f:then></f:if></span>
 		</div>		
 		<div class="tp13_formdivwebapp">
 			<label for="geburtsland">

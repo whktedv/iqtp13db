@@ -128,19 +128,26 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      */
     public function createAction(\Ud\Iqtp13db\Domain\Model\Folgekontakt $folgekontakt): ResponseInterface
     {
+       
         $valArray = $this->request->getArguments();
         $teilnehmer = $this->teilnehmerRepository->findByUid($valArray['folgekontakt']['teilnehmer']);
         
         $letzterfolgekontakt = $this->folgekontaktRepository->findLastByTNuid($teilnehmer->getUid());
         $beratungtimestamp = DateTime::createFromFormat("Y-m-d", $teilnehmer->getBeratungdatum());
         $folgekontakttimestamp = DateTime::createFromFormat("d.m.Y", $folgekontakt->getDatum());
+
+        if($folgekontakttimestamp == FALSE) {
+            $folgekontakttimestamp = DateTime::createFromFormat("Y-m-d", $folgekontakt->getDatum());
+            $folgekontakt->setDatum($folgekontakttimestamp->format("d.m.Y"));
+        }
         $letzterfolgekontakttimestamp = $letzterfolgekontakt != NULL ? DateTime::createFromFormat("d.m.Y", $letzterfolgekontakt->getDatum()) : DateTime::createFromFormat("d.m.Y", '01.01.1970');
         
         if($folgekontakttimestamp == FALSE) {
             $this->addFlashMessage('Falsches Format Datum Folgekontakt.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
             return $this->redirect('new', 'Folgekontakt', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'],'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage']));
         }
-                
+   
+        
         if($folgekontakttimestamp->getTimestamp() < $beratungtimestamp->getTimestamp()) {
             $this->addFlashMessage('Datum Folgekontakt muss nach Datum Erstberatung sein.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
             return $this->redirect('new', 'Folgekontakt', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'],'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage']));
