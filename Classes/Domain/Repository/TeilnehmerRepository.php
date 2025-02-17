@@ -605,7 +605,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      * Abschlussart für Adminübersicht
      */
-    public function showAbschlussart($type, $jahr, $bundesland, $staat) {
+    public function showAbschlussart($niqbid, $type, $jahr, $bundesland, $staat) {
         
         if($type == 0) {
             // Anmeldungen (unbestätigt und bestätigt)
@@ -628,6 +628,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                     AND erste_staatsangehoerigkeit LIKE '$staat'
                     AND a.hidden = 0 and a.deleted = 0
                     AND b.teilnehmer IS NOT NULL 
+                    AND niqidberatungsstelle LIKE '$niqbid' 
                     GROUP BY abschlussart ORDER BY anz DESC";
         
         $query->statement($sql);
@@ -639,7 +640,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      * Herkunft für Adminübersicht
      */
-    public function showHerkunft($type, $jahr, $bundesland) {
+    public function showHerkunft($niqbid, $type, $jahr, $bundesland) {
         
         if($type == 0) {
             // Anmeldungen (unbestätigt und bestätigt)
@@ -660,7 +661,8 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 				    YEAR($filternach) LIKE $jahr
                     AND d.bundesland LIKE '$bundesland'
                     AND a.hidden = 0 and a.deleted = 0
-                    AND s.langisocode = 'de'
+                    AND s.langisocode = 'de' 
+                    AND niqidberatungsstelle LIKE '$niqbid' 
                     GROUP BY erste_staatsangehoerigkeit ORDER BY anz DESC LIMIT 20";
         
         $query->statement($sql);
@@ -671,7 +673,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      *  Abschlüsse/Berufe für Adminübersicht
      */
-    public function showAbschluesseBerufe($type, $jahr, $bundesland, $staat) {
+    public function showAbschluesseBerufe($niqbid, $type, $jahr, $bundesland, $staat) {
         
         if($type == 0) {
             // Anmeldungen (unbestätigt und bestätigt)
@@ -694,7 +696,8 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                     AND d.bundesland LIKE '$bundesland'
                     AND erste_staatsangehoerigkeit LIKE '$staat'
                     AND a.hidden = 0 and a.deleted = 0
-                    AND b.teilnehmer IS NOT NULL
+                    AND b.teilnehmer IS NOT NULL 
+                    AND niqidberatungsstelle LIKE '$niqbid' 
                     GROUP BY b.referenzberufzugewiesen ORDER BY anz DESC LIMIT 20";
         
         $query->statement($sql);
@@ -705,7 +708,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      * Geschlecht für Adminübersicht
      */
-    public function showGeschlecht($type, $jahr, $bundesland, $staat) {
+    public function showGeschlecht($niqbid, $type, $jahr, $bundesland, $staat) {
         
         if($type == 0) {
             // Anmeldungen (unbestätigt und bestätigt)
@@ -725,7 +728,8 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 				    YEAR($filternach) LIKE $jahr
                     AND d.bundesland LIKE '$bundesland'
                     AND erste_staatsangehoerigkeit LIKE '$staat'
-                    AND a.hidden = 0 and a.deleted = 0
+                    AND a.hidden = 0 and a.deleted = 0 
+                    AND niqidberatungsstelle LIKE '$niqbid' 
                     GROUP BY geschlecht ORDER BY anz DESC";
         
         $query->statement($sql);
@@ -736,7 +740,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      * Alter für Adminübersicht
      */
-    public function showAlter($type, $jahr, $bundesland, $staat) {
+    public function showAlter($niqbid, $type, $jahr, $bundesland, $staat) {
         
         if($type == 0) {
             // Anmeldungen (unbestätigt und bestätigt)
@@ -756,7 +760,8 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 				    YEAR($filternach) LIKE $jahr
                     AND d.bundesland LIKE '$bundesland'
                     AND erste_staatsangehoerigkeit LIKE '$staat'
-                    AND a.hidden = 0 and a.deleted = 0
+                    AND a.hidden = 0 and a.deleted = 0 
+                    AND niqidberatungsstelle LIKE '$niqbid' 
                     GROUP BY lebensalter ORDER BY lebensalter DESC";
         
         $query->statement($sql);

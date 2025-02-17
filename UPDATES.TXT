@@ -129,4 +129,5 @@ Update 12.02.2025:
 - Fehler im Modul Gelöscht korrigiert: Suchformular war hier ohne Funktion
 
 Neu:
+- im Admin-Modul kann die Statistik auch für einzelne Beratungsstellen generiert werden.
 

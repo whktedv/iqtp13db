@@ -124,7 +124,9 @@
 			Jahr:
 			<f:form.select name="jahrauswahl" options="{jahrauswahl}" prependOptionValue="0" prependOptionLabel="-letzte 12 Monate-" value="{jahrselected}"/>
 			Erste Staatsangehörigkeit: 
-			<f:form.select name="filterstaat" options="{staatenarr}" optionValueField="key" optionLabelField="value" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterstaat}"/>
+			<f:form.select name="filterstaat" options="{staatenarr}" optionValueField="key" optionLabelField="value" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterstaat}"/>			
+			Beratungsstelle:
+			<f:form.select name="filterbstelle" options="{alleberatungsstellensortiert}" optionValueField="niqbid" optionLabelField="title" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterniqbid}"/>
 			<div style=" ">
 				<f:form.button id="linkloadoverlay-export" type="submit" name="showstats">Statistik anzeigen</f:form.button>
 				<f:form.button id="linkloadoverlay-export" type="submit" name="statsexport">Statistik exportieren</f:form.button>

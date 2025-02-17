@@ -115,7 +115,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         $jahrselected = $valArray['jahrauswahl'] ?? 0;
         $bundeslandselected = $valArray['bundeslandauswahl'] ?? '';
         $staatselected = $valArray['filterstaat'] ?? '%';
-        
+        $filterbstelle = $valArray['filterbstelle'] ?? '%';
         
         $backenduser = $this->beraterRepository->findByUid($this->user['uid']);
         $backendusergroups = array();
@@ -166,19 +166,19 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         $days4wartezeit = $emptystatusarray;
         $days4beratung = $emptystatusarray;
         
-        $ergarrayangemeldete = $this->teilnehmerRepository->countTNby('%', $bundeslandselected, 1, $jahrselected, $staatselected);
+        $ergarrayangemeldete = $this->teilnehmerRepository->countTNby($filterbstelle, $bundeslandselected, 1, $jahrselected, $staatselected);
         foreach($ergarrayangemeldete as $erg) $angemeldeteTN[$erg['monat']] = $erg['anzahl'];
-        $ergarrayerstberatung = $this->teilnehmerRepository->countTNby('%', $bundeslandselected, 2, $jahrselected, $staatselected);
+        $ergarrayerstberatung = $this->teilnehmerRepository->countTNby($filterbstelle, $bundeslandselected, 2, $jahrselected, $staatselected);
         foreach($ergarrayerstberatung as $erg) $erstberatung[$erg['monat']] = $erg['anzahl'];
-        $ergarrayberatungfertig = $this->teilnehmerRepository->countTNby('%', $bundeslandselected, 3, $jahrselected, $staatselected);
+        $ergarrayberatungfertig = $this->teilnehmerRepository->countTNby($filterbstelle, $bundeslandselected, 3, $jahrselected, $staatselected);
         foreach($ergarrayberatungfertig as $erg) $beratungfertig[$erg['monat']] = $erg['anzahl'];
-        $ergarrayniqerfasst = $this->teilnehmerRepository->countTNby('%', $bundeslandselected, 4, $jahrselected, $staatselected);
+        $ergarrayniqerfasst = $this->teilnehmerRepository->countTNby($filterbstelle, $bundeslandselected, 4, $jahrselected, $staatselected);
         foreach($ergarrayniqerfasst as $erg) $niqerfasst[$erg['monat']] = $erg['anzahl'];
-        $ergarrayfolgekontakte = $this->folgekontaktRepository->countFKby('%', $bundeslandselected, $jahrselected, $staatselected);
+        $ergarrayfolgekontakte = $this->folgekontaktRepository->countFKby($filterbstelle, $bundeslandselected, $jahrselected, $staatselected);
         foreach($ergarrayfolgekontakte as $erg) $qfolgekontakte[$erg['monat']] = $erg['anzahl'];
-        $ergarraywartezeitanmeldung = $this->teilnehmerRepository->calcwaitingdays('%', $bundeslandselected,'anmeldung', $jahrselected, $staatselected);
+        $ergarraywartezeitanmeldung = $this->teilnehmerRepository->calcwaitingdays($filterbstelle, $bundeslandselected,'anmeldung', $jahrselected, $staatselected);
         foreach($ergarraywartezeitanmeldung as $erg) $days4wartezeit[$erg['monat']] = $erg['wert'];
-        $ergarraywartezeitberatung = $this->teilnehmerRepository->calcwaitingdays('%', $bundeslandselected,'beratung', $jahrselected, $staatselected);
+        $ergarraywartezeitberatung = $this->teilnehmerRepository->calcwaitingdays($filterbstelle, $bundeslandselected,'beratung', $jahrselected, $staatselected);
         foreach($ergarraywartezeitberatung as $erg) $days4beratung[$erg['monat']] = $erg['wert'];
                        
         ksort($angemeldeteTN);
@@ -251,32 +251,35 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
         }
+        foreach($alleberatungsstellen as $bst) {
+            $bstellenarr[$bst->getNiqbid()] = $bst->getTitle();
+        }
         
         if($jahrselected != 0) {
             $arrabschlussart1 = $this->settings['abschlussart'];  
             $arrabschlussart2 = array("" => 'nichts eingetragen', '-1' => 'keine Angabe', '1,2' => 'Alte Angabe: sowohl Uni, als auch Ausbildungsabschluss', '-1,1' => 'Alte Angabe: k.A. und Ausbildungsabschluss', '-1,2' => 'Alte Angabe: k.A. und Universitätsabschluss', '-1,1,2'  => 'Eintrag fehlerhaft');
             $arrabschlussart = array_merge($arrabschlussart1, $arrabschlussart2);
 
-            $abschlussartanmeldungen = $this->teilnehmerRepository->showAbschlussart(0, $jahrselected, $bundeslandselected, $staatselected);
-            $abschlussartberatungabgeschl = $this->teilnehmerRepository->showAbschlussart(4, $jahrselected, $bundeslandselected, $staatselected);
+            $abschlussartanmeldungen = $this->teilnehmerRepository->showAbschlussart($filterbstelle, 0, $jahrselected, $bundeslandselected, $staatselected);
+            $abschlussartberatungabgeschl = $this->teilnehmerRepository->showAbschlussart($filterbstelle, 4, $jahrselected, $bundeslandselected, $staatselected);
             
             $herkunftanmeldungen = array();
             $herkunftberatungabgeschl = array();
             if($staatselected == '%') {
-                $herkunftanmeldungen = $this->teilnehmerRepository->showHerkunft(0, $jahrselected, $bundeslandselected);
-                $herkunftberatungabgeschl = $this->teilnehmerRepository->showHerkunft(4, $jahrselected, $bundeslandselected);
+                $herkunftanmeldungen = $this->teilnehmerRepository->showHerkunft($filterbstelle, 0, $jahrselected, $bundeslandselected);
+                $herkunftberatungabgeschl = $this->teilnehmerRepository->showHerkunft($filterbstelle, 4, $jahrselected, $bundeslandselected);
             }
             
-            $berufeanmeldungen = $this->teilnehmerRepository->showAbschluesseBerufe(0, $jahrselected, $bundeslandselected, $staatselected);
-            $berufeberatungabgeschl = $this->teilnehmerRepository->showAbschluesseBerufe(4, $jahrselected, $bundeslandselected, $staatselected);
+            $berufeanmeldungen = $this->teilnehmerRepository->showAbschluesseBerufe($filterbstelle, 0, $jahrselected, $bundeslandselected, $staatselected);
+            $berufeberatungabgeschl = $this->teilnehmerRepository->showAbschluesseBerufe($filterbstelle, 4, $jahrselected, $bundeslandselected, $staatselected);
             
-            $geschlechtartanmeldungen = $this->teilnehmerRepository->showGeschlecht(0, $jahrselected, $bundeslandselected, $staatselected);
-            $geschlechtberatungabgeschl = $this->teilnehmerRepository->showGeschlecht(4, $jahrselected, $bundeslandselected, $staatselected);
+            $geschlechtartanmeldungen = $this->teilnehmerRepository->showGeschlecht($filterbstelle, 0, $jahrselected, $bundeslandselected, $staatselected);
+            $geschlechtberatungabgeschl = $this->teilnehmerRepository->showGeschlecht($filterbstelle, 4, $jahrselected, $bundeslandselected, $staatselected);
             
             $arrgeschlecht =  array('0' => 'nichts eingetragen', '-1' => 'keine Angabe', '1' => 'weiblich', '2' => 'männlich', '3' => 'divers');
             
-            $lebensalteranmeldungen = $this->teilnehmerRepository->showAlter(0, $jahrselected, $bundeslandselected, $staatselected);
-            $lebensalterberatungabgeschl = $this->teilnehmerRepository->showAlter(4, $jahrselected, $bundeslandselected, $staatselected);
+            $lebensalteranmeldungen = $this->teilnehmerRepository->showAlter($filterbstelle, 0, $jahrselected, $bundeslandselected, $staatselected);
+            $lebensalterberatungabgeschl = $this->teilnehmerRepository->showAlter($filterbstelle, 4, $jahrselected, $bundeslandselected, $staatselected);
             
         }
         
@@ -330,6 +333,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 'Statistik '.($jahrselected != 0 ? $jahrselected : 'letzte 12 Monate') => 'string',
                 'Bundesland: '.($bundeslandselected == '%' ? 'Alle' : $bundeslandselected)  => 'string',
                 'Staatsangehörigkeit: '.($staatselected == '%' ? 'Alle' : $staatenarr[$staatselected]) => 'string',
+                'Beratungsstelle: '.($filterbstelle == '%' ? 'Alle' : $bstellenarr[$filterbstelle]) => 'string',               
             ];
             
             // Abschlussart
@@ -490,6 +494,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 'filterbundesland' => $filterbundesland ?? '',
                 'filterstaat' => $staatselected,
                 'filterberuf' => $berufselected ?? '',
+                'filterniqbid' => $filterbstelle ?? '',
                 'ausgabearray' => $ausgabearray ?? '',
                 'anzgesamt' => $anzgesamt ?? '',
                 'abschlussartanmeldungen' => $abschlussartanmeldungen ?? '',
