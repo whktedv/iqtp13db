@@ -21,7 +21,7 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $this->userGroupRepository = $userGroupRepository;
         $this->beraterRepository = $beraterRepository;
     }
-    
+      
     /**
      * action init
      *

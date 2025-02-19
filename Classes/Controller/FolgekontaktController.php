@@ -131,18 +131,23 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      */
     public function createAction(\Ud\Iqtp13db\Domain\Model\Folgekontakt $folgekontakt): ResponseInterface
     {
-       
+        
         $valArray = $this->request->getArguments();
         $teilnehmer = $this->teilnehmerRepository->findByUid($valArray['folgekontakt']['teilnehmer']);
         
         $letzterfolgekontakt = $this->folgekontaktRepository->findLastByTNuid($teilnehmer->getUid());
         $beratungtimestamp = DateTime::createFromFormat("Y-m-d", $teilnehmer->getBeratungdatum());
         
+        if($folgekontakt->getDatum() == '') {
+            $this->addFlashMessage('Bitte Datum eingeben.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+            return $this->redirect('new', 'Folgekontakt', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'],'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage']));
+        }
+        
         $folgekontakttimestamp = DateTime::createFromFormat("d.m.Y", $folgekontakt->getDatum());
         if($folgekontakttimestamp == FALSE) {
             $folgekontakttimestamp = DateTime::createFromFormat("Y-m-d", $folgekontakt->getDatum());
         }
-
+        
         $letzterfolgekontakttimestamp = $letzterfolgekontakt != NULL ? DateTime::createFromFormat("d.m.Y", $letzterfolgekontakt->getDatum()) : DateTime::createFromFormat("d.m.Y", '01.01.1970');
         if($letzterfolgekontakttimestamp == FALSE) {
             $letzterfolgekontakttimestamp = DateTime::createFromFormat("Y-m-d", $letzterfolgekontakt->getDatum());
@@ -159,7 +164,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
             $this->addFlashMessage('Falsches Format Datum Folgekontakt.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
             return $this->redirect('new', 'Folgekontakt', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'],'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage']));
         }
-         
+        
         if($folgekontakttimestamp->getTimestamp() < $beratungtimestamp->getTimestamp()) {
             $this->addFlashMessage('Datum Folgekontakt muss nach Datum Erstberatung sein.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
             return $this->redirect('new', 'Folgekontakt', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'],'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage']));
@@ -174,10 +179,10 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
             $persistenceManager->persistAll();
             
             return $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
-        }           
+        }
     }
     
-    /**
+     /**
      * action edit
      *
      * @param \Ud\Iqtp13db\Domain\Model\Folgekontakt $folgekontakt
@@ -189,11 +194,14 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $valArray = $this->request->getArguments();
         $teilnehmer = $folgekontakt->getTeilnehmer();
         
-        $folgekontakttimestamp = DateTime::createFromFormat("d.m.Y", $folgekontakt->getDatum());
-        if($folgekontakttimestamp == FALSE) {
-            $folgekontakttimestamp = DateTime::createFromFormat("Y-m-d", $folgekontakt->getDatum());
-        }        
-        $folgekontakt->setDatum($folgekontakttimestamp->format("d.m.Y"));
+        if($folgekontakt->getDatum() != '') {
+            $folgekontakttimestamp = DateTime::createFromFormat("d.m.Y", $folgekontakt->getDatum());
+            if($folgekontakttimestamp == FALSE) {
+                $folgekontakttimestamp = DateTime::createFromFormat("Y-m-d", $folgekontakt->getDatum());
+            }
+            
+            $folgekontakt->setDatum($folgekontakttimestamp->format("d.m.Y"));            
+        }
 
         $this->view->assign('berater', $this->user);
         $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);

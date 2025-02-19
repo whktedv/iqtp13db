@@ -1688,7 +1688,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $thistn = $this->teilnehmerRepository->findByUid($tnuid);   
         
-        if($thistn != null) {
+        if($thistn != NULL) {
             if($thistn->getPlz() == '') $thistn->setPlz('0');
             $tnanonym = $thistn->getAnonym();
             $anonymeberatung = $valArray['newanonymeberatung'] ?? '';
@@ -1697,6 +1697,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             }            
         } else {
             // TN ist (nicht) mehr vorhanden (gelöscht z.B. durch Task)
+            echo "FEHLER: Datensatz mit ID $tnuid nicht vorhanden.";
+            die;            
             $this->addFlashMessage("FEHLER: Datensatz mit ID $tnuid nicht vorhanden.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
             return $this->redirect($valArray['calleraction'] ?? 'listangemeldet', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1'));
         }
@@ -1980,7 +1982,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         foreach($abschluesse as $abschl) {
             if(strstr($abschl->getAbschlussart(), ',')) $abschl->setAbschlussart(2);
         }
-        $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
+        $alleberater  = $this->getberater4Bstelle();
         
         $dokumente = $this->dokumentRepository->findByTeilnehmer($teilnehmer);
         $dokumentpfad = $this->generalhelper->sanitizeFileFolderName($teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid(). '/');
@@ -3021,5 +3023,30 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         return FALSE;
     }
     
+    protected function getberater4Bstelle() {
+        // ************ Start - Beraterarray bestimmen *****************
+        $arrberater = array();
+        $usergroups4berater = explode(",", $this->user['usergroup']);
+        if($this->niqbid == '12345' || intval($this->niqbid) < 999) { // Admin
+            $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected ?? '%');
+            foreach($usergroups4bundesland as $ug) {
+                $ugberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $ug);
+                foreach($ugberater as $currber) {
+                    $arrberater[] = $currber;
+                }
+            }
+        } else {
+            foreach ($usergroups4berater as $ug4b) {
+                
+                $thisug = $this->userGroupRepository->findBeratungsstellebyUid($this->settings['beraterstoragepid'], $ug4b);
+                $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $thisug[0]);
+                foreach($berater as $currber) {
+                    $arrberater[] = $currber;
+                }
+            }
+        }
+        return $arrberater;
+        // ***************** Ende - Beraterarray bestimmen *****************
+    }
     
 }
