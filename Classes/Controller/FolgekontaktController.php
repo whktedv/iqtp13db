@@ -117,7 +117,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $this->view->assign('callercontroller', $valArray['callercontroller']);
         $this->view->assign('callerpage', $valArray['callerpage'] ?? '1');
         $this->view->assign('settings', $this->settings);
-        $this->view->assign('datum', date("d.m.Y"));
+        $this->view->assign('datum', date("Y-m-d"));
         return $this->htmlResponse();
     }
     
@@ -143,25 +143,11 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
             return $this->redirect('new', 'Folgekontakt', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'],'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage']));
         }
         
-        $folgekontakttimestamp = DateTime::createFromFormat("d.m.Y", $folgekontakt->getDatum());
-        if($folgekontakttimestamp == FALSE) {
-            $folgekontakttimestamp = DateTime::createFromFormat("Y-m-d", $folgekontakt->getDatum());
-        }
-        
-        $letzterfolgekontakttimestamp = $letzterfolgekontakt != NULL ? DateTime::createFromFormat("d.m.Y", $letzterfolgekontakt->getDatum()) : DateTime::createFromFormat("d.m.Y", '01.01.1970');
-        if($letzterfolgekontakttimestamp == FALSE) {
-            $letzterfolgekontakttimestamp = DateTime::createFromFormat("Y-m-d", $letzterfolgekontakt->getDatum());
-        }
-        
-        if($folgekontakttimestamp != FALSE) {
-            $folgekontakt->setDatum($folgekontakttimestamp->format("d.m.Y"));
-        } else {
-            $this->addFlashMessage('Bitte Datum eingeben.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
-            return $this->redirect('new', 'Folgekontakt', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'],'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage']));
-        }
+        $folgekontakttimestamp = DateTime::createFromFormat("Y-m-d", $folgekontakt->getDatum());
+        $letzterfolgekontakttimestamp = $letzterfolgekontakt != NULL ? DateTime::createFromFormat("Y-m-d", $letzterfolgekontakt->getDatum()) : DateTime::createFromFormat("d.m.Y", '01.01.1970');
         
         if($folgekontakttimestamp == FALSE) {
-            $this->addFlashMessage('Falsches Format Datum Folgekontakt.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+            $this->addFlashMessage('Falsches Format oder kein Datum eingeben.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
             return $this->redirect('new', 'Folgekontakt', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'],'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage']));
         }
         
@@ -194,15 +180,6 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $valArray = $this->request->getArguments();
         $teilnehmer = $folgekontakt->getTeilnehmer();
         
-        if($folgekontakt->getDatum() != '') {
-            $folgekontakttimestamp = DateTime::createFromFormat("d.m.Y", $folgekontakt->getDatum());
-            if($folgekontakttimestamp == FALSE) {
-                $folgekontakttimestamp = DateTime::createFromFormat("Y-m-d", $folgekontakt->getDatum());
-            }
-            
-            $folgekontakt->setDatum($folgekontakttimestamp->format("d.m.Y"));            
-        }
-
         $this->view->assign('berater', $this->user);
         $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
         

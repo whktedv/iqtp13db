@@ -12,7 +12,6 @@ namespace Ud\Iqtp13db\Domain\Model;
  *
  ***/
 
-use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
  * Berater
@@ -30,7 +29,7 @@ class Berater extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $password = '';
     
     /**
-     * @var ?ObjectStorage<\Ud\Iqtp13db\Domain\Model\UserGroup>
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Ud\Iqtp13db\Domain\Model\UserGroup>
      */
     protected $usergroup;
     
@@ -77,7 +76,7 @@ class Berater extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function initializeObject()
     {
-        $this->usergroup = $this->usergroup ?? new ObjectStorage();
+        $this->usergroup = $this->usergroup ?? new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
     }
     
     /**
@@ -124,9 +123,9 @@ class Berater extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * Sets the usergroups. Keep in mind that the property is called "usergroup"
      * although it can hold several usergroups.
      *
-     * @param ObjectStorage<UserGroup> $usergroup
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Ud\Iqtp13db\Domain\Model\UserGroup> $usergroup
      */
-    public function setUsergroup(ObjectStorage $usergroup)
+    public function setUsergroup(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $usergroup)
     {
         $this->usergroup = $usergroup;
     }
@@ -134,19 +133,19 @@ class Berater extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Adds a usergroup to the frontend user
      *
-     * @param UserGroup $usergroup
+     * @param \Ud\Iqtp13db\Domain\Model\UserGroup $usergroup
      */
-    public function addUsergroup(UserGroup $usergroup)
+    public function addUsergroup(\Ud\Iqtp13db\Domain\Model\UserGroup $usergroup)
     {
         $this->usergroup->attach($usergroup);
     }
-    
+     
     /**
      * Removes a usergroup from the frontend user
      *
-     * @param UserGroup $usergroup
+     * @param \Ud\Iqtp13db\Domain\Model\UserGroup $usergroup
      */
-    public function removeUsergroup(UserGroup $usergroup)
+    public function removeUsergroup(\Ud\Iqtp13db\Domain\Model\UserGroup $usergroup)
     {
         $this->usergroup->detach($usergroup);
     }
@@ -155,9 +154,9 @@ class Berater extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * Returns the usergroups. Keep in mind that the property is called "usergroup"
      * although it can hold several usergroups.
      *
-     * @return ObjectStorage<UserGroup> An object storage containing the usergroup
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Ud\Iqtp13db\Domain\Model\UserGroup> An object storage containing the usergroup
      */
-    public function getUsergroup(): ObjectStorage
+    public function getUsergroup(): \TYPO3\CMS\Extbase\Persistence\ObjectStorage
     {
         return $this->usergroup;
     }

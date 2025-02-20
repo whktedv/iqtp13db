@@ -1,7 +1,6 @@
 <?php
 namespace Ud\Iqtp13db\Domain\Model;
 
-use TYPO3\CMS\Extbase\Annotation\Validate;
 /***
  *
  * This file is part of the "IQ Webapp Anerkennungserstberatung" Extension for TYPO3 CMS.
@@ -23,7 +22,7 @@ class Folgekontakt extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * datum
      *
      * @var string
-     * @Validate("NotEmpty")     
+     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")     
      */
     protected $datum = '';
     
@@ -45,7 +44,7 @@ class Folgekontakt extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * beratungsdauer
      *
      * @var string
-     * @Validate("\Ud\Iqtp13db\Domain\Validator\KommazahlValidator")
+     * @TYPO3\CMS\Extbase\Annotation\Validate("\Ud\Iqtp13db\Domain\Validator\KommazahlValidator")
      */
     protected $beratungsdauer = '';
     

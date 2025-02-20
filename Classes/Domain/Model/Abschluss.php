@@ -1,7 +1,6 @@
 <?php
 namespace Ud\Iqtp13db\Domain\Model;
 
-use TYPO3\CMS\Extbase\Annotation\Validate;
 /***
  *
  * This file is part of the "IQ Webapp Anerkennungserstberatung" Extension for TYPO3 CMS.
@@ -28,7 +27,7 @@ class Abschluss extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     
     /**
      * Branche
-     * @Validate("NotEmpty")
+     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
      * @var int
      */
     protected $branche = 0;

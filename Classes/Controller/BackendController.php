@@ -123,7 +123,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         } else {
             $this->user = NULL;
         }
-      
+        
         if($this->user != NULL) {
             $standardniqidberatungsstelle = $this->settings['standardniqidberatungsstelle'];
             $standardbccmail = $this->settings['standardbccmail'];
@@ -199,12 +199,13 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function statusAction(int $currentPage = 1): ResponseInterface
     {
         $valArray = $this->request->getArguments();
-
-        
+               
         // Gruppenwechsel Beratungsstelle, wenn ein User mehreren Beratungsstellen zugeordnet ist
         $backenduser = $this->beraterRepository->findByUid($this->user['uid']);
         $backendusergroups = array();
         $backendusergroups = $backenduser->getUsergroup();
+
+        
         $niqbidaktuellegruppe = $this->usergroup->getNiqbid();        
         if(isset($valArray['bstellen']) && $valArray['bstellen'] != '') {            
             $niqbidgruppeselected = $valArray['bstellen'];            

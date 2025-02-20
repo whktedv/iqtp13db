@@ -608,6 +608,18 @@ return [
                 'eval' => 'trim'
             ],
         ],
+        'berater' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.berater',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'foreign_table' => 'fe_users',
+                'minitems' => 0,
+                'maxitems' => 1,
+            ],
+            
+        ],        
         'beratungsart' => [
             'exclude' => true,
             'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.beratungsart',
@@ -720,18 +732,15 @@ return [
                 'eval' => 'trim'
             ],
         ],       
-        'berater' => [
+        'einwilligunginfo' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.berater',
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.einwilligunginfo',
             'config' => [
-                'type' => 'select',
-                'renderType' => 'selectSingle',
-                'foreign_table' => 'fe_users',
-                'minitems' => 0,
-                'maxitems' => 1,
+                'type' => 'input',
+                'size' => 4,
+                'eval' => 'int'
             ],
-            
-        ],
+        ],         
         'edittstamp' => [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.edittstamp',
@@ -752,15 +761,7 @@ return [
                 'default' => 0
             ],
         ],
-        'einwilligunginfo' => [
-            'exclude' => true,
-            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.einwilligunginfo',
-            'config' => [
-                'type' => 'input',
-                'size' => 4,
-                'eval' => 'int'
-            ],
-        ],      
+           
        
         
     ],

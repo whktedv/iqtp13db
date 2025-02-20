@@ -14,7 +14,7 @@
 				<f:if condition="{folgekontakt.teilnehmer.uid} == {teilnehmer.uid}">
 					<f:then>
 						<tr>
-							<td class="fklistdatum"><f:link.action action="show" arguments="{folgekontakt:folgekontakt, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Folgekontakt">{folgekontakt.datum}</f:link.action></td>
+							<td class="fklistdatum"><f:link.action action="show" arguments="{folgekontakt:folgekontakt, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Folgekontakt"><f:format.date format="d.m.Y">{folgekontakt.datum}</f:format.date></f:link.action></td>
 							<td class="fklistberater">{folgekontakt.berater.username}</td>
 							<td class="fklistinhalt"><f:format.crop maxCharacters="200" append="&nbsp;...">{folgekontakt.notizen}</f:format.crop></td>
 							<td>{folgekontakt.beratungsdauer}</td>

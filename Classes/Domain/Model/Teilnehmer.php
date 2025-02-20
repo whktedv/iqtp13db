@@ -1,7 +1,6 @@
 <?php
 namespace Ud\Iqtp13db\Domain\Model;
 
-use TYPO3\CMS\Extbase\Annotation\Validate;
 /***
  *
  * This file is part of the "IQ Webapp Anerkennungserstberatung" Extension for TYPO3 CMS.
@@ -77,28 +76,28 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     
     /**
      * nachname
-     * @Validate("NotEmpty")
+     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
      * @var string
      */
     protected $nachname = '';
     
     /**
      * vorname
-     * @Validate("NotEmpty")
+     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
      * @var string
      */
     protected $vorname = '';
     
     /**
      * strasse
-     * @Validate("NotEmpty")
+     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
      * @var string
      */
     protected $strasse = '';
     
     /**
      * plz
-     * @Validate("NotEmpty")
+     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
      * @var string
      */
     protected $plz = '';
@@ -112,8 +111,8 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     
     /**
      * email
-     * @Validate("NotEmpty")
-     * @Validate("EmailAddress")
+     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
+     * @TYPO3\CMS\Extbase\Annotation\Validate("EmailAddress")
      * @var string
      */
     protected $email = '';
@@ -121,15 +120,15 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * E-Mail bestätigung
      *
-     * @Validate("NotEmpty")
-     * @Validate("EmailAddress")
+     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
+     * @TYPO3\CMS\Extbase\Annotation\Validate("EmailAddress")
      * @var string
      */
     protected $confirmemail = '';
     
     /**
      * telefon
-     * @Validate("NotEmpty")
+     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
      * @var string
      */
     protected $telefon = '';
@@ -137,7 +136,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * gebdat
      * @var string
-     * @Validate("\Ud\Iqtp13db\Domain\Validator\GebdatValidator")
+     * @TYPO3\CMS\Extbase\Annotation\Validate("\Ud\Iqtp13db\Domain\Validator\GebdatValidator")
      */
     protected $gebdat = '';
     
@@ -245,27 +244,6 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $leistungsbezug = '';
     
     /**
-     * einwilligungdatenanAA
-     *
-     * @var int
-     */
-    protected $einwilligungdatenanAA = 0;
-    
-    /**
-     * einwilligungdatenanAAdatum
-     *
-     * @var string
-     */
-    protected $einwilligungdatenanAAdatum = '';
-    
-    /**
-     * einwilligungdatenanAAmedium
-     *
-     * @var string
-     */
-    protected $einwilligungdatenanAAmedium = '';
-    
-    /**
      * nameBeraterAA
      *
      * @var string
@@ -278,6 +256,13 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var string
      */
     protected $kontaktBeraterAA = '';
+    
+    /**
+     * kundennummerAA
+     *
+     * @var string
+     */
+    protected $kundennummerAA = '';
     
     /**
      * einwAnerkstelle
@@ -350,13 +335,6 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $einwPersonkontakt = '';
     
     /**
-     * kundennummerAA
-     *
-     * @var string
-     */
-    protected $kundennummerAA = '';
-    
-    /**
      * aufenthaltsstatus
      *
      * @var int
@@ -388,7 +366,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * Einwilligung Datenübermittlung
      *
      * @var bool
-     * @Validate("\Ud\Iqtp13db\Domain\Validator\EinwilligungValidator")
+     * @TYPO3\CMS\Extbase\Annotation\Validate("\Ud\Iqtp13db\Domain\Validator\EinwilligungValidator")
      */
     protected $einwilligung = NULL;
     
@@ -451,9 +429,16 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * beratungdatum
      * @var string
-     * @Validate("\Ud\Iqtp13db\Domain\Validator\DatumValidator")
+     * @TYPO3\CMS\Extbase\Annotation\Validate("\Ud\Iqtp13db\Domain\Validator\DatumValidator")
      */
     protected $beratungdatum = '';
+    
+    /**
+     * berater
+     *
+     * @var \Ud\Iqtp13db\Domain\Model\Berater
+     */
+    protected $berater = null;
     
     /**
      * beratungsart
@@ -480,7 +465,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * beratungsdauer
      *
      * @var string
-     * @Validate("\Ud\Iqtp13db\Domain\Validator\KommazahlValidator")
+     * @TYPO3\CMS\Extbase\Annotation\Validate("\Ud\Iqtp13db\Domain\Validator\KommazahlValidator")
      */
     protected $beratungsdauer = '';
     
@@ -537,16 +522,16 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * erstberatungabgeschlossen
      *
      * @var string
-     * @Validate("\Ud\Iqtp13db\Domain\Validator\DatumValidator")
+     * @TYPO3\CMS\Extbase\Annotation\Validate("\Ud\Iqtp13db\Domain\Validator\DatumValidator")
      */
     protected $erstberatungabgeschlossen = '';
-    
+
     /**
-     * berater
+     * einwilligunginfo
      *
-     * @var \Ud\Iqtp13db\Domain\Model\Berater
+     * @var int
      */
-    protected $berater = null;
+    protected $einwilligunginfo = 0;
     
     /**
      * edittstamp
@@ -561,13 +546,6 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var int
      */
     protected $edituser = null;
-    
-    /**
-     * einwilligunginfo
-     *
-     * @var int
-     */
-    protected $einwilligunginfo = 0;
     
     /**
      * dublette
@@ -603,7 +581,6 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function __construct(array $sonstigerstatus = array(), array $einwilligungdatenanAAmedium = array(), array $einwAnerkstellemedium = array(), array $einwPersonmedium = array(), array $beratungsart = array(), array $anerkennungsberatung = array(), array $qualifizierungsberatung = array(), array $wieberaten = array()) {
         $this->setSonstigerstatus($sonstigerstatus);
-        $this->setEinwilligungdatenanAAmedium($einwilligungdatenanAAmedium);
         $this->setEinwAnerkstellemedium($einwAnerkstellemedium);
         $this->setEinwPersonmedium($einwPersonmedium);
         $this->initVerificationCode();
@@ -1282,69 +1259,6 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
     
     /**
-     * Returns the einwilligungdatenanAA
-     *
-     * @return int $einwilligungdatenanAA
-     */
-    public function getEinwilligungdatenanAA()
-    {
-        return $this->einwilligungdatenanAA;
-    }
-    
-    /**
-     * Sets the einwilligungdatenanAA
-     *
-     * @param int $einwilligungdatenanAA
-     * @return void
-     */
-    public function setEinwilligungdatenanAA($einwilligungdatenanAA)
-    {
-        $this->einwilligungdatenanAA = $einwilligungdatenanAA;
-    }
-    
-    /**
-     * Returns the einwilligungdatenanAAdatum
-     *
-     * @return string $einwilligungdatenanAAdatum
-     */
-    public function getEinwilligungdatenanAAdatum()
-    {
-        return $this->einwilligungdatenanAAdatum;
-    }
-    
-    /**
-     * Sets the einwilligungdatenanAAdatum
-     *
-     * @param string $einwilligungdatenanAAdatum
-     * @return void
-     */
-    public function setEinwilligungdatenanAAdatum($einwilligungdatenanAAdatum)
-    {
-        $this->einwilligungdatenanAAdatum = $einwilligungdatenanAAdatum;
-    }
-    
-    /**
-     * Returns the einwilligungdatenanAAmedium
-     *
-     * @return array $einwilligungdatenanAAmedium
-     */
-    public function getEinwilligungdatenanAAmedium()
-    {
-        return explode(',', $this->einwilligungdatenanAAmedium);
-    }
-    
-    /**
-     * Sets the einwilligungdatenanAAmedium
-     *
-     * @param array $einwilligungdatenanAAmedium
-     * @return void
-     */
-    public function setEinwilligungdatenanAAmedium(array $einwilligungdatenanAAmedium)
-    {
-        $this->einwilligungdatenanAAmedium = implode(',', $einwilligungdatenanAAmedium);
-    }
-    
-    /**
      * Returns the nameBeraterAA
      *
      * @return string $nameBeraterAA
@@ -1384,6 +1298,27 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setKontaktBeraterAA($kontaktBeraterAA)
     {
         $this->kontaktBeraterAA = $kontaktBeraterAA;
+    }
+    
+    /**
+     * Returns the kundennummerAA
+     *
+     * @return string $kundennummerAA
+     */
+    public function getKundennummerAA()
+    {
+        return $this->kundennummerAA;
+    }
+    
+    /**
+     * Sets the kundennummerAA
+     *
+     * @param string $kundennummerAA
+     * @return void
+     */
+    public function setKundennummerAA($kundennummerAA)
+    {
+        $this->kundennummerAA = $kundennummerAA;
     }
     
     /**
@@ -1594,27 +1529,6 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setEinwPersonkontakt($einwPersonkontakt)
     {
         $this->einwPersonkontakt = $einwPersonkontakt;
-    }
-    
-    /**
-     * Returns the kundennummerAA
-     *
-     * @return string $kundennummerAA
-     */
-    public function getKundennummerAA()
-    {
-        return $this->kundennummerAA;
-    }
-    
-    /**
-     * Sets the kundennummerAA
-     *
-     * @param string $kundennummerAA
-     * @return void
-     */
-    public function setKundennummerAA($kundennummerAA)
-    {
-        $this->kundennummerAA = $kundennummerAA;
     }
     
     /**
@@ -1929,6 +1843,27 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
     
     /**
+     * Returns the berater
+     *
+     * @return \Ud\Iqtp13db\Domain\Model\Berater $berater
+     */
+    public function getBerater()
+    {
+        return $this->berater;
+    }
+    
+    /**
+     * Sets the berater
+     *
+     * @param \Ud\Iqtp13db\Domain\Model\Berater $berater
+     * @return void
+     */
+    public function setBerater(\Ud\Iqtp13db\Domain\Model\Berater $berater = NULL)
+    {
+        $this->berater = $berater;
+    }
+    
+    /**
      * Returns the beratungsart
      *
      * @return array $beratungsart
@@ -2031,27 +1966,6 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setBeratungzu($beratungzu)
     {
         $this->beratungzu = $beratungzu;
-    }
-    
-    /**
-     * Returns the referenzberufe
-     *
-     * @return string $referenzberufe
-     */
-    public function getReferenzberufe()
-    {
-        return $this->referenzberufe;
-    }
-    
-    /**
-     * Sets the referenzberufe
-     *
-     * @param string $referenzberufe
-     * @return void
-     */
-    public function setReferenzberufe($referenzberufe)
-    {
-        $this->referenzberufe = $referenzberufe;
     }
     
     /**
@@ -2202,24 +2116,31 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
     
     /**
-     * Returns the berater
+     * Returns the einwilligunginfo
      *
-     * @return \Ud\Iqtp13db\Domain\Model\Berater $berater
+     * @return int $einwilligunginfo
      */
-    public function getBerater()
+    public function getEinwilligunginfo()
     {
-        return $this->berater;
+        return $this->einwilligunginfo;
     }
     
     /**
-     * Sets the berater
+     * Sets the einwilligunginfo
      *
-     * @param \Ud\Iqtp13db\Domain\Model\Berater $berater
+     * @param int $einwilligunginfo
      * @return void
      */
-    public function setBerater(\Ud\Iqtp13db\Domain\Model\Berater $berater = NULL)
+    public function setEinwilligunginfo($einwilligunginfo)
     {
-        $this->berater = $berater;
+        $this->einwilligunginfo = $einwilligunginfo;
+    }
+    
+    /**
+     * @return boolean $einwilligunginfo
+     */
+    public function isEinwilligunginfo() {
+        return $this->getEinwilligunginfo();
     }
     
     /**
@@ -2262,34 +2183,6 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setEdituser($edituser)
     {
         $this->edituser = $edituser;
-    }
-    
-    /**
-     * Returns the einwilligunginfo
-     *
-     * @return int $einwilligunginfo
-     */
-    public function getEinwilligunginfo()
-    {
-        return $this->einwilligunginfo;
-    }
-    
-    /**
-     * Sets the einwilligunginfo
-     *
-     * @param int $einwilligunginfo
-     * @return void
-     */
-    public function setEinwilligunginfo($einwilligunginfo)
-    {
-        $this->einwilligunginfo = $einwilligunginfo;
-    }
-    
-    /**
-     * @return boolean $einwilligunginfo
-     */
-    public function isEinwilligunginfo() {
-        return $this->getEinwilligunginfo();
     }
     
     /**
