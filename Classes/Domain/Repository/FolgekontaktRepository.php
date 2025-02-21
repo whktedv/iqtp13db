@@ -24,7 +24,7 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     {
         $query = $this->createQuery();
         $query->statement("SELECT a.* FROM tx_iqtp13db_domain_model_folgekontakt as a LEFT JOIN tx_iqtp13db_domain_model_teilnehmer as b ON a.teilnehmer = b.uid WHERE
-                a.deleted = 0 AND b.niqidberatungsstelle LIKE '$niqbid' ORDER BY STR_TO_DATE(a.datum, '%d.%m.%Y') ");
+                a.deleted = 0 AND b.niqidberatungsstelle LIKE '$niqbid' ORDER BY STR_TO_DATE(a.datum, '%Y-%m-%d') ");
         $query = $query->execute();
         
         return $query;
@@ -38,29 +38,29 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 	{
 	    $query = $this->createQuery();
 	    if($jahr == 0) {
-	        $query->statement("SELECT MONTH(STR_TO_DATE(a.datum, '%d.%m.%Y')) as monat, count(*) as anzahl
+	        $query->statement("SELECT MONTH(STR_TO_DATE(a.datum, '%Y-%m-%d')) as monat, count(*) as anzahl
                 FROM tx_iqtp13db_domain_model_folgekontakt as a
                 INNER JOIN tx_iqtp13db_domain_model_teilnehmer as b ON a.teilnehmer = b.uid 
                 LEFT JOIN fe_groups as g on b.niqidberatungsstelle = g.niqbid 
-                WHERE YEAR(STR_TO_DATE(a.datum, '%d.%m.%Y')) = YEAR(CURRENT_DATE())
+                WHERE YEAR(STR_TO_DATE(a.datum, '%Y-%m-%d')) = YEAR(CURRENT_DATE())
                 AND a.deleted = 0 AND niqidberatungsstelle LIKE '$niqbid' AND g.bundesland LIKE '$bundesland' AND erste_staatsangehoerigkeit LIKE '$staat'
-                GROUP BY MONTH(STR_TO_DATE(a.datum, '%d.%m.%Y'))
+                GROUP BY MONTH(STR_TO_DATE(a.datum, '%Y-%m-%d'))
                 UNION
-                SELECT MONTH(STR_TO_DATE(a.datum, '%d.%m.%Y')) as monat, count(*) as anzahl
+                SELECT MONTH(STR_TO_DATE(a.datum, '%Y-%m-%d')) as monat, count(*) as anzahl
                 FROM tx_iqtp13db_domain_model_folgekontakt as a
                 INNER JOIN tx_iqtp13db_domain_model_teilnehmer as b ON a.teilnehmer = b.uid 
                 LEFT JOIN fe_groups as g on b.niqidberatungsstelle = g.niqbid 
-                WHERE YEAR(STR_TO_DATE(a.datum, '%d.%m.%Y')) = YEAR(CURRENT_DATE())-1 AND MONTH(STR_TO_DATE(a.datum, '%d.%m.%Y')) > MONTH(CURRENT_DATE())
+                WHERE YEAR(STR_TO_DATE(a.datum, '%Y-%m-%d')) = YEAR(CURRENT_DATE())-1 AND MONTH(STR_TO_DATE(a.datum, '%Y-%m-%d')) > MONTH(CURRENT_DATE())
                 AND a.deleted = 0 AND niqidberatungsstelle LIKE '$niqbid' AND g.bundesland LIKE '$bundesland' AND erste_staatsangehoerigkeit LIKE '$staat'
-                GROUP BY MONTH(STR_TO_DATE(a.datum, '%d.%m.%Y'))");
+                GROUP BY MONTH(STR_TO_DATE(a.datum, '%Y-%m-%d'))");
 	    } else {
-	        $query->statement("SELECT MONTH(STR_TO_DATE(a.datum, '%d.%m.%Y')) as monat, count(*) as anzahl
+	        $query->statement("SELECT MONTH(STR_TO_DATE(a.datum, '%Y-%m-%d')) as monat, count(*) as anzahl
                 FROM tx_iqtp13db_domain_model_folgekontakt as a
                 INNER JOIN tx_iqtp13db_domain_model_teilnehmer as b ON a.teilnehmer = b.uid 
                 LEFT JOIN fe_groups as g on b.niqidberatungsstelle = g.niqbid 
-                WHERE YEAR(STR_TO_DATE(a.datum, '%d.%m.%Y')) = $jahr
+                WHERE YEAR(STR_TO_DATE(a.datum, '%Y-%m-%d')) = $jahr
                 AND a.deleted = 0 AND niqidberatungsstelle LIKE '$niqbid' AND g.bundesland LIKE '$bundesland' AND erste_staatsangehoerigkeit LIKE '$staat'
-                GROUP BY MONTH(STR_TO_DATE(a.datum, '%d.%m.%Y'))");
+                GROUP BY MONTH(STR_TO_DATE(a.datum, '%Y-%m-%d'))");
 	    }
         $query = $query->execute(true);
         return $query;
@@ -84,10 +84,10 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 	    $query = $this->createQuery();
 	    $query->statement("SELECT * FROM tx_iqtp13db_domain_model_folgekontakt as a
                 LEFT JOIN tx_iqtp13db_domain_model_teilnehmer as b ON a.teilnehmer = b.uid
-                WHERE DATEDIFF(STR_TO_DATE(datum, '%d.%m.%Y'), '2022-12-31') > 0 AND
-                DATEDIFF(STR_TO_DATE('31.12.2022', '%d.%m.%Y'),erstberatungabgeschlossen) >= 0 AND
-                DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),STR_TO_DATE(datum, '%d.%m.%Y')) <= 0 AND
-				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),STR_TO_DATE(datum, '%d.%m.%Y')) >= 0 AND
+                WHERE DATEDIFF(STR_TO_DATE(datum, '%Y-%m-%d'), '2022-12-31') > 0 AND
+                DATEDIFF(STR_TO_DATE('31.12.2022', '%Y-%m-%d'),erstberatungabgeschlossen) >= 0 AND
+                DATEDIFF(STR_TO_DATE('".$datum1."', '%Y-%m-%d'),STR_TO_DATE(datum, '%Y-%m-%d')) <= 0 AND
+				DATEDIFF(STR_TO_DATE('".$datum2."', '%Y-%m-%d'),STR_TO_DATE(datum, '%Y-%m-%d')) >= 0 AND
         		b.deleted = 0 AND b.hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' GROUP BY teilnehmer");
 	    
 	    
@@ -111,7 +111,7 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 LEFT JOIN fe_groups as b on t.niqidberatungsstelle = b.niqbid
                 LEFT JOIN tx_iqtp13db_domain_model_ort o ON t.plz = o.plz ";
 	    $sql .= "WHERE
-                STR_TO_DATE(f.datum, '%d.%m.%Y') BETWEEN STR_TO_DATE('$filtervon', '%d.%m.%Y') AND STR_TO_DATE('$filterbis', '%d.%m.%Y')
+                STR_TO_DATE(f.datum, '%Y-%m-%d') BETWEEN STR_TO_DATE('$filtervon', '%Y-%m-%d') AND STR_TO_DATE('$filterbis', '%Y-%m-%d')
                 AND niqidberatungsstelle LIKE '$niqbid' AND t.hidden = 0 AND t.deleted = 0";
                 if($bundesland != '%') $sql .= " AND b.bundesland LIKE '$bundesland'";
                 if($staat != '%') $sql .= " AND t.erste_staatsangehoerigkeit LIKE '$staat'";

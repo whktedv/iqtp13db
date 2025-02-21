@@ -247,7 +247,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $tnberatungenfk22 = $this->folgekontaktRepository->fk4StatusFK2022("01.01.2023", "31.12.2023", $this->niqbid);
         for($m = 1; $m < 13; $m++) $beratungfk22[$m] = 0;
         foreach($tnberatungenfk22 as $fk22) {
-            $fkmonat = DateTime::createFromFormat('d.m.Y', $fk22->getDatum())->format('n');
+            $fkmonat = DateTime::createFromFormat('Y-m-d', $fk22->getDatum())->format('n');
             $beratungfk22[$fkmonat]++;
         }
         //
