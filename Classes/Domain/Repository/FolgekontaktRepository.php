@@ -111,7 +111,7 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 LEFT JOIN fe_groups as b on t.niqidberatungsstelle = b.niqbid
                 LEFT JOIN tx_iqtp13db_domain_model_ort o ON t.plz = o.plz ";
 	    $sql .= "WHERE
-                STR_TO_DATE(f.datum, '%Y-%m-%d') BETWEEN STR_TO_DATE('$filtervon', '%Y-%m-%d') AND STR_TO_DATE('$filterbis', '%Y-%m-%d')
+                STR_TO_DATE(f.datum, '%Y-%m-%d') BETWEEN STR_TO_DATE('$filtervon', '%d.%m.%Y') AND STR_TO_DATE('$filterbis', '%d.%m.%Y')
                 AND niqidberatungsstelle LIKE '$niqbid' AND t.hidden = 0 AND t.deleted = 0";
                 if($bundesland != '%') $sql .= " AND b.bundesland LIKE '$bundesland'";
                 if($staat != '%') $sql .= " AND t.erste_staatsangehoerigkeit LIKE '$staat'";
