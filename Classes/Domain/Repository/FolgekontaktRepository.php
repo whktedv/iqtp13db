@@ -105,7 +105,7 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 	    
 	    $query = $this->createQuery();
 	    
-	    $sql = "SELECT * FROM tx_iqtp13db_domain_model_folgekontakt as f
+	    $sql = "SELECT f.uid, f.teilnehmer, f.datum, f.berater, f.notizen, f.beratungsform, f.beratungsdauer FROM tx_iqtp13db_domain_model_folgekontakt as f
                 INNER JOIN tx_iqtp13db_domain_model_teilnehmer as t ON f.teilnehmer = t.uid
                 LEFT JOIN tx_iqtp13db_domain_model_abschluss as a ON f.teilnehmer = a.teilnehmer
                 LEFT JOIN fe_groups as b on t.niqidberatungsstelle = b.niqbid
@@ -115,14 +115,12 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 AND niqidberatungsstelle LIKE '$niqbid' AND t.hidden = 0 AND t.deleted = 0";
                 if($bundesland != '%') $sql .= " AND b.bundesland LIKE '$bundesland'";
                 if($staat != '%') $sql .= " AND t.erste_staatsangehoerigkeit LIKE '$staat'";
-                if($berater != '%') $sql .= " AND t.berater LIKE '$berater'";
+                if($berater != '%') $sql .= " AND f.berater LIKE '$berater'";
                 if($landkreis != '%') $sql .= " AND o.landkreis LIKE '$landkreis'";
                 if($beruf != '%') $sql .= " AND a.referenzberufzugewiesen LIKE '$beruf'";
                 if($branche != '%') $sql .= " AND a.branche LIKE '$branche'";
         $sql .= " GROUP BY t.uid ORDER BY f.datum ASC LIMIT 500";
-                  
-        //(\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($sql);
-        //die;
+
         $query->statement($sql);
         
         return $query->execute();
