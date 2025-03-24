@@ -881,7 +881,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function setEmail($email)
     {
-        $this->email = $email;
+        $this->email = trim($email);
     }
     
     /**
@@ -900,7 +900,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @return void
      */
     public function setConfirmemail($confirmemail) {
-        $this->confirmemail = $confirmemail;
+        $this->confirmemail = trim($confirmemail);
     }
     
     /**
