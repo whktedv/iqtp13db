@@ -578,22 +578,22 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         
         $query = $this->createQuery();
         if($jahr == 0) {
-            $query->statement("SELECT MONTH($bis) as monat, SUM(IF(DATEDIFF($bis,$von) < 0, 0, DATEDIFF($bis,$von))) / count(*) as wert
-                        FROM tx_iqtp13db_domain_model_teilnehmer as a 
+            $query->statement("SELECT MONTH($bis) as monat, SUM(IF(DATEDIFF($bis,$von) < 0 OR verification_date = 0, 0, DATEDIFF($bis,$von))) / count(*) as wert
+                        FROM tx_iqtp13db_domain_model_teilnehmer as a
                         LEFT JOIN fe_groups as b on a.niqidberatungsstelle = b.niqbid
-                        WHERE $bis != '' AND a.deleted = 0 AND a.hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND b.bundesland LIKE '$bundesland' AND YEAR($von) = YEAR(CURRENT_DATE()) AND erste_staatsangehoerigkeit LIKE '$staat'
+                        WHERE $bis != '' AND a.deleted = 0 AND a.hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND b.bundesland LIKE '$bundesland' AND YEAR($bis) = YEAR(CURRENT_DATE()) AND erste_staatsangehoerigkeit LIKE '$staat'
                         GROUP BY MONTH($bis)
                         UNION
-                        SELECT MONTH($bis) as monat, SUM(DATEDIFF($bis,$von)) / count(*) as wert
+                        SELECT MONTH($bis) as monat, SUM(IF(DATEDIFF($bis,$von) < 0 OR verification_date = 0, 0, DATEDIFF($bis,$von))) / count(*) as wert
                         FROM tx_iqtp13db_domain_model_teilnehmer as a
                         LEFT JOIN fe_groups as b on a.niqidberatungsstelle = b.niqbid
-                        WHERE $bis != '' AND a.deleted = 0 AND a.hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND b.bundesland LIKE '$bundesland' AND YEAR($von) = YEAR(CURRENT_DATE())-1 AND MONTH($von) > MONTH(CURRENT_DATE()) AND erste_staatsangehoerigkeit LIKE '$staat'
+                        WHERE $bis != '' AND a.deleted = 0 AND a.hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND b.bundesland LIKE '$bundesland' AND YEAR($bis) = YEAR(CURRENT_DATE())-1 AND MONTH($bis) > MONTH(CURRENT_DATE()) AND erste_staatsangehoerigkeit LIKE '$staat'
                         GROUP BY MONTH($bis)");
         } else {
-            $query->statement("SELECT MONTH($bis) as monat, SUM(IF(DATEDIFF($bis,$von) < 0, 0, DATEDIFF($bis,$von))) / count(*) as wert
+            $query->statement("SELECT MONTH($bis) as monat, SUM(IF(DATEDIFF($bis,$von) < 0 OR verification_date = 0, 0, DATEDIFF($bis,$von))) / count(*) as wert
                         FROM tx_iqtp13db_domain_model_teilnehmer as a
                         LEFT JOIN fe_groups as b on a.niqidberatungsstelle = b.niqbid
-                        WHERE $bis != '' AND a.deleted = 0 AND a.hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND b.bundesland LIKE '$bundesland' AND YEAR($von) = $jahr AND erste_staatsangehoerigkeit LIKE '$staat'
+                        WHERE $bis != '' AND a.deleted = 0 AND a.hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND b.bundesland LIKE '$bundesland' AND YEAR($bis) = $jahr AND erste_staatsangehoerigkeit LIKE '$staat'
                         GROUP BY MONTH($bis)");
         }
         
