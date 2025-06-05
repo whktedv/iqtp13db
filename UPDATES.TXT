@@ -128,6 +128,12 @@ Update 12.02.2025:
 - Fehler im Suchformular korrigiert: führende/nachfolgende Leerzeichen und doppelte Leerzeichen in der Eingabe werden ignoriert
 - Fehler im Modul Gelöscht korrigiert: Suchformular war hier ohne Funktion
 
-Neu:
+Update 05.06.2025:
 - im Admin-Modul kann die Statistik auch für einzelne Beratungsstellen generiert werden.
+- Bugfixes
+- Vorbereitung für 2FA
+
+
+Neu:
+
 

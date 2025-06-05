@@ -14,4 +14,9 @@
 	<f:render partial="Berater/FormFields" arguments="{_all}" />
 	<f:form.button type="submit" class="linkbuttons" id="savebutton1">{f:translate(key:'speichern')}</f:form.button>
 </f:form>
+
+<f:if condition="isudtotpauthloaded">
+	<h1>Zwei-Faktor-Authentifizierung</h1>
+	<f:link.page pageUid="{pageid2facode}" class="linkbuttons">2FA per Code aktivieren</f:link.page>
+</f:if>
 </f:section>

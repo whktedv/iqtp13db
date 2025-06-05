@@ -107,6 +107,7 @@ plugin.tx_iqtp13db.settings {
 	anmeldungnichtwebapppageuid = 
 	datenschutzeinwilligungurluid = 
 	tempuserstoragepid = 
+	pageid2facode = 
 	
 	# für Wartungsmodus
 	wartungvon = 01.01.2021 08:00

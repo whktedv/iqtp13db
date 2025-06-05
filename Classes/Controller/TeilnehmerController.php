@@ -410,7 +410,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                         $teilnehmerarr = $this->teilnehmerRepository->findDublette4Anmeldung($teilnehmer->getNachname(), $teilnehmer->getVorname(), $teilnehmer->getEmail());
                         if(count($teilnehmerarr) > 0) {
                             $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnuid', null);
-                            return $this->redirect('bereitsberaten', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmerarr[0]));
+                            return $this->redirect('bereitsberaten', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
                         }
                     }
                     // **************************************

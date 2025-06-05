@@ -79,9 +79,14 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     {
         $usergroups = $this->userGroupRepository->findAll();
         
+        $isLoaded = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('ud_totpauth');
+        
+        $this->view->assign('isudtotpauthloaded', $isLoaded);        
         $this->view->assign('berater', $berater);
         $this->view->assign('usergroups', $usergroups);
         $this->view->assign('thisuser', $this->user);
+        $this->view->assign('userId', $this->user['uid']);
+        $this->view->assign('pageid2facode', $this->settings['pageid2facode']);
         return $this->htmlResponse();
     }
     

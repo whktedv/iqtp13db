@@ -70,6 +70,7 @@ Im Typoscript Template müssen im Setup mindestens folgende Werte eingetragen we
 &nbsp;&nbsp;&nbsp;&nbsp;beraterstoragepid = (ID der [DB] Berater)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;standardbccmail = (Standard-BCC-E-Mail-Adresse der Anmeldebestätigung)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;standardniqidberatungsstelle = (Standard NIQ-Beratungsstellen-ID - s.u.)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pageid2facode = (Seiten-ID der 2FA-Aktivierung per Code)<br>
 &nbsp;&nbsp;}<br>
 &nbsp;&nbsp;_LOCAL_LANG {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;de {<br>
