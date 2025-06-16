@@ -5,7 +5,7 @@ return [
         'label' => 'titel',
         'hideTable' => true,
         'searchFields' => 'staatid, titel',
-        'iconfile' => ''
+        'iconfile' => 'EXT:iqtp13db/Resources/Public/Icons/tx_iqtp13db_domain_model_staaten.gif'
     ],
     'types' => [
         '1' => ['showitem' => 'staatid, titel, langisocode'],

@@ -5,7 +5,7 @@ return [
         'label' => 'titel',
         'hideTable' => true,
         'searchFields' => 'plz, bundesland, landkreis',
-        'iconfile' => ''
+        'iconfile' => 'EXT:iqtp13db/Resources/Public/Icons/tx_iqtp13db_domain_model_ort.gif'
     ],
     'types' => [
         '1' => ['showitem' => 'plz, bundesland, landkreis'],

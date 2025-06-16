@@ -5,7 +5,7 @@ return [
         'label' => 'titel',
         'hideTable' => true,
         'searchFields' => 'brancheid, titel',
-        'iconfile' => ''
+        'iconfile' => 'EXT:iqtp13db/Resources/Public/Icons/tx_iqtp13db_domain_model_branche.gif'
     ],
     'types' => [
         '1' => ['showitem' => 'brancheid, brancheok, titel, langisocode'],
