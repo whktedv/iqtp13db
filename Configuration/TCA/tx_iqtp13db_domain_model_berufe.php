@@ -5,7 +5,7 @@ return [
         'label' => 'titel',
         'hideTable' => true,
         'searchFields' => 'berufid, titel',
-        'iconfile' => ''
+        'iconfile' => 'EXT:iqtp13db/Resources/Public/Icons/tx_iqtp13db_domain_model_berufe.gif'
     ],
     'types' => [
         '1' => ['showitem' => 'berufid, titel, langisocode'],
