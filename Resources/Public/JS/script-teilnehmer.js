@@ -74,14 +74,7 @@
 		}); 
 		
     	// Seite 3
-    	toggleleistungsbezugjanein();
-    	
-		$('#optleistungsbezugjanein1').change(function() {
-			toggleleistungsbezugjanein();
-		});    	
-		$('#optleistungsbezugjanein2').change(function() {
-			toggleleistungsbezugjanein();
-		}); 
+
 						
 		// **********+ für Backend *********		
 		for (i = 0; i < 17; i++) {
@@ -215,22 +208,7 @@
 			$('#selectzertsprachniveau').fadeOut();
 			$('#selectzertsprachniveau').val('1');
 		}	
-    }
-    
-    function toggleleistungsbezugjanein() {
-    	if($('#optleistungsbezugjanein1').is(":checked")) {
-			$('#divleistungsbezug').fadeIn();
-			$('#datenAA').fadeIn();
-			return;
-		} else if($('#optleistungsbezugjanein2').is(":checked")) {
-			 $('#divleistungsbezug').fadeOut();
-			 $('#datenAA').fadeOut();			 
-			return;
-		} else {
-			$('#divleistungsbezug').fadeOut();
-			$('#datenAA').fadeOut();
-		}
-	}   
+    } 
     
 // für BACKEND
 

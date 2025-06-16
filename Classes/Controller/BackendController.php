@@ -222,7 +222,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $monatsnamen = array();
         for($i=1;$i<=12;$i++) {
             $monatsnamen[$i] = date("M", mktime(0, 0, 0, $i, 1, date('Y')));
-            if($jahrselected != 0) {
+            if($jahrselected != 0 && $jahrselected != 99) {
                 $monatsnamen[$i] = $monatsnamen[$i]." ".$jahrselected;
             } else {
                 if($i <= idate('m')) {
@@ -237,6 +237,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         for($j=2023;$j<=date('Y');$j++){
             $jahrarray[$j] = $j;
         }
+        $jahrarray[99] = "-alle-";
         
         if(isset($valArray['zeigebstelle'])) {
             $plzbstelle = $this->userGroupRepository->getBeratungsstelle4PLZ($valArray['plzeingabe'], $this->settings['beraterstoragepid']);
@@ -252,6 +253,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         //
         
+        // Vorbelegen der Arrays
         $emptystatusarray = array(1 => 0,2 => 0,3 => 0,4 => 0,5 => 0,6 => 0,7 => 0,8 => 0,9 => 0,10 => 0,11 => 0, 12 => 0);
         $angemeldeteTN = $emptystatusarray;
         $erstberatung = $emptystatusarray;
@@ -290,6 +292,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         ksort($beratungfertig);
         ksort($days4beratung);
         ksort($days4wartezeit);
+        
         
         $aktuelleanmeldungen = $this->teilnehmerRepository->countAllOrder4Status(0, $thisniqbid, $thisbundesland)[0]['anzahl'] + $this->teilnehmerRepository->countAllOrder4Status(1, $thisniqbid, $thisbundesland)[0]['anzahl'];
         $aktuellerstberatungen = $this->teilnehmerRepository->countAllOrder4Status(2, $thisniqbid, $thisbundesland)[0]['anzahl'];

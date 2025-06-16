@@ -66,7 +66,7 @@
 		<f:form.hidden value="{filterbranche}" name="filterbranche" />
 		<f:form.hidden value="{filteranonym}" name="filteranonym" />
 		<f:if condition="{anzgesamt} > 500"><f:then>
-			<f:form.button id="linkloadoverlay-export" type="submit" name="export" disabled="disabled" style="background-color: #9A9CA2;">Ratsuchende exportieren</f:form.button>
+			<f:form.button type="submit" name="export" disabled="disabled" style="background-color: #9A9CA2;">Ratsuchende exportieren</f:form.button>
 			<span style="color: #cd0000; font-weight: bold;">Export nicht möglich, da zuviele Datensätze. Bitte Zeitraum eingrenzen.</span>
 		</f:then>
 		<f:else>

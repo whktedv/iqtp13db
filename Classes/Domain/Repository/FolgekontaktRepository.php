@@ -53,6 +53,13 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 WHERE YEAR(STR_TO_DATE(a.datum, '%Y-%m-%d')) = YEAR(CURRENT_DATE())-1 AND MONTH(STR_TO_DATE(a.datum, '%Y-%m-%d')) > MONTH(CURRENT_DATE())
                 AND a.deleted = 0 AND niqidberatungsstelle LIKE '$niqbid' AND g.bundesland LIKE '$bundesland' AND erste_staatsangehoerigkeit LIKE '$staat'
                 GROUP BY MONTH(STR_TO_DATE(a.datum, '%Y-%m-%d'))");
+	    } elseif($jahr == 99) {
+	        $query->statement("SELECT MONTH(STR_TO_DATE(a.datum, '%Y-%m-%d')) as monat, count(*) as anzahl
+                FROM tx_iqtp13db_domain_model_folgekontakt as a
+                INNER JOIN tx_iqtp13db_domain_model_teilnehmer as b ON a.teilnehmer = b.uid
+                LEFT JOIN fe_groups as g on b.niqidberatungsstelle = g.niqbid
+                WHERE a.deleted = 0 AND niqidberatungsstelle LIKE '$niqbid' AND g.bundesland LIKE '$bundesland' AND erste_staatsangehoerigkeit LIKE '$staat'
+                GROUP BY MONTH(STR_TO_DATE(a.datum, '%Y-%m-%d'))");
 	    } else {
 	        $query->statement("SELECT MONTH(STR_TO_DATE(a.datum, '%Y-%m-%d')) as monat, count(*) as anzahl
                 FROM tx_iqtp13db_domain_model_folgekontakt as a

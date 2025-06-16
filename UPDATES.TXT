@@ -133,7 +133,10 @@ Update 05.06.2025:
 - Bugfixes
 - Vorbereitung für 2FA
 
+Update: 16.06.2025:
+- Übersicht - Statistik über -alle- Jahre möglich
+- Weitere Referenzberufe hinzugefügt
+- Bugfix bei Frontend: Leistungsbezug
 
 Neu:
-
 
