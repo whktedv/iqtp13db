@@ -6,7 +6,8 @@
 			</label>
 			<div class="tp13_formdivwebappmultiradio">
 				<f:for each="{settings.erwerbsstatus}" as="text" key="wert">
-					<div class="tp13_formdivwebappradio"><f:form.radio property="erwerbsstatus" value="{wert}" checked="{teilnehmer.erwerbsstatus} == {wert}" /><span class="abschlussradiotext">{text}</span></div>
+					<div class="tp13_formdivwebappradio"><f:form.radio property="erwerbsstatus" value="{wert}" checked="{teilnehmer.erwerbsstatus} == {wert}" /><span class="abschlussradiotext">{text}</span>
+					<f:if condition="{wert} > 0 && {wert} < 8">&nbsp;<span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoErwerbsstatus.{wert}' />" class="infolabel" /></f:if></div>
 				</f:for>
 			</div>				
 		</div>
@@ -53,7 +54,7 @@
 <div class="fframe"><h2><f:translate key="datenweitereperson" /></h2>
     <div class="tp13_formdivwebapp">
       <label for="einwPerson" class="tp13_options">
-        <f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_person" />
+        <span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoDatenweitereperson' />" class="infolabel" /><f:translate key="tx_iqtp13db_domain_model_teilnehmer.einw_person" />
         </label>
         <div class="tp13_formdivwebappradio"><f:form.radio id="opteinwPerson1" property="einwPerson" value="1" /><span class="abschlussradiotext"><f:translate key="ja" /></span></div>
         <div class="tp13_formdivwebappradio"><f:form.radio id="opteinwPerson2" property="einwPerson" value="2" /><span class="abschlussradiotext"><f:translate key="nein" /></span></div>
@@ -97,10 +98,10 @@
   			</div>				
   		</div>
 		<label for="notizen" class="tp13_options">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.notizen" />
+				<span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoNotizen' />" class="infolabel" /><f:translate key="tx_iqtp13db_domain_model_teilnehmer.notizen" />
 		</label>
 		<div class="tp13_formdivwebappnotizen">
-			<f:form.textarea property="notizen" rows="10" cols="100" />
+			<f:form.textarea placeholder="{f:translate(key: 'infoNotizen')}" property="notizen" rows="10" cols="100" />
 		</div>
 		<div class="frameeinwilligung">
 			<f:form.checkbox id="ein1" property="einwilligunginfo" value="1" />

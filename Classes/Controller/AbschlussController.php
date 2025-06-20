@@ -534,7 +534,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         if($thistn == null) {
             // TN ist (nicht) mehr vorhanden (gelöscht z.B. durch Task)
             $this->addFlashMessage("ERROR: Session expired or data not found. Please restart registration.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
-            $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnseite1', null);
+            $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('teilnehmer', null);
             $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnuid', null);
             $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('ses', null);            
             return $this->redirect('startseite', 'Teilnehmer', null, null);
@@ -552,7 +552,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         if($valarrabschluss == '') {
             // TN ist (nicht) mehr vorhanden (gelöscht z.B. durch Task)
             $this->addFlashMessage("ERROR: Session expired or data not found. Please restart registration.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
-            $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnseite1', null);
+            $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('teilnehmer', null);
             $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnuid', null);
             $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('ses', null);
             return $this->redirect('startseite', 'Teilnehmer', null, null);

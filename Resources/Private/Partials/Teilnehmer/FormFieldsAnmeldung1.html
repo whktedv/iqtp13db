@@ -17,56 +17,56 @@
 			<label for="schonberatenvon">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.schonberatenvon" />
 			</label>
-				<f:form.textfield id="txtschonberatenvon" pattern="[A-Za-zÀ-ÿ0-9 ,;\(\)\-=\?`´*+.:&§%\/#@!_\[\]\{\}<>]*" property="schonberatenvon" />
+			<f:form.textfield id="txtschonberatenvon" pattern="[A-Za-zÀ-ÿ0-9 ,;\(\)\-=\?`´*+.:&§%\/#@!_\[\]\{\}<>]*" property="schonberatenvon" />
 		</div>
 </div>
 <div class="fframe"><h2><f:translate key="persdaten" /></h2>
 		<div class="tp13_formdivwebapp">
 			<label for="nachname">
-				<span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoNachname' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" />
-			</label>
-				<f:form.textfield property="nachname" pattern="[A-Za-zÀ-ÿ0-9 ,;\(\)\-=\?`´*+.:&§%\/#@!_\[\]\{\}<>]*" />
+				<span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoNachname' />" class="infolabel" /><f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" />
+			</label>				
+			<f:form.textfield placeholder="{f:translate(key: 'infoNachname')}" property="nachname" pattern="[A-Za-zÀ-ÿ0-9 ,;\(\)\-=\?`´*+.:&§%\/#@!_\[\]\{\}<>]*" />
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="vorname">
-				<span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoVorname' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" />
+				<span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoVorname' />" class="infolabel" /><f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" />
 			</label>
-				<f:form.textfield property="vorname" pattern="[A-Za-zÀ-ÿ0-9 ,;\(\)\-=\?`´*+.:&§%\/#@!_\[\]\{\}<>]*" />
+			<f:form.textfield placeholder="{f:translate(key: 'infoVorname')}" property="vorname" pattern="[A-Za-zÀ-ÿ0-9 ,;\(\)\-=\?`´*+.:&§%\/#@!_\[\]\{\}<>]*" />
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="strasse">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.strasse" />
 			</label>
-				<f:form.textfield property="strasse" pattern="[A-Za-zÀ-ÿ0-9 ,;\(\)\-=\?`´*+.:&§%\/#@!_\[\]\{\}<>]*" />
+			<f:form.textfield property="strasse" pattern="[A-Za-zÀ-ÿ0-9 ,;\(\)\-=\?`´*+.:&§%\/#@!_\[\]\{\}<>]*" />
 		</div>		
 		<div class="tp13_formdivwebapp">
 			<label for="plz">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.plz" />/<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ort" />
+				<span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoPLZ' />" class="infolabel" /><f:translate key="tx_iqtp13db_domain_model_teilnehmer.plz" />/<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ort" />
 			</label>
-				<f:if condition="{plz}"><f:then>
-						<f:form.hidden name="tnseite1[plz]" value="{plz}" />
-						<span class="plzprefilled">{plz}</span>
-						<f:form.textfield class="orttextfield" property="ort" pattern="[A-Za-zÀ-ÿ0-9 ,;\(\)\-=\?`´*+.:&§%\/#@!_\[\]\{\}<>]*" placeholder="<f:translate key='tx_iqtp13db_domain_model_teilnehmer.ort'/>"/>
-					</f:then>
-					<f:else>
-						<f:if condition="{direkt} == '1' && {wohnsitzDeutschland} != '2'">
-							<f:then>
-								<f:form.textfield class="plztextfield" property="plz" pattern="[A-Za-zÀ-ÿ0-9 ,;\(\)\-=\?`´*+.:&§%\/#@!_\[\]\{\}<>]*" placeholder="" required="1"/>
-							</f:then>
-							<f:else>
-								<f:form.textfield class="plztextfield" property="plz" pattern="[A-Za-zÀ-ÿ0-9 ,;\(\)\-=\?`´*+.:&§%\/#@!_\[\]\{\}<>]*" value="00000"/>
-							</f:else>
-						</f:if>
-						<f:form.textfield class="orttextfield" property="ort" pattern="[A-Za-zÀ-ÿ0-9 ,;\(\)\-=\?`´*+.:&§%\/#@!_\[\]\{\}<>]*" placeholder="<f:translate key='tx_iqtp13db_domain_model_teilnehmer.ort'/>"/>											
-					</f:else>
-				</f:if>
+			<f:if condition="{plz}"><f:then>
+					<f:form.hidden name="teilnehmer[plz]" value="{plz}" />
+					<span class="plzprefilled">{plz}</span>
+					<f:form.textfield class="orttextfield" property="ort" pattern="[A-Za-zÀ-ÿ0-9 ,;\(\)\-=\?`´*+.:&§%\/#@!_\[\]\{\}<>]*" placeholder="<f:translate key='tx_iqtp13db_domain_model_teilnehmer.ort'/>"/>
+				</f:then>
+				<f:else>
+					<f:if condition="{direkt} == '1' && {wohnsitzDeutschland} != '2'">
+						<f:then>
+							<f:form.textfield class="plztextfield" property="plz" pattern="[A-Za-zÀ-ÿ0-9 ,;\(\)\-=\?`´*+.:&§%\/#@!_\[\]\{\}<>]*" placeholder="" required="1"/>
+						</f:then>
+						<f:else>
+							<f:form.textfield class="plztextfield" property="plz" pattern="[A-Za-zÀ-ÿ0-9 ,;\(\)\-=\?`´*+.:&§%\/#@!_\[\]\{\}<>]*" value="00000"/>
+						</f:else>
+					</f:if>
+					<f:form.textfield class="orttextfield" property="ort" pattern="[A-Za-zÀ-ÿ0-9 ,;\(\)\-=\?`´*+.:&§%\/#@!_\[\]\{\}<>]*" placeholder="<f:translate key='tx_iqtp13db_domain_model_teilnehmer.ort'/>"/>											
+				</f:else>
+			</f:if>
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="email">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.email" />
 			</label>
 				<f:form.textfield property="email" />
-				<f:form.validationResults for="tnseite1.email">
+				<f:form.validationResults for="teilnehmer.email">
 					<f:for each="{validationResults.flattenedErrors}" key="propertyName" as="errors">
 						<p class="errormessage">{errors.0.message}</p>
 					</f:for>
@@ -74,9 +74,9 @@
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="email">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.confirmemail" />
+				<span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoEmailconfirm' />" class="infolabel" /><f:translate key="tx_iqtp13db_domain_model_teilnehmer.confirmemail" />
 			</label>			
-				<f:form.textfield property="confirmemail" />
+				<f:form.textfield placeholder="{f:translate(key: 'infoEmailconfirm')}" property="confirmemail" />
 				<f:form.validationResults>				
 		        	 <f:for each="{validationResults.flattenedErrors}" as="errors" key="propertyName">
 		        	 	<f:if condition="{errors.0.code} == '1262341707'"><f:then>		                  
@@ -101,7 +101,7 @@
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="geburtsland">
-				<span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoGeburtsland' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geburtsland" />
+				<span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoGeburtsland' />" class="infolabel" /><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geburtsland" />
 			</label>
 				<f:form.select property="geburtsland" options="{staatenarr}" optionValueField="value" optionLabelField="value" />
 		</div>
@@ -121,13 +121,13 @@
 		
 		<div class="tp13_formdivwebapp">
 			<label for="ersteStaatsangehoerigkeit">
-				<span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoStaatsangehoerigkeit' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.erste_staatsangehoerigkeit" />
+				<span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoStaatsangehoerigkeit' />" class="infolabel" /><f:translate key="tx_iqtp13db_domain_model_teilnehmer.erste_staatsangehoerigkeit" />
 			</label>
 			<f:form.select property="ersteStaatsangehoerigkeit" options="{staatenarr}" optionValueField="value" optionLabelField="value" />
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="zweiteStaatsangehoerigkeit">
-				<span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoStaatsangehoerigkeit' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.zweite_staatsangehoerigkeit" />
+				<span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoStaatsangehoerigkeit' />" class="infolabel" /><f:translate key="tx_iqtp13db_domain_model_teilnehmer.zweite_staatsangehoerigkeit" />
 			</label>
 			<f:form.select property="zweiteStaatsangehoerigkeit" options="{staatenarr}" optionValueField="value" optionLabelField="value" />
 		</div>
@@ -135,10 +135,10 @@
 		<f:if condition="{wohnsitzdeutschland} == 1">
 			<f:then>
 				<div class="tp13_formdivwebapp">
-					<f:form.hidden name="tnseite1[wohnsitzDeutschland]" value="1" />
-					<f:form.hidden name="tnseite1[wohnsitzNeinIn]" value="-1000" />
+					<f:form.hidden name="teilnehmer[wohnsitzDeutschland]" value="1" />
+					<f:form.hidden name="teilnehmer[wohnsitzNeinIn]" value="-1000" />
 					<label for="einreisejahr">
-						<span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoJahrEinreise' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.einreisejahr" />
+						<span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoJahrEinreise' />" class="infolabel" /><f:translate key="tx_iqtp13db_domain_model_teilnehmer.einreisejahr" />
 					</label>
 						<f:form.select property="einreisejahr" options="{jahre}" optionValueField="value" optionLabelField="value" /> 
 				</div>
@@ -161,7 +161,7 @@
 						<f:form.select id="inputeinreisejahr" property="einreisejahr" options="{jahre}" optionValueField="value" optionLabelField="value" /> 
 
 					<label id="labelwohnsitzNeinIn" for="wohnsitzNeinIn">
-						<span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoWohnsitzinDeutschlandNein' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_nein_in" />
+						<span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoWohnsitzinDeutschlandNein' />" class="infolabel" /><f:translate key="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_nein_in" />
 					</label>
 						<f:form.select id="inputwohnsitzNeinIn" property="wohnsitzNeinIn" options="{staatenarr}" optionValueField="value" optionLabelField="value" />
 				</div>
@@ -170,12 +170,12 @@
 		
 		<div class="tp13_formdivwebapp" >
 			<label for="aufenthaltsstatus" class="tp13_options">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus" />
+				<span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoAufenthaltsstatus' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus" />
 			</label>
 			<div class="tp13_formdivwebappmultiradio">
 				<f:for each="{settings.aufenthaltsstatus}" as="text" key="wert">
 					<div class="tp13_formdivwebappradio" >	
-						<f:form.radio property="aufenthaltsstatus" value="{wert}" checked="{tnseite1.aufenthaltsstatus} == {wert}"/><span class="abschlussradiotext">{text}</span>
+						<f:form.radio property="aufenthaltsstatus" value="{wert}" checked="{teilnehmer.aufenthaltsstatus} == {wert}"/><span class="abschlussradiotext">{text}</span>
 					</div>
 				</f:for>				
 			</div>			
@@ -190,7 +190,7 @@
 <div class="fframe"><h2><f:translate key="deutschkenntnisse" /></h2>
 		<div class="tp13_formdivwebapp">
 			<label for="deutschkenntnisse" class="tp13_options">
-				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse" />
+				<span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoDeutschMuttersprache' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse" />
 			</label>
 			<div class="tp13_options">
 				<div class="tp13_formdivwebappradio"><f:form.radio id="checkdeutschkenntnisse1" property="deutschkenntnisse" value="1" /><span class="abschlussradiotext"><f:translate key="ja" /></span></div>

@@ -1,6 +1,7 @@
 <?php
 namespace Ud\Iqtp13db\Domain\Model;
 
+use TYPO3\CMS\Extbase\Annotation\Validate;
 /***
  *
  * This file is part of the "IQ Webapp Anerkennungserstberatung" Extension for TYPO3 CMS.
@@ -76,28 +77,24 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     
     /**
      * nachname
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
      * @var string
      */
     protected $nachname = '';
     
     /**
      * vorname
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
      * @var string
      */
     protected $vorname = '';
     
     /**
      * strasse
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
      * @var string
      */
     protected $strasse = '';
     
     /**
      * plz
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
      * @var string
      */
     protected $plz = '';
@@ -111,24 +108,18 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     
     /**
      * email
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
-     * @TYPO3\CMS\Extbase\Annotation\Validate("EmailAddress")
      * @var string
      */
     protected $email = '';
     
     /**
      * E-Mail bestätigung
-     *
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
-     * @TYPO3\CMS\Extbase\Annotation\Validate("EmailAddress")
      * @var string
      */
     protected $confirmemail = '';
     
     /**
      * telefon
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
      * @var string
      */
     protected $telefon = '';

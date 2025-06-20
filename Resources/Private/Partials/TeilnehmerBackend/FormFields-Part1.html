@@ -57,7 +57,7 @@
 		<div class="tp13_formdivwebapp">
 			<label for="nachname">
 				<span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoNachname' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 			<f:if condition="{newanonymeberatung} == '1' || {teilnehmer.anonym} == '1'">
 				<f:then>
@@ -73,7 +73,7 @@
 		<div class="tp13_formdivwebapp">
 			<label for="vorname">
 				<span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoVorname' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 			<f:if condition="{newanonymeberatung} == '1' || {teilnehmer.anonym} == '1'">
 				<f:then>
@@ -88,7 +88,7 @@
 		<div class="tp13_formdivwebapp">
 			<label for="strasse">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.strasse" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 			<f:if condition="{newanonymeberatung} == '1' || {teilnehmer.anonym} == '1'">
 					<f:then>
@@ -151,7 +151,7 @@
 		<div class="tp13_formdivwebapp">
 			<label for="gebdat">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.gebdat" />
-				<span class="niqfield" /> 
+				<span class="important-icon"></span> 
 			</label>
 				<f:form.textfield type="date" class="datumtextfieldberatung" name="teilnehmer[gebdat]" value="{teilnehmer.gebdat}" />&nbsp;
 				<span style="font-color: #cecece;"><f:if condition="{teilnehmer.gebdat} == ''"><f:then>berechnetes Geburtsjahr = {jahraltereintraglebensalter}</f:then></f:if></span>
@@ -166,7 +166,7 @@
 		<div class="tp13_formdivwebapp">
 			<label class="tp13_options" for="geschlecht">
 			<f:translate key="tx_iqtp13db_domain_model_teilnehmer.geschlecht" />
-			<span class="niqfield" />
+			<span class="important-icon"></span>
 			</label>
 			<div class="tp13_options">
 				<div class="tp13_formdivwebappradio"><f:form.radio property="geschlecht" value="2"/><span class="abschlussradiotext"><f:translate key="maennlich" /></span></div>
@@ -180,7 +180,7 @@
 		<div class="tp13_formdivwebapp">
 			<label for="ersteStaatsangehoerigkeit">
 				<span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoStaatsangehoerigkeit' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.erste_staatsangehoerigkeit" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 				<f:form.select property="ersteStaatsangehoerigkeit" options="{staatenarr}" optionValueField="value" optionLabelField="value" />
 				{iqtp13db:isint(field:'{teilnehmer.ersteStaatsangehoerigkeit}',then:'',else:'{teilnehmer.ersteStaatsangehoerigkeit}')}
@@ -195,7 +195,7 @@
 		<div class="tp13_formdivwebapp">
 			<label class="tp13_options" for="wohnsitzDeutschland">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_deutschland" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 			<div class="tp13_options">
 				<div class="tp13_formdivwebappradio"><f:form.radio id="checkwohnsitzDeutschland1" property="wohnsitzDeutschland" value="1" /><span class="abschlussradiotext"><f:translate key="ja" /></span></div>
@@ -207,14 +207,14 @@
 		<div id="labeleinreisejahr" class="tp13_formdivwebapp">
 			<label for="einreisejahr">
 				<span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoJahrEinreise' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.einreisejahr" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 				<f:form.select property="einreisejahr" id="inputeinreisejahr" options="{jahre}" optionValueField="value" optionLabelField="value" /> 
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label id="labelwohnsitzNeinIn" for="wohnsitzNeinIn">
 				<span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoWohnsitzinDeutschlandNein' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_nein_in" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 				<f:form.select id="inputwohnsitzNeinIn" property="wohnsitzNeinIn" options="{staatenarr}" optionValueField="value" optionLabelField="value" />
 				{iqtp13db:isint(field:'{teilnehmer.wohnsitzNeinIn}',then:'',else:'{teilnehmer.wohnsitzNeinIn}')}
@@ -222,7 +222,7 @@
 		<div class="tp13_formdivwebapp" id="divaufenthaltsstatus">
 			<label for="aufenthaltsstatus" class="tp13_options">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 			<div class="tp13_formdivwebappmultiradio">
 			<span class="togglebutton" id="toggleallaufenthaltsstatus">Alle ein-/ausblenden</span>
@@ -245,7 +245,7 @@
 		<div class="tp13_formdivwebapp">
 			<label for="deutschkenntnisse" class="tp13_options">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 			<div class="tp13_options">
 				<div class="tp13_formdivwebappradio"><f:form.radio id="checkdeutschkenntnisse1" property="deutschkenntnisse" value="1" /><span class="abschlussradiotext"><f:translate key="ja" /></span></div>
@@ -256,7 +256,7 @@
 		<div class="tp13_formdivwebapp">
 			<label id="labelzertsprachniveau" for="zertifikatSprachniveau">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 				<f:form.select id="selectzertsprachniveau" property="zertifikatSprachniveau" options="{settings.zertifikatlevel}" optionValueField="key" optionLabelField="value" />
 		</div>
@@ -267,7 +267,7 @@
 		<div class="tp13_formdivwebapp">
 			<label for="erwerbsstatus" class="tp13_options">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.erwerbsstatus" /></span>
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>			
 			<div class="tp13_formdivwebappmultiradio">				
 				<span class="togglebutton" id="toggleallerwerbsstatus">Alle ein-/ausblenden</span>
@@ -281,7 +281,7 @@
 		<div class="tp13_formdivwebapp">
 			<label for="leistungsbezugjanein" class="tp13_options">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.leistungsbezugjanein" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 			<div class="tp13_formdivwebappradio"><f:form.radio id="optleistungsbezugjanein1" property="leistungsbezugjanein" value="1" /><span class="abschlussradiotext"><f:translate key="ja" /></span></div>
 			<div class="tp13_formdivwebappradio"><f:form.radio id="optleistungsbezugjanein2" property="leistungsbezugjanein" value="2" /><span class="abschlussradiotext"><f:translate key="nein" /></span></div>
@@ -290,7 +290,7 @@
 		<div class="tp13_formdivwebapp" id="divleistungsbezug">
 			<label for="leistungsbezug" class="tp13_options">
 				<span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoBezugsart' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.leistungsbezug" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 			<div class="tp13_formdivwebappmultiradio">
 				<f:for each="{settings.leistungsbezug}" as="text" key="wert">
@@ -407,7 +407,7 @@
 		<div class="tp13_formdivwebapp">
 			<label for="nameBeratungsstelle" class="tp13_options">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.name_beratungsstelle" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 			
 			<div class="tp13_formdivwebappmultiradio">

@@ -42,16 +42,6 @@
   <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><target>	اللغة الألمانية كلغة الأم؟	</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>	في حالة وجود شهادة لغة ألمانية، في أي مستوى؟	</target></trans-unit>
 	
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.einwilligung"><target>موافقة</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.nachname"><target>	إسم العائلة / الكنية	</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.vorname"><target>	الإسم الأول	</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.strasse"><target>الشارع، رقم المنزل</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.plz"><target>	الرمز البريدي	</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.ort"><target>	المكان	</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.email"><target>	البريد الإلكتروني	</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.confirmemail"><target>	تأكيد البريد الإلكتروني	</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.telefon"><target>	التلفون	</target></trans-unit>
-	
 	<trans-unit id="keinabschlussbisher"><target><![CDATA[ No foreign educational qualification specified. Please enter information about your educational qualification (university or training) here. You can also enter several qualifications (diplomas, certificates).]]></target></trans-unit>
 	
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>أعلى مؤهل مهني لدي هو </target></trans-unit>

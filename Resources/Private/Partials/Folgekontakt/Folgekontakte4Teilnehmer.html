@@ -1,0 +1,32 @@
+ <div class="fframe" id="AnkerFolgekontakte"><h2>Folgekontakte</h2>
+	<f:form action="new" controller="Folgekontakt" arguments="{teilnehmer : teilnehmer, thisaction : thisaction, calleraction : calleraction, callercontroller : callercontroller, callerpage : callerpage}" >
+		<f:form.button type="submit" class="linkbuttons" id="savebutton1"><f:translate key='folgekontakthinzu' /></f:form.button>
+	</f:form>
+
+	<f:if condition="{folgekontakte}">
+		<table class="folgekontakttable">
+			<thead>
+				<th>Datum</th>
+				<th>Berater*in</th>
+				<th>Inhalt der Beratung</th>
+				<th style="hyphens: auto;">Beratungsdauer (in h)</th>
+				<th>Bearbeiten</th>
+				<th>Löschen</th>
+			</thead>
+			<f:for each="{folgekontakte}" as="folgekontakt" iteration="itera">
+				<f:if condition="{folgekontakt.teilnehmer.uid} == {teilnehmer.uid}">
+					<f:then>
+						<tr>
+							<td class="fklistdatum"><f:link.action action="show" arguments="{folgekontakt:folgekontakt, thisaction : thisaction, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Folgekontakt"><f:format.date format="d.m.Y">{folgekontakt.datum}</f:format.date></f:link.action></td>
+							<td class="fklistberater">{folgekontakt.berater.username}</td>
+							<td class="fklistinhalt"><f:format.crop maxCharacters="200" append="&nbsp;...">{folgekontakt.notizen}</f:format.crop></td>
+							<td>{folgekontakt.beratungsdauer}</td>
+							<td><f:link.action action="edit" arguments="{folgekontakt:folgekontakt, thisaction : thisaction, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Folgekontakt" title="Bearbeiten"><img src="/fileadmin/template/images/iq-webapp_bearbeiten.svg" alt="Bearbeiten" width="30" height="30"/></f:link.action></td>
+							<td><f:link.action action="delete" arguments="{folgekontakt:folgekontakt, thisaction : thisaction, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Folgekontakt" onclick="return confirm('Wirklich löschen?');" title="Löschen"><img src="/fileadmin/template/images/iq-webapp_loeschen.svg" width="30" height="30" alt="Löschen" /></f:link.action></td>
+						</tr>
+					</f:then>
+				</f:if>
+			</f:for>
+		</table>
+	</f:if>
+</div>

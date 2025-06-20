@@ -15,9 +15,9 @@ call_user_func(
             'Iqtp13db',
             'Iqtp13dbadmin',
             [
-                \Ud\Iqtp13db\Controller\BackendController::class => 'start, listangemeldet, listerstberatung, listarchiv, checkniqconnection, sendtoniq, sendtoarchiv, show, new, create, edit, update, delete, status, export, askconsent, listdeleted, undelete, savedatenblattpdf, takeover, setBeratungsstellebyPLZ, saveAVpdf, showsearchresult, editsettings, updatesettings, mail4editextern',
+                \Ud\Iqtp13db\Controller\BackendController::class => 'start, listangemeldet, listerstberatung, listarchiv, checkniqconnection, sendtoniq, sendtoarchiv, unarchive, show, new, create, edit, update, delete, status, export, askconsent, listdeleted, undelete, savedatenblattpdf, takeover, setBeratungsstellebyPLZ, saveAVpdf, showsearchresult, editsettings, updatesettings, mail4editextern',
                 \Ud\Iqtp13db\Controller\FolgekontaktController::class => 'show, new, create, edit, update, delete',
-                \Ud\Iqtp13db\Controller\DokumentController::class => 'saveFileBackend, deleteFileBackend, openfile, updateBackend, doksave',
+                \Ud\Iqtp13db\Controller\DokumentController::class => 'saveFileBackend, savemultiFileBackend, deleteFileBackend, openfile, updateBackend, doksave',
                 \Ud\Iqtp13db\Controller\HistorieController::class => 'list',
                 \Ud\Iqtp13db\Controller\AbschlussController::class => 'show, new, create, edit, update, delete',
                 \Ud\Iqtp13db\Controller\BeraterController::class => 'list, edit, update, delete',
@@ -26,9 +26,9 @@ call_user_func(
             
             // non-cacheable actions
             [
-                \Ud\Iqtp13db\Controller\BackendController::class => 'start, listangemeldet, listerstberatung, listarchiv, checkniqconnection, sendtoniq, sendtoarchiv, show, new, create, edit, update, delete, status, export, askconsent, listdeleted, undelete, savedatenblattpdf, takeover, setBeratungsstellebyPLZ, saveAVpdf, showsearchresult, editsettings, updatesettings, mail4editextern',
+                \Ud\Iqtp13db\Controller\BackendController::class => 'start, listangemeldet, listerstberatung, listarchiv, checkniqconnection, sendtoniq, sendtoarchiv, unarchive, show, new, create, edit, update, delete, status, export, askconsent, listdeleted, undelete, savedatenblattpdf, takeover, setBeratungsstellebyPLZ, saveAVpdf, showsearchresult, editsettings, updatesettings, mail4editextern',
                 \Ud\Iqtp13db\Controller\FolgekontaktController::class => 'show, new, create, edit, update, delete',
-                \Ud\Iqtp13db\Controller\DokumentController::class => 'saveFileBackend, deleteFileBackend, openfile, updateBackend, doksave',
+                \Ud\Iqtp13db\Controller\DokumentController::class => 'saveFileBackend, savemultiFileBackend, deleteFileBackend, openfile, updateBackend, doksave',
                 \Ud\Iqtp13db\Controller\HistorieController::class => 'list',
                 \Ud\Iqtp13db\Controller\AbschlussController::class => 'show, new, create, edit, update, delete',
                 \Ud\Iqtp13db\Controller\BeraterController::class => 'list, edit, update, delete',
@@ -41,13 +41,13 @@ call_user_func(
             'Iqtp13dbwebapp',
             [
                 \Ud\Iqtp13db\Controller\TeilnehmerController::class => 'start, startseite, startseiteplz, anmeldseite0, anmeldseite1, anmeldseite1redirect, anmeldseite2, anmeldseite2redirect, anmeldseite3, anmeldseite3redirect, anmeldseite4, anmeldseite4redirect, anmeldungcomplete, anmeldungcompleteredirect, confirm, validationFailed, wartung, bereitsberaten, cancelregistration, editextern, editexternredirect, editexternmenu',
-                \Ud\Iqtp13db\Controller\DokumentController::class => 'saveFileWebapp, deleteFileWebapp, openfileextern, deletefileextern, uploadfileextern',
+                \Ud\Iqtp13db\Controller\DokumentController::class => 'saveFileWebapp, savemultiFileWebapp, deleteFileWebapp, openfileextern, deletefileextern, uploadfileextern',
                 \Ud\Iqtp13db\Controller\AbschlussController::class => 'newWebapp, createWebapp, editWebapp, updateWebapp, deleteWebapp'
             ],
             // non-cacheable actions
             [
                 \Ud\Iqtp13db\Controller\TeilnehmerController::class => 'start, startseite, startseiteplz, anmeldseite0, anmeldseite1, anmeldseite1redirect, anmeldseite2, anmeldseite2redirect, anmeldseite3, anmeldseite3redirect, anmeldseite4, anmeldseite4redirect, anmeldungcomplete, anmeldungcompleteredirect, confirm, validationFailed, wartung, bereitsberaten, cancelregistration, editextern, editexternredirect, editexternmenu',
-                \Ud\Iqtp13db\Controller\DokumentController::class => 'saveFileWebapp, deleteFileWebapp, openfileextern, deletefileextern, uploadfileextern',
+                \Ud\Iqtp13db\Controller\DokumentController::class => 'saveFileWebapp, savemultiFileWebapp, deleteFileWebapp, openfileextern, deletefileextern, uploadfileextern',
                 \Ud\Iqtp13db\Controller\AbschlussController::class => 'newWebapp, createWebapp, editWebapp, updateWebapp, deleteWebapp'
             ]
             );

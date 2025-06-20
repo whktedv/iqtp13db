@@ -58,7 +58,11 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 FROM tx_iqtp13db_domain_model_folgekontakt as a
                 INNER JOIN tx_iqtp13db_domain_model_teilnehmer as b ON a.teilnehmer = b.uid
                 LEFT JOIN fe_groups as g on b.niqidberatungsstelle = g.niqbid
+<<<<<<< Upstream, based on origin/version7
                 WHERE a.deleted = 0 AND niqidberatungsstelle LIKE '$niqbid' AND g.bundesland LIKE '$bundesland' AND erste_staatsangehoerigkeit LIKE '$staat'
+=======
+                WHERE a.deleted = 0 AND niqidberatungsstelle LIKE '$niqbid' AND g.bundesland LIKE '$bundesland' AND erste_staatsangehoerigkeit LIKE '$staat' AND YEAR(STR_TO_DATE(a.datum, '%Y-%m-%d')) > 2022
+>>>>>>> 9ae79f4 Update 20.06.2025
                 GROUP BY MONTH(STR_TO_DATE(a.datum, '%Y-%m-%d'))");
 	    } else {
 	        $query->statement("SELECT MONTH(STR_TO_DATE(a.datum, '%Y-%m-%d')) as monat, count(*) as anzahl

@@ -44,17 +44,7 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatusfreitext"><target>Notă privind statutul de rezidență</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><target>Germana ca limbă maternă?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Ce nivel de cunoștințe de limba germană?</target></trans-unit>
- 
- 	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.einwilligung"><target>Consimţământ</target></trans-unit>
- 	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.nachname"><target>Nume de familie</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.vorname"><target>Prenume</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.strasse"><target>Strada, numărul casei</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.plz"><target>Codul poștal</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.ort"><target>Localitate</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.email"><target>E-mail</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.confirmemail"><target>Confirmați e-mail</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.telefon"><target>Telefon</target></trans-unit>
- 
+ 	
   <trans-unit id="keinabschlussbisher"><target><![CDATA[ No foreign educational qualification specified yet. Please enter information about your educational qualification (university or training) here. You can also enter several qualifications (diplomas, certificates).]]></target></trans-unit>
 
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Cea mai înaltă calificare profesională a mea este</target></trans-unit>

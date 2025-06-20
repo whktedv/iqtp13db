@@ -81,6 +81,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $this->view->assign('calleraction', $valArray['calleraction']);
         $this->view->assign('callercontroller', $valArray['callercontroller']);
         $this->view->assign('callerpage', $valArray['callerpage'] ?? '1');
+        $this->view->assign('thisaction', $valArray['thisaction']);
         return $this->htmlResponse();
     }
     
@@ -112,7 +113,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $this->view->assign('alleberater', $alleberater);
         $this->view->assign('berater', $this->user);
         $this->view->assign('teilnehmer', $teilnehmer);
-            
+        $this->view->assign('thisaction', $valArray['thisaction']);
         $this->view->assign('calleraction', $valArray['calleraction']);
         $this->view->assign('callercontroller', $valArray['callercontroller']);
         $this->view->assign('callerpage', $valArray['callerpage'] ?? '1');
@@ -186,7 +187,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $this->view->assign('alleberater', $alleberater);
         $this->view->assign('folgekontakt', $folgekontakt);
         $this->view->assign('teilnehmer', $teilnehmer);
-        
+        $this->view->assign('thisaction', $valArray['thisaction']);
         $this->view->assign('callerpage', $valArray['callerpage']  ?? '1');
         $this->view->assign('calleraction', $valArray['calleraction']);
         $this->view->assign('callercontroller', $valArray['callercontroller']);

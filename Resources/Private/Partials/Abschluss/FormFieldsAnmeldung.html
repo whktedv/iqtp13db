@@ -1,6 +1,6 @@
 	<div class="tp13_formdivwebapp" class="tp13_options">
       <label for="abschlussart">
-        <span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoAbschlussart' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_abschluss.abschlussart" />
+        <span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoAbschlussart' />" class="infolabel" /><f:translate key="tx_iqtp13db_domain_model_abschluss.abschlussart" />
        </label>
         <f:form.select property="abschlussart" value="{abschluss.abschlussart}" options="{abschlussartarr}" optionValueField="key" optionLabelField="value" />
 	</div>
@@ -24,58 +24,58 @@
 	
 	<div class="tp13_formdivwebapp">
 	      <label for="erwerbsland">
-	        <f:translate key="tx_iqtp13db_domain_model_abschluss.erwerbsland" />
+	        <span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoErwerbsland' />" class="infolabel" /><f:translate key="tx_iqtp13db_domain_model_abschluss.erwerbsland" />
 	       </label>
 	        <f:form.select property="erwerbsland" options="{staatenarr}" optionValueField="key" optionLabelField="value" /> 
 	</div>
 	<div class="tp13_formdivwebapp">
 	      <label for="dauerBerufsausbildung">
-	        <f:translate key="tx_iqtp13db_domain_model_abschluss.dauer_berufsausbildung" />
+	        <span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoDauerBerufsausbildung' />" class="infolabel" /><f:translate key="tx_iqtp13db_domain_model_abschluss.dauer_berufsausbildung" />
 	       </label>
-	        <f:form.textfield property="dauerBerufsausbildung" pattern="[A-Za-zÀ-ÿ0-9 ,;\(\)\-=\?`´*+.:&§%\/#@!_\[\]\{\}<>]*" /> 
+	        <f:form.textfield placeholder="{f:translate(key: 'infoDauerBerufsausbildung')}" property="dauerBerufsausbildung" pattern="[A-Za-zÀ-ÿ0-9 ,;\(\)\-=\?`´*+.:&§%\/#@!_\[\]\{\}<>]*" /> 
 	</div>
 	<div class="tp13_formdivwebapp">
 	      <label for="abschlussjahr">
-	        <f:translate key="tx_iqtp13db_domain_model_abschluss.abschlussjahr" />
+	        <span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoAbschlussjahr' />" class="infolabel" /><f:translate key="tx_iqtp13db_domain_model_abschluss.abschlussjahr" />
 	       </label>
 	        <f:form.select property="abschlussjahr" value="{abschluss.abschlussjahr}" options="{abschlussjahre}" optionValueField="value" optionLabelField="value" /> 
 	</div>
 	<div class="tp13_formdivwebapp">
 	      <label for="ausbildungsinstitution">
-	        <f:translate key="tx_iqtp13db_domain_model_abschluss.ausbildungsinstitution" />
+	        <span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoAusbildungsinstitution' />" class="infolabel" /><f:translate key="tx_iqtp13db_domain_model_abschluss.ausbildungsinstitution" />
 	       </label>
-	        <f:form.textfield property="ausbildungsinstitution" pattern="[A-Za-zÀ-ÿ0-9 ,;\(\)\-=\?`´*+.:&§%\/#@!_\[\]\{\}<>]*" /> 
+	        <f:form.textfield placeholder="{f:translate(key: 'infoAusbildungsinstitution')}" property="ausbildungsinstitution" pattern="[A-Za-zÀ-ÿ0-9 ,;\(\)\-=\?`´*+.:&§%\/#@!_\[\]\{\}<>]*" /> 
 	</div>
 	<div class="tp13_formdivwebapp">
 	      <label for="ausbildungsort">
-	        <f:translate key="tx_iqtp13db_domain_model_abschluss.ausbildungsort" />
+	        <span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoAusbildungsort' />" class="infolabel" /><f:translate key="tx_iqtp13db_domain_model_abschluss.ausbildungsort" />
 	       </label>
-	        <f:form.textfield property="ausbildungsort" pattern="[A-Za-zÀ-ÿ0-9 ,;\(\)\-=\?`´*+.:&§%\/#@!_\[\]\{\}<>]*" /> 
+	        <f:form.textfield placeholder="{f:translate(key: 'infoAusbildungsort')}" property="ausbildungsort" pattern="[A-Za-zÀ-ÿ0-9 ,;\(\)\-=\?`´*+.:&§%\/#@!_\[\]\{\}<>]*" /> 
 	</div>
 	<div class="tp13_formdivwebapp">
 	      <label for="abschluss">
 	        <span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoAbschluss' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_abschluss.abschluss" />
 	       </label>
-	        <f:form.textfield property="abschluss" pattern="[A-Za-zÀ-ÿ0-9 ,;\(\)\-=\?`´*+.:&§%\/#@!_\[\]\{\}<>]*" /> 
+	        <f:form.textfield placeholder="{f:translate(key: 'infoAbschluss')}" property="abschluss" pattern="[A-Za-zÀ-ÿ0-9 ,;\(\)\-=\?`´*+.:&§%\/#@!_\[\]\{\}<>]*" /> 
 	</div>
 	<div class="tp13_formdivwebapp" id="divantragstellungerfolgt">
 		<label for="berufserfahrung">
-			<f:translate key="tx_iqtp13db_domain_model_abschluss.berufserfahrung" />	
+			<span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoBerufserfahrung' />" class="infolabel" /><f:translate key="tx_iqtp13db_domain_model_abschluss.berufserfahrung" />	
 		</label>
 			<f:form.select property="berufserfahrung" options="{settings.berufserfahrung}" optionValueField="key" optionLabelField="value" />				
 	</div>
 
 	<div class="tp13_formdivwebapp">
 	      <label for="deutscherReferenzberuf">
-	        <f:translate key="tx_iqtp13db_domain_model_abschluss.deutscher_referenzberuf" />
+	        <span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoMoeglicherdeutscherBeruf' />" class="infolabel" /><f:translate key="tx_iqtp13db_domain_model_abschluss.deutscher_referenzberuf" />
 	       </label>
-	        <f:form.textfield property="deutscherReferenzberuf" pattern="[A-Za-zÀ-ÿ0-9 ,;\(\)\-=\?`´*+.:&§%\/#@!_\[\]\{\}<>]*" /> 
+	        <f:form.textfield placeholder="{f:translate(key: 'infoMoeglicherdeutscherBeruf')}" property="deutscherReferenzberuf" pattern="[A-Za-zÀ-ÿ0-9 ,;\(\)\-=\?`´*+.:&§%\/#@!_\[\]\{\}<>]*" /> 
 	</div>
 	<div class="tp13_formdivwebapp">
 	      <label for="wunschberuf">
-	        <f:translate key="tx_iqtp13db_domain_model_abschluss.wunschberuf" />
+	        <span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoWunschberuf' />" class="infolabel" /><f:translate key="tx_iqtp13db_domain_model_abschluss.wunschberuf" />
 	       </label>
-	        <f:form.textfield property="wunschberuf" pattern="[A-Za-zÀ-ÿ0-9 ,;\(\)\-=\?`´*+.:&§%\/#@!_\[\]\{\}<>]*" /> 
+	        <f:form.textfield placeholder="{f:translate(key: 'infoWunschberuf')}" property="wunschberuf" pattern="[A-Za-zÀ-ÿ0-9 ,;\(\)\-=\?`´*+.:&§%\/#@!_\[\]\{\}<>]*" /> 
 	</div>
 	
 	<div class="tp13_formdivwebapp" id="divantragstellungvorher">

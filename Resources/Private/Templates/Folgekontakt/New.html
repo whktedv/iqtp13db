@@ -11,7 +11,7 @@
 	<div class="toplinkbuttons">
 		<f:link.action target="_blank" class="linkbuttons" action="show" controller="Backend" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">Daten {teilnehmer.nachname}, {teilnehmer.vorname} anzeigen</f:link.action>
 		<f:link.action target="_blank" class="linkbuttons" action="edit" controller="Backend" arguments="{teilnehmer:teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">Daten {teilnehmer.nachname}, {teilnehmer.vorname} bearbeiten</f:link.action>
-		<f:link.action id="linkloadoverlay-back" class="linkbuttons" action="{calleraction}" controller="{callercontroller}" arguments="{callerpage : callerpage}">Zurück zur Liste</f:link.action>
+		<f:link.action id="linkloadoverlay-back" class="linkbuttons" action="{thisaction}" controller="{callercontroller}" arguments="{teilnehmer: teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">Zurück</f:link.action>
 	</div>
 </div>
 
@@ -27,7 +27,7 @@
 	<f:form.hidden property="teilnehmer" value="{teilnehmer.uid}" />
 	
 	<f:form.button type="submit" class="linkbuttons" id="savebutton1">{f:translate(key:'speichern')}</f:form.button>
-	<f:link.action id="linkloadoverlay-back" class="linkbuttons" action="{calleraction}" controller="{callercontroller}" arguments="{callerpage : callerpage}">Zurück zur Liste</f:link.action>
+	<f:link.action id="linkloadoverlay-back" class="linkbuttons" action="{thisaction}" controller="{callercontroller}" arguments="{teilnehmer: teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">Zurück</f:link.action>
 </f:form>
 
 </f:section>

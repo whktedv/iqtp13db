@@ -62,20 +62,48 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     /**
      * action saveFileBackend
      *
-     * @param \Ud\Iqtp13db\Domain\Model\Dokument $dokument
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("dokument")
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("teilnehmer")
      * @return void
      */
-    public function saveFileBackendAction(\Ud\Iqtp13db\Domain\Model\Dokument $dokument, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
+    public function saveFileBackendAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
     {
         $valArray = $this->request->getArguments();
         
         if ($_FILES['tx_iqtp13db_iqtp13dbadmin']['tmp_name']['file'] == '') {
             $this->addFlashMessage('Error in saveFileWebapp: maximum filesize exceeded or permission error', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
-        } else {            
+        } else {        
+            $dokument = new \Ud\Iqtp13db\Domain\Model\Dokument();
+            $dokument->setBeschreibung("");
             $this->saveFileTeilnehmer($dokument, $teilnehmer, $_FILES['tx_iqtp13db_iqtp13dbadmin']);
+        }
+        
+        return $this->redirect($valArray['thisaction'], 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'] ?? 'edit', 'callercontroller' => $valArray['callercontroller'] ?? 'Backend', 'callerpage' => $valArray['callerpage'] ?? '1', 'showdokumente' => '1'));
+    }
+    
+    /**
+     * action savemultiFileBackend
+     *
+     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("teilnehmer")
+     * @return void
+     */
+    public function savemultiFileBackendAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
+    {
+        $valArray = $this->request->getArguments();
+        
+        $dateienbisher = $this->dokumentRepository->findByTeilnehmer($teilnehmer->getUid());
+        $anzdateienbisher = count($dateienbisher);
+        $files = $this->request->getArgument('file');
+        
+        if($files == NULL) {
+            $this->addFlashMessage('Error in saveFileBackend: maximum filesize exceeded or permission error', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+        } else {
+            foreach ($files as $file) {
+                $dokument = new \Ud\Iqtp13db\Domain\Model\Dokument();
+                $dokument->setBeschreibung("");
+                $this->saveFileTeilnehmer($dokument, $teilnehmer, $file);
+            }
         }
         
         return $this->redirect($valArray['thisaction'], 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'] ?? 'edit', 'callercontroller' => $valArray['callercontroller'] ?? 'Backend', 'callerpage' => $valArray['callerpage'] ?? '1', 'showdokumente' => '1'));
@@ -178,6 +206,44 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     
     
     /**
+     * action savemultiFileWebapp
+     *
+     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
+     * @return void
+     */
+    public function savemultiFileWebappAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
+    {
+        $valArray = $this->request->getArguments();
+        
+        $dateienbisher = $this->dokumentRepository->findByTeilnehmer($teilnehmer->getUid());
+        $anzdateienbisher = count($dateienbisher);
+        $files = $this->request->getArgument('file');
+          
+        if($files == NULL) {
+            $this->addFlashMessage('Error in saveFileWebapp: File does not meet policy.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+        } else {
+            foreach ($files as $file) {
+                if ($file['tmp_name'] == '') {
+                    $this->addFlashMessage('Error: permission error or maximum filesize exceeded.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+                    break;
+                } elseif ($file['size'] > 10485760) {
+                    $this->addFlashMessage('Error: Maximum filesize exceeded (10 MB). Please reduce filesize.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+                    break;
+                } else {                    
+                    $fileType = $file['type'];
+                    // TODO: Dateityp überprüfen
+                    
+                    $dokument = new \Ud\Iqtp13db\Domain\Model\Dokument();
+                    $dokument->setBeschreibung($valArray['beschreibung']);
+                    $this->saveFileTeilnehmer($dokument, $teilnehmer, $file);
+                }                
+            }
+            
+        }
+        return $this->redirect('anmeldungcomplete', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
+    }
+    
+    /**
     * action initdeleteFileWebapp
     *
     * @param void
@@ -215,24 +281,24 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      *
      * @param \Ud\Iqtp13db\Domain\Model\Dokument $dokument
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
-     * @param array $files
+     * @param array $file
      * @return void
      */
-    public function saveFileTeilnehmer(\Ud\Iqtp13db\Domain\Model\Dokument $dokument, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer, $files)
+    public function saveFileTeilnehmer(\Ud\Iqtp13db\Domain\Model\Dokument $dokument, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer, $file)
     {        
         $storage = $this->generalhelper->getTP13Storage( $this->storageRepository->findAll());
         $pfad = $this->generalhelper->createFolder($teilnehmer, $this->storageRepository->findAll());
         $beratenepath = ltrim($pfad->getIdentifier(), '/');
         
-        $tmpName = $this->generalhelper->sanitizeFileFolderName($files['name']['file']);
+        $tmpName = $this->generalhelper->sanitizeFileFolderName($file['name']);
         $fullpath = $storage->getConfiguration()['basePath'] . $beratenepath . $tmpName;
         
         if($this->generalhelper->getFolderSize($storage->getConfiguration()['basePath'] . $beratenepath) > 40000) {
     	    $this->addFlashMessage('Maximum total filesize of 40 MB exceeded, please reduce filesize. Maximale Dateigröße aller Dateien zusammen ist 40 MB. Bitte Dateigröße verringern.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
     	} else {
-    	    if ($files['name']['file']) {
+    	    if ($file) {
     	        
-    	        $dokument = $this->savefile($dokument->getBeschreibung(), $beratenepath, $files);
+    	        $dokument = $this->savefile($dokument->getBeschreibung(), $beratenepath, $file);
     	        
     	        if($dokument == null) {
     	            $this->addFlashMessage('File already uploaded. Datei wurde schon hochgeladen.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
@@ -356,18 +422,17 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      *
      * @param string $beschreibung
      * @param string $pathtofile
-     * @param array $arrfiles
+     * @param array $file
      * @return \Ud\Iqtp13db\Domain\Model\Dokument
      */
-    public function savefile($beschreibung, $pfad, $arrfiles)
+    public function savefile($beschreibung, $pfad, $file)
     {          
-
         $dokument = new \Ud\Iqtp13db\Domain\Model\Dokument();
         
-        $tmpName = $this->generalhelper->sanitizeFileFolderName($arrfiles['name']['file']);
-        $tmpFile = $arrfiles['tmp_name']['file'];
+        $tmpName = $this->generalhelper->sanitizeFileFolderName($file['name']);
+        $tmpFile = $file['tmp_name'];
                 
-        $storage = $this->generalhelper->getTP13Storage( $this->storageRepository->findAll());
+        $storage = $this->generalhelper->getTP13Storage($this->storageRepository->findAll());
         
         if (!$storage->hasFolder($pfad)) {
             $targetFolder = $storage->createFolder($pfad);
@@ -383,7 +448,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         } else {
             $movedNewFile = $storage->addFile($tmpFile, $targetFolder, $tmpName, \TYPO3\CMS\Core\Resource\DuplicationBehavior::REPLACE);
             
-            $reducedfile = $this->reduce_filesize($arrfiles, $tmpName, $storage->getConfiguration()['basePath'] . "/" .$pfad);
+            $reducedfile = $this->reduce_filesize($file, $tmpName, $storage->getConfiguration()['basePath'] . "/" .$pfad);
             
             $dokument->setBeschreibung($beschreibung);
             if($reducedfile) {            
@@ -432,13 +497,13 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      * Reduce file size on upload of file
      *
      **/    
-    function reduce_filesize($filearr, $filename, $pfad) {
+    function reduce_filesize($file, $filename, $pfad) {
         
-        if (is_array($filearr) && $filearr['size']['file'] > 1000000 && file_exists($pfad.$filename)) // bei Dateigrößen über 1 MB 
+        if (is_array($file) && $file['size'] > 1000000 && file_exists($pfad.$filename)) // bei Dateigrößen über 1 MB 
         {
-            $fileName = $filearr['tmp_name']['file'];
-            $fileExt = pathinfo($filearr['name']['file'], PATHINFO_EXTENSION);
-            $fileNamewoExt = pathinfo($filearr['name']['file'], PATHINFO_FILENAME); 
+            $fileName = $file['tmp_name'];
+            $fileExt = pathinfo($file['name'], PATHINFO_EXTENSION);
+            $fileNamewoExt = pathinfo($file['name'], PATHINFO_FILENAME); 
             $percent = 40;
             
             $timestamp = time();

@@ -4,9 +4,8 @@
 		<!-- Modal - HTML -->
 		<dialog open id="errormodal">
 			<h3 id="fehlermeldung"><f:translate key="error" /></h3>
-			<f:for each="{validationResults.flattenedErrors}" key="propertyName" as="errors">
-				<b><f:translate key="tx_iqtp13db_domain_model_{propertyName}" /> </b>					
-				<f:for each="{errors}" as="error"><f:translate key="error.{error.code}">{error}</f:translate><br></f:for>
+			<f:for each="{validationResults.flattenedErrors}" key="propertyName" as="errors">			
+				<f:for each="{errors}" as="error"><f:format.html>{error}</f:format.html></f:for>
 			</f:for>
 			<div style="margin-top: 1rem;">
 		  		<button id="errorokModal">OK</button>

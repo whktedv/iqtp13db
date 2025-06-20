@@ -10,7 +10,7 @@
 		<div class="tp13_formdivwebapp">
 			<label for="datum">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungdatum" />
-				<span class="niqfield" /> 
+				<span class="important-icon"></span> 
 			</label>
 				<f:form.textfield type="date" class="datumtextfieldberatung" name="teilnehmer[beratungdatum]" value="{teilnehmer.beratungdatum}" />
 		</div>
@@ -23,7 +23,7 @@
 		<div class="tp13_formdivwebapp">
 			<label for="beratungsart">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungsart" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 			<div class="tp13_formdivwebappmultiradio">			
 				<f:for each="{settings.beratungsart}" as="option" key="key">
@@ -50,21 +50,21 @@
 		<div class="tp13_formdivwebapp" id="textfieldberatungsort">
 			<label for="beratungsort">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungsort" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 				<f:form.textfield property="beratungsort" placeholder="{settings.standardberatungort}"/>				
 		</div>
 		<div class="tp13_formdivwebapp" id="textfieldberatungsdauer">
 			<label for="beratungsdauer">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungsdauer" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 				<f:form.textfield class="textfieldsmall" property="beratungsdauer" size="5"/>				
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="anerkennungsberatung">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.anerkennungsberatung" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 			<div class="tp13_formdivwebappmultiradio">
 				<f:for each="{settings.anerkennungsberatung}" as="option" key="key">
@@ -78,14 +78,14 @@
 		<div class="tp13_formdivwebapp">
 			<label for="anerkennungsberatungfreitext">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.anerkennungsberatungfreitext" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 			<f:form.textarea property="anerkennungsberatungfreitext" rows="2" cols="100" />
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="qualifizierungsberatung">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.qualifizierungsberatung" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 			<div class="tp13_formdivwebappmultiradio">
 				<f:for each="{settings.qualifizierungsberatung}" as="option" key="key">
@@ -99,7 +99,7 @@
 		<div class="tp13_formdivwebapp">
 			<label for="qualifizierungsberatungfreitext">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.qualifizierungsberatungfreitext" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 			<f:form.textarea property="qualifizierungsberatungfreitext" rows="3" cols="100" />
 		</div>

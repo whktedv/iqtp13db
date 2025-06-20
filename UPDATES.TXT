@@ -139,4 +139,12 @@ Update: 16.06.2025:
 - Bugfix bei Frontend: Leistungsbezug
 
 Neu:
+<<<<<<< Upstream, based on origin/version7
+=======
+- Anpassungen Eingabeformular Hilfetexte
+- Bugfixing Quellcodepflege (Klasse tnseite1 entfernt)
+- Folgeberatungen auch im Ratsuchenden-Datensatz aufrufbar
+- Ratsuchende können aus dem Modul Archiv in das Modul Erstberatung verschoben werden (un-archiviert werden) 
+- Verbesserung des Dokumentenuploads für Ratsuchende (Frontend) und Beratende (Backend)
+>>>>>>> 9ae79f4 Update 20.06.2025
 

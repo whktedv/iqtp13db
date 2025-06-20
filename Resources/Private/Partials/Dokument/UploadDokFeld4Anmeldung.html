@@ -1,0 +1,34 @@
+<div class="dokumenteuploadform">
+
+	<f:if condition="{anzdateien} < 20"><f:then>
+		<f:form action="savemultiFileWebapp" id="fileuploadform{formnumber}" controller="Dokument" name="dokument" arguments="{teilnehmer: teilnehmer}" method="post" enctype="multipart/form-data">
+		    <div id="dropzone{formnumber}" class="dropzone">
+		    	<div class="dropzone-inner">
+		    		<img src="/fileadmin/template/images/iq_upload_icon.svg" width="100" height="100"/>
+		    		<span class="descdragdrop">{f:translate(key='uploaddropfile')}</span>
+		    	</div>       
+		        <f:form.upload name="file" id="fileInput{formnumber}" multiple="multiple" />	
+		        <f:form.hidden name="beschreibung" value="{dokumenttyp}" />        
+		    </div>
+		    <div class="opensysfileuploaddiv">
+		    	<p class="fileuploadoder">
+		    		<f:form.button class="linkbuttons" id="opensysfileupload{formnumber}" type="button">{f:translate(key='dokumentauswaehlen')}</f:form.button>
+		    	</p>
+		    </div>
+		</f:form>
+	</f:then><f:else>
+		<div class="maxuploadhinweis">Es können maximal 20 Dateien hochgeladen werden.</div>
+	</f:else>
+	</f:if>
+</div>
+
+<div class="dokumenteliste">						
+	<f:for each="{dokumente}" as="dokument">	
+		<f:if condition="{dokument.beschreibung} == {dokumenttyp}">					
+			<div class="dokitem">
+				<span>{dokument.name}</span>
+				<span><f:link.action class="iconbuttons" action="deleteFileWebapp" controller="Dokument" arguments="{dokument : dokument, teilnehmer : teilnehmer}" onclick="$('#overlay').show();"><img src="/typo3conf/ext/iqtp13db/Resources/Public/Icons/delete-640.png" width="32" height="32" alt="{f:translate(key='loeschen')}" /></f:link.action></span>
+			</div>						
+		</f:if>
+	</f:for>
+</div>

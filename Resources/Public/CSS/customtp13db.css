@@ -72,14 +72,19 @@
     color: #7478bf;
 }
 
-.tx-iqtp13db .infolabel {
-	background-image: url(../Icons/infoicon.png);
-	background-repeat: no-repeat;
-	background-position: right;
-	background-size: 1.1em;
-	padding-right: 30px;
+.tx-iqtp13db .infolabel::after {
+	content: '?';	
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	background-color: #99CACA;
+	color: white;
+	text-align: center;
+	line-height: 20px;
+	font-size: 16px;
+	cursor: pointer;
 }
-
 
 .tp13_formdivwebapp {
 	padding: 5px;
@@ -289,13 +294,60 @@ button.abbruchbtn {
 	margin-left: 10px;
 }
 
-.tx-iqtp13db table td.dokumentliste {
+.formdokument .tp13_formdivwebapp {
+	align-items: flex-start;
+}
+
+.dropzone {
+    border: 2px dashed #cccccc;
+    background-color: #eeeeee;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 1rem;
+}
+.dropzone-inner {
+	display: flex;
+	flex-direction: column;   
+	justify-content: center;
+	align-items: center;
+}
+
+.dokumenteuploadform {
+	margin-left: 10px;
+}
+
+.dokumenteliste {
+	display: flex;
+	flex-direction: column;   
+	justify-content: center;	
 	font-size: 1.1rem;
 	color: #556bb9;
+	margin-left: 10px;	
+}
+
+#fileInput {
+	display: none;
+}
+#fileInput1 {
+	display: none;
+}
+#fileInput2 {
+	display: none;
+}
+#fileInput3 {
+	display: none;
+}
+#fileInput4 {
+	display: none;
+}
+
+.descdragdrop {
+	font-weight: bold;
 }
 
 table tr.dokcattr td {
-	border-top: 2px dotted #9F9168;
+	border-top: 3px dashed #9F9168;
 }
 
 .speicherplatz {
@@ -480,7 +532,7 @@ form.filterform div {
 }
 
 #errormodal, #infomodal {
-	position: absolute;
+	/* position: absolute;*/
 	inset-inline-start: 0;
 	inset-inline-end: 0;
 	margin: auto;	
@@ -510,9 +562,9 @@ form.filterform div {
 	background-color: ##99CACA; !important;
 	border-radius: 10px;
 }
-	
+
 #infomodal h3 {
-	color: #000;
+	color: #fff;
 	font-weight: 500;
 	padding: 5px;
 	background-color: #99CACA;

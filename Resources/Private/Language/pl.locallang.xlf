@@ -39,16 +39,6 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Jaki poziom znajomości języka niemieckiego?</target></trans-unit>
     <trans-unit id="keinabschlussbisher"><target><![CDATA[ No foreign educational qualification specified yet. Please enter information about your educational qualification (university or training) here. You can also enter several qualifications (diplomas, certificates).]]></target></trans-unit>
   
-  	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.einwilligung"><target>Zgoda</target></trans-unit>
-  	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.nachname"><target>Nazwisko</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.vorname"><target>Imie</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.strasse"><target>Ulica, numer domu</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.plz"><target>Kod pocztowy</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.ort"><target>Miejscowość</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.email"><target>E-mail</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.confirmemail"><target>Potwierdź e-mail</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.telefon"><target>Numer telefonu</target></trans-unit>
-	
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Moje najwyższe kwalifikacje zawodowe to</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branche"><target>Wskaż sektor, w którym uzyskałeś(-aś) kwalifikacje</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branchekurz"><target>Przemysł</target></trans-unit>

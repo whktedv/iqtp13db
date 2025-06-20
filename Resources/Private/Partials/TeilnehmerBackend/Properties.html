@@ -13,7 +13,7 @@
 		<div class="tp13_formdivwebapp">
 			<label for="nachname">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 				<span class="propdat">{teilnehmer.nachname}</span>
 				<div class="historie">
@@ -26,7 +26,7 @@
 		<div class="tp13_formdivwebapp">
 			<label for="vorname">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 				<span class="propdat">{teilnehmer.vorname}</span>
 				<div class="historie">
@@ -38,7 +38,7 @@
 		<div class="tp13_formdivwebapp">
 			<label for="strasse">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.strasse" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 				<span class="propdat">{teilnehmer.strasse}</span>
 				<div class="historie">
@@ -94,14 +94,14 @@
 		<div class="tp13_formdivwebapp">
 			<label for="gebdat">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.gebdat" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 				<span class="propdat"><f:if condition="{teilnehmer.gebdat} != '0000-00-00' && {teilnehmer.gebdat} != ''">{teilnehmer.gebdat -> f:format.date(format: 'd.m.Y')}</f:if></span>
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="geburtsjahr">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.lebensalter" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 				<span class="propdat">{f:if(condition: '{teilnehmer.lebensalter} == -1000', then: '-', else: '{teilnehmer.lebensalter}')}</span>
 				<div class="historie">
@@ -128,7 +128,7 @@
 		<div class="tp13_formdivwebapp">
 			<label for="geschlecht">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.geschlecht" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 			<span class="propdat">
 			<f:if condition="{teilnehmer.geschlecht} == 2"><f:then>
@@ -154,7 +154,7 @@
 		<div class="tp13_formdivwebapp">
 			<label for="ersteStaatsangehoerigkeit">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.erste_staatsangehoerigkeit" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 				<f:for each="{staaten}" as="staat">
 					{f:if(condition: '{teilnehmer.ersteStaatsangehoerigkeit} == {staat.staatid}', then: '<span class="propdat">{staat.titel}</span>')}					 
@@ -183,7 +183,7 @@
 		<div class="tp13_formdivwebapp">
 			<label for="wohnsitzDeutschland">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_deutschland" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 			<span class="propdat">
 			<f:if condition="{teilnehmer.wohnsitzDeutschland} == 1"><f:then>
@@ -209,7 +209,7 @@
 		<div class="tp13_formdivwebapp">
 			<label for="einreisejahr">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einreisejahr" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 				<span class="propdat">{teilnehmer.einreisejahr}</span>
 				<div class="historie">
@@ -222,7 +222,7 @@
 		<div class="tp13_formdivwebapp">
 			<label id="labelwohnsitzNeinIn4propertypage" for="wohnsitzNeinIn">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.wohnsitz_nein_in" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 				<f:for each="{staaten}" as="staat">
 					{f:if(condition: '{teilnehmer.wohnsitzNeinIn} == {staat.staatid}', then: '<span class="propdat">{staat.titel}</span>')}					 
@@ -238,7 +238,7 @@
 		<div class="tp13_formdivwebapp">
 			<label for="aufenthaltsstatus">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 				<f:for each="{settings.aufenthaltsstatus}" as="text" key="wert">
 					{f:if(condition: '{teilnehmer.aufenthaltsstatus} == {wert}', then: '<span class="propdat">{text}</span>')}					 
@@ -298,7 +298,7 @@
 		<div class="tp13_formdivwebapp">
 			<label for="zertifikatSprachniveau">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 			<f:for each="{settings.zertifikatlevel}" as="text" key="wert">
 					{f:if(condition: '{teilnehmer.zertifikatSprachniveau} == {wert}', then: '<span class="propdat">{text}</span>')}					 
@@ -315,7 +315,7 @@
 		<div class="tp13_formdivwebapp">
 			<label for="erwerbsstatus">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.erwerbsstatus" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 				<f:for each="{settings.erwerbsstatus}" as="text" key="wert">
 					{f:if(condition: '{teilnehmer.erwerbsstatus} == {wert}', then: '<span class="propdat">{text}</span>')}					 
@@ -329,7 +329,7 @@
 		<div class="tp13_formdivwebapp">
 			<label for="leistungsbezugjanein">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.leistungsbezugjanein" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 			<span class="propdat"><f:if condition="{teilnehmer.leistungsbezugjanein} == 1"><f:then>
 				<f:translate key="ja" />
@@ -353,7 +353,7 @@
 			<div class="tp13_formdivwebapp">
 				<label for="leistungsbezug">
 					<f:translate key="tx_iqtp13db_domain_model_teilnehmer.leistungsbezug" />
-					<span class="niqfield" />
+					<span class="important-icon"></span>
 				</label>
 					<f:for each="{settings.leistungsbezug}" as="text" key="wert">
 						{f:if(condition: '{teilnehmer.leistungsbezug} == {wert}', then: '<span class="propdat">{text}</span>')}					 
@@ -556,7 +556,7 @@
 	<div class="tp13_formdivwebapp">
 		<label for="nameBeratungsstelle">
 			<f:translate key="tx_iqtp13db_domain_model_teilnehmer.name_beratungsstelle" />
-			<span class="niqfield" />
+			<span class="important-icon"></span>
 		</label>
 			<f:for each="{settings.beratungsstelle}" as="text" key="wert">
 				{f:if(condition: '{teilnehmer.nameBeratungsstelle} == {wert}', then: '<span class="propdat">{text}</span>')}					 
@@ -599,7 +599,7 @@
 	<div id="divniqchiffre" class="tp13_formdivwebapp">
 		<label for="niqchiffre">
 			<f:translate key="tx_iqtp13db_domain_model_teilnehmer.niqchiffre" />
-			<span class="niqfield" />
+			<span class="important-icon"></span>
 		</label>
 			<span class="propdat"><f:format.html>{teilnehmer.niqchiffre}</f:format.html></span>
 			<div class="historie">
@@ -632,7 +632,7 @@
 		<div class="tp13_formdivwebapp">
 			<label for="datum">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungdatum" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 				<span class="propdat"><f:if condition="{teilnehmer.beratungdatum} != '0000-00-00' && {teilnehmer.beratungdatum} != ''">{teilnehmer.beratungdatum -> f:format.date(format: 'd.m.Y')}</f:if></span>
 		</div>
@@ -645,7 +645,7 @@
 		<div class="tp13_formdivwebapp">
 			<label for="beratungsart">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungsart" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 			<f:for each="{teilnehmer.beratungsart}" as="beratungart">
 				<f:for each="{settings.beratungsart}" as="text" key="wert">
@@ -666,7 +666,7 @@
 					<f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungsort" />
 				</label>
 					<span class="propdat">{teilnehmer.beratungsort}</span>
-					<span class="niqfield" />
+					<span class="important-icon"></span>
 			</div>
 		</f:then>
 		</f:if>
@@ -676,7 +676,7 @@
 					<f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungsdauer" />
 				</label>
 					<span class="propdat">{teilnehmer.beratungsdauer}</span>
-					<span class="niqfield" />
+					<span class="important-icon"></span>
 			</div>						
 		<div class="tp13_formdivwebapp">
 			<label for="anerkennendestellen">
@@ -687,7 +687,7 @@
 		<div class="tp13_formdivwebapp">
 			<label for="anerkennungsberatung">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.anerkennungsberatung" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 			<f:for each="{teilnehmer.anerkennungsberatung}" as="anerkennungsberatung">
 				<f:for each="{settings.anerkennungsberatung}" as="text" key="wert">
@@ -698,14 +698,14 @@
 		<div class="tp13_formdivwebapp">
 			<label for="anerkennungsberatungfreitext">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.anerkennungsberatungfreitext" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 			<span class="propdat">{teilnehmer.anerkennungsberatungfreitext}</span>
 		</div>
 		<div class="tp13_formdivwebapp">
 			<label for="qualifizierungsberatung">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.qualifizierungsberatung" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 			<f:for each="{teilnehmer.qualifizierungsberatung}" as="qualifizierungsberatung">
 				<f:for each="{settings.qualifizierungsberatung}" as="text" key="wert">
@@ -716,7 +716,7 @@
 		<div class="tp13_formdivwebapp">
 			<label for="qualifizierungsberatungfreitext">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.qualifizierungsberatungfreitext" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 			<span class="propdat">{teilnehmer.qualifizierungsberatungfreitext}</span>
 		</div>

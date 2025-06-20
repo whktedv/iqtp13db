@@ -40,16 +40,6 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><target>Немецкий как родной язык?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Какой уровень владения немецким языком?</target></trans-unit>
 
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.einwilligung"><target>согласие</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.nachname"><target>Фамилия</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.vorname"><target>Имя</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.strasse"><target>Улица, номер дома</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.plz"><target>Индекс</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.ort"><target>место</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.email"><target>электронная почта</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.confirmemail"><target>Подтвердите адрес электронной почты</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.telefon"><target>Телефон</target></trans-unit>
-
   <trans-unit id="keinabschlussbisher"><target><![CDATA[ No foreign educational qualification specified yet. Please enter information about your educational qualification (university or training) here. You can also enter several qualifications (diplomas, certificates).]]></target></trans-unit>
 
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Моя высшая профессиональная квалификация</target></trans-unit>

@@ -237,7 +237,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         for($j=2023;$j<=date('Y');$j++){
             $jahrarray[$j] = $j;
         }
-        $jahrarray[99] = "-alle-";
+        $jahrarray[99] = "- alle seit 01/2023 -";
         
         if(isset($valArray['zeigebstelle'])) {
             $plzbstelle = $this->userGroupRepository->getBeratungsstelle4PLZ($valArray['plzeingabe'], $this->settings['beraterstoragepid']);
@@ -1753,6 +1753,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $brancheunterkat = $this->brancheRepository->findAllUnterkategorie($isocode);
         
+        $fk4tn = $this->folgekontaktRepository->findByTeilnehmer($teilnehmer->getUid());
+        //DebuggerUtility::var_dump($fk4tn);
+        
         $this->view->assignMultiple(
             [
                 'dokumente' => $dokumente,
@@ -1774,7 +1777,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'searchparams' => $searchparams ?? '',
                 'abschlussartarr' => $abschlussartarr,
                 'brancheunterkat' => $brancheunterkat,
-                'anzbstellen' => $this->anzbstellen
+                'anzbstellen' => $this->anzbstellen,
+                'folgekontakte' => $fk4tn
             ]
             );
         return $this->htmlResponse();
@@ -2054,6 +2058,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $gebjahrberechnetausalter = (intval(date('Y', $teilnehmer->getCrdate()))-intval($teilnehmer->getLebensalter()));
         $gebjahrberechnetausalter = ($gebjahrberechnetausalter > 0 && $gebjahrberechnetausalter < 100) ? $gebjahrberechnetausalter : 'Lebensalter nicht angegeben';
+        
+        $fk4tn = $this->folgekontaktRepository->findByTeilnehmer($teilnehmer->getUid());
+        
         $this->view->assignMultiple(
             [
                 'alleberatungsstellen' => $alleberatungsstellen,
@@ -2085,7 +2092,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'abschlussartarr' => $abschlussartarr,
                 'brancheunterkat' => $brancheunterkat,
                 'anzbstellen' => $this->anzbstellen,
-                'jahraltereintraglebensalter' => $gebjahrberechnetausalter
+                'jahraltereintraglebensalter' => $gebjahrberechnetausalter,
+                'folgekontakte' => $fk4tn
             ]
             );
         return $this->htmlResponse();
@@ -2546,6 +2554,30 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $this->addFlashMessage('Archiviert.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
         }
         
+        return $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'] ?? '1'), null);
+    }
+    
+    /**
+     * action unarchive
+     *
+     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("teilnehmer")
+     * @return void
+     */
+    public function unarchiveAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
+    {
+        $valArray = $this->request->getArguments();
+        
+        if($teilnehmer->getErstberatungabgeschlossen() == "") $teilnehmer->setBeratungsstatus(2);
+        else $teilnehmer->setBeratungsstatus(3);
+        
+        $this->teilnehmerRepository->update($teilnehmer);
+        // Daten sofort in die Datenbank schreiben
+        $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+        $persistenceManager->persistAll();
+        
+        $this->addFlashMessage('Zurück aus Archiv in Modul Erstberatung verschoben.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
+    
         return $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'] ?? '1'), null);
     }
     

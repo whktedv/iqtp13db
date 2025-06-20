@@ -46,16 +46,6 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Quel niveau de maîtrise de la langue allemande ?</target></trans-unit>
 	<trans-unit id="keinabschlussbisher"><source><![CDATA[ Aucun diplôme étranger n'est indiqué. Veuillez saisir ici les informations relatives à votre diplôme (université ou formation). Vous pouvez également saisir plusieurs qualifications (diplômes, certificats).]]></source></trans-unit>
 		
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.einwilligung"><target>Consentement</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.nachname"><target>Nom de famille</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.vorname"><target>Prénom</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.strasse"><target>Rue, numéro de maison</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.plz"><target>Code postal</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.ort"><target>Ville</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.email"><target>E-Mail</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.confirmemail"><target>Confirmer l'e-mail</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.telefon"><target>Téléphone</target></trans-unit>
-	
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Mon diplôme professionnel le plus élevé est</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branche"><target>Veuillez indiquer le secteur dans lequel vous avez obtenu votre/vos qualification(s)</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branchekurz"><target>Industrie</target></trans-unit>

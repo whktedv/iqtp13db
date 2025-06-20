@@ -41,11 +41,35 @@
 		<div style="font-size: 0.8rem;">Speichergröße: 30 MB, Auslastung: {speicherbelegung} %</div>
 	</f:then></f:if>
   
-	<f:form id="dokumenteform2" method="post" action="saveFileBackend" name="dokument" controller="Dokument" arguments="{teilnehmer:teilnehmer, calleraction : calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : thisaction}" object="{dokument}" enctype="multipart/form-data" ><br />
-		<div class="tp13_formdiv100 dokupload">
-				<f:form.upload name="file" />
-				<f:form.textfield class="inputdokumentbeschreibung" property="beschreibung" size="50" placeholder="<f:translate key='tx_iqtp13db_domain_model_dokument.beschreibung' />" />
-				<f:form.button type="submit" class="linkbuttons updatebutton" id="savebutton2"><f:translate key='dokumenthochladen' /></f:form.button>
-  		</div>
-	</f:form>
+  <f:render partial="Dokument/UploadDokFeld4Backend" arguments="{teilnehmer:teilnehmer, calleraction : calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : thisaction}" />
+  
 </div>
+
+<script>
+	const dropzone = document.getElementById('dropzone');
+	const fileInput = document.getElementById('fileInput');
+	
+    $( "#opensysfileupload" ).on( "click", function() {
+	  $("#fileInput").click();
+	});
+		
+	dropzone.addEventListener('dragover', (e) => {
+	    e.preventDefault();
+	    dropzone.classList.add('dragging');
+	});	
+	dropzone.addEventListener('dragleave', () => {
+	    dropzone.classList.remove('dragging');	    
+	});	
+	dropzone.addEventListener('drop', (e) => {
+	    e.preventDefault();
+	    dropzone.classList.remove('dragging');
+	    fileInput.files = e.dataTransfer.files;	    
+	    $("#overlay").show();	    
+	    document.getElementById('fileuploadform').submit();
+	});
+	
+	fileInput.addEventListener('change', () => {			
+		document.getElementById('fileuploadform').submit();
+	});
+	
+</script>

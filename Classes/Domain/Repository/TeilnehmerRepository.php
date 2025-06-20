@@ -68,14 +68,14 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         if($ort != '') {
             $orwhereExpressionsOrt = [
                 $queryBuilder->expr()->like('ort', $queryBuilder->createNamedParameter('%' . $queryBuilder->escapeLikeWildcards($ort) . '%')),
-                $queryBuilder->expr()->like('plz', $queryBuilder->createNamedParameter('%' . $queryBuilder->escapeLikeWildcards($ort) . '%'))
+                $queryBuilder->expr()->like('plz', $queryBuilder->createNamedParameter('%' . $queryBuilder->escapeLikeWildcards($ort) . '%'))                
             ];
         }
         if($land != '') {
             $whereExpressions[] = $queryBuilder->expr()->eq('geburtsland', $queryBuilder->escapeLikeWildcards($land, Connection::PARAM_INT));
         }
         if($berater != '') {
-            $whereExpressions[] = $queryBuilder->expr()->eq('tx_iqtp13db_domain_model_teilnehmer.berater', $queryBuilder->createNamedParameter($berater, Connection::PARAM_INT));
+            $whereExpressions[] = $queryBuilder->expr()->eq('tx_iqtp13db_domain_model_teilnehmer.berater', $queryBuilder->createNamedParameter($berater, Connection::PARAM_INT));            
         }
         if($gruppe != '') {
             $whereExpressions[] = $queryBuilder->expr()->like('kooperationgruppe', $queryBuilder->createNamedParameter('%' . $queryBuilder->escapeLikeWildcards($gruppe) . '%'));
@@ -548,7 +548,11 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             $query->statement("SELECT MONTH($field) as monat, count(*) as anzahl
                 FROM tx_iqtp13db_domain_model_teilnehmer as a
                 LEFT JOIN fe_groups as b on a.niqidberatungsstelle = b.niqbid
+<<<<<<< Upstream, based on origin/version7
                 WHERE a.deleted = 0 AND a.hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND b.bundesland LIKE '$bundesland' AND erste_staatsangehoerigkeit LIKE '$staat' AND $field != ''
+=======
+                WHERE a.deleted = 0 AND a.hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND b.bundesland LIKE '$bundesland' AND erste_staatsangehoerigkeit LIKE '$staat' AND $field != 0 AND YEAR($field) > 2022
+>>>>>>> 9ae79f4 Update 20.06.2025
                 $addfield
                 GROUP BY MONTH($field)");
         } else {
@@ -601,7 +605,11 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             $query->statement("SELECT MONTH($bis) as monat, SUM(IF(DATEDIFF($bis,$von) < 0 OR verification_date = 0, 0, DATEDIFF($bis,$von))) / count(*) as wert
                         FROM tx_iqtp13db_domain_model_teilnehmer as a
                         LEFT JOIN fe_groups as b on a.niqidberatungsstelle = b.niqbid
+<<<<<<< Upstream, based on origin/version7
                         WHERE $bis != '' AND a.deleted = 0 AND a.hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND b.bundesland LIKE '$bundesland' AND erste_staatsangehoerigkeit LIKE '$staat'
+=======
+                        WHERE $bis != '' AND a.deleted = 0 AND a.hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND b.bundesland LIKE '$bundesland' AND YEAR($bis) > 2022 AND erste_staatsangehoerigkeit LIKE '$staat'
+>>>>>>> 9ae79f4 Update 20.06.2025
                         GROUP BY MONTH($bis)");
         } else {
             $query->statement("SELECT MONTH($bis) as monat, SUM(IF(DATEDIFF($bis,$von) < 0 OR verification_date = 0, 0, DATEDIFF($bis,$von))) / count(*) as wert

@@ -17,7 +17,7 @@
 	  <button id="okModal">OK</button>
 	</dialog>
 	
-<f:form id="teilnehmerform" action="anmeldseite1redirect" name="tnseite1" object="{tnseite1}" arguments="{direkt : direkt, wohnsitzDeutschland : wohnsitzDeutschland}">
+<f:form id="teilnehmerform" action="anmeldseite1redirect" name="teilnehmer" object="{teilnehmer}" arguments="{direkt : direkt, wohnsitzDeutschland : wohnsitzDeutschland}">
 		<f:render partial="Teilnehmer/FormFieldsAnmeldung1" arguments="{_all}" />
 		<f:if condition="{iseditextern} != 0">
 			<f:form.button type="submit" id="zurueckbutton" name="btnzurueck"><f:translate key="zurueck" /></f:form.button>
@@ -55,6 +55,7 @@
 	okModal.addEventListener("click", () => {
 		modal.close();	    
 	});
+	
 	
 </script>
 </f:section>

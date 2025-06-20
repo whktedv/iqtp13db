@@ -36,17 +36,6 @@
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><target>Deutsch als Muttersprache?</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Deutschkenntnisse auf welchem Sprachniveau?</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.weiteresprachkenntnisse"><target>Weitere Sprachkenntnisse</target></trans-unit>
-			
-			<trans-unit id="tx_iqtp13db_domain_model_tnseite1.einwilligung"><target>Einwilligung</target></trans-unit>
-			<trans-unit id="tx_iqtp13db_domain_model_tnseite1.nachname"><target>Nachname</target></trans-unit>
-			<trans-unit id="tx_iqtp13db_domain_model_tnseite1.vorname"><target>Vorname</target></trans-unit>
-			<trans-unit id="tx_iqtp13db_domain_model_tnseite1.strasse"><target>Strasse, Nr.</target></trans-unit>
-			<trans-unit id="tx_iqtp13db_domain_model_tnseite1.plz"><target>PLZ</target></trans-unit>
-			<trans-unit id="tx_iqtp13db_domain_model_tnseite1.ort"><target>Wohnort</target></trans-unit>
-			<trans-unit id="tx_iqtp13db_domain_model_tnseite1.email"><target>E-Mail</target></trans-unit>
-			<trans-unit id="tx_iqtp13db_domain_model_tnseite1.confirmemail"><target>E-Mail bestätigen</target></trans-unit>
-			<trans-unit id="tx_iqtp13db_domain_model_tnseite1.telefon"><target>Telefon</target></trans-unit>
-			<trans-unit id="tx_iqtp13db_domain_model_tnseite1.gebdat"><target>Geburtsdatum</target></trans-unit>
 						
 			<trans-unit id="keinabschlussbisher"><target><![CDATA[ Noch keinen Berufsabschluss angegeben. Bitte tragen Sie hier Informationen zu Ihrem Berufsabschluss (Universität oder Ausbildung) ein. Sie können auch mehrere Abschlüsse (Diplome, Zeugnisse) angeben.]]></target></trans-unit>
 			
@@ -120,19 +109,40 @@
 			<trans-unit id="aufenthaltsdokumente"><target>Aufenthaltsdokumente</target></trans-unit>	
 			<trans-unit id="sonstigedokumente"><target>Sonstige Dokumente</target></trans-unit>
 			
-			<trans-unit id="infoNachname"><target>Der Nachname entspricht Ihrem Familiennamen. Bitte geben Sie diesen hier an.</target></trans-unit>
-			<trans-unit id="infoVorname"><target>Der Vorname ist Ihr erster Name vor dem Nachnamen und entspricht meistens Ihrem Rufnamen. Bitte geben Sie diesen hier an.</target></trans-unit>
-			<trans-unit id="infoGeburtsland"><target>Das Geburtsland entspricht dem Land, in dem Sie geboren wurden. Bitte geben Sie dieses hier an.</target></trans-unit>
+			<trans-unit id="folgekontakthinzu"><target>Folgekontakt hinzufügen</target></trans-unit>
+			
+			<trans-unit id="infoNachname"><target>Wie heißt Ihr Nachname?</target></trans-unit>
+			<trans-unit id="infoVorname"><target>Wie heißt Ihr Vorname?</target></trans-unit>
+			<trans-unit id="infoPLZ"><target>Postleitzahl und Ort, in dem Sie wohnen.</target></trans-unit>
+			<trans-unit id="infoEmailconfirm"><target>Geben Sie Ihre E-Mail-Adresse hier erneut ein</target></trans-unit>
+			<trans-unit id="infoGeburtsland"><target>Land, in dem Sie geboren wurden.</target></trans-unit>
 			<trans-unit id="infoStaatsangehoerigkeit"><target>Sofern Sie zwei verschiedene Staatsangehörigkeiten/Nationalitäten haben, geben Sie bitte beide an.</target></trans-unit>
 			<trans-unit id="infoJahrEinreise"><target>Bitte geben Sie das Jahr an, in dem Sie nach Deutschland eingereist sind.</target></trans-unit>
+			<trans-unit id="infoAufenthaltsstatus"><target>Welches Visum haben Sie? Sie können es in Ihrem Aufenthaltstitel nachlesen.</target></trans-unit>
+			<trans-unit id="infoDeutschMuttersprache"><target>Sprechen Sie Deutsch als Ihre Muttersprache?</target></trans-unit>
 			<trans-unit id="infoWohnsitzinDeutschlandNein"><target>Bitte geben Sie an, in welchem Land Sie aktuell leben.</target></trans-unit>
-			<trans-unit id="infoAbschlussart_ALT"><target>Ein Ausbildungsabschluss ist ein Abschluss einer beruflichen Ausbildung. Ein Universitätsabschluss ist ein akademischer Abschluss der nach einem Studium an einer Hochschule/Universität erworben wurde. Das Studium hat in der Regel mindestens 3 Jahre gedauert. Bitte geben Sie an welchen Abschluss Sie erworben haben.</target></trans-unit>
-			<trans-unit id="infoAbschlussart"><target>Falls der Berufsabschluss im Ausland erworben wurde: Wählen Sie bitte einen gleichwertigen Abschluss in der Liste aus.</target></trans-unit>			
+			
+			<trans-unit id="infoAbschlussart"><target>Falls der Berufsabschluss im Ausland erworben wurde: Wählen Sie bitte einen gleichwertigen Abschluss in der Liste aus.</target></trans-unit>
+			<trans-unit id="infoErwerbsland"><target>Land, in dem Sie Ihren Berufsabschluss gemacht haben</target></trans-unit>
+			<trans-unit id="infoDauerBerufsausbildung"><target>Wie lange hat Ihre Berufsausbildung gedauert?</target></trans-unit>
+			<trans-unit id="infoAbschlussjahr"><target>Jahr, in dem Sie Ihre Ausbildung abgeschlossen haben</target></trans-unit>
+			<trans-unit id="infoAusbildungsinstitution"><target>Name der Schule, Hochschule oder Ausbildungsinstitution</target></trans-unit>
+			<trans-unit id="infoAusbildungsort"><target>Stadt und Land, in dem die Ausbildung stattgefunden hat</target></trans-unit>
 			<trans-unit id="infoAbschluss"><target>z.B. Bachelor of Arts in Erziehung, Master of Science Elektronik, Maurer, Bäcker, ...</target></trans-unit>
-			<trans-unit id="infoAusbildungsort"><target>Bitte geben Sie die Stadt an, in der Sie Ihren Abschluss gemacht haben.</target></trans-unit>
 			<trans-unit id="infoBerufserfahrung"><target>Bitte geben Sie an, wie lange Sie schon im Beruf der Ausbildung/des Studiums gearbeitet haben (Monate/Jahre).</target></trans-unit>
-			<trans-unit id="infoBezug"><target>Von welcher Institution/Behörde/Amt erhalten Sie aktuell Geld für Ihren Lebensunterhalt? Bitte geben Sie diese Institution/Behörde/Amt hier an.</target></trans-unit>
+			<trans-unit id="infoMoeglicherdeutscherBeruf"><target>Welcher Beruf in Deutschland könnte zu Ihrem Abschluss passen?</target></trans-unit>
+			<trans-unit id="infoWunschberuf"><target>Welchen Beruf möchten Sie in Deutschland ausüben?</target></trans-unit>
+					
+			<trans-unit id="infoErwerbsstatus.1"><target>Vollzeit oder Teilzeit mit Sozialversicherungsbeiträgen</target></trans-unit>
+			<trans-unit id="infoErwerbsstatus.2"><target>Minijob oder ähnliche Arbeit</target></trans-unit>
+			<trans-unit id="infoErwerbsstatus.3"><target>Sie arbeiten auf eigene Rechnung</target></trans-unit>
+			<trans-unit id="infoErwerbsstatus.4"><target>Sie nehmen an einer Ausbildung oder Weiterbildung teil</target></trans-unit>
+			<trans-unit id="infoErwerbsstatus.5"><target>Derzeit ohne Arbeit</target></trans-unit>
+			<trans-unit id="infoErwerbsstatus.6"><target>Sie arbeiten im Ausland</target></trans-unit>
+			<trans-unit id="infoErwerbsstatus.7"><target>Sie sind arbeitslos im Ausland</target></trans-unit>
+			<trans-unit id="infoDatenweitereperson"><target>Möchten Sie, dass jemand anders bei der Beratung hilft oder dabei ist?</target></trans-unit>
 			<trans-unit id="infoBezugsart"><target><![CDATA[Welche Art des Bezugs (Geld für den Lebensunterhalt) erhalten Sie aktuell?<br>SGB II: Grundsicherung für Arbeitssuchende (Hartz IV)<br>SGB III: Leistungen aus der Arbeitslosenversicherung und Arbeitsförderung<br>Asylbewerberleistungsbezug: Grundsicherung für Asylbewerber, Geduldete und Ausländer, die vollziehbar zur Ausreise verpflichtet sind.<br>Bitte geben Sie eine der Bezugsarten an.]]></target></trans-unit>
+			<trans-unit id="infoNotizen"><target>Bitte nutzen Sie dieses Feld, um uns wichtige Informationen zu geben, die für Ihre Beratung wichtig sind. Zum Beispiel: Termine, die dringend sind, besondere Wünsche oder Dinge, die der Berater oder die Beraterin wissen sollte.</target></trans-unit>
 	
 			<trans-unit id="anredemail"><target>Guten Tag </target></trans-unit>
 			<trans-unit id="mailtext"><target> <![CDATA[ vielen Dank für Ihre Informationen.</p><p>Sie sind jetzt zur Beratung angemeldet. ]]></target></trans-unit>
@@ -217,6 +227,8 @@
 			<trans-unit id="errornosector"><target>Angabe Branche ist Pflichtfeld.</target></trans-unit>
 			
 			<trans-unit id="editexternauthenticatelabel"><target>Zur Authentifizierung bitte Geburtsdatum eingeben und auf den Weiter-Button klicken.</target></trans-unit>
+						
+			<trans-unit id="uploaddropfile"><target>Dateien für den Upload hier ablegen.</target></trans-unit>
 		</body>
 	</file>
 </xliff>

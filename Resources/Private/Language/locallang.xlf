@@ -37,17 +37,6 @@
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><source>What level of German language skills?</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.weiteresprachkenntnisse"><source>Further language skills</source></trans-unit>
 		
-		<trans-unit id="tx_iqtp13db_domain_model_tnseite1.einwilligung"><source>Consent</source></trans-unit>
-		<trans-unit id="tx_iqtp13db_domain_model_tnseite1.nachname"><source>Last name, Family name</source></trans-unit>
-		<trans-unit id="tx_iqtp13db_domain_model_tnseite1.vorname"><source>First name</source></trans-unit>
-		<trans-unit id="tx_iqtp13db_domain_model_tnseite1.strasse"><source>Street and house number</source></trans-unit>
-		<trans-unit id="tx_iqtp13db_domain_model_tnseite1.plz"><source>Postal code</source></trans-unit>
-		<trans-unit id="tx_iqtp13db_domain_model_tnseite1.ort"><source>Place of residence, town</source></trans-unit>
-		<trans-unit id="tx_iqtp13db_domain_model_tnseite1.email"><source>E-mail address</source></trans-unit>
-		<trans-unit id="tx_iqtp13db_domain_model_tnseite1.confirmemail"><source>Confirm email address</source></trans-unit>
-		<trans-unit id="tx_iqtp13db_domain_model_tnseite1.telefon"><source>Mobile number</source></trans-unit>
-		<trans-unit id="tx_iqtp13db_domain_model_tnseite1.gebdat"><source>Date of birth</source></trans-unit>
-		
 		<trans-unit id="keinabschlussbisher"><source><![CDATA[ No foreign educational qualification specified yet. Please enter information about your educational qualification (university or training) here. You can also enter several qualifications (diplomas, certificates).]]></source></trans-unit>
 		
 		<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><source>My highest professional qualification is</source></trans-unit>
@@ -112,6 +101,8 @@
 		<trans-unit id="datenweitereperson"><source>Data transfer further person</source></trans-unit>
 		<trans-unit id="beratung"><source>Advisory</source></trans-unit>
 		
+		<trans-unit id="folgekontakthinzu"><source>Add following contact</source></trans-unit>
+		
 		<trans-unit id="dokumente"><source>Documents</source></trans-unit>
 		<trans-unit id="dokumentauswaehlen"><source>Select document</source></trans-unit>
 		<trans-unit id="dokumenthochladen"><source>Upload documents</source></trans-unit>
@@ -122,16 +113,36 @@
 
 		<trans-unit id="infoNachname"><source>The surname corresponds to your family name. Please enter it here.</source></trans-unit>
 		<trans-unit id="infoVorname"><source>The first name is your first name before the surname and usually corresponds to your call name. Please enter it here.</source></trans-unit>
+		<trans-unit id="infoPLZ"><source>ZIP-Code and place where you currently live.</source></trans-unit>
+		<trans-unit id="infoEmailconfirm"><source>Please enter your email address again in this field.</source></trans-unit>
 		<trans-unit id="infoGeburtsland"><source>The country of birth corresponds to the country in which you were born. Please indicate this here.</source></trans-unit>
 		<trans-unit id="infoStaatsangehoerigkeit"><source>If you have two different citizenships/nationalities, please state both.</source></trans-unit>
 		<trans-unit id="infoJahrEinreise"><source>Please enter the year in which you entered Germany.</source></trans-unit>
+		<trans-unit id="infoAufenthaltsstatus"><source>Which visa do you have? You can find out in your residence permit.</source></trans-unit>
+		<trans-unit id="infoDeutschMuttersprache"><source>Do you speak German as your native language?</source></trans-unit>
 		<trans-unit id="infoWohnsitzinDeutschlandNein"><source>Please indicate in which country you currently live.</source></trans-unit>
-		<trans-unit id="infoAbschlussart"><source>A training qualification is a qualification obtained after vocational training. A university degree is an academic degree obtained after a course of study at a college/university. As a rule, the degree programme lasted at least 3 years. Please indicate which degree you have obtained.</source></trans-unit>
-		<trans-unit id="infoAbschluss"><source>i.e. Bachelor of Arts in Education, Master of Science Electronics, Bricklayer, Baker, ...</source></trans-unit>
-		<trans-unit id="infoAusbildungsort"><source>Please indicate the city in which you graduated.</source></trans-unit>
+		
+		<trans-unit id="infoAbschlussart"><source>A training qualification is a qualification obtained after vocational training. A university degree is an academic degree obtained after a course of study at a college/university. As a rule, the degree programme lasted at least 3 years. Please indicate which degree you have obtained.</source></trans-unit>		
+		<trans-unit id="infoErwerbsland"><source>Country where you obtained your vocational qualification</source></trans-unit>
+		<trans-unit id="infoDauerBerufsausbildung"><source>How long did your vocational training last?</source></trans-unit>
+		<trans-unit id="infoAbschlussjahr"><source>Year you completed your training</source></trans-unit>
+		<trans-unit id="infoAusbildungsinstitution"><source>Name of school, university, or training institution</source></trans-unit>
+		<trans-unit id="infoAusbildungsort"><source>City and country where the training took place</source></trans-unit>
+		<trans-unit id="infoAbschluss"><source>i.e. Bachelor of Arts in Education, Master of Science Electronics, Bricklayer, Baker, ...</source></trans-unit><trans-unit id="infoBerufserfahrung"><source>Have you already worked in your profession?</source></trans-unit>
 		<trans-unit id="infoBerufserfahrung"><source>Please indicate how long you have worked in the profession of education/study (months/years).</source></trans-unit>
-		<trans-unit id="infoBezug"><source>From which institution/authority/office do you currently receive money for your living expenses? Please indicate this institution/authority/office here.</source></trans-unit>
+		<trans-unit id="infoMoeglicherdeutscherBeruf"><source>Which profession in Germany would be suitable for your qualification?</source></trans-unit>
+		<trans-unit id="infoWunschberuf"><source>Which profession would you like to pursue in Germany?</source></trans-unit>
+		
+		<trans-unit id="infoErwerbsstatus.1"><source>Full-time or part-time with social security contributions</source></trans-unit>
+		<trans-unit id="infoErwerbsstatus.2"><source>Mini-job or similar work</source></trans-unit>
+		<trans-unit id="infoErwerbsstatus.3"><source>You work on your own account</source></trans-unit>
+		<trans-unit id="infoErwerbsstatus.4"><source>You are participating in training or further education</source></trans-unit>
+		<trans-unit id="infoErwerbsstatus.5"><source>Currently unemployed</source></trans-unit>
+		<trans-unit id="infoErwerbsstatus.6"><source>You work abroad</source></trans-unit>
+		<trans-unit id="infoErwerbsstatus.7"><source>You are unemployed abroad</source></trans-unit>
+		<trans-unit id="infoDatenweitereperson"><source>Would you like someone else to help or be present during the consultation?</source></trans-unit>
 		<trans-unit id="infoBezugsart"><source> <![CDATA[ What type of benefit (money for living expenses) do you currently receive?<br>SGB II: Basic income support for job-seekers (Hartz IV)<br>SGB III: Unemployment insurance benefits and employment promotion benefits	<br>Asylbewerberleistungsbezug: Basic benefits for asylum seekers, tolerated persons and foreigners who are under an enforceable obligation to leave the country.<br>Please enter one of the reference types ]]></source></trans-unit>
+		<trans-unit id="infoNotizen"><source>Please use this field to provide us with important information relevant to your consultation. For example, urgent appointments, special requests, or things the counselor should know.</source></trans-unit>
 
 		<trans-unit id="anredemail"><source>Hello </source></trans-unit>		
 		<trans-unit id="mailtext"><source> <![CDATA[ <p>Thank you for your information.</p> <p>You are now registered for counselling. </p> ]]></source></trans-unit>
@@ -156,7 +167,9 @@
 		<trans-unit id="errornoqualification"><source>You must enter at least one qualification.</source></trans-unit>
 		<trans-unit id="errornosector"><source>Sector is mandatory.</source></trans-unit>
 		
-		<trans-unit id="editexternauthenticatelabel"><target>To authenticate, please enter your date of birth and click the Forward button.</target></trans-unit>
+		<trans-unit id="editexternauthenticatelabel"><source>To authenticate, please enter your date of birth and click the Forward button.</source></trans-unit>
+		
+		<trans-unit id="uploaddropfile"><source>Drop files for upload here.</source></trans-unit>
 	</body>
   </file>
 </xliff>

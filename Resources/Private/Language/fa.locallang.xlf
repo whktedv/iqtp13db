@@ -44,18 +44,7 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatusfreitext"><target>توضیح مربوط به مجوز اقامت</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><target>	آلمانی به عنوان زبان مادری؟</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>مهارت زبان آلمانی در چه سطحی است؟</target></trans-unit>
-  
-    <trans-unit id="tx_iqtp13db_domain_model_tnseite1.einwilligung"><target>رضایت</target></trans-unit>
-    <trans-unit id="tx_iqtp13db_domain_model_tnseite1.nachname"><target>	نام خانوادگی</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.vorname"><target>	نام</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.strasse"><target>خیابان، شماره خانه</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.plz"><target>	کد پستی</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.ort"><target>	محل</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.email"><target>	ایمیل</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.confirmemail"><target>	تایید ایمیل</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.gebdat"><target>تاریخ تولد</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_tnseite1.telefon"><target>	تلفن</target></trans-unit>
-	
+  	
   <trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>بالاترین مدرک حرفه ای من این است معادل را در لیست انتخاب کنید‌</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branche"><target>لطفا صنعتی را که در ان صلاحیت (های) خود را بدست اورده اید را مشخص کنید</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.branchekurz"><target>صنعت</target></trans-unit>
