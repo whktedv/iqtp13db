@@ -36,6 +36,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $uid = $filterArray['uid'];
         $name = $filterArray['name'];
         $ort = $filterArray['ort'];
+        $gebdat = $filterArray['gebdat'];
         $land = $filterArray['land'];
         $berater = $filterArray['berater'];
         $gruppe = $filterArray['gruppe'];
@@ -71,11 +72,17 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 $queryBuilder->expr()->like('plz', $queryBuilder->createNamedParameter('%' . $queryBuilder->escapeLikeWildcards($ort) . '%'))                
             ];
         }
+        if($gebdat != '') {
+            $whereExpressions[] = $queryBuilder->expr()->like('gebdat', $queryBuilder->createNamedParameter($gebdat));
+        }
         if($land != '') {
             $whereExpressions[] = $queryBuilder->expr()->eq('geburtsland', $queryBuilder->escapeLikeWildcards($land, Connection::PARAM_INT));
         }
         if($berater != '') {
-            $whereExpressions[] = $queryBuilder->expr()->eq('tx_iqtp13db_domain_model_teilnehmer.berater', $queryBuilder->createNamedParameter($berater, Connection::PARAM_INT));            
+            $orwhereExpressionsBerater = [
+                $queryBuilder->expr()->eq('tx_iqtp13db_domain_model_teilnehmer.berater', $queryBuilder->createNamedParameter($berater, Connection::PARAM_INT)),
+                $queryBuilder->expr()->eq('f.berater', $queryBuilder->createNamedParameter($berater, Connection::PARAM_INT))
+            ];
         }
         if($gruppe != '') {
             $whereExpressions[] = $queryBuilder->expr()->like('kooperationgruppe', $queryBuilder->createNamedParameter('%' . $queryBuilder->escapeLikeWildcards($gruppe) . '%'));
@@ -139,10 +146,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         } 
         
         $orderby = $orderby == 'verificationDate' ? 'verification_date' : $orderby;
-        
-        //$limitsql = $limit == 0 ? '' : ' LIMIT '.$limit;
-        
-        
+                
         if($type == 999) {
             $queryBuilder->getRestrictions()
             ->removeByType(HiddenRestriction::class)
@@ -151,7 +155,6 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 ->addForTables(GeneralUtility::makeInstance(HiddenRestriction::class), ['tt'])
                 );
         }
-        
         
         $result = $queryBuilder
             ->select('tx_iqtp13db_domain_model_teilnehmer.*')
@@ -168,12 +171,19 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 'berater',
                 $queryBuilder->expr()->eq('berater.uid',$queryBuilder->quoteIdentifier('tx_iqtp13db_domain_model_teilnehmer.berater'))
                 )
+            ->leftJoin(
+                'tx_iqtp13db_domain_model_teilnehmer',
+                'tx_iqtp13db_domain_model_folgekontakt',
+                'f',
+                $queryBuilder->expr()->eq('f.teilnehmer',$queryBuilder->quoteIdentifier('tx_iqtp13db_domain_model_teilnehmer.uid'))
+                )
             ->where(
                 $queryBuilder->expr()->or(...$orwhereExpressionsName),
                 $queryBuilder->expr()->or(...$orwhereExpressionsOrt),
                 $queryBuilder->expr()->or(...$orwhereExpressionsBeruf),
                 $queryBuilder->expr()->or(...$orwhereExpressionsBeratungsstatus),
-                $queryBuilder->expr()->and(...$andwhereExpressionAntrag),
+                $queryBuilder->expr()->or(...$orwhereExpressionsBerater),
+                $queryBuilder->expr()->and(...$andwhereExpressionAntrag),                               
                 ...$whereExpressions,                
             )
             ->groupBy('tx_iqtp13db_domain_model_teilnehmer.uid')            
@@ -181,8 +191,9 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             ->addOrderBy('uid', 'DESC')
             ->setMaxResults($limit)
             ->executeQuery();
-        
-           //DebuggerUtility::var_dump($queryBuilder->getSQL());
+            //DebuggerUtility::var_dump($queryBuilder->getSQL());
+            //die;
+            
            //DebuggerUtility::var_dump($queryBuilder->getParameters());
            //die;
         
@@ -548,11 +559,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             $query->statement("SELECT MONTH($field) as monat, count(*) as anzahl
                 FROM tx_iqtp13db_domain_model_teilnehmer as a
                 LEFT JOIN fe_groups as b on a.niqidberatungsstelle = b.niqbid
-<<<<<<< Upstream, based on origin/version7
-                WHERE a.deleted = 0 AND a.hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND b.bundesland LIKE '$bundesland' AND erste_staatsangehoerigkeit LIKE '$staat' AND $field != ''
-=======
                 WHERE a.deleted = 0 AND a.hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND b.bundesland LIKE '$bundesland' AND erste_staatsangehoerigkeit LIKE '$staat' AND $field != 0 AND YEAR($field) > 2022
->>>>>>> 9ae79f4 Update 20.06.2025
                 $addfield
                 GROUP BY MONTH($field)");
         } else {
@@ -605,11 +612,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             $query->statement("SELECT MONTH($bis) as monat, SUM(IF(DATEDIFF($bis,$von) < 0 OR verification_date = 0, 0, DATEDIFF($bis,$von))) / count(*) as wert
                         FROM tx_iqtp13db_domain_model_teilnehmer as a
                         LEFT JOIN fe_groups as b on a.niqidberatungsstelle = b.niqbid
-<<<<<<< Upstream, based on origin/version7
-                        WHERE $bis != '' AND a.deleted = 0 AND a.hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND b.bundesland LIKE '$bundesland' AND erste_staatsangehoerigkeit LIKE '$staat'
-=======
                         WHERE $bis != '' AND a.deleted = 0 AND a.hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND b.bundesland LIKE '$bundesland' AND YEAR($bis) > 2022 AND erste_staatsangehoerigkeit LIKE '$staat'
->>>>>>> 9ae79f4 Update 20.06.2025
                         GROUP BY MONTH($bis)");
         } else {
             $query->statement("SELECT MONTH($bis) as monat, SUM(IF(DATEDIFF($bis,$von) < 0 OR verification_date = 0, 0, DATEDIFF($bis,$von))) / count(*) as wert

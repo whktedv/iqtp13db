@@ -395,21 +395,20 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             return $this->redirect('anmeldseite1', 'Teilnehmer', null, null);
         } else {            
             $direkt = $valArray['direkt'] ?? '0';
-            if(isset($valArray['btnweiter'])) {
+            if(isset($valArray['btnweiter'])) {                
                 
                 $GLOBALS['TSFE']->fe_user->setKey('ses', 'teilnehmer', serialize($teilnehmer));
                 $bstid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid') ?? '';
-
-                //DebuggerUtility::var_dump($teilnehmer);
-                //die;
+                
                 if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid') == NULL) {
                     
                     // **** Doppelanmeldungen vermeiden *****
                     if(strtolower($teilnehmer->getNachname()) != 'anonym') {
                         $teilnehmerarr = $this->teilnehmerRepository->findDublette4Anmeldung($teilnehmer->getNachname(), $teilnehmer->getVorname(), $teilnehmer->getEmail());
+                        
                         if(count($teilnehmerarr) > 0) {
-                            $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnuid', null);
-                            return $this->redirect('bereitsberaten', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+                            $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnuid', null);                            
+                            return $this->redirect('bereitsberaten', 'Teilnehmer', 'Iqtp13db', array('tn' => $teilnehmerarr[0]));                           
                         }
                     }
                     // **************************************
@@ -918,10 +917,11 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     /**
      * action bereitsberaten
      *
-     * @param Teilnehmer $teilnehmer
      */
-    public function bereitsberatenAction(Teilnehmer $teilnehmer): ResponseInterface
-    {        
+    public function bereitsberatenAction(): ResponseInterface
+    {   
+        $valArray = $this->request->getArguments();
+        $teilnehmer = $this->teilnehmerRepository->findByUid($valArray['tn']);
         $bstid = $teilnehmer->getNiqidberatungsstelle() == 0 ? $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid') : $teilnehmer->getNiqidberatungsstelle();
 
         $beratungsstelle = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $bstid);

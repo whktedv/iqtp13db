@@ -3,8 +3,8 @@
 	
 	<div class="tp13_formdivwebapp" class="tp13_options">
       <label for="abschlussart">
-        <span id="infolab" title="<f:translate key='infoAbschluss' />" class="infolabel"><f:translate key="tx_iqtp13db_domain_model_abschluss.abschlussart" />
-        <span class="niqfield" />
+        <f:translate key="tx_iqtp13db_domain_model_abschluss.abschlussart" />
+        <span class="important-icon"></span>
        </label>
         <f:form.select property="abschlussart" value="{abschluss.abschlussart}" options="{abschlussartarr}" optionValueField="key" optionLabelField="value" />
 	</div>
@@ -12,6 +12,7 @@
 	<div class="tp13_formdivwebapp">
 	      <label for="brancheoberkat">
 	        <f:translate key="tx_iqtp13db_domain_model_abschluss.branche" />
+	        <span class="important-icon"></span>
 	       </label>
 	       <f:form.select id="selectbranche" property="branche" prependOptionValue="0" prependOptionLabel="{f:translate(key:'bw')}">
 					<f:groupedFor each="{brancheunterkat}" as="branche" groupBy="brancheok" groupKey="brok">
@@ -30,7 +31,7 @@
 	<div class="tp13_formdivwebapp">
 	      <label for="erwerbsland">
 	        <f:translate key="tx_iqtp13db_domain_model_abschluss.erwerbsland" />
-	        <span class="niqfield" />
+	        <span class="important-icon"></span>
 	       </label>
 	       <f:form.select property="erwerbsland" value="{abschluss.erwerbsland}" options="{staatenarr}" optionValueField="key" optionLabelField="value" />	       
 	</div>
@@ -67,7 +68,7 @@
 	<div class="tp13_formdivwebapp" id="divantragstellungerfolgt">
 			<label for="berufserfahrung">
 				<f:translate key="tx_iqtp13db_domain_model_abschluss.berufserfahrung" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 			<f:form.select property="berufserfahrung" value="{abschluss.berufserfahrung}" options="{settings.berufserfahrung}" optionValueField="key" optionLabelField="value" />				
 	</div>
@@ -81,7 +82,7 @@
 	<div class="tp13_formdivwebapp">
 	      <label for="referenzberufzugewiesen">
 	        <f:translate key="tx_iqtp13db_domain_model_abschluss.referenzberufzugewiesen" />
-	        <span class="niqfield" />
+	        <span class="important-icon"></span>
 	       </label>
 	       <f:security.ifHasRole role="Webapp Admin">
 				<f:then>
@@ -96,14 +97,14 @@
 	<div id="divsonstigerberuf" class="tp13_formdivwebapp">
 	      <label for="sonstigerberuf">
 	        <f:translate key="tx_iqtp13db_domain_model_abschluss.sonstigerberuf" />
-	        <span class="niqfield" />
+	        <span class="important-icon"></span>
 	       </label>
 	        <f:form.textfield id="txtsonstigerberuf" property="sonstigerberuf" value="{abschluss.sonstigerberuf}"/> 
 	</div>
 	<div id="divnregberuf" class="tp13_formdivwebapp">
 	      <label for="nregberuf">
 	        <f:translate key="tx_iqtp13db_domain_model_abschluss.nregberuf" />
-	        <span class="niqfield" />
+	        <span class="important-icon"></span>
 	       </label>
 	        <f:form.textfield id="txtnregberuf" property="nregberuf" value="{abschluss.nregberuf}"/> 
 	</div>
@@ -118,21 +119,21 @@
 	<div class="tp13_formdivwebapp" id="divantragstellungvorher">
 			<label for="antragstellungvorher">
 				<f:translate key="tx_iqtp13db_domain_model_abschluss.antragstellungvorher" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 			<f:form.select id="selectantragstellungvorher" property="antragstellungvorher" value="{abschluss.antragstellungvorher}" options="{settings.antragstellungvorher}" optionValueField="key" optionLabelField="value" />				
 	</div>
 	<div class="tp13_formdivwebapp" id="divantragstellunggwpvorher">
 			<label for="antragstellunggwpvorher">
 				<f:translate key="tx_iqtp13db_domain_model_abschluss.antragstellunggwpvorher" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 			<f:form.select property="antragstellunggwpvorher" value="{abschluss.antragstellunggwpvorher}" options="{settings.ergebnisgleichwertigkeitvorher}" optionValueField="key" optionLabelField="value" />	
 	</div>
 	<div class="tp13_formdivwebapp" id="divantragstellungzabvorher">
 			<label for="antragstellungzabvorher">
 				<f:translate key="tx_iqtp13db_domain_model_abschluss.antragstellungzabvorher" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 			<f:form.select property="antragstellungzabvorher" value="{abschluss.antragstellungzabvorher}" options="{settings.ergebniszab}" optionValueField="key" optionLabelField="value" />	
 	</div>
@@ -142,21 +143,21 @@
 	<div class="tp13_formdivwebapp" id="divantragstellungerfolgt">
 			<label for="antragstellungerfolgt">
 				<f:translate key="tx_iqtp13db_domain_model_abschluss.antragstellungerfolgt" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 			<f:form.select id="selectantragstellungerfolgt" property="antragstellungerfolgt" value="{abschluss.antragstellungerfolgt}" options="{settings.antragstellungerfolgt}" optionValueField="key" optionLabelField="value" />				
 	</div>
 	<div class="tp13_formdivwebapp" id="divantragstellunggwpdatum">
 	      <label for="antragstellunggwpdatum">
 	        <f:translate key="tx_iqtp13db_domain_model_abschluss.antragstellunggwpdatum" />
-	        <span class="niqfield" />
+	        <span class="important-icon"></span>
 	       </label>
 	        <f:form.textfield type="date" class="datumtextfield" property="antragstellunggwpdatum" value="{abschluss.antragstellunggwpdatum}"/> 
 	</div>
 	<div class="tp13_formdivwebapp" id="divantragstellunggwpergebnis">
 			<label for="antragstellunggwpergebnis">
 				<f:translate key="tx_iqtp13db_domain_model_abschluss.antragstellunggwpergebnis" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 			<f:form.select property="antragstellunggwpergebnis" value="{abschluss.antragstellunggwpergebnis}" options="{settings.ergebnisgleichwertigkeit}" optionValueField="key" optionLabelField="value" />	
 	</div>
@@ -164,14 +165,14 @@
 	<div class="tp13_formdivwebapp" id="divantragstellungzabdatum">
 	      <label for="antragstellungzabdatum">
 	        <f:translate key="tx_iqtp13db_domain_model_abschluss.antragstellungzabdatum" />
-	        <span class="niqfield" />
+	        <span class="important-icon"></span>
 	       </label>
 	        <f:form.textfield type="date" class="datumtextfield" property="antragstellungzabdatum" value="{abschluss.antragstellungzabdatum}"/> 
 	</div>
 	<div class="tp13_formdivwebapp" id="divantragstellungzabergebnis">
 			<label for="antragstellungzabergebnis">
 				<f:translate key="tx_iqtp13db_domain_model_abschluss.antragstellungzabergebnis" />
-				<span class="niqfield" />
+				<span class="important-icon"></span>
 			</label>
 			<f:form.select property="antragstellungzabergebnis" value="{abschluss.antragstellungzabergebnis}" options="{settings.ergebniszab}" optionValueField="key" optionLabelField="value" />	
 	</div>	

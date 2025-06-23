@@ -58,20 +58,17 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 FROM tx_iqtp13db_domain_model_folgekontakt as a
                 INNER JOIN tx_iqtp13db_domain_model_teilnehmer as b ON a.teilnehmer = b.uid
                 LEFT JOIN fe_groups as g on b.niqidberatungsstelle = g.niqbid
-<<<<<<< Upstream, based on origin/version7
-                WHERE a.deleted = 0 AND niqidberatungsstelle LIKE '$niqbid' AND g.bundesland LIKE '$bundesland' AND erste_staatsangehoerigkeit LIKE '$staat'
-=======
                 WHERE a.deleted = 0 AND niqidberatungsstelle LIKE '$niqbid' AND g.bundesland LIKE '$bundesland' AND erste_staatsangehoerigkeit LIKE '$staat' AND YEAR(STR_TO_DATE(a.datum, '%Y-%m-%d')) > 2022
->>>>>>> 9ae79f4 Update 20.06.2025
                 GROUP BY MONTH(STR_TO_DATE(a.datum, '%Y-%m-%d'))");
 	    } else {
-	        $query->statement("SELECT MONTH(STR_TO_DATE(a.datum, '%Y-%m-%d')) as monat, count(*) as anzahl
+	        $sql = "SELECT MONTH(STR_TO_DATE(a.datum, '%Y-%m-%d')) as monat, count(*) as anzahl
                 FROM tx_iqtp13db_domain_model_folgekontakt as a
-                INNER JOIN tx_iqtp13db_domain_model_teilnehmer as b ON a.teilnehmer = b.uid 
-                LEFT JOIN fe_groups as g on b.niqidberatungsstelle = g.niqbid 
+                INNER JOIN tx_iqtp13db_domain_model_teilnehmer as b ON a.teilnehmer = b.uid
+                LEFT JOIN fe_groups as g on b.niqidberatungsstelle = g.niqbid
                 WHERE YEAR(STR_TO_DATE(a.datum, '%Y-%m-%d')) = $jahr
                 AND a.deleted = 0 AND niqidberatungsstelle LIKE '$niqbid' AND g.bundesland LIKE '$bundesland' AND erste_staatsangehoerigkeit LIKE '$staat'
-                GROUP BY MONTH(STR_TO_DATE(a.datum, '%Y-%m-%d'))");
+                GROUP BY MONTH(STR_TO_DATE(a.datum, '%Y-%m-%d'))";
+	        $query->statement($sql);
 	    }
         $query = $query->execute(true);
         return $query;
@@ -130,7 +127,7 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 if($landkreis != '%') $sql .= " AND o.landkreis LIKE '$landkreis'";
                 if($beruf != '%') $sql .= " AND a.referenzberufzugewiesen LIKE '$beruf'";
                 if($branche != '%') $sql .= " AND a.branche LIKE '$branche'";
-        $sql .= " GROUP BY t.uid ORDER BY f.datum ASC LIMIT 500";
+        $sql .= " ORDER BY f.datum ASC LIMIT 500";
 
         $query->statement($sql);
         

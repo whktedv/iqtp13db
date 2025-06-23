@@ -224,7 +224,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $monatsnamen[$i] = date("M", mktime(0, 0, 0, $i, 1, date('Y')));
             if($jahrselected != 0 && $jahrselected != 99) {
                 $monatsnamen[$i] = $monatsnamen[$i]." ".$jahrselected;
-            } else {
+            } elseif($jahrselected == 99) {
+                $monatsnamen[$i] = $monatsnamen[$i];
+            } else {            
                 if($i <= idate('m')) {
                     $monatsnamen[$i] = $monatsnamen[$i]." ".idate('Y');
                 } else {
@@ -2882,6 +2884,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', $searchparams['ort'] ?? '');
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', $searchparams['beruf'] ?? '');
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', $searchparams['land'] ?? '');
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fgebdat', $searchparams['gebdat'] ?? '');
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberater', $searchparams['berater'] ?? '');            
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberatername', $searchparams['berater'] ?? '');            
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fgruppe', $searchparams['gruppe'] ?? '');
@@ -2896,6 +2899,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', NULL);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', NULL);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', NULL);
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fgebdat', NULL);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberater', NULL);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fgruppe', NULL);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fbescheid', NULL); // antragstellungvorher
@@ -2906,6 +2910,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $f['name'] = preg_replace('/\s+/', ' ', trim($GLOBALS['TSFE']->fe_user->getKey('ses', 'fname')));
         $f['ort'] = preg_replace('/\s+/', ' ', trim($GLOBALS['TSFE']->fe_user->getKey('ses', 'fort')));
         $f['beruf'] = preg_replace('/\s+/', ' ', trim($GLOBALS['TSFE']->fe_user->getKey('ses', 'fberuf')));
+        $f['gebdat'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fgebdat');
         $f['land'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fland');
         $f['berater'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fberater');
         $f['gruppe'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fgruppe');
@@ -2913,15 +2918,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         if($f['land'] == '-1000' || $f['land'] == NULL) $f['land'] = '';
         if($f['berater'] == -1 || $f['berater'] == NULL) $f['berater'] = '';
-        if($f['uid'] == '' && $f['name'] == '' && $f['ort'] == '' && $f['beruf'] == '' && $f['land'] == '' && $f['berater'] == '' && $f['gruppe'] == '' && $f['bescheid'] == '') {
+        if($f['uid'] == '' && $f['name'] == '' && $f['ort'] == '' && $f['beruf'] == '' && $f['gebdat'] == ''  && $f['land'] == '' && $f['berater'] == '' && $f['gruppe'] == '' && $f['bescheid'] == '') {
             if($deleted == 1) {
                 $teilnehmers = $this->teilnehmerRepository->findhidden4list($orderby, $order, $this->niqbid);
-            } else {
-                //if($type == 0) {
-                    //$teilnehmers = $this->tn4ListeRepository->findTN4Anmeldung($this->niqbid, $orderby, $order);                    
-                //} else {
-                    $teilnehmers = $this->teilnehmerRepository->findAllOrder4List($type, $orderby, $order, $this->niqbid);
-                //}
+            } else {               
+                    $teilnehmers = $this->teilnehmerRepository->findAllOrder4List($type, $orderby, $order, $this->niqbid);               
             }
         } else {
             $berufearr = $this->berufeRepository->findAllOrdered('de');
@@ -2935,6 +2936,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $this->view->assign('filtername', $f['name']);
             $this->view->assign('filterort', $f['ort']);
             $this->view->assign('filterberuf', $f['beruf']);
+            $this->view->assign('filtergebdat', $f['gebdat']);
             $this->view->assign('filterland', $f['land']);
             if($f['land'] != '') {
                 $land = $this->staatenRepository->findStaatname($f['land']);                

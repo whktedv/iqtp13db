@@ -81,7 +81,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $this->view->assign('calleraction', $valArray['calleraction']);
         $this->view->assign('callercontroller', $valArray['callercontroller']);
         $this->view->assign('callerpage', $valArray['callerpage'] ?? '1');
-        $this->view->assign('thisaction', $valArray['thisaction']);
+        $this->view->assign('thisaction', $valArray['thisaction'] ?? '');
         return $this->htmlResponse();
     }
     
@@ -154,11 +154,12 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         
         if($folgekontakttimestamp->getTimestamp() < $beratungtimestamp->getTimestamp()) {
             $this->addFlashMessage('Datum Folgekontakt muss nach Datum Erstberatung sein.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
-            return $this->redirect('new', 'Folgekontakt', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'],'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage']));
-        } elseif($folgekontakttimestamp->getTimestamp() < $letzterfolgekontakttimestamp->getTimestamp()) {
-            $this->addFlashMessage('Datum Folgekontakt muss nach letztem Folgekontakt sein.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
-            return $this->redirect('new', 'Folgekontakt', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'],'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage']));
+            return $this->redirect('new', 'Folgekontakt', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'],'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage']));        
         } else {
+            
+            if($folgekontakttimestamp->getTimestamp() < $letzterfolgekontakttimestamp->getTimestamp()) {
+                $this->addFlashMessage('Hinweis: Datum Folgekontakt ist vor letztem Folgekontakt.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
+            }
             $this->folgekontaktRepository->add($folgekontakt);
             
             // Daten sofort in die Datenbank schreiben
@@ -187,7 +188,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $this->view->assign('alleberater', $alleberater);
         $this->view->assign('folgekontakt', $folgekontakt);
         $this->view->assign('teilnehmer', $teilnehmer);
-        $this->view->assign('thisaction', $valArray['thisaction']);
+        $this->view->assign('thisaction', $valArray['thisaction'] ?? '');
         $this->view->assign('callerpage', $valArray['callerpage']  ?? '1');
         $this->view->assign('calleraction', $valArray['calleraction']);
         $this->view->assign('callercontroller', $valArray['callercontroller']);

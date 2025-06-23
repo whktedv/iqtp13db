@@ -136,7 +136,11 @@ form.filterform select, .exportfilterform select {
 	font-family: roboto;
 	font-weight: 300;
 	font-size: 0.90rem;
-	border: 1px solid #4e638d;
+	border: 1px solid #4e638d;	
+}
+
+form.filterform select {
+	max-width: 140px;
 }
 
 .filterframe h1 {
@@ -434,7 +438,7 @@ td.tdcenter input[type="checkbox"] {
 }
 
 .edit-eingabefelder, .show-eingabefelder {
-	padding-top: 4rem;
+	padding-top: 4.6rem;
 }
 
 .buttoneinwilligung {
@@ -617,8 +621,7 @@ table.abschluesseliste {
 	padding-top: 3px;
 }
 
-#AnkerFolgekontakte button[type="submit"]
-	{
+#AnkerFolgekontakte button[type="submit"] {
 	color: #fff;
 	background: #468787 !important;
 	text-align: center;
@@ -702,6 +705,10 @@ table.abschluesseliste {
 	padding-top: 3px;
 }
 
+.dok-control-panel {
+	margin-bottom: 0.6rem;	
+}
+
 table.dokumenteupload label {
 	font-size: inherit;
 	padding-top: 0;
@@ -713,7 +720,6 @@ table.dokumenteupload label {
 table.dokumenteupload td.dokumenteuploadform {
 	text-align: left;
 }
-
 
 .tx-iqtp13db .buttonberatung {
 	background-color: #7478bf;

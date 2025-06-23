@@ -1,14 +1,12 @@
-
 /* ---- Allgemein ------ */
-
 .tx-iqtp13db ul {
 	list-style: none;
 	display: flex;
 }
 
 .tx-iqtp13db ul.typo3-messages {
-  list-style: none;
-  display: block;  
+	list-style: none;
+	display: block;
 }
 
 .tx-iqtp13db .fframe {
@@ -18,13 +16,13 @@
 }
 
 .tx-iqtp13db a {
-    color: #428BCA;
-    text-decoration: none;
+	color: #428BCA;
+	text-decoration: none;
 }
 
 .tx-iqtp13db table {
-    border-collapse: separate;
-    border-spacing: 4px;
+	border-collapse: separate;
+	border-spacing: 4px;
 }
 
 .tx-iqtp13db table th {
@@ -33,27 +31,27 @@
 }
 
 .tx-iqtp13db table td {
-    vertical-align: middle;
+	vertical-align: middle;
 }
 
 .tx-iqtp13db table td.tdcenter {
-     text-align: center; 
+	text-align: center;
 }
 
-.tx-iqtp13db input[type="submit"], .tx-iqtp13db .linkbuttons  {
-    background-color: #99CACA;
-    border: 1px solid transparent;
-    white-space: nowrap;
-    margin-bottom: 0px;
-    font-weight: normal;
-    text-align: center;
-    font-size: 14px;
-    line-height: 1.42857;
-    padding: 2px 4px;
-    color: #FFF;
-    cursor: pointer;
-    display: inline-block;
-    -moz-user-select: none;
+.tx-iqtp13db input[type="submit"], .tx-iqtp13db .linkbuttons {
+	background-color: #99CACA;
+	border: 1px solid transparent;
+	white-space: nowrap;
+	margin-bottom: 0px;
+	font-weight: normal;
+	text-align: center;
+	font-size: 14px;
+	line-height: 1.42857;
+	padding: 2px 4px;
+	color: #FFF;
+	cursor: pointer;
+	display: inline-block;
+	-moz-user-select: none;
 	text-decoration: none;
 }
 
@@ -63,17 +61,17 @@
 }
 
 .tx-iqtp13db .einwilligungtext {
-    font-weight: 400;
-    font-size: 1.1em;
+	font-weight: 400;
+	font-size: 1.1em;
 }
 
 .nacherfassunginfotext {
-    font-size: 1.1em;
-    color: #7478bf;
+	font-size: 1.1em;
+	color: #7478bf;
 }
 
 .tx-iqtp13db .infolabel::after {
-	content: '?';	
+	content: '?';
 	display: inline-block;
 	width: 20px;
 	height: 20px;
@@ -101,7 +99,6 @@
 .tp13_formdivwebapp:nth-child(even) {
 	background-color: #eff6f9;
 }
-
 
 .tp13_formdivwebapp input[type="text"], select {
 	height: 35px;
@@ -134,16 +131,16 @@
 .tx-iqtp13db input[type="radio"], .tx-iqtp13db input[type="checkbox"] {
 	height: 1.3em;
 	width: auto;
-    display: inline;
-    line-height: normal;
-    margin: 3px 10px 0 0;
-     -ms-transform: scale(1.5); 
-    -webkit-transform: scale(1.5);
-    transform: scale(1.5);
+	display: inline;
+	line-height: normal;
+	margin: 3px 10px 0 0;
+	-ms-transform: scale(1.5);
+	-webkit-transform: scale(1.5);
+	transform: scale(1.5);
 }
 
 .tx-iqtp13db .f3-form-error {
-  outline: 1px solid red;
+	outline: 1px solid red;
 }
 
 .tx-iqtp13db .errormessage {
@@ -182,7 +179,7 @@
 }
 
 .tx-iqtp13db .logo_und_navi {
-    max-width: 1400px;
+	max-width: 1400px;
 }
 
 .tx-iqtp13db .navbar {
@@ -216,20 +213,20 @@ button.abbruchbtn {
 .abbruchlink {
 	background-color: #e69b9b !important;
 	width: 150px;
-    height: 40px;
-    padding: 8px !important;
+	height: 40px;
+	padding: 8px !important;
 }
 
 .tx-iqtp13db .mycustomlink a, button {
-    padding: 4px 12px;
-    margin-top: 0px;
+	padding: 4px 12px;
+	margin-top: 0px;
 }
 
 .tx-iqtp13db input, .tx-iqtp13db select, .tx-iqtp13db textarea {
-    font-family: inherit;
-    font-size: inherit;
-    line-height: inherit;
-    width: auto;
+	font-family: inherit;
+	font-size: inherit;
+	line-height: inherit;
+	width: auto;
 }
 
 .tx-iqtp13db .bdat {
@@ -248,37 +245,37 @@ button.abbruchbtn {
 	padding: 20px;
 	margin: 15px 0px;
 	width: 100%;
-	background-color: rgba(175,208,202,0.46);
+	background-color: rgba(175, 208, 202, 0.46);
 }
 
 .tp13_formdiv100 {
-    display: flex;
-    margin-right: 2%;
-    width: 95%;
+	display: flex;
+	margin-right: 2%;
+	width: 95%;
 }
 
 .tp13_formdiv20 {
 	display: flex;
-    margin-right: 2%;
-    width: 17%;
+	margin-right: 2%;
+	width: 17%;
 }
 
 .tp13_formdiv50 {
 	display: flex;
-    margin-right: 2%;
-    width: 47%;
+	margin-right: 2%;
+	width: 47%;
 }
 
 .tp13_formdiv33 {
 	display: flex;
-    margin-right: 2%;
-    width: 31%;
+	margin-right: 2%;
+	width: 31%;
 }
 
 .tp13_formdiv25 {
 	display: flex;
-    margin-right: 2%;
-    width: 22%;
+	margin-right: 2%;
+	width: 22%;
 }
 
 .tp13_formdiv3 {
@@ -299,16 +296,17 @@ button.abbruchbtn {
 }
 
 .dropzone {
-    border: 2px dashed #cccccc;
-    background-color: #eeeeee;
-    padding: 20px;
-    text-align: center;
-    cursor: pointer;
-    margin-bottom: 1rem;
+	border: 2px dashed #cccccc;
+	background-color: #eeeeee;
+	padding: 20px;
+	text-align: center;
+	cursor: pointer;
+	margin-bottom: 1rem;
 }
+
 .dropzone-inner {
 	display: flex;
-	flex-direction: column;   
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 }
@@ -319,25 +317,29 @@ button.abbruchbtn {
 
 .dokumenteliste {
 	display: flex;
-	flex-direction: column;   
-	justify-content: center;	
+	flex-direction: column;
+	justify-content: center;
 	font-size: 1.1rem;
 	color: #556bb9;
-	margin-left: 10px;	
+	margin-left: 10px;
 }
 
 #fileInput {
 	display: none;
 }
+
 #fileInput1 {
 	display: none;
 }
+
 #fileInput2 {
 	display: none;
 }
+
 #fileInput3 {
 	display: none;
 }
+
 #fileInput4 {
 	display: none;
 }
@@ -351,26 +353,26 @@ table tr.dokcattr td {
 }
 
 .speicherplatz {
-	font-size: 0.8rem;	
+	font-size: 0.8rem;
 }
 
 .iq-teaser-logo-ohne-rand h1 {
-    font-size: 2em;
-    font-weight: 500;
+	font-size: 2em;
+	font-weight: 500;
 }
 
 .iq-teaser-logo-ohne-rand .defaultframe {
-    background-color: rgba(175, 208, 202, 0.46);
-    padding: 15px;
+	background-color: rgba(175, 208, 202, 0.46);
+	padding: 15px;
 }
 
 .iq-teaser-weiss-integrationsbetriebe .defaultframe {
-    background-color: rgba(152, 156, 162, 0.25);
-    padding: 15px;
+	background-color: rgba(152, 156, 162, 0.25);
+	padding: 15px;
 }
 
 .flex {
-  display: flex;
+	display: flex;
 }
 
 form.filterform {
@@ -384,19 +386,51 @@ form.filterform div {
 
 #dialog-confirm {
 	display: none;
-} 
+}
 
 .iq-standardcontainer-weiss {
 	padding-top: 1rem;
 }
 
 .farbbalken_outer {
-  margin-top: 0rem;
+	margin-top: 0rem;
+	position: fixed;
+	top: 90px;
+}
+
+.frame-group-container {
+
+  padding-top: 0rem !important;
+}
+
+.buttonmenu {
+	position: fixed;
+	background-color: #fff;
+	width: 100%;
+	max-width: 1366px;
+	height: fit-content;
+	display: flex;
+	flex-direction: column;
+	margin-top: 0.5rem;
+	padding-top: 0.5rem;
+	padding-bottom: 1.5rem;
+	z-index: 1000;
+	background: -moz-linear-gradient(top, rgba(255, 255, 255, 1) 0%,
+		rgba(255, 255, 255, 1) 74%, rgba(255, 255, 255, 0) 100%);
+	/* FF3.6-15 */
+	background: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 0%,
+		rgba(255, 255, 255, 1) 74%, rgba(255, 255, 255, 0) 100%);
+	/* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%,
+		rgba(255, 255, 255, 1) 74%, rgba(255, 255, 255, 0) 100%);
+	/* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff',
+		endColorstr='#00ffffff', GradientType=0); /* IE6-9 */
 }
 
 #overlay {
-  background: #2d2d2d;
-  opacity: .4;
+	background: #2d2d2d;
+	opacity: .4;
 }
 
 .overlay-inner {
@@ -407,21 +441,19 @@ form.filterform div {
 	margin-top: -100px;
 }
 
-
 /* Anmeldung */
-
 .anmeldstart-frame {
 	background-color: rgba(175, 208, 202, 0.26);
 	display: flex;
-	flex-direction: column;		
-    align-items: center;
+	flex-direction: column;
+	align-items: center;
 }
 
 .anmeldstart-frame .frame-inner h1.text-center {
 	margin: auto;
 	background: #468787;
 }
-	
+
 .iq-teaser-logo-ohne-rand {
 	width: 100%;
 }
@@ -441,7 +473,7 @@ form.filterform div {
 	flex-direction: column;
 }
 
-#divanmeldwohnsitz {	
+#divanmeldwohnsitz {
 	margin: 2rem 0;
 	display: flex;
 	flex-direction: column;
@@ -495,35 +527,34 @@ form.filterform div {
 	padding: 1.5rem;
 }
 
-
 .diveditexternlogin {
 	margin: 3rem 0 0 0;
 	text-align: center;
 }
 
-.tx-iqtp13db .diveditexternlogin button[type="submit"], .tx-iqtp13db .editexterninner .linkbuttons {
-  background-color: #46878730;
-  border: 0px solid transparent;
-  white-space: nowrap;
-  font-weight: 500 !important;
-  text-align: center;
-  font-size: 0.9rem;
-  line-height: 1.42857;
-  padding-top: 5px;
-  padding-right: 10px;
-  padding-bottom: 5px;
-  padding-left: 10px;
-  color: #468787;
-  cursor: pointer;
-  display: inline-block;
-  -moz-user-select: none;
-  text-decoration: none;
-  text-transform: uppercase;
-  border-radius: 0;
-    border-bottom-right-radius: 0px;
-  border-bottom-right-radius: 10px;
-  box-shadow: 1px 2px 3px #494949;
-  
+.tx-iqtp13db .diveditexternlogin button[type="submit"], .tx-iqtp13db .editexterninner .linkbuttons
+	{
+	background-color: #46878730;
+	border: 0px solid transparent;
+	white-space: nowrap;
+	font-weight: 500 !important;
+	text-align: center;
+	font-size: 0.9rem;
+	line-height: 1.42857;
+	padding-top: 5px;
+	padding-right: 10px;
+	padding-bottom: 5px;
+	padding-left: 10px;
+	color: #468787;
+	cursor: pointer;
+	display: inline-block;
+	-moz-user-select: none;
+	text-decoration: none;
+	text-transform: uppercase;
+	border-radius: 0;
+	border-bottom-right-radius: 0px;
+	border-bottom-right-radius: 10px;
+	box-shadow: 1px 2px 3px #494949;
 }
 
 .tx-iqtp13db .diveditexternlogin button[type="submit"] {
@@ -535,7 +566,7 @@ form.filterform div {
 	/* position: absolute;*/
 	inset-inline-start: 0;
 	inset-inline-end: 0;
-	margin: auto;	
+	margin: auto;
 	background-color: Canvas;
 	color: CanvasText;
 	width: -moz-fit-content;
@@ -545,21 +576,21 @@ form.filterform div {
 	box-shadow: 0px 0px 13px 13px #fff;
 	z-index: 101;
 }
-	
+
 #errormodal h3 {
 	color: #000;
 	font-weight: 500;
 	padding: 5px;
 	background-color: #FF9F9F;
 }
-	
-#errormodal button  {
-	background-color: #FF9F9F; !important;
+
+#errormodal button {
+	background-color: #FF9F9F; ! important;
 	border-radius: 10px;
 }
 
-#infomodal button  {
-	background-color: ##99CACA; !important;
+#infomodal button {
+	background-color: ##99CACA; ! important;
 	border-radius: 10px;
 }
 
@@ -569,93 +600,79 @@ form.filterform div {
 	padding: 5px;
 	background-color: #99CACA;
 }
-	  
+
 /* -------- für Display-Größen bis 767 Pixel Breite (Smartphones/MOBILE) -------- */
-@media (max-width: 767px) {
+@media ( max-width : 767px) {
 	.tp13_formdivwebapp label {
 		width: 100%;
 	}
-
 	.tp13_formdivwebapp input[type="text"] {
 		width: 100%;
 	}
-
 	.tx-iqtp13db button {
 		width: 100%;
 		height: 40px;
 		margin-bottom: 10px;
 	}
-
 	.chooselang {
 		display: none;
 	}
-
 	.chooselangmobile {
 		color: #000;
-	}	
-	
+	}
 	.tx-iqtp13db input[type="radio"], .tx-iqtp13db input[type="checkbox"] {
 		width: 1.3em;
 	}
-	
 	#chooselang {
 		width: 100%;
-  		height: 2rem;
+		height: 2rem;
 	}
-	
 	.tx-iqtp13db .infolabel {
 		background-size: 1.4em;
 	}
-	
-	#weiterbutton, #zurueckbutton, #newabschlusszurueckbutton, #abbruchbutton {
+	#weiterbutton, #zurueckbutton, #newabschlusszurueckbutton,
+		#abbruchbutton {
 		margin-bottom: 15px;
 	}
 }
 
 /* -------- für Display-Größen über 768 Pixel Breite -------- */
-@media (min-width: 768px) {
+@media ( min-width : 768px) {
 	.tp13_formdivwebapp label {
 		width: 20%;
 	}
-
 	.tp13_formdivwebapp input[type="text"] {
 		width: 50%;
 		height: 35px;
 	}
-	
 	.formabschluss .tp13_formdivwebapp input[type="text"] {
 		width: 50%;
 		height: 35px;
 	}
-
 	.tx-iqtp13db input[type="text"].plztextfield {
 		width: 10%;
 		margin-right: 14px;
 	}
-
 	.tx-iqtp13db input[type="text"].orttextfield {
 		width: 39%;
 	}
-	
 	.tx-iqtp13db input[type="text"].datumtextfield {
 		width: 10%;
-	}	
-
+	}
 	.tx-iqtp13db input[type="text"].datumtextfieldberatung {
 		width: 10%;
-	}	
-
-	.tx-iqtp13db input[type="text"].smallertextfield, .tx-iqtp13db select.smallertextfield {
+	}
+	.tx-iqtp13db input[type="text"].smallertextfield, .tx-iqtp13db select.smallertextfield
+		{
 		width: 23%;
 		margin-left: 14px;
 	}
-
-	.tx-iqtp13db input[type="text"].smallertextfield2, .tx-iqtp13db select.smallertextfield2 {
+	.tx-iqtp13db input[type="text"].smallertextfield2, .tx-iqtp13db select.smallertextfield2
+		{
 		width: 23%;
 		margin-left: 14px;
 		display: none;
 	}
-
 	.headabschlusslinks, .headabschlussrechts {
 		width: 50%;
 		display: flex;
@@ -663,45 +680,37 @@ form.filterform div {
 		align-items: center;
 		margin: 5px;
 	}
-
 	.chooselang {
 		display: block;
 	}
-	
 	.navbar-toggle {
 		display: none;
 	}
-	
 	.navbar-nav {
 		display: flex;
 		flex-direction: row;
 		margin-left: 0 !important;
 	}
-	
 	.navbar-nav li {
-    	padding-right: 5px;
+		padding-right: 5px;
 	}
 }
 
 @media print {
-  body {
-  	font-size: 0.6em;
-  }
-  
-  .tx-iqtp13db h2 {
-  	color: #468787;
-  	font-size: 1.0em;
-  	margin: 1px;
-  }
-  
-  .tx-iqtp13db .fframe {
-	border: 1px solid #ababab;
-  	padding: 2px;
-  	margin: 2px 0px;
-  }
-
-  .tp13_formdivwebapp {
-  	padding: 1px;
-  }
-  
+	body {
+		font-size: 0.6em;
+	}
+	.tx-iqtp13db h2 {
+		color: #468787;
+		font-size: 1.0em;
+		margin: 1px;
+	}
+	.tx-iqtp13db .fframe {
+		border: 1px solid #ababab;
+		padding: 2px;
+		margin: 2px 0px;
+	}
+	.tp13_formdivwebapp {
+		padding: 1px;
+	}
 }

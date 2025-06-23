@@ -139,12 +139,14 @@ Update: 16.06.2025:
 - Bugfix bei Frontend: Leistungsbezug
 
 Neu:
-<<<<<<< Upstream, based on origin/version7
-=======
-- Anpassungen Eingabeformular Hilfetexte
-- Bugfixing Quellcodepflege (Klasse tnseite1 entfernt)
-- Folgeberatungen auch im Ratsuchenden-Datensatz aufrufbar
+- Anpassungen Eingabeformular Hilfetexte für Anmeldeformular für Ratsuchende (Frontend)
+- Anpassungen Bezeichnungen Eingabefelder für Anmeldeformular für Ratsuchende (Frontend)
+- Verbesserung des Dokumentenuploads für Anmeldeformular für Ratsuchende (Frontend) und Beratende (Backend)
+- In allen Modulen ist nun Suche nach Geburtsdatum möglich
 - Ratsuchende können aus dem Modul Archiv in das Modul Erstberatung verschoben werden (un-archiviert werden) 
-- Verbesserung des Dokumentenuploads für Ratsuchende (Frontend) und Beratende (Backend)
->>>>>>> 9ae79f4 Update 20.06.2025
-
+- Folgeberatungen auch im Ratsuchenden-Datensatz aufrufbar
+- Folgeberatungen könne auch vor bereits eingetragenen Folgeberatungen eingetragen werden
+- Bei Suche nach Berater*in werden nun auch Ergebnisse mit Folgeberatungen angezeigt
+- Bei Anzeige Dokumentenliste im Ratsuchenden-Datensatz nun Button mit Funktion hinzugefügt: „Alle Dokumente in neuen Tabs öffnen“
+- Fehler in Exportmodul bei Folgeberatungen korrigiert
+- Bugfixing und Quellcodepflege (Klasse tnseite1 entfernt)
