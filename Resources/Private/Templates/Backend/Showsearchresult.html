@@ -42,13 +42,17 @@
 			</h1></td></tr>
 			<f:for each="{teilnehmerbystatus}" as="teilnehmer" iteration="it">
 			{f:variable(name: 'summebdauer', value: '{summeberatungsdauer.{teilnehmer.uid}}')}		
-				<tr class="
-				{f:if(condition: '{teilnehmer.hidden}', then: 'geloescht ')}
-				{f:if(condition: '{teilnehmer.dublette}', then: 'dublette ')}
-				{f:if(condition: '{teilnehmer.verificationDate} != 0 AND {teilnehmer.beratungsstatus} < 2', then: 'bestaetigt ')}
-				{f:if(condition: '{teilnehmer.verificationDate} == 0 AND {teilnehmer.beratungdatum} != \'\'', then: 'unbestaetigt-beraten ')}
-				">
-				
+				<f:if condition="{teilnehmer.dublette}"><f:then>
+					<tr class="dublette">
+				</f:then>
+				<f:else>
+					<tr class="
+					{f:if(condition: '{teilnehmer.hidden}', then: 'geloescht ')}				
+					{f:if(condition: '{teilnehmer.verificationDate} != 0 AND {teilnehmer.beratungsstatus} < 2', then: 'bestaetigt ')}
+					{f:if(condition: '{teilnehmer.verificationDate} == 0 AND {teilnehmer.beratungdatum} != \'\'', then: 'unbestaetigt-beraten ')}
+					">
+				</f:else>			
+				</f:if>
 					<td><f:link.action action="show" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, searchparams : searchparams}">{teilnehmer.uid}</f:link.action></td>
 					<td><f:link.action action="show" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, searchparams : searchparams}">{teilnehmer.nachname}</f:link.action></td>
 					<td><f:link.action action="show" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, searchparams : searchparams}">{teilnehmer.vorname}</f:link.action></td>

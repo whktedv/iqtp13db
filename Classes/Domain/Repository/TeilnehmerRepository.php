@@ -48,9 +48,10 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $whereExpressions = array();
         $orwhereExpressionsName = array();
         $orwhereExpressionsOrt = array();
+        $orwhereExpressionsBerater = array();
         $andwhereExpressionAntrag = array();
         $orwhereExpressionsBeratungsstatus = array();
-        $orwhereExpressionsBeruf = array();
+        $orwhereExpressionsBeruf = array();        
         
         $whereExpressions = [
             $queryBuilder->expr()->eq('niqidberatungsstelle', $queryBuilder->createNamedParameter($niqbid, Connection::PARAM_INT)),

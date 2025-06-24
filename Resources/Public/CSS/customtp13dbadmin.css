@@ -680,7 +680,7 @@ table.abschluesseliste {
 }
 
 #AnkerDokumente button[type="submit"], #AnkerDokumente button.linkbuttons
-	{
+{
 	color: #fff;
 	background: #9F9168 !important;
 	text-align: center;
@@ -689,8 +689,7 @@ table.abschluesseliste {
 	padding: 9px;
 	padding-top: 1px;
 	border-bottom-right-radius: 10px;
-	height: 22px;
-	margin-left: 1rem !important;
+	height: 22px;	
 }
 
 #AnkerDokumente h2 {

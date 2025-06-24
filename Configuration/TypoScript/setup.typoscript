@@ -160,12 +160,22 @@ plugin.tx_iqtp13db.settings {
    }  
    	
    beratungsart {
-   	1 = face-to-face
-   	2 = Telefon
-   	3 = E-Mail
-   	5 = Video
+   	1 = Persönliche Beratung am Beratungsstandort
+   	6 = Persönliche Beratung mobil
+   	2 = Telefonische Beratung
+   	3 = Digitale Beratung (E-Mail, Messenger, Social Media, etc.)
+   	5 = Videoberatung
    }
-
+	
+   beratungsformfolgeberatung {
+	0 = keine Angabe
+	1 = Persönliche Beratung am Beratungsstandort
+	2 = Persönliche Beratung mobil
+	3 = Telefonische Beratung
+	4 = Digitale Beratung (E-Mail, Messenger, Social Media, etc.)
+	5 = Videoberatung
+   }
+   
    anerkennungsberatung {
 	1 = Beratung zu Anerkennungsmöglichkeiten
 	2 = Beratung zu aufenthaltsrechtl. Möglichkeiten i.V.m. Anerkennung
@@ -201,14 +211,6 @@ plugin.tx_iqtp13db.settings {
 	3 = Auflage einer Ausgleichsmaßmahme (reglementierter Beruf)
 	4 = Teilweise Gleichwertigkeit (nicht reglementierter Beruf)
 	5 = Keine Gleichwertigkeit (Ablehnungsbescheid)
-   }
-	
-   beratungsformfolgeberatung {
-	0 = keine Angabe
-	1 = Persönliche Beratung am festen Beratungsstandort
-	2 = Persönliche Beratung außerhalb der eigenen Räumlichkeiten (mobil)
-	3 = Telefonische Beratung
-	4 = Digitale Beratung (E-Mail, Messenger, Social Media, etc.)
    }
  
 }

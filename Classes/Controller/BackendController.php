@@ -975,13 +975,10 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $j = 0;
         foreach($alleteilnehmer as $key => $teilnehmer) {
             // Dublettenprüfung
-            // $anz = $this->teilnehmerRepository->findDublette4Angemeldet($teilnehmer->getNachname(),$teilnehmer->getVorname(), $this->niqbid);
-            // if($anz > 1) $alleteilnehmer[$key]->setDublette(TRUE);
-                        
             foreach($tnuiddublette as $tnuid) {
                 if($teilnehmer->getNachname() == $tnuid['nachname'] && $teilnehmer->getVorname() == $tnuid['vorname'] && $teilnehmer->getEmail() == $tnuid['email'] && $teilnehmer->getAnonym() == '0') $alleteilnehmer[$key]->setDublette(TRUE);
             }
-            
+
             // Modul
             $beratungsstatus = $teilnehmer->getBeratungsstatus();
             if($teilnehmer->getHidden() == 1) $alleteilnehmer[$key]->setModul("Gelöscht");

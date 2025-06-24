@@ -146,7 +146,10 @@ Neu:
 - Ratsuchende können aus dem Modul Archiv in das Modul Erstberatung verschoben werden (un-archiviert werden) 
 - Folgeberatungen auch im Ratsuchenden-Datensatz aufrufbar
 - Folgeberatungen könne auch vor bereits eingetragenen Folgeberatungen eingetragen werden
+- Bezeichnung der Beratungsformen für Erst- und Folgeberatungen miteinander synchronisiert und Wording angepasst (bei Folgeberatungen nun zusätzlich Videoberatung, bei Erstberatung nun zusätzlich Beratung mobil)
 - Bei Suche nach Berater*in werden nun auch Ergebnisse mit Folgeberatungen angezeigt
 - Bei Anzeige Dokumentenliste im Ratsuchenden-Datensatz nun Button mit Funktion hinzugefügt: „Alle Dokumente in neuen Tabs öffnen“
 - Fehler in Exportmodul bei Folgeberatungen korrigiert
+- Fehler in Dublettendarstellung bei Suche in allen Modulen korrigiert
 - Bugfixing und Quellcodepflege (Klasse tnseite1 entfernt)
+
