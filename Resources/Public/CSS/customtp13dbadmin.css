@@ -73,10 +73,10 @@ p.alert-message {
 	margin: 0rem 0rem 2.5rem 0rem;
 	margin-top: 0rem;
 	margin-right: 0rem;
-	margin-bottom: 2.5rem;
+	margin-bottom: 0.5rem;
 	margin-left: 0rem;
 	border-bottom: 1px solid rgb(206, 201, 201);
-	padding-bottom: 2rem;
+	padding-bottom: 0.5rem;
 }
 
 form.filterform {
@@ -438,7 +438,7 @@ td.tdcenter input[type="checkbox"] {
 }
 
 .edit-eingabefelder, .show-eingabefelder {
-	padding-top: 4.6rem;
+	padding-top: 5.3rem;
 }
 
 .buttoneinwilligung {

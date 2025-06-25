@@ -113,7 +113,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $this->view->assign('alleberater', $alleberater);
         $this->view->assign('berater', $this->user);
         $this->view->assign('teilnehmer', $teilnehmer);
-        $this->view->assign('thisaction', $valArray['thisaction']);
+        $this->view->assign('thisaction', $valArray['thisaction'] ?? '');
         $this->view->assign('calleraction', $valArray['calleraction']);
         $this->view->assign('callercontroller', $valArray['callercontroller']);
         $this->view->assign('callerpage', $valArray['callerpage'] ?? '1');
@@ -138,6 +138,11 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         
         $letzterfolgekontakt = $this->folgekontaktRepository->findLastByTNuid($teilnehmer->getUid());
         $beratungtimestamp = DateTime::createFromFormat("Y-m-d", $teilnehmer->getBeratungdatum());
+        
+        if($beratungtimestamp == FALSE) {
+            $this->addFlashMessage('Noch kein Beratungsdatum eingetragen, Folgekontakt nur nach erfolgter Erstberatung möglich.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+            return $this->redirect('new', 'Folgekontakt', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'],'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage']));
+        }
         
         if($folgekontakt->getDatum() == '') {
             $this->addFlashMessage('Bitte Datum eingeben.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
@@ -165,6 +170,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
             // Daten sofort in die Datenbank schreiben
             $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
             $persistenceManager->persistAll();
+            $this->addFlashMessage('Folgekontakt für '.$teilnehmer->getNachname().', '.$teilnehmer->getVorname().' (UID: '.$teilnehmer->getUid().') erstellt.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
             
             return $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
         }
@@ -208,11 +214,12 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $valArray = $this->request->getArguments();
         
         $this->folgekontaktRepository->update($folgekontakt);
+        $teilnehmer = $folgekontakt->getTeilnehmer();
         
         // Daten sofort in die Datenbank schreiben
         $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
-        
+        $this->addFlashMessage('Folgekontakt für '.$teilnehmer->getNachname().', '.$teilnehmer->getVorname().' (UID: '.$teilnehmer->getUid().') aktualisiert.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
         return $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'] ?? '1'));       
     }
     
@@ -228,11 +235,12 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $valArray = $this->request->getArguments();
         
         $this->folgekontaktRepository->remove($folgekontakt);
+        $teilnehmer = $folgekontakt->getTeilnehmer();
         
         // Daten sofort in die Datenbank schreiben
         $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
-                
+        $this->addFlashMessage('Folgekontakt für '.$teilnehmer->getNachname().', '.$teilnehmer->getVorname().' (UID: '.$teilnehmer->getUid().') gelöscht.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
         return $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'] ?? '1'));
         
     }

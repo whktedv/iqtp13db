@@ -228,7 +228,7 @@
 			
 			<trans-unit id="editexternauthenticatelabel"><target>Zur Authentifizierung bitte Geburtsdatum eingeben und auf den Weiter-Button klicken.</target></trans-unit>
 						
-			<trans-unit id="uploaddropfile"><target>Dateien für den Upload hier ablegen.</target></trans-unit>
+			<trans-unit id="uploaddropfile"><target>Dokumente für den Upload hier ablegen.</target></trans-unit>
 		</body>
 	</file>
 </xliff>

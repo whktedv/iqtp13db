@@ -7,25 +7,25 @@
 
 <f:section name="main">
 
-<div class="buttonmenu">
-	<div class="toplinkbuttons">
-		<f:link.action target="_blank" class="linkbuttons" action="show" controller="Backend" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">Daten {teilnehmer.nachname}, {teilnehmer.vorname} anzeigen</f:link.action>
-		<f:link.action target="_blank" class="linkbuttons" action="edit" controller="Backend" arguments="{teilnehmer:teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">Daten {teilnehmer.nachname}, {teilnehmer.vorname} bearbeiten</f:link.action>
-		<f:link.action id="linkloadoverlay-back" class="linkbuttons" action="{thisaction}" controller="{callercontroller}" arguments="{teilnehmer: teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">Zurück</f:link.action>
-	</div>
-</div>
-
-<h1>Neuer Folgekontakt für {teilnehmer.nachname}, {teilnehmer.vorname}</h1>
-
 <f:flashMessages />
-
 <f:render partial="FormErrors" arguments="{object:Folgekontakt}" />
 
 <f:form action="create" name="folgekontakt" object="{folgekontakt}" arguments="{calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">
-
-	<f:render partial="Folgekontakt/FormFields" arguments="{_all}" />
-	<f:form.hidden property="teilnehmer" value="{teilnehmer.uid}" />
-	
+	<div class="buttonmenu">
+		<div class="toplinkbuttons">
+			<f:link.action target="_blank" class="linkbuttons" action="show" controller="Backend" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">Daten {teilnehmer.nachname}, {teilnehmer.vorname} anzeigen</f:link.action>
+			<f:link.action target="_blank" class="linkbuttons" action="edit" controller="Backend" arguments="{teilnehmer:teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">Daten {teilnehmer.nachname}, {teilnehmer.vorname} bearbeiten</f:link.action>
+			<f:link.action id="linkloadoverlay-back" class="linkbuttons" action="{thisaction}" controller="{callercontroller}" arguments="{teilnehmer: teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">Zurück</f:link.action>
+		</div>
+		<div class="toplinkbuttons">
+			<f:form.button type="submit" class="linkbuttons" id="savebutton1">{f:translate(key:'speichern')}</f:form.button>
+		</div>	
+	</div>
+	<div class="edit-eingabefelder">
+		<h1>Neuer Folgekontakt für {teilnehmer.nachname}, {teilnehmer.vorname}</h1>
+		<f:render partial="Folgekontakt/FormFields" arguments="{_all}" />
+		<f:form.hidden property="teilnehmer" value="{teilnehmer.uid}" />
+	</div>
 	<f:form.button type="submit" class="linkbuttons" id="savebutton1">{f:translate(key:'speichern')}</f:form.button>
 	<f:link.action id="linkloadoverlay-back" class="linkbuttons" action="{thisaction}" controller="{callercontroller}" arguments="{teilnehmer: teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">Zurück</f:link.action>
 </f:form>

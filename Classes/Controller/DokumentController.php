@@ -94,7 +94,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         
         $dateienbisher = $this->dokumentRepository->findByTeilnehmer($teilnehmer->getUid());
         $anzdateienbisher = count($dateienbisher);
-        $files = $this->request->getArgument('file');
+        $files = $this->request->getArgument('file') ?? null;
         
         if($files == NULL) {
             $this->addFlashMessage('Error in saveFileBackend: maximum filesize exceeded or permission error', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);

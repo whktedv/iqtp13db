@@ -5,12 +5,22 @@
 </f:section>
 <f:section name="main">
 
+<div class="buttonmenu">
+	<div class="toplinkbuttons">
+		<f:link.action target="_blank" class="linkbuttons" action="show" controller="Backend" arguments="{teilnehmer: teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">Daten {teilnehmer.nachname}, {teilnehmer.vorname} anzeigen</f:link.action>
+		<f:link.action target="_blank" class="linkbuttons" action="edit" controller="Backend" arguments="{teilnehmer: teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">Daten {teilnehmer.nachname}, {teilnehmer.vorname} bearbeiten</f:link.action>
+		<f:link.action id="linkloadoverlay-back" class="linkbuttons" action="{thisaction}" controller="{callercontroller}" arguments="{teilnehmer: teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, showabschluesse : '1'}">Zurück</f:link.action>
+	</div>
+	<div class="toplinkbuttons">
+		<f:link.action class="linkbuttons" action="edit" controller="Abschluss" arguments="{abschluss : abschluss, teilnehmer : teilnehmer, calleraction : calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : 'show'}" title="Bearbeiten">Abschluss bearbeiten</f:link.action>
+	</div>
+</div>
+
 <f:flashMessages />
 
-<f:link.action id="linkloadoverlay-back" class="linkbuttons" action="{thisaction}" controller="{callercontroller}" arguments="{teilnehmer: teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, showabschluesse : '1'}">Zurück</f:link.action>
-<f:link.action class="linkbuttons" action="edit" controller="Abschluss" arguments="{abschluss : abschluss, teilnehmer : teilnehmer, calleraction : calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : 'edit'}" title="Bearbeiten">Bearbeiten</f:link.action>
-<h1>Daten Abschluss</h1>
-<f:render partial="Abschluss/Properties" arguments="{abschluss:abschluss, staaten:staaten, berufe:berufe, abschlussartarr : abschlussartarr, brancheunterkat : brancheunterkat}" />
-<f:link.action id="linkloadoverlay-edit" class="linkbuttons" action="{thisaction}" controller="{callercontroller}" arguments="{teilnehmer: teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, showabschluesse : '1'}">Zurück</f:link.action>
+<div class="show-eingabefelder">
+	<h1>Daten Abschluss</h1>
+	<f:render partial="Abschluss/Properties" arguments="{abschluss:abschluss, staaten:staaten, berufe:berufe, abschlussartarr : abschlussartarr, brancheunterkat : brancheunterkat}" />
+</div>
 
 </f:section>

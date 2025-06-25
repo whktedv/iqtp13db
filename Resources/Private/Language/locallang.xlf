@@ -169,7 +169,7 @@
 		
 		<trans-unit id="editexternauthenticatelabel"><source>To authenticate, please enter your date of birth and click the Forward button.</source></trans-unit>
 		
-		<trans-unit id="uploaddropfile"><source>Drop files for upload here.</source></trans-unit>
+		<trans-unit id="uploaddropfile"><source>Drop documents for upload here.</source></trans-unit>
 	</body>
   </file>
 </xliff>

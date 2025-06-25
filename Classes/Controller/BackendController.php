@@ -2299,6 +2299,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             // Daten sofort in die Datenbank schreiben
             $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
             $persistenceManager->persistAll();
+            
+            $this->addFlashMessage($teilnehmer->getNachname().', '.$teilnehmer->getVorname().' (UID: '.$teilnehmer->getUid().') gelöscht.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
         } else {
             $this->addFlashMessage('Bereits in NIQ übertragene Datensätze können nicht gelöscht werden.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
         }
@@ -2327,6 +2329,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         // Daten sofort in die Datenbank schreiben
         $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
+        
+        $this->addFlashMessage($teilnehmer->getNachname().', '.$teilnehmer->getVorname().' (UID: '.$teilnehmer->getUid().') wiederhergestellt.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
         
         return $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'], 'searchparams' => $searchparams));
     }
@@ -2550,7 +2554,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
             $persistenceManager->persistAll();
             
-            $this->addFlashMessage('Archiviert.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
+            $this->addFlashMessage($teilnehmer->getNachname().', '.$teilnehmer->getVorname().' (UID: '.$teilnehmer->getUid().') archiviert.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
         }
         
         return $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'] ?? '1'), null);
@@ -2575,7 +2579,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
         
-        $this->addFlashMessage('Zurück aus Archiv in Modul Erstberatung verschoben.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
+        $this->addFlashMessage($teilnehmer->getNachname().', '.$teilnehmer->getVorname().' (UID: '.$teilnehmer->getUid().') zurück aus Archiv in Modul Erstberatung verschoben.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
     
         return $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'] ?? '1'), null);
     }

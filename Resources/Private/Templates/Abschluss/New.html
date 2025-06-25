@@ -4,17 +4,26 @@
   		<link rel="stylesheet" href="{f:uri.resource(path: 'CSS/customtp13dbadmin.css')}"/>  		
 </f:section>
 <f:section name="main">
-<h1>Neuer Abschluss</h1>
 
 <f:flashMessages />
-
 <f:render partial="FormErrors" arguments="{object:Abschluss}" />
 
 <f:form id="abschlussform" action="create" name="abschluss" object="{abschluss}" arguments="{teilnehmer: teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : thisaction}">
-	<f:form.button type="submit" class="linkbuttons" onclick="return cancelsubmit();" id="savebutton1">{f:translate(key:'speichern')}</f:form.button>
-	<f:link.action id="linkloadoverlay-back" class="linkbuttons" action="{thisaction}" controller="{callercontroller}" arguments="{teilnehmer: teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, showabschluesse : 1}">Zurück</f:link.action>
-	
-	<f:render partial="Abschluss/FormFields" arguments="{abschlussjahre:abschlussjahre, staatenarr:staatenarr, berufearr:berufearr, abschlussartarr : abschlussartarr, brancheoberkat : brancheoberkat, brancheunterkat : brancheunterkat}" />
+	<div class="buttonmenu">
+		<div class="toplinkbuttons">
+			<f:link.action target="_blank" class="linkbuttons" action="show" controller="Backend" arguments="{teilnehmer: teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">Daten {teilnehmer.nachname}, {teilnehmer.vorname} anzeigen</f:link.action>
+			<f:link.action target="_blank" class="linkbuttons" action="edit" controller="Backend" arguments="{teilnehmer: teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">Daten {teilnehmer.nachname}, {teilnehmer.vorname} bearbeiten</f:link.action>
+			<f:link.action id="linkloadoverlay-back" class="linkbuttons" action="{thisaction}" controller="{callercontroller}" arguments="{teilnehmer: teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, showabschluesse : '1'}">Zurück</f:link.action>
+		</div>
+		<div class="toplinkbuttons">
+			<f:form.button type="submit" class="linkbuttons" onclick="return cancelsubmit();" id="savebutton2">{f:translate(key:'speichern')}</f:form.button>
+		</div>	
+	</div>
+
+	<div class="edit-eingabefelder">
+		<h1>Neuer Abschluss</h1>
+		<f:render partial="Abschluss/FormFields" arguments="{abschlussjahre:abschlussjahre, staatenarr:staatenarr, berufearr:berufearr, abschlussartarr : abschlussartarr, brancheoberkat : brancheoberkat, brancheunterkat : brancheunterkat}" />
+	</div>
 	
 	<f:form.button type="submit" class="linkbuttons" onclick="return cancelsubmit();" id="savebutton2">{f:translate(key:'speichern')}</f:form.button>
 	<f:link.action id="linkloadoverlay-edit" class="linkbuttons" action="{thisaction}" controller="{callercontroller}" arguments="{teilnehmer: teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, showabschluesse : 1}">Zurück</f:link.action>
