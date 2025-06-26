@@ -157,3 +157,4 @@ Update 25.06.2025
 - Bugfixing und Quellcodepflege (Klasse tnseite1 entfernt)
 
 Neu:
+- Bugfixing bei Bereitsberaten-Action

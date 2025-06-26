@@ -2120,7 +2120,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             }
         } else {
             $this->addFlashMessage("FEHLER in initializeUpdateAction.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
-            return $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage']));
+            return $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'] ?? '1'));
         }
     }
     
@@ -2332,7 +2332,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $this->addFlashMessage($teilnehmer->getNachname().', '.$teilnehmer->getVorname().' (UID: '.$teilnehmer->getUid().') wiederhergestellt.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
         
-        return $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'], 'searchparams' => $searchparams));
+        return $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $searchparams));
     }
     
     

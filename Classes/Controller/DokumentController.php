@@ -196,7 +196,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
                 $this->addFlashMessage('Error in saveFileWebapp: Maximum filesize exceeded (10 MB). Please reduce filesize.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
             } else {
                 $dokument = new \Ud\Iqtp13db\Domain\Model\Dokument();
-                $dokument->setBeschreibung($valArray['beschreibung']);
+                $dokument->setBeschreibung($valArray['beschreibung'] ?? '');
                 $this->saveFileTeilnehmer($dokument, $teilnehmer, $_FILES['tx_iqtp13db_iqtp13dbwebapp']);
             }
             
@@ -234,7 +234,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
                     // TODO: Dateityp überprüfen
                     
                     $dokument = new \Ud\Iqtp13db\Domain\Model\Dokument();
-                    $dokument->setBeschreibung($valArray['beschreibung']);
+                    $dokument->setBeschreibung($valArray['beschreibung'] ?? '');
                     $this->saveFileTeilnehmer($dokument, $teilnehmer, $file);
                 }                
             }

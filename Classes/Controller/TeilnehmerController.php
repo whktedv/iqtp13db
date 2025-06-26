@@ -407,7 +407,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                         $teilnehmerarr = $this->teilnehmerRepository->findDublette4Anmeldung($teilnehmer->getNachname(), $teilnehmer->getVorname(), $teilnehmer->getEmail());
                         
                         if(count($teilnehmerarr) > 0) {
-                            $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnuid', null);                            
+                            $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnuidbereitsberaten', $teilnehmerarr[0]);
                             return $this->redirect('bereitsberaten', 'Teilnehmer', 'Iqtp13db', array('tn' => $teilnehmerarr[0]));                           
                         }
                     }
@@ -921,12 +921,22 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function bereitsberatenAction(): ResponseInterface
     {   
         $valArray = $this->request->getArguments();
-        $teilnehmer = $this->teilnehmerRepository->findByUid($valArray['tn']);
-        $bstid = $teilnehmer->getNiqidberatungsstelle() == 0 ? $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid') : $teilnehmer->getNiqidberatungsstelle();
-
-        $beratungsstelle = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $bstid);
-        $beratungsstellendaten = $beratungsstelle[0]->getDescription();            
         
+        $tnuid = $valArray['tn'] ?? false;
+        if($tnuid == false) $GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuidbereitsberaten') ?? 0;
+        
+        $teilnehmer = $this->teilnehmerRepository->findByUid($tnuid);
+        
+        $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnuid', null);
+        if($teilnehmer){                    
+            $bstid = $teilnehmer->getNiqidberatungsstelle() == 0 ? $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid') : $teilnehmer->getNiqidberatungsstelle();
+    
+            $beratungsstelle = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $bstid);
+            $beratungsstellendaten = $beratungsstelle[0]->getDescription();                        
+        } else {
+            $beratungsstellendaten = '';
+            $teilnehmer = 0;
+        }
         $this->view->assign('beratungsstellendaten', $beratungsstellendaten);
         $this->view->assign('teilnehmer', $teilnehmer);
         return $this->htmlResponse();
