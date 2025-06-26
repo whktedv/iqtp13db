@@ -53,6 +53,13 @@ class Dokument extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $filesize = 0;    
     
     /**
+     * tnfreigabe
+     *
+     * @var bool
+     */
+    protected $tnfreigabe = NULL;  
+    
+    /**
      * Returns the name
      *
      * @return string $name
@@ -149,6 +156,34 @@ class Dokument extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         } else {
             return 0;
         }
+    }
+    
+    /**
+     * Returns the tnfreigabe
+     *
+     * @return int $tnfreigabe
+     */
+    public function getTnfreigabe()
+    {
+        return $this->tnfreigabe;
+    }
+    
+    /**
+     * Sets the tnfreigabe
+     *
+     * @param int $tnfreigabe
+     * @return void
+     */
+    public function setTnfreigabe($tnfreigabe)
+    {
+        $this->tnfreigabe = $tnfreigabe;
+    }
+    
+    /**
+     * @return boolean $tnfreigabe
+     */
+    public function isTnfreigabe() {
+        return $this->getTnfreigabe();
     }
     
 }

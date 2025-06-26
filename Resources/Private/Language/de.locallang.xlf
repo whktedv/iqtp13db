@@ -209,6 +209,7 @@
 			<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.beratungsdauer"><target>Beratungsdauer (in Stunden)</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.notizen"><target>Notizen</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.teilnehmer"><target>Ratsuchende*r</target></trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_folgekontakt.tnfreigabe"><target>Ratsuchenden-Freigabe</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_dokument"><target>Dokument</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_dokument.name"><target>Name</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_dokument.beschreibung"><target>Kurzbeschreibung</target></trans-unit>

@@ -197,6 +197,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
             } else {
                 $dokument = new \Ud\Iqtp13db\Domain\Model\Dokument();
                 $dokument->setBeschreibung($valArray['beschreibung'] ?? '');
+                $dokument->setTnfreigabe(1);
                 $this->saveFileTeilnehmer($dokument, $teilnehmer, $_FILES['tx_iqtp13db_iqtp13dbwebapp']);
             }
             
@@ -235,12 +236,13 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
                     
                     $dokument = new \Ud\Iqtp13db\Domain\Model\Dokument();
                     $dokument->setBeschreibung($valArray['beschreibung'] ?? '');
+                    $dokument->setTnfreigabe(1);
                     $this->saveFileTeilnehmer($dokument, $teilnehmer, $file);
                 }                
             }
             
         }
-        return $this->redirect('anmeldungcomplete', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
+        return $this->redirect($valArray['calleraction'], 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
     }
     
     /**
@@ -272,8 +274,9 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      */
     public function deleteFileWebappAction(\Ud\Iqtp13db\Domain\Model\Dokument $dokument, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
     {
+        $valArray = $this->request->getArguments();
         $retval = $this->deleteFileTeilnehmer($dokument, $teilnehmer);
-        return (new ForwardResponse('anmeldungcomplete'))->withControllerName('Teilnehmer');
+        return (new ForwardResponse($valArray['calleraction']))->withControllerName('Teilnehmer');
     }
    
     /**
@@ -410,6 +413,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
             } else {
                 $dokument = new \Ud\Iqtp13db\Domain\Model\Dokument();
                 $dokument->setBeschreibung($valArray['beschreibung']);
+                $dokument->setTnfreigabe(1);
                 $this->saveFileTeilnehmer($dokument, $teilnehmer, $_FILES['tx_iqtp13db_iqtp13dbwebapp']);
             }
             

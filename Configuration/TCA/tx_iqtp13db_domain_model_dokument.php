@@ -18,7 +18,7 @@ return [
         'iconfile' => 'EXT:iqtp13db/Resources/Public/Icons/tx_iqtp13db_domain_model_dokument.gif'
     ],
     'types' => [
-        '1' => ['showitem' => 'hidden, name, beschreibung, pfad, teilnehmer, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+        '1' => ['showitem' => 'hidden, name, beschreibung, pfad, teilnehmer, tnfreigabe --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
     'columns' => [
         't3ver_label' => [
@@ -110,6 +110,15 @@ return [
                 'foreign_table' => 'tx_iqtp13db_domain_model_teilnehmer',
                 'minitems' => 0,
                 'maxitems' => 1,
+            ],
+        ],
+        'tnfreigabe' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_dokument.tnfreigabe',
+            'config' => [
+                'type' => 'input',
+                'size' => 4,
+                'eval' => 'int'
             ],
         ],
     ],

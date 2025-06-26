@@ -191,7 +191,10 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     return (new ForwardResponse('startseite'))->withControllerName('Teilnehmer')->withExtensionName('Iqtp13db');
                 }
             }
-        }       
+        }  
+        if ($this->settings['modtyp'] == 'bearbeiten') {
+            return (new ForwardResponse('editextern'))->withControllerName('Teilnehmer')->withExtensionName('Iqtp13db');
+        }
     }
     
     /**
@@ -664,6 +667,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 $this->teilnehmerRepository->update($teilnehmer);
                 return $this->redirect('anmeldungcomplete', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
             }elseif(isset($valArray['btnspeichern'])) {
+                $this->teilnehmerRepository->update($teilnehmer);
                 $this->addFlashMessage('Daten gespeichert.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
                 return $this->redirect('editexternmenu', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));            
             } else {
@@ -1062,6 +1066,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 $this->addFlashMessage('Link ungültig, Datensatz nicht vorhanden.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
                 return $this->redirect('validationFailed');
             }
+        } else {
+            $this->addFlashMessage('Aufruf dieser Seite nur über individuellen Link aus E-Mail.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            return $this->redirect('anmeldseite0');
         }
         return $this->htmlResponse();
     }
@@ -1073,6 +1080,10 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function editexternredirectAction(): ResponseInterface
     {
         $valArray = $this->request->getArguments();
+        if(!$this->request->hasArgument('authfrage')) {
+            $this->addFlashMessage('Link ungültig, bitte erst anmelden.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            return $this->redirect('validationFailed');
+        }
         
         if($this->request->hasArgument('code')) {
             $teilnehmer = $this->teilnehmerRepository->findOneByVerificationCode($this->request->getArgument('code'));
@@ -1086,54 +1097,15 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 $tngebdat = \DateTime::createFromFormat('Y-m-d', $teilnehmer->getGebdat());
                 $authfragegebdat = DateTime::createFromFormat('Y-m-d', $this->request->getArgument('authfrage'));                
             } else {
-                $this->addFlashMessage('Geburtsdatum für diesen Datensatz nicht eingetragen.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                $this->addFlashMessage('Geburtsdatum für diesen Datensatz nicht eingetragen, Anmeldung nicht möglich.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
                 return $this->redirect('editextern', 'Teilnehmer', null, array('code' => $valArray['code']));
             }
             
-            if($tngebdat == $authfragegebdat) {                
-                
-                $groupId = $this->createTemporaryFrontendGroup('temp_user'.$teilnehmer->getUid(), $this->settings['tempuserstoragepid'], time() + 7200);
-                
-                $newfefUserId = $this->createTemporaryFrontendUser([
-                    'username' => 'temp_user'.$teilnehmer->getUid(),
-                    'password' => $valArray['code'],
-                    'email' => $teilnehmer->getEmail(),
-                    'pid' => $this->settings['tempuserstoragepid'], // Speicherort im Seitenbaum 
-                    'usergroup' => $groupId,
-                    'endtime' => time() + 7200 // 2 Stunden gültig
-                ]);
-                
-                $storage = $this->generalhelper->getTP13Storage($this->storageRepository->findAll());                
-                $storagerec = $storage->getStorageRecord(); // ID des File-Storage
-                
-                $pfad = $this->generalhelper->createFolder($teilnehmer, $this->storageRepository->findAll());
-                $beratenepath = '/'.ltrim($pfad->getIdentifier(), '/');
-                
-                $newPermissionId = $this->addFolderPermission($storagerec['uid'], $beratenepath, $pfad, $groupId);
-               
-                // frontend User --------------------
-                $frontendUser = GeneralUtility::makeInstance(FrontendUserAuthentication::class);
-                $frontendUser->lockIP = 0;
-                
-                // Benutzer direkt aus der Datenbank holen
-                $queryBuilder = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ConnectionPool::class)
-                ->getQueryBuilderForTable('fe_users');
-                
-                $userData = $queryBuilder
-                ->select('*')
-                ->from('fe_users')
-                ->where($queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($newfefUserId, \PDO::PARAM_INT)))
-                ->executeQuery()
-                ->fetchAssociative();
-                
-                if ($userData) {
-                    $frontendUser->loginUser = true;
-                    $frontendUser->user = $userData;                    
-                }
-                
-                return $this->redirect('editexternmenu', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));                
+            if($tngebdat == $authfragegebdat) {
+                $GLOBALS['TSFE']->fe_user->setKey('ses', 'editextern', $teilnehmer->getUid());
+                return $this->redirect('editexternmenu', 'Teilnehmer', null, null);                
             } else {
-                $this->addFlashMessage('Eingegebenes Geburtsdatum ist nicht korrekt.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                $this->addFlashMessage('Eingegebenes Geburtsdatum ist nicht korrekt oder falsches Format!', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
                 return $this->redirect('editextern', 'Teilnehmer', null, array('code' => $valArray['code']));
             }
         } else {
@@ -1149,81 +1121,83 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function editexternmenuAction(): ResponseInterface
     {
         $valArray = $this->request->getArguments();
-        
-        $tnuid = $valArray['teilnehmer'];
-        $GLOBALS['TSFE']->fe_user->setKey('ses', 'editextern', $tnuid);
-       
+              
+        $tnuid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'editextern') ?? 0;
          
-        $teilnehmer = $this->teilnehmerRepository->findByUid($tnuid);
-        $dokumente = $this->dokumentRepository->findByTeilnehmer($teilnehmer);
-        $storage = $this->generalhelper->getTP13Storage($this->storageRepository->findAll());
-        $folder = $storage->getConfiguration()['basePath'].'/';
-        $filesizes = array();
-        $filesizesum = 0;
-        foreach($dokumente as $key => $dok) {
-            $dokfs = $dok->getFilesize($folder) ?? 0;
-            $filesizes[$key] = $dokfs == 0 ? 0 : $this->generalhelper->human_filesize($dokfs, 1);
-            $filesizesum += $dokfs;
-        }
-        $speicherbelegung = intval(($filesizesum/31457280)*100);
-                      
-        if(isset($valArray['thisaction']) && $valArray['thisaction'] == "anmeldung") {            
-
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'teilnehmer', serialize($teilnehmer));
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnuid', $teilnehmer->getUid());
-            //$GLOBALS['TSFE']->fe_user->setKey('ses', 'editextern', $teilnehmer->getUid());
+        if($tnuid == 0) {
+            $this->addFlashMessage('Daten konnte nicht geladen werden, Session abgelaufen oder Cookie nicht gefunden.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            return $this->redirect('editextern', 'Teilnehmer', null, null);
+        } else {
+            $teilnehmer = $this->teilnehmerRepository->findByUid($tnuid);
+            $dokumente = $this->dokumentRepository->findTnfreigegeben($teilnehmer);
+            $storage = $this->generalhelper->getTP13Storage($this->storageRepository->findAll());
+            $folder = $storage->getConfiguration()['basePath'].'/';
+            $filesizes = array();
+            $filesizesum = 0;
+            foreach($dokumente as $key => $dok) {
+                $dokfs = $dok->getFilesize($folder) ?? 0;
+                $filesizes[$key] = $dokfs == 0 ? 0 : $this->generalhelper->human_filesize($dokfs, 1);
+                $filesizesum += $dokfs;
+            }
+            $speicherbelegung = intval(($filesizesum/31457280)*100);
             
-            return $this->redirect('anmeldseite1', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'plz' => $teilnehmer->getPlz(), 'wohnsitzDeutschland' => $teilnehmer->getWohnsitzdeutschland()));            
-        }elseif(isset($valArray['thisaction']) && $valArray['thisaction'] == "abmelden"){
-            $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnuid', null);
-            $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('teilnehmer', null);
-            $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('ses', null);
+            if(isset($valArray['thisaction']) && $valArray['thisaction'] == "anmeldung") {
+                
+                $GLOBALS['TSFE']->fe_user->setKey('ses', 'teilnehmer', serialize($teilnehmer));
+                $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnuid', $teilnehmer->getUid());
+                //$GLOBALS['TSFE']->fe_user->setKey('ses', 'editextern', $teilnehmer->getUid());
+                
+                return $this->redirect('anmeldseite1', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'plz' => $teilnehmer->getPlz(), 'wohnsitzDeutschland' => $teilnehmer->getWohnsitzdeutschland()));
+            }elseif(isset($valArray['thisaction']) && $valArray['thisaction'] == "abmelden"){
+                $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnuid', null);
+                $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('teilnehmer', null);
+                $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('ses', null);
+                
+                return $this->redirect('startseite', 'Teilnehmer', null, null);
+            }
             
-            $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('fe_users');
-            $tempfeuserid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'tempfeuserid');
-            $connection->delete('fe_users', ['uid' => $tempfeuserid]);
+            $abschluesse = new \Ud\Iqtp13db\Domain\Model\Abschluss();
+            $abschluesse = $this->abschlussRepository->findByTeilnehmer($teilnehmer->getUid());
             
-            return $this->redirect('startseite', 'Teilnehmer', null, null);
-        }
-        
-        $abschluesse = new \Ud\Iqtp13db\Domain\Model\Abschluss();
-        $abschluesse = $this->abschlussRepository->findByTeilnehmer($teilnehmer->getUid());
-        
-        $language = $this->request->getAttribute('language');
-        $isocode  = $language->getLocale()->getLanguageCode();
-        
-        $aktuellesJahr = (int)date("Y");
-        $abschlussjahre = array();
-        $abschlussjahre[-1] = 'k.A.';
-        for($jahr = $aktuellesJahr; $jahr > $aktuellesJahr-60; $jahr--) {
-            $abschlussjahre[$jahr] = (String)$jahr;
-        }
-        
-        $abschlussartarr = $this->settings['abschlussart'];
-        unset($abschlussartarr[2]);
-        
-        $brancheunterkat = $this->brancheRepository->findAllUnterkategorie($isocode);
-        $arrbranche = array();
-        foreach ($brancheunterkat as $branche) {
-            $arrbranche[$branche->getBrancheid()] = $branche->getTitel();
-        }
-        
-        $this->view->assignMultiple(
-            [
-                'settings' => $this->settings,
-                'abschluesse' => $abschluesse,
-                'teilnehmer' => $teilnehmer,
-                'dokumente' => $dokumente,
-                'beratungsstelle' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid'),
-                'abschlussjahre' => $abschlussjahre,
-                'abschlussartarr' => $abschlussartarr,
-                'arrbranche' => $arrbranche,
-                'speicherbelegung' => $speicherbelegung, 
-                'filesizes' => $filesizes
-            ]
-        );
-        
-        return $this->htmlResponse();        
+            $language = $this->request->getAttribute('language');
+            $isocode  = $language->getLocale()->getLanguageCode();
+            
+            $aktuellesJahr = (int)date("Y");
+            $abschlussjahre = array();
+            $abschlussjahre[-1] = 'k.A.';
+            for($jahr = $aktuellesJahr; $jahr > $aktuellesJahr-60; $jahr--) {
+                $abschlussjahre[$jahr] = (String)$jahr;
+            }
+            
+            $abschlussartarr = $this->settings['abschlussart'];
+            unset($abschlussartarr[2]);
+            
+            $brancheunterkat = $this->brancheRepository->findAllUnterkategorie($isocode);
+            $arrbranche = array();
+            foreach ($brancheunterkat as $branche) {
+                $arrbranche[$branche->getBrancheid()] = $branche->getTitel();
+            }
+            
+            $this->view->assignMultiple(
+                [
+                    'settings' => $this->settings,
+                    'abschluesse' => $abschluesse,
+                    'teilnehmer' => $teilnehmer,
+                    'dokumente' => $dokumente,
+                    'beratungsstelle' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid'),
+                    'abschlussjahre' => $abschlussjahre,
+                    'abschlussartarr' => $abschlussartarr,
+                    'arrbranche' => $arrbranche,
+                    'speicherbelegung' => $speicherbelegung,
+                    'filesizes' => $filesizes,
+                    'calleraction' => 'editexternmenu'
+                    
+                    
+                ]
+                );
+            
+            return $this->htmlResponse();   
+        }             
     }
        
     /*
@@ -1333,39 +1307,5 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 
         return $existingEntry; // Eintrag existiert bereits
     }
-    
-    protected function addFolderPermission(int $storageId, string $folderPath, $pfadobject, int $feGroupId)
-    {
-        // Berechnung des Folder-Hashes
-        $folderHash = $pfadobject->getHashedIdentifier();
-              
-        // Datenbankverbindung
-        $connection = GeneralUtility::makeInstance(ConnectionPool::class)
-        ->getConnectionForTable('tx_falsecuredownload_folder');
-        
-        // Prüfen, ob der Eintrag bereits existiert
-        $existingEntry = $connection->select(
-            ['uid'],
-            'tx_falsecuredownload_folder',
-            ['folder_hash' => $folderHash, 'fe_groups' => $feGroupId]
-            )->fetchOne();
-            
-            if (!$existingEntry) {
-                // Berechtigung hinzufügen
-                $connection->insert('tx_falsecuredownload_folder', [
-                    'folder_hash' => $folderHash,
-                    'fe_groups' => $feGroupId,
-                    'storage' => $storageId,
-                    'folder' => $folderPath,
-                    'tstamp' => time(),
-                    'crdate' => time(),
-                ]);
-                
-                return $connection->lastInsertId('tx_falsecuredownload_folder');
-            }
-            
-            return null; // Eintrag existiert bereits
-    }
-    
     
 }

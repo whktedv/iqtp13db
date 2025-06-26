@@ -1,7 +1,7 @@
 <div class="dokumenteuploadform">
 
 	<f:if condition="{anzdateien} < 20"><f:then>
-		<f:form action="savemultiFileWebapp" id="fileuploadform{formnumber}" controller="Dokument" name="dokument" arguments="{teilnehmer: teilnehmer}" method="post" enctype="multipart/form-data">
+		<f:form action="savemultiFileWebapp" id="fileuploadform{formnumber}" controller="Dokument" name="dokument" arguments="{teilnehmer: teilnehmer, calleraction : calleraction}" method="post" enctype="multipart/form-data">
 		    <div id="dropzone{formnumber}" class="dropzone">
 		    	<div class="dropzone-inner">
 		    		<img src="/fileadmin/template/images/iq_upload_icon.svg" width="100" height="100"/>
@@ -22,13 +22,15 @@
 	</f:if>
 </div>
 
-<div class="dokumenteliste">						
+<f:if condition="{calleraction} == 'anmeldungcomplete'"><f:then>
+<div class="dokumenteliste">
 	<f:for each="{dokumente}" as="dokument">	
 		<f:if condition="{dokument.beschreibung} == {dokumenttyp}">					
 			<div class="dokitem">
 				<span>{dokument.name}</span>
-				<span><f:link.action class="iconbuttons" action="deleteFileWebapp" controller="Dokument" arguments="{dokument : dokument, teilnehmer : teilnehmer}" onclick="$('#overlay').show();"><img src="/typo3conf/ext/iqtp13db/Resources/Public/Icons/delete-640.png" width="32" height="32" alt="{f:translate(key='loeschen')}" /></f:link.action></span>
+				<span><f:link.action class="iconbuttons" action="deleteFileWebapp" controller="Dokument" arguments="{dokument : dokument, teilnehmer : teilnehmer, calleraction: calleraction}" onclick="$('#overlay').show();"><img src="/typo3conf/ext/iqtp13db/Resources/Public/Icons/delete-640.png" width="32" height="32" alt="{f:translate(key='loeschen')}" /></f:link.action></span>
 			</div>						
 		</f:if>
 	</f:for>
 </div>
+</f:then></f:if>

@@ -22,16 +22,15 @@ class RequestController
 
     public function doksaveEidAction(ServerRequestInterface $request)
     {
-        // Argumente aus dem POST-Request holen
-        //alt typo3-11: $uid = GeneralUtility::trimExplode('=', GeneralUtility::_POST('dokuid'), true)[0];
-        //alt typo3-11: $beschreibung = GeneralUtility::trimExplode('=', GeneralUtility::_POST('dokdescr'), true)[0] ?? '';
-        
+     
         $uid = GeneralUtility::trimExplode('=', $request->getParsedBody()['dokuid'], true)[0];
+        $tnfreigabe = GeneralUtility::trimExplode('=', $request->getParsedBody()['dokfreigabe'], true)[0] ?? 0;
         $beschreibung = GeneralUtility::trimExplode('=', $request->getParsedBody()['dokdescr'], true)[0] ?? '';
         
         // Daten speichern
         $dokument = $this->dokumentRepository->findByUid($uid);        
         $dokument->setBeschreibung($beschreibung);
+        $dokument->setTnfreigabe($tnfreigabe);
         $this->dokumentRepository->update($dokument);
 
         // Persistierung erzwingen

@@ -37,4 +37,18 @@ class DokumentRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         }
     }
     
+    /**
+     * @param $teilnehmer
+     */
+    public function findTnfreigegeben($teilnehmeruid)
+    {
+        $query = $this->createQuery();
+        $query->matching($query->logicalAnd(
+            $query->equals('tnfreigabe', 1),
+            $query->like('teilnehmer', $teilnehmeruid),
+            ));
+        $query = $query->execute();
+        return $query;
     }
+    
+}

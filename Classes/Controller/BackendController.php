@@ -1753,7 +1753,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $brancheunterkat = $this->brancheRepository->findAllUnterkategorie($isocode);
         
         $fk4tn = $this->folgekontaktRepository->findByTeilnehmer($teilnehmer->getUid());
-        //DebuggerUtility::var_dump($fk4tn);
         
         $this->view->assignMultiple(
             [

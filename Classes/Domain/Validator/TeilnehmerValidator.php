@@ -39,6 +39,11 @@ class TeilnehmerValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstra
 	        $errormsg = "<b>".\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('tx_iqtp13db_domain_model_teilnehmer.telefon','iqtp13db') . ":</b> Feld muss ausgefüllt sein.";
 	        $this->addError($errormsg, 1262341470);
 	    }
+	    
+	    if($teilnehmer->getGebdat() == '') {
+	        $errormsg = "<b>".\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('tx_iqtp13db_domain_model_teilnehmer.gebdat','iqtp13db') . ":</b> Feld muss ausgefüllt sein.";
+	        $this->addError($errormsg, 1262341470);
+	    }
 	    return;
 	}
 }

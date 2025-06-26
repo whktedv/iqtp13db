@@ -350,10 +350,10 @@ function showFolgekontakt(uid) {
     $('table#fkt' + uid).toggle();
 }
 
-function asyncupdatedokdescription(inputField, uidField) {
+function asyncupdatedokdescription(inputField, chkboxValue, uidField) {
 	var inputValue = inputField.value;
-	var uidValue = uidField.value;
-	
+	var uidValue = uidField.value;	
+	console.log(chkboxValue);
 	var xhr = new XMLHttpRequest();
     xhr.open('POST', 'index.php?eID=doksave', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -369,5 +369,5 @@ function asyncupdatedokdescription(inputField, uidField) {
 		}
     };
 
-    xhr.send('dokdescr=' + encodeURIComponent(inputValue) + '&dokuid=' + encodeURIComponent(uidValue));
+    xhr.send('dokdescr=' + encodeURIComponent(inputValue) + '&dokfreigabe=' + encodeURIComponent(chkboxValue) + '&dokuid=' + encodeURIComponent(uidValue));
 }
