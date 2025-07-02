@@ -24,10 +24,15 @@
 			<f:flashMessages />
 			
 			<div class="fframe">
-				<p>Guten Tag {teilnehmer.vorname} {teilnehmer.nachname},</p>
-				<p>Sie haben hier die Möglichkeit, Ihre Daten zu bearbeiten oder Dokumente hochzuladen.</p>
-				<p>Wir setzen uns mit Ihnen in Verbindung, sobald Sie an der Reihe sind. Wir bitten um Ihr Verständnis und Ihre Geduld.</p>
-				<p><i>... weiterer Text hier??</i></p>	
+				<p><f:translate key="anredemail" /> {teilnehmer.vorname} {teilnehmer.nachname}!</p>
+				
+				<div style="background-color: #dedede; padding: 10px; border: 1px solid #222; margin-top: 15px;">
+					<div style="font-size: 14px; color:#222222;">
+						<b><f:translate key="kontaktberatungsstelle" /></b><br>
+						<f:format.raw>{datenberatungsstelle}</f:format.raw>
+					</div>
+				</div>
+				
 			</div>
 			
 			<div class="fframe">
@@ -77,17 +82,8 @@
 									<td>{filesizes.{iter.index}}</td>
 									<f:form id="dokumenteform1">
 										<f:form.hidden id="dokid{iter.index}" name="dokid{iter.index}" value="{dokument.uid}" />
-										<td><f:form.textfield id="dokdescrinput{iter.index}" name="dokdescrinput{iter.index}" property="beschreibung" value="{dokument.beschreibung}" size="50" /></td>								
-										<script type="text/javascript">
-											<f:format.raw>
-												$(document).on('blur', '#dokdescrinput{iter.index}', function () {
-													asyncupdatedokdescription(document.getElementById('dokdescrinput{iter.index}'), 1, document.getElementById('dokid{iter.index}'));
-												});
-												$(document).on('keyup', '#dokdescrinput{iter.index}', function (e) {
-													if(e.key === 'Enter' || e.keyCode === 13) asyncupdatedokdescription(document.getElementById('dokdescrinput{iter.index}'), 1, document.getElementById('dokid{iter.index}'));
-												});												
-											</f:format.raw>									
-										</script>
+										<td><f:form.textfield id="dokdescrinput{iter.index}" data-num="{iter.index}" onblur="asyncdescriptionblur(this)" name="dokdescrinput{iter.index}" property="beschreibung" value="{dokument.beschreibung}" size="50" /></td>								
+										
 									</f:form>						
 									<td><f:link.action class="iconbuttons" action="deleteFileWebapp" controller="Dokument" arguments="{dokument : dokument, teilnehmer : teilnehmer, calleraction: 'editexternmenu'}" onclick="return confirm('Wirklich löschen?');$('#overlay').show();" ><img src="/typo3conf/ext/iqtp13db/Resources/Public/Icons/delete-640.png" width="32" height="32" alt="Löschen" /></f:link.action></td>
 								</tr>		
@@ -97,7 +93,7 @@
 					<div style="font-size: 0.8rem;">Speichergröße: 30 MB, Auslastung: {speicherbelegung} %</div>
 				</f:then></f:if>
 				
-				<f:render partial="Dokument/UploadDokFeld4Anmeldung" arguments="{teilnehmer : teilnehmer, dokumente: dokumente, calleraction : calleraction, anzdateien : anzdateien, dokumenttyp : '', formnumber : 1, calleraction : 'editexternmenu'}" />
+				<f:render partial="Dokument/UploadDokFeld4EditExtern" arguments="{teilnehmer : teilnehmer, dokumente: dokumente, calleraction : calleraction, anzdateien : anzdateien, dokumenttyp : ''}" />
 			</div>
 			<div class="fframe">			
 				<f:link.action class="linkbuttons frontend" action="editexternmenu" arguments="{thisaction : 'abmelden'}">Logout</f:link.action><br>
@@ -105,7 +101,13 @@
 		</div>
 	</div>
 </div>
-
+<script type="text/javascript">
+	function asyncdescriptionblur(elem) {
+		let num = elem.getNamedItem("data-num").value;									
+		asyncupdatedokdescription(elem, 1, document.getElementById('dokid' + num));
+	}
+	
+</script>
 <f:asset.script identifier="tndokupload" src="EXT:iqtp13db/Resources/Public/JS/tndokupload.js" />
 
 </f:section>

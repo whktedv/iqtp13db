@@ -1177,6 +1177,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             foreach ($brancheunterkat as $branche) {
                 $arrbranche[$branche->getBrancheid()] = $branche->getTitel();
             }
+            $zugewieseneberatungsstelle = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $teilnehmer->getNiqidberatungsstelle());
+            $datenberatungsstelle = $zugewieseneberatungsstelle != NULL ? $zugewieseneberatungsstelle[0]->getDescription() : '';
             
             $this->view->assignMultiple(
                 [
@@ -1190,9 +1192,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     'arrbranche' => $arrbranche,
                     'speicherbelegung' => $speicherbelegung,
                     'filesizes' => $filesizes,
-                    'calleraction' => 'editexternmenu'
-                    
-                    
+                    'calleraction' => 'editexternmenu',
+                    'datenberatungsstelle' => $datenberatungsstelle                    
                 ]
                 );
             
@@ -1238,74 +1239,5 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      protected function getErrorFlashMessage() {
          return FALSE;
      }
-    
-    
-    protected function createTemporaryFrontendUser(array $userData)
-    {
-        // Passwort hashen
-        $passwordHashFactory = GeneralUtility::makeInstance(PasswordHashFactory::class);
-        $passwordHash = $passwordHashFactory->getDefaultHashInstance('FE');
-        $hashedPassword = $passwordHash->getHashedPassword($userData['password']);
         
-        // Benutzer-Daten vorbereiten
-        $userRecord = [
-            'username' => $userData['username'],
-            'password' => $hashedPassword,
-            'email' => $userData['email'],
-            'pid' => $userData['pid'], // Storage PID für FE-User
-            'disable' => 0, // Benutzer aktiv
-            'tstamp' => time(),
-            'crdate' => time(),
-            'starttime' => time(), // Startzeit (optional)
-            'endtime' => $userData['endtime'] ?? 0, // Endzeit für temporäre User
-        ];
-        
-        // Einfügen in die Datenbank
-        $connection = GeneralUtility::makeInstance(ConnectionPool::class)
-        ->getConnectionForTable('fe_users');
-        
-        // Prüfen, ob der Eintrag bereits existiert
-        $existingEntry = $connection->select(
-            ['uid'],
-            'fe_users',
-            ['username' => $userData['username']]
-            )->fetchOne();
-            
-        if (!$existingEntry) {                
-            $connection->insert('fe_users', $userRecord);                
-            return $connection->lastInsertId('fe_users');
-        }
-            
-        return $existingEntry; // Eintrag existiert bereits
-    }
-    
-    protected function createTemporaryFrontendGroup(string $title, int $pid, int $endtime = 0)
-    {
-        $connection = GeneralUtility::makeInstance(ConnectionPool::class)
-        ->getConnectionForTable('fe_groups');
-        
-        // Prüfen, ob der Eintrag bereits existiert
-        $existingEntry = $connection->select(
-            ['uid'],
-            'fe_groups',
-            ['title' => $title]
-            )->fetchOne();
-            
-        if (!$existingEntry) {
-            $groupRecord = [
-                'title' => $title,
-                'pid' => $pid,
-                'tstamp' => time(),
-                'crdate' => time(),
-                'hidden' => 0
-            ];
-            
-            $connection->insert('fe_groups', $groupRecord);
-            
-            return $connection->lastInsertId('fe_groups');
-        }
-
-        return $existingEntry; // Eintrag existiert bereits
-    }
-    
 }
