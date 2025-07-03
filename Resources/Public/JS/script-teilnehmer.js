@@ -111,7 +111,10 @@
 		
 		// Erstberatung
 		toggleberatungface2face();		
-		$('#chkberatungsartface2face').click(function() {
+		$('#chkberatungsartface2face1').click(function() {
+			toggleberatungface2face();
+		});
+		$('#chkberatungsartface2face6').click(function() {
 			toggleberatungface2face();
 		});
 		
@@ -339,7 +342,7 @@
     			
     // Erstberatung
     function toggleberatungface2face() {
-    	if($('#chkberatungsartface2face').is(":checked")) {
+    	if($('#chkberatungsartface2face1').is(":checked") || $('#chkberatungsartface2face6').is(":checked")) {
     		$('#textareaberatungsartfreitext').show(); 
 			$('#textfieldberatungsort').show(); 
 		} else {
