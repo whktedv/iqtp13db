@@ -515,7 +515,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         asort($arrberater);
         // ***************** Ende - Beraterarray bestimmen *****************
-                
         $this->view->assignMultiple(
             [
                 'anzgesamt' => count($teilnehmer),
@@ -533,7 +532,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'niqbid' => $this->niqbid,
                 'alleberater' => $arrberater,
                 'anzbstellen' => $this->anzbstellen,
-                'abschluesse' => $abschluesse
+                'abschluesse' => $abschluesse,
+                'betafeaturesaktiviert' => $this->usergroup->getBetafeatures()
             ]);
         return $this->htmlResponse();
     }

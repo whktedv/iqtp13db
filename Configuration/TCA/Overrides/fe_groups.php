@@ -11,6 +11,19 @@ $fields = array(
             'eval' => 'trim'
         ),
     ),
+    'betafeatures' => array(
+        'exclude' => 1,
+        'label' => 'Zugriff auf BETA-Features',
+        'config' => array(
+            'type' => 'check',
+            'items' => array(
+                [
+                    'BETA-Features aktivieren',
+                    1,
+                ],
+            ),
+        ),
+    ),
     'nichtiq' => array(
         'exclude' => 1,
         'label' => 'Ist keine IQ-Beratungsstelle',
@@ -87,7 +100,7 @@ $fields = array(
                 ],
             ),
         ),
-    ),
+    ),   
     'einwilligungserklaerungsseite' => array(
         'label' => 'Seite mit eigener Einwilligungserklärung',
         'config' => array(
@@ -150,7 +163,7 @@ $fields = array(
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
     'fe_groups',
-    'niqbid, nichtiq, bundesland, generalmail, plzlist, keywordlist, beratungsarten, einwilligungserklaerungsseite, avadresse, custominfotextmail, custominfotextstart, customlogourl',
+    'niqbid, betafeatures, nichtiq, bundesland, generalmail, plzlist, keywordlist, beratungsarten, einwilligungserklaerungsseite, avadresse, custominfotextmail, custominfotextstart, customlogourl',
     '',
     ''
     );

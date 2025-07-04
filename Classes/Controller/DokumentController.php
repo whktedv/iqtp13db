@@ -7,6 +7,7 @@ use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Core\Core\Environment;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
+use TYPO3\CMS\Core\Resource\ResourceFactory;
 
 use Ud\Iqtp13db\Domain\Repository\UserGroupRepository;
 use Ud\Iqtp13db\Domain\Repository\TeilnehmerRepository;
@@ -176,6 +177,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $publicUrl .= '?' . http_build_query($queryParameterArray, '', '&', PHP_QUERY_RFC3986);
         
         return $this->redirectToURI($publicUrl, $delay=0, $statusCode=303);
+        
     }
     
     /**
@@ -238,6 +240,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
                     $dokument->setBeschreibung($valArray['beschreibung'] ?? '');
                     $dokument->setTnfreigabe(1);
                     $this->saveFileTeilnehmer($dokument, $teilnehmer, $file);
+                    $this->addFlashMessage('Upload erfolgreich.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
                 }                
             }
             
@@ -300,8 +303,8 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     	    $this->addFlashMessage('Maximum total filesize of 40 MB exceeded, please reduce filesize. Maximale Dateigröße aller Dateien zusammen ist 40 MB. Bitte Dateigröße verringern.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
     	} else {
     	    if ($file) {
-    	        
-    	        $dokument = $this->savefile($dokument->getBeschreibung(), $beratenepath, $file);
+
+    	        $dokument = $this->savefile($dokument->getBeschreibung(), $beratenepath, $file, $dokument->getTnfreigabe());
     	        
     	        if($dokument == null) {
     	            $this->addFlashMessage('File already uploaded. Datei wurde schon hochgeladen.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
@@ -309,6 +312,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     	            $dokument->setTeilnehmer($teilnehmer);
     	            $this->dokumentRepository->update($dokument);
     	            //Daten sofort in die Datenbank schreiben
+    	            
     	            $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
     	            $persistenceManager->persistAll();
     	            
@@ -372,6 +376,36 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         
         $targetfile = $storage->getFile($beratenepath . $tmpName);
         
+        $resourceFactory = GeneralUtility::makeInstance(ResourceFactory::class);
+        
+        try {
+            $file = $resourceFactory->getFileObject($targetfile->getUid());
+            
+            // Sicherheitsprüfung
+            if (!$file->exists()) {
+                throw new \Exception('Datei nicht gefunden');
+            }
+            
+            // Response-Header setzen
+            $response = $this->responseFactory->createResponse()
+            ->withHeader('Content-Type', $file->getMimeType())
+            ->withHeader('Content-Disposition', 'attachment; filename="' . $file->getName() . '"')
+            ->withHeader('Content-Length', (string)$file->getSize());
+            
+            // Datei-Inhalt zum Response hinzufügen
+            $response->getBody()->write($file->getContents());
+            
+            return $response;
+            
+        } catch (\Exception $e) {
+            // Fehlerbehandlung
+            return $this->responseFactory->createResponse(404)
+            ->withHeader('Content-Type', 'text/plain')
+            ->withBody($this->streamFactory->createStream('Datei nicht gefunden'));
+        }
+        
+        /*
+        
         $queryParameterArray = ['eID' => 'dumpFile', 't' => 'f'];
         $queryParameterArray['f'] = $targetfile->getUid();
         $queryParameterArray['token'] = GeneralUtility::hmac(implode('|', $queryParameterArray), 'resourceStorageDumpFile');
@@ -379,6 +413,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $publicUrl .= '?' . http_build_query($queryParameterArray, '', '&', PHP_QUERY_RFC3986);
         
         return $this->redirectToURI($publicUrl, $delay=0, $statusCode=303);
+        */
     }
     
     /**
@@ -427,9 +462,10 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      * @param string $beschreibung
      * @param string $pathtofile
      * @param array $file
+     * @param string $tnfreigabe 
      * @return \Ud\Iqtp13db\Domain\Model\Dokument
      */
-    public function savefile($beschreibung, $pfad, $file)
+    public function savefile($beschreibung, $pfad, $file, $tnfreigabe)
     {          
         $dokument = new \Ud\Iqtp13db\Domain\Model\Dokument();
         
@@ -455,6 +491,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
             $reducedfile = $this->reduce_filesize($file, $tmpName, $storage->getConfiguration()['basePath'] . "/" .$pfad);
             
             $dokument->setBeschreibung($beschreibung);
+            $dokument->setTnfreigabe($tnfreigabe);
             if($reducedfile) {            
                 $movedNewFile->delete();
                 $dokument->setName($reducedfile);

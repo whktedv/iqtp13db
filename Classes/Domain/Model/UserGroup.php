@@ -18,7 +18,14 @@ class UserGroup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var string
      */
     protected $niqbid = '';
-        
+
+    /**
+     * betafeatures
+     *
+     * @var int
+     */
+    protected $betafeatures = 0;
+    
     /**
      * nichtiq
      * 
@@ -160,6 +167,27 @@ class UserGroup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setNiqbid($niqbid)
     {
         $this->niqbid = $niqbid;
+    }
+    
+    /**
+     * Returns the betafeatures
+     *
+     * @return int $betafeatures
+     */
+    public function getBetafeatures()
+    {
+        return $this->betafeatures;
+    }
+    
+    /**
+     * Sets the betafeatures
+     *
+     * @param int $betafeatures
+     * @return void
+     */
+    public function setBetafeatures($betafeatures)
+    {
+        $this->betafeatures = $betafeatures;
     }
     
     /**

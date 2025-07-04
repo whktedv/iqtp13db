@@ -75,7 +75,7 @@
 										<f:if condition="{filesizes.{iter.index}} == 0"><f:then>
 											Datei {dokument.name} wurde nicht vollständig hochgeladen oder ist defekt.
 										</f:then><f:else>
-											<f:link.action action="openfile" arguments="{dokument : dokument, teilnehmer : teilnehmer}" controller="Dokument" target="_blank">{dokument.name}</f:link.action>
+											<f:link.action action="openfileextern" arguments="{dokument : dokument, teilnehmer : teilnehmer}" controller="Dokument" target="_blank">{dokument.name}</f:link.action>
 										</f:else>
 										</f:if>
 									</td>
@@ -108,6 +108,6 @@
 	}
 	
 </script>
-<f:asset.script identifier="tndokupload" src="EXT:iqtp13db/Resources/Public/JS/tndokupload.js" />
+<f:asset.script identifier="tndokupload" src="EXT:iqtp13db/Resources/Public/JS/tndokuploadEditExtern.js" />
 
 </f:section>

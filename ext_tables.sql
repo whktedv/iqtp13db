@@ -243,6 +243,7 @@ CREATE TABLE tx_iqtp13db_domain_model_historie (
 #
 CREATE TABLE fe_groups (
         niqbid varchar(255) DEFAULT '' NOT NULL,
+        betafeatures int(11) unsigned DEFAULT '0',
         nichtiq int(11) unsigned DEFAULT '0',
         bundesland varchar(255) DEFAULT '' NOT NULL,
         generalmail varchar(255) DEFAULT '' NOT NULL,
