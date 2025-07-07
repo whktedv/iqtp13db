@@ -353,16 +353,15 @@ function showFolgekontakt(uid) {
 function asyncupdatedokdescription(inputField, chkboxValue, uidField) {
 	var inputValue = inputField.value;
 	var uidValue = uidField.value;	
-	console.log(chkboxValue);
 	var xhr = new XMLHttpRequest();
     xhr.open('POST', 'index.php?eID=doksave', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
     xhr.onreadystatechange = function() {			
         if (xhr.readyState == 4 && xhr.status == 200) {
-			//var jsonresponse = JSON.parse(xhr.responseText);
-            //document.getElementById('response').innerHTML = jsonresponse.message;
-			document.getElementById('response').innerHTML = "";
+			var jsonresponse = JSON.parse(xhr.responseText);
+            document.getElementById('response').innerHTML = jsonresponse.message;
+			//document.getElementById('response').innerHTML = "";
         }
 		if (xhr.readyState == 4 && xhr.status == 500) {
 			document.getElementById('response').innerHTML = "<span style='color: red; font-weight: bold;'>Error " + xhr.status + " - Beschreibung konnte nicht gespeichert werden. Sollte dieser Fehler erneut erscheinen, bitte Support kontaktieren.</span>";

@@ -220,31 +220,33 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         
         $dateienbisher = $this->dokumentRepository->findByTeilnehmer($teilnehmer->getUid());
         $anzdateienbisher = count($dateienbisher);
-        $files = $this->request->getArgument('file');
-          
-        if($files == NULL) {
-            $this->addFlashMessage('Error in saveFileWebapp: File does not meet policy.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
-        } else {
-            foreach ($files as $file) {
-                if ($file['tmp_name'] == '') {
-                    $this->addFlashMessage('Error: permission error or maximum filesize exceeded.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
-                    break;
-                } elseif ($file['size'] > 10485760) {
-                    $this->addFlashMessage('Error: Maximum filesize exceeded (10 MB). Please reduce filesize.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
-                    break;
-                } else {                    
-                    $fileType = $file['type'];
-                    // TODO: Dateityp überprüfen
-                    
-                    $dokument = new \Ud\Iqtp13db\Domain\Model\Dokument();
-                    $dokument->setBeschreibung($valArray['beschreibung'] ?? '');
-                    $dokument->setTnfreigabe(1);
-                    $this->saveFileTeilnehmer($dokument, $teilnehmer, $file);
-                    $this->addFlashMessage('Upload erfolgreich.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
-                }                
-            }
+        if($this->request->hasArgument('file')){
+            $files = $this->request->getArgument('file');
             
-        }
+            if($files == NULL) {
+                $this->addFlashMessage('Error in saveFileWebapp: File does not meet policy.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+            } else {
+                foreach ($files as $file) {
+                    if ($file['tmp_name'] == '') {
+                        $this->addFlashMessage('Error: permission error or maximum filesize exceeded.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+                        break;
+                    } elseif ($file['size'] > 10485760) {
+                        $this->addFlashMessage('Error: Maximum filesize exceeded (10 MB). Please reduce filesize.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+                        break;
+                    } else {
+                        $fileType = $file['type'];
+                        // TODO: Dateityp überprüfen
+                        
+                        $dokument = new \Ud\Iqtp13db\Domain\Model\Dokument();
+                        $dokument->setBeschreibung($valArray['beschreibung'] ?? '');
+                        $dokument->setTnfreigabe(1);
+                        $this->saveFileTeilnehmer($dokument, $teilnehmer, $file);
+                        $this->addFlashMessage('Upload erfolgreich.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
+                    }
+                }
+                
+            }            
+        }   
         return $this->redirect($valArray['calleraction'], 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
     }
     
@@ -279,7 +281,8 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     {
         $valArray = $this->request->getArguments();
         $retval = $this->deleteFileTeilnehmer($dokument, $teilnehmer);
-        return (new ForwardResponse($valArray['calleraction']))->withControllerName('Teilnehmer');
+        return $this->redirect($valArray['calleraction'], 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
+        //return (new ForwardResponse($valArray['calleraction']))->withControllerName('Teilnehmer');
     }
    
     /**

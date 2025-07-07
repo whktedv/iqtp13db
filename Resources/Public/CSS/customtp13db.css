@@ -348,6 +348,15 @@ button.abbruchbtn {
 	font-weight: bold;
 }
 
+#response {
+	color: #3c763d;
+	text-align: center;
+	border: 1px solid #ddd;
+	margin: 1rem auto;
+	background-color: #def1de;  
+	font-weight: bolder;
+}
+
 table tr.dokcattr td {
 	border-top: 3px dashed #9F9168;
 }

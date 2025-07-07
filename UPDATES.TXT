@@ -156,5 +156,10 @@ Update 25.06.2025
 - Fehler in Ausgabe der Dublettenmeldung im Frontend korrigiert
 - Bugfixing und Quellcodepflege (Klasse tnseite1 entfernt)
 
-Neu:
+Update 07.07.2025
 - Bugfixing bei Bereitsberaten-Action
+- Feld Leistungsbezug angepasst
+- Vorbereitung für externen Zugriff durch Ratsuchende zum nachträglichen Bearbeiten von Daten
+
+Neu:
+

@@ -58,7 +58,7 @@
 				</f:if>		
 			</div>
 			 
-			<div class="fframe">
+			<div id="AnkerDokumente" class="fframe">
 				<h2><f:translate key="dokumente" /></h2>
 				
 				<f:if condition="{dokumente}"><f:then>
@@ -80,11 +80,12 @@
 										</f:if>
 									</td>
 									<td>{filesizes.{iter.index}}</td>
-									<f:form id="dokumenteform1">
-										<f:form.hidden id="dokid{iter.index}" name="dokid{iter.index}" value="{dokument.uid}" />
-										<td><f:form.textfield id="dokdescrinput{iter.index}" data-num="{iter.index}" onblur="asyncdescriptionblur(this)" name="dokdescrinput{iter.index}" property="beschreibung" value="{dokument.beschreibung}" size="50" /></td>								
-										
-									</f:form>						
+									<td>
+										<f:form id="dokumenteform1">
+											<f:form.hidden id="dokid{iter.index}" name="dokid{iter.index}" value="{dokument.uid}" />
+											<f:form.textfield id="dokdescrinput{iter.index}" data-num="{iter.index}" onblur="asyncdescriptionblur(this)" name="dokdescrinput{iter.index}" property="beschreibung" value="{dokument.beschreibung}" size="50" />																		
+										</f:form>
+									</td>					
 									<td><f:link.action class="iconbuttons" action="deleteFileWebapp" controller="Dokument" arguments="{dokument : dokument, teilnehmer : teilnehmer, calleraction: 'editexternmenu'}" onclick="return confirm('Wirklich löschen?');$('#overlay').show();" ><img src="/typo3conf/ext/iqtp13db/Resources/Public/Icons/delete-640.png" width="32" height="32" alt="Löschen" /></f:link.action></td>
 								</tr>		
 						</f:for>
@@ -102,11 +103,11 @@
 	</div>
 </div>
 <script type="text/javascript">
-	function asyncdescriptionblur(elem) {
-		let num = elem.getNamedItem("data-num").value;									
-		asyncupdatedokdescription(elem, 1, document.getElementById('dokid' + num));
-	}
-	
+
+
+    
+
+  
 </script>
 <f:asset.script identifier="tndokupload" src="EXT:iqtp13db/Resources/Public/JS/tndokuploadEditExtern.js" />
 

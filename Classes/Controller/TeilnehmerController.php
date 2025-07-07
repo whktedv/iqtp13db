@@ -659,7 +659,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             if (isset($valArray['btnzurueck'])) {
                 $this->teilnehmerRepository->update($teilnehmer);
                 if($iseditextern != 0) {
-                    return $this->redirect('anmeldseite1', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+                    return $this->redirect('anmeldseite1', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer, 'plz' => $teilnehmer->getPlz()));
                 } else {
                     return $this->redirect('anmeldseite2', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));                                      
                 }                

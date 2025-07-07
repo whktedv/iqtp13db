@@ -39,7 +39,7 @@ class RequestController
         
         // Antwort zurückgeben
         header('Content-Type: application/json');
-        //echo json_encode(['message' => 'Beschreibung gespeichert: ' . htmlspecialchars($beschreibung)]);        
+        echo json_encode(['message' => 'Beschreibung gespeichert.']);        
         exit;
     }
 }

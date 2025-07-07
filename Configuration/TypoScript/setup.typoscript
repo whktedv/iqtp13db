@@ -314,6 +314,7 @@ plugin.tx_iqtp13db.settings {
 
    leistungsbezug {
 	    -1 = keine Angabe
+	     0 = kein Leistungsbezug
 	     2 = mit (ergänzendem) SGB II-Leistungsbezug (Bürgergeld)
 	     3 = mit SGB III-Leistungsbezug (Arbeitslosengeld)
 	     4 = mit SGB III- und SGB II-Leistungsbezug (Arbeitslosengeld + Bürgergeld)
@@ -446,6 +447,7 @@ plugin.tx_iqtp13db.settings {
  
    leistungsbezug {
 	   	 -1 = no specification
+	   	 0 = no support
 	     2 = with (complementary) SGB II-support (Bürgergeld)
 	     3 = with SGB III-support (Arbeitslosengeld)
 	     4 = with SGB III- and SGB II-support (Arbeitslosengeld + Bürgergeld)
@@ -581,6 +583,7 @@ plugin.tx_iqtp13db.settings {
 	
 	leistungsbezug {
 		-1 = لا توجد معلومات
+		0 = no support
 		2 = أحصل على إعانة (تكميلية) حسب القانون SGB II (Bürgergeld)
 		3 = أحصل على إعانة  حسب القانون SGB III (Arbeitslosengeld)
 		4 = أحصل على إعانة  حسب القانونSGB III  والقانون SGB II (Arbeitslosengeld + Bürgergeld)
@@ -717,6 +720,7 @@ plugin.tx_iqtp13db.settings {
 	
 	leistungsbezug {
 		-1 = نمی‌دانم
+		0 = no support
 		2 = دریافت مزایا (مکمل) طبق جلد دوم کتاب قوانین اجتماعی (SGB II Bürgergeld)
 		3 = دریافت مزایا طبق جلد سوم کتاب قوانین اجتماعی (SGB III Arbeitslosengeld)
 		4 = دریافت مزایا طبق جلد سوم کتاب قوانین اجتماعی و جلد دوم کتاب قوانین اجتماعی
@@ -848,6 +852,7 @@ plugin.tx_iqtp13db.settings {
 	
 	leistungsbezug {
 		-1 = non spécifié
+		0 = aucune prestation reçue
 		2 = bénéficiaire de prestations (complémentaires) du SGB II (Bürgergeld)
 		3 = bénéficiaire de prestations du SGB III (Arbeitslosengeld)
 		4 = bénéficiaire de prestations SGB III et du SGB II (Arbeitslosengeld + Bürgergeld)
@@ -979,6 +984,7 @@ plugin.tx_iqtp13db.settings {
 	
 	leistungsbezug {
 		-1 = Brak informacji
+		0 = Brak otrzymania świadczenia
 		2 = z (uzupełniającym) pobieraniem świadczeń wg ustawy socjalnej II
 		3 = z pobieraniem świadczeń wg ustawy socjalnej III
 		4 = z pobieraniem świadczeń wg ustawy socjalnej III i II
@@ -1111,6 +1117,7 @@ plugin.tx_iqtp13db.settings {
 	
 	leistungsbezug {
 		-1 = Lipsă date
+		0 = Nu se primesc prestații
 		2 = Cu venituri sociale SGB II (Bürgergeld)
 		3 = Cu venituri sociale SGB III (Arbeitslosengeld)
 		4 = Cu venituri sociale SGB III şi SGB II (Arbeitslosengeld + Bürgergeld)
@@ -1243,6 +1250,7 @@ plugin.tx_iqtp13db.settings {
 	
 	leistungsbezug {
 		-1 = Информация отсутствует
+		0 = ез получения пособия
 		2 = Получаете (дополнительное) пособие в соответствии с ч. II Социального кодекса Германии 
 		3 = Получаете пособие в соответствии с ч. III Социального кодекса Германии 
 		4 = Получаете пособие в соответствии с ч. II и III Социального кодекса Германии 
@@ -1376,6 +1384,7 @@ plugin.tx_iqtp13db.settings {
 	
 	leistungsbezug {
 		-1 = No se especifica
+		0 = No percepción de prestaciones
 		2 = con prestaciones (complementarias) SGB II (Bürgergeld)
 		3 = con prestaciones SGB III (Arbeitslosengeld)
 		4 = con prestaciones SGB III y SGB II (Arbeitslosengeld + Bürgergeld)
@@ -1508,6 +1517,7 @@ plugin.tx_iqtp13db.settings {
 	
 	leistungsbezug {
 		-1 = B.y.
+		0 = Yardım makbuzu yok
 		2 = Tamamlayıcı SGB II - yardımı alıyorum (Bürgergeld) 
 		3 = SGB III- yardımı alıyorum (Arbeitslosengeld)
 		4 = SGB III- ve SGB II yardımı alıyorum (Arbeitslosengeld + Bürgergeld)
@@ -1641,6 +1651,7 @@ plugin.tx_iqtp13db.settings {
 
    leistungsbezug {
 		-1 = без відповіді
+		 0 = Без отримання допомоги
 		 2 = SGB II (доповнююча) базова фінансова підтримка для шукачів роботи (Bürgergeld) 
 		 3 = SGB III страхові виплати по безробіттю та виплати за сприяння працевлаштуванню (Arbeitslosengeld)
 		 4 = SGB II базова фінансова підтримка для шукачів роботи і SGB III страхові виплати по безробіттю та виплати за сприяння працевлаштуванню (Arbeitslosengeld + Bürgergeld)

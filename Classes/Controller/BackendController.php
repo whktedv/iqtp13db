@@ -2507,7 +2507,21 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             
             $mailtextedit = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtextedit', 'Iqtp13db');
             $linktitleeditregistration = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('linktitleeditregistration', 'Iqtp13db');
-            
+                        
+            // QRCode Library per composer einbinden - wenn nicht vorhanden, dann s.u.
+            /*
+            $qrcodeComposer = \TYPO3\CMS\Core\Core\Environment::getConfigPath() . '/ext/vendor/autoload.php';
+            if (file_exists($qrcodeComposer)) {
+                require_once($qrcodeComposer);
+            } else {
+                // QRCode Library nicht per composer eingebunden
+                $this->addFlashMessage('QR Code Library nicht installiert. Bitte Admin kontaktieren.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+                return $this->redirect('listangemeldet', 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer, 'callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $searchparams ?? ''));
+            }
+            $qrcode = new QRCode();
+            $link = "https://www.whkt.de/";
+            $qrcodesvg = $qrcode->render($link);
+            */
             $variables = array(
                 'teilnehmer' => $teilnehmer,
                 'anrede' => $anrede . $teilnehmer->getVorname(). ' ' . $teilnehmer->getNachname() . ',',
@@ -2517,7 +2531,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'kontaktlabel' => $kontaktlabel,
                 'logolink' => $this->settings['logolink'],
                 'anmeldeditseite' => $this->settings['anmeldeditseite'],
-                'baseurl' => $baseUri
+                'baseurl' => $baseUri                
             );
             
             $emailview = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Fluid\\View\\StandaloneView');

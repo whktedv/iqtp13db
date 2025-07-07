@@ -537,11 +537,7 @@ input[type="text"].textfieldsmall {
 	overflow: hidden;
 }
 
-.abschluesseliste {
-	margin-top: 1rem;
-}
-
-table.abschluesseliste {
+.tx-iqtp13db table.abschluesseliste {
 	margin: 0.5rem 0;
 }
 
