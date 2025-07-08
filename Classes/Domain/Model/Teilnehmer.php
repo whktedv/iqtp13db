@@ -525,12 +525,20 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $einwilligunginfo = 0;
     
     /**
+     * editexternsent
+     *
+     * @var int
+     */
+    protected $editexternsent = 0;
+    
+    
+    /**
      * edittstamp
      *
      * @var int
      */
     protected $edittstamp = 0;
-    
+        
     /**
      * edituser
      *
@@ -2132,6 +2140,27 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function isEinwilligunginfo() {
         return $this->getEinwilligunginfo();
+    }
+    
+    /**
+     * Returns the editexternsent
+     *
+     * @return \DateTime $editexternsent
+     */
+    public function getEditexternsent()
+    {
+        return $this->editexternsent;
+    }
+    
+    /**
+     * Sets the editexternsent
+     *
+     * @param \DateTime $editexternsent
+     * @return void
+     */
+    public function setEditexternsent(\DateTime $editexternsent)
+    {
+        $this->editexternsent = $editexternsent;
     }
     
     /**

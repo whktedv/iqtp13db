@@ -740,7 +740,16 @@ return [
                 'size' => 4,
                 'eval' => 'int'
             ],
-        ],         
+        ],      
+        'editexternsent' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.editexternsent',
+            'config' => [
+                'type' => 'input',
+                'size' => 4,
+                'eval' => 'int'
+            ],
+        ],
         'edittstamp' => [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.edittstamp',

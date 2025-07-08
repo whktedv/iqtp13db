@@ -596,19 +596,6 @@
 			</div>
 
 	</div>
-	<div id="divniqchiffre" class="tp13_formdivwebapp">
-		<label for="niqchiffre">
-			<f:translate key="tx_iqtp13db_domain_model_teilnehmer.niqchiffre" />
-			<span class="important-icon"></span>
-		</label>
-			<span class="propdat"><f:format.html>{teilnehmer.niqchiffre}</f:format.html></span>
-			<div class="historie">
-			<f:for each="{historie}" as="hist" key="wert">
-				{f:if(condition: '{hist.property} == "niqchiffre"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
-			</f:for>
-			</div>
-
-	</div>
 	<div class="tp13_formdivwebapp">
 			<label for="einwilligunginfo">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einwilligunginfo" />
@@ -763,7 +750,16 @@
 				</f:for>
 			</div>
 		</div>
-	
+		
+		<f:if condition="{teilnehmer.editexternsent} != 0"><f:then>
+			<div class="tp13_formdivwebapp">
+				<label for="editexternsent">
+					<f:translate key="tx_iqtp13db_domain_model_teilnehmer.editexternsent" />
+				</label>
+				<span class="propdat"><f:format.date format="d.m.Y - H:i">{teilnehmer.editexternsent}</f:format.date></span>
+			</div>
+		</f:then></f:if>
+		
 		<div class="tp13_formdivwebapp">
 			<label for="notizen">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungnotizen" />

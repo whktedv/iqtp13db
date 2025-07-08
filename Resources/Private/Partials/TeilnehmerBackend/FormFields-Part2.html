@@ -127,6 +127,15 @@
   				<f:form.textfield property="kooperationgruppe" />
   		</div>	
   		
+  		<f:if condition="{teilnehmer.editexternsent} != 0"><f:then>
+			<div class="tp13_formdivwebapp">
+				<label for="editexternsent">
+					<f:translate key="tx_iqtp13db_domain_model_teilnehmer.editexternsent" />
+				</label>
+				<span class="propdat"><f:format.date format="d.m.Y - H:i">{teilnehmer.editexternsent}</f:format.date></span>
+			</div>
+		</f:then></f:if>
+		
 		<div class="tp13_formdivwebapp">
 			<label for="notizen">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungnotizen" />

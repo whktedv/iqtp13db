@@ -1058,13 +1058,21 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     {
         if($this->request->hasArgument('code')) {
             $teilnehmer = $this->teilnehmerRepository->findOneByVerificationCode($this->request->getArgument('code'));
-            
-            if($teilnehmer) {
-                $this->view->assign('teilnehmer', $teilnehmer);
-                $this->view->assign('code', $this->request->getArgument('code'));
+                                    
+            if($teilnehmer) {                
+                // Gültigkeitszeitraum berechnen
+                $validUntil = $teilnehmer->getEditexternsent() + ($this->settings['externlinkgueltigminuten'] * 60);
+                
+                if ($validUntil < time()) {
+                    $this->addFlashMessage('Link nicht mehr gültig, bitte neuen Link bei Beratungsstelle anfordern.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                    return $this->redirect('anmeldseite0');                    
+                } else {
+                    $this->view->assign('teilnehmer', $teilnehmer);
+                    $this->view->assign('code', $this->request->getArgument('code'));
+                }
             } else {
                 $this->addFlashMessage('Link ungültig, Datensatz nicht vorhanden.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-                return $this->redirect('validationFailed');
+                return $this->redirect('anmeldseite0');
             }
         } else {
             $this->addFlashMessage('Aufruf dieser Seite nur über individuellen Link aus E-Mail.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);

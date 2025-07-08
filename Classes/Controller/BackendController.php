@@ -515,6 +515,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         asort($arrberater);
         // ***************** Ende - Beraterarray bestimmen *****************
+        
+        $mail4externstandardmailtext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtextedit', 'Iqtp13db');
+        
         $this->view->assignMultiple(
             [
                 'anzgesamt' => count($teilnehmer),
@@ -533,7 +536,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'alleberater' => $arrberater,
                 'anzbstellen' => $this->anzbstellen,
                 'abschluesse' => $abschluesse,
-                'betafeaturesaktiviert' => $this->usergroup->getBetafeatures()
+                'betafeaturesaktiviert' => $this->usergroup->getBetafeatures(),
+                'mail4externstandardmailtext' => $mail4externstandardmailtext
+                
             ]);
         return $this->htmlResponse();
     }
@@ -653,6 +658,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         asort($arrberater);
         // ***************** Ende - Beraterarray bestimmen *****************
+        
+        $mail4externstandardmailtext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtextedit', 'Iqtp13db');
+        
         $this->view->assignMultiple(
             [
                 'anzgesamt' => count($teilnehmer),
@@ -673,7 +681,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'beratungsstelle' => $this->beratungsstellenname,
                 'niqbid' => $this->niqbid,
                 'alleberater' => $arrberater,
-                'anzbstellen' => $this->anzbstellen
+                'anzbstellen' => $this->anzbstellen,
+                'betafeaturesaktiviert' => $this->usergroup->getBetafeatures(),
+                'mail4externstandardmailtext' => $mail4externstandardmailtext
             ]
             );
         return $this->htmlResponse();
@@ -2481,16 +2491,22 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     {
         $valArray = $this->request->getArguments();
         
+        $emailBody = $valArray['emailBody'];
+                
         $bcc = '';
         $sender = $this->settings['sender'];
         if($sender == '') {
             $this->addFlashMessage('Error 101 in mail4editextern.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
-            return $this->redirect('listangemeldet', 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+            return $this->redirect($valArray['calleraction'], 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
         } else {
             $recipient = $teilnehmer->getEmail();
             if($recipient == '') {
                 $this->addFlashMessage('Keine E-Mail-Adresse eingetragen.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
-                return $this->redirect('listangemeldet', 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+                return $this->redirect($valArray['calleraction'], 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+            }            
+            if($teilnehmer->getGebdat() == '') {
+                $this->addFlashMessage('Kein Geburtsdatum eingetragen, externer Login nicht möglich. Bitte Geburtsdatum eintragen.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+                return $this->redirect($valArray['calleraction'], 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
             }
             
             $templateName = 'MailEditExtern';
@@ -2505,7 +2521,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $normalizedParams = $request->getAttribute('normalizedParams');
             $baseUri = $normalizedParams->getSiteUrl();
             
-            $mailtextedit = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtextedit', 'Iqtp13db');
+            $mailtextedit = $emailBody;
+            //\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtextedit', 'Iqtp13db');
             $linktitleeditregistration = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('linktitleeditregistration', 'Iqtp13db');
                         
             // QRCode Library per composer einbinden - wenn nicht vorhanden, dann s.u.
@@ -2537,12 +2554,15 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $emailview = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
             $emailview->setRequest($this->request);
             
+            $teilnehmer->setEditexternsent(new \DateTime);
+            $this->teilnehmerRepository->update($teilnehmer);
+            
             $extbaseFrameworkConfiguration = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
             $this->generalhelper->sendTemplateEmail(array($recipient), array($bcc), array($sender), $subject, $templateName, $variables, $emailview, $this->uriBuilder, $extbaseFrameworkConfiguration);
             
             $this->addFlashMessage('E-Mail zum nachträglichen Bearbeiten an '.$recipient.' versendet.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
             
-            return $this->redirect('listangemeldet', 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer, 'callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $searchparams ?? ''));
+            return $this->redirect($valArray['calleraction'], 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer, 'callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $searchparams ?? ''));
         }
     }   
         

@@ -108,6 +108,7 @@ plugin.tx_iqtp13db.settings {
 	datenschutzeinwilligungurluid = 	 
 	pageid2facode = 
 	anmeldeditseite =
+	externlinkgueltigminuten = 10080
 	
 	# für Wartungsmodus
 	wartungvon = 01.01.2021 08:00

@@ -68,6 +68,7 @@
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wieberaten"><source>How would you like to be advised?</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.notizen"><source>What else would you like to tell us or do you already have a specific question?</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligunginfotext"><source>I would like to receive further information and references to qualification offers in my occupational field.</source></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.editexternsent"><source>E-Mail with edit link sent</source></trans-unit>
 
 		<trans-unit id="ja"><source>Yes</source></trans-unit>
 		<trans-unit id="nein"><source>No</source></trans-unit>
@@ -154,7 +155,7 @@
 		<trans-unit id="confirmmailtext2"><source>Yours recognition counselling</source></trans-unit>
 		<trans-unit id="confirmsubject"><source>Please confirm your registration for the initial recognition counselling</source></trans-unit>
 		<trans-unit id="kontaktberatungsstelle"><source>This is your counselling center:</source></trans-unit>
-		<trans-unit id="mailtextedit"><source> <![CDATA[ <p>You can change your data or cancel your registration by using this link:</p> ]]></source></trans-unit>
+		<trans-unit id="mailtextedit"><source><![CDATA[<p>You can change your data or cancel your registration by using this link:</p> ]]></source></trans-unit>
 		<trans-unit id="linktitleeditregistration"><source>Edit registration</source></trans-unit>
 		
 		<trans-unit id="error"><source>Error</source></trans-unit>
@@ -170,6 +171,7 @@
 		<trans-unit id="editexternauthenticatelabel"><source>To authenticate, please enter your date of birth and click the Forward button.</source></trans-unit>
 		
 		<trans-unit id="uploaddropfile"><source>Drop documents for upload here.</source></trans-unit>
+		
 	</body>
   </file>
 </xliff>

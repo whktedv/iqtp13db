@@ -42,6 +42,7 @@
 		<th> </th>
 		<th> </th>
 		<th> </th>
+		<f:if condition="{betafeaturesaktiviert} == 1"><th> </th></f:if>
 	</tr>
 
 	<f:for each="{paginator.paginatedItems}" as="teilnehmer" iteration="it">
@@ -94,7 +95,20 @@
 			<td><f:link.action action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" title="Bearbeiten"><img src="/fileadmin/template/images/iq-webapp_bearbeiten.svg" alt="Bearbeiten" width="30" height="30"/></f:link.action></td>
 			<td><f:link.action action="new" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Folgekontakt" title="Folgekontakt anlegen"><img src="/fileadmin/template/images/iq-webapp_folgekontakt.svg" width="30" height="30" alt="Folgekontakt" /></f:link.action></td>
 			<td><f:link.action action="sendtoarchiv" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Backend" onclick="return confirm('Wirklich archivieren?');" title="Archivieren"><img src="/fileadmin/template/images/iq-webapp_archivieren.svg" width="30" height="30" alt="Archivieren" /></f:link.action></td>				
+			<f:if condition="{betafeaturesaktiviert} == 1">
+			<td>
+				<f:render partial="TeilnehmerBackend/ModalMail4Extern" arguments="{teilnehmer : teilnehmer, mail4externstandardmailtext: mail4externstandardmailtext}" />
+				<a href="#" onclick="openEmailModal({teilnehmer.uid})">
+		            <f:if condition="{teilnehmer.editexternsent} == 0"><f:then>
+						<img src="/fileadmin/template/images/iq-webapp_editextern.svg" width="30" height="30" alt="Link senden" />
+					</f:then><f:else>
+						<img src="/fileadmin/template/images/iq-webapp_editextern-ok.svg" width="30" height="30" alt="Link senden" />
+					</f:else></f:if>
+		        </a>
+		    </td>
+			</f:if>
 			<td><f:link.action action="delete" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" onclick="return confirm('Wirklich löschen?');" title="Löschen"><img src="/fileadmin/template/images/iq-webapp_loeschen.svg" width="30" height="30" alt="Löschen" /></f:link.action></td>
+			
 		</tr>		
 		<f:if condition="{anzfolgekontakte.{it.index}} != 0"><f:then>
 			<f:render partial="Folgekontakt/Folgekontakte4List" arguments="{folgekontakte : folgekontakte, teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" />
@@ -115,9 +129,65 @@
 			<td><img src="/fileadmin/template/images/iq-webapp_archivieren.svg" alt="Archivieren" width="30" height="30"/> = Archivieren</td>
 			<td><img src="/fileadmin/template/images/iq-webapp_loeschen.svg" width="30" height="30" alt="Löschen" /> = Löschen</td>
 		</tr>
+		<tr>
+			<td><img src="/fileadmin/template/images/iq-webapp_editextern.svg" alt="E-Mail an RS senden" width="30" height="30"/> = E-Mail an RS zum Bearbeiten senden</td>
+			<td><img src="/fileadmin/template/images/iq-webapp_editextern-ok.svg" alt="E-Mail erneut an RS senden" width="30" height="30"/> = E-Mail an RS zum Bearbeiten senden (wurde schon gesendet)</td>
+			<td></td>
+			<td></td>
+		</tr>
 	</table>
 </div>
 
+
+<!-- JavaScript für Modal-Funktionalität -->
+<script>
+function openEmailModal(itemId) {
+    const modal = document.getElementById('mail4externmodal' + itemId);
+    if (modal) {
+        modal.showModal();
+        // Focus auf das Textarea setzen
+        const textarea = document.getElementById('emailBody_' + itemId);
+        if (textarea) {
+            textarea.focus();
+        }
+    }
+}
+
+function closeEmailModal(itemId) {
+    const modal = document.getElementById('mail4externmodal' + itemId);
+    if (modal) {
+        modal.close();
+        // Formular zurücksetzen
+        const form = document.getElementById('emailForm_' + itemId);
+        if (form) {
+            form.reset();
+        }
+    }
+}
+
+// Modal schließen bei Klick auf Backdrop
+document.addEventListener('click', function(event) {
+    if (event.target.tagName === 'DIALOG') {
+        const modal = event.target;
+        const rect = modal.getBoundingClientRect();
+        const isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height &&
+                           rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
+        if (!isInDialog) {
+            modal.close();
+        }
+    }
+});
+
+// ESC-Taste zum Schließen des Modals
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        const openModals = document.querySelectorAll('dialog[open]');
+        openModals.forEach(modal => {
+            modal.close();
+        });
+    }
+});
+</script>
 </f:section>
 
 

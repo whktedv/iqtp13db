@@ -69,6 +69,7 @@
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wieberaten"><target>Wie möchten Sie beraten werden?</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.notizen"><target>Was möchten Sie uns noch mitteilen oder haben Sie schon eine konkrete Frage?</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligunginfotext"><target>Ich bin einverstanden, dass mir weitere Informationen und Hinweise zu Qualifizierungsangeboten in meinem Beruf zugesendet werden.</target></trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.editexternsent"><target>E-Mail mit Bearbeitungslink versendet</target></trans-unit>
 
 			<trans-unit id="ja"><target>Ja</target></trans-unit>
 			<trans-unit id="nein"><target>Nein</target></trans-unit>
@@ -154,7 +155,7 @@
 			<trans-unit id="confirmmailtext2"><target> <![CDATA[ <p>Mit freundlichem Gruß</p> <p>Ihre Anerkennungs- und Qualifizierungsberatung beim IQ Netzwerk</p>]]></target></trans-unit>
 			<trans-unit id="confirmsubject"><target>Bitte bestätigen Sie Ihre Anmeldung zur Anerkennungsberatung beim IQ Netzwerk</target></trans-unit>	
 			<trans-unit id="kontaktberatungsstelle"><target>Das ist Ihre Beratungsstelle:</target></trans-unit>			
-			<trans-unit id="mailtextedit"><target> <![CDATA[ Über diesen Link können Sie Ihre Daten ändern oder Ihre Anmeldung zurückziehen: ]]></target></trans-unit>
+			<trans-unit id="mailtextedit"><target><![CDATA[Über diesen Link können Sie Ihre Daten ändern oder Ihre Anmeldung zurückziehen: ]]></target></trans-unit>
 			<trans-unit id="linktitleeditregistration"><target>Anmeldung bearbeiten</target></trans-unit>
 			
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer"><target>Teilnehmer</target></trans-unit>
