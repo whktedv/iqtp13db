@@ -348,6 +348,11 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     public function initializeCreateWebappAction() {
         $this->exists_teilnehmer($this->request->getArguments());
         $this->exists_abschluss($this->request->getArguments());
+        
+        $valArray = $this->request->getArguments();
+        $valArray['abschluss']['branche'] = 0;
+        //DebuggerUtility::var_dump($valArray);
+        //die;
     }
 
     /**

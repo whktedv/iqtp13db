@@ -92,6 +92,7 @@ CREATE TABLE tx_iqtp13db_domain_model_teilnehmer (
 	erstberatungabgeschlossen varchar(255) DEFAULT '' NOT NULL,
     einwilligunginfo tinyint(1) unsigned DEFAULT '0',
     editexternsent int(11) unsigned DEFAULT '0' NOT NULL,
+    anzloginfehlgeschlagen int(4) unsigned DEFAULT '0' NOT NULL,
     
     edittstamp int(11) unsigned DEFAULT '0' NOT NULL,
     edituser int(11) unsigned DEFAULT '0',	

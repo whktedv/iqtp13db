@@ -1096,6 +1096,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         if($this->request->hasArgument('code')) {
             $teilnehmer = $this->teilnehmerRepository->findOneByVerificationCode($this->request->getArgument('code'));
 
+            $anzfailedlogins = $teilnehmer->getAnzloginfehlgeschlagen();
+            
             if(!$teilnehmer) {
                 $this->addFlashMessage('Teilnehmer unbekannt.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
                 return $this->redirect('editextern', 'Teilnehmer', null, array('code' => $valArray['code']));
@@ -1110,11 +1112,23 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             }
             
             if($tngebdat == $authfragegebdat) {
+                // Login OK
+                $teilnehmer->setAnzloginfehlgeschlagen(0);
+                $this->teilnehmerRepository->update($teilnehmer);
                 $GLOBALS['TSFE']->fe_user->setKey('ses', 'editextern', $teilnehmer->getUid());
                 return $this->redirect('editexternmenu', 'Teilnehmer', null, null);                
             } else {
-                $this->addFlashMessage('Eingegebenes Geburtsdatum ist nicht korrekt oder falsches Format!', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
-                return $this->redirect('editextern', 'Teilnehmer', null, array('code' => $valArray['code']));
+                $anzfailedlogins = $anzfailedlogins + 1;
+                $teilnehmer->setAnzloginfehlgeschlagen($anzfailedlogins);
+                $this->teilnehmerRepository->update($teilnehmer);
+                
+                if($anzfailedlogins > 5) {
+                    $this->addFlashMessage('Zuviele fehlerhafte Login-Versuche. Bitte neuen Link von der Beratungsstelle zusenden lassen.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                    return $this->redirect('anmeldseite0');
+                } else {
+                    $this->addFlashMessage('Eingegebenes Geburtsdatum ist nicht korrekt oder falsches Format!', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);                
+                    return $this->redirect('editextern', 'Teilnehmer', null, array('code' => $valArray['code']));
+                }
             }
         } else {
             $this->addFlashMessage('Link ungültig.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);

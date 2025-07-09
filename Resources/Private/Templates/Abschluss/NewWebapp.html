@@ -52,6 +52,10 @@
 	const modaltext = document.getElementById("modaltext");
 	const okModal = document.getElementById("okModal");
 	
+	const backbutton = document.getElementById("newabschlusszurueckbutton");
+	const selectbranche = document.getElementById("selectbranche");
+	const teilnehmerform = document.getElementById("teilnehmerform");
+	
 	var dellink = '';
 	var cancellink = '';
 
@@ -62,10 +66,13 @@
 		return false;
 	}
 	
-
 	okModal.addEventListener("click", () => {
 		modal.close();	    
 	});
+	
+	backbutton.addEventListener("click", (e) => {
+		selectbranche.value = "9000";		
+	});	
 	
 </script>
 </f:section>

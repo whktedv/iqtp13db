@@ -41,6 +41,7 @@
 		<th style="hyphens: auto;">Summe<br>Beratungsd.<br>(in h)</th>
 		<th> </th>
 		<th> </th>
+		<f:if condition="{betafeaturesaktiviert} == 1"><th> </th></f:if>
 		<th> </th>
 		<th> </th>
 	</tr>
@@ -102,6 +103,18 @@
 			<td>{summebdauer}</td>
 			<td><f:link.action action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" title="Bearbeiten"><img src="/fileadmin/template/images/iq-webapp_bearbeiten.svg" alt="Bearbeiten" width="30" height="30"/></f:link.action></td>
 			<td><f:link.action action="new" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Folgekontakt" title="Folgekontakt anlegen"><img src="/fileadmin/template/images/iq-webapp_folgekontakt.svg" width="30" height="30" alt="Folgekontakt" /></f:link.action></td>
+		
+			<f:if condition="{betafeaturesaktiviert} == 1">
+					<f:render partial="TeilnehmerBackend/ModalMail4Extern" arguments="{teilnehmer : teilnehmer, mail4externstandardmailtext: mail4externstandardmailtext}" />
+					<a href="#" onclick="openEmailModal({teilnehmer.uid})">
+			            <f:if condition="{teilnehmer.editexternsent} == 0"><f:then>
+							<img src="/fileadmin/template/images/iq-webapp_editextern.svg" width="30" height="30" alt="Link senden" />
+						</f:then><f:else>
+							<img src="/fileadmin/template/images/iq-webapp_editextern-ok.svg" width="30" height="30" alt="Link senden" />
+						</f:else></f:if>
+			        </a>
+			</f:if>
+					
 			<td><f:link.action action="unarchive" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Backend" onclick="return confirm('Wirklich zurück aus Archiv?');" title="Zurück aus Archiv"><img src="/fileadmin/template/images/iq-webapp_unarchivieren.svg" width="30" height="30" alt="Zurück aus Archiv" /></f:link.action></td>
 			<td><f:link.action action="delete" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" onclick="return confirm('Wirklich löschen?');" title="Löschen"><img src="/fileadmin/template/images/iq-webapp_loeschen.svg" width="30" height="30" alt="Löschen" /></f:link.action></td>
 		</tr>
@@ -130,8 +143,16 @@
 			<td><img src="/fileadmin/template/images/iq-webapp_unarchivieren.svg" alt="Archivieren" width="30" height="30"/> = Zurück aus Archiv</td>
 			<td><span class="linkbuttons buttonnew buttonnacherfassung">Nacherfassung</span> = Bereits Beratene nacherfassen</td>
 		</tr>
+		<tr>
+			<td><img src="/fileadmin/template/images/iq-webapp_editextern.svg" alt="E-Mail an RS senden" width="30" height="30"/> = E-Mail an RS zum Bearbeiten senden</td>
+			<td><img src="/fileadmin/template/images/iq-webapp_editextern-ok.svg" alt="E-Mail erneut an RS senden" width="30" height="30"/> = E-Mail an RS zum Bearbeiten senden (wurde schon gesendet)</td>
+			<td></td>
+			<td></td>
+		</tr>
 	</table>
 </div>
+
+<f:asset.script identifier="tndokupload" src="EXT:iqtp13db/Resources/Public/JS/externmailmodal.js" />
 
 </f:section>
 

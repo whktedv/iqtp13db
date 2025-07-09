@@ -66,41 +66,7 @@ call_user_func(
         
         // Register eID call
         $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['doksave'] = \Ud\Iqtp13db\Controller\RequestController::class . '::doksaveEidAction';
-        
-        
-        // Only include page.tsconfig if TYPO3 version is below 12 so that it is not imported twice.
-        $versionInformation = GeneralUtility::makeInstance(Typo3Version::class);
-        if ($versionInformation->getMajorVersion() < 12) {
-            ExtensionManagementUtility::addPageTSConfig('
-                 @import "EXT:iqtp13db/Configuration/page.tsconfig"
-            ');
-        }
-                
-        /************************************************************************
-         * XCLASS (Extending Classes) für FrontendUsergroup Klasse
-         ************************************************************************/
-        /* --------------------- Deprecated mit Typo3 12 ---------------------
-        $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][TYPO3\CMS\Extbase\Domain\Model\FrontendUserGroup::class] = [
-            'className' => \Ud\Iqtp13db\Domain\Model\UserGroup::class,
-        ];
-        $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][TYPO3\CMS\Extbase\Domain\Model\FrontendUser::class] = [
-            'className' => \Ud\Iqtp13db\Domain\Model\Berater::class,
-        ];        
-        
-        // Register extended domain class
-        GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\Container\Container::class)
-        ->registerImplementation(
-            TYPO3\CMS\Extbase\Domain\Model\FrontendUserGroup::class,
-            \Ud\Iqtp13db\Domain\Model\UserGroup::class
-            );
-        
-        GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\Container\Container::class)
-        ->registerImplementation(
-            TYPO3\CMS\Extbase\Domain\Model\FrontendUser::class,
-            \Ud\Iqtp13db\Domain\Model\Berater::class
-            );
-        */
-        
+                        
         /****************
          * Scheduler TASK to delete old/deleted entries
          ****************/

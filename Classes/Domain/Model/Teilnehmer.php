@@ -531,6 +531,12 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $editexternsent = 0;
     
+    /**
+     * anzloginfehlgeschlagen
+     *
+     * @var int
+     */
+    protected $anzloginfehlgeschlagen = 0;
     
     /**
      * edittstamp
@@ -2161,6 +2167,27 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setEditexternsent(\DateTime $editexternsent)
     {
         $this->editexternsent = $editexternsent;
+    }
+    
+    /**
+     * Returns the anzloginfehlgeschlagen
+     *
+     * @return int $anzloginfehlgeschlagen
+     */
+    public function getAnzloginfehlgeschlagen()
+    {
+        return $this->anzloginfehlgeschlagen;
+    }
+    
+    /**
+     * Sets the anzloginfehlgeschlagen
+     *
+     * @param int $anzloginfehlgeschlagen
+     * @return void
+     */
+    public function setAnzloginfehlgeschlagen($anzloginfehlgeschlagen)
+    {
+        $this->anzloginfehlgeschlagen = $anzloginfehlgeschlagen;
     }
     
     /**

@@ -750,6 +750,15 @@ return [
                 'eval' => 'int'
             ],
         ],
+        'anzloginfehlgeschlagen' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.anzloginfehlgeschlagen',
+            'config' => [
+                'type' => 'input',
+                'size' => 4,
+                'eval' => 'int'
+            ],
+        ],
         'edittstamp' => [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.edittstamp',

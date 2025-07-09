@@ -803,6 +803,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         asort($arrberater);
         // ***************** Ende - Beraterarray bestimmen *****************
         
+        $mail4externstandardmailtext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtextedit', 'Iqtp13db');
+        
         $this->view->assignMultiple(
             [
                 'anzgesamt' => count($teilnehmer),
@@ -823,7 +825,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'beratungsstelle' => $this->beratungsstellenname,
                 'niqbid' => $this->niqbid,
                 'alleberater' => $arrberater,
-                'anzbstellen' => $this->anzbstellen
+                'anzbstellen' => $this->anzbstellen,
+                'betafeaturesaktiviert' => $this->usergroup->getBetafeatures(),
+                'mail4externstandardmailtext' => $mail4externstandardmailtext
             ]
             );
         return $this->htmlResponse();
@@ -2526,19 +2530,18 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $linktitleeditregistration = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('linktitleeditregistration', 'Iqtp13db');
                         
             // QRCode Library per composer einbinden - wenn nicht vorhanden, dann s.u.
-            /*
-            $qrcodeComposer = \TYPO3\CMS\Core\Core\Environment::getConfigPath() . '/ext/vendor/autoload.php';
-            if (file_exists($qrcodeComposer)) {
-                require_once($qrcodeComposer);
-            } else {
+            $composer = \TYPO3\CMS\Core\Core\Environment::getConfigPath(). '/vendor/autoload.php';
+            if (file_exists($composer)) {
+             //   require_once($composer);
+            //} else {
                 // QRCode Library nicht per composer eingebunden
-                $this->addFlashMessage('QR Code Library nicht installiert. Bitte Admin kontaktieren.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
-                return $this->redirect('listangemeldet', 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer, 'callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $searchparams ?? ''));
+                //$this->addFlashMessage('QR Code Library nicht installiert. Bitte Admin kontaktieren.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+                //return $this->redirect('listangemeldet', 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer, 'callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $searchparams ?? ''));
             }
-            $qrcode = new QRCode();
-            $link = "https://www.whkt.de/";
-            $qrcodesvg = $qrcode->render($link);
-            */
+//            $qrcode = new \QRCode();
+//            $link = "https://www.whkt.de/";
+//            $qrcodesvg = $qrcode->render($link);
+            
             $variables = array(
                 'teilnehmer' => $teilnehmer,
                 'anrede' => $anrede . $teilnehmer->getVorname(). ' ' . $teilnehmer->getNachname() . ',',
@@ -2548,13 +2551,15 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'kontaktlabel' => $kontaktlabel,
                 'logolink' => $this->settings['logolink'],
                 'anmeldeditseite' => $this->settings['anmeldeditseite'],
-                'baseurl' => $baseUri                
+                'baseurl' => $baseUri,
+                'qrcode' => $qrcodesvg ?? ''
             );
             
             $emailview = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
             $emailview->setRequest($this->request);
             
             $teilnehmer->setEditexternsent(new \DateTime);
+            $teilnehmer->setAnzloginfehlgeschlagen(0);
             $this->teilnehmerRepository->update($teilnehmer);
             
             $extbaseFrameworkConfiguration = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
