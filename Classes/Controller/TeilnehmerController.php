@@ -1202,6 +1202,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $zugewieseneberatungsstelle = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $teilnehmer->getNiqidberatungsstelle());
             $datenberatungsstelle = $zugewieseneberatungsstelle != NULL ? $zugewieseneberatungsstelle[0]->getDescription() : '';
             
+            $maxtime = time() - 600; // Aktuelle Zeit + 10 Minuten
+            
             $this->view->assignMultiple(
                 [
                     'settings' => $this->settings,
@@ -1216,7 +1218,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     'filesizes' => $filesizes,
                     'calleraction' => 'editexternmenu',
                     'datenberatungsstelle' => $datenberatungsstelle,
-                    'currenttimestamp' => time()
+                    'maxtimestamp' => $maxtime
                 ]
                 );
             
