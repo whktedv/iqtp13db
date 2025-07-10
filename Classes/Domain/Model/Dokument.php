@@ -60,6 +60,13 @@ class Dokument extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $tnfreigabe = NULL;  
     
     /**
+     * tstamp
+     *
+     * @var int
+     */
+    protected $tstamp = 0;
+    
+    /**
      * Returns the name
      *
      * @return string $name
@@ -184,6 +191,27 @@ class Dokument extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function isTnfreigabe() {
         return $this->getTnfreigabe();
+    }
+    
+    /**
+     * Returns the tstamp
+     *
+     * @return int $tstamp
+     */
+    public function getTstamp()
+    {
+        return $this->tstamp;
+    }
+    
+    /**
+     * Sets the tstamp
+     *
+     * @param int $tstamp
+     * @return void
+     */
+    public function setTstamp($tstamp)
+    {
+        $this->tstamp = $tstamp;
     }
     
 }

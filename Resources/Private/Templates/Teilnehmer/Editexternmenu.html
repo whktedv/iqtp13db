@@ -86,7 +86,11 @@
 											<f:form.textfield id="dokdescrinput{iter.index}" data-num="{iter.index}" onblur="asyncdescriptionblur(this)" name="dokdescrinput{iter.index}" property="beschreibung" value="{dokument.beschreibung}" size="50" />																		
 										</f:form>
 									</td>					
-									<td><f:link.action class="iconbuttons" action="deleteFileWebapp" controller="Dokument" arguments="{dokument : dokument, teilnehmer : teilnehmer, calleraction: 'editexternmenu'}" onclick="return confirm('Wirklich löschen?');$('#overlay').show();" ><img src="/typo3conf/ext/iqtp13db/Resources/Public/Icons/delete-640.png" width="32" height="32" alt="Löschen" /></f:link.action></td>
+									<td><f:if condition="({dokument.tstamp} + 600) < {currenttimestamp}"><f:then>
+											<f:link.action class="iconbuttons" action="deleteFileWebapp" controller="Dokument" arguments="{dokument : dokument, teilnehmer : teilnehmer, calleraction: 'editexternmenu'}" onclick="return confirm('Wirklich löschen?');$('#overlay').show();" ><img src="/typo3conf/ext/iqtp13db/Resources/Public/Icons/delete-640.png" width="32" height="32" alt="Löschen" /></f:link.action>
+										</f:then>
+										</f:if>
+									</td>
 								</tr>		
 						</f:for>
 					</table>	

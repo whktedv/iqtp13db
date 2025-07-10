@@ -1215,7 +1215,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     'speicherbelegung' => $speicherbelegung,
                     'filesizes' => $filesizes,
                     'calleraction' => 'editexternmenu',
-                    'datenberatungsstelle' => $datenberatungsstelle                    
+                    'datenberatungsstelle' => $datenberatungsstelle,
+                    'currenttimestamp' => time()
                 ]
                 );
             
