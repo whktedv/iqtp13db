@@ -67,6 +67,14 @@ class Dokument extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $tstamp = 0;
     
     /**
+     * crdate
+     *
+     * @var int
+     */
+    protected $crdate = 0;
+    
+    
+    /**
      * Returns the name
      *
      * @return string $name
@@ -214,4 +222,24 @@ class Dokument extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->tstamp = $tstamp;
     }
     
+    /**
+     * Returns the crdate
+     *
+     * @return int $crdate
+     */
+    public function getCrdate()
+    {
+        return $this->crdate;
+    }
+    
+    /**
+     * Sets the crdate
+     *
+     * @param int $crdate
+     * @return void
+     */
+    public function setCrdate($crdate)
+    {
+        $this->crdate = $crdate;
+    }
 }

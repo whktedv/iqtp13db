@@ -131,5 +131,10 @@ return [
                 'default' => 0
             ],
         ],
+        'crdate' => [
+            'config' => [
+                'type' => 'passthrough',
+            ],
+        ],
     ],
 ];
