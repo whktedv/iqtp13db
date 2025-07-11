@@ -105,7 +105,7 @@
 			<td><f:link.action action="new" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Folgekontakt" title="Folgekontakt anlegen"><img src="/fileadmin/template/images/iq-webapp_folgekontakt.svg" width="30" height="30" alt="Folgekontakt" /></f:link.action></td>
 		
 			<f:if condition="{betafeaturesaktiviert} == 1">
-					<f:render partial="TeilnehmerBackend/ModalMail4Extern" arguments="{teilnehmer : teilnehmer, mail4externstandardmailtext: mail4externstandardmailtext}" />
+					<f:render partial="TeilnehmerBackend/ModalMail4Extern" arguments="{teilnehmer : teilnehmer, mail4externstandardmailtext: mail4externstandardmailtext, anmeldeditseite: anmeldeditseite}" />
 					<a href="#" onclick="openEmailModal({teilnehmer.uid})">
 			            <f:if condition="{teilnehmer.editexternsent} == 0"><f:then>
 							<img src="/fileadmin/template/images/iq-webapp_editextern.svg" width="30" height="30" alt="Link senden" />

@@ -4,11 +4,14 @@ function openEmailModal(itemId) {
     const modal = document.getElementById('mail4externmodal' + itemId);
     if (modal) {
         modal.showModal();
+		
+		asyncupdateteilnehmereditlink(itemId);
+		
         // Focus auf das Textarea setzen
-        const textarea = document.getElementById('emailBody_' + itemId);
-        if (textarea) {
-            textarea.focus();
-        }
+        //const textarea = document.getElementById('emailBody_' + itemId);
+        //if (textarea) {
+        //    textarea.focus();
+        //}
     }
 }
 
@@ -16,11 +19,12 @@ function closeEmailModal(itemId) {
     const modal = document.getElementById('mail4externmodal' + itemId);
     if (modal) {
         modal.close();
+		location.reload();
         // Formular zurücksetzen
-        const form = document.getElementById('emailForm_' + itemId);
-        if (form) {
-            form.reset();
-        }
+        //const form = document.getElementById('emailForm_' + itemId);
+        //if (form) {
+        //    form.reset();
+        //}
     }
 }
 
@@ -46,3 +50,34 @@ document.addEventListener('keydown', function(event) {
         });
     }
 });
+
+function linkKopieren(dokid) {
+  const linklink = document.getElementById("editlinkforRS");
+  navigator.clipboard.writeText(linklink.href)  	
+    .then(() => {
+	  document.getElementById("mail4externfeedback" + dokid).style.display = "block"; 
+      document.getElementById("mail4externfeedback" + dokid).innerHTML = "Link kopiert!";
+    })
+    .catch(() => {
+	  document.getElementById("mail4externfeedback" + dokid).style.display = "block"; 
+      document.getElementById("mail4externfeedback" + dokid).innerHTML = "Kopieren fehlgeschlagen.";
+    });
+}
+
+function asyncupdateteilnehmereditlink(uid) {
+	var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'index.php?eID=tneditlinksave', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+    xhr.onreadystatechange = function() {			
+        if (xhr.readyState == 4 && xhr.status == 200) {
+			var jsonresponse = JSON.parse(xhr.responseText);
+            document.getElementById('mail4externfeedback' + uid).innerHTML = jsonresponse.message;			
+        }
+		if (xhr.readyState == 4 && xhr.status == 500) {
+			document.getElementById('mail4externfeedback' + uid).innerHTML = "<span style='color: red; font-weight: bold;'>Error " + xhr.status + " - Zeitstempel konnte nicht gespeichert werden. Sollte dieser Fehler erneut erscheinen, bitte Support kontaktieren.</span>";
+		}
+    };
+
+    xhr.send('tnuid=' + encodeURIComponent(uid));
+}

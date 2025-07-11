@@ -348,7 +348,11 @@ button.abbruchbtn {
 	font-weight: bold;
 }
 
-#response {
+.divmail4externfeedback {
+	display:none; 
+}
+
+#response, .divmail4externfeedback {
 	color: #3c763d;
 	text-align: center;
 	border: 1px solid #ddd;
@@ -616,7 +620,7 @@ form.filterform div {
     border-radius: 8px;
     padding: 0;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    max-width: 500px;
+    max-width: 600px;
     width: 90%;
 }
 
@@ -693,6 +697,15 @@ form.filterform div {
     border-radius: 4px;
     cursor: pointer;
     font-size: 14px;
+}
+
+.mail4externlinkdiv {
+	text-align: left;
+}
+
+.mail4externlinkdiv a {
+	font-size: 1.2rem;
+	text-decoration: underline;
 }
 
 /* -------- für Display-Größen bis 767 Pixel Breite (Smartphones/MOBILE) -------- */

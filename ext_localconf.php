@@ -64,8 +64,9 @@ call_user_func(
             ]
             );
         
-        // Register eID call
+        // Register eID calls
         $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['doksave'] = \Ud\Iqtp13db\Controller\RequestController::class . '::doksaveEidAction';
+        $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['tneditlinksave'] = \Ud\Iqtp13db\Controller\RequestController::class . '::tneditlinksaveEidAction';
                         
         /****************
          * Scheduler TASK to delete old/deleted entries

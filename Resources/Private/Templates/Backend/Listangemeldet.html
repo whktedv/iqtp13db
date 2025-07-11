@@ -94,7 +94,7 @@
 					<f:if condition="{teilnehmer.verificationDate} == 0"><f:then><f:link.action action="askconsent" arguments="{teilnehmer : teilnehmer, callerpage : callerpage}" onclick="return confirm('E-Mail senden?');" title="Einwilligung anfordern"><img src="/fileadmin/template/images/iq-webapp_einwilligung-anfordern.svg" alt="Einwilligung anfordern" width="30" height="30" class="anfordernbtnimg"/></f:link.action></f:then></f:if>
 					
 					<f:if condition="{betafeaturesaktiviert} == 1">
-						<f:render partial="TeilnehmerBackend/ModalMail4Extern" arguments="{teilnehmer : teilnehmer, mail4externstandardmailtext: mail4externstandardmailtext}" />
+						<f:render partial="TeilnehmerBackend/ModalMail4Extern" arguments="{teilnehmer : teilnehmer, mail4externstandardmailtext: mail4externstandardmailtext, anmeldeditseite: anmeldeditseite}" />
 						<a href="#" onclick="openEmailModal({teilnehmer.uid})">
 				            <f:if condition="{teilnehmer.editexternsent} == 0"><f:then>
 								<img src="/fileadmin/template/images/iq-webapp_editextern.svg" width="30" height="30" alt="Link senden" />

@@ -97,7 +97,7 @@
 			<td><f:link.action action="sendtoarchiv" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Backend" onclick="return confirm('Wirklich archivieren?');" title="Archivieren"><img src="/fileadmin/template/images/iq-webapp_archivieren.svg" width="30" height="30" alt="Archivieren" /></f:link.action></td>				
 			<f:if condition="{betafeaturesaktiviert} == 1">
 			<td>
-				<f:render partial="TeilnehmerBackend/ModalMail4Extern" arguments="{teilnehmer : teilnehmer, mail4externstandardmailtext: mail4externstandardmailtext}" />
+				<f:render partial="TeilnehmerBackend/ModalMail4Extern" arguments="{teilnehmer : teilnehmer, mail4externstandardmailtext: mail4externstandardmailtext, anmeldeditseite: anmeldeditseite}" />
 				<a href="#" onclick="openEmailModal({teilnehmer.uid})">
 		            <f:if condition="{teilnehmer.editexternsent} == 0"><f:then>
 						<img src="/fileadmin/template/images/iq-webapp_editextern.svg" width="30" height="30" alt="Link senden" />

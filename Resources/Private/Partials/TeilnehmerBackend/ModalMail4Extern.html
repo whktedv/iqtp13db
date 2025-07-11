@@ -1,34 +1,53 @@
 <dialog id="mail4externmodal{teilnehmer.uid}" class="mail4externemail-modal">
- <div class="mail4externmodal-content">
-	 <div class="mail4externmodal-header">
-               <h4>E-Mail senden an: {teilnehmer.nachname}, {teilnehmer.vorname}</h4>
-               <button type="button" class="mail4externclose-btn" onclick="closeEmailModal({teilnehmer.uid})">&times;</button>
-           </div>
-           
-           <div class="mail4externmodal-body">
-                 <f:form action="mail4editextern" arguments="{teilnehmer : teilnehmer, calleraction : 'listangemeldet', callerpage : callerpage}" method="post" id="emailForm_{teilnehmer.uid}">
-                     <f:form.hidden name="teilnehmerId" value="{teilnehmer.uid}" />
-                     
-                     <div class="mail4externform-group">
-                     	<div style="text-align: left;">Guten Tag {teilnehmer.vorname} {teilnehmer.nachname},</div>			                            
-                         <f:form.textarea 
-                             name="emailBody" 
-                             id="emailBody_{teilnehmer.uid}" 
-                             rows="3" 
-                             cols="50" 
-                             value="{mail4externstandardmailtext}"
-                             required="required"
-                         />
-                     </div>
-                     
-                     <div class="mail4externform-actions">
-                         <f:form.submit value="E-Mail senden" class="mail4externbtn" />
-                         <button type="button" class="mail4externbtn" onclick="closeEmailModal({teilnehmer.uid})">
-                             Abbrechen
-                         </button>
-                     </div>
-                 </f:form>
-             </div>
-	  </div>
+	<div class="mail4externmodal-content">
+		<div class="mail4externmodal-header">
+			<h4>Link zum Bearbeiten der eingegebenen Daten für
+				{teilnehmer.nachname}, {teilnehmer.vorname}</h4>
+			<button type="button" class="mail4externclose-btn"
+				onclick="closeEmailModal({teilnehmer.uid})">&times;</button>
+		</div>
+	
+		<div class="mail4externmodal-body">		
+			<f:if condition="{teilnehmer.gebdat} != ''"><f:then>
+				<div class="mail4externlinkdiv">
+					<a href="#" onclick="linkKopieren({teilnehmer.uid})"><svg
+							clip-rule="evenodd" width="50px" height="50px" fill-rule="evenodd"
+							stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24"
+							xmlns="http://www.w3.org/2000/svg">
+							<path
+								d="m6 19v2c0 .621.52 1 1 1h2v-1.5h-1.5v-1.5zm7.5 3h-3.5v-1.5h3.5zm4.5 0h-3.5v-1.5h3.5zm4-3h-1.5v1.5h-1.5v1.5h2c.478 0 1-.379 1-1zm-1.5-1v-3.363h1.5v3.363zm0-4.363v-3.637h1.5v3.637zm-13-3.637v3.637h-1.5v-3.637zm11.5-4v1.5h1.5v1.5h1.5v-2c0-.478-.379-1-1-1zm-10 0h-2c-.62 0-1 .519-1 1v2h1.5v-1.5h1.5zm4.5 1.5h-3.5v-1.5h3.5zm3-1.5v-2.5h-13v13h2.5v-1.863h1.5v3.363h-4.5c-.48 0-1-.379-1-1v-14c0-.481.38-1 1-1h14c.621 0 1 .522 1 1v4.5h-3.5v-1.5z"
+								fill-rule="nonzero" /></svg>Link in Zwischenablage kopieren</a>								
+				</div>
+				<div class="mail4externlinkdiv">
+						<a href="mailto:{teilnehmer.email}" onclick="linkKopieren({teilnehmer.uid})" target="_blank"><?xml version="1.0" encoding="iso-8859-1"?>
+						<svg width="50px" height="50px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+							 viewBox="0 0 16.615 16.615" xml:space="preserve">
+						<g>
+							<g>
+								<path style="fill:#030104;" d="M16.614,5.208c0-0.276-0.225-0.501-0.502-0.501H7.53l1.208,0.813
+									c0.078,0.053,0.142,0.119,0.199,0.19h6.455L10.408,9.32L7.971,7.566l-0.965,0.65l3.111,2.218c0.17,0.123,0.412,0.121,0.582,0
+									l4.912-3.502v5.09H5.205V9.428L5.003,9.565C4.845,9.669,4.669,9.721,4.488,9.721C4.39,9.721,4.295,9.7,4.202,9.67v2.854
+									c0,0.277,0.225,0.502,0.502,0.502h11.409c0.277,0,0.502-0.225,0.502-0.502V5.958c0-0.026-0.004-0.05-0.008-0.072
+									c0.006-0.027,0.008-0.054,0.008-0.08V5.208H16.614z"/>
+								<path style="fill:#030104;" d="M4.308,8.799c0,0.066,0.037,0.127,0.096,0.158c0.06,0.031,0.13,0.027,0.185-0.01l3.735-2.514
+									C8.373,6.4,8.403,6.344,8.403,6.283c0-0.06-0.03-0.115-0.079-0.149L4.59,3.621C4.535,3.585,4.464,3.58,4.405,3.611
+									c-0.059,0.032-0.096,0.093-0.096,0.16v1.454C3.721,5.221,3.235,5.195,2.83,5.146C0.888,4.916,0.368,3.75,0.347,3.7
+									C0.318,3.632,0.252,3.59,0.181,3.59c-0.012,0-0.024,0-0.035,0.003C0.06,3.611,0,3.685,0,3.77c0,2.944,3.495,3.571,4.307,3.677
+									L4.308,8.799L4.308,8.799z"/>
+							</g>
+						</g>
+						</svg>Link in Zwischenablage kopieren und E-Mail erstellen</a>
+				</div>
+				<f:link.action id="editlinkforRS" extensionName="iqtp13db"
+						pluginName="Iqtp13dbwebapp" controller="Teilnehmer"
+						action="editextern" arguments="{code:teilnehmer.verificationCode}"
+						absolute="true" pageUid="{anmeldeditseite}"></f:link.action>
+				<div id="mail4externfeedback{teilnehmer.uid}"
+						class="divmail4externfeedback"></div>
+			</f:then><f:else>
+				<div class="errormessage">Kein Geburtsdatum für Ratsuchende(n) hinterlegt, Link senden nicht möglich!</div>
+			</f:else>
+			</f:if>
+		</div>
+	</div>
 </dialog>
-

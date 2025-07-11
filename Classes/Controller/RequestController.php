@@ -1,11 +1,12 @@
 <?php
 namespace Ud\Iqtp13db\Controller;
 
+use \Datetime;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Psr\Http\Message\ServerRequestInterface;
 
 use Ud\Iqtp13db\Domain\Repository\DokumentRepository;
-
+use Ud\Iqtp13db\Domain\Repository\TeilnehmerRepository;
 
 class RequestController
 {
@@ -14,10 +15,11 @@ class RequestController
      */
     protected $dokumentRepository;
 
-    public function __construct(DokumentRepository $dokumentRepository)
+    public function __construct(DokumentRepository $dokumentRepository, TeilnehmerRepository $teilnehmerRepository)
     {       
         // Damit die Dependency Injection hier funktinoiert, unbedingt in die Datei Configuration/Services.yaml eintragen! Siehe "Dependency Injection" in der Typo3 Doku
         $this->dokumentRepository = $dokumentRepository;
+        $this->teilnehmerRepository = $teilnehmerRepository;
     }
 
     public function doksaveEidAction(ServerRequestInterface $request)
@@ -40,6 +42,25 @@ class RequestController
         // Antwort zurückgeben
         header('Content-Type: application/json');
         echo json_encode(['message' => 'Beschreibung gespeichert.']);        
+        exit;
+    }
+    
+    public function tneditlinksaveEidAction(ServerRequestInterface $request)
+    {
+        $uid = GeneralUtility::trimExplode('=', $request->getParsedBody()['tnuid'], true)[0];
+        
+        // Daten speichern
+        $teilnehmer = $this->teilnehmerRepository->findByUid($uid);
+        $teilnehmer->setEditexternsent(new \DateTime);
+        $this->teilnehmerRepository->update($teilnehmer);
+        
+        // Persistierung erzwingen
+        $persistenceManager = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager::class);
+        $persistenceManager->persistAll();
+        
+        // Antwort zurückgeben
+        header('Content-Type: application/json');
+        echo json_encode(['message' => 'Zeitstempel gespeichert.']);
         exit;
     }
 }

@@ -537,7 +537,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'anzbstellen' => $this->anzbstellen,
                 'abschluesse' => $abschluesse,
                 'betafeaturesaktiviert' => $this->usergroup->getBetafeatures(),
-                'mail4externstandardmailtext' => $mail4externstandardmailtext
+                'mail4externstandardmailtext' => $mail4externstandardmailtext,
+                'anmeldeditseite' => $this->settings['anmeldeditseite']
                 
             ]);
         return $this->htmlResponse();
@@ -683,7 +684,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'alleberater' => $arrberater,
                 'anzbstellen' => $this->anzbstellen,
                 'betafeaturesaktiviert' => $this->usergroup->getBetafeatures(),
-                'mail4externstandardmailtext' => $mail4externstandardmailtext
+                'mail4externstandardmailtext' => $mail4externstandardmailtext,
+                'anmeldeditseite' => $this->settings['anmeldeditseite']
             ]
             );
         return $this->htmlResponse();
@@ -827,7 +829,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'alleberater' => $arrberater,
                 'anzbstellen' => $this->anzbstellen,
                 'betafeaturesaktiviert' => $this->usergroup->getBetafeatures(),
-                'mail4externstandardmailtext' => $mail4externstandardmailtext
+                'mail4externstandardmailtext' => $mail4externstandardmailtext,
+                'anmeldeditseite' => $this->settings['anmeldeditseite']
             ]
             );
         return $this->htmlResponse();

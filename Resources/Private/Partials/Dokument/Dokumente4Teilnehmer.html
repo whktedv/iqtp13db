@@ -10,6 +10,7 @@
 			<thead>
 				<th>Dateiname</th>
 				<th>Dateigröße</th>
+				<th>Zeitstempel</th>
 				<th>Freigabe für Ratsuchende*n</th>
 				<th>Kurzbeschreibung</th>
 				<th></th>
@@ -26,6 +27,7 @@
 							</f:if>
 						</td>
 						<td>{filesizes.{iter.index}}</td>
+						<td><f:format.date format="d.m.Y - H:i">{dokument.crdate}</f:format.date></td>
 						<f:form id="dokumenteform1">
 							<f:form.hidden id="dokid{iter.index}" name="dokid{iter.index}" value="{dokument.uid}" />
 							<td><f:form.checkbox id="dokfreigabecheck{iter.index}" name="dokfreigabecheck{iter.index}" property="tnfreigabe" value="{dokument.tnfreigabe}" checked="{dokument.tnfreigabe} == 1"/></td>

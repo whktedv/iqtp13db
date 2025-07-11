@@ -60,6 +60,21 @@ class Dokument extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $tnfreigabe = NULL;  
     
     /**
+     * tstamp
+     *
+     * @var int
+     */
+    protected $tstamp = 0;
+    
+    /**
+     * crdate
+     *
+     * @var int
+     */
+    protected $crdate = 0;
+    
+    
+    /**
      * Returns the name
      *
      * @return string $name
@@ -186,4 +201,45 @@ class Dokument extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         return $this->getTnfreigabe();
     }
     
+    /**
+     * Returns the tstamp
+     *
+     * @return int $tstamp
+     */
+    public function getTstamp()
+    {
+        return $this->tstamp;
+    }
+    
+    /**
+     * Sets the tstamp
+     *
+     * @param int $tstamp
+     * @return void
+     */
+    public function setTstamp($tstamp)
+    {
+        $this->tstamp = $tstamp;
+    }
+    
+    /**
+     * Returns the crdate
+     *
+     * @return int $crdate
+     */
+    public function getCrdate()
+    {
+        return $this->crdate;
+    }
+    
+    /**
+     * Sets the crdate
+     *
+     * @param int $crdate
+     * @return void
+     */
+    public function setCrdate($crdate)
+    {
+        $this->crdate = $crdate;
+    }
 }
