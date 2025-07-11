@@ -4,6 +4,7 @@ return [
         'title' => 'Ort',
         'label' => 'titel',
         'hideTable' => true,
+        'readOnly' => true,
         'searchFields' => 'plz, bundesland, landkreis',
         'iconfile' => 'EXT:iqtp13db/Resources/Public/Icons/tx_iqtp13db_domain_model_ort.gif'
     ],

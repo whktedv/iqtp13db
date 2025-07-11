@@ -406,17 +406,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
             ->withHeader('Content-Type', 'text/plain')
             ->withBody($this->streamFactory->createStream('Datei nicht gefunden'));
         }
-        
-        /*
-        
-        $queryParameterArray = ['eID' => 'dumpFile', 't' => 'f'];
-        $queryParameterArray['f'] = $targetfile->getUid();
-        $queryParameterArray['token'] = GeneralUtility::hmac(implode('|', $queryParameterArray), 'resourceStorageDumpFile');
-        $publicUrl = GeneralUtility::locationHeaderUrl(PathUtility::getAbsoluteWebPath(Environment::getPublicPath() . '/index.php'));
-        $publicUrl .= '?' . http_build_query($queryParameterArray, '', '&', PHP_QUERY_RFC3986);
-        
-        return $this->redirectToURI($publicUrl, $delay=0, $statusCode=303);
-        */
+      
     }
     
     /**
@@ -528,7 +518,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
         
-        $storage = $this->generalhelper->getTP13Storage( $this->storageRepository->findAll());
+        $storage = $this->generalhelper->getTP13Storage($this->storageRepository->findAll());
         $delfile = $storage->getFile('/'.$dokument->getPfad().$dokument->getName());
         $erg = $storage->deleteFile($delfile);
         
@@ -543,12 +533,12 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      **/    
     function reduce_filesize($file, $filename, $pfad) {
         
-        if (is_array($file) && $file['size'] > 1000000 && file_exists($pfad.$filename)) // bei Dateigrößen über 1 MB 
+        if (is_array($file) && $file['size'] > 800000 && file_exists($pfad.$filename)) // bei Dateigrößen über 800 kB 
         {
             $fileName = $file['tmp_name'];
             $fileExt = pathinfo($file['name'], PATHINFO_EXTENSION);
             $fileNamewoExt = pathinfo($file['name'], PATHINFO_FILENAME); 
-            $percent = 40;
+            $percent = 35;
             
             $timestamp = time();
             

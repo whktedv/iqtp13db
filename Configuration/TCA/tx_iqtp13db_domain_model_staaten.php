@@ -4,7 +4,7 @@ return [
         'title' => 'Staaten',
         'label' => 'titel',
         'hideTable' => true,
-        'searchFields' => 'staatid, titel',
+        'readOnly' => true,
         'iconfile' => 'EXT:iqtp13db/Resources/Public/Icons/tx_iqtp13db_domain_model_staaten.gif'
     ],
     'types' => [

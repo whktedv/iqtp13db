@@ -4,6 +4,7 @@ return [
         'title' => 'Berufe',
         'label' => 'titel',
         'hideTable' => true,
+        'readOnly' => true,
         'searchFields' => 'berufid, titel',
         'iconfile' => 'EXT:iqtp13db/Resources/Public/Icons/tx_iqtp13db_domain_model_berufe.gif'
     ],

@@ -4,7 +4,7 @@ return [
         'title' => 'Branche',
         'label' => 'titel',
         'hideTable' => true,
-        'searchFields' => 'brancheid, titel',
+        'readOnly' => true,
         'iconfile' => 'EXT:iqtp13db/Resources/Public/Icons/tx_iqtp13db_domain_model_branche.gif'
     ],
     'types' => [

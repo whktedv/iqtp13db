@@ -23,8 +23,11 @@ class Task extends AbstractTask {
          $delabschl = $this->deleteDeletedAbschluesse();
          $deldoks = $this->deleteDeletedDokumente();
          $delfks = $this->deleteDeletedFolgekontakte();
+         $delhistorie = $this->deleteDeletedHistorie();
+         $deloldhistorie = $this->deleteOldHistorie();
+         $delfilemeta = $this->deletefilemetadata();
          
-         if($del90 && $delberatung99 && $delabschl && $deldoks && $delfks) {             
+         if($del90 && $delberatung99 && $delabschl && $deldoks && $delfks && $delhistorie) {             
              return true;
          } else {
              return false;
@@ -72,6 +75,46 @@ class Task extends AbstractTask {
          
          return true;
      }
+     
+     /**
+      * Executes the delete-query for the deleted table
+      * Markiere in der Historie-Tabelle alle Einträge, die älter als 365 Tage sind, als deleted
+      *
+      * @return bool
+      */
+     protected function deleteOldHistorie() {
+         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_iqtp13db_domain_model_historie');
+         $queryBuilder->getRestrictions()->removeAll();
+         
+         $dateold = strtotime('-365 day');
+         
+         $queryBuilder->update('tx_iqtp13db_domain_model_historie')
+         ->where($queryBuilder->expr()->lt('tstamp',$queryBuilder->createNamedParameter($dateold, \PDO::PARAM_INT)))
+         ->set('deleted', 1)
+         ->executeStatement();
+         
+         return true;
+     }
+     
+     /**
+      * Executes a delete-query for sys_file_metadata
+      *
+      * @return bool
+      */
+     protected function deletefilemetadata() {
+         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('sys_file_metadata');
+         $queryBuilder->getRestrictions()->removeAll();
+         
+         // DELETE Query ausführen
+         $affectedRows = $queryBuilder
+         ->delete('sys_file_metadata')
+         ->where($queryBuilder->expr()->isNull('title'))
+         ->executeStatement();
+         
+         return true;
+     }
+     
+     
      
      /**
       * Executes the delete-query for the deleted table
@@ -134,6 +177,38 @@ class Task extends AbstractTask {
              
          return true;
      }
+     
+     /**
+      * Executes the delete-query for the deleted table
+      * Markiere in der History-Tabelle alle Einträge, bei denen in der Webapp die zugehörigen Teilnehmer gelöscht wurden (hidden = 1) und markiere diese als deleted
+      *
+      * @return bool
+      */
+     protected function deleteDeletedHistorie() {
+         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_iqtp13db_domain_model_historie');
+         $queryBuilder->getRestrictions()->removeAll();
+         
+         $result = $queryBuilder->select('tx_iqtp13db_domain_model_historie.uid')
+         ->from('tx_iqtp13db_domain_model_historie')
+         ->leftJoin(
+             'tx_iqtp13db_domain_model_historie',
+             'tx_iqtp13db_domain_model_teilnehmer',
+             't',
+             $queryBuilder->expr()->eq('t.uid', $queryBuilder->quoteIdentifier('tx_iqtp13db_domain_model_historie.teilnehmer'))
+             )
+             ->where($queryBuilder->expr()->eq('t.deleted',$queryBuilder->createNamedParameter(1, \PDO::PARAM_INT)))
+             ->executeQuery();
+             
+             while ($row = $result->fetchAssociative()) {
+                 $queryBuilder->update('tx_iqtp13db_domain_model_historie')
+                 ->where($queryBuilder->expr()->eq('uid',$queryBuilder->createNamedParameter($row['uid'], \PDO::PARAM_INT)))
+                 ->set('deleted', 1)
+                 ->executeStatement();
+             }
+             
+             return true;
+     }
+     
      
      /**
       * Executes the delete-query for the deleted table
