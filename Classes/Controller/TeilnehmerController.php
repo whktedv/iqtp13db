@@ -407,7 +407,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     
                     // **** Doppelanmeldungen vermeiden *****
                     if(strtolower($teilnehmer->getNachname()) != 'anonym') {
-                        $teilnehmerarr = $this->teilnehmerRepository->findDublette4Anmeldung($teilnehmer->getNachname(), $teilnehmer->getVorname(), $teilnehmer->getEmail());
+                        $teilnehmerarr = $this->teilnehmerRepository->findDublette4Anmeldung(trim($teilnehmer->getNachname()), trim($teilnehmer->getVorname()), $teilnehmer->getEmail());
                         
                         if(count($teilnehmerarr) > 0) {
                             $GLOBALS['TSFE']->fe_user->setKey('ses', 'tnuidbereitsberaten', $teilnehmerarr[0]);

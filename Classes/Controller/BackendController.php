@@ -469,7 +469,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $plzberatungsstelle4tn = array();
         for($j=0; $j < count($teilnehmerpag); $j++) {
             foreach($tnuiddublette as $tnuid) {
-                if($teilnehmerpag[$j]->getNachname() == $tnuid['nachname'] && $teilnehmerpag[$j]->getVorname() == $tnuid['vorname'] && $teilnehmerpag[$j]->getEmail() == $tnuid['email']) $teilnehmerpag[$j]->setDublette(TRUE);
+                if(trim($teilnehmerpag[$j]->getNachname()) == trim($tnuid['nachname']) && trim($teilnehmerpag[$j]->getVorname()) == trim($tnuid['vorname']) && $teilnehmerpag[$j]->getEmail() == $tnuid['email']) $teilnehmerpag[$j]->setDublette(TRUE);
             }
             
             foreach($abschluesserepo as $ab) {
