@@ -129,11 +129,6 @@ return [
                 'eval' => 'datetime,int',
                 'default' => 0
             ],
-        ],
-        'crdate' => [
-            'config' => [
-                'type' => 'passthrough',
-            ],
-        ],
+        ],        
     ],
 ];
