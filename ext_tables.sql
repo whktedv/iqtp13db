@@ -249,7 +249,7 @@ CREATE TABLE fe_groups (
         nichtiq int(11) unsigned DEFAULT '0',
         bundesland varchar(255) DEFAULT '' NOT NULL,
         generalmail varchar(255) DEFAULT '' NOT NULL,
-        plzlist TEXT DEFAULT '' CHARACTER SET utf8mb4 NOT NULL COLLATE `utf8mb4_unicode_ci`
+        plzlist text DEFAULT '' NOT NULL, 
         keywordlist text DEFAULT '' NOT NULL,
         beratungsarten varchar(255) DEFAULT '' NOT NULL,
         einwilligungserklaerungsseite int(11) DEFAULT '0',
