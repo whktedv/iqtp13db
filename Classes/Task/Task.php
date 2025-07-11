@@ -72,7 +72,7 @@ class Task extends AbstractTask {
          ->andWhere($queryBuilder->expr()->lt('tstamp',$queryBuilder->createNamedParameter($date90, \PDO::PARAM_INT)))
          ->set('deleted', 1)
          ->executeStatement();
-         
+          
          return true;
      }
      
