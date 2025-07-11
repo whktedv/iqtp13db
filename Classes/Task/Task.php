@@ -86,7 +86,7 @@ class Task extends AbstractTask {
          $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_iqtp13db_domain_model_historie');
          $queryBuilder->getRestrictions()->removeAll();
          
-         $dateold = strtotime('-365 day');
+         $dateold = strtotime('-180 day');
          
          $queryBuilder->update('tx_iqtp13db_domain_model_historie')
          ->where($queryBuilder->expr()->lt('tstamp',$queryBuilder->createNamedParameter($dateold, \PDO::PARAM_INT)))
