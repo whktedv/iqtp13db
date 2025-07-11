@@ -10,8 +10,3 @@ services:
 
   Ud\Iqtp13db\Controller\RequestController:
     public: true    
-
-  Ud\Iqtp13db\EventListener\ExcludeTableFromReferenceIndex:
-    tags:
-      - name: event.listener
-        identifier: 'excludeTableFromReferenceIndex'
