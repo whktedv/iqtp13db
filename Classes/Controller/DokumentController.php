@@ -76,6 +76,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         } else {        
             $dokument = new \Ud\Iqtp13db\Domain\Model\Dokument();
             $dokument->setBeschreibung("");
+            $dokument->setCrdate(time());
             $this->saveFileTeilnehmer($dokument, $teilnehmer, $_FILES['tx_iqtp13db_iqtp13dbadmin']);
         }
         
@@ -103,6 +104,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
             foreach ($files as $file) {
                 $dokument = new \Ud\Iqtp13db\Domain\Model\Dokument();
                 $dokument->setBeschreibung("");
+                $dokument->setCrdate(time());
                 $this->saveFileTeilnehmer($dokument, $teilnehmer, $file);
             }
         }
@@ -200,6 +202,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
                 $dokument = new \Ud\Iqtp13db\Domain\Model\Dokument();
                 $dokument->setBeschreibung($valArray['beschreibung'] ?? '');
                 $dokument->setTnfreigabe(1);
+                $dokument->setCrdate(time());
                 $this->saveFileTeilnehmer($dokument, $teilnehmer, $_FILES['tx_iqtp13db_iqtp13dbwebapp']);
             }
             
@@ -240,6 +243,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
                         $dokument = new \Ud\Iqtp13db\Domain\Model\Dokument();
                         $dokument->setBeschreibung($valArray['beschreibung'] ?? '');
                         $dokument->setTnfreigabe(1);
+                        $dokument->setCrdate(time());
                         $this->saveFileTeilnehmer($dokument, $teilnehmer, $file);
                         $this->addFlashMessage('Upload erfolgreich.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
                     }
@@ -313,6 +317,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     	            $this->addFlashMessage('File already uploaded. Datei wurde schon hochgeladen.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
     	        } else {
     	            $dokument->setTeilnehmer($teilnehmer);
+    	            $dokument->setCrdate(time());
     	            $this->dokumentRepository->update($dokument);
     	            //Daten sofort in die Datenbank schreiben
     	            
