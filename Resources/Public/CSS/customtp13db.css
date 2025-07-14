@@ -295,6 +295,10 @@ button.abbruchbtn {
 	align-items: flex-start;
 }
 
+.img-thumbnail {
+	max-width: 60px;
+}
+
 .dropzone {
 	border: 2px dashed #cccccc;
 	background-color: #eeeeee;

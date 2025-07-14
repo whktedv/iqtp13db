@@ -62,7 +62,20 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     protected $ortRepository;
     protected $brancheRepository;
     
-    public function __construct(UserGroupRepository $userGroupRepository, TeilnehmerRepository $teilnehmerRepository, FolgekontaktRepository $folgekontaktRepository, DokumentRepository $dokumentRepository, HistorieRepository $historieRepository, BeraterRepository $beraterRepository, AbschlussRepository $abschlussRepository, StorageRepository $storageRepository, BerufeRepository $berufeRepository, StaatenRepository $staatenRepository, OrtRepository $ortRepository, BrancheRepository $brancheRepository)
+    public function __construct(
+        UserGroupRepository $userGroupRepository, 
+        TeilnehmerRepository $teilnehmerRepository, 
+        FolgekontaktRepository $folgekontaktRepository, 
+        DokumentRepository $dokumentRepository, 
+        HistorieRepository $historieRepository, 
+        BeraterRepository $beraterRepository, 
+        AbschlussRepository $abschlussRepository, 
+        StorageRepository $storageRepository, 
+        BerufeRepository $berufeRepository, 
+        StaatenRepository $staatenRepository, 
+        OrtRepository $ortRepository, 
+        BrancheRepository $brancheRepository
+    )
     {
         $this->userGroupRepository = $userGroupRepository;
         $this->teilnehmerRepository = $teilnehmerRepository;
@@ -1749,11 +1762,13 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $dokumente = $this->dokumentRepository->findByTeilnehmer($teilnehmer);
         $dokumentpfad = $this->generalhelper->sanitizeFileFolderName($teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid(). '/');
         
+        $imageService = $this->imageService; // thumb
         $storage = $this->generalhelper->getTP13Storage($this->storageRepository->findAll());
         $folder = $storage->getConfiguration()['basePath'].'/';
         
         $filesizes = array();
         $filesizesum = 0;
+        
         foreach($dokumente as $key => $dok) {
             $dokfs = $dok->getFilesize($folder) ?? 0;
             $filesizes[$key] = $dokfs == 0 ? 0 : $this->generalhelper->human_filesize($dokfs, 1);

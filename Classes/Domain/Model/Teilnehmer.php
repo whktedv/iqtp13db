@@ -1,7 +1,11 @@
 <?php
 namespace Ud\Iqtp13db\Domain\Model;
 
+use TYPO3\CMS\Extbase\Annotation as Extbase;
+use TYPO3\CMS\Extbase\Domain\Model\AbstractEntity;
 use TYPO3\CMS\Extbase\Annotation\Validate;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+
 /***
  *
  * This file is part of the "IQ Webapp Anerkennungserstberatung" Extension for TYPO3 CMS.
@@ -573,6 +577,12 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $hidden;
     
     /**
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Ud\Iqtp13db\Domain\Model\Gruppenberatung>
+     * @Extbase\ORM\Lazy
+     */
+    protected ObjectStorage $gruppenberatungen;
+    
+    /**
      * initializes this object
      *
      * @param array $sonstigerstatus
@@ -593,6 +603,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->setAnerkennungsberatung($anerkennungsberatung);
         $this->setQualifizierungsberatung($qualifizierungsberatung);
         $this->setWieberaten($wieberaten);
+        $this->gruppenberatungen = new ObjectStorage();
     }
     
     /**
@@ -2305,6 +2316,42 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function setHidden($hidden) {
         $this->hidden = $hidden;
+    }
+    
+    /**
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Ud\Iqtp13db\Domain\Model\Gruppenberatung>
+     */
+    public function getGruppenberatungen(): ObjectStorage
+    {
+        return $this->gruppenberatungen;
+    }
+    
+    /**
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Ud\Iqtp13db\Domain\Model\Gruppenberatung> $gruppenberatungen
+     */
+    public function setGruppenberatungen(ObjectStorage $gruppenberatungen): void
+    {
+        $this->gruppenberatungen = $gruppenberatungen;
+    }
+    
+    public function addGruppenberatung(Gruppenberatung $gruppenberatung): void
+    {
+        $this->gruppenberatungen->attach($gruppenberatung);
+    }
+    
+    public function removeGruppenberatung(Gruppenberatung $gruppenberatung): void
+    {
+        $this->gruppenberatungen->detach($gruppenberatung);
+    }
+    
+    public function getAnzahlGruppenberatungen(): int
+    {
+        return $this->gruppenberatungen->count();
+    }
+    
+    public function istInGruppenberatung(Gruppenberatung $gruppenberatung): bool
+    {
+        return $this->gruppenberatungen->contains($gruppenberatung);
     }
     
     /**

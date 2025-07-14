@@ -36,6 +36,7 @@
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><source>German as a native language?</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><source>What level of German language skills?</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.weiteresprachkenntnisse"><source>Further language skills</source></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.gruppenberatung"><source>Group consultation</source></trans-unit>
 		
 		<trans-unit id="keinabschlussbisher"><source><![CDATA[ No foreign educational qualification specified yet. Please enter information about your educational qualification (university or training) here. You can also enter several qualifications (diplomas, certificates).]]></source></trans-unit>
 		
@@ -172,6 +173,13 @@
 		<trans-unit id="editexternauthenticatelabel"><source>To authenticate, please enter your date of birth and click the Forward button.</source></trans-unit>
 		
 		<trans-unit id="uploaddropfile"><source>Drop documents for upload here.</source></trans-unit>
+		
+		<trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.titel"><source>Title</source></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.beschreibung"><source>Description</source></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.datum"><source>Date</source></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.ort"><source>Place</source></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.max_teilnehmer"><source>Max. participants</source></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.teilnehmer"><source>Participants</source></trans-unit>
 		
 	</body>
   </file>

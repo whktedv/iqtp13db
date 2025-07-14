@@ -36,7 +36,8 @@
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.deutschkenntnisse"><target>Deutsch als Muttersprache?</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.zertifikat_sprachniveau"><target>Deutschkenntnisse auf welchem Sprachniveau?</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.weiteresprachkenntnisse"><target>Weitere Sprachkenntnisse</target></trans-unit>
-						
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.gruppenberatung"><target>Gruppenberatung</target></trans-unit>
+									
 			<trans-unit id="keinabschlussbisher"><target><![CDATA[ Noch keinen Berufsabschluss angegeben. Bitte tragen Sie hier Informationen zu Ihrem Berufsabschluss (Universität oder Ausbildung) ein. Sie können auch mehrere Abschlüsse (Diplome, Zeugnisse) angeben.]]></target></trans-unit>
 			
 			<trans-unit id="tx_iqtp13db_domain_model_abschluss"><target>Abschluss</target></trans-unit>
@@ -151,7 +152,7 @@
 			<trans-unit id="mailtextcustom"><target> <![CDATA[ Wir setzen uns mit Ihnen in Verbindung, sobald Sie an der Reihe sind. Wir bitten um Ihr Verständnis und Ihre Geduld. <p>Mit freundlichen Grüßen</p>Ihre IQ Anerkennungs- und Qualifizierungsberatung ]]></target></trans-unit>
 			<trans-unit id="grcinfotext"><target><![CDATA[ <p>Wir weisen Sie darauf hin, dass das Beratungsangebot gemäß der Charta der Grundrechte der Europäischen Union umgesetzt wird. Wir setzen das gegenseitige Einverständnis der Einhaltung der Charta für die Anerkennungs- und Qualifizierungsberatung voraus.</p><p>Charta der Grundrechte der europäischen Union: <a href="https://www.europarl.europa.eu/charter/pdf/text_de.pdf" target="_blank">https://www.europarl.europa.eu/charter/pdf/text_de.pdf</a></p> ]]></target></trans-unit>
 			<trans-unit id="subject"><target>Ihre Anmeldung zur Anerkennungsberatung beim IQ Netzwerk</target></trans-unit>
-			<trans-unit id="confirmlinktext"><target> <![CDATA[ Bestätigung der Anmeldung ]]></target></trans-unit>
+			<trans-unit id="confirmlinktext"><target> <![CDATA[ Anmeldung bestätigen ]]></target></trans-unit>
 			<trans-unit id="confirmmailtext1"><target> <![CDATA[ <p>Guten Tag VORNAMENACHNAME,</p> <p>bestätigen Sie Ihre Anmeldung zur Anerkennungsberatung bitte hier:</p> ]]></target></trans-unit>			
 			<trans-unit id="confirmmailtext2"><target> <![CDATA[ <p>Mit freundlichem Gruß</p> <p>Ihre Anerkennungs- und Qualifizierungsberatung beim IQ Netzwerk</p>]]></target></trans-unit>
 			<trans-unit id="confirmsubject"><target>Bitte bestätigen Sie Ihre Anmeldung zur Anerkennungsberatung beim IQ Netzwerk</target></trans-unit>	
@@ -232,6 +233,13 @@
 			<trans-unit id="editexternauthenticatelabel"><target>Zur Authentifizierung bitte Geburtsdatum eingeben und auf den Weiter-Button klicken.</target></trans-unit>
 						
 			<trans-unit id="uploaddropfile"><target>Dokumente für den Upload hier ablegen.</target></trans-unit>
+			
+			<trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.titel"><target>Titel</target></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.beschreibung"><target>Beschreibung</target></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.datum"><target>Datum</target></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.ort"><target>Ort</target></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.max_teilnehmer"><target>Max. Teilnehmeranzahl</target></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.teilnehmer"><target>Teilnehmer</target></trans-unit>
 		</body>
 	</file>
 </xliff>

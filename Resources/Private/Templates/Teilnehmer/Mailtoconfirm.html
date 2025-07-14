@@ -127,6 +127,29 @@
         a.button {
             display:block;
         }
+        a.confirmlink {
+	        background-color: #46878730;
+	        text-decoration:none !important;
+		    border: 0px solid transparent;
+			white-space: nowrap;
+			margin-bottom: 0px;
+			font-weight: 500 !important;
+			text-align: center;
+			font-size: 1.4rem;
+			padding-top: 10px;
+			padding-right: 20px;
+			padding-bottom: 10px;
+			padding-left: 20px;
+			color: #468787;
+			cursor: pointer;
+			display: inline-block;
+			-moz-user-select: none;
+			text-decoration: none;
+			border-radius: 0;
+  		    border-bottom-right-radius: 0px;
+	        border-bottom-right-radius: 10px;
+		    box-shadow: 1px 2px 3px #494949;
+		}
         .image,.retinaImage {
             vertical-align:bottom;
         }
@@ -138,7 +161,7 @@
         }
         .dividerBlock {
             table-layout:fixed !important;
-        }
+        }        
         h1 {
             color:#222222;
             font-family:'Helvetica Neue', Helvetica, Arial, Verdana, sans-serif;
@@ -397,6 +420,7 @@
 
                                     <f:format.html>{confirmmailtext1}</f:format.html>
 							          <f:link.action
+							          class="confirmlink"
 							        extensionName="iqtp13db"
 							        pluginName="Iqtp13dbwebapp"
 							        controller="Teilnehmer"

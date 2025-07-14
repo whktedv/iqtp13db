@@ -162,4 +162,6 @@ Update 07.07.2025
 - Vorbereitung für externen Zugriff durch Ratsuchende zum nachträglichen Bearbeiten von Daten
 
 Neu:
-
+- Bugfixing
+- BETA: Erstellen von Link für externen Zugriff durch Ratsuchende zum nachträglichen Bearbeiten möglich
+- BETA: Vorbereitungen für neues Modul Gruppenberatungen

@@ -18,7 +18,7 @@ return [
         'iconfile' => 'EXT:iqtp13db/Resources/Public/Icons/tx_iqtp13db_domain_model_teilnehmer.gif'
     ],
     'types' => [
-        '1' => ['showitem' => 'hidden, niqidberatungsstelle, beratungsstatus, nachname, vorname, strasse, plz, ort, email, confirmemail, telefon, gebdat, lebensalter, geschlecht, einwilligung, beratungdatum, erstberatungabgeschlossen, berater, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+        '1' => ['showitem' => 'hidden, niqidberatungsstelle, beratungsstatus, nachname, vorname, strasse, plz, ort, email, confirmemail, telefon, gebdat, lebensalter, geschlecht, einwilligung, beratungdatum, erstberatungabgeschlossen, berater, gruppenberatungen, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
     'columns' => [
         't3ver_label' => [
@@ -776,6 +776,32 @@ return [
                 'size' => 5,
                 'eval' => 'int',
                 'default' => 0
+            ],
+        ],
+        'gruppenberatungen' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang_db.xlf:tx_iqtp13db_domain_model_teilnehmer.gruppenberatungen',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectMultipleSideBySide',
+                'foreign_table' => 'tx_iqtp13db_domain_model_gruppenberatung',
+                'MM' => 'tx_iqtp13db_teilnehmer_gruppenberatung_mm',
+                'MM_opposite_field' => 'teilnehmer',
+                'size' => 10,
+                'autoSizeMax' => 30,
+                'maxitems' => 9999,
+                'multiple' => 0,
+                'fieldControl' => [
+                    'editPopup' => [
+                        'disabled' => false,
+                    ],
+                    'addRecord' => [
+                        'disabled' => false,
+                    ],
+                    'listModule' => [
+                        'disabled' => true,
+                    ],
+                ],
             ],
         ],
            
