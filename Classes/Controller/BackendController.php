@@ -200,6 +200,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         if ($this->settings['modtyp'] == 'einstellungen') {
             return (new ForwardResponse('editsettings'))->withControllerName('Backend')->withExtensionName('Iqtp13db');
         }
+        if ($this->settings['modtyp'] == 'listgruppenberatung') {
+            return (new ForwardResponse('listgruppenberatung'))->withControllerName('Gruppenberatung')->withExtensionName('Iqtp13db');
+        }
      
     }
     
@@ -1761,8 +1764,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $historie = $this->historieRepository->findByTeilnehmerOrdered($teilnehmer->getUid());
         $dokumente = $this->dokumentRepository->findByTeilnehmer($teilnehmer);
         $dokumentpfad = $this->generalhelper->sanitizeFileFolderName($teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid(). '/');
-        
-        $imageService = $this->imageService; // thumb
+                
         $storage = $this->generalhelper->getTP13Storage($this->storageRepository->findAll());
         $folder = $storage->getConfiguration()['basePath'].'/';
         

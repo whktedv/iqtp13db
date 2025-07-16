@@ -1207,6 +1207,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $this->view->assignMultiple(
                 [
                     'settings' => $this->settings,
+                    'calleraction' => 'editexternmenu',
                     'abschluesse' => $abschluesse,
                     'teilnehmer' => $teilnehmer,
                     'dokumente' => $dokumente,

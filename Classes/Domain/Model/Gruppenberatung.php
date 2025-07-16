@@ -37,6 +37,13 @@ class Gruppenberatung extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected int $maxTeilnehmer = 0;
     
     /**
+     * niqbid
+     *
+     * @var string
+     */
+    protected $niqbid = '';
+    
+    /**
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Ud\Iqtp13db\Domain\Model\Teilnehmer>
      * @Extbase\ORM\Lazy
      */
@@ -95,6 +102,27 @@ class Gruppenberatung extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setMaxTeilnehmer(int $maxTeilnehmer): void
     {
         $this->maxTeilnehmer = $maxTeilnehmer;
+    }
+    
+    /**
+     * Returns the niqbid
+     *
+     * @return string $niqbid
+     */
+    public function getNiqbid()
+    {
+        return $this->niqbid;
+    }
+    
+    /**
+     * Sets the niqbid
+     *
+     * @param string $niqbid
+     * @return void
+     */
+    public function setNiqbid($niqbid)
+    {
+        $this->niqbid = $niqbid;
     }
     
     /**

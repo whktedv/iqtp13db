@@ -13,19 +13,58 @@ use Ud\Iqtp13db\Domain\Model\Teilnehmer;
  */
 class GruppenberatungRepository extends Repository
 {
+    
+    /**
+     * Findet alle Gruppenberatungen
+     *
+     * @param $orderby
+     * @param $order
+     * @param $niqbid
+     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     */
+    public function findAllOrder4List($orderby, $order, $niqbid)
+    {
+        $query = $this->createQuery();
+        
+        $query->matching(
+               $query->like('niqbid', $niqbid)
+        );
+        
+        if($order == 'DESC') $order = \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING;
+        else $order = \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING;
+        
+        if($beratungsstatus == 0) {
+            $query->setOrderings(
+                [
+                    $orderby => $order,
+                    'uid' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING
+                ]
+                );
+        } else {
+            $query->setOrderings([ $orderby => $order ]);
+        }
+        
+        $query = $query->execute();
+        return $query;
+    }  
+    
     /**
      * Findet alle Gruppenberatungen mit verfügbaren Plätzen
      *
+     * @param $niqbid
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function findAvailable()
+    public function findAvailable($niqbid)
     {
         $query = $this->createQuery();
         
         return $query->matching(
-            $query->logicalOr(
-                $query->equals('maxTeilnehmer', 0), // Unbegrenzte Teilnehmerzahl
-                $query->lessThan('teilnehmer', $query->statement('max_teilnehmer'))
+            $query->logicalAnd(
+                $query->logicalOr(
+                    $query->equals('maxTeilnehmer', 0), // Unbegrenzte Teilnehmerzahl
+                    $query->lessThan('teilnehmer', $query->statement('max_teilnehmer'))
+                    ),
+                $query->like('niqbid', $niqbid)
             )
         )->execute();
     }
@@ -35,16 +74,18 @@ class GruppenberatungRepository extends Repository
      *
      * @param \DateTime $startDate
      * @param \DateTime $endDate
+     * @param $niqbid
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function findByDateRange(\DateTime $startDate, \DateTime $endDate)
+    public function findByDateRange(\DateTime $startDate, \DateTime $endDate, $niqbid)
     {
         $query = $this->createQuery();
         
         return $query->matching(
             $query->logicalAnd(
                 $query->greaterThanOrEqual('datum', $startDate),
-                $query->lessThanOrEqual('datum', $endDate)
+                $query->lessThanOrEqual('datum', $endDate),
+                $query->like('niqbid', $niqbid)
             )
         )->setOrderings(['datum' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING])
         ->execute();
@@ -67,15 +108,19 @@ class GruppenberatungRepository extends Repository
 
     /**
      * Findet kommende Gruppenberatungen
-     *
+     * 
+     * @param $niqbid
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function findUpcoming()
+    public function findUpcoming($niqbid)
     {
         $query = $this->createQuery();
         
         return $query->matching(
-            $query->greaterThan('datum', new \DateTime())
+            $query->logicalAnd(
+                $query->greaterThan('datum', new \DateTime()),
+                $query->like('niqbid', $niqbid)
+            )
         )->setOrderings(['datum' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING])
         ->execute();
     }

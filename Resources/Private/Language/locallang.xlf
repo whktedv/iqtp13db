@@ -69,7 +69,7 @@
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wieberaten"><source>How would you like to be advised?</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.notizen"><source>What else would you like to tell us or do you already have a specific question?</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligunginfotext"><source>I would like to receive further information and references to qualification offers in my occupational field.</source></trans-unit>
-		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.editexternsent"><source>E-Mail with edit link sent</source></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.editexternsent"><source>Edit link created</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.anzloginfehlgeschlagen"><source>Failed logins</source></trans-unit>
 
 		<trans-unit id="ja"><source>Yes</source></trans-unit>
@@ -174,6 +174,7 @@
 		
 		<trans-unit id="uploaddropfile"><source>Drop documents for upload here.</source></trans-unit>
 		
+		<trans-unit id="tx_iqtp13db_domain_model_gruppenberatung"><source>Gruppenberatung</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.titel"><source>Title</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.beschreibung"><source>Description</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.datum"><source>Date</source></trans-unit>

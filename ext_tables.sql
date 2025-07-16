@@ -246,19 +246,19 @@ CREATE TABLE tx_iqtp13db_domain_model_historie (
 # Table extension for table 'fe_groups'
 #
 CREATE TABLE fe_groups (
-        niqbid varchar(255) DEFAULT '' NOT NULL,
-        betafeatures int(11) unsigned DEFAULT '0',
-        nichtiq int(11) unsigned DEFAULT '0',
-        bundesland varchar(255) DEFAULT '' NOT NULL,
-        generalmail varchar(255) DEFAULT '' NOT NULL,
-        plzlist text DEFAULT '' NOT NULL, 
-        keywordlist text DEFAULT '' NOT NULL,
-        beratungsarten varchar(255) DEFAULT '' NOT NULL,
-        einwilligungserklaerungsseite int(11) DEFAULT '0',
-        avadresse text DEFAULT '' NOT NULL,
-        custominfotextmail text DEFAULT '' NOT NULL,
-        custominfotextstart text DEFAULT '' NOT NULL,
-        customlogourl varchar(255) DEFAULT '' NOT NULL
+    niqbid varchar(255) DEFAULT '' NOT NULL,
+    betafeatures int(11) unsigned DEFAULT '0',
+    nichtiq int(11) unsigned DEFAULT '0',
+    bundesland varchar(255) DEFAULT '' NOT NULL,
+    generalmail varchar(255) DEFAULT '' NOT NULL,
+    plzlist text DEFAULT '' NOT NULL, 
+    keywordlist text DEFAULT '' NOT NULL,
+    beratungsarten varchar(255) DEFAULT '' NOT NULL,
+    einwilligungserklaerungsseite int(11) DEFAULT '0',
+    avadresse text DEFAULT '' NOT NULL,
+    custominfotextmail text DEFAULT '' NOT NULL,
+    custominfotextstart text DEFAULT '' NOT NULL,
+    customlogourl varchar(255) DEFAULT '' NOT NULL
 );
 
 CREATE TABLE fe_users (
@@ -327,10 +327,11 @@ CREATE TABLE tx_iqtp13db_domain_model_gruppenberatung (
     
     titel varchar(255) DEFAULT '' NOT NULL,
     beschreibung text,
-    datum datetime DEFAULT NULL,
+    datum int(11) unsigned DEFAULT '0' NOT NULL,
     ort varchar(255) DEFAULT '' NOT NULL,
     max_teilnehmer int(11) DEFAULT '0' NOT NULL,
     
+    niqbid varchar(255) DEFAULT '' NOT NULL,    
     teilnehmer int(11) unsigned DEFAULT '0' NOT NULL,
     
     tstamp int(11) unsigned DEFAULT '0' NOT NULL,

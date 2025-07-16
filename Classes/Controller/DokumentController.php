@@ -230,10 +230,11 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
                 $this->addFlashMessage('Error in saveFileWebapp: File does not meet policy.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
             } else {
                 foreach ($files as $file) {
+                    $filesize = $file['size'] ?? 0;
                     if ($file['tmp_name'] == '') {
                         $this->addFlashMessage('Error: permission error or maximum filesize exceeded.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
                         break;
-                    } elseif ($file['size'] > 10485760) {
+                    } elseif ($filesize > 10485760) {
                         $this->addFlashMessage('Error: Maximum filesize exceeded (10 MB). Please reduce filesize.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
                         break;
                     } else {
@@ -538,7 +539,8 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      **/    
     function reduce_filesize($file, $filename, $pfad) {
         
-        if (is_array($file) && $file['size'] > 800000 && file_exists($pfad.$filename)) // bei Dateigrößen über 800 kB 
+        $filesize = $file['size'] ?? 0;
+        if (is_array($file) && $filesize > 800000 && file_exists($pfad.$filename)) // bei Dateigrößen über 800 kB 
         {
             $fileName = $file['tmp_name'];
             $fileExt = pathinfo($file['name'], PATHINFO_EXTENSION);

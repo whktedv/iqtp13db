@@ -2,7 +2,7 @@
 
 return [
     'ctrl' => [
-        'title' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang_db.xlf:tx_iqtp13db_domain_model_gruppenberatung',
+        'title' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_gruppenberatung',
         'label' => 'titel',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
@@ -69,7 +69,7 @@ return [
         ],
         'titel' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang_db.xlf:tx_iqtp13db_domain_model_gruppenberatung.titel',
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_gruppenberatung.titel',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -78,7 +78,7 @@ return [
         ],
         'beschreibung' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang_db.xlf:tx_iqtp13db_domain_model_gruppenberatung.beschreibung',
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_gruppenberatung.beschreibung',
             'config' => [
                 'type' => 'text',
                 'cols' => 40,
@@ -88,17 +88,17 @@ return [
         ],
         'datum' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang_db.xlf:tx_iqtp13db_domain_model_gruppenberatung.datum',
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_gruppenberatung.datum',
             'config' => [
                 'type' => 'input',
                 'renderType' => 'inputDateTime',
-                'eval' => 'datetime',
+                'eval' => 'datetime,int',
                 'default' => 0,
             ],
         ],
         'ort' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang_db.xlf:tx_iqtp13db_domain_model_gruppenberatung.ort',
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_gruppenberatung.ort',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -107,7 +107,7 @@ return [
         ],
         'max_teilnehmer' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang_db.xlf:tx_iqtp13db_domain_model_gruppenberatung.max_teilnehmer',
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_gruppenberatung.max_teilnehmer',
             'config' => [
                 'type' => 'input',
                 'size' => 4,
@@ -115,9 +115,19 @@ return [
                 'default' => 0,
             ]
         ],
+        'niqbid' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.niqidberatungsstelle',
+            'config' => [
+                'type' => 'input',
+                'size' => 4,
+                'eval' => 'int',
+                'default' => 0
+            ],
+        ],
         'teilnehmer' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang_db.xlf:tx_iqtp13db_domain_model_gruppenberatung.teilnehmer',
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_gruppenberatung.teilnehmer',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectMultipleSideBySide',

@@ -49,7 +49,11 @@
    				<numIndex index="9" type="array">
       				<numIndex index="0">Einstellungen</numIndex>
      				<numIndex index="1">einstellungen</numIndex>
-   				</numIndex>		  	  
+   				</numIndex>
+   				<numIndex index="10" type="array">
+      				<numIndex index="0">Gruppenberatung</numIndex>
+     				<numIndex index="1">gruppenberatung</numIndex>
+   				</numIndex>  	  
    				</items>
 				</config>
             </TCEforms>

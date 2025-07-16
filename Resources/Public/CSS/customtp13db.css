@@ -712,6 +712,13 @@ form.filterform div {
 	text-decoration: underline;
 }
 
+.mail4externlinkdiv .hinweismodal {
+	position: relative;
+	left: 60px;
+	color: red;
+	font-size: 0.8rem;
+}
+
 /* -------- für Display-Größen bis 767 Pixel Breite (Smartphones/MOBILE) -------- */
 @media ( max-width : 767px) {
 	.tp13_formdivwebapp label {
@@ -803,7 +810,7 @@ form.filterform div {
 		margin-left: 0 !important;
 	}
 	.navbar-nav li {
-		padding-right: 5px;
+		/* padding-right: 5px; */
 	}
 }
 
