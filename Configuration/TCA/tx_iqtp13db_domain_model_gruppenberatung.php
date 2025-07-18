@@ -20,7 +20,7 @@ return [
         'showRecordFieldList' => 'hidden, titel, beschreibung, datum, ort, max_teilnehmer, teilnehmer',
     ],
     'types' => [
-        '1' => ['showitem' => 'hidden, titel, beschreibung, datum, ort, max_teilnehmer, teilnehmer, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+        '1' => ['showitem' => 'hidden, niqbid, titel, beschreibung, datum, ort, max_teilnehmer, teilnehmer, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
     'columns' => [
         'hidden' => [

@@ -1,0 +1,26 @@
+
+<f:layout name="Default" />
+<f:section name="HeaderAssets">
+  		<link rel="stylesheet" href="{f:uri.resource(path: 'CSS/customtp13dbadmin.css')}"/>  		
+</f:section>
+<f:section name="main">
+
+<f:flashMessages />
+<f:render partial="FormErrors" arguments="{object:Abschluss}" />
+
+<f:form action="create" name="gruppenberatung" object="{gruppenberatung}" arguments="{calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : thisaction}">
+	<div class="buttonmenu">
+		<div class="toplinkbuttons">
+			<f:link.action id="linkloadoverlay-back" class="linkbuttons" action="{thisaction}" controller="{callercontroller}" arguments="{calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">Zurück</f:link.action>
+		</div>
+	</div>
+
+	<div class="edit-eingabefelder">
+		<h1>Neue Gruppenberatung</h1>
+		<f:render partial="Gruppenberatung/FormFields" />
+	</div>
+	
+	<f:form.button type="submit" class="linkbuttons" onclick="return cancelsubmit();" id="savebutton2">{f:translate(key:'speichern')}</f:form.button>
+	<f:link.action id="linkloadoverlay-edit" class="linkbuttons" action="{thisaction}" controller="{callercontroller}" arguments="{calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">Zurück</f:link.action>
+</f:form>
+</f:section>

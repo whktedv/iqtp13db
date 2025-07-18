@@ -200,7 +200,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         if ($this->settings['modtyp'] == 'einstellungen') {
             return (new ForwardResponse('editsettings'))->withControllerName('Backend')->withExtensionName('Iqtp13db');
         }
-        if ($this->settings['modtyp'] == 'listgruppenberatung') {
+        if ($this->settings['modtyp'] == 'gruppenberatung') {
             return (new ForwardResponse('listgruppenberatung'))->withControllerName('Gruppenberatung')->withExtensionName('Iqtp13db');
         }
      
@@ -1305,7 +1305,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     $rows[$x]['Leistungsbezugjanein'] = $tnleistungsbezugjanein == 0 ? '-' : $arrjanein[$tnleistungsbezugjanein];
                     
                     $tnleistungsbezug = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'leistungsbezug');
-                    $rows[$x]['Leistungsbezug'] = $tnleistungsbezug == '' ? '-' : $arrleistungsbezug[$tnleistungsbezug];
+                    $rows[$x]['Leistungsbezug'] = ($tnleistungsbezug == '' || $tnleistungsbezug == 0) ? '-' : $arrleistungsbezug[$tnleistungsbezug];
                     
                     $tngeburtsland = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($tn, 'geburtsland');
                     $rows[$x]['Geburtsland'] = $tngeburtsland == '' ? '-' : $arrstaaten[$tngeburtsland];

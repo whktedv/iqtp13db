@@ -1,0 +1,27 @@
+<div class="fframe">
+		
+		<div class="tp13_formdivwebapp">
+			<label for="titel">
+				<f:translate key="tx_iqtp13db_domain_model_gruppenberatung.titel" />
+			</label>
+				<span class="propdat">{gruppenberatung.titel}</span>
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="beschreibung" class="tp13_options">
+				<f:translate key="tx_iqtp13db_domain_model_gruppenberatung.beschreibung" />
+			</label>
+				<span class="propdat"><f:format.html>{gruppenberatung.beschreibung}</f:format.html></span>
+		</div>		
+		<div class="tp13_formdivwebapp">
+			<label for="datum">
+				<f:translate key="tx_iqtp13db_domain_model_gruppenberatung.datum" />
+			</label>
+				<span class="propdat">{gruppenberatung.datum -> f:format.date(format: 'd.m.Y')}</span>
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="ort">
+				<f:translate key="tx_iqtp13db_domain_model_gruppenberatung.ort" />
+			</label>
+				<span class="propdat">{gruppenberatung.ort}</span>
+		</div>
+</div>

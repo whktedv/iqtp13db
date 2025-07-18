@@ -110,14 +110,53 @@ class GruppenberatungController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
      * @param int $currentPage
      * @return void
      */
-    public function listgruppenberatung(int $currentPage = 1): ResponseInterface
+    public function listgruppenberatungAction(int $currentPage = 1): ResponseInterface
+    {
+        $valArray = $this->request->getArguments();
+                
+        $gruppenberatungen = $this->gruppenberatungRepository->findAvailable($this->niqbid);
+
+        $this->view->assignMultiple(
+            [
+                'gruppenberatungen' => $gruppenberatungen
+            ]);
+        return $this->htmlResponse();    
+    }
+    
+    /**
+     * action show
+     *
+     * @param \Ud\Iqtp13db\Domain\Model\Gruppenberatung $gruppenberatung
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("gruppenberatung")
+     * @return void
+     */
+    public function showAction(\Ud\Iqtp13db\Domain\Model\Gruppenberatung $gruppenberatung): ResponseInterface
+    {
+        $this->view->assign('gruppenberatung', $gruppenberatung);
+        
+        $valArray = $this->request->getArguments();
+        $this->view->assign('calleraction', $valArray['calleraction']);
+        $this->view->assign('callercontroller', $valArray['callercontroller']);
+        $this->view->assign('callerpage', $valArray['callerpage'] ?? '1');
+        $this->view->assign('thisaction', $valArray['thisaction'] ?? '');
+        return $this->htmlResponse();
+    }
+    
+    /**
+     * action new
+     *
+     * @return void
+     */
+    public function newAction(): ResponseInterface
     {
         $valArray = $this->request->getArguments();
         
-        
-        //$gruppenberatungen = $this->gruppenberatungRepository->
-                // Daten sofort in die Datenbank schreiben
-    
+        $this->view->assign('thisaction', $valArray['thisaction'] ?? '');
+        $this->view->assign('calleraction', $valArray['calleraction']);
+        $this->view->assign('callercontroller', $valArray['callercontroller']);
+        $this->view->assign('callerpage', $valArray['callerpage'] ?? '1');
+        $this->view->assign('settings', $this->settings);
+        return $this->htmlResponse();
     }
     
     

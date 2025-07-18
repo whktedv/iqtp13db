@@ -59,13 +59,7 @@ class GruppenberatungRepository extends Repository
         $query = $this->createQuery();
         
         return $query->matching(
-            $query->logicalAnd(
-                $query->logicalOr(
-                    $query->equals('maxTeilnehmer', 0), // Unbegrenzte Teilnehmerzahl
-                    $query->lessThan('teilnehmer', $query->statement('max_teilnehmer'))
-                    ),
                 $query->like('niqbid', $niqbid)
-            )
         )->execute();
     }
 

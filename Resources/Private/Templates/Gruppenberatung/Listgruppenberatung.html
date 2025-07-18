@@ -1,0 +1,35 @@
+<f:layout name="DefaultBackend" />
+<f:section name="HeaderAssets">
+  		<link rel="stylesheet" href="{f:uri.resource(path: 'CSS/customtp13dbadmin.css')}"/>
+</f:section>
+
+<f:section name="main">
+ 
+<f:flashMessages />
+
+<h1>Gruppennberatungen</h1>
+
+<table  class="tx_iqtp13db listerstberatung" >
+	<tr>
+		<th>Titel</th>
+		<th>Datum</th>
+		<th>Ort</th>
+		<th></th>
+		<th></th>
+	</tr>
+
+	<f:for each="{gruppenberatungen}" as="gruppenberatung" iteration="it">
+		<tr>
+			<td>{gruppenberatung.titel}</td>
+			<td><f:format.date format="d.m.Y">{gruppenberatung.datum}</f:format.date></td>
+			<td>{gruppenberatung.ort}</td>
+			<td><f:link.action action="edit" arguments="{gruppenberatung : gruppenberatung, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" title="Bearbeiten"><img src="/fileadmin/template/images/iq-webapp_bearbeiten.svg" alt="Bearbeiten" width="30" height="30"/></f:link.action></td>
+			<td><f:link.action action="delete" arguments="{gruppenberatung : gruppenberatung, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" onclick="return confirm('Wirklich löschen?');" title="Löschen"><img src="/fileadmin/template/images/iq-webapp_loeschen.svg" width="30" height="30" alt="Löschen" /></f:link.action></td>			
+		</tr>		
+	</f:for>
+</table>
+
+</f:section>
+
+
+
