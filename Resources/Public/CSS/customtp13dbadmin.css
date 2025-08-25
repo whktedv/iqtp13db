@@ -410,6 +410,10 @@ table.fktable {
 	min-width: 10%;
 }
 
+.tx_iqtp13db tr.deaktivierterberatende {
+	text-decoration: line-through;
+}
+
 .tx_iqtp13db td.fklistinhalt {
 	min-width: 50%;
 }

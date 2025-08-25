@@ -29,6 +29,9 @@ return [
             'lastlogin' => [
                 'fieldName' => 'lastlogin'
             ],
+            'disable' => [
+                'fieldName' => 'disable'
+            ],
         ],
     ],
     \Ud\Iqtp13db\Domain\Model\UserGroup::class => [

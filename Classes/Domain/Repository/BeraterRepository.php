@@ -27,10 +27,13 @@ class BeraterRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     {
         $querySettings = GeneralUtility::makeInstance(Typo3QuerySettings::class);
         $querySettings->setRespectStoragePage(TRUE);
+        $querySettings->setIgnoreEnableFields(TRUE);
+        $querySettings->setEnableFieldsToBeIgnored(array('disabled', 'hidden', 'deleted'));
+        
         $querySettings->setStoragePageIds(array($customStoragePid));
         $this->setDefaultQuerySettings($querySettings);
 
-        // Now get all (only Presets)
+        //Now get all (only Presets)
         $queryResult = $this->findByUsergroup($usergroup);
         return $queryResult;
     }

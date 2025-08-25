@@ -59,6 +59,11 @@ class Berater extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $lastlogin;
     
     /**
+     * @var int
+     */
+    protected $disable = 0;
+    
+    /**
      * Constructs a new Front-End User
      *
      * @param string $username
@@ -259,6 +264,16 @@ class Berater extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function getLastlogin()
     {
         return $this->lastlogin;
+    }
+    
+    /**
+     * Returns the disable value
+     *
+     * @return int
+     */
+    public function getDisable()
+    {
+        return $this->disable;
     }
     
 }

@@ -161,7 +161,11 @@ Update 07.07.2025
 - Feld Leistungsbezug angepasst
 - Vorbereitung für externen Zugriff durch Ratsuchende zum nachträglichen Bearbeiten von Daten
 
-Neu:
+Update 25.08.2025
 - Bugfixing
 - BETA: Erstellen von Link für externen Zugriff durch Ratsuchende zum nachträglichen Bearbeiten möglich
 - BETA: Vorbereitungen für neues Modul Gruppenberatungen
+- Export für deaktivierte/ausgeschiedene Beratende möglich
+
+Neu:
+

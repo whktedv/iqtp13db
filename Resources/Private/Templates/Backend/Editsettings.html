@@ -24,7 +24,13 @@
 	</tr>
 
 		<f:for each="{paginator.paginatedItems}" as="berat" iteration="it">
-		<tr>
+		<f:if condition="{berat.disable} == 1"><f:then>
+				<tr class="deaktivierterberatende">
+			</f:then>
+			<f:else>
+				<tr>	
+			</f:else>
+		</f:if>				
 			<td>{berat.username}</td>
 			<td>{berat.lastname}</td>
 			<td>{berat.firstname}</td>
