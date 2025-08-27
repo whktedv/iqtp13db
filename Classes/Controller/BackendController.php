@@ -1245,7 +1245,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     $rows[$x] = array();
                     $rows[$x]['uid'] = $tn['uid'];
                     $rows[$x]['verificationDate'] = date('d.m.Y H:i:s', $tn['verification_date']);
-                    $rowsanonym[$x]['verificationDate'] = $rows[$x]['verification_date'];
+                    $rowsanonym[$x]['verificationDate'] = $rows[$x]['verificationDate'];
                     $rows[$x]['Nachname'] = $tn['nachname'];
                     $rows[$x]['Vorname'] = $tn['vorname'];
                     $rows[$x]['Strasse'] = $tn['strasse'];
@@ -1340,7 +1340,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     
                     $stringqualifizierungsberatung = '';
                     $arrtnqualifizierungsberatung = explode(",", $tn['qualifizierungsberatung']);
-                    foreach ($tn['qualifizierungsberatung'] as $atn) $stringqualifizierungsberatung .= $atn == '' ? '-;' : $arrqualifizierungsberatung[$atn].";";
+                    if(is_array($arrtnqualifizierungsberatung)) {
+                        foreach ($tn['qualifizierungsberatung'] as $atn) $stringqualifizierungsberatung .= $atn == '' ? '-;' : $arrqualifizierungsberatung[$atn].";";                        
+                    } else {
+                        $stringqualifizierungsberatung = $tn['qualifizierungsberatung'];
+                    }
                     $rows[$x]['qualifizierungsberatung'] = $stringqualifizierungsberatung;
                     
                     $tnnameberatungsstelle = $tn['name_beratungsstelle'];
@@ -1386,14 +1390,14 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                         $rows[$x]['Abschluss'.$y.' Ausbildungsinstitution'] = $tn['abschluss'.$y.'_institution'];
                         
                         $tnabschlussberufserfahrung = $tn['abschluss'.$y.'_berufserfahrung'] ?? '';
-                        $rows[$x]['Abschluss'.$y.' Berufserfahrung'] = $arrberufserfahrung[$tnabschlussberufserfahrung];
+                        $rows[$x]['Abschluss'.$y.' Berufserfahrung'] = $tnabschlussberufserfahrung  == '' ? '' : $arrberufserfahrung[$tnabschlussberufserfahrung];
                         
                         $rows[$x]['Abschluss'.$y.' Wunschberuf'] = $tn['abschluss'.$y.'_wunschberuf'];
                         $rows[$x]['Abschluss'.$y.' DeutscherReferenzberuf'] = $tn['abschluss'.$y.'_refberuf'];
                         $rowsanonym[$x]['Abschluss'.$y.' DeutscherReferenzberuf'] = $rows[$x]['Abschluss'.$y.' DeutscherReferenzberuf'];
                         
                         $abantragstellungerfolgt = $tn['abschluss'.$y.'_antrag'] ?? '';
-                        $rows[$x]['Abschluss'.$y.' Antragstellungerfolgt'] = $abantragstellungerfolgt == 0 ? '-' : $arrantragstellungerfolgt[$abantragstellungerfolgt];
+                        $rows[$x]['Abschluss'.$y.' Antragstellungerfolgt'] = $abantragstellungerfolgt == '' ? '' : $arrantragstellungerfolgt[$abantragstellungerfolgt];
                     }                    
                 }
                 
