@@ -95,6 +95,8 @@ $(document).ready(function() {
     $('#datepickerfiltervon').datepicker({
         showButtonPanel : true,
         firstDay: 1,
+		changeMonth: true,
+		changeYear: true,
         dateFormat : "dd.mm.yy",
 		onSelect: function(dateText, inst) {
 	        $("#overlay").show();
@@ -106,6 +108,8 @@ $(document).ready(function() {
     $('#datepickerfilterbis').datepicker({
         showButtonPanel : true,
         firstDay: 1,
+		changeMonth: true,
+		changeYear: true,
         dateFormat : "dd.mm.yy",
 		onSelect: function(dateText, inst) {
 	        $("#overlay").show();
@@ -160,6 +164,10 @@ $(document).ready(function() {
 		  $("#exportfilterform").submit(); 
 		});
 	$('#exportfiltercheckanonym').change(function() {
+			$("#overlay").show();
+		  $("#exportfilterform").submit(); 
+	});
+	$('#exportfilterfolgekontakte').change(function() {
 			$("#overlay").show();
 		  $("#exportfilterform").submit(); 
 	});

@@ -167,5 +167,7 @@ Update 25.08.2025
 - BETA: Vorbereitungen für neues Modul Gruppenberatungen
 - Export für deaktivierte/ausgeschiedene Beratende möglich
 
-Neu:
+Update 27.08.2025
+- Überarbeitung Exportmodul: Bis max. 5.000 Datensätze können exportiert werden (wenn ohne Folgeberatungen) 
 
+Neu:

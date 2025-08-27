@@ -932,7 +932,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             a.nachname,
             a.vorname,
             a.strasse,            
-            a.plz AS PLZ,
+            a.plz,
             a.ort,
             a.email,
             a.telefon,

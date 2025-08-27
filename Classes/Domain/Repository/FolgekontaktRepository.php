@@ -127,7 +127,7 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 if($landkreis != '%') $sql .= " AND o.landkreis LIKE '$landkreis'";
                 if($beruf != '%') $sql .= " AND a.referenzberufzugewiesen LIKE '$beruf'";
                 if($branche != '%') $sql .= " AND a.branche LIKE '$branche'";
-        $sql .= " GROUP BY f.uid ORDER BY f.datum ASC LIMIT 500";
+        $sql .= " GROUP BY f.uid ORDER BY f.datum ASC";
 
         $query->statement($sql);
         
