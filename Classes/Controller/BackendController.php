@@ -1341,7 +1341,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     $stringqualifizierungsberatung = '';
                     $arrtnqualifizierungsberatung = explode(",", $tn['qualifizierungsberatung']);
                     if(is_array($arrtnqualifizierungsberatung)) {
-                        foreach ($tn['qualifizierungsberatung'] as $atn) $stringqualifizierungsberatung .= $atn == '' ? '-;' : $arrqualifizierungsberatung[$atn].";";                        
+                        foreach ($arrtnqualifizierungsberatung as $atn) $stringqualifizierungsberatung .= $atn == '' ? '-;' : $arrqualifizierungsberatung[$atn].";";                        
                     } else {
                         $stringqualifizierungsberatung = $tn['qualifizierungsberatung'];
                     }
