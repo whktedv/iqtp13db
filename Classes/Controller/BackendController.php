@@ -1163,7 +1163,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $orderby = 'crdate';
         $order = 'ASC';
-        $fberatungsstatus = isset($valArray['filterberatungsstatus']) ? $valArray['filterberatungsstatus'] : '';
+        
+        $fberatungsstatus = $valArray['filterberatungsstatus'] ?? 11;
         $bezbstatus = $this->settings['filterberatungsstatus'][$fberatungsstatus];
         
         $del = 0;
@@ -1243,8 +1244,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 foreach($teilnehmers as $x => $tn) {
                     $rows[$x] = array();
                     $rows[$x]['uid'] = $tn['uid'];
-                    $rows[$x]['verificationDate'] = date('d.m.Y H:i:s', $tn['verificationDate']);
-                    $rowsanonym[$x]['verificationDate'] = $rows[$x]['verificationDate'];
+                    $rows[$x]['verificationDate'] = date('d.m.Y H:i:s', $tn['verification_date']);
+                    $rowsanonym[$x]['verificationDate'] = $rows[$x]['verification_date'];
                     $rows[$x]['Nachname'] = $tn['nachname'];
                     $rows[$x]['Vorname'] = $tn['vorname'];
                     $rows[$x]['Strasse'] = $tn['strasse'];
@@ -1384,14 +1385,14 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                         $rows[$x]['Abschluss'.$y.' DauerBerufsausbildung'] = $tn['abschluss'.$y.'_dauer'];
                         $rows[$x]['Abschluss'.$y.' Ausbildungsinstitution'] = $tn['abschluss'.$y.'_institution'];
                         
-                        $tnabschlussberufserfahrung = $tn['abschluss'.$y.'_berufserfahrung'];
+                        $tnabschlussberufserfahrung = $tn['abschluss'.$y.'_berufserfahrung'] ?? '';
                         $rows[$x]['Abschluss'.$y.' Berufserfahrung'] = $arrberufserfahrung[$tnabschlussberufserfahrung];
                         
                         $rows[$x]['Abschluss'.$y.' Wunschberuf'] = $tn['abschluss'.$y.'_wunschberuf'];
                         $rows[$x]['Abschluss'.$y.' DeutscherReferenzberuf'] = $tn['abschluss'.$y.'_refberuf'];
                         $rowsanonym[$x]['Abschluss'.$y.' DeutscherReferenzberuf'] = $rows[$x]['Abschluss'.$y.' DeutscherReferenzberuf'];
                         
-                        $abantragstellungerfolgt = $tn['abschluss'.$y.'_antrag'];
+                        $abantragstellungerfolgt = $tn['abschluss'.$y.'_antrag'] ?? '';
                         $rows[$x]['Abschluss'.$y.' Antragstellungerfolgt'] = $abantragstellungerfolgt == 0 ? '-' : $arrantragstellungerfolgt[$abantragstellungerfolgt];
                     }                    
                 }

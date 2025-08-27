@@ -329,27 +329,6 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      * @return array
      */
     public function findDubletten4Angemeldetneu($niqbid) {
-        // Zugriff auf den QueryBuilder
-        /*
-         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_iqtp13db_domain_model_teilnehmer');
-         
-         $queryBuilder
-         ->select('nachname', 'vorname', 'email')
-         ->addSelectLiteral('COUNT(*) AS count')
-         ->from('tx_iqtp13db_domain_model_teilnehmer')
-         ->where(
-         $queryBuilder->expr()->and(
-         $queryBuilder->expr()->eq('niqidberatungsstelle', $queryBuilder->createNamedParameter($niqbid, Connection::PARAM_INT)),
-         $queryBuilder->expr()->neq('beratungsstatus', $queryBuilder->createNamedParameter(99, Connection::PARAM_INT))
-         ),
-         )
-         ->groupBy('nachname', 'vorname', 'email')
-         ->having('count > 1');
-         
-         $duplicates = $queryBuilder->executeQuery()->fetchAll();
-         
-         return $duplicates;
-         */
         $query = $this->createQuery();
         $query->statement("SELECT nachname, vorname, email, count(*) as anzahl
                             FROM tx_iqtp13db_domain_model_teilnehmer as t
@@ -418,59 +397,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         }
     }
     
-    /**
-     *
-     
-    public function search4exportTeilnehmer($type, $verstecktundgelöscht, $filtervon, $filterbis, $niqbid, $bundesland, $staat, $berater, $landkreis, $beruf, $branche)
-    {
-        if($type == 1) {
-            $filternach = "FROM_UNIXTIME(verification_date)";
-        } elseif($type == 2) {
-            $filternach = "beratungdatum";
-        } elseif($type == 3) {
-            $filternach = "erstberatungabgeschlossen";
-        } else {
-            $filternach = "FROM_UNIXTIME(verification_date)";            
-        }
-        
-        if($niqbid == '12345' || intval($niqbid) < 999) { // (Bundesland-)Admin dann Beratungsstelle ignorieren
-            $niqbid = '%';
-        }
-        
-        $query = $this->createQuery();
-        
-        if($verstecktundgelöscht == 1) {
-            $query->getQuerySettings()->setIgnoreEnableFields(TRUE);
-            $query->getQuerySettings()->setEnableFieldsToBeIgnored(array('disabled', 'hidden'));
-            $hidden = " AND t.hidden = 1 ";
-        } else {
-            $hidden = " AND t.hidden = 0 AND t.deleted = 0 ";
-        }
-        
-        $sql = "SELECT t.* FROM tx_iqtp13db_domain_model_teilnehmer t
-    			LEFT JOIN tx_iqtp13db_domain_model_abschluss a ON a.teilnehmer = t.uid
-                LEFT JOIN fe_groups as b on t.niqidberatungsstelle = b.niqbid 
-                LEFT JOIN tx_iqtp13db_domain_model_ort o ON t.plz = o.plz ";
-        $sql .= "WHERE
-                $filternach BETWEEN STR_TO_DATE('$filtervon', '%d.%m.%Y') AND STR_TO_DATE('$filterbis', '%d.%m.%Y')                
-                $hidden 
-                AND niqidberatungsstelle LIKE '$niqbid'";
-        if($bundesland != '%') $sql .= " AND b.bundesland LIKE '$bundesland'";
-        if($staat != '%') $sql .= " AND t.erste_staatsangehoerigkeit LIKE '$staat'";
-        if($berater != '%') $sql .= " AND t.berater LIKE '$berater'";
-        if($landkreis != '%') $sql .= " AND o.landkreis LIKE '$landkreis'";
-        if($beruf != '%') $sql .= " AND a.referenzberufzugewiesen LIKE '$beruf'";
-        if($branche != '%') $sql .= " AND a.branche LIKE '$branche'";
-        $sql .= " GROUP BY t.uid ORDER BY verification_date ASC LIMIT 500";
- 
-        $query->statement($sql);
-        
-        return $query->execute();
-    }
-    */
-    
     // STATUS
-    
     
     /**
      * @param $beratungsstatus
