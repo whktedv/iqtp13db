@@ -51,16 +51,16 @@ document.addEventListener('keydown', function(event) {
     }
 });
 
-function linkKopieren(dokid) {
-  const linklink = document.getElementById("editlinkforRS");
+function linkKopieren(uid) {
+  const linklink = document.getElementById("editlinkforRS" + uid);
   navigator.clipboard.writeText(linklink.href)  	
     .then(() => {
-	  document.getElementById("mail4externfeedback" + dokid).style.display = "block"; 
-      document.getElementById("mail4externfeedback" + dokid).innerHTML = "Link kopiert!";
+	  document.getElementById("mail4externfeedback" + uid).style.display = "block"; 
+      document.getElementById("mail4externfeedback" + uid).innerHTML = "Link kopiert!";
     })
     .catch(() => {
-	  document.getElementById("mail4externfeedback" + dokid).style.display = "block"; 
-      document.getElementById("mail4externfeedback" + dokid).innerHTML = "Kopieren fehlgeschlagen.";
+	  document.getElementById("mail4externfeedback" + uid).style.display = "block"; 
+      document.getElementById("mail4externfeedback" + uid).innerHTML = "Kopieren fehlgeschlagen.";
     });
 }
 
