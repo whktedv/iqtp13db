@@ -6,6 +6,10 @@ use TYPO3\CMS\Extbase\Domain\Model\AbstractEntity;
 use TYPO3\CMS\Extbase\Annotation\Validate;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use Ud\Iqtp13db\Domain\Repository\BeraterRepository;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /***
  *
  * This file is part of the "IQ Webapp Anerkennungserstberatung" Extension for TYPO3 CMS.
@@ -1866,6 +1870,32 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function getBerater()
     {
         return $this->berater;
+    }
+    
+    public function getBeraterIncludingDisabled()
+    {
+        // Erst normale Relation versuchen
+        if ($this->berater !== null) {
+            return $this->berater;
+        }
+        
+        // Falls null, aber eine Berater-UID in der DB steht, lade disabled Berater
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
+        ->getQueryBuilderForTable('tx_iqtp13db_domain_model_teilnehmer');
+        
+        $result = $queryBuilder
+        ->select('berater')
+        ->from('tx_iqtp13db_domain_model_teilnehmer')
+        ->where($queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($this->getUid())))
+        ->execute()
+        ->fetchAssociative();
+        
+        if ($result && $result['berater'] > 0) {
+            $beraterRepository = GeneralUtility::makeInstance(BeraterRepository::class);
+            return $beraterRepository->findByUidIgnoreDisabled($result['berater']);
+        }
+        
+        return null;
     }
     
     /**

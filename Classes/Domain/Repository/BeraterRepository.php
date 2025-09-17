@@ -38,4 +38,33 @@ class BeraterRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         return $queryResult;
     }
     
+    public function findBerater4Search($customStoragePid, $uid)
+    {
+        $query = $this->createQuery();
+        
+        $query->getQuerySettings()->setRespectStoragePage(false);
+        $query->getQuerySettings()->setRespectSysLanguage(false);
+        $query->getQuerySettings()->setEnableFieldsToBeIgnored(array('disabled', 'hidden', 'deleted'));        
+        $query->getQuerySettings()->setStoragePageIds(array($customStoragePid));
+        
+        //Now get all (only Presets)
+        $queryResult = $query->matching(
+            $query->logicalAnd(
+                $query->equals('uid', $uid),
+                $query->equals('deleted', 0)
+                )
+            )->execute()->getFirst();
+        return $queryResult;
+    }
+    
+    // In BeraterRepository.php
+    public function findByUidIgnoreDisabled($uid)
+    {
+        $query = $this->createQuery();
+        $query->getQuerySettings()->setIgnoreEnableFields(true);
+        $query->matching($query->equals('uid', $uid));
+        
+        return $query->execute()->getFirst();
+    }
+    
 }

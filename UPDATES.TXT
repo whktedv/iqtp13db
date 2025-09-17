@@ -171,3 +171,5 @@ Update 27.08.2025
 - Überarbeitung Exportmodul: Bis max. 5.000 Datensätze können exportiert werden (wenn ohne Folgeberatungen) 
 
 Neu:
+- Bugfix: Suche mit Filter nach ehemaligen Beratenden
+- Bugfix: Export mit Filter nach Abschluss

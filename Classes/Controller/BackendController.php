@@ -456,13 +456,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         
         $teilnehmer = $this->setfilter(0, $valArray, $orderby, $order, 0, 9999);
-        //DebuggerUtility::var_dump($teilnehmer);
         
         // Wegen Bug in Paginator, der nicht mit Custom SQL Queryresults funktioniert, werden hier alle gefilterten Einträge auf einer Seite dargestellt. Queryresultpaginator hat dann keine Auswahl an Datensätzen, sondern alle.
         $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 20 : 20;
         $currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : $currentPage;
                 
-        //if($GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' && is_array($teilnehmer)) {
         if(is_array($teilnehmer)) {
             $paginator = new ArrayPaginator($teilnehmer, $currentPage, $anzperpag);
         } else {
@@ -2977,7 +2975,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             if($deleted == 1) {
                 $teilnehmers = $this->teilnehmerRepository->findhidden4list($orderby, $order, $this->niqbid);
             } else {               
-                    $teilnehmers = $this->teilnehmerRepository->findAllOrder4List($type, $orderby, $order, $this->niqbid);               
+                $teilnehmers = $this->teilnehmerRepository->findAllOrder4List($type, $orderby, $order, $this->niqbid);      
             }
         } else {
             $berufearr = $this->berufeRepository->findAllOrdered('de');
@@ -2999,7 +2997,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             }
             $this->view->assign('filterberater', $f['berater']);
             if($f['berater'] != '' && $f['berater'] != 0) {
-                $berater = $this->beraterRepository->findByUid($f['berater']);
+                $berater = $this->beraterRepository->findBerater4Search($this->settings['beraterstoragepid'], $f['berater']);
                 $this->view->assign('filterberatername', $berater->getUsername());
             }
             $this->view->assign('filtergruppe', $f['gruppe']);
@@ -3059,7 +3057,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 if($newvalue == 0) {
                     $newvalue = '-';
                 } else {
-                    $berater = $this->beraterRepository->findOneByUid($newvalue);                    
+                    $berater = $this->beraterRepository->findBerater4Search($this->settings['beraterstoragepid'], $newvalue);                    
                     $newvalue = $berater ? $berater->getUsername() : '?';
                 }
             }            

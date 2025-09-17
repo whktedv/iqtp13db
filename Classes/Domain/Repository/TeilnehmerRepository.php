@@ -44,7 +44,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $fbescheid = $filterArray['bescheid'];
         
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_iqtp13db_domain_model_teilnehmer');
-        
+           
         $whereExpressions = array();
         $orwhereExpressionsName = array();
         $orwhereExpressionsOrt = array();
@@ -54,8 +54,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $orwhereExpressionsBeruf = array();        
         
         $whereExpressions = [
-            $queryBuilder->expr()->eq('niqidberatungsstelle', $queryBuilder->createNamedParameter($niqbid, Connection::PARAM_INT)),
-            //$queryBuilder->expr()->eq('tx_iqtp13db_domain_model_teilnehmer.deleted', $queryBuilder->createNamedParameter(0, Connection::PARAM_INT))
+            $queryBuilder->expr()->eq('niqidberatungsstelle', $queryBuilder->createNamedParameter($niqbid, Connection::PARAM_INT)),            
         ];
         
         if($uid != '') {
@@ -157,6 +156,13 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 );
         }
         
+        $query = $this->createQuery();
+        
+        $query->getQuerySettings()->setRespectStoragePage(false);
+        $query->getQuerySettings()->setRespectSysLanguage(false);
+        $query->getQuerySettings()->setEnableFieldsToBeIgnored(array('disabled', 'hidden', 'deleted'));
+        $query->getQuerySettings()->setStoragePageIds(array($customStoragePid));
+        
         $result = $queryBuilder
             ->select('tx_iqtp13db_domain_model_teilnehmer.*')
             ->from('tx_iqtp13db_domain_model_teilnehmer')
@@ -209,6 +215,9 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     public function findAllOrder4List($beratungsstatus, $orderby, $order, $niqbid)
     {
         $query = $this->createQuery();
+        
+        $query->getQuerySettings()->setIgnoreEnableFields(true);
+        $query->getQuerySettings()->setEnableFieldsToBeIgnored(['disabled']);
         
         if($beratungsstatus == 0 || $beratungsstatus == 1) {
             $query->matching(
@@ -983,6 +992,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 ab.wunschberuf,
                 ab.deutscher_referenzberuf,
                 ab.antragstellungerfolgt,
+                ab.referenzberufzugewiesen,
                 c.titel,
                 ROW_NUMBER() OVER (PARTITION BY ab.teilnehmer ORDER BY ab.uid) AS rn
                 FROM tx_iqtp13db_domain_model_abschluss ab
