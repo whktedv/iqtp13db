@@ -158,9 +158,9 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         
         $query = $this->createQuery();
         
-        $query->getQuerySettings()->setRespectStoragePage(false);
-        $query->getQuerySettings()->setRespectSysLanguage(false);
-        $query->getQuerySettings()->setEnableFieldsToBeIgnored(array('disabled', 'hidden', 'deleted'));
+        //$query->getQuerySettings()->setRespectStoragePage(false);
+        //$query->getQuerySettings()->setRespectSysLanguage(false);
+        //$query->getQuerySettings()->setEnableFieldsToBeIgnored(array('disabled', 'hidden', 'deleted'));
         //$query->getQuerySettings()->setStoragePageIds(array($customStoragePid));
         
         $result = $queryBuilder
@@ -216,8 +216,8 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     {
         $query = $this->createQuery();
         
-        $query->getQuerySettings()->setIgnoreEnableFields(true);
-        $query->getQuerySettings()->setEnableFieldsToBeIgnored(['disabled']);
+        //$query->getQuerySettings()->setIgnoreEnableFields(true);
+        //$query->getQuerySettings()->setEnableFieldsToBeIgnored(['disabled']);
         
         if($beratungsstatus == 0 || $beratungsstatus == 1) {
             $query->matching(
