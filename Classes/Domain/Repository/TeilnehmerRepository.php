@@ -161,7 +161,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $query->getQuerySettings()->setRespectStoragePage(false);
         $query->getQuerySettings()->setRespectSysLanguage(false);
         $query->getQuerySettings()->setEnableFieldsToBeIgnored(array('disabled', 'hidden', 'deleted'));
-        $query->getQuerySettings()->setStoragePageIds(array($customStoragePid));
+        //$query->getQuerySettings()->setStoragePageIds(array($customStoragePid));
         
         $result = $queryBuilder
             ->select('tx_iqtp13db_domain_model_teilnehmer.*')
