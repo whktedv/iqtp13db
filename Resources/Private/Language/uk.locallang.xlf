@@ -48,7 +48,7 @@
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussjahr"><target>Рік завершення освіти</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.ausbildungsinstitution"><target>Навчальний заклад </target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.ausbildungsort"><target>В якому місті Ви навчалися?</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschluss"><target>Закінчена професійна або вища освіта</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschluss"><target>Спеціальність</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.berufserfahrung"><target>Досвід роботи</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.deutscher_referenzberuf"><target>Можлива професія в Німеччині</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_abschluss.wunschberuf"><target>Бажана професія</target></trans-unit>
