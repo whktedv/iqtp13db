@@ -2856,7 +2856,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         // ************ Start - Beraterarray bestimmen *****************
         $arrberater = array();
         $usergroups4berater = explode(",", $this->user['usergroup']);
-        if($this->niqbid == '12345' || intval($this->niqbid) < 999) { // Admin
+        if(intval($this->niqbid) < 999) { // Admin
             $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected ?? '%');
             foreach($usergroups4bundesland as $ug) {
                 $ugberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $ug);
