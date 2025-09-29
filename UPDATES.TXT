@@ -173,3 +173,4 @@ Update 27.08.2025
 Neu:
 - Bugfix: Suche mit Filter nach ehemaligen Beratenden
 - Bugfix: Export mit Filter nach Abschluss
+- Neuer Unterpunkt bei Aufenthaltstatus: Chancen-Aufenthaltsrecht (§ 104c AufenthG)

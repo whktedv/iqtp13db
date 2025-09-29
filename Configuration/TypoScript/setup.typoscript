@@ -240,6 +240,7 @@ plugin.tx_iqtp13db.settings {
 		14 = Staatsbürger-/in EU/EWR/Schweiz oder Freizügigkeit (§2-5, §§12-13, §15 FreizüG/EU, §28 AufenthG)
 		17 = kein Aufenthaltstitel, da Wohnsitz im Ausland 
 		15 = Fiktionsbescheinigung
+		20 = Chancen-Aufenthaltsrecht (§ 104c AufenthG)
 		18 = Anmerkung		
    }
    
@@ -373,6 +374,7 @@ plugin.tx_iqtp13db.settings {
 		 14 = Citizen of EU/EWR/Switzerland or freedom of movement (§2-5, §§12-13, §15 FreizüG/EU, §28 AufenthG)
 		 17 = No residence permit because you reside abroad
 		 15 = Fiction certificate
+		 20 = Opportunity-Residence-Act (§ 104c AufenthG)
 		 18 = annotation
    }
    
@@ -509,6 +511,7 @@ plugin.tx_iqtp13db.settings {
 		14 = (§2-5, §§12-13, §15 FreizüG/EU, §28 AufenthG) جنسية دولة من دول الاتحاد الأوروبي / المنطقة الاقتصادية الأوروبية / سويسرا أو حرية التنقل 
 		17 = لا يوجد تصريح إقامة ، لأن مكان الإقامة بالخارج
 		15 = (Fiktionsbescheinigung) شهادة وضع طلب الإقامة
+		20 = Opportunity-Residence-Act (§ 104c AufenthG)
 		18 = ملاحظة
 	}
 	
@@ -645,6 +648,7 @@ plugin.tx_iqtp13db.settings {
 	    14 = تبعه اتحادیه اروپا/منطقه اقتصادی اروپا/سوئیس یا فرد دارای حق آزادی جابه‌جایی (ماده 2-5 و ماده‌های 12-13 و ماده 15 از FreizüG/EU و ماده 28 از AufenthG)
 	    17 = بدون عنوان اقامت، به دلیل سکونت در خارج از کشور 
 	    15 = گواهی آزمایشی
+		20 = Opportunity-Residence-Act (§ 104c AufenthG)	    
 	    18 = توضیح
 	}
 
@@ -778,6 +782,7 @@ plugin.tx_iqtp13db.settings {
 	    14 = citoyen/ne UE/EEE/Suisse ou «Freizügigkeit » (§2-5, §§12-13, §15 FreizüG/EU, §28 AufenthG)
 	    17 = pas de titre de séjour, car résidence à l'étranger
 	    15 = „Fiktionsbescheinigung“
+		20 = Opportunity-Residence-Act (§ 104c AufenthG)
 	    18 = remarque
 	}
 	
@@ -910,6 +915,7 @@ plugin.tx_iqtp13db.settings {
 	    14 = Obywatel UE/EOG/Szwajcarii lub osoba posiadająca prawo do swobodnego przemieszczania się (§2-5, §§12-13, §15 FreizüG/EU, §28 AufenthG) 
 	    17 = Brak zezwolenia na pobyt, ponieważ miejsce zamieszkania jest za granicą
 	    15 = Dokument zezwalający na pobyt czasowy
+		20 = Opportunity-Residence-Act (§ 104c AufenthG)	    
 	    18 = Informacje dodatkowe 
 	}
 	
@@ -1043,6 +1049,7 @@ plugin.tx_iqtp13db.settings {
 	    14 = Cetățean UE/SEE/elvețian sau libertatea de circulație (§2-5, §§12-13, FreizüG/UE (*Legea privind libera circulație), §28 AufenthG)
 	    17 = Fără permis de ședere, deoarece domiciliul este în străinătate 
 	    15 = Certificat fictiv
+		20 = Opportunity-Residence-Act (§ 104c AufenthG)	    
 	    18 = Notă
 	}
 	
@@ -1176,6 +1183,7 @@ plugin.tx_iqtp13db.settings {
 	    14 = ЕС/ЕЭЗ/швейцарское гражданство или свобода передвижения (§2-5, §§12-13, §15 FreizüG/EU, §28 AufenthG)
 	    17 = Отсутствие вида на жительство ввиду того, что место жительства за границей
 	    15 = Заменяющий документ выданной со стороны Миграционной службы
+		20 = Opportunity-Residence-Act (§ 104c AufenthG)	    
 	    18 = примечание
 	}
 	
@@ -1309,6 +1317,7 @@ plugin.tx_iqtp13db.settings {
 	    14 = Ciudadano/ciudadano UE, EEE o Libertad de circulación y de residencia (§2-5, §§12-13, §15 FreizüG/EU, §28 AufenthG) 
 	    17 = no titulo de residencia, porque el lugar de residencia es en el extranjero
 	    15 = certificado ficticio
+		20 = Opportunity-Residence-Act (§ 104c AufenthG)	    
 	    18 = Comentario
 	}
 
@@ -1442,7 +1451,8 @@ plugin.tx_iqtp13db.settings {
 	  	10 = Kalıcı oturma izni (§9 AufenthG)
 	    14 = AB/AEA/İsviçre'de vatandaşlık veya serbest dolaşım özgürlüğü (§2-5, §§12-13, §15 FreizüG/EU, §28 AufenthG)
 	    17 = Oturma izni yok, çünkü yurtdışında yaşıyor
-	    15= Geçici oturum izni belgesi (Fiktionsbescheinigung)
+	    15 = Geçici oturum izni belgesi (Fiktionsbescheinigung)
+		20 = Opportunity-Residence-Act (§ 104c AufenthG)	    
 	    18 = Not
 	}
 	
@@ -1577,6 +1587,7 @@ plugin.tx_iqtp13db.settings {
 	    14 = Громадянство ЄС/ЄЕЗ/Швейцарії або свобода пересування (§2-5, §§12-13, §15 Закону про свободу пересування/ЄС FreizüG/EU, §28 Закону про проживання AufenthG)
 	    17 = відсутність посвідки на проживання, так як місце проживання за кордоном
 	    15 = фікціонсбешайнігунг(Fiktionsbescheinigung)
+		20 = Opportunity-Residence-Act (§ 104c AufenthG)	    
 	    18 = примітка
 	}
 
