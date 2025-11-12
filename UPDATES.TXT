@@ -170,7 +170,13 @@ Update 25.08.2025
 Update 27.08.2025
 - Überarbeitung Exportmodul: Bis max. 5.000 Datensätze können exportiert werden (wenn ohne Folgeberatungen) 
 
-Neu:
+Update 29.09.2025
 - Bugfix: Suche mit Filter nach ehemaligen Beratenden
 - Bugfix: Export mit Filter nach Abschluss
 - Neuer Unterpunkt bei Aufenthaltstatus: Chancen-Aufenthaltsrecht (§ 104c AufenthG)
+
+Update 12.11.2025
+- Die UID-Nummer wird nun in der Bestätigungs-E-Mail angegeben, damit RS diese Nummer bei Rückfragen mitteilen können
+- Dublettenerkennung Beratungsstellen-übergreifend. Bei Aufruf des RS wird darauf hingewiesen, bei welcher Beratungsstelle die Dublette erkannt wurde.
+- Bugfixing Export bzgl. Branchen
+- Bugfixing Alle Module-Suche nach Wechsel der Ansicht

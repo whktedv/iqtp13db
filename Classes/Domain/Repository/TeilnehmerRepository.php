@@ -341,10 +341,25 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $query = $this->createQuery();
         $query->statement("SELECT nachname, vorname, email, count(*) as anzahl
                             FROM tx_iqtp13db_domain_model_teilnehmer as t
-                            WHERE t.deleted = 0 AND t.hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' AND beratungsstatus != 99
+                            WHERE t.deleted = 0 AND t.hidden = 0 AND beratungsstatus != 99 AND nachname != 'Anonym'
                             GROUP BY SOUNDEX(nachname), SOUNDEX(vorname), email
                             HAVING anzahl > 1");
-        
+        // 12.11.2025 nicht mehr nur in Beratungsstelle: AND niqidberatungsstelle LIKE '$niqbid'
+        $query = $query->execute(true);
+        return $query;
+    }
+    
+    /**
+     * Gibt die Beratungsstellen IDs der Dubletten-Einträge zurück
+     *
+     * @return array
+     */
+    public function findDublettenBstellen($nachname, $vorname, $email) {
+        $query = $this->createQuery();
+        $query->statement("SELECT niqidberatungsstelle
+                            FROM tx_iqtp13db_domain_model_teilnehmer as t
+                            WHERE t.deleted = 0 AND t.hidden = 0 AND beratungsstatus != 99
+                            AND SOUNDEX(nachname) = SOUNDEX('$nachname') AND SOUNDEX(vorname) = SOUNDEX('$vorname') AND email LIKE '$email' AND nachname != 'Anonym'");
         $query = $query->execute(true);
         return $query;
     }
@@ -981,8 +996,8 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 ab.sonstigerberuf,
                 ab.nregberuf,
                 ab.abschlussart,
-                br.titel AS branche,
-                st.titel AS erwerbsland,
+                br.brancheid AS branche,
+                st.staatid AS erwerbsland,
                 ab.abschlussjahr,
                 ab.ausbildungsort,
                 ab.abschluss,

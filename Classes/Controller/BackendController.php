@@ -961,6 +961,12 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     {        
         $valArray = $this->request->getArguments();
         
+        $filtermodus = $valArray['filtermodus'] ?? '1';
+        if($filtermodus == '0')
+        {
+            return $this->redirect($valArray['searchparams']['action'] ?? 'listangemeldet', 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1'));
+        }
+        
         if(isset($valArray['searchparams']) && $valArray['searchparams']['berater'] == '0' &&
             $valArray['searchparams']['beruf'] == '' &&
             $valArray['searchparams']['bescheid'] == '' &&
@@ -970,7 +976,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $valArray['searchparams']['ort'] == '' &&
             $valArray['searchparams']['uid'] == '') {
                 $this->addFlashMessage("FEHLER: Bitte Suchkriterium angeben.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
-                return $this->redirect($valArray['searchparameter']['action'] ?? 'listangemeldet', 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1'));
+                return $this->redirect($valArray['searchparams']['action'] ?? 'listangemeldet', 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1'));
         }
         
         if(array_key_exists("searchparams", $valArray)) {
@@ -990,6 +996,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     $searchparams['gruppe'] = $valArray['gruppe'];
                     $searchparams['bescheid'] = $valArray['bescheid'];
                     $searchparams['filteran'] = $valArray['filteran'];
+                    $searchparams['allemodule'] = $valArray['allemodule'];
                 }
             }
         }
@@ -1045,7 +1052,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'anzfolgekontakte' => $anzfolgekontakte,
                 'folgekontakte' => $folgekontakte,
                 'summeberatungsdauer' => $summeberatungsdauer ?? 0,
-                'calleraction' => $valArray['searchparameter']['action'] ?? 'listangemeldet',
+                'calleraction' => $valArray['searchparams']['action'] ?? 'showsearchresult',
                 'callercontroller' => 'Backend',
                 'staatenarr' => $staatenarr,
                 'beratungsstelle' => $this->beratungsstellenname,
@@ -1671,7 +1678,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $anzgesamt = count($folgekontakte);
             } else {
                 $anzgesamt = $anzteilnehmers;
-            }
+            }            
+            
             $this->view->assignMultiple(
                 [
                     'anzgesamt' => $anzgesamt,
@@ -1781,6 +1789,17 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $brancheunterkat = $this->brancheRepository->findAllUnterkategorie($isocode);
         
         $fk4tn = $this->folgekontaktRepository->findByTeilnehmer($teilnehmer->getUid());
+        
+        $dublettenbstellen = $this->teilnehmerRepository->findDublettenBstellen($teilnehmer->getNachname(), $teilnehmer->getVorname(), $teilnehmer->getEmail());
+        if(count($dublettenbstellen) != 0){
+            $auch_bei_beratungsstelle = array();
+            foreach($dublettenbstellen as $bid) {
+                if($bid['niqidberatungsstelle'] != intval($this->niqbid)) $auch_bei_beratungsstelle = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $bid);
+            }
+            foreach($auch_bei_beratungsstelle as $bstelle) {
+                $this->addFlashMessage("Achtung: Diese/r Ratsuchende/r ist auch bei der Beratungsstelle <b>".$bstelle->getDescription()."</b> angemeldet.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
+            }
+        }
         
         $this->view->assignMultiple(
             [
@@ -2087,6 +2106,17 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $fk4tn = $this->folgekontaktRepository->findByTeilnehmer($teilnehmer->getUid());
         
+        $dublettenbstellen = $this->teilnehmerRepository->findDublettenBstellen($teilnehmer->getNachname(), $teilnehmer->getVorname(), $teilnehmer->getEmail());
+        if(count($dublettenbstellen) != 0){
+            $auch_bei_beratungsstelle = array();
+            foreach($dublettenbstellen as $bid) {
+                if($bid['niqidberatungsstelle'] != intval($this->niqbid)) $auch_bei_beratungsstelle = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $bid);
+            }
+            foreach($auch_bei_beratungsstelle as $bstelle) {
+                $this->addFlashMessage("Achtung: Diese/r Ratsuchende/r ist auch bei der Beratungsstelle <b>".$bstelle->getDescription()."</b> angemeldet.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
+            }
+        }
+        
         $this->view->assignMultiple(
             [
                 'alleberatungsstellen' => $alleberatungsstellen,
@@ -2119,7 +2149,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'brancheunterkat' => $brancheunterkat,
                 'anzbstellen' => $this->anzbstellen,
                 'jahraltereintraglebensalter' => $gebjahrberechnetausalter,
-                'folgekontakte' => $fk4tn
+                'folgekontakte' => $fk4tn,
+                'auchbeuiberatungsstelle' => $auch_bei_beratungsstelle
             ]
             );
         return $this->htmlResponse();
@@ -2544,17 +2575,17 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $linktitleeditregistration = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('linktitleeditregistration', 'Iqtp13db');
                         
             // QRCode Library per composer einbinden - wenn nicht vorhanden, dann s.u.
-            $composer = \TYPO3\CMS\Core\Core\Environment::getConfigPath(). '/vendor/autoload.php';
-            if (file_exists($composer)) {
-             //   require_once($composer);
+            //$composer = \TYPO3\CMS\Core\Core\Environment::getConfigPath(). '/vendor/autoload.php';
+            //if (file_exists($composer)) {
+            //   require_once($composer);
             //} else {
                 // QRCode Library nicht per composer eingebunden
                 //$this->addFlashMessage('QR Code Library nicht installiert. Bitte Admin kontaktieren.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
                 //return $this->redirect('listangemeldet', 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer, 'callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $searchparams ?? ''));
-            }
-//            $qrcode = new \QRCode();
-//            $link = "https://www.whkt.de/";
-//            $qrcodesvg = $qrcode->render($link);
+            //}
+            // $qrcode = new \QRCode();
+            // $link = "https://www.whkt.de/";
+            // $qrcodesvg = $qrcode->render($link);
             
             $variables = array(
                 'teilnehmer' => $teilnehmer,
@@ -2941,8 +2972,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberater', $searchparams['berater'] ?? '');            
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberatername', $searchparams['berater'] ?? '');            
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fgruppe', $searchparams['gruppe'] ?? '');
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fbescheid', $searchparams['bescheid'] ?? ''); // antragstellungvorher
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fbescheid', $searchparams['bescheid'] ?? ''); // antragstellungvorher            
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'filtermodus', '1');
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fallemodule', $searchparams['allemodule'] ?? ''); 
         } 
         $filtermodus = $searchparams['filtermodus'] ?? '1';
         if($filtermodus == '0') 
@@ -2956,7 +2988,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberater', NULL);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fgruppe', NULL);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fbescheid', NULL); // antragstellungvorher
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'filtermodus', NULL);          
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'filtermodus', NULL);
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'filterallemodule', NULL);
         }
         
         $f['uid'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fuid');
@@ -2968,6 +3001,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $f['berater'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fberater');
         $f['gruppe'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fgruppe');
         $f['bescheid'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fbescheid'); // antragstellungvorher
+        $f['allemodule'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fallemodule'); 
         
         if($f['land'] == '-1000' || $f['land'] == NULL) $f['land'] = '';
         if($f['berater'] == -1 || $f['berater'] == NULL) $f['berater'] = '';
@@ -3003,6 +3037,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $this->view->assign('filtergruppe', $f['gruppe']);
             $this->view->assign('filterbescheid', $f['bescheid']); // antragstellungvorher
             $this->view->assign('filteron', $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus'));
+            $this->view->assign('filterallemodule', $f['allemodule']);
         }
         
         // FILTER bis hier

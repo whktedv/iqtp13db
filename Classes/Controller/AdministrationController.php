@@ -141,8 +141,10 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         $monatsnamen = array();
         for($i=1;$i<=12;$i++) {
             $monatsnamen[$i] = date("M", mktime(0, 0, 0, $i, 1, date('Y')));
-            if($jahrselected != 0) {
+            if($jahrselected != 0 && $jahrselected != 99) {
                 $monatsnamen[$i] = $monatsnamen[$i]." ".$jahrselected;
+            } elseif($jahrselected == 99) {
+                $monatsnamen[$i] = $monatsnamen[$i];
             } else {
                 if($i <= idate('m')) {
                     $monatsnamen[$i] = $monatsnamen[$i]." ".idate('Y');
@@ -156,6 +158,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         for($j=2023;$j<=date('Y');$j++){
             $jahrarray[$j] = $j;
         }
+        $jahrarray[99] = "- alle seit 01/2023 -";
         
         $emptystatusarray = array(1 => 0,2 => 0,3 => 0,4 => 0,5 => 0,6 => 0,7 => 0,8 => 0,9 => 0,10 => 0,11 => 0, 12 => 0);
         $angemeldeteTN = $emptystatusarray;

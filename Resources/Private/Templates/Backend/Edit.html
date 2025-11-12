@@ -97,7 +97,17 @@
 	<f:render partial="Dokument/Dokumente4Teilnehmer" arguments="{teilnehmer : teilnehmer, dokumente: dokumente, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, dokumentpfad : dokumentpfad, thisaction : 'edit', filesizes : filesizes, speicherbelegung : speicherbelegung}" />
 </f:if>
 
-<f:flashMessages />
+<f:flashMessages as="flashMessages">
+  <dl class="messages">
+    <f:for each="{flashMessages}" as="flashMessage">
+    	<ul class="typo3-messages">
+    		<li class="alert alert-warning"><p class="alert-message">
+				<f:format.html>{flashMessage.message}</f:format.html>
+			</p></li></ul>
+    </f:for>
+  </dl>
+</f:flashMessages>
+
 <script>
 	
 	// Modal - JavaScript

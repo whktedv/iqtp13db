@@ -1015,6 +1015,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $anrede = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('anredemail', 'Iqtp13db');
         $mailtext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtext', 'Iqtp13db');
         $mailtext = str_replace("WARTEZEITWOCHEN", $this->settings['wartezeitwochen'], $mailtext);
+        $mailtext = str_replace("UIDNUMMER", $teilnehmer->getUid(), $mailtext);
         $mailtextcustom = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtextcustom', 'Iqtp13db');
         $grcinfotext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('grcinfotext', 'Iqtp13db');
         

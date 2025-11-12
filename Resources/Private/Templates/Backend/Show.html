@@ -51,7 +51,16 @@
 <div class="show-eingabefelder">
 <h1>Daten Ratsuchende*r UID: {teilnehmer.uid}</h1>
 
-<f:flashMessages />
+<f:flashMessages as="flashMessages">
+  <dl class="messages">
+    <f:for each="{flashMessages}" as="flashMessage">
+    	<ul class="typo3-messages">
+    		<li class="alert alert-warning"><p class="alert-message">
+				<f:format.html>{flashMessage.message}</f:format.html>
+			</p></li></ul>
+    </f:for>
+  </dl>
+</f:flashMessages>
 
 	<f:render partial="TeilnehmerBackend/Properties" arguments="{teilnehmer:teilnehmer, historie : historie, staaten:staaten}" />
 </div>
