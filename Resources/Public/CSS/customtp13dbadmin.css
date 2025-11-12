@@ -22,16 +22,16 @@ a.errorframe-close {
 	display: block;
 	border: 1px solid;
 	list-style: none;
-	display: block;
 	z-index: 999;
 	position: fixed;
-	top: 40%;
-	left: 38%;
-	width: auto;
+	top: 35%;
+	left: 25%;
+	width: 50%;
 	height: auto;
 	margin: auto;
 	box-shadow: .4rem .4rem 2.4rem .2rem #000;
 	cursor: pointer;
+	min-height: 250px;
 }
 
 .tx-iqtp13db ul .alert::after {
