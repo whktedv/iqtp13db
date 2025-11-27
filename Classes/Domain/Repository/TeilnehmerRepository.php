@@ -600,7 +600,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                     LEFT JOIN  tx_iqtp13db_domain_model_abschluss as b ON a.uid = b.teilnehmer
                     LEFT JOIN fe_groups as d ON niqidberatungsstelle = d.niqbid
                     WHERE YEAR($filternach) ";        
-        $sql .= $jahr == 99 ? "> 2023" : "LIKE $jahr";
+        $sql .= $jahr == 99 ? ">= 2023" : "LIKE $jahr";
         $sql .= " AND d.bundesland LIKE '$bundesland'
                     AND erste_staatsangehoerigkeit LIKE '$staat'
                     AND a.hidden = 0 and a.deleted = 0
@@ -635,7 +635,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                     LEFT JOIN fe_groups as d ON niqidberatungsstelle = d.niqbid
                     LEFT JOIN tx_iqtp13db_domain_model_staaten as s ON erste_staatsangehoerigkeit = s.staatid
                     WHERE YEAR($filternach) ";        
-        $sql .= $jahr == 99 ? "> 2023" : "LIKE $jahr";
+        $sql .= $jahr == 99 ? ">= 2023" : "LIKE $jahr";
         $sql .= " AND d.bundesland LIKE '$bundesland'
                     AND a.hidden = 0 and a.deleted = 0
                     AND s.langisocode = 'de' 
@@ -669,7 +669,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                     LEFT JOIN tx_iqtp13db_domain_model_berufe as c ON b.referenzberufzugewiesen = c.berufid
                     LEFT JOIN fe_groups as d ON niqidberatungsstelle = d.niqbid
                     WHERE YEAR($filternach) ";        
-        $sql .= $jahr == 99 ? "> 2023" : "LIKE $jahr";
+        $sql .= $jahr == 99 ? ">= 2023" : "LIKE $jahr";
         $sql .= " AND d.bundesland LIKE '$bundesland'
                     AND erste_staatsangehoerigkeit LIKE '$staat'
                     AND a.hidden = 0 and a.deleted = 0
@@ -702,7 +702,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                     FROM  tx_iqtp13db_domain_model_teilnehmer as a
                     LEFT JOIN fe_groups as d ON niqidberatungsstelle = d.niqbid
                     WHERE YEAR($filternach) ";        
-        $sql .= $jahr == 99 ? "> 2023" : "LIKE $jahr";
+        $sql .= $jahr == 99 ? ">= 2023" : "LIKE $jahr";
         $sql .= " AND d.bundesland LIKE '$bundesland'
                     AND erste_staatsangehoerigkeit LIKE '$staat'
                     AND a.hidden = 0 and a.deleted = 0 
@@ -734,7 +734,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                     FROM  tx_iqtp13db_domain_model_teilnehmer as a
                     LEFT JOIN fe_groups as d ON niqidberatungsstelle = d.niqbid
                     WHERE YEAR($filternach) ";        
-        $sql .= $jahr == 99 ? "> 2023" : "LIKE $jahr";
+        $sql .= $jahr == 99 ? ">= 2023" : "LIKE $jahr";
         $sql .= " AND d.bundesland LIKE '$bundesland'
                     AND erste_staatsangehoerigkeit LIKE '$staat'
                     AND a.hidden = 0 and a.deleted = 0 
