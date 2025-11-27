@@ -2054,7 +2054,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $berufe = $this->berufeRepository->findAllOrdered($isocode);
         $staaten = $this->staatenRepository->findByLangisocode($isocode);
-        unset($staaten[200]); // entfernt 'staatenlos'
+        //unset($staaten[200]); // entfernt 'staatenlos'
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
         }        
