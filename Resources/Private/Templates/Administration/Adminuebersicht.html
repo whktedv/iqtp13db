@@ -191,7 +191,7 @@
 	<f:then>
 		<table>
 			<tr>
-				<th>Abschlussart alle Anmeldungen in {jahrselected}</th><th>Anzahl</th>
+				<th>Abschlussart alle Anmeldungen {f:if(condition: jahrselected == 99, then: 'seit 01/2023', else: 'in {jahrselected}')}</th><th>Anzahl</th>
 			</tr>
 			<f:for each="{abschlussartanmeldungen}" as="abschlussart" iteration="iter">
 				<tr><td>{arrabschlussart.{abschlussart.abschlussart}}</td><td>{abschlussart.anz}</td></tr>
@@ -203,7 +203,7 @@
 	<f:then>
 		<table>
 			<tr>
-				<th>Abschlussart alle Beratenen in {jahrselected}</th><th>Anzahl</th>
+				<th>Abschlussart alle Beratenen {f:if(condition: jahrselected == 99, then: 'seit 01/2023', else: 'in {jahrselected}')}</th><th>Anzahl</th>
 			</tr>
 			<f:for each="{abschlussartberatungabgeschl}" as="abschlussart" iteration="iter">
 				<tr><td>{arrabschlussart.{abschlussart.abschlussart}}</td><td>{abschlussart.anz}</td></tr>
@@ -216,7 +216,7 @@
 		<br>
 		<table>
 			<tr>
-				<th>Herkunft alle Anmeldungen in {jahrselected}</th><th>Anzahl</th>
+				<th>Herkunft alle Anmeldungen {f:if(condition: jahrselected == 99, then: 'seit 01/2023', else: 'in {jahrselected}')}</th><th>Anzahl</th>
 			</tr>
 			<f:for each="{herkunftanmeldungen}" as="herkunft" iteration="iter">
 				<tr><td>{herkunft.titel}</td><td>{herkunft.anz}</td></tr>
@@ -228,7 +228,7 @@
 	<f:then>
 		<table>
 			<tr>
-				<th>Herkunft alle Beratenen in {jahrselected}</th><th>Anzahl</th>
+				<th>Herkunft alle Beratenen {f:if(condition: jahrselected == 99, then: 'seit 01/2023', else: 'in {jahrselected}')}</th><th>Anzahl</th>
 			</tr>
 			<f:for each="{herkunftberatungabgeschl}" as="herkunft" iteration="iter">
 				<tr><td>{herkunft.titel}</td><td>{herkunft.anz}</td></tr>
@@ -241,7 +241,7 @@
 		<br>
 		<table>
 			<tr>
-				<th>Berufe/Abschlüsse alle Anmeldungen in {jahrselected}</th><th>Anzahl</th>
+				<th>Berufe/Abschlüsse alle Anmeldungen {f:if(condition: jahrselected == 99, then: 'seit 01/2023', else: 'in {jahrselected}')}</th><th>Anzahl</th>
 			</tr>
 			<f:for each="{berufeanmeldungen}" as="berufe" iteration="iter">
 				<tr><td>{berufe.titel}</td><td>{berufe.anz}</td></tr>
@@ -253,7 +253,7 @@
 	<f:then>
 		<table>
 			<tr>
-				<th>Berufe/Abschlüsse alle Beratenen in {jahrselected}</th><th>Anzahl</th>
+				<th>Berufe/Abschlüsse alle Beratenen {f:if(condition: jahrselected == 99, then: 'seit 01/2023', else: 'in {jahrselected}')}</th><th>Anzahl</th>
 			</tr>
 			<f:for each="{berufeberatungabgeschl}" as="berufe" iteration="iter">
 				<tr><td>{berufe.titel}</td><td>{berufe.anz}</td></tr>
@@ -266,7 +266,7 @@
 		<br>
 		<table>
 			<tr>
-				<th>Geschlecht alle Anmeldungen in {jahrselected}</th><th>Anzahl</th>
+				<th>Geschlecht alle Anmeldungen {f:if(condition: jahrselected == 99, then: 'seit 01/2023', else: 'in {jahrselected}')}</th><th>Anzahl</th>
 			</tr>
 			<f:for each="{geschlechtartanmeldungen}" as="geschlecht" iteration="iter">
 				<tr><td>{arrgeschlecht.{geschlecht.geschlecht}}</td><td>{geschlecht.anz}</td></tr>
@@ -278,7 +278,7 @@
 	<f:then>
 		<table>
 			<tr>
-				<th>Geschlecht alle Beratenen in {jahrselected}</th><th>Anzahl</th>
+				<th>Geschlecht alle Beratenen {f:if(condition: jahrselected == 99, then: 'seit 01/2023', else: 'in {jahrselected}')}</th><th>Anzahl</th>
 			</tr>
 			<f:for each="{geschlechtberatungabgeschl}" as="geschlecht" iteration="iter">
 				<tr><td>{arrgeschlecht.{geschlecht.geschlecht}}</td><td>{geschlecht.anz}</td></tr>
@@ -291,7 +291,7 @@
 		<br>
 		<table>
 			<tr>
-				<th>Lebensalter alle Anmeldungen in {jahrselected}</th><th>Anzahl</th>
+				<th>Lebensalter alle Anmeldungen {f:if(condition: jahrselected == 99, then: 'seit 01/2023', else: 'in {jahrselected}')}</th><th>Anzahl</th>
 			</tr>
 			<f:for each="{lebensalteranmeldungen}" as="lebensalter" iteration="iter">
 				<tr><td>{lebensalter.lebensalter}</td><td>{lebensalter.anz}</td></tr>
@@ -303,7 +303,7 @@
 	<f:then>
 		<table>
 			<tr>
-				<th>Lebensalter alle Beratenen in {jahrselected}</th><th>Anzahl</th>
+				<th>Lebensalter alle Beratenen {f:if(condition: jahrselected == 99, then: 'seit 01/2023', else: 'in {jahrselected}')}</th><th>Anzahl</th>
 			</tr>
 			<f:for each="{lebensalterberatungabgeschl}" as="lebensalter" iteration="iter">
 				<tr><td>{lebensalter.lebensalter}</td><td>{lebensalter.anz}</td></tr>
