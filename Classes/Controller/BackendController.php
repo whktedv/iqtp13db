@@ -2149,8 +2149,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'brancheunterkat' => $brancheunterkat,
                 'anzbstellen' => $this->anzbstellen,
                 'jahraltereintraglebensalter' => $gebjahrberechnetausalter,
-                'folgekontakte' => $fk4tn,
-                'auchbeuiberatungsstelle' => $auch_bei_beratungsstelle
+                'folgekontakte' => $fk4tn                
             ]
             );
         return $this->htmlResponse();
