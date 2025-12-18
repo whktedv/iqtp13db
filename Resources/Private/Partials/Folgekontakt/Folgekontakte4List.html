@@ -13,7 +13,12 @@
 			<f:for each="{folgekontakte}" as="folgekontakt" iteration="itera">
 				<f:if condition="{folgekontakt.teilnehmer.uid} == {teilnehmer.uid}">
 					<f:then>
+						<f:if condition="{f:format.date(date: teilnehmer.erstberatungabgeschlossen, format: 'Y')} < 2026 && {f:format.date(date: folgekontakt.datum, format: 'Y')} > 2025"><f:then>
+						<tr class="fkaltefoepha">
+						</f:then><f:else>
 						<tr>
+						</f:else>
+						</f:if>
 							<td class="fklistdatum"><f:link.action action="show" arguments="{folgekontakt:folgekontakt, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Folgekontakt"><f:format.date format="d.m.Y">{folgekontakt.datum}</f:format.date></f:link.action></td>
 							<td class="fklistberater">{folgekontakt.berater.username}</td>
 							<td class="fklistinhalt"><f:format.crop maxCharacters="200" append="&nbsp;...">{folgekontakt.notizen}</f:format.crop></td>

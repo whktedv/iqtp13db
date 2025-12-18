@@ -180,3 +180,12 @@ Update 12.11.2025
 - Dublettenerkennung Beratungsstellen-übergreifend. Bei Aufruf des RS wird darauf hingewiesen, bei welcher Beratungsstelle die Dublette erkannt wurde.
 - Bugfixing Export bzgl. Branchen
 - Bugfixing Alle Module-Suche nach Wechsel der Ansicht
+
+Update 18.12.2025:
+- Anpassungen bei Bezeichnungen in Anmeldeformular
+- UID wird in Betreff der Mail mit dem Link zum nachträglichen Bearbeiten an den Ratsuchenden gesendet 
+- Für Statistik: Folgeberatungen von Erstberatungen aus 2025 werden ab 2026 in der Statistik der Übersicht separat ausgewiesen
+- Solche Folgeberatungen werden in der Liste Erstberatungen/Archiv farblich anders markiert (s. Legende unten auf der jeweiligen Modulseite)
+- Im Datensatz eines/r Ratsuchenden gibt es oberhalb der Liste der Folgekontakte einen neuen Button, über den alle Folgekontakte auf einer Seite dargestellt werden
+- Suchformular überarbeitet. Optische Anpassungen und nun Suche nach E-Mail-Adresse möglich
+- Exportformular optisch überarbeitet, damit responsiv 

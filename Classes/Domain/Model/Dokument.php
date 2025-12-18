@@ -73,7 +73,6 @@ class Dokument extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $crdate = 0;
     
-    
     /**
      * Returns the name
      *
@@ -242,4 +241,5 @@ class Dokument extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->crdate = $crdate;
     }
+    
 }

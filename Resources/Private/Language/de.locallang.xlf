@@ -4,7 +4,7 @@
 		<header/>
 		<body>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.start0intro"><target>Um Ihre Anfrage direkt an die richtige Beratungsstelle weiterleiten zu können, geben Sie bitte zunächst Ihren Wohnsitz an</target></trans-unit>
-			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.start0wohnsitz"><target>Befindet sich Ihr aktueller Wohnsitz in Deutschland?</target></trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.start0wohnsitz"><target>Wohnen Sie zurzeit in Deutschland?</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.start0plz"><target>Wie lautet die Postleitzahl Ihres Wohnortes in Deutschland? (fünf Ziffern)</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.startseitetext"><target> <![CDATA[ <p>Liebe Ratsuchende,</p><p>wir beraten, begleiten und unterstützen Ratsuchende mit ausländischen Berufsqualifikationen auf ihrem Weg in und durch die Anerkennungsverfahren. &nbsp;</p><p>Um Sie gut beraten zu können, ist es sehr hilfreich, wenn wir einige Informationen über Sie und Ihre beruflichen Qualifikationen und Erfahrungen von Ihnen erhalten.</p><p>Deshalb möchten wir Sie bitten, den folgenden Fragebogen so vollständig wie möglich auszufüllen. Sie können sich die Fragen in verschiedenen Sprachen anzeigen lassen. Bitte wählen Sie hierfür zu Beginn eine Sprache aus. Beantworten Sie die Fragen bitte nur auf <span style="font-weight: 500;">Deutsch oder Englisch</span>. Ihre Anfrage kann sonst nicht bearbeitet werden.</p><p>Ihre Daten können nur bearbeitet werden, wenn Sie das Formular möglichst vollständig ausgefüllt absenden.</p> ]]> </target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.startseitetextcustom"><target> <![CDATA[ <p>Die Anerkennungsberatung erfolgt üblicherweise per E-Mail. Bei Rückfragen kontaktieren wir Sie telefonisch.</p><p>Mit freundlichen Grüßen</p><p>Ihre IQ Anerkennungs- und Qualifizierungsberatung</p> ]]> </target></trans-unit>
@@ -42,7 +42,7 @@
 			
 			<trans-unit id="tx_iqtp13db_domain_model_abschluss"><target>Abschluss</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_abschluss.abschlussart"><target>Mein höchster Berufsabschluss ist</target></trans-unit>
-			<trans-unit id="tx_iqtp13db_domain_model_abschluss.branche"><target>Bitte geben Sie die Branche an, in der Sie Ihre Qualifikation(en) erworben haben</target></trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_abschluss.branche"><target>Zu welcher Branche gehört Ihr Abschluss?</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_abschluss.branchekurz"><target>Branche</target></trans-unit>			
 			<trans-unit id="tx_iqtp13db_domain_model_abschluss.erwerbsland"><target>Erwerbsland</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_abschluss.dauer_berufsausbildung"><target>Dauer Berufsausbildung</target></trans-unit>
@@ -53,7 +53,7 @@
 			<trans-unit id="tx_iqtp13db_domain_model_abschluss.berufserfahrung"><target>Berufserfahrung</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_abschluss.deutscher_referenzberuf"><target>Möglicher deutscher Beruf</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_abschluss.wunschberuf"><target>Wunschberuf</target></trans-unit>
-			<trans-unit id="tx_iqtp13db_domain_model_abschluss.antragstellungvorher"><target>Wurde schon ein Antrag auf Anerkennung des Berufsabschlusses gestellt?</target></trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_abschluss.antragstellungvorher"><target>Haben Sie schon einen Antrag auf Anerkennung des Berufsabschlusses gestellt?</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_abschluss.antragstellunggwpvorher"><target>Ergebnis vorherige Gleichwertigkeitsprüfung</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_abschluss.antragstellungzabvorher"><target>Ergebnis vorherige ZAB-Bewertung</target></trans-unit>
 			

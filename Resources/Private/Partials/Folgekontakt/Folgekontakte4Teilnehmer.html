@@ -1,8 +1,9 @@
  <div class="fframe" id="AnkerFolgekontakte"><h2>Folgekontakte</h2>
-	<f:form action="new" controller="Folgekontakt" arguments="{teilnehmer : teilnehmer, thisaction : thisaction, calleraction : calleraction, callercontroller : callercontroller, callerpage : callerpage}" >
-		<f:form.button type="submit" class="linkbuttons" id="savebutton1"><f:translate key='folgekontakthinzu' /></f:form.button>
+	<f:form style="display: inline;" action="new" controller="Folgekontakt" arguments="{teilnehmer : teilnehmer, thisaction : thisaction, calleraction : calleraction, callercontroller : callercontroller, callerpage : callerpage}" >
+		<f:form.button type="submit" class="linkbuttons" id="savebutton1"><f:translate key='folgekontakthinzu' /></f:form.button>		
 	</f:form>
-
+	<f:link.action class="linkbuttons" action="listall" controller="Folgekontakt" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, thisaction : thisaction, callercontroller : callercontroller, callerpage : callerpage, searchparams : searchparams}">Alle Folgekontakte anzeigen</f:link.action>
+	
 	<f:if condition="{folgekontakte}">
 		<table class="folgekontakttable">
 			<thead>

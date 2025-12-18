@@ -245,5 +245,24 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         
     }
     
+    /**
+     * action listall
+     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
+     * @return void
+     */
+    public function listallAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
+    {        
+        $valArray = $this->request->getArguments();
+        
+        $folgekontakte = $this->folgekontaktRepository->findByTeilnehmer($teilnehmer->getUid());
+        
+        $this->view->assign('calleraction', $valArray['calleraction']);
+        $this->view->assign('callercontroller', $valArray['callercontroller']);
+        $this->view->assign('callerpage', $valArray['callerpage'] ?? '1');
+        $this->view->assign('thisaction', $valArray['thisaction'] ?? '');
+        $this->view->assign('folgekontakte', $folgekontakte);
+        $this->view->assign('teilnehmer', $teilnehmer);
+        return $this->htmlResponse();
+    }
     
 }

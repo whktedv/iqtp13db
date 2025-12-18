@@ -392,15 +392,6 @@ table tr.dokcattr td {
 	display: flex;
 }
 
-form.filterform {
-	display: flex;
-	flex-flow: row wrap;
-}
-
-form.filterform div {
-	margin: 0 3px;
-}
-
 #dialog-confirm {
 	display: none;
 }
@@ -718,6 +709,11 @@ form.filterform div {
 	color: red;
 	font-size: 0.8rem;
 }
+
+table tr.fkaltefoepha, table td.fkaltefoepha {
+	background-color: #fbf7e5;	
+}
+
 
 /* -------- für Display-Größen bis 767 Pixel Breite (Smartphones/MOBILE) -------- */
 @media ( max-width : 767px) {

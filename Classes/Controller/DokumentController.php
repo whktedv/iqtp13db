@@ -242,7 +242,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
                         // TODO: Dateityp überprüfen
                         
                         $dokument = new \Ud\Iqtp13db\Domain\Model\Dokument();
-                        $dokument->setBeschreibung($valArray['beschreibung'] ?? '');
+                        $dokument->setBeschreibung($valArray['beschreibung'] ?? '');                                                
                         $dokument->setTnfreigabe(1);
                         $dokument->setCrdate(time());
                         $this->saveFileTeilnehmer($dokument, $teilnehmer, $file);

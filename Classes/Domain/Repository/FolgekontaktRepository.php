@@ -103,6 +103,22 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 	    return $query;
 	}
 	
+	public function fk4StatusFK2025($datum1, $datum2, $niqbid)
+	{
+	    $query = $this->createQuery();
+	    $query->statement("SELECT * FROM tx_iqtp13db_domain_model_folgekontakt as a
+                LEFT JOIN tx_iqtp13db_domain_model_teilnehmer as b ON a.teilnehmer = b.uid
+                WHERE DATEDIFF(STR_TO_DATE(datum, '%Y-%m-%d'), '2025-12-31') > 0 AND
+                DATEDIFF(STR_TO_DATE('31.12.2025', '%Y-%m-%d'),erstberatungabgeschlossen) >= 0 AND
+                DATEDIFF(STR_TO_DATE('".$datum1."', '%Y-%m-%d'),STR_TO_DATE(datum, '%Y-%m-%d')) <= 0 AND
+				DATEDIFF(STR_TO_DATE('".$datum2."', '%Y-%m-%d'),STR_TO_DATE(datum, '%Y-%m-%d')) >= 0 AND
+        		b.deleted = 0 AND b.hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' GROUP BY teilnehmer");
+	    
+	    
+	    $query = $query->execute();
+	    return $query;
+	}
+	
 	/**
 	 *
 	 */

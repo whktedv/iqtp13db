@@ -115,18 +115,18 @@
 		</f:for>
 		<td>{SUMerstberatung}</td>
 	</tr>
-	<f:if condition="({niqbid} == '900026' || {niqbid} == '900143') && {jahrselected} == '2023'">
+	<f:if condition="{jahrselected} == '2026'">
 		<tr>
-			<th>FK/Beratungen aus alter Förderphase</th>
-			<f:for each="{beratungfk22}" as="fkeb" iteration="iter">
+			<th>FK von Beratungen aus Förderphase '23-'25</th>
+			<f:for each="{beratungfk25}" as="fkeb" iteration="iter">
 				<td {f:if(condition: '{iter.index} == {aktmonat}', then: 'style="background-color: #ffcaf2;"')}>{fkeb}</td>
 			</f:for>
-			<td>{SUMberatungfk22}</td>
+			<td>{SUMberatungfk25}</td>
 		</tr>
 	</f:if>
 	<tr>
 		<th>Folgekontakte 
-		<f:if condition="({niqbid} == '900026' || {niqbid} == '900143') && {jahrselected} == '2023'">
+		<f:if condition="{jahrselected} == '2026'">
 			(inkl. alte Föpha)
 		</f:if></th>
 		<f:for each="{qfolgekontakte}" as="qf" iteration="iter">

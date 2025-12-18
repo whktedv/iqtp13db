@@ -30,6 +30,7 @@
 </f:then>
 </f:if>
 
+
 <div class="buttonmenu">
 	<div class="toplinkbuttons">
 		<f:link.action id="linkloadoverlay-edit" class="linkbuttons" action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, searchparams : searchparams}">Bearbeiten</f:link.action>
@@ -37,13 +38,13 @@
 		<f:link.action id="linkloadoverlay-back" class="linkbuttons" action="{calleraction}" controller="{callercontroller}" arguments="{calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage, searchparams : searchparams}">Zurück zur Liste</f:link.action>
 	</div>
 	<div class="ankerbuttons">		
-			<a href="#AnkerBeratung" class="linkbuttons buttonberatung" >Beratung anzeigen</a>
+			<a href="#AnkerBeratung" class="linkbuttons buttonberatung ">Beratung anzeigen</a>
 			<f:if condition="{teilnehmer.beratungsstatus} > 1">
-				<a href="#AnkerFolgekontakte" class="linkbuttons buttonfolgekontakte" >Folgekontakte anzeigen</a>
+				<a href="#AnkerFolgekontakte" class="linkbuttons buttonfolgekontakte ">Folgekontakte anzeigen</a>
 			</f:if>
-			<a href="#AnkerAbschluesse" class="linkbuttons buttonabschluesse" >Abschlüsse anzeigen</a>
+			<a href="#AnkerAbschluesse" class="linkbuttons buttonabschluesse ">Abschlüsse anzeigen</a>
 			<f:if condition="{teilnehmer.anonym} != '1'">
-				<a href="#AnkerDokumente" class="linkbuttons buttondokumente" >Dokumente anzeigen</a>
+				<a href="#AnkerDokumente" class="linkbuttons buttondokumente ">Dokumente anzeigen</a>
 			</f:if>			
 	</div>
 </div>
@@ -75,5 +76,6 @@
 </f:if>
 
 <f:flashMessages />
+
 
 </f:section>

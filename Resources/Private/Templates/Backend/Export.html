@@ -16,44 +16,36 @@
 </div>
 
 <div class="filterframe">
-	<f:form class="exportfilterform" id="exportfilterform" method="post" controller="Backend" action="export" name="export" >
-	<div class="filterframe-inner">
-			<div class="filterframe-inner-row">
+	<f:form class="filterform" id="exportfilterform" method="post" controller="Backend" action="export" name="export" >
+	<div class="filter-grid">
+			
 				<f:security.ifHasRole role="Webapp Admin"> 
 				<f:then>
-					<div><label>Bundesland:</label> <f:form.select name="filterbundesland" id="exportfilterselectbundesland" options="{allebundeslaender}" optionValueField="bundesland" optionLabelField="bundesland" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterbundesland}"/></div>	
+					<div class="filter-item filter-item--small"><label>Bundesland:</label> <f:form.select name="filterbundesland" id="exportfilterselectbundesland" options="{allebundeslaender}" optionValueField="bundesland" optionLabelField="bundesland" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterbundesland}"/></div>	
 				</f:then>
 				</f:security.ifHasRole>
 				<f:security.ifHasRole role="Webapp Admin RP"> 
 				<f:then>
-					<div><f:form.select name="filterbundesland" id="exportfilterselectbundesland" options="0" optionValueField="bundesland" optionLabelField="bundesland" prependOptionValue="Rheinland-Pfalz" prependOptionLabel="Rheinland-Pfalz" value="{filterbundesland}"/></div>
+					<div class="filter-item filter-item--small"><f:form.select name="filterbundesland" id="exportfilterselectbundesland" options="0" optionValueField="bundesland" optionLabelField="bundesland" prependOptionValue="Rheinland-Pfalz" prependOptionLabel="Rheinland-Pfalz" value="{filterbundesland}"/></div>
 					<f:form.hidden value="1" name="filteranonym" />
 				</f:then>
 				<f:else>
-					<div><label>Anonym und gekürzt: </label><f:form.checkbox id="exportfiltercheckanonym" value="1" name="filteranonym" checked="{filteranonym} == 1" /></div>	
+					<div class="filter-item filter-item--small"><label>Anonym und gekürzt: </label><f:form.checkbox id="exportfiltercheckanonym" value="1" name="filteranonym" checked="{filteranonym} == 1" /></div>	
 				</f:else>
 				</f:security.ifHasRole>
 				 
-				<div><label>von:</label> <f:form.textfield size="10" id="datepickerfiltervon" value="{filtervon}" name="filtervon" /></div>
-				<div><label>bis:</label> <f:form.textfield size="10" id="datepickerfilterbis" value="{filterbis}" name="filterbis" /></div>				
-				<div><label>Status:</label> <f:form.select id="exportfilterselect" value="{filterberatungsstatus}" name="filterberatungsstatus" options="{settings.filterberatungsstatus}" optionValueField="key" optionLabelField="value" /></div>
-			</div>	
+				<div class="filter-item filter-item--small"><label>von:</label> <f:form.textfield size="10" id="datepickerfiltervon" value="{filtervon}" name="filtervon" /></div>
+				<div class="filter-item filter-item--small"><label>bis:</label> <f:form.textfield size="10" id="datepickerfilterbis" value="{filterbis}" name="filterbis" /></div>				
+				<div class="filter-item filter-item--small"><label>Status:</label> <f:form.select id="exportfilterselect" value="{filterberatungsstatus}" name="filterberatungsstatus" options="{settings.filterberatungsstatus}" optionValueField="key" optionLabelField="value" /></div>
 			
-			<div class="filterframe-inner-row">			
-				<div><label>Erste Staatsangehörigkeit:</label> <f:form.select id="exportfilterselectstaat" name="filterstaat" options="{staatenarr}" optionValueField="key" optionLabelField="value" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterstaat}"/></div>					
-				<div><label>Berater*in:</label> <f:form.select id="exportfilterselectberater" name="filterberater" options="{alleberater}" optionValueField="key" optionLabelField="value" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterberater}"/></div>
-			</div>
-			
-			<div class="filterframe-inner-row">
-				<div><label>Landkreis:</label>	<f:form.select id="exportfilterselectlandkreis" name="filterlandkreis" options="{gewlandkreise}" optionValueField="landkreis" optionLabelField="landkreis" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterlandkreis}"/></div>
-				<div><label>Abschluss:</label>	<f:form.select id="exportfilterreferenzberuf" name="filterreferenzberuf" options="{alleberufe}" optionValueField="key" optionLabelField="value" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterberuf}"/></div>
-			</div>
-			<div class="filterframe-inner-row">
-				<div><label>Berufgruppe:</label>	<f:form.select id="exportfilterbranche" name="filterbranche" options="{allebranchen}" optionValueField="key" optionLabelField="value" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterbranche}"/></div>				
-			</div>
-			<div class="filterframe-inner-row">
-				<div><label>Folgekontakte in Export auf 2. Tabellenblatt einbeziehen (dann maximal 1.000 Ratsuchende!): </label><f:form.checkbox id="exportfilterfolgekontakte" value="1" name="filterfolgekontakte" checked="{filterfolgekontakte} == 1" /></div>
-			</div>
+						
+				<div class="filter-item filter-item--small"><label>Erste Staatsangehörigkeit:</label> <f:form.select id="exportfilterselectstaat" name="filterstaat" options="{staatenarr}" optionValueField="key" optionLabelField="value" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterstaat}"/></div>					
+				<div class="filter-item filter-item--small"><label>Berater*in:</label> <f:form.select id="exportfilterselectberater" name="filterberater" options="{alleberater}" optionValueField="key" optionLabelField="value" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterberater}"/></div>
+				<div class="filter-item filter-item--small"><label>Landkreis:</label>	<f:form.select id="exportfilterselectlandkreis" name="filterlandkreis" options="{gewlandkreise}" optionValueField="landkreis" optionLabelField="landkreis" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterlandkreis}"/></div>
+				<div class="filter-item filter-item--small"><label>Abschluss:</label>	<f:form.select id="exportfilterreferenzberuf" name="filterreferenzberuf" options="{alleberufe}" optionValueField="key" optionLabelField="value" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterberuf}"/></div>
+				<div class="filter-item filter-item--small"><label>Berufgruppe:</label>	<f:form.select id="exportfilterbranche" name="filterbranche" options="{allebranchen}" optionValueField="key" optionLabelField="value" prependOptionValue="%" prependOptionLabel="-alle-" value="{filterbranche}"/></div>				
+				<div class="filter-item filter-item--small"><label>Mit Folgekontakten <br>(max. 1.000 Ratsuchende): </label><f:form.checkbox id="exportfilterfolgekontakte" value="1" name="filterfolgekontakte" checked="{filterfolgekontakte} == 1" /></div>
+	</div>
 			
 	</f:form>
 

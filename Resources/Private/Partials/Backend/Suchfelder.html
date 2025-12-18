@@ -1,15 +1,65 @@
 
-		<div>UID:<f:form.textfield size="3" value="{filteruid}" name="uid" /></div>
-		<div>Name: <f:form.textfield size="15" value="{filtername}" name="name" /></div>
-		<div>Ort/PLZ: <f:form.textfield size="10" value="{filterort}" name="ort" /></div>		
-		<div>Beruf: <f:form.textfield size="20" value="{filterberuf}" name="beruf" /></div>
-		<div>Geburtsdatum: <f:form.textfield type="date" class="datumtextfield" size="10" value="{filtergebdat}" name="gebdat" /></div>
-		<div>Geburtsland: <f:form.select value="{filterland}" name="land" options="{staatenarr}" optionValueField="value" optionLabelField="value" /></div>
-		<div>Berater*in: <f:form.select value="{filterberater}" name="berater" options="{alleberater}" optionValueField="key" optionLabelField="value" prependOptionLabel="-" prependOptionValue="-1" /></div>
-		<div>Gruppe: <f:form.textfield size="20" value="{filtergruppe}" name="gruppe" /></div>
-		<div>Bescheid: <f:form.checkbox value="1" name="bescheid" checked="{filterbescheid} == 1" /></div>
-		<div class="divfilterallemodule">alle&nbsp;Module: <f:form.checkbox value="1" name="allemodule" checked="{filterallemodule} == 1" /></div>
-		<div><f:form.button type="submit" name="filteran">Suchen</f:form.button></div>
+		<div class="filter-grid">
+			<div class="filter-item filter-item--small">
+				<label for="uid">UID</label>
+				<f:form.textfield id="uid" size="3" value="{filteruid}" name="uid" />
+			</div>
+			
+			<div class="filter-item">
+				<label for="name">Name</label>
+				<f:form.textfield id="name" size="15" value="{filtername}" name="name" />
+			</div>
+			
+			<div class="filter-item">
+				<label for="ort">Ort/PLZ</label>
+				<f:form.textfield id="ort" size="10" value="{filterort}" name="ort" />
+			</div>
+							
+			<div class="filter-item filter-item--wide">
+				<label for="beruf">Beruf</label>
+				<f:form.textfield id="beruf" size="20" value="{filterberuf}" name="beruf" />
+			</div>
+			
+			<div class="filter-item">
+				<label for="gebdat">Geburtsdatum</label>
+				<f:form.textfield id="gebdat" type="date" class="datumtextfield" size="10" value="{filtergebdat}" name="gebdat" />
+			</div>
+			
+			<div class="filter-item">
+				<label for="land">Geburtsland</label>
+				<f:form.select id="land" value="{filterland}" name="land" options="{staatenarr}" optionValueField="value" optionLabelField="value" />
+			</div>
+			
+			<div class="filter-item">
+				<label for="ort">E-Mail</label>
+				<f:form.textfield id="email" size="10" value="{filteremail}" name="email" />
+			</div>
+			
+			<div class="filter-item">
+				<label for="berater">Berater*in</label>
+				<f:form.select id="berater" value="{filterberater}" name="berater" options="{alleberater}" optionValueField="key" optionLabelField="value" prependOptionLabel="-" prependOptionValue="-1" />
+			</div>
+			
+			<div class="filter-item">
+				<label for="gruppe">Gruppe</label>
+				<f:form.textfield id="gruppe" size="20" value="{filtergruppe}" name="gruppe" />
+			</div>
+			
+			<div class="filter-item filter-item--checkbox">
+				<f:form.checkbox id="bescheid" value="1" name="bescheid" checked="{filterbescheid} == 1" />
+				<label for="bescheid">Bescheid</label>
+			</div>
+			
+			<div class="filter-item filter-item--checkbox">
+				<f:form.checkbox id="allemodule" value="1" name="allemodule" checked="{filterallemodule} == 1" />
+				<label for="allemodule">Alle Module</label>
+			</div>
+			
+			<div class="filter-item filter-item--button">
+				<f:form.button type="submit" name="filteran">Suchen</f:form.button>
+			</div>
+		</div>
+		
 		<f:if condition="{filteron}">
 			<f:then>
 				<span style="margin-bottom: 5px;"> 

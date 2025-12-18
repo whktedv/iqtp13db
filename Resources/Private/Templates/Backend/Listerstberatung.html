@@ -41,7 +41,7 @@
 		<th> </th>
 		<th> </th>
 		<th> </th>
-		<f:if condition="{betafeaturesaktiviert} == 1"><th> </th></f:if>
+		<th> </th>
 		<th> </th>		
 	</tr>
 
@@ -95,10 +95,9 @@
 			<td><f:link.action action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" title="Bearbeiten"><img src="/fileadmin/template/images/iq-webapp_bearbeiten.svg" alt="Bearbeiten" width="30" height="30"/></f:link.action></td>
 			<td><f:link.action action="new" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Folgekontakt" title="Folgekontakt anlegen"><img src="/fileadmin/template/images/iq-webapp_folgekontakt.svg" width="30" height="30" alt="Folgekontakt" /></f:link.action></td>
 			<td><f:link.action action="sendtoarchiv" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Backend" onclick="return confirm('Wirklich archivieren?');" title="Archivieren"><img src="/fileadmin/template/images/iq-webapp_archivieren.svg" width="30" height="30" alt="Archivieren" /></f:link.action></td>				
-			<f:if condition="{betafeaturesaktiviert} == 1">
 			<td>
 				<f:render partial="TeilnehmerBackend/ModalMail4Extern" arguments="{teilnehmer : teilnehmer, mail4externstandardmailtext: mail4externstandardmailtext, anmeldeditseite: anmeldeditseite}" />
-				<a href="#" onclick="openEmailModal({teilnehmer.uid})">
+				<a href="#" onclick="openEmailModal({teilnehmer.uid})">				
 		            <f:if condition="{teilnehmer.editexternsent} == 0"><f:then>
 						<img src="/fileadmin/template/images/iq-webapp_editextern.svg" width="30" height="30" alt="Link senden" />
 					</f:then><f:else>
@@ -106,7 +105,6 @@
 					</f:else></f:if>
 		        </a>
 		    </td>
-			</f:if>
 			<td><f:link.action action="delete" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" onclick="return confirm('Wirklich löschen?');" title="Löschen"><img src="/fileadmin/template/images/iq-webapp_loeschen.svg" width="30" height="30" alt="Löschen" /></f:link.action></td>
 			
 		</tr>		
@@ -132,7 +130,7 @@
 		<tr>
 			<td><img src="/fileadmin/template/images/iq-webapp_editextern.svg" alt="E-Mail an RS senden" width="30" height="30"/> = E-Mail an RS zum Bearbeiten senden</td>
 			<td><img src="/fileadmin/template/images/iq-webapp_editextern-ok.svg" alt="E-Mail erneut an RS senden" width="30" height="30"/> = E-Mail an RS zum Bearbeiten senden (wurde schon gesendet)</td>
-			<td></td>
+			<td class="fkaltefoepha">Folgekontakt Förderphase 2023-25</td>
 			<td></td>
 		</tr>
 	</table>

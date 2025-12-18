@@ -262,12 +262,20 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $plzgroup = $plzbstelle[0];
         }
         
-        // FK/Beratungen aus alter Förderphase in 2023
+        // FK/Beratungen aus Förderphase 2019-2022 in 2023
         $tnberatungenfk22 = $this->folgekontaktRepository->fk4StatusFK2022("01.01.2023", "31.12.2023", $this->niqbid);
         for($m = 1; $m < 13; $m++) $beratungfk22[$m] = 0;
         foreach($tnberatungenfk22 as $fk22) {
             $fkmonat = DateTime::createFromFormat('Y-m-d', $fk22->getDatum())->format('n');
             $beratungfk22[$fkmonat]++;
+        }
+        //
+        // FK/Beratungen aus Förderphase 2023-2025 in 2026
+        $tnberatungenfk25 = $this->folgekontaktRepository->fk4StatusFK2025("01.01.2026", "31.12.2026", $this->niqbid);
+        for($m = 1; $m < 13; $m++) $beratungfk25[$m] = 0;
+        foreach($tnberatungenfk25 as $fk25) {
+            $fkmonat = DateTime::createFromFormat('Y-m-d', $fk25->getDatum())->format('n');
+            $beratungfk25[$fkmonat]++;
         }
         //
         
@@ -307,6 +315,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         ksort($qfolgekontakte);
         ksort($erstberatung);
         ksort($beratungfk22);
+        ksort($beratungfk25);
         ksort($beratungfertig);
         ksort($days4beratung);
         ksort($days4wartezeit);
@@ -378,6 +387,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             [
                 'beratungfk22'=> $beratungfk22,
                 'SUMberatungfk22'=> count($tnberatungenfk22),
+                'beratungfk25'=> $beratungfk25,
+                'SUMberatungfk25'=> count($tnberatungenfk25),
                 'monatsnamen'=> $monatsnamen,
                 'jahrauswahl' => $jahrarray,
                 'jahrselected' => $jahrselected,
@@ -500,8 +511,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             }
         }
         
-        $staaten = $this->staatenRepository->findByLangisocode('de');
-        
+        $staaten = $this->staatenRepository->findByLangisocode('de');       
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
         }
@@ -529,7 +539,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         asort($arrberater);
         // ***************** Ende - Beraterarray bestimmen *****************
-        
+                        
         $mail4externstandardmailtext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtextedit', 'Iqtp13db');
         
         $this->view->assignMultiple(
@@ -629,6 +639,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         $abschluesserepo = $this->abschlussRepository->findByTnByUidarray($tnuidarray);
         
+        $uploaddokmarkierung = array();
+        
         $abschluesse = array();
         for($j=0; $j < count($teilnehmerpag); $j++) {
             $fk4tn = $this->folgekontaktRepository->findByTeilnehmer($teilnehmerpag[$j]->getUid());
@@ -641,7 +653,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 if($ab->getTeilnehmer()->getUid() == $teilnehmerpag[$j]->getUid()) {
                     $abschluesse[$j][] = $ab;
                 }
-            }  
+            }
         }
         
         $staaten = $this->staatenRepository->findByLangisocode('de');
@@ -682,7 +694,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'abschluesse' => $abschluesse,
                 'anzfolgekontakte' => $anzfolgekontakte,
                 'folgekontakte' => $folgekontakte,
-                'summeberatungsdauer' => $summeberatungsdauer,
+                'summeberatungsdauer' => $summeberatungsdauer,                
                 'calleraction' => 'listerstberatung',
                 'callercontroller' => 'Backend',
                 'callerpage' => $currentPage,
@@ -974,6 +986,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $valArray['searchparams']['land'] == '-1000' &&
             $valArray['searchparams']['name'] == '' &&
             $valArray['searchparams']['ort'] == '' &&
+            $valArray['searchparams']['email'] == '' &&
             $valArray['searchparams']['uid'] == '') {
                 $this->addFlashMessage("FEHLER: Bitte Suchkriterium angeben.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
                 return $this->redirect($valArray['searchparams']['action'] ?? 'listangemeldet', 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1'));
@@ -990,6 +1003,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     $searchparams['uid'] = $valArray['uid'];
                     $searchparams['name'] = $valArray['name'];
                     $searchparams['ort'] = $valArray['ort'];
+                    $searchparams['email'] = $valArray['email'];
                     $searchparams['beruf'] = $valArray['beruf'];
                     $searchparams['land'] = $valArray['land'];
                     $searchparams['berater'] = $valArray['berater'];
@@ -2558,7 +2572,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             }
             
             $templateName = 'MailEditExtern';
-            $subject = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('subject', 'Iqtp13db');
+            $subject = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('subject', 'Iqtp13db')." - UID: ".$teilnehmer->getUid();
             $anrede = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('anredemail', 'Iqtp13db');
             $zugewieseneberatungsstelle = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $teilnehmer->getNiqidberatungsstelle());
             $datenberatungsstelle = $zugewieseneberatungsstelle != NULL ? $zugewieseneberatungsstelle[0]->getDescription() : '';
@@ -2965,6 +2979,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fuid', $searchparams['uid'] ?? '');
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', $searchparams['name'] ?? '');
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', $searchparams['ort'] ?? '');
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'femail', $searchparams['email'] ?? '');
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', $searchparams['beruf'] ?? '');
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', $searchparams['land'] ?? '');
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fgebdat', $searchparams['gebdat'] ?? '');
@@ -2981,6 +2996,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fuid', NULL);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', NULL);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', NULL);
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'femail', NULL);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', NULL);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', NULL);
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fgebdat', NULL);
@@ -2994,6 +3010,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $f['uid'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fuid');
         $f['name'] = preg_replace('/\s+/', ' ', trim($GLOBALS['TSFE']->fe_user->getKey('ses', 'fname')));
         $f['ort'] = preg_replace('/\s+/', ' ', trim($GLOBALS['TSFE']->fe_user->getKey('ses', 'fort')));
+        $f['email'] = preg_replace('/\s+/', ' ', trim($GLOBALS['TSFE']->fe_user->getKey('ses', 'femail')));
         $f['beruf'] = preg_replace('/\s+/', ' ', trim($GLOBALS['TSFE']->fe_user->getKey('ses', 'fberuf')));
         $f['gebdat'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fgebdat');
         $f['land'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fland');
@@ -3004,7 +3021,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         if($f['land'] == '-1000' || $f['land'] == NULL) $f['land'] = '';
         if($f['berater'] == -1 || $f['berater'] == NULL) $f['berater'] = '';
-        if($f['uid'] == '' && $f['name'] == '' && $f['ort'] == '' && $f['beruf'] == '' && $f['gebdat'] == ''  && $f['land'] == '' && $f['berater'] == '' && $f['gruppe'] == '' && $f['bescheid'] == '') {
+        if($f['uid'] == '' && $f['name'] == '' && $f['ort'] == '' && $f['email'] == '' && $f['beruf'] == '' && $f['gebdat'] == ''  && $f['land'] == '' && $f['berater'] == '' && $f['gruppe'] == '' && $f['bescheid'] == '') {
             if($deleted == 1) {
                 $teilnehmers = $this->teilnehmerRepository->findhidden4list($orderby, $order, $this->niqbid);
             } else {               
@@ -3021,6 +3038,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $this->view->assign('filteruid', $f['uid']);
             $this->view->assign('filtername', $f['name']);
             $this->view->assign('filterort', $f['ort']);
+            $this->view->assign('filteremail', $f['email']);
             $this->view->assign('filterberuf', $f['beruf']);
             $this->view->assign('filtergebdat', $f['gebdat']);
             $this->view->assign('filterland', $f['land']);

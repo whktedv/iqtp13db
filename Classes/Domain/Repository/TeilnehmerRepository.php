@@ -36,6 +36,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $uid = $filterArray['uid'];
         $name = $filterArray['name'];
         $ort = $filterArray['ort'];
+        $email = $filterArray['email'];
         $gebdat = $filterArray['gebdat'];
         $land = $filterArray['land'];
         $berater = $filterArray['berater'];
@@ -71,6 +72,9 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 $queryBuilder->expr()->like('ort', $queryBuilder->createNamedParameter('%' . $queryBuilder->escapeLikeWildcards($ort) . '%')),
                 $queryBuilder->expr()->like('plz', $queryBuilder->createNamedParameter('%' . $queryBuilder->escapeLikeWildcards($ort) . '%'))                
             ];
+        }
+        if($email != '') {
+            $whereExpressions[] = $queryBuilder->expr()->like('tx_iqtp13db_domain_model_teilnehmer.email', $queryBuilder->createNamedParameter($email));
         }
         if($gebdat != '') {
             $whereExpressions[] = $queryBuilder->expr()->like('gebdat', $queryBuilder->createNamedParameter($gebdat));

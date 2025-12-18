@@ -31,7 +31,7 @@ a.errorframe-close {
 	margin: auto;
 	box-shadow: .4rem .4rem 2.4rem .2rem #000;
 	cursor: pointer;
-	min-height: 250px;
+	/* min-height: 250px;*/
 }
 
 .tx-iqtp13db ul .alert::after {
@@ -65,82 +65,34 @@ p.alert-message {
 	max-width: 100%;
 }
 
-.filterframe {
-	margin: 1rem 0rem 2rem 0rem;
-}
 
-.filterframe {
-	margin: 0rem 0rem 2.5rem 0rem;
-	margin-top: 0rem;
-	margin-right: 0rem;
-	margin-bottom: 0.5rem;
-	margin-left: 0rem;
-	border-bottom: 1px solid rgb(206, 201, 201);
-	padding-bottom: 0.5rem;
-}
+/* Suchrahmen */
 
-form.filterform {
-	display: flex;
-	flex-flow: row wrap;
-	background: #445d982b;
-	padding-left: 10px;
-	padding-right: 10px;
-	padding-top: 10px;
-	padding-bottom: 10px;
-	justify-content: space-between;
-}
-
-form.filterform div {
-	margin: 0 3px;
-	width: min-content;
-	max-width: 100%;
-	font-size: 0.75rem;
+.suchfelder {
+	background-color: #4E638D;
+	border: 0px solid transparent;
+	white-space: nowrap;
+	font-weight: normal;
+	font-family: Roboto Condensed;
+	text-align: center;
+	font-size: 12px;
+	line-height: 1.42857;
+	padding: 0px 23px;
+	color: #fff;
+	cursor: pointer;
+	-moz-user-select: none;
+	text-decoration: none;
 	text-transform: uppercase;
-	color: #3c5381;
+	border-bottom-right-radius: 7px;
+	padding-top: 0.25rem;
+	padding-bottom: 0.25rem;
+	height: 1.75rem;
 }
 
-.divfilterallemodule {
-	border-left: 1px solid #4E638D;
-	padding-left: 15px;
-}
-
-.filterframe-inner div {
-	display: flex;
-	flex-direction: row;
-}
-
-.filterframe-inner .filterframe-inner-row {
-	margin-bottom: 1rem;
-}
-
-.filterframe-inner-row {
-	justify-content: normal;
-}
-
-.filterframe-inner-row div {
-	margin-right: 1.5rem;
-}
-
-.filterframe-inner-row label {
-	margin-right: 0.5rem;
-	font-weight: 300;
-	padding-top: 0px;
-}
-
-form.filterform select, .exportfilterform select {
-	height: 24px;
-	border: 1px solid #4e638d;
-	border-radius: 0;
-	border-radius: 0 !important;
-	background: #fff;
-	font-family: roboto;
-	font-weight: 300;
-	font-size: 0.90rem;
-	border: 1px solid #4e638d;	
-}
-
-form.filterform select {
-	max-width: 140px;
+.filterframe {
+	background: #f8f9fa;
+	border: 1px solid #dee2e6;
+	margin-bottom: 0.5rem;	
 }
 
 .filterframe h1 {
@@ -157,27 +109,133 @@ form.filterform select {
 	margin-bottom: 0rem;
 }
 
-.filterframe input, .exportfilterform input {
-	font-family: inherit;
-	font-size: inherit;
-	line-height: inherit;
-	width: auto;
-	margin-top: 0rem;
-	margin-bottom: 0rem;
-	font-family: roboto;
-	font-weight: 300;
-	font-size: 0.90rem;
-	height: 24px;
-	border: 1px solid #4e638d;
-	border-radius: 0;
+.filterform {
+	width: 100%;
+	background: #445d982b;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
-.exporthinweis {
-	border: 1px solid #444;
-	background-color: #dedede;
-	margin-bottom: 1rem;
-	padding: 0.5rem;
+form.filterform div {
+	font-size: 0.75rem;
+	text-transform: uppercase;
+	color: #3c5381;
 }
+
+.filter-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+	gap: 1rem;
+	align-items: end;
+}
+
+.filter-item {
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+}
+
+.filter-item--small {
+	min-width: 80px;
+}
+
+.filter-item--wide {
+	grid-column: span 1;
+}
+
+.filter-item--checkbox {
+	flex-direction: row;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.filter-item--checkbox input[type="checkbox"] {
+	width: auto;
+	margin: 0;
+}
+
+.filter-item--checkbox label {
+	margin: 0;
+	cursor: pointer;
+}
+
+.filter-item--button {
+	display: flex;
+	align-items: flex-end;
+}
+
+.filter-item label {
+	margin-bottom: 0.25rem;
+	padding-top: 0px;
+}
+
+.filter-item input[type="text"],
+.filter-item input[type="date"],
+.filter-item select {
+	width: 100%;
+	padding: 0.3rem;
+	border: 1px solid #ced4da;
+	font-size: 0.875rem;
+	transition: border-color 0.15s;
+}
+
+.filter-item input[type="text"]:focus,
+.filter-item input[type="date"]:focus,
+.filter-item select:focus {
+	outline: none;
+	border-color: #80bdff;
+	box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.filter-item button[type="submit"] {
+	width: 100%;
+	padding: 0.5rem 1.5rem;
+	background-color: #007bff;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	font-size: 0.875rem;
+	font-weight: 500;
+	cursor: pointer;
+	transition: background-color 0.15s;
+}
+
+.filter-item button[type="submit"]:hover {
+	background-color: #0056b3;
+}
+
+/* Responsive Anpassungen */
+@media (max-width: 768px) {
+	.filter-grid {
+		grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+		gap: 0.75rem;
+	}
+	
+	.filterframe {
+		padding: 1rem;
+	}
+}
+
+@media (max-width: 480px) {
+	.filter-grid {
+		grid-template-columns: 1fr;
+	}
+	
+	.filter-item--wide {
+		grid-column: span 1;
+	}
+}
+
+/* Kompakte Variante für mehr Felder */
+@media (min-width: 1200px) {
+	.filter-grid {
+		grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+		gap: 0.875rem;
+	}
+}
+/* Suchform bis hier */
 
 .filterframe button[type="submit"], .filterframe button[type="submit"],
 	.uebersicht-beratungsstelle .linkbuttons {
@@ -200,6 +258,17 @@ form.filterform select {
 	height: 1.75rem;
 }
 
+
+/* für Export */
+
+.exporthinweis {
+	border: 1px solid #444;
+	background-color: #dedede;
+	margin-bottom: 1rem;
+	padding: 0.5rem;
+}
+
+
 .exportfilterform {
 	display: flex;
 	flex-flow: row wrap;
@@ -215,26 +284,8 @@ form.filterform select {
 	margin-bottom: 1rem;
 }
 
-.suchfelder {
-	background-color: #4E638D;
-	border: 0px solid transparent;
-	white-space: nowrap;
-	font-weight: normal;
-	font-family: Roboto Condensed;
-	text-align: center;
-	font-size: 12px;
-	line-height: 1.42857;
-	padding: 0px 23px;
-	color: #fff;
-	cursor: pointer;
-	-moz-user-select: none;
-	text-decoration: none;
-	text-transform: uppercase;
-	border-bottom-right-radius: 7px;
-	padding-top: 0.25rem;
-	padding-bottom: 0.25rem;
-	height: 1.75rem;
-}
+
+/* für Export bis hier */
 
 .body-bg-top {
 	padding-top: 59px;
@@ -787,6 +838,10 @@ table.dokumenteupload td.dokumenteuploadform {
 .ck.ck-content ul li {
 	display: list-item;
 	height: auto;
+}
+
+table.folgekontakttable {
+	margin-top: 0.5rem;
 }
 
 /* -------- für Tablets -------- */
