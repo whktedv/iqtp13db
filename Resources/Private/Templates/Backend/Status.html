@@ -115,7 +115,7 @@
 		</f:for>
 		<td>{SUMerstberatung}</td>
 	</tr>
-	<f:if condition="{jahrselected} == '2026'">
+	<f:if condition="{jahrselected} == '2026' || {jahrselected} == '0'">
 		<tr>
 			<th>FK von Beratungen aus Förderphase '23-'25</th>
 			<f:for each="{beratungfk25}" as="fkeb" iteration="iter">
@@ -126,7 +126,7 @@
 	</f:if>
 	<tr>
 		<th>Folgekontakte 
-		<f:if condition="{jahrselected} == '2026'">
+		<f:if condition="{jahrselected} == '2026' || {jahrselected} == '0'">
 			(inkl. alte Föpha)
 		</f:if></th>
 		<f:for each="{qfolgekontakte}" as="qf" iteration="iter">
