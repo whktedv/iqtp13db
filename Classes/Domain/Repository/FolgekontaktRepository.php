@@ -113,7 +113,7 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 DATEDIFF(STR_TO_DATE('31.12.2025', '%d.%m.%Y'),erstberatungabgeschlossen) >= 0 AND
                 DATEDIFF(STR_TO_DATE('".$datum1."', '%d.%m.%Y'),STR_TO_DATE(datum, '%Y-%m-%d')) <= 0 AND
 				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),STR_TO_DATE(datum, '%Y-%m-%d')) >= 0 AND
-        		b.deleted = 0 AND b.hidden = 0 AND niqidberatungsstelle LIKE '$niqbid' GROUP BY teilnehmer");
+        		b.deleted = 0 AND b.hidden = 0 AND a.deleted = 0 AND niqidberatungsstelle LIKE '$niqbid' GROUP BY teilnehmer");
 	    
 	    $query = $query->execute();
 	    return $query;

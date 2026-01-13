@@ -69,7 +69,7 @@
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_beratungsstelle"><target>Wie haben Sie uns gefunden?</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wieberaten"><target>Wie möchten Sie beraten werden?</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.notizen"><target>Was möchten Sie uns noch mitteilen oder haben Sie schon eine konkrete Frage?</target></trans-unit>
-			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligunginfotext"><target>Ich bin einverstanden, dass mir weitere Informationen und Hinweise zu Qualifizierungsangeboten in meinem Beruf zugesendet werden.</target></trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einwilligunginfotext"><target>Ich möchte Informationen zu Qualifikationsangeboten erhalten</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.editexternsent"><target>Bearbeitungslink erstellt</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.anzloginfehlgeschlagen"><target>Anzahl fehlgeschlagene Login-Versuche</target></trans-unit>
 

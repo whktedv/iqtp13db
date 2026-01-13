@@ -317,10 +317,10 @@ plugin.tx_iqtp13db.settings {
    leistungsbezug {
 	    -1 = keine Angabe
 	     1 = kein Leistungsbezug
-	     2 = mit (ergänzendem) SGB II-Leistungsbezug (Bürgergeld)
-	     3 = mit SGB III-Leistungsbezug (Arbeitslosengeld)
-	     4 = mit SGB III- und SGB II-Leistungsbezug (Arbeitslosengeld + Bürgergeld)
-	     5 = mit (ergänzendem) Asylbewerberleistungsbezug   
+	     2 = vom Jobcenter (Bürgergeld)
+	     3 = von der Agentur für Arbeit (Arbeitslosengeld)
+	     4 = vom Jobcenter und der Agentur für Arbeit (Arbeitslosengeld + Bürgergeld)
+	     5 = vom Sozialamt (Asylbewerberleistungsbezug)  
    }
    
    beratungsstelle {
