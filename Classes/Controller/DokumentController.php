@@ -245,7 +245,15 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
                         $dokument->setBeschreibung($valArray['beschreibung'] ?? '');                                                
                         $dokument->setTnfreigabe(1);
                         $dokument->setCrdate(time());
+                        
+                        $teilnehmer->setNeuedokumente(1);                        
+                        $this->teilnehmerRepository->update($teilnehmer);                        
+                        //Daten sofort in die Datenbank schreiben
+                        $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+                        $persistenceManager->persistAll();
+                        
                         $this->saveFileTeilnehmer($dokument, $teilnehmer, $file);
+                        
                         $this->addFlashMessage('Upload erfolgreich.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
                     }
                 }
@@ -320,12 +328,12 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     	            $dokument->setTeilnehmer($teilnehmer);
     	            $dokument->setCrdate(time());
     	            $this->dokumentRepository->update($dokument);
-    	            //Daten sofort in die Datenbank schreiben
+    	            $this->teilnehmerRepository->update($teilnehmer);
     	            
+    	            //Daten sofort in die Datenbank schreiben    	            
     	            $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
     	            $persistenceManager->persistAll();
     	            
-    	            $this->teilnehmerRepository->update($teilnehmer);
     	        }    	        
     	    } else {
     	    	// Fehler
@@ -448,6 +456,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
                 $dokument = new \Ud\Iqtp13db\Domain\Model\Dokument();
                 $dokument->setBeschreibung($valArray['beschreibung']);
                 $dokument->setTnfreigabe(1);
+                $teilnehmer->setNeuedokumente(1);
                 $this->saveFileTeilnehmer($dokument, $teilnehmer, $_FILES['tx_iqtp13db_iqtp13dbwebapp']);
             }
             

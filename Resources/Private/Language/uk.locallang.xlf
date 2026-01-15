@@ -64,7 +64,8 @@
   <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kundennummer_a_a"><target>Ваш номер клієнта</target></trans-unit>
   <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_person"><target>Чи є хтось, кого б Ви хотіли залучити до своєї консультації?</target></trans-unit>
   <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personname"><target>Ім’я особи та організації, якщо є</target></trans-unit>
-  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personkontakt"><target>Контактні дані (е-мейл і телефон)</target></trans-unit>
+  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personkontakt"><target>Контактні дані (телефон)</target></trans-unit>
+  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personkontaktmail"><target>Контактні дані (е-мейл)</target></trans-unit>
   <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_beratungsstelle"><target>Як Ви дізналися про нас?</target></trans-unit>
   <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wieberaten"><target>В який спосіб Ви би хотіли проконсультуватися?</target></trans-unit>
   <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.notizen"><target>Що б Ви ще хотіли нам розповісти чи може у Вас вже є конкретне запитання?</target></trans-unit>

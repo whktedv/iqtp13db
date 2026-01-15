@@ -139,6 +139,11 @@
 	transform: scale(1.5);
 }
 
+.tx-iqtp13db .filter-item input[type="checkbox"] {
+	width: fit-content;
+	margin: 3px 10px 10px 10px;
+}
+
 .tx-iqtp13db .f3-form-error {
 	outline: 1px solid red;
 }

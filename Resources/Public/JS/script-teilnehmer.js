@@ -264,11 +264,13 @@
 			$('#einwpersonmedium').fadeIn();
 			$('#einwpersonname').fadeIn();
 			$('#einwpersonkontakt').fadeIn();
+			$('#einwpersonkontaktmail').fadeIn();
 		} else {
 			$('#einwpersondatum').fadeOut();
 			$('#einwpersonmedium').fadeOut();
 			$('#einwpersonname').fadeOut();
 			$('#einwpersonkontakt').fadeOut();
+			$('#einwpersonkontaktmail').fadeOut();
 			$('#txteinwpersondatum').val('');
 			$('#chkeinwpersonmedium1').prop("checked", false);
 			$('#chkeinwpersonmedium2').prop("checked", false);
@@ -276,7 +278,8 @@
 			$('#chkeinwpersonmedium4').prop("checked", false);
 			$('#chkeinwpersonmedium5').prop("checked", false);
 			$('#txteinwpersonname').val('');
-			$('#txteinwpersonkontakt').val('');			
+			$('#einwpersonkontakt').fadeOut();
+			$('#einwpersonkontaktmail').fadeOut();
 		}
 		return;
 	}

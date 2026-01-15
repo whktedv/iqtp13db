@@ -64,7 +64,8 @@
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kundennummer_a_a"><source>Your client number</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_person"><source>Is there someone you would like to include in your consultation?</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personname"><source>Name of the contact person and possibly the institution</source></trans-unit>
-		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personkontakt"><source>Contact details (e-mail, telephones)</source></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personkontakt"><source>Contact telephone</source></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personkontaktmail"><source>Contact e-mail</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_beratungsstelle"><source>How did you find us?</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wieberaten"><source>How would you like to be advised?</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.notizen"><source>What else would you like to tell us or do you already have a specific question?</source></trans-unit>

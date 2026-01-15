@@ -479,6 +479,15 @@ return [
                 'eval' => 'trim'
             ],
         ],
+        'einw_personkontaktmail' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.einw_personkontaktmail',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim'
+            ],
+        ],
         'aufenthaltsstatus' => [
             'exclude' => true,
             'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.aufenthaltsstatus',
@@ -771,6 +780,16 @@ return [
         'edituser' => [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.tstamp',
+            'config' => [
+                'type' => 'input',
+                'size' => 5,
+                'eval' => 'int',
+                'default' => 0
+            ],
+        ],
+        'neuedokumente' => [
+            'exclude' => true,
+            'label' => 'Neue Dokumente',
             'config' => [
                 'type' => 'input',
                 'size' => 5,

@@ -1001,6 +1001,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 ab.nregberuf,
                 ab.abschlussart,
                 br.titel AS branche,
+                br.brancheid AS brancheid,
                 st.titel AS erwerbsland,
                 ab.abschlussjahr,
                 ab.ausbildungsort,
@@ -1042,7 +1043,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         if($berater != '%') $sql .= " AND a.berater LIKE '$berater'";
         if($landkreis != '%') $sql .= " AND o.landkreis LIKE '$landkreis'";
         if($beruf != '%') $sql .= " AND b.referenzberufzugewiesen LIKE '$beruf'";
-        if($branche != '%') $sql .= " AND b.branche LIKE '$branche'";
+        if($branche != '%') $sql .= " AND b.brancheid LIKE '$branche'";
         $sql .= " GROUP BY a.uid ORDER BY verification_date ASC";
   
         $query->statement($sql);        

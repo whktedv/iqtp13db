@@ -97,13 +97,17 @@
 			<td><f:link.action action="sendtoarchiv" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" controller="Backend" onclick="return confirm('Wirklich archivieren?');" title="Archivieren"><img src="/fileadmin/template/images/iq-webapp_archivieren.svg" width="30" height="30" alt="Archivieren" /></f:link.action></td>				
 			<td>
 				<f:render partial="TeilnehmerBackend/ModalMail4Extern" arguments="{teilnehmer : teilnehmer, mail4externstandardmailtext: mail4externstandardmailtext, anmeldeditseite: anmeldeditseite}" />
-				<a href="#" onclick="openEmailModal({teilnehmer.uid})">				
-		            <f:if condition="{teilnehmer.editexternsent} == 0"><f:then>
-						<img src="/fileadmin/template/images/iq-webapp_editextern.svg" width="30" height="30" alt="Link senden" />
-					</f:then><f:else>
-						<img src="/fileadmin/template/images/iq-webapp_editextern-ok.svg" width="30" height="30" alt="Link senden" />
-					</f:else></f:if>
-		        </a>
+				<a href="#" onclick="openEmailModal({teilnehmer.uid})">
+			            <f:if condition="{teilnehmer.editexternsent} == 0"><f:then>
+							<img src="/fileadmin/template/images/iq-webapp_editextern.svg" width="30" height="30" alt="Link senden" />
+						</f:then><f:else>
+							<f:if condition="{teilnehmer.neuedokumente} == 1"><f:then>
+								<img src="/fileadmin/template/images/iq-webapp_editextern-newdat.svg" width="30" height="30" alt="Link senden" />
+							</f:then><f:else>
+								<img src="/fileadmin/template/images/iq-webapp_editextern-ok.svg" width="30" height="30" alt="Link senden" />
+							</f:else></f:if>
+						</f:else></f:if>
+			        </a>
 		    </td>
 			<td><f:link.action action="delete" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" onclick="return confirm('Wirklich löschen?');" title="Löschen"><img src="/fileadmin/template/images/iq-webapp_loeschen.svg" width="30" height="30" alt="Löschen" /></f:link.action></td>
 			
@@ -130,8 +134,8 @@
 		<tr>
 			<td><img src="/fileadmin/template/images/iq-webapp_editextern.svg" alt="E-Mail an RS senden" width="30" height="30"/> = E-Mail an RS zum Bearbeiten senden</td>
 			<td><img src="/fileadmin/template/images/iq-webapp_editextern-ok.svg" alt="E-Mail erneut an RS senden" width="30" height="30"/> = E-Mail an RS zum Bearbeiten senden (wurde schon gesendet)</td>
-			<td class="fkaltefoepha">Folgekontakt Förderphase 2023-25</td>
-			<td></td>
+			<td><img src="/fileadmin/template/images/iq-webapp_editextern-newdat.svg" alt="E-Mail erneut an RS senden (neue Dateien)" width="30" height="30"/> = E-Mail an RS zum Bearbeiten senden (Neue Dateien wurden hochgeladen)</td>
+			<td class="fkaltefoepha">Folgekontakt Förderphase 2023-25</td>			
 		</tr>
 	</table>
 </div>

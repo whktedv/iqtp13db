@@ -56,6 +56,7 @@ CREATE TABLE tx_iqtp13db_domain_model_teilnehmer (
 	einw_personmedium varchar(255) DEFAULT '' NOT NULL,
 	einw_personname varchar(255) DEFAULT '' NOT NULL,
 	einw_personkontakt varchar(255) DEFAULT '' NOT NULL,
+	einw_personkontaktmail varchar(255) DEFAULT '' NOT NULL,
 	
 	aufenthaltsstatus int(11) DEFAULT '0' NOT NULL,
 	aufenthaltsstatusfreitext text NOT NULL,
@@ -93,7 +94,7 @@ CREATE TABLE tx_iqtp13db_domain_model_teilnehmer (
     einwilligunginfo tinyint(1) unsigned DEFAULT '0',
     editexternsent int(11) unsigned DEFAULT '0' NOT NULL,
     anzloginfehlgeschlagen int(4) unsigned DEFAULT '0' NOT NULL,
-    
+    neuedokumente tinyint(4) unsigned DEFAULT '0' NOT NULL,
     gruppenberatungen int(11) unsigned DEFAULT '0' NOT NULL,
     
     edittstamp int(11) unsigned DEFAULT '0' NOT NULL,

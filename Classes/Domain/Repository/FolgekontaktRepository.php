@@ -136,7 +136,7 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 LEFT JOIN tx_iqtp13db_domain_model_ort o ON t.plz = o.plz ";
 	    $sql .= "WHERE
                 STR_TO_DATE(f.datum, '%Y-%m-%d') BETWEEN STR_TO_DATE('$filtervon', '%d.%m.%Y') AND STR_TO_DATE('$filterbis', '%d.%m.%Y')
-                AND niqidberatungsstelle LIKE '$niqbid' AND t.hidden = 0 AND t.deleted = 0";
+                AND niqidberatungsstelle LIKE '$niqbid' AND t.hidden = 0 AND t.deleted = 0 AND f.deleted = 0 AND f.hidden = 0";
                 if($bundesland != '%') $sql .= " AND b.bundesland LIKE '$bundesland'";
                 if($staat != '%') $sql .= " AND t.erste_staatsangehoerigkeit LIKE '$staat'";
                 if($berater != '%') $sql .= " AND f.berater LIKE '$berater'";
@@ -150,4 +150,37 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         return $query->execute();
 	}
 	
+	/**
+	 *
+	 */
+	public function fksearch4exportFK2025($filtervon, $filterbis, $niqbid, $bundesland, $staat, $berater, $landkreis, $beruf, $branche)
+	{
+	    
+	    $niqbid = $niqbid == '12345' ? '%' : $niqbid; // Admin? dann Beratungsstelle ignorieren
+	    
+	    $query = $this->createQuery();
+	    
+	    $sql = "SELECT f.uid, f.teilnehmer, f.datum, f.berater, f.notizen, f.beratungsform, f.beratungsdauer FROM tx_iqtp13db_domain_model_folgekontakt as f
+                INNER JOIN tx_iqtp13db_domain_model_teilnehmer as t ON f.teilnehmer = t.uid
+                LEFT JOIN tx_iqtp13db_domain_model_abschluss as a ON f.teilnehmer = a.teilnehmer
+                LEFT JOIN fe_groups as b on t.niqidberatungsstelle = b.niqbid
+                LEFT JOIN tx_iqtp13db_domain_model_ort o ON t.plz = o.plz ";
+	    $sql .= "WHERE
+                DATEDIFF(STR_TO_DATE(f.datum, '%Y-%m-%d'), '2025-12-31') > 0 AND
+                DATEDIFF(STR_TO_DATE('31.12.2025', '%d.%m.%Y'),erstberatungabgeschlossen) >= 0 AND
+                STR_TO_DATE(f.datum, '%Y-%m-%d') BETWEEN STR_TO_DATE('$filtervon', '%d.%m.%Y') AND STR_TO_DATE('$filterbis', '%d.%m.%Y')
+                AND niqidberatungsstelle LIKE '$niqbid' AND t.hidden = 0 AND t.deleted = 0 AND t.deleted = 0 AND f.deleted = 0 AND f.hidden = 0";
+	    
+	    if($bundesland != '%') $sql .= " AND b.bundesland LIKE '$bundesland'";
+	    if($staat != '%') $sql .= " AND t.erste_staatsangehoerigkeit LIKE '$staat'";
+	    if($berater != '%') $sql .= " AND f.berater LIKE '$berater'";
+	    if($landkreis != '%') $sql .= " AND o.landkreis LIKE '$landkreis'";
+	    if($beruf != '%') $sql .= " AND a.referenzberufzugewiesen LIKE '$beruf'";
+	    if($branche != '%') $sql .= " AND a.branche LIKE '$branche'";
+	    $sql .= " GROUP BY f.uid ORDER BY f.datum ASC";
+	    
+	    $query->statement($sql);
+	    
+	    return $query->execute();
+	}
 }

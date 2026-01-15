@@ -71,7 +71,8 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kundennummer_a_a"><target>Numărul dumneavoastră de client</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_person"><target>Consimțământul de a transmite datele unei alte persoane</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personname"><target>Numele persoanei și, dacă este cazul, al organizației</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personkontakt"><target>Contact (e-mail și telefon)</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personkontakt"><target>Contact (telefon)</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personkontaktmail"><target>Contact (e-mail)</target></trans-unit>
   <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_beratungsstelle"><target>Cum ne-ați găsit?</target></trans-unit>
   <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wieberaten"><target>Cum doriți să fiți consiliat?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.notizen"><target>Ce altceva ați dori să ne spuneți sau aveți deja o întrebare specifică?</target></trans-unit>

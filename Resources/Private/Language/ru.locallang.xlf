@@ -66,7 +66,8 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kundennummer_a_a"><target>Ваш клиентский номер</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_person"><target>Согласие на передачу данных другому лицу</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personname"><target>Имя человека и, если применимо, организация</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personkontakt"><target>Контакты (электронная почта и телефон)</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personkontakt"><target>Контакты (электронная телефон)</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personkontaktmail"><target>Контакты (электронная почта)</target></trans-unit>
   <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_beratungsstelle"><target>Как ты нашел нас?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wieberaten"><target>Какая консультация необхоидимо Вaм?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.notizen"><target>Что еще вы хотели бы нам сказать или у вас уже есть конкретный вопрос?</target></trans-unit>

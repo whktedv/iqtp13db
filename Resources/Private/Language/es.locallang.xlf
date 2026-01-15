@@ -63,7 +63,8 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kundennummer_a_a"><target>Su número de cliente</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_person"><target>Consentimiento para la transmisión de datos a otras personas</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personname"><target>Nombre de la contact y organización</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personkontakt"><target>Contacto (correo electrónico y teléfono)</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personkontakt"><target>Contacto (teléfono)</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personkontaktmail"><target>Contacto (correo electrónico)</target></trans-unit>
   <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_beratungsstelle"><target>¿Cómo nos ha encontrado?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wieberaten"><target>¿Cómo le gustaría que le asesoraran?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.notizen"><target>¿Qué más quiere decirnos o tiene ya una pregunta concreta?</target></trans-unit>

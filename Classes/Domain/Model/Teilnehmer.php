@@ -334,6 +334,13 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $einwPersonkontakt = '';
     
     /**
+     * einwPersonkontaktmail
+     *
+     * @var string
+     */
+    protected $einwPersonkontaktmail = '';
+    
+    /**
      * aufenthaltsstatus
      *
      * @var int
@@ -579,6 +586,13 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var boolean
      */
     protected $hidden;
+    
+    /**
+     * neuedokumente
+     *
+     * @var int
+     */
+    protected $neuedokumente;
     
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Ud\Iqtp13db\Domain\Model\Gruppenberatung>
@@ -1552,6 +1566,27 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
     
     /**
+     * Returns the einwPersonkontaktmail
+     *
+     * @return string $einwPersonkontaktmail
+     */
+    public function getEinwPersonkontaktmail()
+    {
+        return $this->einwPersonkontaktmail;
+    }
+    
+    /**
+     * Sets the einwPersonkontaktmail
+     *
+     * @param string $einwPersonkontaktmail
+     * @return void
+     */
+    public function setEinwPersonkontaktmail($einwPersonkontaktmail)
+    {
+        $this->einwPersonkontaktmail = $einwPersonkontaktmail;
+    }
+    
+    /**
      * Returns the aufenthaltsstatus
      *
      * @return int $aufenthaltsstatus
@@ -2346,6 +2381,27 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function setHidden($hidden) {
         $this->hidden = $hidden;
+    }
+    
+    /**
+     * Returns the neuedokumente
+     *
+     * @return int $neuedokumente
+     */
+    public function getNeuedokumente()
+    {
+        return $this->neuedokumente;
+    }
+    
+    /**
+     * Sets the neuedokumente
+     *
+     * @param int $neuedokumente
+     * @return void
+     */
+    public function setNeuedokumente($neuedokumente)
+    {
+        $this->neuedokumente = $neuedokumente;
     }
     
     /**

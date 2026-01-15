@@ -1594,6 +1594,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }elseif(isset($valArray['export']) && $fberatungsstatus == '15') {
             // **** nur Folgekontakte exportieren ****
             $folgekontakte = $this->folgekontaktRepository->fksearch4export($filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected, $beraterselected, $landkreisselected, $berufselected, $brancheselected);
+            $folgekontakteFK2025 = $this->folgekontaktRepository->fksearch4exportFK2025($filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected, $beraterselected, $landkreisselected, $berufselected, $brancheselected);            
             $anzfolgekontakte = count($folgekontakte);
             
             if($anzfolgekontakte == 0) {
@@ -1635,9 +1636,39 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     $rowsfk[$x]['beratungsdauer'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'beratungsdauer');
                 }
                 
+                $rowsfkFK2025 = array();
+                foreach($folgekontakteFK2025 as $x25 => $fk25) {
+                    
+                    $beraterfk = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk25, 'berater');
+                    $teilnehmerfk = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk25, 'teilnehmer');
+                    
+                    $rowsfkFK2025[$x25]['folgekontaktuid'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk25, 'uid');
+                    $rowsfkFK2025[$x25]['teilnehmernachname'] = $teilnehmerfk == NULL ? '-nicht vorhanden-' : \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($teilnehmerfk, 'nachname');
+                    $rowsfkFK2025[$x25]['teilnehmervorname'] = $teilnehmerfk == NULL ? '-nicht vorhanden-' : \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($teilnehmerfk, 'vorname');
+                    $rowsfkFK2025[$x25]['datum'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk25, 'datum');
+                    if($beraterfk != NULL) $rowsfkFK2025[$x25]['beraterin'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($beraterfk, 'username');
+                    else $rowsfkFK2025[$x25]['beraterin'] = '-';
+                    $rowsfkFK2025[$x25]['notizen'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk25, 'notizen');
+                    $bform = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk25, 'beratungsform');
+                    $rowsfkFK2025[$x25]['beratungsform'] = $bform == '-1000' ? '-' : $arrberatungsformfolgeberatung[$bform];
+                    $rowsfkFK2025[$x25]['beratungsdauer'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk25, 'beratungsdauer');
+                }
+                
                 // XLSX
                 $filename = 'export_folgekontakte_'.date('Y-m-d_H-i', time()).'.xlsx';
+                
                 $headerblatt = [
+                    'FolgekontaktUID' => 'string',
+                    'Nachname' => 'string',
+                    'Vorname' => 'string',
+                    'Datum' => 'string',
+                    'BeraterIn' => 'string',
+                    'Notizen' => 'string',
+                    'Beratungsorm' => 'string',
+                    'Beratungsdauer' => 'string'
+                ];
+                
+                $headerblatt2 = [
                     'FolgekontaktUID' => 'string',
                     'Nachname' => 'string',
                     'Vorname' => 'string',
@@ -1651,7 +1682,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $writer = new \XLSXWriter();
                 $writer->setAuthor('IQ Webapp');
                 
-                $writer->writeSheet($rowsfk, 'Folgekontakte', $headerblatt);
+                $writer->writeSheet($rowsfk, 'Alle Folgekontakte', $headerblatt);
+                $writer->writeSheet($rowsfkFK2025, 'Davon Folgekontakte von Beratungen aus Förderphase 23-25', $headerblatt2);
                 
                 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
                 header('Content-Disposition: attachment;filename="'.$filename.'"');
@@ -1814,6 +1846,12 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $this->addFlashMessage("Achtung: Diese/r Ratsuchende/r ist auch bei der Beratungsstelle <b>".$bstelle->getDescription()."</b> angemeldet.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
             }
         }
+        
+        $teilnehmer->setNeuedokumente(0);
+        $this->teilnehmerRepository->update($teilnehmer);        
+        // Daten sofort in die Datenbank schreiben
+        $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+        $persistenceManager->persistAll();
         
         $this->view->assignMultiple(
             [
@@ -2131,6 +2169,12 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             }
         }
         
+        $teilnehmer->setNeuedokumente(0);
+        $this->teilnehmerRepository->update($teilnehmer);
+        // Daten sofort in die Datenbank schreiben
+        $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+        $persistenceManager->persistAll();
+        
         $this->view->assignMultiple(
             [
                 'alleberatungsstellen' => $alleberatungsstellen,
@@ -2284,6 +2328,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $this->createHistory($teilnehmer, "einwPersonmedium");
         $this->createHistory($teilnehmer, "einwPersonname");
         $this->createHistory($teilnehmer, "einwPersonkontakt");
+        $this->createHistory($teilnehmer, "einwPersonkontaktmail");
         $this->createHistory($teilnehmer, "nameBeratungsstelle");
         $this->createHistory($teilnehmer, "wieberaten");
         $this->createHistory($teilnehmer, "notizen");

@@ -63,7 +63,8 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kundennummer_a_a"><target>Pana/Pani numer klienta</target></trans-unit>
   <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_person"><target>Zgoda na przekazanie danych innym osobom</target></trans-unit>
   <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personname"><target>Nazwisko osoby lub nazwa organizacji </target></trans-unit>
-  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personkontakt"><target>Dane kontaktowe (e-mail i numer telefonu) </target></trans-unit>
+  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personkontakt"><target>Dane kontaktowe (numer telefonu) </target></trans-unit>
+  <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personkontakt"><target>Dane kontaktowe (e-mail) </target></trans-unit>
   <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_beratungsstelle"><target>Jak nas Pan/Pani znalazł/a?</target></trans-unit>
   <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wieberaten"><target>W jaki sposób chciałby Pan/chciałaby Pani otrzymać poradę?</target></trans-unit>
   <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.notizen"><target>Co chciałby Pan/ chciałaby Pani nam jeszcze przekazać? Ma Pan/ Pani dodatkowe pytania? </target></trans-unit>

@@ -219,6 +219,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         } else {
             $this->view->assign('beratungsstelle', $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid'));
         }
+        $this->view->assign('anmeldseite', 'startseite');        
         return $this->htmlResponse();
     }
     
@@ -231,7 +232,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         // Beratungsstellen-ID aus Session-Cache löschen
         $GLOBALS['TSFE']->fe_user->setKey('ses', 'beratungsstellenid', null);
         
-        $this->view->assign('anmeldungseiteuid', $this->settings['registrationpageuid']);       
+        $this->view->assign('anmeldungseiteuid', $this->settings['registrationpageuid']); 
+        $this->view->assign('anmeldseite', 'startseiteplz');
         return $this->htmlResponse();
     }
     
@@ -267,7 +269,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             return $this->redirectToUri($uri, 0, 303);
         } else {
             
-            if($valarrwohnsitzdeutschland == '' && $direkt != '1') {
+            if($valarrwohnsitzdeutschland == '' && $direkt != '1' && $valArray['langmenuchange'] != '1') {
                 return $this->redirect('startseite', 'Teilnehmer', 'Iqtp13db', null);
             }
             
@@ -292,6 +294,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     $startseitetextcustom = $custominfotextstart;
                 }
                 
+                $this->view->assign('anmeldseite', 'anmeldseite0');
                 $this->view->assign('beratungsstelle', $bstid);
                 $this->view->assign('wohnsitzDeutschland', $valarrwohnsitzdeutschland);
                 $this->view->assign('plz', $valArray['plz'] ?? '');
@@ -367,6 +370,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         
         $this->view->assignMultiple(
             [
+                'anmeldseite' => 'anmeldseite1',
                 'staatenarr' => $staatenarr,
                 'jahre' => $jahre,
                 'teilnehmer' => $teilnehmer,
@@ -527,6 +531,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         
         $this->view->assignMultiple(
             [
+                'anmeldseite' => 'anmeldseite2',
                 'settings' => $this->settings,
                 'abschluesse' => $abschluesse,
                 'teilnehmer' => $teilnehmer,
@@ -620,6 +625,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             }
         }
         
+        $this->view->assign('anmeldseite', 'anmeldseite3');
         $this->view->assign('settings', $this->settings);
         $this->view->assign('teilnehmer', $teilnehmer);
         $this->view->assign('iseditextern', $GLOBALS['TSFE']->fe_user->getKey('ses', 'editextern') ?? 0);
@@ -721,6 +727,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             
             $this->view->assignMultiple(
                 [
+                    'anmeldseite' => 'anmeldungcomplete',
                     'settings' => $this->settings,
                     'abschluesse' => $abschluesse,
                     'heute' => time(),

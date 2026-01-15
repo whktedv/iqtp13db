@@ -1,7 +1,15 @@
+{namespace iq = Ud\Iqtp13db\ViewHelpers}
 
 <f:layout name="Default" />
 
 <f:section name="main">
+
+<div class="footer-language languagemenu-webapp">
+	<span id="chooselang"><img src="/fileadmin/template/images/globe-language.svg" width="24" height="24"/> Language</span>
+	<iq:formAwareLanguageMenu currentStep="{anmeldseite}" class="language-menu" teilnehmer="{teilnehmer.uid}" />
+</div>
+
+
 <h1><f:translate key="fragebogen" /> 3 / 4</h1>
 
 <div id="dialog-confirm" title="Webapp - IQ Anerkennungsberatung">
@@ -48,7 +56,9 @@
 	const modal = document.getElementById("infomodal");
 	const modaltext = document.getElementById("modaltext");
 	const okModal = document.getElementById("okModal");
-	
+	const txteinwpersonname = document.getElementById('txteinwpersonname');
+	const txteinwpersonkontaktmail = document.getElementById('txteinwpersonkontaktmail');
+
 	var dellink = '';
 	var cancellink = '';
 
@@ -58,11 +68,21 @@
 		modal.showModal();
 		return false;
 	}
-	
 
 	okModal.addEventListener("click", () => {
 		modal.close();	    
 	});
+	
+	// einwpersonkontaktmail wird zum Pflichtfeld, wenn Person angegeben
+	function updateRequirements() {
+	  if (txteinwpersonname.value.trim() !== '') {
+	    txteinwpersonkontaktmail.required = true;      
+	  } else {
+	    txteinwpersonkontaktmail.required = false;     
+	  }
+	}
+	
+	txteinwpersonname.addEventListener('input', updateRequirements);
 	
 </script>
 

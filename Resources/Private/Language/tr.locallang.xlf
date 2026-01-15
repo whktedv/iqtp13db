@@ -66,7 +66,8 @@
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kundennummer_a_a"><target>Müşteri numaranız</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_person"><target>Bilgilerin başka kişi/makamlara verilmesinin onayı</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personname"><target>Kişinin yada organizasyonun adı</target></trans-unit>
-	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personkontakt"><target>İletişim (E-Mail ve Telefon)</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personkontakt"><target>İletişim (Telefon)</target></trans-unit>
+	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personkontaktmail"><target>İletişim (E-Mail)</target></trans-unit>
   <trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_beratungsstelle"><target>Bizi bulmanız ne yolla oldu?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wieberaten"><target>Nasıl bilgilendirilmek  istersiniz?</target></trans-unit>
 	<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.notizen"><target>Bize bildirmek istediğiniz birşey yada sorunuz var mı?</target></trans-unit>

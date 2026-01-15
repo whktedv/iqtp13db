@@ -65,7 +65,8 @@
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kundennummer_a_a"><target>Ihre Kundennummer</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_person"><target>Gibt es jemand den Sie in Ihre Beratung mit einbeziehen möchten?</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personname"><target>Name der Person und ggf. Organisation</target></trans-unit>
-			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personkontakt"><target>Kontakt (E-Mail und Telefon)</target></trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personkontakt"><target>Kontakt Telefonnummer</target></trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.einw_personkontaktmail"><target>Kontakt E-Mail</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.name_beratungsstelle"><target>Wie haben Sie uns gefunden?</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.wieberaten"><target>Wie möchten Sie beraten werden?</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.notizen"><target>Was möchten Sie uns noch mitteilen oder haben Sie schon eine konkrete Frage?</target></trans-unit>
