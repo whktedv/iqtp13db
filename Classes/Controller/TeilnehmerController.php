@@ -268,8 +268,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $uri = $uriBuilder->setTargetPageUid($this->settings['anmeldungnichtwebapppageuid'])->build();
             return $this->redirectToUri($uri, 0, 303);
         } else {
+            $langmenuchange = $valArray['langmenuchange'] ?? '0';
             
-            if($valarrwohnsitzdeutschland == '' && $direkt != '1' && $valArray['langmenuchange'] != '1') {
+            if($valarrwohnsitzdeutschland == '' && $direkt != '1' && $langmenuchange != '1') {
                 return $this->redirect('startseite', 'Teilnehmer', 'Iqtp13db', null);
             }
             

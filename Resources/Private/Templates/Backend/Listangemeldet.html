@@ -88,7 +88,7 @@
 						{f:if(condition: '{abschluss.antragstellungvorher} == 3', then: '<img src="/fileadmin/template/images/iq-webapp_vollstaendig-ok.svg" alt="✓" width="16" height="16"/>')}					
 					</f:for>
 				</td>
-				<td>{teilnehmer.kooperationgruppe} - {teilnehmer.neuedokumente}</td>
+				<td>{teilnehmer.kooperationgruppe}</td>
 				<td class="actionbuttons">
 					<f:link.action action="edit" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" title="Bearbeiten"><img src="/fileadmin/template/images/iq-webapp_bearbeiten.svg" alt="Bearbeiten" width="30" height="30"/></f:link.action>
 					<f:if condition="{teilnehmer.niqidberatungsstelle} != {plzberatungsstelle4tn.{it.index}} && {plzberatungsstelle4tn.{it.index}} != ''"><f:then><f:link.action action="setBeratungsstellebyPLZ" arguments="{teilnehmer : teilnehmer, callerpage : callerpage}" onclick="return confirm('Achtung: Ratsuchende:r wird Beratungsstelle nach PLZ zugewiesen?');" title="Beratungsstelle zuweisen"><img src="/fileadmin/template/images/iq-webapp_AQB-PLZ.svg" alt="AQB nach PLZ" width="30" height="30"/><span style="font-size: 0.6rem;">{plzberatungsstelle4tn.{it.index}}</span></f:link.action></f:then></f:if>
