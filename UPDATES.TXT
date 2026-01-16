@@ -190,7 +190,7 @@ Update 18.12.2025:
 - Suchformular überarbeitet. Optische Anpassungen und nun Suche nach E-Mail-Adresse möglich
 - Exportformular optisch überarbeitet, damit responsiv 
 
-Update 15.01.2026:
+Update 16.01.2026:
 - Export: Folgeberatungen von Erstberatungen aus 2025 sind bei Export Folgeberatungen in separatem Tabellenblatt angegeben
 - Datenweitergabe weitere Person: Bei Kontakt sind Telefon und E-Mail separate Felder. Bei Eingabe in Feld Name/Organisation ist Feld E-Mail Pflichtfeld
 - Im Modul Anmeldungen und Erstberatungen wird am Button zum Externen Bearbeiten nun mit einem <b>blauen</b> Haken angezeigt, ob neue Dokumente hochgeladen wurden. Sobald der Datensatz geöffnet wird, ist der Haken wieder grün.

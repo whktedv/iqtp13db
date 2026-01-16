@@ -19,7 +19,6 @@ class FormAwareLanguageMenuViewHelper extends AbstractViewHelper
     public function initializeArguments(): void
     {
         $this->registerArgument('currentStep', 'int', 'Current form step', false, 1);
-        $this->registerArgument('class', 'string', 'CSS class for menu', false, 'language-menu');
         $this->registerArgument('teilnehmer', 'string', 'Current form data', false, []);        
     }
 
@@ -28,7 +27,6 @@ class FormAwareLanguageMenuViewHelper extends AbstractViewHelper
         $iconFactory = GeneralUtility::makeInstance(IconFactory::class);
 
         $currentStep = $this->arguments['currentStep'];
-        $class = $this->arguments['class'];
         $formData = $this->arguments['teilnehmer'];
 
         $typoScriptFrontendController = $this->getTypoScriptFrontendController();
@@ -37,7 +35,7 @@ class FormAwareLanguageMenuViewHelper extends AbstractViewHelper
 
         // Korrekter Aufruf für TYPO3 12
         $languages = $site->getLanguages();
-        $output = '<ul id="language_menu" class="' . htmlspecialchars($class) . '">';
+        $output = '';
         
         foreach ($languages as $language) {
             if (! $language->isEnabled()) {
@@ -78,8 +76,6 @@ class FormAwareLanguageMenuViewHelper extends AbstractViewHelper
             $output .= sprintf("%s</a></li>", htmlspecialchars($language->getNavigationTitle() ?: $language->getTitle()));
         }
 
-        $output .= '</ul>';
-
         return $output;
     }
 
@@ -101,40 +97,6 @@ class FormAwareLanguageMenuViewHelper extends AbstractViewHelper
         ];
 
         return $tsfe->cObj->typoLink_URL($conf);
-    }
-
-    /**
-     * Konvertiert ein Domain-Model oder Array in ein serialisierbares Array
-     */
-    protected function convertToArray($data): array
-    {
-        if (is_array($data)) {
-            return $data;
-        }
-
-        if (is_object($data)) {
-            $result = [];
-
-            // Alle Getter-Methoden aufrufen
-            $methods = get_class_methods($data);
-            foreach ($methods as $method) {
-                if (strpos($method, 'get') === 0 && $method !== 'get') {
-                    $property = lcfirst(substr($method, 3));
-                    $value = $data->$method();
-
-                    // Nur einfache Datentypen serialisieren
-                    if (is_scalar($value) || $value === null) {
-                        $result[$property] = $value;
-                    } elseif ($value instanceof \DateTime) {
-                        $result[$property] = $value->format('Y-m-d H:i:s');
-                    }
-                }
-            }
-
-            return $result;
-        }
-
-        return [];
     }
 
     protected function getTypoScriptFrontendController(): TypoScriptFrontendController

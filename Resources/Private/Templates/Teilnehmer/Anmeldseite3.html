@@ -1,13 +1,8 @@
-{namespace iq = Ud\Iqtp13db\ViewHelpers}
-
 <f:layout name="Default" />
 
 <f:section name="main">
 
-<div class="footer-language languagemenu-webapp">
-	<span id="chooselang"><img src="/fileadmin/template/images/globe-language.svg" width="24" height="24"/> Language</span>
-	<iq:formAwareLanguageMenu currentStep="{anmeldseite}" class="language-menu" teilnehmer="{teilnehmer.uid}" />
-</div>
+<f:render partial="Teilnehmer/LanguageMenu" arguments="{teilnehmer : teilnehmer, anmeldseite : anmeldseite}" />
 
 
 <h1><f:translate key="fragebogen" /> 3 / 4</h1>
