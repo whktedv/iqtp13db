@@ -9,4 +9,5 @@ services:
     exclude: '../Classes/Domain/Model/*'
 
   Ud\Iqtp13db\Controller\RequestController:
-    public: true    
+    public: true
+  

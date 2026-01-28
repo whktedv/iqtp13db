@@ -78,6 +78,7 @@ page {
 		tx_iqtp13dbjquery1 = EXT:iqtp13db/Resources/Public/CSS/jquery-ui.min.css
 		tx_iqtp13dbjquery2 = EXT:iqtp13db/Resources/Public/CSS/jquery-ui.structure.min.css
 		tx_iqtp13dbjquery3 = EXT:iqtp13db/Resources/Public/CSS/jquery-ui.theme.min.css
+		listCheckboxes = EXT:iqtp13db/Resources/Public/CSS/ListCheckboxes.css
 	}
 	
 	includeJS.tx_iqtp13dbjquery = EXT:iqtp13db/Resources/Public/JS/jquery-3.6.3.min.js
@@ -86,10 +87,10 @@ page {
 	includeJSFooter {
 		tx_iqtp13dbjqueryui = EXT:iqtp13db/Resources/Public/JS/jquery-ui.min.js
 		tx_iqtp13db = EXT:iqtp13db/Resources/Public/JS/customtp13.js
-		tx_iqtp13dbanmeldung = EXT:iqtp13db/Resources/Public/JS/script-teilnehmer.js		
+		tx_iqtp13dbanmeldung = EXT:iqtp13db/Resources/Public/JS/script-teilnehmer.js
+		listCheckboxes = EXT:iqtp13db/Resources/Public/JS/ListCheckboxes.js
 	}
 }
-
 
 plugin.tx_iqtp13db.settings {
 	

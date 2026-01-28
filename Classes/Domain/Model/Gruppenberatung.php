@@ -22,9 +22,12 @@ class Gruppenberatung extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected string $beschreibung = '';
     
     /**
-     * @var \DateTime|null
+     * datum
+     *
+     * @var string
+     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
      */
-    protected ?\DateTime $datum = null;
+    protected $datum = '';
     
     /**
      * @var string
@@ -74,12 +77,23 @@ class Gruppenberatung extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->beschreibung = $beschreibung;
     }
     
-    public function getDatum(): ?\DateTime
+    /**
+     * Returns the datum
+     *
+     * @return string $datum
+     */
+    public function getDatum()
     {
         return $this->datum;
     }
     
-    public function setDatum(?\DateTime $datum): void
+    /**
+     * Sets the datum
+     *
+     * @param string $datum
+     * @return void
+     */
+    public function setDatum(string $datum)
     {
         $this->datum = $datum;
     }

@@ -1,0 +1,224 @@
+/**
+ * Styles für List-Checkboxen und Gruppenberatung
+ */
+
+.list-container {
+    margin: 20px 0;
+}
+
+/* Steuerungsbereich */
+.list-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.checkbox-toggle {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-toggle label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin: 0;
+    font-weight: 500;
+}
+
+.checkbox-toggle-input {
+    margin-right: 8px;
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+}
+
+/* Gruppenberatungs-Controls */
+.group-consultation-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#addToGroupConsultation {
+    padding: 8px 16px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: background-color 0.2s;
+}
+
+#addToGroupConsultation:hover:not(:disabled) {
+    background: #0056b3;
+}
+
+#addToGroupConsultation:disabled {
+    background: #6c757d;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+#addToGroupConsultation .icon {
+    font-size: 16px;
+}
+
+.selected-count {
+    color: #6c757d;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Tabelle */
+.items-list {
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+.table thead th {
+    background: #f8f9fa;
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.table tbody td {
+    padding: 12px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.table tbody tr:hover {
+    background: #f8f9fa;
+}
+
+/* Checkbox-Spalte */
+.checkbox-column {
+    width: 50px;
+    text-align: center;
+}
+
+.checkbox-column input[type="checkbox"] {
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+}
+
+#selectAll {
+    cursor: pointer;
+}
+
+.item-checkbox {
+    cursor: pointer;
+}
+
+/* Pagination */
+.pagination-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 5px;
+}
+
+.page-item {
+    display: inline-block;
+}
+
+.page-link {
+    display: block;
+    padding: 8px 12px;
+    color: #007bff;
+    text-decoration: none;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.page-link:hover {
+    background: #e9ecef;
+    border-color: #007bff;
+}
+
+.page-item.active .page-link {
+    background: #007bff;
+    color: white;
+    border-color: #007bff;
+    cursor: default;
+}
+
+/* Benachrichtigungen */
+.notification {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.alert-success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-danger {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.alert-warning {
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeaa7;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .list-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .group-consultation-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    #addToGroupConsultation {
+        justify-content: center;
+    }
+}

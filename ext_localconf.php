@@ -69,6 +69,10 @@ call_user_func(
         // Register eID calls
         $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['doksave'] = \Ud\Iqtp13db\Controller\RequestController::class . '::doksaveEidAction';
         $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['tneditlinksave'] = \Ud\Iqtp13db\Controller\RequestController::class . '::tneditlinksaveEidAction';
+        // diese drei für die Gruppenberatungsfunktion
+        $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['iqtp13db_update'] = \Ud\Iqtp13db\Controller\RequestController::class . '::updateSelectionAction';
+        $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['iqtp13db_toggle'] = \Ud\Iqtp13db\Controller\RequestController::class . '::toggleCheckboxesAction';
+        $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['iqtp13db_submit'] = \Ud\Iqtp13db\Controller\RequestController::class . '::addToGroupConsultationAction';
                         
         /****************
          * Scheduler TASK to delete old/deleted entries

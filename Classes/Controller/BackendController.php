@@ -5,16 +5,17 @@ use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Extbase\Annotation\Validate;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
+use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
+
+use Psr\Http\Message\ResponseInterface;
 
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3\CMS\Core\Pagination\ArrayPaginator;
 use TYPO3\CMS\Core\Pagination\SimplePagination;
 
-use Psr\Http\Message\ResponseInterface;
 use Ud\Iqtp13db\Domain\Repository\UserGroupRepository;
 use Ud\Iqtp13db\Domain\Repository\TeilnehmerRepository;
 use Ud\Iqtp13db\Domain\Repository\FolgekontaktRepository;
@@ -27,6 +28,9 @@ use Ud\Iqtp13db\Domain\Repository\BerufeRepository;
 use Ud\Iqtp13db\Domain\Repository\StaatenRepository;
 use Ud\Iqtp13db\Domain\Repository\OrtRepository;
 use Ud\Iqtp13db\Domain\Repository\BrancheRepository;
+use Ud\Iqtp13db\Domain\Repository\GruppenberatungRepository;
+
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 require_once(Environment::getPublicPath() . '/' . 'typo3conf/ext/iqtp13db/Resources/Private/Libraries/xlsxwriter.class.php');
 
@@ -61,6 +65,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     protected $staatenRepository;
     protected $ortRepository;
     protected $brancheRepository;
+    protected $gruppenberatungRepository;
+    
     
     public function __construct(
         UserGroupRepository $userGroupRepository, 
@@ -74,7 +80,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         BerufeRepository $berufeRepository, 
         StaatenRepository $staatenRepository, 
         OrtRepository $ortRepository, 
-        BrancheRepository $brancheRepository
+        BrancheRepository $brancheRepository,
+        GruppenberatungRepository $gruppenberatungRepository
     )
     {
         $this->userGroupRepository = $userGroupRepository;
@@ -89,6 +96,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $this->staatenRepository = $staatenRepository;
         $this->ortRepository = $ortRepository;
         $this->brancheRepository = $brancheRepository;
+        $this->gruppenberatungRepository = $gruppenberatungRepository;
     }
     
     /**
@@ -319,8 +327,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         ksort($beratungfertig);
         ksort($days4beratung);
         ksort($days4wartezeit);
-        
-        
+                
         $aktuelleanmeldungen = $this->teilnehmerRepository->countAllOrder4Status(0, $thisniqbid, $thisbundesland)[0]['anzahl'] + $this->teilnehmerRepository->countAllOrder4Status(1, $thisniqbid, $thisbundesland)[0]['anzahl'];
         $aktuellerstberatungen = $this->teilnehmerRepository->countAllOrder4Status(2, $thisniqbid, $thisbundesland)[0]['anzahl'];
         $aktuellberatungenfertig = $this->teilnehmerRepository->countAllOrder4Status(3, $thisniqbid, $thisbundesland)[0]['anzahl'];
@@ -542,6 +549,13 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                         
         $mail4externstandardmailtext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtextedit', 'Iqtp13db');
         
+        $gruppenberatungen = $this->gruppenberatungRepository->findAvailable($this->niqbid);
+        foreach($gruppenberatungen as $gb) {
+            $gruppenberatungenarr[$gb->getUid()] = $gb->getTitel();
+        }
+        //DebuggerUtility::var_dump($gruppenberatungenarr);
+        
+        
         $this->view->assignMultiple(
             [
                 'anzgesamt' => count($teilnehmer),
@@ -562,12 +576,12 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'abschluesse' => $abschluesse,
                 'betafeaturesaktiviert' => $this->usergroup->getBetafeatures(),
                 'mail4externstandardmailtext' => $mail4externstandardmailtext,
-                'anmeldeditseite' => $this->settings['anmeldeditseite']
-                
+                'anmeldeditseite' => $this->settings['anmeldeditseite'],
+                'gruppenberatungarr' => $gruppenberatungenarr
             ]);
         return $this->htmlResponse();
     }
-    
+        
     /**
      * action listerstberatung
      *

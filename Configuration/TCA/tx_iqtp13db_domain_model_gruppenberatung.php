@@ -91,9 +91,8 @@ return [
             'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_gruppenberatung.datum',
             'config' => [
                 'type' => 'input',
-                'renderType' => 'inputDateTime',
-                'eval' => 'datetime,int',
-                'default' => 0,
+                'size' => 30,
+                'eval' => 'trim'
             ],
         ],
         'ort' => [

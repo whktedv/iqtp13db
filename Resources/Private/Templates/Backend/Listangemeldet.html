@@ -17,6 +17,33 @@
 
 <h1>{f:if(condition:'{filteron} == 1', then: 'Suchergebnis: ', else: '' )} {anzgesamt} angemeldete Ratsuchende</h1>
 <f:link.action id="linkloadoverlay-new" class="linkbuttons buttonnew" action="new" arguments="{calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}"></f:link.action>
+
+<!-- Steuerungsbereich über der Liste -->
+        <div class="list-controls">
+            <div class="checkbox-toggle">
+                <label>
+                    <input type="checkbox" 
+                           id="toggleCheckboxes" 
+                           class="checkbox-toggle-input">
+                    <span>Auswahlmodus aktivieren</span>
+                </label>
+            </div>
+            
+            <!-- Button für Gruppenberatung (initial versteckt) -->
+            <div class="group-consultation-controls" id="groupConsultationControls" style="display: none;">
+            	<label>Gruppenberatung: </label>
+            	<f:form.select id="gruppenberatungselect" name="gruppenberatung" options="{gruppenberatungarr}" optionValueField="value" optionLabelField="value" prependOptionLabel="-" prependOptionValue="-1" />
+                <button type="button" 
+                        class="btn btn-primary" 
+                        id="addToGroupConsultation">
+                    <span class="icon">✓</span>
+                    Auswahl zu Gruppenberatung
+                </button>
+                <span class="selected-count" id="selectedCount">0 ausgewählt</span>
+            </div>
+        </div>
+<!--  -->
+       
 <div class="pretablediv">
 	
 	<div class="toppaginator">
@@ -25,6 +52,10 @@
 	
 	<table  class="tx_iqtp13db listangemeldet" >
 		<tr>
+		<th class="checkbox-column" style="display: none;">
+                            <input type="checkbox" id="selectAll" title="Alle auswählen">
+                        </th>
+                        
 			<th><f:link.action action="listangemeldet" arguments="{orderby : 'uid', changeorder : 1}">UID{f:if(condition:'{orderby} == "uid"',then: ' {orderchar}')}</f:link.action></th>
 			<th><f:link.action action="listangemeldet" arguments="{orderby : 'nachname', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" />{f:if(condition:'{orderby} == "nachname"',then: ' {orderchar}')}</f:link.action></th>
 			<th><f:link.action action="listangemeldet" arguments="{orderby : 'vorname', changeorder : 1}"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" />{f:if(condition:'{orderby} == "vorname"',then: ' {orderchar}')}</f:link.action></th>
@@ -55,7 +86,15 @@
 				</f:else>
 				</f:if>
 			</f:else>			
-			</f:if>						
+			</f:if>		
+				<td class="checkbox-column" style="display: none;">					
+                    <input type="checkbox" 
+                          class="item-checkbox" 
+                          name="selectedItems[]" 
+                          value="{teilnehmer.uid}"
+                          data-item-id="{teilnehmer.uid}">
+
+                </td>
 				<td><f:link.action action="show" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">{teilnehmer.uid}</f:link.action></td>
 				<td><f:link.action action="show" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">{teilnehmer.nachname}</f:link.action></td>
 				<td><f:link.action action="show" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">{teilnehmer.vorname}</f:link.action></td>
@@ -148,6 +187,16 @@
 </div>
 
 <f:asset.script identifier="tndokupload" src="EXT:iqtp13db/Resources/Public/JS/externmailmodal.js" />
+<f:asset.script identifier="listCheckboxes" src="EXT:iqtp13db/Resources/Public/JS/ListCheckboxes.js" />
+    
+<!-- AJAX-Endpoints als data-Attribute -->
+ <div id="ajaxConfig" 
+       data-toggle-url="?eID=iqtp13db_toggle"
+       data-update-url="?eID=iqtp13db_update"
+       data-submit-url="?eID=iqtp13db_submit"
+       data-selected-ids="{selectedIds -> f:format.json()}"
+       style="display: none;">
+</div>
 
 </f:section>
 

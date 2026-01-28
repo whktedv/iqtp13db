@@ -328,7 +328,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $teilnehmer = unserialize($GLOBALS['TSFE']->fe_user->getKey('ses', 'teilnehmer'));
         }
         
-        if(!isset($valArray['plz']) && $teilnehmer == NULL && !isset($valArray['direkt'])){
+        $langmenuchange = $valArray['langmenuchange'] ?? '0';
+        
+        if(!isset($valArray['plz']) && $teilnehmer == NULL && !isset($valArray['direkt']) && $langmenuchange == '0'){
             // Link Anmeldeseite1 ohne vorherigen Aufruf der Anmeldseite0 geöffnet -> das ist nicht erlaubt!
             return $this->redirect('startseite', 'Teilnehmer', 'Iqtp13db', null);
         }

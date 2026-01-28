@@ -328,7 +328,7 @@ CREATE TABLE tx_iqtp13db_domain_model_gruppenberatung (
     
     titel varchar(255) DEFAULT '' NOT NULL,
     beschreibung text,
-    datum int(11) unsigned DEFAULT '0' NOT NULL,
+    datum varchar(255) DEFAULT '' NOT NULL,
     ort varchar(255) DEFAULT '' NOT NULL,
     max_teilnehmer int(11) DEFAULT '0' NOT NULL,
     
