@@ -1,5 +1,6 @@
-<div class="fframe">
-		
+{namespace iqtp13db=Ud\Iqtp13db\ViewHelpers}
+<div id="AnkerStandard">
+	<div class="fframe">		
 		<div class="tp13_formdivwebapp">
 			<label for="titel">
 				<f:translate key="tx_iqtp13db_domain_model_gruppenberatung.titel" />
@@ -13,15 +14,96 @@
 				<span class="propdat"><f:format.html>{gruppenberatung.beschreibung}</f:format.html></span>
 		</div>		
 		<div class="tp13_formdivwebapp">
-			<label for="datum">
-				<f:translate key="tx_iqtp13db_domain_model_gruppenberatung.datum" />
-			</label>
-				<span class="propdat">{gruppenberatung.datum -> f:format.date(format: 'd.m.Y')}</span>
-		</div>
-		<div class="tp13_formdivwebapp">
 			<label for="ort">
 				<f:translate key="tx_iqtp13db_domain_model_gruppenberatung.ort" />
 			</label>
 				<span class="propdat">{gruppenberatung.ort}</span>
 		</div>
+	</div>
+</div>
+<div id="AnkerBeratung">
+	<div class="fframeadminonly"><h2>Beratungsdaten beim Ratsuchenden</h2>
+	
+		<div class="tp13_formdivwebapp">
+			<label for="beratungdatum">
+				<f:translate key="tx_iqtp13db_domain_model_gruppenberatung.beratungdatum" />
+			</label>				
+				<span class="propdat"><f:if condition="{gruppenberatung.beratungdatum} != '0000-00-00' && {gruppenberatung.beratungdatum} != ''">{gruppenberatung.beratungdatum -> f:format.date(format: 'd.m.Y')}</f:if></span>
+		</div>
+
+		<!-- Beratungsarten -->
+        <div class="tp13_formdivwebapp">
+            <label><f:translate key="tx_iqtp13db_domain_model_gruppenberatung.beratungsarten" /></label>
+            <ul>
+                <f:for each="{gruppenberatung.beratungsartenArray}" as="artKey">
+                    <li><span class="propdat">{settings.beratungsart.{artKey}}</span></li>
+                </f:for>
+            </ul>
+        </div>
+        
+        <div class="tp13_formdivwebapp">
+			<label for="berater">
+				<f:translate key="tx_iqtp13db_domain_model_gruppenberatung.berater" />
+			</label>
+				<span class="propdat">{berater.username}</span>
+		</div>
+    
+        <div class="tp13_formdivwebapp">
+			<label for="beratungsdauer">
+				<f:translate key="tx_iqtp13db_domain_model_gruppenberatung.beratungsdauer" />
+			</label>
+				<span class="propdat">{gruppenberatung.beratungsdauer}</span>
+		</div>
+		
+		<div class="tp13_formdivwebapp">
+			<label for="beratungzu">
+				<f:translate key="tx_iqtp13db_domain_model_gruppenberatung.beratungzu" />
+			</label>
+			<span class="propdat">
+			<f:if condition="{gruppenberatung.beratungzu} != ''"><f:then>
+				{f:if(condition: '{gruppenberatung.beratungzu} == 1', then: 'Ja', else: 'Nein')}
+				</f:then><f:else>-</f:else></f:if>
+			</span>
+		</div>
+		
+    	<!-- Anerkennungsberatung -->
+    	<div class="tp13_formdivwebapp">
+            <label><f:translate key="tx_iqtp13db_domain_model_gruppenberatung.anerkennungsberatung" /></label>
+            <ul>
+                <f:for each="{gruppenberatung.anerkennungsberatungArray}" as="artKey">
+                    <li><span class="propdat">{settings.anerkennungsberatung.{artKey}}</span></li>
+                </f:for>
+            </ul>
+        </div>
+    	<div class="tp13_formdivwebapp">
+			<label for="anerkennungsberatungfreitext">
+				<f:translate key="tx_iqtp13db_domain_model_gruppenberatung.anerkennungsberatungfreitext" />
+				<span class="important-icon"></span>
+			</label>
+			<span class="propdat">{gruppenberatung.anerkennungsberatungfreitext}</span>
+		</div>
+		
+    	<!-- Qualifizierungsberatung -->
+    	<div class="tp13_formdivwebapp">
+            <label><f:translate key="tx_iqtp13db_domain_model_gruppenberatung.qualifizierungsberatung" /></label>
+            <ul>
+                <f:for each="{gruppenberatung.qualifizierungsberatungArray}" as="artKey">
+                    <li><span class="propdat">{settings.qualifizierungsberatung.{artKey}}</span></li>
+                </f:for>
+            </ul>
+        </div>
+		<div class="tp13_formdivwebapp">
+			<label for="qualifizierungsberatungfreitext">
+				<f:translate key="tx_iqtp13db_domain_model_gruppenberatung.qualifizierungsberatungfreitext" />
+				<span class="important-icon"></span>
+			</label>
+			<span class="propdat">{gruppenberatung.qualifizierungsberatungfreitext}</span>
+		</div>
+		<div class="tp13_formdivwebapp">
+			<label for="erstberatungabgeschlossen">
+				<f:translate key="tx_iqtp13db_domain_model_gruppenberatung.erstberatungabgeschlossen" />
+			</label>
+			<span class="propdat"><f:if condition="{gruppenberatung.erstberatungabgeschlossen} != '0000-00-00' && {gruppenberatung.erstberatungabgeschlossen} != ''">{gruppenberatung.erstberatungabgeschlossen -> f:format.date(format: 'd.m.Y')}</f:if></span>			
+		</div>
+	</div>
 </div>

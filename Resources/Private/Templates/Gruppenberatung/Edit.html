@@ -14,6 +14,7 @@
 
 	<div class="buttonmenu">
 		<div class="toplinkbuttons">
+			<f:form.button type="submit" onclick="return cancelsubmit();" id="savebutton2">{f:translate(key:'speichern')}</f:form.button>
 			<f:link.action id="linkloadoverlay-back" class="linkbuttons" action="{thisaction}" controller="{callercontroller}" arguments="{calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">Zurück</f:link.action>
 		</div>
 	</div>
@@ -28,4 +29,6 @@
 	<f:form.button type="submit" class="linkbuttons" onclick="return cancelsubmit();" id="savebutton2">{f:translate(key:'speichern')}</f:form.button>
 	<f:link.action id="linkloadoverlay-edit" class="linkbuttons" action="{thisaction}" controller="{callercontroller}" arguments="{calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">Zurück</f:link.action>
 </f:form>
+
+	
 </f:section>

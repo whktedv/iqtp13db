@@ -5,9 +5,6 @@ use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Domain\Model\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 /**
  * Gruppenberatung
  */
@@ -24,14 +21,6 @@ class Gruppenberatung extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected string $beschreibung = '';
     
     /**
-     * datum
-     *
-     * @var string
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
-     */
-    protected $datum = '';
-    
-    /**
      * @var string
      */
     protected string $ort = '';
@@ -42,11 +31,9 @@ class Gruppenberatung extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected int $maxTeilnehmer = 0;
     
     /**
-     * niqbid
-     *
      * @var string
      */
-    protected $niqbid = '';
+    protected string $niqbid = '';
     
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Ud\Iqtp13db\Domain\Model\Teilnehmer>
@@ -54,27 +41,59 @@ class Gruppenberatung extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected ObjectStorage $teilnehmer;
     
-    protected $beratungdatum = '';
+    /*
+     * @var string
+     */
+    protected string $beratungdatum = '';
+    
+    /**
+     * @var string
+     */
+    protected string $beratungsarten = '';
+    
+    /*
+     * @var int
+     */
     protected int $berater = 0;
-    protected $beratungsart = 0;
-    protected $beratungsdauer = '';
-    protected $beratungzu = '';
-    protected $anerkennungsberatung = '';
-    protected $anerkennungsberatungfreitext = '';
-    protected $qualifizierungsberatung = '';
-    protected $qualifizierungsberatungfreitext = '';
-    protected $erstberatungabgeschlossen = '';
+    
+    /*
+     * @var string
+     */
+    protected string $beratungsdauer = '';
+    
+    /*
+     * @var string
+     */
+    protected string $beratungzu = '';
+    
+    /**
+     * @var string
+     */
+    protected string $anerkennungsberatung = '';
+    
+    /**
+     * @var string
+     */
+    protected string $qualifizierungsberatung = '';
+    
+    /*
+     * @var string
+     */
+    protected string $anerkennungsberatungfreitext = '';
+    
+    /*
+     * @var string
+     */
+    protected string $qualifizierungsberatungfreitext = '';
+    
+    /*
+     * @var string
+     */
+    protected string $erstberatungabgeschlossen = '';
     
     
-    //public function __construct(array $beratungsart = array(), array $anerkennungsberatung = array(), array $qualifizierungsberatung = array())
-    public function __construct(array $beratungsart = array())
+    public function __construct()
     {
-        
-        $this->setBeratungsart($beratungsart);
-        /*
-        $this->setAnerkennungsberatung($anerkennungsberatung);
-        $this->setQualifizierungsberatung($qualifizierungsberatung);
-        */
         $this->teilnehmer = new ObjectStorage();        
     }
     
@@ -96,27 +115,6 @@ class Gruppenberatung extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setBeschreibung(string $beschreibung): void
     {
         $this->beschreibung = $beschreibung;
-    }
-    
-    /**
-     * Returns the datum
-     *
-     * @return string $datum
-     */
-    public function getDatum()
-    {
-        return $this->datum;
-    }
-    
-    /**
-     * Sets the datum
-     *
-     * @param string $datum
-     * @return void
-     */
-    public function setDatum(string $datum)
-    {
-        $this->datum = $datum;
     }
     
     public function getOrt(): string
@@ -206,28 +204,46 @@ class Gruppenberatung extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->beratungdatum = $beratungdatum;
     }
     
+    /**
+     * Returns the beratungsarten
+     *
+     * @return string
+     */
+    public function getBeratungsarten()
+    {
+        return $this->beratungsarten;
+    }
+    
+    /**
+     * Sets the beratungsarten
+     *
+     * @param string $beratungsarten
+     * @return void
+     */
+    public function setBeratungsarten($beratungsarten)
+    {
+        $this->beratungsarten = $beratungsarten;
+    }
+    
+    /**
+     * Returns beratungsarten as array
+     *
+     * @return array
+     */
+    public function getBeratungsartenArray()
+    {
+        return \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->beratungsarten, true);
+    }
+    
     public function getBerater(): int
     {
         return $this->berater;
     }
     
-    
     public function setBerater(int $berater): void
     {
         $this->berater = $berater;
     }
-    
-    
-    public function getBeratungsart(): array
-    {
-        return explode(',', $this->beratungsart);
-    }
-    public function setBeratungsart(array $beratungsart): void
-    {
-        $this->beratungsart = implode(',', $beratungsart);
-    }
-    
-    
     
     public function getBeratungsdauer(): string
     {
@@ -247,21 +263,67 @@ class Gruppenberatung extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->beratungzu = $beratungzu;
     }
     
+    /**
+     * Returns the anerkennungsberatung
+     *
+     * @return string
+     */
+    public function getAnerkennungsberatung()
+    {
+        return $this->anerkennungsberatung;
+    }
     
-    public function getAnerkennungsberatung(): array
+    /**
+     * Sets the anerkennungsberatung
+     *
+     * @param string $anerkennungsberatung
+     * @return void
+     */
+    public function setAnerkennungsberatung($anerkennungsberatung)
     {
-        //return $this->anerkennungsberatung;
-        return explode(',', $this->anerkennungsberatung);
+        $this->anerkennungsberatung = $anerkennungsberatung;
     }
-    public function setAnerkennungsberatung(array $anerkennungsberatung): void
+    
+    /**
+     * Returns anerkennungsberatung as array
+     *
+     * @return array
+     */
+    public function getAnerkennungsberatungArray()
     {
-        $this->anerkennungsberatung = implode(',', $anerkennungsberatung);
+        return \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->anerkennungsberatung, true);
     }
-    //public function setAnerkennungsberatung(string $anerkennungsberatung): void
-    //{
-    //    $this->anerkennungsberatung = $anerkennungsberatung;
-    //}
-
+    
+    /**
+     * Returns the qualifizierungsberatung
+     *
+     * @return string
+     */
+    public function getQualifizierungsberatung()
+    {
+        return $this->qualifizierungsberatung;
+    }
+    
+    /**
+     * Sets the qualifizierungsberatung
+     *
+     * @param string $qualifizierungsberatung
+     * @return void
+     */
+    public function setQualifizierungsberatung($qualifizierungsberatung)
+    {
+        $this->qualifizierungsberatung = $qualifizierungsberatung;
+    }
+    
+    /**
+     * Returns qualifizierungsberatung as array
+     *
+     * @return array
+     */
+    public function getQualifizierungsberatungArray()
+    {
+        return \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->qualifizierungsberatung, true);
+    }
     
     public function getAnerkennungsberatungfreitext(): string
     {
@@ -271,22 +333,6 @@ class Gruppenberatung extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->anerkennungsberatungfreitext = $text;
     }
-    
-    
-    public function getQualifizierungsberatung(): array
-    {
-        //return $this->qualifizierungsberatung;
-        return explode(',', $this->qualifizierungsberatung);
-    }
-    //public function setQualifizierungsberatung(string $qualifizierungsberatung): void
-    //{
-     //   $this->qualifizierungsberatung = $qualifizierungsberatung;
-    //}
-    public function setQualifizierungsberatung(array $qualifizierungsberatung): void
-    {
-        $this->qualifizierungsberatung = implode(',', $qualifizierungsberatung);
-    }
-
     
     public function getQualifizierungsberatungfreitext(): string
     {

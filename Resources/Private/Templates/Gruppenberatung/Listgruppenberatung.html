@@ -22,14 +22,16 @@
 			<th>Titel</th>
 			<th>Datum</th>
 			<th>Ort</th>
+			<th>Berater*in</th>
 			<th></th>
 			<th></th>
 		</tr>
 		<f:for each="{gruppenberatungen}" as="gruppenberatung" iteration="it">
 			<tr>
 				<td><f:link.action action="show" arguments="{gruppenberatung : gruppenberatung, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" title="Show">{gruppenberatung.titel}</f:link.action></td>
-				<td><f:format.date format="d.m.Y">{gruppenberatung.datum}</f:format.date></td>
+				<td><f:format.date format="d.m.Y">{gruppenberatung.beratungdatum}</f:format.date></td>
 				<td>{gruppenberatung.ort}</td>
+				<td><f:for each="{alleberater}" as="berater">{f:if(condition: '{berater.uid} == {gruppenberatung.berater}', then: '{berater.username}')}</f:for></td>
 				<td><f:link.action action="edit" arguments="{gruppenberatung : gruppenberatung, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" title="Bearbeiten"><img src="/fileadmin/template/images/iq-webapp_bearbeiten.svg" alt="Bearbeiten" width="30" height="30"/></f:link.action></td>
 				<td><f:link.action action="delete" arguments="{gruppenberatung : gruppenberatung, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" onclick="return confirm('Wirklich löschen?');" title="Löschen"><img src="/fileadmin/template/images/iq-webapp_loeschen.svg" width="30" height="30" alt="Löschen" /></f:link.action></td>			
 			</tr>		

@@ -215,6 +215,8 @@ class RequestController
             
             $gruppenberatung->addTeilnehmer($teilnehmer);
             $countadded++;
+            
+            // AB HIER DIE BERATUNGSDATEN DES TEILNEHMERS auf die der Gruppenberatung ändern und den TN updaten
         }
         
         $this->gruppenberatungRepository->update($gruppenberatung);

@@ -20,10 +20,7 @@ return [
         'showRecordFieldList' => 'hidden, titel, beschreibung, datum, ort, max_teilnehmer, teilnehmer',
     ],
     'types' => [
-        '1' => ['showitem' => 'hidden, niqbid, titel, beschreibung, datum, ort, max_teilnehmer, teilnehmer, beratungdatum, berater, beratungsart, beratungsdauer, beratungzu,
-                                                anerkennungsberatung, anerkennungsberatungfreitext,
-                                                qualifizierungsberatung, qualifizierungsberatungfreitext,
-                                                erstberatungabgeschlossen
+        '1' => ['showitem' => 'hidden, niqbid, titel, beschreibung, datum, ort, max_teilnehmer, teilnehmer, beratungdatum, beratungsarten, berater, beratungsdauer, beratungzu, anerkennungsberatung, anerkennungsberatungfreitext, qualifizierungsberatung, qualifizierungsberatungfreitext, erstberatungabgeschlossen
                                  --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
     'columns' => [
@@ -153,8 +150,6 @@ return [
                 ],
             ],
         ],
-        
-        
         'beratungdatum' => [
             'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_gruppenberatung.beratungdatum',
             'config' => [
@@ -162,6 +157,15 @@ return [
                 'size' => 30,
                 'eval' => 'trim', // (kein eval:date, da DB varchar)
                 'placeholder' => 'z. B. 2026-02-15',
+            ],
+        ],
+        'beratungsarten' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_gruppenberatung.beratungsarten',
+            'config' => [
+                'type' => 'check',
+                'itemsProcFunc' => \Ud\Iqtp13db\UserFunc\TcaItems::class . '->getBeratungsarten',
+                'cols' => 2,
             ],
         ],
         'berater' => [
@@ -175,15 +179,6 @@ return [
                 ],
                 'minitems' => 0,
                 'maxitems' => 1,
-            ],
-        ],
-        'beratungsart' => [
-            'exclude' => true,
-            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_gruppenberatung.beratungsart',
-            'config' => [
-                'type' => 'input',
-                'size' => 30,
-                'eval' => 'trim',
             ],
         ],
         'beratungsdauer' => [
@@ -206,9 +201,9 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_gruppenberatung.anerkennungsberatung',
             'config' => [
-                'type' => 'input',
-                'size' => 30,
-                'eval' => 'trim',
+                'type' => 'check',
+                'itemsProcFunc' => \Ud\Iqtp13db\UserFunc\TcaItems::class . '->getAnerkennungsberatung',
+                'cols' => 2,
             ],
         ],
         'anerkennungsberatungfreitext' => [
@@ -224,11 +219,11 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_gruppenberatung.qualifizierungsberatung',
             'config' => [
-                'type' => 'input',
-                'size' => 30,
-                'eval' => 'trim',
+                'type' => 'check',
+                'itemsProcFunc' => \Ud\Iqtp13db\UserFunc\TcaItems::class . '->getQualifizierungsberatung',
+                'cols' => 2,
             ],
-        ],
+        ],        
         'qualifizierungsberatungfreitext' => [
             'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_gruppenberatung.qualifizierungsberatungfreitext',
             'config' => [

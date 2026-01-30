@@ -15,6 +15,15 @@
 	<f:form.button type="submit" class="linkbuttons" id="savebutton1">{f:translate(key:'speichern')}</f:form.button>
 </f:form>
 
+<f:if condition="{betafeaturesaktiviert} == '1'"><f:then>
+	<h1>Gruppenberatungen</h1>
+	<f:if condition="{gpaktiv} == '0'"><f:then>
+		<f:link.action class="linkbuttons" action="enableGruppenberatungen" controller="Berater" arguments="{berater : berater, aktivieren : 1, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" title="Gruppenberatungen aktivieren">Gruppenberatungen aktivieren</f:link.action>
+	</f:then><f:else>
+		<f:link.action class="linkbuttons" action="enableGruppenberatungen" controller="Berater" arguments="{berater : berater, aktivieren : 0, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" title="Gruppenberatungen deaktivieren">Gruppenberatungen deaktivieren</f:link.action>
+	</f:else></f:if>
+</f:then></f:if>
+
 <f:if condition="isudtotpauthloaded">
 	<h1>Zwei-Faktor-Authentifizierung</h1>
 	<f:link.page pageUid="{pageid2facode}" class="linkbuttons">2FA per Code aktivieren</f:link.page>

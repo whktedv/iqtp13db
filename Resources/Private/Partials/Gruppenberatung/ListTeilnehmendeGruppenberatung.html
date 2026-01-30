@@ -1,0 +1,39 @@
+{namespace iqtp13db=Ud\Iqtp13db\ViewHelpers}
+<div id="AnkerTeilnehmende">
+	<div class="fframeadminonly"><h2>Teilnehmende</h2>
+	
+		<table class="tx_iqtp13db listgruppenberatungteilnehmende" >
+			<tr>
+				<th>UID</th>
+				<th><f:translate key="tx_iqtp13db_domain_model_teilnehmer.nachname" /></th>
+				<th><f:translate key="tx_iqtp13db_domain_model_teilnehmer.vorname" /></th>
+				<th>Anmeldedatum</th>
+				<th><f:translate key="tx_iqtp13db_domain_model_teilnehmer.plz" />/<f:translate key="tx_iqtp13db_domain_model_teilnehmer.ort" /></th>
+				<th><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geschlecht" /></th>
+				<th><f:translate key="tx_iqtp13db_domain_model_teilnehmer.geburtsland" />/-ort</th>
+				<th id="resizablecol2"><f:translate key="tx_iqtp13db_domain_model_teilnehmer.kooperationgruppe" /></th>
+				<th> </th>	
+			</tr>
+	
+			<f:for each="{teilnehmeros}" as="teilnehmer" iteration="it">
+					<tr>
+					<td><f:link.action action="show" controller="Backend" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">{teilnehmer.uid}</f:link.action></td>
+					<td><f:link.action action="show" controller="Backend" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">{teilnehmer.nachname}</f:link.action></td>
+					<td><f:link.action action="show" controller="Backend" arguments="{teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}">{teilnehmer.vorname}</f:link.action></td>
+					<td class="tdcenter">{f:if(condition: '{teilnehmer.verificationDate} == 0', then: 'unbestätigt ({f:format.date(date: teilnehmer.crdate, format:"d.m.Y")})', else: '{f:format.date(date: teilnehmer.verificationDate, format:"d.m.Y")}')}</td>
+					<td>{teilnehmer.plz} {teilnehmer.ort}</td>
+					<td class="tdcenter">{f:if(condition: '{teilnehmer.geschlecht} == 2', then: '<span style="color: #84a0ff;">M</span>')}
+					{f:if(condition: '{teilnehmer.geschlecht} == 1', then: '<span style="color: #fe7a84;">W</span>')}
+					{f:if(condition: '{teilnehmer.geschlecht} == 3', then: '<span>D</span>')}</td>
+					<td>{iqtp13db:isint(field:'{teilnehmer.geburtsland}',then:'{staatenarr.{teilnehmer.geburtsland}}',else:'{teilnehmer.geburtsland}')}</td>
+					<td>{teilnehmer.kooperationgruppe}</td>
+					<td class="actionbuttons">
+						<f:link.action action="removeFromGroupConsultation" arguments="{gruppenberatung: gruppenberatung, teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" onclick="return confirm('Wirklich aus dieser Gruppenberatung entfernen?');" title="Entfernen"><img src="/fileadmin/template/images/iq-webapp_loeschen.svg" width="30" height="30" alt="Entfernen" /></f:link.action>										
+					</td>
+				</tr>
+				
+			</f:for>
+		</table>
+	
+	</div>
+</div>

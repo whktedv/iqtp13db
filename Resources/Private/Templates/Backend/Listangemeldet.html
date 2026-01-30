@@ -15,6 +15,7 @@
 
 <f:flashMessages />
 
+<f:if condition="{betafeaturesaktiviert} == '1'"><f:then>
 <div class="list-controls">        
      <div class="checkbox-toggle">
          <label>
@@ -37,6 +38,7 @@
          <span class="selected-count" id="selectedCount">0 ausgewählt</span>
      </div>
 </div>
+</f:then></f:if>
 
 <h1>{f:if(condition:'{filteron} == 1', then: 'Suchergebnis: ', else: '' )} {anzgesamt} angemeldete Ratsuchende</h1>
 

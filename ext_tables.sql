@@ -328,7 +328,6 @@ CREATE TABLE tx_iqtp13db_domain_model_gruppenberatung (
     
     titel varchar(255) DEFAULT '' NOT NULL,
     beschreibung text,
-    datum varchar(255) DEFAULT '' NOT NULL,
     ort varchar(255) DEFAULT '' NOT NULL,
     max_teilnehmer int(11) DEFAULT '0' NOT NULL,
     
@@ -336,13 +335,13 @@ CREATE TABLE tx_iqtp13db_domain_model_gruppenberatung (
     teilnehmer int(11) unsigned DEFAULT '0' NOT NULL,
     
     beratungdatum varchar(255) DEFAULT '' NOT NULL,
+    beratungsarten varchar(255) DEFAULT '' NOT NULL,
 	berater int(11) unsigned DEFAULT '0',	
-	beratungsart varchar(255) DEFAULT '' NOT NULL,
 	beratungsdauer varchar(255) DEFAULT '' NOT NULL,	
 	beratungzu varchar(255) DEFAULT '' NOT NULL,
 	anerkennungsberatung varchar(255) DEFAULT '' NOT NULL,
+    qualifizierungsberatung varchar(255) DEFAULT '' NOT NULL,
 	anerkennungsberatungfreitext text NOT NULL,
-	qualifizierungsberatung varchar(255) DEFAULT '' NOT NULL,
 	qualifizierungsberatungfreitext text NOT NULL,	
 	erstberatungabgeschlossen varchar(255) DEFAULT '' NOT NULL,
 	

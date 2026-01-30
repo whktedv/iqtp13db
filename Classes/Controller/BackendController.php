@@ -155,10 +155,16 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             
             $thisusrgrpid = array_pop($ugroupsarray);
             $this->usergroup = $this->userGroupRepository->findByIdentifier($thisusrgrpid);
-            
+            if($this->usergroup->getTitle() == "Gruppenberatungen") {
+                $thisusrgrpid = array_pop($ugroupsarray);
+                $this->usergroup = $this->userGroupRepository->findByIdentifier($thisusrgrpid);
+            }
+                
             if($this->usergroup != NULL) {
                 $userniqidbstelle = $this->usergroup->getNiqbid() ?? $standardniqidberatungsstelle;
             }
+            
+            
             //$this->niqbid = $userniqidbstelle == '' ? $standardniqidberatungsstelle : $userniqidbstelle;
             $sesniqbid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'currentusergroup') ?? '';
             $this->niqbid = $sesniqbid != '' ? $sesniqbid : $userniqidbstelle;

@@ -215,6 +215,9 @@
 		<trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.ort"><source>Place</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.max_teilnehmer"><source>Max. participants</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.teilnehmer"><source>Participants</source></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.beratungsarten"><source>Beratungsarten</source></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.anerkennungsberatung"><source>Anerkennungsberatung</source></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.qualifizierungsberatung"><source>Qualifizierungsberatung</source></trans-unit>
 		
 	</body>
   </file>

@@ -284,38 +284,45 @@
     // Zu Gruppenberatung hinzufügen
     if (addToGroupConsultationBtn) {
         addToGroupConsultationBtn.addEventListener('click', async function() {
-            const selectedIds = getSelectedIds();
-            
-            if (selectedIds.length === 0) {
-                showNotification('Bitte wählen Sie mindestens einen Datensatz aus.', 'warning');
-                return;
-            }
-
-            // Button während der Verarbeitung deaktivieren
-            this.disabled = true;
-            this.textContent = 'Verarbeite...';
-
-            try {
-                const result = await sendAjaxRequest(submitUrl, {
-                    selectedIds: selectedIds,
-					selectedGroupConsult: selectedGroupConsult
-                });
-
-                if (result.success) {
-                    showNotification(result.message, 'success');
-                    
-                    // Auswahl zurücksetzen
-                    globalSelectedIds.clear();
-                    syncCheckboxesWithGlobalSelection();
-                } else {
-                    showNotification(result.message || 'Ein Fehler ist aufgetreten.', 'danger');
-                }
-            } catch (error) {
-                showNotification('Fehler beim Verarbeiten der Anfrage.', 'danger');
-            } finally {
-                this.disabled = false;
-                this.innerHTML = '<span class="icon">✓</span> Auswahl zu Gruppenberatung';
-            }
+			
+			const bestätigung = confirm("Beratungsdaten der ausgewählten Nutzer werden durch die der Gruppenberatung ersetzt. Fortfahren?");
+			  
+			if (bestätigung) {
+	            const selectedIds = getSelectedIds();
+	            
+	            if (selectedIds.length === 0) {
+	                showNotification('Bitte wählen Sie mindestens einen Datensatz aus.', 'warning');
+	                return;
+	            }
+	
+	            // Button während der Verarbeitung deaktivieren
+	            this.disabled = true;
+	            this.textContent = 'Verarbeite...';
+	
+	            try {
+	                const result = await sendAjaxRequest(submitUrl, {
+	                    selectedIds: selectedIds,
+						selectedGroupConsult: selectedGroupConsult
+	                });
+	
+	                if (result.success) {
+	                    showNotification(result.message, 'success');
+	                    
+	                    // Auswahl zurücksetzen
+	                    globalSelectedIds.clear();
+	                    syncCheckboxesWithGlobalSelection();
+	                } else {
+	                    showNotification(result.message || 'Ein Fehler ist aufgetreten.', 'danger');
+	                }
+	            } catch (error) {
+	                showNotification('Fehler beim Verarbeiten der Anfrage.', 'danger');
+	            } finally {
+	                this.disabled = false;
+	                this.innerHTML = '<span class="icon">✓</span> Auswahl zu Gruppenberatung';
+	            }
+			} else {
+				showNotification('Zuweisung zu Gruppenberatung abgebrochen.', 'danger');
+			}
         });
     }
 	

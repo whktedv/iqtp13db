@@ -4,8 +4,10 @@ use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3\CMS\Core\Pagination\SimplePagination;
 use Ud\Iqtp13db\Domain\Repository\UserGroupRepository;
 use Ud\Iqtp13db\Domain\Repository\BeraterRepository;
-
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Psr\Http\Message\ResponseInterface;
+
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * BeraterController
@@ -79,6 +81,13 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     {
         $usergroups = $this->userGroupRepository->findAll();
         
+        $beraterusergroups = array();
+        $beraterusergroups = $berater->getUsergroup();
+        $gpaktiv = 0;
+        foreach($beraterusergroups as $bgp) {
+            if($bgp->getTitle() == "Gruppenberatungen") $gpaktiv = 1;
+        }
+        
         $isLoaded = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('ud_totpauth');
         
         $this->view->assign('isudtotpauthloaded', $isLoaded);        
@@ -87,6 +96,8 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $this->view->assign('thisuser', $this->user);
         $this->view->assign('userId', $this->user['uid']);
         $this->view->assign('pageid2facode', $this->settings['pageid2facode']);
+        $this->view->assign('betafeaturesaktiviert', $this->usergroup->getBetafeatures());
+        $this->view->assign('gpaktiv', $gpaktiv);
         return $this->htmlResponse();
     }
     
@@ -120,5 +131,39 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $this->beraterRepository->remove($berater);
         return $this->redirect('editsettings', 'Backend', 'Iqtp13db', null);
     }   
+    
+    /**
+     * action enableGruppenberatungen
+     *
+     * @param \Ud\Iqtp13db\Domain\Model\Berater $berater
+     * @return void
+     */
+    public function enableGruppenberatungenAction(\Ud\Iqtp13db\Domain\Model\Berater $berater): ResponseInterface
+    {        
+        $valArray = $this->request->getArguments();
+        
+        //$currentusergroup = $berater->getUsergroup();
+        $aktivieren = $valArray['aktivieren'];
+        
+        $alleberatungsstellen = $this->userGroupRepository->findAllGroups($this->settings['beraterstoragepid']);
+        foreach ($alleberatungsstellen as $bst) {
+            if($bst->getTitle() == "Gruppenberatungen") $gruppenberatungenusergroup = $bst;
+        }
+        
+        if($aktivieren) {
+            $berater->addUsergroup($bst);
+        } else {
+            $berater->removeUsergroup($bst);
+        }
+        
+        $this->beraterRepository->update($berater);
+        
+        // Daten sofort in die Datenbank schreiben
+        $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+        $persistenceManager->persistAll();
+        
+        return $this->redirect('editsettings', 'Backend', 'Iqtp13db', null);
+    }   
+    
     
 }

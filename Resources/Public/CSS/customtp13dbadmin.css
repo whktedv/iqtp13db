@@ -16,8 +16,8 @@ a.errorframe-close {
 	text-decoration: none;
 	font-size: 1.3em;
 }
-
-.alert, .errorframe {
+ 
+.alert, .errorframe, .tx-iqtp13db ul li.alert {
 	text-align: center;
 	display: block;
 	border: 1px solid;
@@ -41,15 +41,15 @@ a.errorframe-close {
 	top: 0px;
 }
 
-.alert-danger {
+.alert-danger, .tx-iqtp13db ul li.alert-danger {
 	background: #f1dede;
 }
 
-.alert-success {
+.alert-success, .tx-iqtp13db ul li.alert-success {
 	background: #def1de;
 }
 
-.alert-warning {
+.alert-warning, .tx-iqtp13db ul li.alert-warning {
 	background-color: #f0d051;
 }
 

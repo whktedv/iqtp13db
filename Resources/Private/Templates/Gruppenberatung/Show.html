@@ -16,7 +16,9 @@
 
 <div class="show-eingabefelder">
 	<h1>Daten Gruppenberatung</h1>
-	<f:render partial="Gruppenberatung/Properties" arguments="{gruppenberatung : gruppenberatung}" />
+	<f:render partial="Gruppenberatung/Properties" arguments="{_all}" />
+	
+	<f:render partial="Gruppenberatung/ListTeilnehmendeGruppenberatung.html" arguments="{_all}" />
 </div>
 
 </f:section>
