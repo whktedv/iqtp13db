@@ -20,7 +20,11 @@ return [
         'showRecordFieldList' => 'hidden, titel, beschreibung, datum, ort, max_teilnehmer, teilnehmer',
     ],
     'types' => [
-        '1' => ['showitem' => 'hidden, niqbid, titel, beschreibung, datum, ort, max_teilnehmer, teilnehmer, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+        '1' => ['showitem' => 'hidden, niqbid, titel, beschreibung, datum, ort, max_teilnehmer, teilnehmer, beratungdatum, berater, beratungsart, beratungsdauer, beratungzu,
+                                                anerkennungsberatung, anerkennungsberatungfreitext,
+                                                qualifizierungsberatung, qualifizierungsberatungfreitext,
+                                                erstberatungabgeschlossen
+                                 --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
     'columns' => [
         'hidden' => [
@@ -149,5 +153,103 @@ return [
                 ],
             ],
         ],
+        
+        
+        'beratungdatum' => [
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_gruppenberatung.beratungdatum',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim', // (kein eval:date, da DB varchar)
+                'placeholder' => 'z. B. 2026-02-15',
+            ],
+        ],
+        'berater' => [
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_gruppenberatung.berater',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'foreign_table' => 'fe_users', // ggf. zu 'be_users' oder eigener Tabelle ändern
+                'items' => [
+                    ['', 0],
+                ],
+                'minitems' => 0,
+                'maxitems' => 1,
+            ],
+        ],
+        'beratungsart' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_gruppenberatung.beratungsart',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim',
+            ],
+        ],
+        'beratungsdauer' => [
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_gruppenberatung.beratungsdauer',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim',
+            ],
+        ],
+        'beratungzu' => [
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_gruppenberatung.beratungzu',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim',
+            ],
+        ],
+        'anerkennungsberatung' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_gruppenberatung.anerkennungsberatung',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim',
+            ],
+        ],
+        'anerkennungsberatungfreitext' => [
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_gruppenberatung.anerkennungsberatungfreitext',
+            'config' => [
+                'type' => 'text',
+                'enableRichtext' => true,
+                'cols' => 40,
+                'rows' => 5,
+            ],
+        ],
+        'qualifizierungsberatung' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_gruppenberatung.qualifizierungsberatung',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim',
+            ],
+        ],
+        'qualifizierungsberatungfreitext' => [
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_gruppenberatung.qualifizierungsberatungfreitext',
+            'config' => [
+                'type' => 'text',
+                'enableRichtext' => true,
+                'cols' => 40,
+                'rows' => 5,
+            ],
+        ],
+        'erstberatungabgeschlossen' => [
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_gruppenberatung.erstberatungabgeschlossen',
+            'config' => [
+                'type' => 'check',
+                'renderType' => 'checkboxToggle',
+                'items' => [
+                    ['LLL:EXT:core/Resources/Private/Language/locallang_tca.xlf:enabled', ''],
+                ],
+                'default' => 0,
+            ],
+        ],
+        
+        
     ],
 ];

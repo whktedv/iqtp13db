@@ -17,7 +17,7 @@ a.errorframe-close {
 	font-size: 1.3em;
 }
 
-.tx-iqtp13db ul .alert, .errorframe {
+.alert, .errorframe {
 	text-align: center;
 	display: block;
 	border: 1px solid;
@@ -34,22 +34,22 @@ a.errorframe-close {
 	/* min-height: 250px;*/
 }
 
-.tx-iqtp13db ul .alert::after {
+.alert::after {
 	content: '✖';
 	position: absolute;
 	right: 5px;
 	top: 0px;
 }
 
-.tx-iqtp13db ul .alert-danger {
+.alert-danger {
 	background: #f1dede;
 }
 
-.tx-iqtp13db ul .alert-success {
+.alert-success {
 	background: #def1de;
 }
 
-.tx-iqtp13db ul .alert-warning {
+.alert-warning {
 	background-color: #f0d051;
 }
 
@@ -404,6 +404,35 @@ summary.backend-summary {
 	display: block;
 }
 
+
+.linkbuttons.buttonnew {
+  background-color: #fff !important;
+  text-transform: uppercase;
+  margin-bottom: -2px !important;
+  padding: 2px 10px !important;
+  color: #aa4e56 !important;
+  box-shadow: none !important;
+}
+
+.linkbuttons.buttonnew::before {
+  content: "+";
+  background-color: #f18b89 !important;
+  color: #fff;
+  text-transform: uppercase;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-left: -5px;
+  border-radius: 20px;
+  padding-right: 0;
+  padding-bottom: 14px;
+  font-weight: 600;
+  font-size: 1.3rem;
+  line-height: 1.0;   
+  margin-right: 10px;
+  margin-top: 0px;
+}
+
 .tablelinkbuttons.buttonedit, .tablelinkbuttons.buttonnew {
 	text-transform: uppercase;
 	line-height: 1.0 !important;
@@ -494,6 +523,10 @@ td.tdcenter input[type="checkbox"] {
 
 .edit-eingabefelder, .show-eingabefelder {
 	padding-top: 5.3rem;
+}
+
+.listgruppenberatungen {
+	padding-top: 4.3rem;
 }
 
 .buttoneinwilligung {

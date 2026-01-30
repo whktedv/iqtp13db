@@ -1,11 +1,13 @@
 <?php
-declare(strict_types = 1);
 namespace Ud\Iqtp13db\Domain\Model;
 
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Domain\Model\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 /**
  * Gruppenberatung
  */
@@ -52,9 +54,28 @@ class Gruppenberatung extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected ObjectStorage $teilnehmer;
     
-    public function __construct()
+    protected $beratungdatum = '';
+    protected int $berater = 0;
+    protected $beratungsart = 0;
+    protected $beratungsdauer = '';
+    protected $beratungzu = '';
+    protected $anerkennungsberatung = '';
+    protected $anerkennungsberatungfreitext = '';
+    protected $qualifizierungsberatung = '';
+    protected $qualifizierungsberatungfreitext = '';
+    protected $erstberatungabgeschlossen = '';
+    
+    
+    //public function __construct(array $beratungsart = array(), array $anerkennungsberatung = array(), array $qualifizierungsberatung = array())
+    public function __construct(array $beratungsart = array())
     {
-        $this->teilnehmer = new ObjectStorage();
+        
+        $this->setBeratungsart($beratungsart);
+        /*
+        $this->setAnerkennungsberatung($anerkennungsberatung);
+        $this->setQualifizierungsberatung($qualifizierungsberatung);
+        */
+        $this->teilnehmer = new ObjectStorage();        
     }
     
     public function getTitel(): string
@@ -174,4 +195,115 @@ class Gruppenberatung extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         return $this->maxTeilnehmer > 0 && $this->getAnzahlTeilnehmer() >= $this->maxTeilnehmer;
     }
+    
+    
+    public function getBeratungdatum(): string
+    {
+        return $this->beratungdatum;
+    }
+    public function setBeratungdatum(string $beratungdatum): void
+    {
+        $this->beratungdatum = $beratungdatum;
+    }
+    
+    public function getBerater(): int
+    {
+        return $this->berater;
+    }
+    
+    
+    public function setBerater(int $berater): void
+    {
+        $this->berater = $berater;
+    }
+    
+    
+    public function getBeratungsart(): array
+    {
+        return explode(',', $this->beratungsart);
+    }
+    public function setBeratungsart(array $beratungsart): void
+    {
+        $this->beratungsart = implode(',', $beratungsart);
+    }
+    
+    
+    
+    public function getBeratungsdauer(): string
+    {
+        return $this->beratungsdauer;
+    }
+    public function setBeratungsdauer(string $beratungsdauer): void
+    {
+        $this->beratungsdauer = $beratungsdauer;
+    }
+    
+    public function getBeratungzu(): string
+    {
+        return $this->beratungzu;
+    }
+    public function setBeratungzu(string $beratungzu): void
+    {
+        $this->beratungzu = $beratungzu;
+    }
+    
+    
+    public function getAnerkennungsberatung(): array
+    {
+        //return $this->anerkennungsberatung;
+        return explode(',', $this->anerkennungsberatung);
+    }
+    public function setAnerkennungsberatung(array $anerkennungsberatung): void
+    {
+        $this->anerkennungsberatung = implode(',', $anerkennungsberatung);
+    }
+    //public function setAnerkennungsberatung(string $anerkennungsberatung): void
+    //{
+    //    $this->anerkennungsberatung = $anerkennungsberatung;
+    //}
+
+    
+    public function getAnerkennungsberatungfreitext(): string
+    {
+        return $this->anerkennungsberatungfreitext;
+    }
+    public function setAnerkennungsberatungfreitext(string $text): void
+    {
+        $this->anerkennungsberatungfreitext = $text;
+    }
+    
+    
+    public function getQualifizierungsberatung(): array
+    {
+        //return $this->qualifizierungsberatung;
+        return explode(',', $this->qualifizierungsberatung);
+    }
+    //public function setQualifizierungsberatung(string $qualifizierungsberatung): void
+    //{
+     //   $this->qualifizierungsberatung = $qualifizierungsberatung;
+    //}
+    public function setQualifizierungsberatung(array $qualifizierungsberatung): void
+    {
+        $this->qualifizierungsberatung = implode(',', $qualifizierungsberatung);
+    }
+
+    
+    public function getQualifizierungsberatungfreitext(): string
+    {
+        return $this->qualifizierungsberatungfreitext;
+    }
+    public function setQualifizierungsberatungfreitext(string $text): void
+    {
+        $this->qualifizierungsberatungfreitext = $text;
+    }
+    
+    public function getErstberatungabgeschlossen(): string
+    {
+        return $this->erstberatungabgeschlossen;
+    }
+    public function setErstberatungabgeschlossen(string $flag): void
+    {
+        $this->erstberatungabgeschlossen = $flag; // '0' oder '1'
+    }
+    
 }

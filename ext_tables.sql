@@ -335,6 +335,17 @@ CREATE TABLE tx_iqtp13db_domain_model_gruppenberatung (
     niqbid varchar(255) DEFAULT '' NOT NULL,    
     teilnehmer int(11) unsigned DEFAULT '0' NOT NULL,
     
+    beratungdatum varchar(255) DEFAULT '' NOT NULL,
+	berater int(11) unsigned DEFAULT '0',	
+	beratungsart varchar(255) DEFAULT '' NOT NULL,
+	beratungsdauer varchar(255) DEFAULT '' NOT NULL,	
+	beratungzu varchar(255) DEFAULT '' NOT NULL,
+	anerkennungsberatung varchar(255) DEFAULT '' NOT NULL,
+	anerkennungsberatungfreitext text NOT NULL,
+	qualifizierungsberatung varchar(255) DEFAULT '' NOT NULL,
+	qualifizierungsberatungfreitext text NOT NULL,	
+	erstberatungabgeschlossen varchar(255) DEFAULT '' NOT NULL,
+	
     tstamp int(11) unsigned DEFAULT '0' NOT NULL,
     crdate int(11) unsigned DEFAULT '0' NOT NULL,
     deleted tinyint(4) unsigned DEFAULT '0' NOT NULL,

@@ -24,15 +24,20 @@
     let globalSelectedIds = new Set();
 	
 	let selectedGroupConsult = 0;
-    
-    // Initial ausgewählte IDs aus Session laden
+    let auswahlmodus = 0; // Auswahlmodus
+	
+    // Initial ausgewählte IDs und Status Auswahlmodus aus Session laden
     function initializeSelectedIds() {
         try {
             const selectedIdsJson = ajaxConfig?.dataset.selectedIds;
+			const togglecheckboxesActiveJson = ajaxConfig?.dataset.auswahlmodus;
             if (selectedIdsJson != 'null') {
                 const selectedIds = JSON.parse(selectedIdsJson);
                 globalSelectedIds = new Set(selectedIds.map(String));
-            }
+            }			
+			if (togglecheckboxesActiveJson != 'null') {
+				auswahlmodus = togglecheckboxesActiveJson;				
+			}			
         } catch (error) {
             console.error('Fehler beim Laden der gespeicherten Auswahl:', error);
             globalSelectedIds = new Set();
@@ -46,6 +51,10 @@
             checkbox.checked = globalSelectedIds.has(itemId);
         });
         updateSelectedCount();
+		
+		const isSelectionMode = auswahlmodus == 0 ? false : true; 		
+		toggleCheckboxes.checked = isSelectionMode;
+		toggleCheckboxVisibility(isSelectionMode);
     }
 
     /**
@@ -73,11 +82,15 @@
      */
     function updateSelectedCount() {
         const count = globalSelectedIds.size;
-        selectedCountSpan.textContent = `${count} ausgewählt`;
-        
+        selectedCountSpan.textContent = `${count} ausgewählt`;        
+		
         // Button deaktivieren wenn nichts ausgewählt
         if (addToGroupConsultationBtn) {
-            addToGroupConsultationBtn.disabled = count === 0;
+			if(groupConsultSelect.value != -1 && count > 0) {
+				addToGroupConsultationBtn.disabled = false;
+			} else {
+				addToGroupConsultationBtn.disabled = true;
+			}
         }
         
         // "Alle auswählen" Checkbox aktualisieren
@@ -192,27 +205,22 @@
     function showNotification(message, type = 'success') {
         // Einfache Benachrichtigung - kann durch TYPO3 Notification API ersetzt werden
         const notification = document.createElement('div');
-        notification.className = `alert alert-${type} notification`;
+        notification.className = 'alert alert-' + type;
         notification.textContent = message;
-        notification.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 20px;
-            border-radius: 4px;
-            z-index: 9999;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        `;
         
         document.body.appendChild(notification);
         
+		notification.addEventListener('click', function() {
+			notification.remove();
+		});
+				
         setTimeout(() => {
             notification.style.opacity = '0';
             notification.style.transition = 'opacity 0.3s';
             setTimeout(() => notification.remove(), 300);
-        }, 3000);
+        }, 80000);
     }
-
+	
     /**
      * Event Listeners
      */
@@ -222,11 +230,16 @@
         toggleCheckboxes.addEventListener('change', async function() {
             const show = this.checked;
             toggleCheckboxVisibility(show);
-            
+			
+			auswahlmodus = this.checked;
+
             // Optional: AJAX-Call zum Server
             if (toggleUrl) {
-                try {
-                    await sendAjaxRequest(toggleUrl, { show: show ? 1 : 0 });
+                try {				
+                    await sendAjaxRequest(toggleUrl, { 
+						show: show ? 1 : 0,
+						auswahlmodus: auswahlmodus ? 1 : 0
+					});
                     
                     // Wenn deaktiviert, globale Auswahl zurücksetzen
                     if (!show) {
@@ -264,6 +277,7 @@
 	if(groupConsultSelect) {
 		groupConsultSelect.addEventListener('change', function() {
 			selectedGroupConsult = this.value;
+			updateSelectedCount();
 		});
 	}
 	
@@ -304,7 +318,7 @@
             }
         });
     }
-
+	
     // Initialisierung
     initializeSelectedIds();
     syncCheckboxesWithGlobalSelection();

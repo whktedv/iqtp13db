@@ -207,7 +207,8 @@ $(document).ready(function() {
     $("ul.typo3-messages").click(function() {
     	$("ul.typo3-messages").hide();
     });
-    
+
+
     $(".errorframe").click(function() {
     	$(".errorframe").hide();
     });

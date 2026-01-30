@@ -110,6 +110,10 @@ class RequestController
         // Frontend-User holen
         $frontendUser = $this->getFrontendUser($request);
         
+        if ($frontendUser) {
+            $frontendUser->setAndSaveSessionData('auswahlmodus', $show);
+        }        
+        
         if (!$show && $frontendUser) {
             $frontendUser->setAndSaveSessionData('selectedItemIds', []);
         }
@@ -166,6 +170,7 @@ class RequestController
         $postParams = $request->getParsedBody();
         $groupConsulId = $postParams['selectedGroupConsult'] ?? 0;
         
+        
         if (empty($selectedIds)) {
             return new JsonResponse([
                 'success' => false,
@@ -182,6 +187,8 @@ class RequestController
         // GP holen
         $gruppenberatung = $this->gruppenberatungRepository->findByUid($groupConsulId);
         
+        $countadded = 0;
+        $countnotadded = 0;               
         foreach($selectedIds as $tnid) {
             $teilnehmer = $this->teilnehmerRepository->findByUid((int)$tnid);
             if ($teilnehmer === null) {
@@ -191,12 +198,13 @@ class RequestController
             // Falls du Duplikate vermeiden willst:
             $bereitsDrin = false;
             foreach ($gruppenberatung->getTeilnehmer() as $t) {
-                if ($t->getUid() === $teilnehmer->getUid()) {
+                if ($t->getUid() === $teilnehmer->getUid()) {                    
                     $bereitsDrin = true;
                     break;
                 }
             }
             if ($bereitsDrin) {
+                $countnotadded++;
                 continue;
             }
             
@@ -205,16 +213,11 @@ class RequestController
             //    break; // oder Fehler zurückgeben
             //}
             
-            // Anhängen
             $gruppenberatung->addTeilnehmer($teilnehmer);
-            
-            // Wenn die Beziehung bidirektional ist (z. B. Teilnehmer hat "gruppenberatungen"),
-            // solltest du dort ebenfalls die Gegenseite setzen, z. B.:
-            // $teilnehmer->addGruppenberatung($gruppenberatung);
-            // (nur falls dein Teilnehmer-Modell so eine Relation besitzt)
+            $countadded++;
         }
-
-        $this->gruppenberatungRepository->update($gruppenberatung);     
+        
+        $this->gruppenberatungRepository->update($gruppenberatung);
         
         // Persistierung erzwingen
         $persistenceManager = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager::class);
@@ -222,7 +225,7 @@ class RequestController
                 
         return new JsonResponse([
             'success' => true,
-            'message' => count($selectedIds) . ' Datensatz/Datensätze zur Gruppenberatung mit ID '. $groupConsulId . ' hinzugefügt',
+            'message' => $countadded . ' Datensatz/Datensätze zur Gruppenberatung mit GID '. $groupConsulId . ' hinzugefügt.' . ($countnotadded > 0 ? '('.$countnotadded.' schon vorhanden)' : ''),
             'count' => count($selectedIds),
             //'anzahl' => $gruppenberatung->getAnzahlTeilnehmer(),
             //'voll' => $gruppenberatung->istVollBelegt(),           

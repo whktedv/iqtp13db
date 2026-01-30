@@ -73,6 +73,39 @@
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.editexternsent"><source>Edit link created</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.anzloginfehlgeschlagen"><source>Failed logins</source></trans-unit>
 
+
+		<trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.beratungdatum">
+          <source>Datum Erstberatung</source>
+        </trans-unit>
+        <trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.berater">
+          <source>Berater</source>
+        </trans-unit>
+        <trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.beratungsart">
+          <source>Beratungsart</source>
+        </trans-unit>
+        <trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.beratungsdauer">
+          <source>Beratungsdauer</source>
+        </trans-unit>
+        <trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.beratungzu">
+          <source>Beratung zu Schulabschluss</source>
+        </trans-unit>
+        <trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.anerkennungsberatung">
+          <source>Anerkennungsberatung</source>
+        </trans-unit>
+        <trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.anerkennungsberatungfreitext">
+          <source>Anerkennungsberatung (Freitext)</source>
+        </trans-unit>
+        <trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.qualifizierungsberatung">
+          <source>Qualifizierungsberatung</source>
+        </trans-unit>
+        <trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.qualifizierungsberatungfreitext">
+          <source>Qualifizierungsberatung (Freitext)</source>
+        </trans-unit>
+        <trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.erstberatungabgeschlossen">
+          <source>Erstberatung abgeschlossen</source>
+        </trans-unit>
+
+
 		<trans-unit id="ja"><source>Yes</source></trans-unit>
 		<trans-unit id="nein"><source>No</source></trans-unit>
 		<trans-unit id="ka"><source>No specification</source></trans-unit>

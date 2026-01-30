@@ -142,7 +142,7 @@ class GruppenberatungController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
         $teilnehmeros = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
         $teilnehmeros = $gruppenberatung->getTeilnehmer();
         
-        DebuggerUtility::var_dump($teilnehmeros);
+        //DebuggerUtility::var_dump($teilnehmeros);
         
         $this->view->assign('calleraction', $valArray['calleraction']);
         $this->view->assign('callercontroller', $valArray['callercontroller']);
@@ -160,11 +160,15 @@ class GruppenberatungController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
     {
         $valArray = $this->request->getArguments();
         
+        $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);      
+        
         $this->view->assign('thisaction', $valArray['thisaction'] ?? '');
         $this->view->assign('calleraction', $valArray['calleraction']);
         $this->view->assign('callercontroller', $valArray['callercontroller']);
         $this->view->assign('callerpage', $valArray['callerpage'] ?? '1');
         $this->view->assign('settings', $this->settings);
+        $this->view->assign('alleberater', $alleberater);
+        
         return $this->htmlResponse();
     }
     
@@ -178,7 +182,8 @@ class GruppenberatungController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
     public function createAction(\Ud\Iqtp13db\Domain\Model\Gruppenberatung $gruppenberatung): ResponseInterface
     {        
         $valArray = $this->request->getArguments();
-           
+        
+        $gruppenberatung->setNiqbid($this->niqbid);
         $this->gruppenberatungRepository->add($gruppenberatung);
         
         // Daten sofort in die Datenbank schreiben
@@ -202,12 +207,19 @@ class GruppenberatungController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
     {
         $valArray = $this->request->getArguments();
         
+        $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);   
+        
+        $arr = $gruppenberatung->getBeratungsart();
+        DebuggerUtility::var_dump($arr);
+        
         $this->view->assign('gruppenberatung', $gruppenberatung);
         $this->view->assign('thisaction', $valArray['thisaction'] ?? '');
         $this->view->assign('callerpage', $valArray['callerpage']  ?? '1');
         $this->view->assign('calleraction', $valArray['calleraction']);
         $this->view->assign('callercontroller', $valArray['callercontroller']);
         $this->view->assign('settings', $this->settings);
+        $this->view->assign('alleberater', $alleberater);
+        
         return $this->htmlResponse();
     }
     

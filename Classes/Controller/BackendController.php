@@ -553,8 +553,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         foreach($gruppenberatungen as $gb) {
             $gruppenberatungenarr[$gb->getUid()] = $gb->getTitel();
         }
-        //DebuggerUtility::var_dump($gruppenberatungenarr);
-        
+        // Gespeicherte Auswahl aus Session laden
+        $selectedIds = $this->getSelectedIdsFromSession();
+        $auswahlmodus = $this->request->getAttribute('frontend.user')->getSessionData('auswahlmodus');
         
         $this->view->assignMultiple(
             [
@@ -577,7 +578,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'betafeaturesaktiviert' => $this->usergroup->getBetafeatures(),
                 'mail4externstandardmailtext' => $mail4externstandardmailtext,
                 'anmeldeditseite' => $this->settings['anmeldeditseite'],
-                'gruppenberatungarr' => $gruppenberatungenarr
+                'gruppenberatungarr' => $gruppenberatungenarr,
+                'selectedIds' => $selectedIds,
+                'auswahlmodus' => $auswahlmodus ? 1 : 0
             ]);
         return $this->htmlResponse();
     }
@@ -3209,6 +3212,24 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             }
         }
         return 999;
+    }
+    
+    /**
+     * Get selected IDs from session
+     */
+    private function getSelectedIdsFromSession(): array
+    {
+        $sessionData = $this->request->getAttribute('frontend.user')->getSessionData('selectedItemIds');
+        
+        return is_array($sessionData) ? $sessionData : [];
+    }
+    
+    /**
+     * Save selected IDs to session
+     */
+    private function saveSelectedIdsToSession(array $selectedIds): void
+    {
+        $this->request->getAttribute('frontend.user')->setAndSaveSessionData('selectedItemIds', $selectedIds);
     }
     
     /**
