@@ -17,7 +17,7 @@ a.errorframe-close {
 	font-size: 1.3em;
 }
  
-.alert, .errorframe, .tx-iqtp13db ul li.alert {
+.tx-iqtp13db .alert, .errorframe, .tx-iqtp13db ul li.alert {
 	text-align: center;
 	display: block;
 	border: 1px solid;
@@ -34,7 +34,7 @@ a.errorframe-close {
 	/* min-height: 250px;*/
 }
 
-.alert::after {
+.tx-iqtp13db .alert::after {
 	content: '✖';
 	position: absolute;
 	right: 5px;
