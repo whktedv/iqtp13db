@@ -555,6 +555,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                         
         $mail4externstandardmailtext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtextedit', 'Iqtp13db');
         
+        $gruppenberatungen = array();
         $gruppenberatungen = $this->gruppenberatungRepository->findAvailable($this->niqbid);
         foreach($gruppenberatungen as $gb) {
             $gruppenberatungenarr[$gb->getUid()] = $gb->getTitel();

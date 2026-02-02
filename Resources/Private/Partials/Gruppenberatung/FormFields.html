@@ -1,9 +1,10 @@
 {namespace iqtp13db=Ud\Iqtp13db\ViewHelpers}
+Pflichtfelder sind mit einem * markiert
 <div id="AnkerStandard">
 	<div class="fframe">
 			<div class="tp13_formdivwebapp">
 				<label for="titel">
-					<f:translate key="tx_iqtp13db_domain_model_gruppenberatung.titel" />
+					<f:translate key="tx_iqtp13db_domain_model_gruppenberatung.titel" /> *
 				</label>
 					<f:form.textfield property="titel" value="{titel}" size="15" />	
 			</div>
@@ -18,7 +19,7 @@
 			
 			<div class="tp13_formdivwebapp">
 				<label for="ort" class="tp13_options">
-					<f:translate key="tx_iqtp13db_domain_model_gruppenberatung.ort" />
+					<f:translate key="tx_iqtp13db_domain_model_gruppenberatung.ort" /> *
 				</label>
 					<f:form.textfield property="ort" value="{ort}" size="15" />	
 			</div>	
@@ -29,7 +30,7 @@
 		<!-- Beratungdatum -->
 		<div class="tp13_formdivwebapp">
 			<label for="beratungdatum">
-				<f:translate key="tx_iqtp13db_domain_model_gruppenberatung.beratungdatum" />
+				<f:translate key="tx_iqtp13db_domain_model_gruppenberatung.beratungdatum" /> *
 			</label>			
 			<f:form.textfield type="date" class="datumtextfieldberatung" name="gruppenberatung[beratungdatum]" value="{gruppenberatung.beratungdatum}" />
 		</div>
