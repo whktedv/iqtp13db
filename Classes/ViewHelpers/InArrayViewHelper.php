@@ -8,7 +8,7 @@ class InArrayViewHelper extends AbstractViewHelper
     public function initializeArguments()
     {
         $this->registerArgument('needle', 'string', 'The value to search for', true);
-        $this->registerArgument('haystack', 'array', 'The array to search in', true);
+        $this->registerArgument('haystack', 'mixed', 'The array to search in', true);
     }
 
     public function render()

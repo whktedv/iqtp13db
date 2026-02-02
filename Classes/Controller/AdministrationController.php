@@ -40,7 +40,7 @@ require_once(Environment::getPublicPath() . '/' . 'typo3conf/ext/iqtp13db/Resour
 class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
     
-    protected $generalhelper, $niqinterface, $niqapiurl, $usergroup, $niqbid, $groupbccmail;
+    protected $generalhelper, $niqapiurl, $usergroup, $niqbid, $groupbccmail;
     
     protected $userGroupRepository;
     protected $teilnehmerRepository;

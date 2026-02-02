@@ -22,7 +22,7 @@ call_user_func(
                 \Ud\Iqtp13db\Controller\AbschlussController::class => 'show, new, create, edit, update, delete',
                 \Ud\Iqtp13db\Controller\BeraterController::class => 'list, edit, update, delete, enableGruppenberatungen',
                 \Ud\Iqtp13db\Controller\AdministrationController::class => 'adminuebersicht',
-                \Ud\Iqtp13db\Controller\GruppenberatungController::class => 'listgruppenberatung, show, new, create, edit, update, delete, removeFromGroupConsultation'
+                \Ud\Iqtp13db\Controller\GruppenberatungController::class => 'listgruppenberatung, show, new, create, edit, update, delete, removeFromGroupConsultation, removeAllFromGroupConsultation'
             ],
             
             // non-cacheable actions
@@ -34,7 +34,7 @@ call_user_func(
                 \Ud\Iqtp13db\Controller\AbschlussController::class => 'show, new, create, edit, update, delete',
                 \Ud\Iqtp13db\Controller\BeraterController::class => 'list, edit, update, delete, enableGruppenberatungen',
                 \Ud\Iqtp13db\Controller\AdministrationController::class => 'adminuebersicht',
-                \Ud\Iqtp13db\Controller\GruppenberatungController::class => 'listgruppenberatung, show, new, create, edit, update, delete, removeFromGroupConsultation'
+                \Ud\Iqtp13db\Controller\GruppenberatungController::class => 'listgruppenberatung, show, new, create, edit, update, delete, removeFromGroupConsultation, removeAllFromGroupConsultation'
             ]
             );
         

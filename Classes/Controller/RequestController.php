@@ -13,6 +13,7 @@ use TYPO3\CMS\Core\Log\LogManager;
 use Ud\Iqtp13db\Domain\Repository\DokumentRepository;
 use Ud\Iqtp13db\Domain\Repository\TeilnehmerRepository;
 use Ud\Iqtp13db\Domain\Repository\GruppenberatungRepository;
+use Ud\Iqtp13db\Domain\Repository\BeraterRepository;
 
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 /**
@@ -25,13 +26,17 @@ class RequestController
      * @var DokumentRepository
      */
     protected $dokumentRepository;
+    protected $teilnehmerRepository;
+    protected $gruppenberatungRepository;
+    protected $beraterRepository;
 
-    public function __construct(DokumentRepository $dokumentRepository, TeilnehmerRepository $teilnehmerRepository, GruppenberatungRepository $gruppenberatungRepository)
+    public function __construct(DokumentRepository $dokumentRepository, TeilnehmerRepository $teilnehmerRepository, GruppenberatungRepository $gruppenberatungRepository, BeraterRepository $beraterRepository)
     {       
         // Damit die Dependency Injection hier funktinoiert, unbedingt in die Datei Configuration/Services.yaml eintragen! Siehe "Dependency Injection" in der Typo3 Doku
         $this->dokumentRepository = $dokumentRepository;
         $this->teilnehmerRepository = $teilnehmerRepository;
         $this->gruppenberatungRepository = $gruppenberatungRepository;
+        $this->beraterRepository = $beraterRepository;
     }
 
     public function doksaveEidAction(ServerRequestInterface $request)
@@ -195,7 +200,7 @@ class RequestController
                 continue; // ignorieren oder Fehler sammeln
             }
             
-            // Falls du Duplikate vermeiden willst:
+            // Duplikate vermeiden:
             $bereitsDrin = false;
             foreach ($gruppenberatung->getTeilnehmer() as $t) {
                 if ($t->getUid() === $teilnehmer->getUid()) {                    
@@ -216,7 +221,26 @@ class RequestController
             $gruppenberatung->addTeilnehmer($teilnehmer);
             $countadded++;
             
-            // AB HIER DIE BERATUNGSDATEN DES TEILNEHMERS auf die der Gruppenberatung ändern und den TN updaten
+            $berater = $this->beraterRepository->findByUid($gruppenberatung->getBerater());
+            
+            $teilnehmer->setBeratungdatum($gruppenberatung->getBeratungdatum());
+            $teilnehmer->setBeratungsort($gruppenberatung->getOrt());
+            $teilnehmer->setBerater($berater);
+            $teilnehmer->setBeratungsart(explode(',', $gruppenberatung->getBeratungsarten()));            
+            $teilnehmer->setBeratungsdauer($gruppenberatung->getBeratungsdauer());
+            $teilnehmer->setBeratungzu($gruppenberatung->getBeratungzu());
+            $teilnehmer->setAnerkennungsberatung(explode(',', $gruppenberatung->getAnerkennungsberatung()));
+            $teilnehmer->setAnerkennungsberatungfreitext($gruppenberatung->getAnerkennungsberatungfreitext());
+            $teilnehmer->setQualifizierungsberatung(explode(',', $gruppenberatung->getQualifizierungsberatung()));
+            $teilnehmer->setQualifizierungsberatungfreitext($gruppenberatung->getQualifizierungsberatungfreitext());
+            $teilnehmer->setErstberatungabgeschlossen($gruppenberatung->getErstberatungabgeschlossen());
+            if($gruppenberatung->getErstberatungabgeschlossen() != '') {
+                $teilnehmer->setBeratungsstatus(3);
+            } else {
+                $teilnehmer->setBeratungsstatus(2);
+            }   
+            
+            $this->teilnehmerRepository->update($teilnehmer);
         }
         
         $this->gruppenberatungRepository->update($gruppenberatung);
@@ -224,13 +248,17 @@ class RequestController
         // Persistierung erzwingen
         $persistenceManager = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager::class);
         $persistenceManager->persistAll();
-                
+        
+        //$redirectUrl = $request->getUri()->getPath();
+        
         return new JsonResponse([
             'success' => true,
             'message' => $countadded . ' Datensatz/Datensätze zur Gruppenberatung mit GID '. $groupConsulId . ' hinzugefügt.' . ($countnotadded > 0 ? '('.$countnotadded.' schon vorhanden)' : ''),
             'count' => count($selectedIds),
+            'reload' => true, 
+            //'redirect' => $redirectUrl,
             //'anzahl' => $gruppenberatung->getAnzahlTeilnehmer(),
             //'voll' => $gruppenberatung->istVollBelegt(),           
-        ]);
+        ]);                
     }
 }

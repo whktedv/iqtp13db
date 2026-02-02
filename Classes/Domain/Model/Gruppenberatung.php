@@ -12,6 +12,7 @@ class Gruppenberatung extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
     /**
      * @var string
+     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
      */
     protected string $titel = '';
     
@@ -43,6 +44,7 @@ class Gruppenberatung extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     
     /*
      * @var string
+     * @TYPO3\CMS\Extbase\Annotation\Validate("\Ud\Iqtp13db\Domain\Validator\DatumValidator"), @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
      */
     protected string $beratungdatum = '';
     
@@ -58,6 +60,7 @@ class Gruppenberatung extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     
     /*
      * @var string
+     * @TYPO3\CMS\Extbase\Annotation\Validate("\Ud\Iqtp13db\Domain\Validator\KommazahlValidator")
      */
     protected string $beratungsdauer = '';
     

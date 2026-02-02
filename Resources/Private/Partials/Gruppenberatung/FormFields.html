@@ -41,7 +41,12 @@
 			<div class="tp13_formdivwebappmultiradio">	
 			<f:for each="{settings.beratungsart}" as="label" key="key">
 	            <div class="tp13_formdivwebappradio">
-	                <f:form.checkbox name="beratungsarten[]" value="{key}" id="beratungsart_{key}" checked="{iqtp13db:inArray(needle: key, haystack: gruppenberatung.beratungsartenArray)}" />{label}
+	             <f:if condition="{thisaction} == 'new'"><f:then>
+	             		<f:form.checkbox name="beratungsarten[]" value="{key}" id="beratungsart_{key}" />{label}
+	            	</f:then><f:else>
+	                	<f:form.checkbox name="beratungsarten[]" value="{key}" id="beratungsart_{key}" checked="{iqtp13db:inArray(needle: key, haystack: gruppenberatung.beratungsartenArray)}" />{label}
+	            	</f:else>
+	             </f:if>
 	            </div>
 	        </f:for>
 	        </div>
@@ -75,7 +80,12 @@
 			<div class="tp13_formdivwebappmultiradio">	
 			<f:for each="{settings.anerkennungsberatung}" as="label" key="key">
 	            <div class="tp13_formdivwebappradio">
-	                <f:form.checkbox name="anerkennungsberatung[]" value="{key}" id="anerkennungsberatung_{key}" checked="{iqtp13db:inArray(needle: key, haystack: gruppenberatung.anerkennungsberatungArray)}" />{label}
+	            	<f:if condition="{thisaction} == 'new'"><f:then>
+	            		<f:form.checkbox name="anerkennungsberatung[]" value="{key}" id="anerkennungsberatung_{key}" />{label}
+	            	</f:then><f:else>
+	                	<f:form.checkbox name="anerkennungsberatung[]" value="{key}" id="anerkennungsberatung_{key}" checked="{iqtp13db:inArray(needle: key, haystack: gruppenberatung.anerkennungsberatungArray)}" />{label}
+	              	</f:else>
+	              </f:if>
 	            </div>
 	        </f:for>
 	        </div>
@@ -93,7 +103,12 @@
 			<div class="tp13_formdivwebappmultiradio">	
 			<f:for each="{settings.qualifizierungsberatung}" as="label" key="key">
 	            <div class="tp13_formdivwebappradio">
-	                <f:form.checkbox name="qualifizierungsberatung[]" value="{key}" id="qualifizierungsberatung_{key}" checked="{iqtp13db:inArray(needle: key, haystack: gruppenberatung.qualifizierungsberatungArray)}" />{label}
+	            	<f:if condition="{thisaction} == 'new'"><f:then>
+	                	<f:form.checkbox name="qualifizierungsberatung[]" value="{key}" id="qualifizierungsberatung_{key}" />{label}
+	                </f:then><f:else>
+	                	<f:form.checkbox name="qualifizierungsberatung[]" value="{key}" id="qualifizierungsberatung_{key}" checked="{iqtp13db:inArray(needle: key, haystack: gruppenberatung.qualifizierungsberatungArray)}" />{label}
+	                </f:else>
+	                </f:if>	
 	            </div>
 	        </f:for>
 	        </div>

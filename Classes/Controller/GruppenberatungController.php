@@ -5,10 +5,10 @@ use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Extbase\Annotation\Validate;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3\CMS\Core\Pagination\ArrayPaginator;
@@ -20,6 +20,10 @@ use Ud\Iqtp13db\Domain\Repository\TeilnehmerRepository;
 use Ud\Iqtp13db\Domain\Repository\BeraterRepository;
 use Ud\Iqtp13db\Domain\Repository\GruppenberatungRepository;
 use TYPO3\CMS\Core\Resource\StorageRepository;
+
+
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+
 
 require_once(Environment::getPublicPath() . '/' . 'typo3conf/ext/iqtp13db/Resources/Private/Libraries/xlsxwriter.class.php');
 
@@ -153,7 +157,7 @@ class GruppenberatungController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
         $this->view->assign('calleraction', $valArray['calleraction']);
         $this->view->assign('callercontroller', $valArray['callercontroller']);
         $this->view->assign('callerpage', $valArray['callerpage'] ?? '1');
-        $this->view->assign('thisaction', $valArray['thisaction'] ?? '');
+        $this->view->assign('thisaction', 'show');
         $this->view->assign('berater', $berater);
         $this->view->assign('teilnehmeros', $teilnehmeros);
         return $this->htmlResponse();
@@ -170,7 +174,7 @@ class GruppenberatungController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
         
         $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);      
         
-        $this->view->assign('thisaction', $valArray['thisaction'] ?? '');
+        $this->view->assign('thisaction', 'new');
         $this->view->assign('calleraction', $valArray['calleraction']);
         $this->view->assign('callercontroller', $valArray['callercontroller']);
         $this->view->assign('callerpage', $valArray['callerpage'] ?? '1');
@@ -244,7 +248,7 @@ class GruppenberatungController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
         $teilnehmeros = $gruppenberatung->getTeilnehmer();
         
         $this->view->assign('gruppenberatung', $gruppenberatung);
-        $this->view->assign('thisaction', $valArray['thisaction'] ?? '');
+        $this->view->assign('thisaction', 'edit');
         $this->view->assign('callerpage', $valArray['callerpage']  ?? '1');
         $this->view->assign('calleraction', $valArray['calleraction']);
         $this->view->assign('callercontroller', $valArray['callercontroller']);
@@ -255,22 +259,7 @@ class GruppenberatungController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
         return $this->htmlResponse();
     }
     
-    
-    /**
-     * action initupdate
-     *
-     * @return void
-     */
-    public function initializeUpdateAction() {
-        
-        $valArray = $this->request->getArguments();
-        
-        if(array_key_exists('gruppenberatung', $valArray)) {
-            //DebuggerUtility::var_dump($valArray);
-            
-        } 
-    }
-    
+   
     /**
      * action update
      *
@@ -327,7 +316,7 @@ class GruppenberatungController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
         $persistenceManager->persistAll();
         
         $this->addFlashMessage('Gruppenberatung aktualisiert.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
-        return $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'] ?? '1'));
+        return $this->redirect($valArray['thisaction'], $valArray['callercontroller'], null, array('gruppenberatung' => $gruppenberatung, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller']));
     }
     
     /**
@@ -356,6 +345,8 @@ class GruppenberatungController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
      *
      * @param \Ud\Iqtp13db\Domain\Model\Gruppenberatung $gruppenberatung
      * @param \Ud\Iqtp13db\Domain\Model\Gruppenberatung $teilnehmer
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("gruppenberatung")
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("teilnehmer")
      * @return void
      */
     public function removeFromGroupConsultationAction(\Ud\Iqtp13db\Domain\Model\Gruppenberatung $gruppenberatung, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
@@ -369,8 +360,33 @@ class GruppenberatungController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
         // Daten sofort in die Datenbank schreiben
         $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
-        $this->addFlashMessage('Teilnehmer aus Gruppenberatung entfernt, Beratungsdaten werden nicht gelöscht!', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
-        return $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'] ?? '1'));
+        $this->addFlashMessage('Teilnehmer aus Gruppenberatung entfernt, Beratungsdaten wurden NICHT gelöscht!', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
+        return $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'] ?? '1', 'gruppenberatung' => $gruppenberatung, 'teilnehmer' => $teilnehmer));
+        
+    }
+    
+    /**
+     * action delete
+     *
+     * @param \Ud\Iqtp13db\Domain\Model\Gruppenberatung $gruppenberatung
+     * @param \Ud\Iqtp13db\Domain\Model\Gruppenberatung $teilnehmer
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("gruppenberatung")
+     * @return void
+     */
+    public function removeAllFromGroupConsultationAction(\Ud\Iqtp13db\Domain\Model\Gruppenberatung $gruppenberatung): ResponseInterface
+    {
+        $valArray = $this->request->getArguments();
+        
+        $newtnstorage = new ObjectStorage();
+        $gruppenberatung->setTeilnehmer($newtnstorage);
+        
+        $this->gruppenberatungRepository->update($gruppenberatung);
+        
+        // Daten sofort in die Datenbank schreiben
+        $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+        $persistenceManager->persistAll();
+        $this->addFlashMessage('Alle Teilnehmenden aus Gruppenberatung entfernt, Beratungsdaten wurden NICHT gelöscht!', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
+        return $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'] ?? '1', 'gruppenberatung' => $gruppenberatung));
         
     }
     
