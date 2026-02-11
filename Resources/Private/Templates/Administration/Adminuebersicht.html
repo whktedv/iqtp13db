@@ -261,6 +261,33 @@
 		</table>
 	</f:then>
 </f:if>
+
+<f:if condition="{brancheanmeldungen}">
+	<f:then>
+		<br>
+		<table>
+			<tr>
+				<th>Branchen alle Anmeldungen {f:if(condition: '{jahrselected} == 99', then: 'seit 01/2023', else: 'in {jahrselected}')}</th><th>Anzahl</th>
+			</tr>
+			<f:for each="{brancheanmeldungen}" as="branche" iteration="iter">
+				<tr><td>{branche.titel}</td><td>{branche.anz}</td></tr>
+			</f:for>
+		</table>
+	</f:then>
+</f:if>
+<f:if condition="{brancheberatungabgeschl}">
+	<f:then>
+		<table>
+			<tr>
+				<th>Branchen alle Beratenen {f:if(condition: '{jahrselected} == 99', then: 'seit 01/2023', else: 'in {jahrselected}')}</th><th>Anzahl</th>
+			</tr>
+			<f:for each="{brancheberatungabgeschl}" as="branche" iteration="iter">
+				<tr><td>{branche.titel}</td><td>{branche.anz}</td></tr>
+			</f:for>
+		</table>
+	</f:then>
+</f:if>
+
 <f:if condition="{geschlechtartanmeldungen}">
 	<f:then>
 		<br>

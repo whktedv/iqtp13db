@@ -19,7 +19,9 @@ class FormAwareLanguageMenuViewHelper extends AbstractViewHelper
     public function initializeArguments(): void
     {
         $this->registerArgument('currentStep', 'int', 'Current form step', false, 1);
-        $this->registerArgument('teilnehmer', 'string', 'Current form data', false, []);        
+        $this->registerArgument('teilnehmer', 'string', 'Current form data', false, []);
+        $this->registerArgument('direkt', 'int', 'Current direktlink state', false, 0);
+        $this->registerArgument('plz', 'string', 'Current plz', false, []);
     }
 
     public function render(): string
@@ -28,6 +30,8 @@ class FormAwareLanguageMenuViewHelper extends AbstractViewHelper
 
         $currentStep = $this->arguments['currentStep'];
         $formData = $this->arguments['teilnehmer'];
+        $direkt = $this->arguments['direkt'];
+        $plz = $this->arguments['plz'];
 
         $typoScriptFrontendController = $this->getTypoScriptFrontendController();
         $site = $typoScriptFrontendController->getSite();
@@ -51,7 +55,9 @@ class FormAwareLanguageMenuViewHelper extends AbstractViewHelper
                 'tx_iqtp13db_iqtp13dbwebapp' => [
                     'action' => $currentStep,
                     'controller' => 'Teilnehmer',
-                    'langmenuchange' => 1
+                    'langmenuchange' => 1,
+                    'direkt' => $direkt,
+                    'plz' => $plz
                 ]
             ];
 

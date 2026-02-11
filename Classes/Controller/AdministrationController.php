@@ -276,6 +276,9 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
             $berufeanmeldungen = $this->teilnehmerRepository->showAbschluesseBerufe($filterbstelle, 0, $jahrselected, $bundeslandselected, $staatselected);
             $berufeberatungabgeschl = $this->teilnehmerRepository->showAbschluesseBerufe($filterbstelle, 4, $jahrselected, $bundeslandselected, $staatselected);
             
+            $brancheanmeldungen = $this->teilnehmerRepository->showAbschluesseBranchen($filterbstelle, 0, $jahrselected, $bundeslandselected, $staatselected);
+            $brancheberatungabgeschl = $this->teilnehmerRepository->showAbschluesseBranchen($filterbstelle, 4, $jahrselected, $bundeslandselected, $staatselected);
+            
             $geschlechtartanmeldungen = $this->teilnehmerRepository->showGeschlecht($filterbstelle, 0, $jahrselected, $bundeslandselected, $staatselected);
             $geschlechtberatungabgeschl = $this->teilnehmerRepository->showGeschlecht($filterbstelle, 4, $jahrselected, $bundeslandselected, $staatselected);
             
@@ -389,6 +392,24 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 $i++;
             }
             
+            // Branchen
+            $rowsbranchen[0] = array("Branchen alle Anmeldungen ".$jahrselected, "Anzahl");
+            $i=1;
+            foreach($brancheanmeldungen as $branche) {
+                $branchetitel = $branche['titel'] == '' ? 'kein Beruf/Abschluss eingetragen' : $branche['titel'];
+                $rowsbranchen[$i] = array($branchetitel, $branche['anz']);
+                $i++;
+            }
+            $rowsbranchen[$i] = array(" ", " ");
+            $i++;
+            $rowsbranchen[$i] = array("Branchen alle Beratungen ".$jahrselected, "Anzahl");
+            $i++;
+            foreach($berufeberatungabgeschl as $branche) {
+                $branchetitel = $branche['titel'] == '' ? 'kein Beruf/Abschluss eingetragen' : $branche['titel'];
+                $rowsbranchen[$i] = array($branchetitel, $branche['anz']);
+                $i++;
+            }
+            
             // Geschlecht
             $rowsgeschlecht[0] = array("Geschlecht alle Anmeldungen ".$jahrselected, "Anzahl");
             $i=1;
@@ -431,6 +452,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
             $writer->writeSheet($rowsabschla, 'Abschlussart');
             $writer->writeSheet($rowsherkunft, 'Herkunft');
             $writer->writeSheet($rowsberufe, 'Berufe');
+            $writer->writeSheet($rowsbranchen, 'Branchen');
             $writer->writeSheet($rowsgeschlecht, 'Geschlecht');
             $writer->writeSheet($rowsalter, 'Lebensalter');
             
@@ -507,6 +529,8 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 'herkunftberatungabgeschl' => $herkunftberatungabgeschl ?? '',
                 'berufeanmeldungen' => $berufeanmeldungen ?? '',
                 'berufeberatungabgeschl' => $berufeberatungabgeschl ?? '',
+                'brancheanmeldungen' => $brancheanmeldungen ?? '',
+                'brancheberatungabgeschl' => $brancheberatungabgeschl ?? '',
                 'arrgeschlecht' => $arrgeschlecht ?? '',
                 'geschlechtartanmeldungen' => $geschlechtartanmeldungen ?? '',
                 'geschlechtberatungabgeschl' => $geschlechtberatungabgeschl ?? '',

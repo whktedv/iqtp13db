@@ -679,7 +679,44 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                     AND a.hidden = 0 and a.deleted = 0
                     AND b.teilnehmer IS NOT NULL 
                     AND niqidberatungsstelle LIKE '$niqbid' 
+                    AND c.langisocode = 'de' 
                     GROUP BY b.referenzberufzugewiesen ORDER BY anz DESC LIMIT 20";
+        
+        $query->statement($sql);
+        $query = $query->execute(true);
+        return $query;
+    }
+    
+    /**
+     *  Abschlüsse/Berufe für Adminübersicht
+     */
+    public function showAbschluesseBranchen($niqbid, $type, $jahr, $bundesland, $staat) {
+        
+        if($type == 0) {
+            // Anmeldungen (unbestätigt und bestätigt)
+            $filternach = "FROM_UNIXTIME(verification_date)";
+        } elseif($type == 4) {
+            $filternach = "erstberatungabgeschlossen";
+        } else {
+            // fehler!
+        }
+        
+        $query = $this->createQuery();
+        
+        $sql = "SELECT c.titel, count(b.branche) as anz
+                    FROM  tx_iqtp13db_domain_model_teilnehmer as a
+                    LEFT JOIN tx_iqtp13db_domain_model_abschluss as b ON a.uid = b.teilnehmer
+                    LEFT JOIN tx_iqtp13db_domain_model_branche as c ON b.branche = c.brancheid
+                    LEFT JOIN fe_groups as d ON niqidberatungsstelle = d.niqbid
+                    WHERE YEAR($filternach) ";
+        $sql .= $jahr == 99 ? ">= 2023" : "LIKE $jahr";
+        $sql .= " AND d.bundesland LIKE '$bundesland'
+                    AND erste_staatsangehoerigkeit LIKE '$staat'
+                    AND a.hidden = 0 and a.deleted = 0
+                    AND b.teilnehmer IS NOT NULL
+                    AND niqidberatungsstelle LIKE '$niqbid'
+                    AND c.langisocode = 'de' 
+                    GROUP BY b.branche ORDER BY anz DESC LIMIT 20";
         
         $query->statement($sql);
         $query = $query->execute(true);
@@ -790,6 +827,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                     AND d.niqbid LIKE '$beratungsstelle' 
                     AND erste_staatsangehoerigkeit LIKE '$staat'
                     AND a.hidden = 0 and a.deleted = 0
+                    AND c.langisocode = 'de'  
                     GROUP BY referenzberufzugewiesen HAVING anz > 0 ORDER BY anz DESC";
         } elseif ($staat == '%' && $filterberufstaat != 'beruf') {
             // Ausgabe Liste Staatsangehörigkeit
@@ -820,6 +858,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                     AND b.referenzberufzugewiesen LIKE '$beruf'
                     AND erste_staatsangehoerigkeit LIKE '$staat'
                     AND a.hidden = 0 and a.deleted = 0
+                    AND c.langisocode = 'de' 
                     AND b.teilnehmer IS NOT NULL AND c.berufid IS NOT NULL
                     GROUP BY d.bundesland HAVING anz > 0 ORDER BY anz DESC";
         } else {
@@ -842,6 +881,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                     AND b.referenzberufzugewiesen LIKE '$beruf'
                     AND erste_staatsangehoerigkeit LIKE '$staat'
                     AND a.hidden = 0 and a.deleted = 0
+                    AND c.langisocode = 'de' 
                     AND b.teilnehmer IS NOT NULL AND c.berufid IS NOT NULL
                     GROUP BY geschlecht HAVING anz > 0 ORDER BY geschlecht";
         }
