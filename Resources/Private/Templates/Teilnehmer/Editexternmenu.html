@@ -101,7 +101,7 @@
 				<f:render partial="Dokument/UploadDokFeld4EditExtern" arguments="{teilnehmer : teilnehmer, dokumente: dokumente, calleraction : calleraction, anzdateien : anzdateien, dokumenttyp : ''}" />
 			</div>
 			<div class="fframe">			
-				<f:link.action class="linkbuttons frontend" action="editexternmenu" arguments="{thisaction : 'abmelden'}">Logout</f:link.action><br>
+				<f:link.action class="linkbuttons frontend" action="editexternmenu" controller="Teilnehmer" arguments="{thisaction : 'abmelden'}">Logout</f:link.action><br>
 			</div>
 		</div>
 	</div>

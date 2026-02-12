@@ -200,3 +200,4 @@ Update
 - Bugfixing für Wechsel im Sprachmenü
 - Neues optionales Modul für Gruppenberatungen: Über die Einstellungen kann je Berater*in das optionale Modul "Gruppen" aktiviert werden. 
 Im diesem Modul können Gruppenberatungen angelegt werden, die über das Anmeldungen-Modul Ratsuchenden zugewiesen werden können.
+- Für einzelne Dokumente können Download-Links erstellt werden, die Ratsuchende nach Authentifizierung mit dem Geburtsdatum verwenden können.

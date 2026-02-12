@@ -1070,7 +1070,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     {
         if($this->request->hasArgument('code')) {
             $teilnehmer = $this->teilnehmerRepository->findOneByVerificationCode($this->request->getArgument('code'));
-                                    
+                                   
             if($teilnehmer) {                
                 // Gültigkeitszeitraum berechnen
                 $validUntil = $teilnehmer->getEditexternsent() + ($this->settings['externlinkgueltigminuten'] * 60);
@@ -1081,6 +1081,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 } else {
                     $this->view->assign('teilnehmer', $teilnehmer);
                     $this->view->assign('code', $this->request->getArgument('code'));
+                    $this->view->assign('filedownload', $this->request->getArgument('filedownload') ?? 0);
                 }
             } else {
                 $this->addFlashMessage('Link ungültig, Datensatz nicht vorhanden.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
@@ -1100,6 +1101,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function editexternredirectAction(): ResponseInterface
     {
         $valArray = $this->request->getArguments();
+        
         if(!$this->request->hasArgument('authfrage')) {
             $this->addFlashMessage('Link ungültig, bitte erst anmelden.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
             return $this->redirect('validationFailed');
@@ -1109,7 +1111,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $teilnehmer = $this->teilnehmerRepository->findOneByVerificationCode($this->request->getArgument('code'));
 
             $anzfailedlogins = $teilnehmer->getAnzloginfehlgeschlagen();
-            
+                      
             if(!$teilnehmer) {
                 $this->addFlashMessage('Teilnehmer unbekannt.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
                 return $this->redirect('editextern', 'Teilnehmer', null, array('code' => $valArray['code']));
@@ -1128,7 +1130,17 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 $teilnehmer->setAnzloginfehlgeschlagen(0);
                 $this->teilnehmerRepository->update($teilnehmer);
                 $GLOBALS['TSFE']->fe_user->setKey('ses', 'editextern', $teilnehmer->getUid());
-                return $this->redirect('editexternmenu', 'Teilnehmer', null, null);                
+                
+                $dokuid = $valArray['filedownload'];
+                
+                if($dokuid == 0) {
+                    return $this->redirect('editexternmenu', 'Teilnehmer', null, null);
+                } else {
+                    return (new ForwardResponse('dokdownload'))
+                        ->withControllerName('Dokument')
+                        ->withExtensionName('Iqtp13db')
+                        ->withArguments(['filedownload' => $valArray['filedownload']]);
+                }                               
             } else {
                 $anzfailedlogins = $anzfailedlogins + 1;
                 $teilnehmer->setAnzloginfehlgeschlagen($anzfailedlogins);
@@ -1219,7 +1231,6 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $this->view->assignMultiple(
                 [
                     'settings' => $this->settings,
-                    'calleraction' => 'editexternmenu',
                     'abschluesse' => $abschluesse,
                     'teilnehmer' => $teilnehmer,
                     'dokumente' => $dokumente,

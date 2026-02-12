@@ -1,0 +1,60 @@
+<f:layout name="Default" />
+
+<f:section name="main">
+
+<div class="anmeldstart-frame">
+	<div class="iq-teaser-logo-ohne-rand frame-type-text frame-layout-0 frame-no-backgroundimage frame-space-before-none frame-space-after-none">
+		<div class="defaultframe">
+			<div class="frame-inner head-links">
+				
+			</div>
+			<div class="frame-inner head-mitte">
+				<h1 class="text-center">IQ Beratungsportal</h1>
+			</div>
+			<div class="frame-inner head-rechts">
+				<a href="https://www.charta-der-vielfalt.de/" target="_blank"><img class="head-logo-charta" src="/fileadmin/template/images/charta-der-vielfalt.svg" width="180" height="53" alt="Logo Charta der Vielfalt"></a>
+			</div>
+		</div>
+	</div>
+	
+	<div class="defaultframe">
+		<div class="frame-inner editexterninner">
+
+			<f:render partial="FormErrors" arguments="{object:Teilnehmer}" />
+			<f:flashMessages />
+			
+			<div id="AnkerDokumente" class="fframe">
+				<h2><f:translate key="dokumente" /></h2>
+				
+				<f:if condition="{dokument}"><f:then>
+					<table class="doks">
+						<thead>
+							<th>Dateiname</th>
+							<th>Dateigröße</th>
+							<th>Kurzbeschreibung</th>
+							<th></th>
+						</thead>						
+						<tr>
+							<td>
+								<f:if condition="{filesize} == 0"><f:then>
+									Datei {dokument.name} wurde nicht vollständig hochgeladen oder ist defekt.
+								</f:then><f:else>
+									<f:link.action action="openfileextern" arguments="{dokument : dokument, teilnehmer : teilnehmer}" controller="Dokument" target="_blank">{dokument.name}</f:link.action>
+								</f:else>
+								</f:if>
+							</td>
+							<td>{filesize}</td>
+							<td>{dokument.beschreibung}</td>	
+						</tr>		
+					</table>	
+					<div id="response"></div>
+				</f:then></f:if>
+			</div>
+			<div class="fframe">			
+				<f:link.action class="linkbuttons frontend" action="editexternmenu" controller="Teilnehmer" arguments="{thisaction : 'abmelden'}">Logout</f:link.action><br>
+			</div>
+		</div>
+	</div>
+</div>
+
+</f:section>

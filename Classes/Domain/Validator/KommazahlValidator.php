@@ -11,8 +11,12 @@ class KommazahlValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstrac
 	    if (is_numeric($value)) {
 	        return;
 	    } else {
-	        $this->addError('Die Beratungsdauer in Stunden muss in ganzen Zahlen oder Kommazahlen angegeben werden.', 40213131);
-	        return;
+	        if($value == '') {
+	            return;
+	        } else {
+	           $this->addError('Die Beratungsdauer in Stunden muss in ganzen Zahlen oder Kommazahlen angegeben werden.', 40213131);
+	           return;
+	        }
 	    }		
 	}
 }

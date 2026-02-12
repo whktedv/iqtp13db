@@ -48,7 +48,15 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $this->storageRepository = $storageRepository;
     }
     
-     
+    protected function errorAction()
+    {
+        // Alle Validierungsfehler holen
+        $result = $this->arguments->validate();
+        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($result->getFlattenedErrors());
+        
+        return parent::errorAction();
+    }
+    
     /**
      * action init
      *
@@ -383,6 +391,8 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      *
      * @param \Ud\Iqtp13db\Domain\Model\Dokument $dokument
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("teilnehmer")
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("dokument")
      * @return void
      */
     public function openfileexternAction(\Ud\Iqtp13db\Domain\Model\Dokument $dokument, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
@@ -390,9 +400,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $storage = $this->generalhelper->getTP13Storage($this->storageRepository->findAll());
         $beratenepath = $dokument->getPfad();
         $tmpName = $dokument->getName();
-        
-        $targetfile = $storage->getFile($beratenepath . $tmpName);
-        
+        $targetfile = $storage->getFile($beratenepath . $tmpName); 
         $resourceFactory = GeneralUtility::makeInstance(ResourceFactory::class);
         
         try {
@@ -540,6 +548,51 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         return $erg;
     }
 
+    /**
+     * action editexternmenu
+     *
+     */
+    public function dokdownloadAction(): ResponseInterface
+    {        
+        $valArray = $this->request->getArguments();
+        $dokuid = $valArray['filedownload'];        
+        $tnuid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'editextern') ?? 0;
+        
+        if($tnuid == 0) {
+            $this->addFlashMessage('Daten konnte nicht geladen werden, Session abgelaufen oder Cookie nicht gefunden.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            return $this->redirect('editextern', 'Teilnehmer', null, null);
+        } else {            
+            $teilnehmer = $this->teilnehmerRepository->findByUid($tnuid);
+            $dokument = $this->dokumentRepository->findByUid($dokuid);
+            $storage = $this->generalhelper->getTP13Storage($this->storageRepository->findAll());
+            $folder = $storage->getConfiguration()['basePath'].'/';
+            $dokfs = $dokument->getFilesize($folder) ?? 0;
+            $filesize = $dokfs == 0 ? 0 : $this->generalhelper->human_filesize($dokfs, 1);
+            
+            if(isset($valArray['thisaction']) && $valArray['thisaction'] == "abmelden"){
+                $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnuid', null);
+                $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('teilnehmer', null);
+                $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('ses', null);                
+                return $this->redirect('startseite', 'Teilnehmer', null, null);
+            }
+                       
+            $maxtime = time() - 600; // Aktuelle Zeit + 10 Minuten
+            
+            $this->view->assignMultiple(
+                [
+                    'settings' => $this->settings,
+                    'calleraction' => 'dokdownload',
+                    'teilnehmer' => $teilnehmer,
+                    'dokument' => $dokument,
+                    'filesize' => $filesize,
+                    'maxtimestamp' => $maxtime
+                ]
+            );
+            
+            return $this->htmlResponse();
+        }
+    }
+    
    
     /**
      * 

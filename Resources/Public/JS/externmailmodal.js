@@ -5,13 +5,7 @@ function openEmailModal(itemId) {
     if (modal) {
         modal.showModal();
 		
-		asyncupdateteilnehmereditlink(itemId);
-		
-        // Focus auf das Textarea setzen
-        //const textarea = document.getElementById('emailBody_' + itemId);
-        //if (textarea) {
-        //    textarea.focus();
-        //}
+		asyncupdateteilnehmereditlink(itemId);		
     }
 }
 
@@ -20,11 +14,6 @@ function closeEmailModal(itemId) {
     if (modal) {
         modal.close();
 		location.reload();
-        // Formular zurücksetzen
-        //const form = document.getElementById('emailForm_' + itemId);
-        //if (form) {
-        //    form.reset();
-        //}
     }
 }
 
@@ -80,4 +69,32 @@ function asyncupdateteilnehmereditlink(uid) {
     };
 
     xhr.send('tnuid=' + encodeURIComponent(uid));
+}
+
+
+// ----------------------- für Filelinks: ----------------------- 
+function openFileLinkModal(itemId) {
+    const modal = document.getElementById('mail4filemodal' + itemId);
+    if (modal) {
+        modal.showModal();
+    }
+}
+function closeFileLinkModal(itemId) {
+    const modal = document.getElementById('mail4filemodal' + itemId);
+    if (modal) {
+        modal.close();
+		location.reload();
+    }
+}
+function filelinkKopieren(uid) {
+  const linklink = document.getElementById("downloadlinkforFile" + uid);
+  navigator.clipboard.writeText(linklink.href)  	
+    .then(() => {
+	  document.getElementById("mail4externfeedback" + uid).style.display = "block"; 
+      document.getElementById("mail4externfeedback" + uid).innerHTML = "Link kopiert!";
+    })
+    .catch(() => {
+	  document.getElementById("mail4externfeedback" + uid).style.display = "block"; 
+      document.getElementById("mail4externfeedback" + uid).innerHTML = "Kopieren fehlgeschlagen.";
+    });
 }

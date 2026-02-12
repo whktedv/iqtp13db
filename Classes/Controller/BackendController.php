@@ -1899,7 +1899,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'abschlussartarr' => $abschlussartarr,
                 'brancheunterkat' => $brancheunterkat,
                 'anzbstellen' => $this->anzbstellen,
-                'folgekontakte' => $fk4tn
+                'folgekontakte' => $fk4tn,
+                'anmeldeditseite' => $this->settings['anmeldeditseite']
             ]
             );
         return $this->htmlResponse();
@@ -2231,7 +2232,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'brancheunterkat' => $brancheunterkat,
                 'anzbstellen' => $this->anzbstellen,
                 'jahraltereintraglebensalter' => $gebjahrberechnetausalter,
-                'folgekontakte' => $fk4tn                
+                'folgekontakte' => $fk4tn,
+                'anmeldeditseite' => $this->settings['anmeldeditseite']
             ]
             );
         return $this->htmlResponse();
