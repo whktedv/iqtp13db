@@ -180,20 +180,13 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $tmpName = $dokument->getName();
         $targetfile = $storage->getFile($beratenepath . $tmpName);
 
-        // Token generieren
-        $token = $this->downloadTokenHelper->generateToken(
-            $targetfile->getUid(),
-            $dokument->getUid(),
-            $teilnehmer->getUid()
-            );
+        $queryParameterArray = ['eID' => 'dumpFile', 't' => 'f'];
+        $queryParameterArray['f'] = $targetfile->getUid();
+        $queryParameterArray['token'] = GeneralUtility::hmac(implode('|', $queryParameterArray), 'resourceStorageDumpFile');
+        $publicUrl = GeneralUtility::locationHeaderUrl(PathUtility::getAbsoluteWebPath(Environment::getPublicPath() . '/index.php'));
+        $publicUrl .= '?' . http_build_query($queryParameterArray, '', '&', PHP_QUERY_RFC3986);
         
-        // Redirect zur eID-Download-URL mit Token
-        $downloadUrl = $this->uriBuilder->reset()
-        ->setCreateAbsoluteUri(true)
-        ->buildFrontendUri() . '?eID=iqtp13db_download&token=' . $token;
-        
-        return $this->responseFactory->createResponse(303)
-        ->withHeader('Location', $downloadUrl);
+        return $this->redirectToURI($publicUrl, $delay=0, $statusCode=303);
     }
     
     /**
