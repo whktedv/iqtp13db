@@ -5,7 +5,11 @@ const fileInput = document.getElementById('fileInput');
 $( "#opensysfileupload" ).on( "click", function() {
   $("#fileInput").click();
 });
-	
+
+$( "#dropzoneimg" ).on( "click", function() {
+  $("#fileInput").click();
+});
+
 dropzone.addEventListener('dragover', (e) => {
     e.preventDefault();
     dropzone.classList.add('dragging');
@@ -24,7 +28,6 @@ dropzone.addEventListener('drop', (e) => {
 fileInput.addEventListener('change', () => {			
 	document.getElementById('fileuploadform').submit();
 });
-
 
 
 function openAllTableLinks() {

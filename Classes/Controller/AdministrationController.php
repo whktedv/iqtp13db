@@ -5,7 +5,6 @@ use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3\CMS\Core\Pagination\SimplePagination;
@@ -20,6 +19,8 @@ use Ud\Iqtp13db\Domain\Repository\AbschlussRepository;
 use TYPO3\CMS\Core\Resource\StorageRepository;
 use Ud\Iqtp13db\Domain\Repository\BerufeRepository;
 use Ud\Iqtp13db\Domain\Repository\StaatenRepository;
+
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 require_once(Environment::getPublicPath() . '/' . 'typo3conf/ext/iqtp13db/Resources/Private/Libraries/xlsxwriter.class.php');
 
@@ -241,8 +242,6 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         }
         
         $letzteanmeldungen = $this->teilnehmerRepository->findLast4Admin();
-               
-        
         
         // *********** Stats Bundesland/Beruf/Staatsangehörigkeit *************
         

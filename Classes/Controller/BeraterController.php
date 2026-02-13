@@ -7,8 +7,6 @@ use Ud\Iqtp13db\Domain\Repository\BeraterRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Psr\Http\Message\ResponseInterface;
 
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
-
 /**
  * BeraterController
  */
@@ -39,8 +37,7 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         if($this->user != NULL) {
             $this->usergroup = $this->userGroupRepository->findByUid($this->user['usergroup']);
-        }
-        
+        }        
     }
     
     /**
@@ -142,7 +139,6 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     {        
         $valArray = $this->request->getArguments();
         
-        //$currentusergroup = $berater->getUsergroup();
         $aktivieren = $valArray['aktivieren'];
         
         $alleberatungsstellen = $this->userGroupRepository->findAllGroups($this->settings['beraterstoragepid']);

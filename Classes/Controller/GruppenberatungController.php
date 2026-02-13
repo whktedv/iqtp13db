@@ -21,10 +21,6 @@ use Ud\Iqtp13db\Domain\Repository\BeraterRepository;
 use Ud\Iqtp13db\Domain\Repository\GruppenberatungRepository;
 use TYPO3\CMS\Core\Resource\StorageRepository;
 
-
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
-
-
 require_once(Environment::getPublicPath() . '/' . 'typo3conf/ext/iqtp13db/Resources/Private/Libraries/xlsxwriter.class.php');
 
 /***
@@ -102,7 +98,6 @@ class GruppenberatungController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
             if($this->usergroup != NULL) {
                 $userniqidbstelle = $this->usergroup->getNiqbid() ?? $standardniqidberatungsstelle;
             }
-            //$this->niqbid = $userniqidbstelle == '' ? $standardniqidberatungsstelle : $userniqidbstelle;
             $sesniqbid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'currentusergroup') ?? '';
             $this->niqbid = $sesniqbid != '' ? $sesniqbid : $userniqidbstelle;
             $thisgroup = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $this->niqbid);            

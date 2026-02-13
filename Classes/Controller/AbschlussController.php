@@ -4,7 +4,6 @@ namespace Ud\Iqtp13db\Controller;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use Psr\Http\Message\ResponseInterface;
@@ -69,7 +68,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $abschlussartarr = $this->settings['abschlussart'];
         
         if(strstr($abschluss->getAbschlussart(), ',')) $abschluss->setAbschlussart(2);
-        //DebuggerUtility::var_dump($abschluss);
+        
         $brancheunterkat = $this->brancheRepository->findAllUnterkategorie($isocode);
         $this->view->assign('abschlussartarr', $abschlussartarr);
         $this->view->assign('abschluss', $abschluss);
@@ -250,7 +249,6 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $valArray = $this->request->getArguments();
 
         // TODO: ggf. hier Daten in History einfügen
-        //$this->createHistory($teilnehmer, "erwerbsstatus");
         
         $teilnehmer = $this->teilnehmerRepository->findByUid($valArray['teilnehmer']);
         
@@ -351,8 +349,6 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         
         $valArray = $this->request->getArguments();
         $valArray['abschluss']['branche'] = 0;
-        //DebuggerUtility::var_dump($valArray);
-        //die;
     }
 
     /**

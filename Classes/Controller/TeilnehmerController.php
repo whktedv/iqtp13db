@@ -18,8 +18,6 @@ use TYPO3\CMS\Extbase\Annotation\Validate;
 use Ud\Iqtp13db\Domain\Validator\TeilnehmerValidator;
 use Ud\Iqtp13db\Domain\Validator\WebappMailValidator;
 
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
-
 use Ud\Iqtp13db\Domain\Model\Teilnehmer;
 use Ud\Iqtp13db\Domain\Repository\UserGroupRepository;
 use Ud\Iqtp13db\Domain\Repository\TeilnehmerRepository;
@@ -310,9 +308,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         }
         return $this->htmlResponse();
     }
-    
-    
-    
+            
     
     /**
      * action anmeldseite1
@@ -1079,9 +1075,12 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     $this->addFlashMessage('Link nicht mehr gültig, bitte neuen Link bei Beratungsstelle anfordern.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
                     return $this->redirect('anmeldseite0');                    
                 } else {
+                    if($this->request->hasArgument('filedownload')) $filedownload = $this->request->getArgument('filedownload');
+                    if($this->request->hasArgument('ohnepersdat')) $ohnepersdat = $this->request->getArgument('ohnepersdat');
                     $this->view->assign('teilnehmer', $teilnehmer);
                     $this->view->assign('code', $this->request->getArgument('code'));
-                    $this->view->assign('filedownload', $this->request->getArgument('filedownload') ?? 0);
+                    $this->view->assign('filedownload', $filedownload ?? 0);
+                    $this->view->assign('ohnepersdat', $ohnepersdat ?? 0);
                 }
             } else {
                 $this->addFlashMessage('Link ungültig, Datensatz nicht vorhanden.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
@@ -1134,7 +1133,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 $dokuid = $valArray['filedownload'];
                 
                 if($dokuid == 0) {
-                    return $this->redirect('editexternmenu', 'Teilnehmer', null, null);
+                    return $this->redirect('editexternmenu', 'Teilnehmer', null, array('ohnepersdat' => $valArray['ohnepersdat'] ?? 0));
                 } else {
                     return (new ForwardResponse('dokdownload'))
                         ->withControllerName('Dokument')
@@ -1167,7 +1166,6 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function editexternmenuAction(): ResponseInterface
     {
         $valArray = $this->request->getArguments();
-              
         $tnuid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'editextern') ?? 0;
          
         if($tnuid == 0) {
@@ -1226,7 +1224,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $zugewieseneberatungsstelle = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $teilnehmer->getNiqidberatungsstelle());
             $datenberatungsstelle = $zugewieseneberatungsstelle != NULL ? $zugewieseneberatungsstelle[0]->getDescription() : '';
             
-            $maxtime = time() - 600; // Aktuelle Zeit + 10 Minuten
+            $maxtime = time() - 600; // Aktuelle Zeit + 10 Minuten = maximales Alter von Dateien, damit diese noch vom RS gelöscht werden können 
             
             $this->view->assignMultiple(
                 [
@@ -1242,7 +1240,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     'filesizes' => $filesizes,
                     'calleraction' => 'editexternmenu',
                     'datenberatungsstelle' => $datenberatungsstelle,
-                    'maxtimestamp' => $maxtime
+                    'maxtimestamp' => $maxtime,
+                    'ohnepersdat' => $valArray['ohnepersdat'] ?? 0
                 ]
                 );
             
@@ -1259,7 +1258,6 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         
         if(is_string($valarrteilnehmer)) $tnuid = $valarrteilnehmer;
         else $tnuid = $valarrteilnehmer['__identity'];
-        //$tnuid = $valarrteilnehmer->getUid();
         
         $thistn = $this->teilnehmerRepository->findByUid($tnuid);
         

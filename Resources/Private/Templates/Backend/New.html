@@ -6,10 +6,6 @@
 
 <f:section name="main">
 
-<f:flashMessages />
-
-<f:render partial="FormErrors" arguments="{object:Teilnehmer}" />
-
 <!-- Modal - HTML -->
 	<dialog id="infomodal">
 	  <h3>Info</h3>
@@ -25,6 +21,9 @@
 			<f:link.action id="linkloadoverlay-back" class="linkbuttons" action="{calleraction}" controller="{callercontroller}" arguments="{callerpage : callerpage, tn : teilnehmer}">Zurück zur Liste</f:link.action>
 		</div>	
 	</div>
+
+	<f:flashMessages />
+	<f:render partial="FormErrors" arguments="{object:Teilnehmer}" />
 	
 	<div class="edit-eingabefelder">
 		<h1>Neue*r Ratsuchende*r</h1>

@@ -1,10 +1,10 @@
 <div class="dokumenteuploadform">
 
 	<f:if condition="{anzdateien} < 20"><f:then>
-		<f:form action="savemultiFileWebapp" id="fileuploadform1" controller="Dokument" name="dokument" arguments="{teilnehmer: teilnehmer, calleraction : calleraction}" method="post" enctype="multipart/form-data">
+		<f:form action="savemultiFileWebapp" id="fileuploadform1" controller="Dokument" name="dokument" arguments="{teilnehmer: teilnehmer, calleraction : calleraction, ohnepersdat : ohnepersdat}" method="post" enctype="multipart/form-data">
 		    <div id="dropzone1" class="dropzone">
 		    	<div class="dropzone-inner">
-		    		<img src="/fileadmin/template/images/iq_upload_icon.svg" width="100" height="100"/>
+		    		<img id="dropzoneimg" src="/fileadmin/template/images/iq_upload_icon.svg" width="100" height="100"/>
 		    		<span class="descdragdrop">{f:translate(key='uploaddropfile')}</span>
 		    	</div>       
 		        <f:form.upload name="file" id="fileInput1" multiple="multiple" />	

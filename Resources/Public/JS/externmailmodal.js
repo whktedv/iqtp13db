@@ -40,9 +40,15 @@ document.addEventListener('keydown', function(event) {
     }
 });
 
-function linkKopieren(uid) {
-  const linklink = document.getElementById("editlinkforRS" + uid);
-  navigator.clipboard.writeText(linklink.href)  	
+function linkKopieren(uid, persdat) {	
+	var linklink = '';
+	if(persdat == 1) {
+		linklink = document.getElementById("editlinkforRS" + uid);
+	} else {
+		linklink = document.getElementById("editlinkforRSohnePersDat" + uid);
+	}
+  	
+	navigator.clipboard.writeText(linklink.href)  	
     .then(() => {
 	  document.getElementById("mail4externfeedback" + uid).style.display = "block"; 
       document.getElementById("mail4externfeedback" + uid).innerHTML = "Link kopiert!";
@@ -71,8 +77,11 @@ function asyncupdateteilnehmereditlink(uid) {
     xhr.send('tnuid=' + encodeURIComponent(uid));
 }
 
-
-// ----------------------- für Filelinks: ----------------------- 
+/* 
+*--------------------------------------------------------------------
+* ----------------------- für Fileonly Links: ----------------------- 
+* -------------------------------------------------------------------
+*/
 function openFileLinkModal(itemId) {
     const modal = document.getElementById('mail4filemodal' + itemId);
     if (modal) {

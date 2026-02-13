@@ -1,7 +1,6 @@
 <?php
 namespace Ud\Iqtp13db\Controller;
 
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Core\Core\Environment;
@@ -12,6 +11,7 @@ use TYPO3\CMS\Core\Resource\ResourceFactory;
 use Ud\Iqtp13db\Domain\Repository\UserGroupRepository;
 use Ud\Iqtp13db\Domain\Repository\TeilnehmerRepository;
 use Ud\Iqtp13db\Domain\Repository\DokumentRepository;
+use Ud\Iqtp13db\Helper\DownloadTokenHelper;
 use TYPO3\CMS\Core\Resource\StorageRepository;
 use TYPO3\CMS\Core\Resource\Folder;
 use TYPO3\CMS\Core\Resource\InaccessibleFolder;
@@ -34,25 +34,26 @@ use TYPO3\CMS\Core\Resource\Search\FileSearchDemand;
 class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
     protected $generalhelper, $allusergroups;
-    
+    protected DownloadTokenHelper $downloadTokenHelper;
     protected $userGroupRepository;
     protected $teilnehmerRepository;
     protected $dokumentRepository;
     protected $storageRepository;
     
-    public function __construct(UserGroupRepository $userGroupRepository, TeilnehmerRepository $teilnehmerRepository, DokumentRepository $dokumentRepository, StorageRepository $storageRepository)
+    public function __construct(UserGroupRepository $userGroupRepository, TeilnehmerRepository $teilnehmerRepository, DokumentRepository $dokumentRepository, StorageRepository $storageRepository, DownloadTokenHelper $downloadTokenHelper)
     {
         $this->userGroupRepository = $userGroupRepository;
         $this->teilnehmerRepository = $teilnehmerRepository;
         $this->dokumentRepository = $dokumentRepository;
         $this->storageRepository = $storageRepository;
+        $this->downloadTokenHelper = $downloadTokenHelper;
     }
     
     protected function errorAction()
     {
         // Alle Validierungsfehler holen
         $result = $this->arguments->validate();
-        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($result->getFlattenedErrors());
+        //\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($result->getFlattenedErrors());
         
         return parent::errorAction();
     }
@@ -177,17 +178,22 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $storage = $this->generalhelper->getTP13Storage($this->storageRepository->findAll());
         $beratenepath = $dokument->getPfad();
         $tmpName = $dokument->getName();
-        
         $targetfile = $storage->getFile($beratenepath . $tmpName);
+
+        // Token generieren
+        $token = $this->downloadTokenHelper->generateToken(
+            $targetfile->getUid(),
+            $dokument->getUid(),
+            $teilnehmer->getUid()
+            );
         
-        $queryParameterArray = ['eID' => 'dumpFile', 't' => 'f'];
-        $queryParameterArray['f'] = $targetfile->getUid();
-        $queryParameterArray['token'] = GeneralUtility::hmac(implode('|', $queryParameterArray), 'resourceStorageDumpFile');
-        $publicUrl = GeneralUtility::locationHeaderUrl(PathUtility::getAbsoluteWebPath(Environment::getPublicPath() . '/index.php'));
-        $publicUrl .= '?' . http_build_query($queryParameterArray, '', '&', PHP_QUERY_RFC3986);
+        // Redirect zur eID-Download-URL mit Token
+        $downloadUrl = $this->uriBuilder->reset()
+        ->setCreateAbsoluteUri(true)
+        ->buildFrontendUri() . '?eID=iqtp13db_download&token=' . $token;
         
-        return $this->redirectToURI($publicUrl, $delay=0, $statusCode=303);
-        
+        return $this->responseFactory->createResponse(303)
+        ->withHeader('Location', $downloadUrl);
     }
     
     /**
@@ -212,8 +218,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
                 $dokument->setTnfreigabe(1);
                 $dokument->setCrdate(time());
                 $this->saveFileTeilnehmer($dokument, $teilnehmer, $_FILES['tx_iqtp13db_iqtp13dbwebapp']);
-            }
-            
+            }            
         }
         return $this->redirect('anmeldungcomplete', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
     }
@@ -268,7 +273,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
                 
             }            
         }   
-        return $this->redirect($valArray['calleraction'], 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
+        return $this->redirect($valArray['calleraction'], 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'ohnepersdat' => $valArray['ohnepersdat'] ?? 0));
     }
     
     /**
@@ -302,8 +307,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     {
         $valArray = $this->request->getArguments();
         $retval = $this->deleteFileTeilnehmer($dokument, $teilnehmer);
-        return $this->redirect($valArray['calleraction'], 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
-        //return (new ForwardResponse($valArray['calleraction']))->withControllerName('Teilnehmer');
+        return $this->redirect($valArray['calleraction'], 'Teilnehmer', null, array('teilnehmer' => $teilnehmer, 'ohnepersdat' => $valArray['ohnepersdat'] ?? 0));
     }
    
     /**
@@ -401,34 +405,21 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $beratenepath = $dokument->getPfad();
         $tmpName = $dokument->getName();
         $targetfile = $storage->getFile($beratenepath . $tmpName); 
-        $resourceFactory = GeneralUtility::makeInstance(ResourceFactory::class);
         
-        try {
-            $file = $resourceFactory->getFileObject($targetfile->getUid());
-            
-            // Sicherheitsprüfung
-            if (!$file->exists()) {
-                throw new \Exception('Datei nicht gefunden');
-            }
-            
-            // Response-Header setzen
-            $response = $this->responseFactory->createResponse()
-            ->withHeader('Content-Type', $file->getMimeType())
-            ->withHeader('Content-Disposition', 'attachment; filename="' . $file->getName() . '"')
-            ->withHeader('Content-Length', (string)$file->getSize());
-            
-            // Datei-Inhalt zum Response hinzufügen
-            $response->getBody()->write($file->getContents());
-            
-            return $response;
-            
-        } catch (\Exception $e) {
-            // Fehlerbehandlung
-            return $this->responseFactory->createResponse(404)
-            ->withHeader('Content-Type', 'text/plain')
-            ->withBody($this->streamFactory->createStream('Datei nicht gefunden'));
-        }
-      
+        // Token generieren
+        $token = $this->downloadTokenHelper->generateToken(
+            $targetfile->getUid(),
+            $dokument->getUid(),
+            $teilnehmer->getUid()
+            );
+        
+        // Redirect zur eID-Download-URL mit Token
+        $downloadUrl = $this->uriBuilder->reset()
+        ->setCreateAbsoluteUri(true)
+        ->buildFrontendUri() . '?eID=iqtp13db_download&token=' . $token;
+        
+        return $this->responseFactory->createResponse(303)
+        ->withHeader('Location', $downloadUrl);
     }
     
     /**

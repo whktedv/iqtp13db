@@ -164,8 +164,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $userniqidbstelle = $this->usergroup->getNiqbid() ?? $standardniqidberatungsstelle;
             }
             
-            
-            //$this->niqbid = $userniqidbstelle == '' ? $standardniqidberatungsstelle : $userniqidbstelle;
             $sesniqbid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'currentusergroup') ?? '';
             $this->niqbid = $sesniqbid != '' ? $sesniqbid : $userniqidbstelle;
             $thisgroup = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $this->niqbid);            
@@ -230,11 +228,12 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     {
         $valArray = $this->request->getArguments();
                
+        //if($this->user['username'] == 'udohmen') DebuggerUtility::var_dump($valArray);
+        
         // Gruppenwechsel Beratungsstelle, wenn ein User mehreren Beratungsstellen zugeordnet ist
         $backenduser = $this->beraterRepository->findByUid($this->user['uid']);
         $backendusergroups = array();
         $backendusergroups = $backenduser->getUsergroup();
-
         
         $niqbidaktuellegruppe = $this->usergroup->getNiqbid();        
         if(isset($valArray['bstellen']) && $valArray['bstellen'] != '') {            
@@ -385,7 +384,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $writer->setAuthor('IQ Webapp');
             
             $writer->writeSheet($rows, 'Statistik', $headerblatt1);
-            // $writer->writeSheet($rowsfk, 'Folgekontakte', $headerblatt2);
             
             header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
             header('Content-Disposition: attachment;filename="'.$filename.'"');
@@ -1074,7 +1072,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             }
             $j++;
         }
-        //DebuggerUtility::var_dump($valArray);
         
         $berufeliste = $this->berufeRepository->findAllOrdered('de');
         $staaten = $this->staatenRepository->findByLangisocode('de');
@@ -2043,8 +2040,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
         
-        // 07.06.2023 auskommentiert, weil ggf. nicht notwendig: $tfolder = $this->generalhelper->createFolder($teilnehmer, $this->storageRepository->findAll());
-        
         return $this->redirect('edit', 'Backend', null, array('teilnehmer' => $teilnehmer, 'calleraction' => $valArray['calleraction'], 'callercontroller' => $valArray['callercontroller'], 'callerpage' => $valArray['callerpage'], 'newnacherfassung' => $valArray['newnacherfassung']));
     }
     
@@ -2299,7 +2294,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $teilnehmer->setBeratungdatum($teilnehmer->getErstberatungabgeschlossen());
             
             $this->addFlashMessage("Datensatz gespeichert. Für 'Datum Erstberatung' wurde automatisch das Datum 'Erstberatung abgeschlossen' eingetragen.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
-            //return $this->redirect($valArray['calleraction'] ?? 'edit', $valArray['callercontroller'] ?? 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
         }
 
         if($teilnehmer->getGebdat() != '') {
@@ -3105,7 +3099,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             } else {
                 $teilnehmers = $this->teilnehmerRepository->searchTeilnehmer($type, $f, $deleted, $this->niqbid, $berufearr, $orderby, $order, $this->usergroup, $limit);
             }            
-            //if($this->user['username'] == 'admin') DebuggerUtility::var_dump($teilnehmers);
             $this->view->assign('filteruid', $f['uid']);
             $this->view->assign('filtername', $f['name']);
             $this->view->assign('filterort', $f['ort']);

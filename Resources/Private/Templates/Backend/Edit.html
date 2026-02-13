@@ -45,8 +45,6 @@
 </f:else>
 </f:if>
 
-<f:render partial="FormErrors" arguments="{object:Teilnehmer}" />
-
 <!-- Modal - HTML -->
 	<dialog id="infomodal">
 	  <h3>Info</h3>
@@ -77,6 +75,7 @@
 	<f:if condition="{edituserfield} != ''"><div class="edituserfield">Datensatz wird seit <strong>{edittstampfield} Uhr</strong> von {edituserfield} bearbeitet</div></f:if>
 	<h1>Ratsuchende*n bearbeiten UID: {teilnehmer.uid}</h1>
 	
+	<f:render partial="FormErrors" arguments="{object:Teilnehmer}" />
 	<f:flashMessages />
 	
 		<f:render partial="TeilnehmerBackend/FormFields-Part1" arguments="{_all}" />

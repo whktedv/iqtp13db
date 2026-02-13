@@ -24,6 +24,9 @@ $( "#opensysfileupload1" ).on( "click", function() {
   $("#fileInput1").click();
 });
 
+$( "#dropzoneimg" ).on( "click", function() {
+  $("#fileInput").click();
+});
 dropzone1.addEventListener('click', (e) => {
 	$("#fileInput1").click();    
 });

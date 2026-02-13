@@ -22,6 +22,9 @@ $( "#opensysfileupload3" ).on( "click", function() {
 $( "#opensysfileupload4" ).on( "click", function() {
   $("#fileInput4").click();
 });
+$( "#dropzoneimg" ).on( "click", function() {
+  $("#fileInput").click();
+});
 
 dropzone1.addEventListener('dragover', (e) => {
     e.preventDefault();

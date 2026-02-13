@@ -1,10 +1,9 @@
 <?php
 namespace Ud\Iqtp13db\Controller;
 use \Datetime;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
-
 use Psr\Http\Message\ResponseInterface;
+
 use Ud\Iqtp13db\Domain\Repository\UserGroupRepository;
 use Ud\Iqtp13db\Domain\Repository\TeilnehmerRepository;
 use Ud\Iqtp13db\Domain\Repository\FolgekontaktRepository;

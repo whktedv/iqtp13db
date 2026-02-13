@@ -17,7 +17,7 @@ call_user_func(
             [
                 \Ud\Iqtp13db\Controller\BackendController::class => 'start, listangemeldet, listerstberatung, listarchiv, checkniqconnection, sendtoniq, sendtoarchiv, unarchive, show, new, create, edit, update, delete, status, export, askconsent, listdeleted, undelete, savedatenblattpdf, takeover, setBeratungsstellebyPLZ, saveAVpdf, showsearchresult, editsettings, updatesettings, mail4editextern',
                 \Ud\Iqtp13db\Controller\FolgekontaktController::class => 'show, new, create, edit, update, delete, listall',
-                \Ud\Iqtp13db\Controller\DokumentController::class => 'saveFileBackend, savemultiFileBackend, deleteFileBackend, openfile, updateBackend, doksave, dokdownload',
+                \Ud\Iqtp13db\Controller\DokumentController::class => 'saveFileBackend, savemultiFileBackend, deleteFileBackend, openfile, updateBackend, dokdownload',
                 \Ud\Iqtp13db\Controller\HistorieController::class => 'list',
                 \Ud\Iqtp13db\Controller\AbschlussController::class => 'show, new, create, edit, update, delete',
                 \Ud\Iqtp13db\Controller\BeraterController::class => 'list, edit, update, delete, enableGruppenberatungen',
@@ -29,7 +29,7 @@ call_user_func(
             [
                 \Ud\Iqtp13db\Controller\BackendController::class => 'start, listangemeldet, listerstberatung, listarchiv, checkniqconnection, sendtoniq, sendtoarchiv, unarchive, show, new, create, edit, update, delete, status, export, askconsent, listdeleted, undelete, savedatenblattpdf, takeover, setBeratungsstellebyPLZ, saveAVpdf, showsearchresult, editsettings, updatesettings, mail4editextern',
                 \Ud\Iqtp13db\Controller\FolgekontaktController::class => 'show, new, create, edit, update, delete, listall',
-                \Ud\Iqtp13db\Controller\DokumentController::class => 'saveFileBackend, savemultiFileBackend, deleteFileBackend, openfile, updateBackend, doksave, dokdownload',
+                \Ud\Iqtp13db\Controller\DokumentController::class => 'saveFileBackend, savemultiFileBackend, deleteFileBackend, openfile, updateBackend, dokdownload',
                 \Ud\Iqtp13db\Controller\HistorieController::class => 'list',
                 \Ud\Iqtp13db\Controller\AbschlussController::class => 'show, new, create, edit, update, delete',
                 \Ud\Iqtp13db\Controller\BeraterController::class => 'list, edit, update, delete, enableGruppenberatungen',
@@ -67,13 +67,15 @@ call_user_func(
             );
         
         // Register eID calls
-        $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['doksave'] = \Ud\Iqtp13db\Controller\RequestController::class . '::doksaveEidAction';
+        $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['doksave'] = \Ud\Iqtp13db\Controller\RequestController::class . '::doksaveEidAction';        
         $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['tneditlinksave'] = \Ud\Iqtp13db\Controller\RequestController::class . '::tneditlinksaveEidAction';
+        $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['iqtp13db_download'] = \Ud\Iqtp13db\Controller\DownloadController::class . '::processRequest';
         // diese drei für die Gruppenberatungsfunktion
         $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['iqtp13db_update'] = \Ud\Iqtp13db\Controller\RequestController::class . '::updateSelectionAction';
         $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['iqtp13db_toggle'] = \Ud\Iqtp13db\Controller\RequestController::class . '::toggleCheckboxesAction';
         $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['iqtp13db_submit'] = \Ud\Iqtp13db\Controller\RequestController::class . '::addToGroupConsultationAction';
-                        
+
+        
         /****************
          * Scheduler TASK to delete old/deleted entries
          ****************/

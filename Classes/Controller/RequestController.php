@@ -15,7 +15,6 @@ use Ud\Iqtp13db\Domain\Repository\TeilnehmerRepository;
 use Ud\Iqtp13db\Domain\Repository\GruppenberatungRepository;
 use Ud\Iqtp13db\Domain\Repository\BeraterRepository;
 
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 /**
  * AJAX Controller für JSON-Requests
  * Wird NICHT über Extbase, sondern direkt über eID aufgerufen
@@ -58,7 +57,7 @@ class RequestController
         
         // Antwort zurückgeben
         header('Content-Type: application/json');
-        echo json_encode(['message' => 'Beschreibung gespeichert.']);        
+        echo json_encode(['message' => 'Gespeichert.']);        
         exit;
     }
     

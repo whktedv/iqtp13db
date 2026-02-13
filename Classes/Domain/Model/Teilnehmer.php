@@ -471,7 +471,6 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * beratungsdauer
      *
      * @var string
-     * @TYPO3\CMS\Extbase\Annotation\Validate("\Ud\Iqtp13db\Domain\Validator\KommazahlValidator")
      */
     protected $beratungsdauer = '';
     
