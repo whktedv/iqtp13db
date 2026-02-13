@@ -228,7 +228,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     {
         $valArray = $this->request->getArguments();
                
-        //if($this->user['username'] == 'udohmen') DebuggerUtility::var_dump($valArray);
+        //if($this->user['username'] == 'udohmen') \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($valArray);
         
         // Gruppenwechsel Beratungsstelle, wenn ein User mehreren Beratungsstellen zugeordnet ist
         $backenduser = $this->beraterRepository->findByUid($this->user['uid']);

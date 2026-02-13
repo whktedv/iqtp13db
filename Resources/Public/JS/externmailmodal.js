@@ -3,9 +3,8 @@
 function openEmailModal(itemId) {
     const modal = document.getElementById('mail4externmodal' + itemId);
     if (modal) {
-        modal.showModal();
-		
-		asyncupdateteilnehmereditlink(itemId);		
+        modal.showModal();		
+		asyncupdateteilnehmereditlink(itemId);
     }
 }
 
@@ -82,10 +81,11 @@ function asyncupdateteilnehmereditlink(uid) {
 * ----------------------- für Fileonly Links: ----------------------- 
 * -------------------------------------------------------------------
 */
-function openFileLinkModal(itemId) {
+function openFileLinkModal(tnuid, itemId) {
     const modal = document.getElementById('mail4filemodal' + itemId);
     if (modal) {
         modal.showModal();
+		asyncupdateteilnehmereditlink(tnuid);
     }
 }
 function closeFileLinkModal(itemId) {

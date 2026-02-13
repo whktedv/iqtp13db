@@ -51,7 +51,7 @@
 						</f:form>						
 						<td>
 						<f:render partial="TeilnehmerBackend/ModalMail4File" arguments="{teilnehmer : teilnehmer, dokument : dokument, anmeldeditseite: anmeldeditseite}" />
-						<a href="#AnkerDokumente" onclick="openFileLinkModal({dokument.uid})"><img src="/fileadmin/template/images/iq-webapp_linkfile.svg" width="30" height="30" alt="Link senden" /></a>					
+						<a href="#AnkerDokumente" onclick="openFileLinkModal({teilnehmer.uid}, {dokument.uid})"><img src="/fileadmin/template/images/iq-webapp_linkfile.svg" width="30" height="30" alt="Link senden" /></a>					
 						<td><f:link.action class="iconbuttons" action="deleteFileBackend" controller="Dokument" arguments="{dokument : dokument, teilnehmer : teilnehmer, calleraction : calleraction, callercontroller : callercontroller, callerpage : callerpage, thisaction : thisaction}" onclick="return confirm('Wirklich löschen?');" ><img src="/typo3conf/ext/iqtp13db/Resources/Public/Icons/delete-640.png" width="32" height="32" alt="Löschen" /></f:link.action></td>
 					</tr>		
 			</f:for>
