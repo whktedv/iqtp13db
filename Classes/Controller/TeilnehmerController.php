@@ -1070,13 +1070,14 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             if($teilnehmer) {                
                 // Gültigkeitszeitraum berechnen
                 $validUntil = $teilnehmer->getEditexternsent() + ($this->settings['externlinkgueltigminuten'] * 60);
+                $filedownload = 0;
+                if($this->request->hasArgument('filedownload')) $filedownload = $this->request->getArgument('filedownload');
+                if($this->request->hasArgument('ohnepersdat')) $ohnepersdat = $this->request->getArgument('ohnepersdat');
                 
-                if ($validUntil < time()) {
+                if ($validUntil < time() && $filedownload == 0) {
                     $this->addFlashMessage('Link nicht mehr gültig, bitte neuen Link bei Beratungsstelle anfordern.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
                     return $this->redirect('anmeldseite0');                    
                 } else {
-                    if($this->request->hasArgument('filedownload')) $filedownload = $this->request->getArgument('filedownload');
-                    if($this->request->hasArgument('ohnepersdat')) $ohnepersdat = $this->request->getArgument('ohnepersdat');
                     $this->view->assign('teilnehmer', $teilnehmer);
                     $this->view->assign('code', $this->request->getArgument('code'));
                     $this->view->assign('filedownload', $filedownload ?? 0);

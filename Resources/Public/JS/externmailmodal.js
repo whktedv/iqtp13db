@@ -85,7 +85,7 @@ function openFileLinkModal(tnuid, itemId) {
     const modal = document.getElementById('mail4filemodal' + itemId);
     if (modal) {
         modal.showModal();
-		asyncupdateteilnehmereditlink(tnuid);
+		//document.getElementById('mail4externfeedback' + uid).innerHTML = "";
     }
 }
 function closeFileLinkModal(itemId) {
