@@ -66,7 +66,7 @@ function asyncupdateteilnehmereditlink(uid) {
     xhr.onreadystatechange = function() {			
         if (xhr.readyState == 4 && xhr.status == 200) {
 			var jsonresponse = JSON.parse(xhr.responseText);
-            document.getElementById('mail4externfeedback' + uid).innerHTML = jsonresponse.message;			
+            document.getElementById('mail4externfeedback' + uid).innerHTML = jsonresponse.message;
         }
 		if (xhr.readyState == 4 && xhr.status == 500) {
 			document.getElementById('mail4externfeedback' + uid).innerHTML = "<span style='color: red; font-weight: bold;'>Error " + xhr.status + " - Zeitstempel konnte nicht gespeichert werden. Sollte dieser Fehler erneut erscheinen, bitte Support kontaktieren.</span>";

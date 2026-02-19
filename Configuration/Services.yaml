@@ -10,4 +10,6 @@ services:
 
   Ud\Iqtp13db\Controller\RequestController:
     public: true
-  
+
+  Ud\Iqtp13db\Service\QRCodeGenerator:
+    public: true

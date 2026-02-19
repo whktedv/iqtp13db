@@ -30,6 +30,8 @@ use Ud\Iqtp13db\Domain\Repository\OrtRepository;
 use Ud\Iqtp13db\Domain\Repository\BrancheRepository;
 use Ud\Iqtp13db\Domain\Repository\GruppenberatungRepository;
 
+use Ud\Iqtp13db\Service\QRCodeGenerator;
+
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 require_once(Environment::getPublicPath() . '/' . 'typo3conf/ext/iqtp13db/Resources/Private/Libraries/xlsxwriter.class.php');
@@ -66,7 +68,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     protected $ortRepository;
     protected $brancheRepository;
     protected $gruppenberatungRepository;
-    
+    protected $qrCodeGenerator;
     
     public function __construct(
         UserGroupRepository $userGroupRepository, 
@@ -81,7 +83,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         StaatenRepository $staatenRepository, 
         OrtRepository $ortRepository, 
         BrancheRepository $brancheRepository,
-        GruppenberatungRepository $gruppenberatungRepository
+        GruppenberatungRepository $gruppenberatungRepository,
+        QRCodeGenerator $qrCodeGenerator
     )
     {
         $this->userGroupRepository = $userGroupRepository;
@@ -97,6 +100,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $this->ortRepository = $ortRepository;
         $this->brancheRepository = $brancheRepository;
         $this->gruppenberatungRepository = $gruppenberatungRepository;
+        $this->qrCodeGenerator = $qrCodeGenerator;
     }
     
     /**
@@ -710,6 +714,13 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $mail4externstandardmailtext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtextedit', 'Iqtp13db');
         
+        $data = 'https://www.iq-nrw-west.de/';
+        // PNG als Base64-Data-URI
+        $qrBase64 = $this->qrCodeGenerator->generateBase64Png($data, QRCodeGenerator::ECC_M, 10, 4);
+        
+        // SVG-String (direkt inline einbettbar)
+        //$qrSvg = $this->qrCodeGenerator->generateSvg($data, $ecc, 4);
+        
         $this->view->assignMultiple(
             [
                 'anzgesamt' => count($teilnehmer),
@@ -733,7 +744,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'anzbstellen' => $this->anzbstellen,
                 'betafeaturesaktiviert' => $this->usergroup->getBetafeatures(),
                 'mail4externstandardmailtext' => $mail4externstandardmailtext,
-                'anmeldeditseite' => $this->settings['anmeldeditseite']
+                'anmeldeditseite' => $this->settings['anmeldeditseite'],
+                'qrBase64' => $qrBase64
             ]
             );
         return $this->htmlResponse();
@@ -2650,20 +2662,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             
             $mailtextedit = $emailBody;
             //\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtextedit', 'Iqtp13db');
-            $linktitleeditregistration = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('linktitleeditregistration', 'Iqtp13db');
-                        
-            // QRCode Library per composer einbinden - wenn nicht vorhanden, dann s.u.
-            //$composer = \TYPO3\CMS\Core\Core\Environment::getConfigPath(). '/vendor/autoload.php';
-            //if (file_exists($composer)) {
-            //   require_once($composer);
-            //} else {
-                // QRCode Library nicht per composer eingebunden
-                //$this->addFlashMessage('QR Code Library nicht installiert. Bitte Admin kontaktieren.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
-                //return $this->redirect('listangemeldet', 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer, 'callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $searchparams ?? ''));
-            //}
-            // $qrcode = new \QRCode();
-            // $link = "https://www.whkt.de/";
-            // $qrcodesvg = $qrcode->render($link);
+            $linktitleeditregistration = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('linktitleeditregistration', 'Iqtp13db');                        
             
             $variables = array(
                 'teilnehmer' => $teilnehmer,

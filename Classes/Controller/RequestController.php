@@ -27,7 +27,7 @@ class RequestController
     protected $dokumentRepository;
     protected $teilnehmerRepository;
     protected $gruppenberatungRepository;
-    protected $beraterRepository;
+    protected $beraterRepository;    
 
     public function __construct(DokumentRepository $dokumentRepository, TeilnehmerRepository $teilnehmerRepository, GruppenberatungRepository $gruppenberatungRepository, BeraterRepository $beraterRepository)
     {       
@@ -73,7 +73,7 @@ class RequestController
         // Persistierung erzwingen
         $persistenceManager = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager::class);
         $persistenceManager->persistAll();
-        
+                
         // Antwort zurückgeben
         header('Content-Type: application/json');
         echo json_encode(['message' => 'Zeitstempel gespeichert.']);

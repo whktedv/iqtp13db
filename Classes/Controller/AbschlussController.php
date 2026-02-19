@@ -47,8 +47,6 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $this->brancheRepository = $brancheRepository;
     }
     
-    
-
     /**
      * action show
      *
