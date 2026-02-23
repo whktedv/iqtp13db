@@ -714,13 +714,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $mail4externstandardmailtext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtextedit', 'Iqtp13db');
         
-        $data = 'https://www.iq-nrw-west.de/';
-        // PNG als Base64-Data-URI
-        $qrBase64 = $this->qrCodeGenerator->generateBase64Png($data, QRCodeGenerator::ECC_M, 10, 4);
-        
-        // SVG-String (direkt inline einbettbar)
-        //$qrSvg = $this->qrCodeGenerator->generateSvg($data, $ecc, 4);
-        
         $this->view->assignMultiple(
             [
                 'anzgesamt' => count($teilnehmer),
@@ -744,8 +737,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'anzbstellen' => $this->anzbstellen,
                 'betafeaturesaktiviert' => $this->usergroup->getBetafeatures(),
                 'mail4externstandardmailtext' => $mail4externstandardmailtext,
-                'anmeldeditseite' => $this->settings['anmeldeditseite'],
-                'qrBase64' => $qrBase64
+                'anmeldeditseite' => $this->settings['anmeldeditseite']
             ]
             );
         return $this->htmlResponse();
@@ -2649,7 +2641,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             }
             
             $templateName = 'MailEditExtern';
-            $subject = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('subject', 'Iqtp13db')." - UID: ".$teilnehmer->getUid();
+            $subject = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('subjecteditextern', 'Iqtp13db')." - UID: ".$teilnehmer->getUid();
             $anrede = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('anredemail', 'Iqtp13db');
             $zugewieseneberatungsstelle = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $teilnehmer->getNiqidberatungsstelle());
             $datenberatungsstelle = $zugewieseneberatungsstelle != NULL ? $zugewieseneberatungsstelle[0]->getDescription() : '';
@@ -2673,8 +2665,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'kontaktlabel' => $kontaktlabel,
                 'logolink' => $this->settings['logolink'],
                 'anmeldeditseite' => $this->settings['anmeldeditseite'],
-                'baseurl' => $baseUri,
-                'qrcode' => $qrcodesvg ?? ''
+                'baseurl' => $baseUri
             );
             
             $emailview = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
@@ -2692,7 +2683,92 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             return $this->redirect($valArray['calleraction'], 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer, 'callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $searchparams ?? ''));
         }
     }   
+       
+    /**
+     * action mail4datenblatt
+     * E-Mail mit Link und QR-Code zu Datenblatt RS senden
+     *
+     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("teilnehmer")
+     * @return void
+     */
+    public function mail4datenblattAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
+    {
+        $valArray = $this->request->getArguments();
         
+        $sender = $this->settings['sender'];
+        if($sender == '') {
+            $this->addFlashMessage('Error 101 in mail4datenblatt.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+            return $this->redirect($valArray['calleraction'], 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+        } else {
+            $recipient = $teilnehmer->getEmail();
+            if($recipient == '') {
+                $this->addFlashMessage('Keine E-Mail-Adresse eingetragen.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+                return $this->redirect($valArray['calleraction'], 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+            }
+            if($teilnehmer->getGebdat() == '') {
+                $this->addFlashMessage('Kein Geburtsdatum eingetragen, externer Login nicht möglich. Bitte Geburtsdatum eintragen.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+                return $this->redirect($valArray['calleraction'], 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
+            }
+            
+            $templateName = 'MailDatenblatt';
+            $subject = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('subjecteditextern', 'Iqtp13db')." - UID: ".$teilnehmer->getUid();
+            $anrede = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('anredemail', 'Iqtp13db');
+            $mailtext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtextdatenblatt', 'Iqtp13db');
+            $zugewieseneberatungsstelle = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $teilnehmer->getNiqidberatungsstelle());
+            $datenberatungsstelle = $zugewieseneberatungsstelle != NULL ? $zugewieseneberatungsstelle[0]->getDescription() : '';
+            if($datenberatungsstelle != '') $kontaktlabel = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('kontaktberatungsstelle', 'Iqtp13db');
+            else $kontaktlabel = '';            
+                        
+            $datenblattdokument =
+            
+            $storage = $this->generalhelper->getTP13Storage($this->storageRepository->findAll());
+            $beratenepath = $dokument->getPfad();
+            $tmpName = $dokument->getName();
+            $targetfile = $storage->getFile($beratenepath . $tmpName);
+            
+            // Token generieren
+            $token = $this->downloadTokenHelper->generateToken(
+                $targetfile->getUid(),
+                $dokument->getUid(),
+                $teilnehmer->getUid()
+                );
+            
+            // Redirect zur eID-Download-URL mit Token
+            $downloadUrl = $this->uriBuilder->reset()
+            ->setCreateAbsoluteUri(true)
+            ->buildFrontendUri() . '?eID=iqtp13db_download&token=' . $token;
+            $qrBase64 = $this->qrCodeGenerator->generateBase64Png($downloadUrl, QRCodeGenerator::ECC_M, 10, 4);
+            // Alternativ SVG-String (direkt inline einbettbar)
+            //$qrSvg = $this->qrCodeGenerator->generateSvg($data, QRCodeGenerator::ECC_M, 4);
+                        
+            $variables = array(
+                'teilnehmer' => $teilnehmer,
+                'anrede' => $anrede . $teilnehmer->getVorname(). ' ' . $teilnehmer->getNachname() . ',',
+                'mailtext' => $mailtext,
+                'datenblattdokumentuid' => $datenblattdokument->getUid(),
+                'datenberatungsstelle' => $datenberatungsstelle,
+                'kontaktlabel' => $kontaktlabel,
+                'logolink' => $this->settings['logolink'],
+                'anmeldeditseite' => $this->settings['anmeldeditseite'],
+                'qrBase64' => $qrBase64 ?? ''
+            );
+            
+            $emailview = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
+            $emailview->setRequest($this->request);
+            
+            $teilnehmer->setAnzloginfehlgeschlagen(0);
+            $this->teilnehmerRepository->update($teilnehmer);
+            
+            $extbaseFrameworkConfiguration = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+            $this->generalhelper->sendTemplateEmail(array($recipient), array($bcc), array($sender), $subject, $templateName, $variables, $emailview, $this->uriBuilder, $extbaseFrameworkConfiguration);
+            
+            $this->addFlashMessage('E-Mail zum nachträglichen Bearbeiten an '.$recipient.' versendet.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
+            
+            return $this->redirect($valArray['calleraction'], 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer, 'callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $searchparams ?? ''));
+        }
+    }  
+    
     /**
      * action sendtoarchiv
      *
@@ -3215,6 +3291,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         return 999;
     }
     
+    private function generateDatenblatt() {
+        
+    }
     /**
      * Get selected IDs from session
      */

@@ -153,12 +153,14 @@
 		<trans-unit id="mailtextcustom"><source> <![CDATA[ <p>We will contact you as soon as it is your turn. <p>We ask for your understanding and patience.</p><p>Regards</p>Your recognition counselling ]]></source></trans-unit>
 		<trans-unit id="grcinfotext"><source><![CDATA[ <p>We would like to point out that the counselling service is implemented in accordance with the Charter of Fundamental Rights of the European Union. We require mutual agreement to comply with the Charter for recognition and qualification counselling.</p><p>Charter of Fundamental Rights of the European Union: <a href="https://www.europarl.europa.eu/charter/pdf/text_en.pdf" target="_blank">https://www.europarl.europa.eu/charter/pdf/text_en.pdf</a></p> ]]></source></trans-unit>
 		<trans-unit id="subject"><source>Your registration for the initial recognition counselling</source></trans-unit>
+		<trans-unit id="subjecteditextern"><source>Your data for the initial recognition counselling</source></trans-unit>
 		<trans-unit id="confirmlinktext"><source>Confirm registration</source></trans-unit>
 		<trans-unit id="confirmmailtext1"><source><![CDATA[ <p>Dear VORNAMENACHNAME,</p> <p>Please confirm your registration for the initial recognition counselling here:</p>]]></source></trans-unit>
 		<trans-unit id="confirmmailtext2"><source>Yours recognition counselling</source></trans-unit>
 		<trans-unit id="confirmsubject"><source>Please confirm your registration for the initial recognition counselling</source></trans-unit>
 		<trans-unit id="kontaktberatungsstelle"><source>This is your counselling center:</source></trans-unit>
 		<trans-unit id="mailtextedit"><source><![CDATA[<p>You can change your data or upload additional documents by using this link:</p> ]]></source></trans-unit>
+		<trans-unit id="mailtextdatenblatt"><target><![CDATA[You can check your recognition counselling status by using this QR code or link: ]]></target></trans-unit>
 		<trans-unit id="linktitleeditregistration"><source>Edit registration</source></trans-unit>
 		
 		<trans-unit id="error"><source>Error</source></trans-unit>
