@@ -69,6 +69,162 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     protected $brancheRepository;
     protected $gruppenberatungRepository;
     protected $qrCodeGenerator;
+
+    protected $headerblattTN = [
+        'UID' => 'string',
+        'Bestätigungsdatum' => 'string',
+        'Nachname' => 'string',
+        'Vorname' => 'string',
+        'Strasse' => 'string',
+        'PLZ' => 'string',
+        'Ort' => 'string',
+        'E-Mail' => 'string',
+        'Telefon' => 'string',
+        'Geburtsdatum' => 'string',
+        'Lebensalter' => 'string',
+        'Erste Staatsangehoerigkeit' => 'string',
+        'Zweite Staatsangehoerigkeit' => 'string',
+        'WohnsitzDeutschland' => 'string',
+        'Landkreis' => 'string',
+        'Einreisejahr' => 'string',
+        'WohnsitzNeinIn' => 'string',
+        'Deutschkenntnisse' => 'string',
+        'ZertifikatSprachniveau' => 'string',
+        'Sonstiger Status' => 'string',
+        'Erwerbsstatus' => 'string',
+        'Leistungsbezug ja/nein' => 'string',
+        'Leistungsbezug' => 'string',
+        'Geburtsland' => 'string',
+        'Aufenthaltsstatus' => 'string',
+        'Geschlecht' => 'string',
+        'Notizen Ratsuchender' => 'string',
+        'Berater:in' => 'string',
+        'Beratungsart' => 'string',
+        'Beratungsort' => 'string',
+        'Anerkennungsberatung' => 'string',
+        'Qualifizierungsberatung' => 'string',
+        'Beratungsstelle' => 'string',
+        'Beratung Notizen' => 'string',
+        'Beratung zu Schulabschluss' => 'string',
+        'Anz. Folgekontakte' => 'string',
+        'Summe Dauer Folgekontakte' => 'string',
+        'Kooperationgruppe' => 'string',
+        'Beratungsdauer' => 'string',
+        'Beratungdatum' => 'string',
+        'Erstberatungabgeschlossen' => 'string',
+        'Einwilligung Infos' => 'string',
+        'Abschluss1 Referenzberuf zugewiesen' => 'string',
+        'Abschluss1 Referenzberuf - sonstiger Beruf' => 'string',
+        'Abschluss1 Referenzberuf - nicht reglementierter Beruf' => 'string',
+        'Abschluss1 Abschlussart' => 'string',
+        'Abschluss1 Branche' => 'string',
+        'Abschluss1 Erwerbsland' => 'string',
+        'Abschluss1 Abschlussjahr' => 'string',
+        'Abschluss1 Ausbildungsort' => 'string',
+        'Abschluss1 Abschluss' => 'string',
+        'Abschluss1 DauerBerufsausbildung' => 'string',
+        'Abschluss1 Ausbildungsinstitution' => 'string',
+        'Abschluss1 Berufserfahrung' => 'string',
+        'Abschluss1 Wunschberuf' => 'string',
+        'Abschluss1 Deutscher Referenzberuf' => 'string',
+        'Abschluss1 Antragstellung erfolgt' => 'string',
+        'Abschluss2 Referenzberuf zugewiesen' => 'string',
+        'Abschluss2 Referenzberuf - sonstiger Beruf' => 'string',
+        'Abschluss2 Referenzberuf - nicht reglementierter Beruf' => 'string',
+        'Abschluss2 Abschlussart' => 'string',
+        'Abschluss2 Branche' => 'string',
+        'Abschluss2 Erwerbsland' => 'string',
+        'Abschluss2 Abschlussjahr' => 'string',
+        'Abschluss2 Ausbildungsort' => 'string',
+        'Abschluss2 Abschluss' => 'string',
+        'Abschluss2 DauerBerufsausbildung' => 'string',
+        'Abschluss2 Ausbildungsinstitution' => 'string',
+        'Abschluss2 Berufserfahrung' => 'string',
+        'Abschluss2 Wunschberuf' => 'string',
+        'Abschluss2 Deutscher Referenzberuf' => 'string',
+        'Abschluss2 Antragstellung erfolgt' => 'string',
+        'Abschluss3 Referenzberuf zugewiesen' => 'string',
+        'Abschluss3 Referenzberuf - sonstiger Beruf' => 'string',
+        'Abschluss3 Referenzberuf - nicht reglementierter Beruf' => 'string',
+        'Abschluss3 Abschlussart' => 'string',
+        'Abschluss3 Branche' => 'string',
+        'Abschluss3 Erwerbsland' => 'string',
+        'Abschluss3 Abschlussjahr' => 'string',
+        'Abschluss3 Ausbildungsort' => 'string',
+        'Abschluss3 Abschluss' => 'string',
+        'Abschluss3 DauerBerufsausbildung' => 'string',
+        'Abschluss3 Ausbildungsinstitution' => 'string',
+        'Abschluss3 Berufserfahrung' => 'string',
+        'Abschluss3 Wunschberuf' => 'string',
+        'Abschluss3 Deutscher Referenzberuf' => 'string',
+        'Abschluss3 Antragstellung erfolgt' => 'string',
+        'Abschluss4 Referenzberuf zugewiesen' => 'string',
+        'Abschluss4 Referenzberuf - sonstiger Beruf' => 'string',
+        'Abschluss4 Referenzberuf - nicht reglementierter Beruf' => 'string',
+        'Abschluss4 Abschlussart' => 'string',
+        'Abschluss4 Branche' => 'string',
+        'Abschluss4 Erwerbsland' => 'string',
+        'Abschluss4 Abschlussjahr' => 'string',
+        'Abschluss4 Ausbildungsort' => 'string',
+        'Abschluss4 Abschluss' => 'string',
+        'Abschluss4 DauerBerufsausbildung' => 'string',
+        'Abschluss4 Ausbildungsinstitution' => 'string',
+        'Abschluss4 Berufserfahrung' => 'string',
+        'Abschluss4 Wunschberuf' => 'string',
+        'Abschluss4 Deutscher Referenzberuf' => 'string',
+        'Abschluss4 Antragstellung erfolgt' => 'string'
+    ];
+    
+    protected $headerblattFK = [
+        'FKUID' => 'string',
+        'Nachname' => 'string',
+        'Vorname' => 'string',
+        'Datum' => 'string',
+        'Berater' => 'string',
+        'Notizen' => 'string',
+        'Beratungsform' => 'string',
+        'Beratungsdauer' => 'string',
+    ];
+    
+    protected $headerblattFK25 = [
+        'Datum' => 'string',
+        'Berater' => 'string',
+        'Notizen' => 'string',
+        'Beratungsform' => 'string',
+    ];
+    
+    protected $headerblattanonym = [
+        'Bestätigungsdatum' => 'string',
+        'PLZ' => 'string',
+        'Ort' => 'string',
+        'Lebensalter' => 'string',
+        'Erste Staatsangehoerigkeit' => 'string',
+        'Zweite Staatsangehoerigkeit' => 'string',
+        'Landkreis' => 'string',
+        'Einreisejahr' => 'string',
+        'Deutschkenntnisse' => 'string',
+        'ZertifikatSprachniveau' => 'string',
+        'Geburtsland' => 'string',
+        'Geschlecht' => 'string',
+        'Anz. Folgekontakte' => 'string',
+        'Erstberatungabgeschlossen' => 'string',
+        'Abschluss1 Referenzberuf zugewiesen' => 'string',
+        'Abschluss1 Abschlussart' => 'string',
+        'Abschluss1 Erwerbsland' => 'string',
+        'Abschluss1 Deutscher Referenzberuf' => 'string',
+        'Abschluss2 Referenzberuf zugewiesen' => 'string',
+        'Abschluss2 Abschlussart' => 'string',
+        'Abschluss2 Erwerbsland' => 'string',
+        'Abschluss2 Deutscher Referenzberuf' => 'string',
+        'Abschluss3 Referenzberuf zugewiesen' => 'string',
+        'Abschluss3 Abschlussart' => 'string',
+        'Abschluss3 Erwerbsland' => 'string',
+        'Abschluss3 Deutscher Referenzberuf' => 'string',
+        'Abschluss4 Referenzberuf zugewiesen' => 'string',
+        'Abschluss4 Abschlussart' => 'string',
+        'Abschluss4 Erwerbsland' => 'string',
+        'Abschluss4 Deutscher Referenzberuf' => 'string',
+    ];
     
     public function __construct(
         UserGroupRepository $userGroupRepository, 
@@ -1105,684 +1261,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         return $this->htmlResponse();
     }
     
-    /**
-     * action export
-     *
-     * @param int $currentPage
-     * @return void
-     */
-    public function exportAction(int $currentPage = 1): ResponseInterface
-    {        
-        // **** Variablen aus Form einlesen ****
-        $valArray = $this->request->getArguments();
-        $fanonym = isset($valArray['filteranonym']) ? $valArray['filteranonym'] : '';
-        $filterfolgekontakte = isset($valArray['filterfolgekontakte']) ? $valArray['filterfolgekontakte'] : '';
-        $bundeslandselected = $valArray['filterbundesland'] ?? $this->usergroup->getBundesland();
-        $allebundeslaender = $this->userGroupRepository->findAllBundeslaender();
-        $staatselected = $valArray['filterstaat'] ?? '%';
-        $landkreisselected = $valArray['filterlandkreis'] ?? '%';
-        $berufselected = $valArray['filterreferenzberuf'] ?? '%';
-        $brancheselected = $valArray['filterbranche'] ?? '%';
-
-        // **** Datumswerte berechnen ****
-        $current_quarter = ceil(date('n') / 3);
-        $first_day_of_this_quarter = date('d.m.Y', strtotime(date('Y').'-'.(($current_quarter*3)-2).'-01'));
-        $last_day_of_this_quarter = date('d.m.Y', strtotime(date('Y').'-'.($current_quarter*3).'-'.(date("t",strtotime(date('Y').'-'.($current_quarter*3).'-01')))));        
-        $today = date("d.m.Y");
-        
-        if(isset($valArray['filtervon'])) {
-            $filtervon = $valArray['filtervon'];
-        } else {
-            $filtervon = $first_day_of_this_quarter;
-        }
-        
-        if(isset($valArray['filterbis'])) {
-            $filterbis = $valArray['filterbis'];
-        } else {
-            $filterbis = $today;
-        }
-        
-        // ************ Start - Beraterarray bestimmen *****************
-        $arrberater = array();
-        $usergroups4berater = explode(",", $this->user['usergroup']);
-        if($this->niqbid == '12345' || intval($this->niqbid) < 999) { // Admin
-            $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected);
-            foreach($usergroups4bundesland as $ug) {
-                $ugberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $ug);
-                foreach($ugberater as $currber) {
-                    $arrberater[$currber->getUid()] = $currber->getUsername();
-                }
-            }
-        } else {
-            $thisug = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $this->niqbid);
-            $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $thisug[0]);
-            foreach($berater as $currber) {
-                $arrberater[$currber->getUid()] = $currber->getUsername();
-            }
-        }
-        // ***************** Ende - Beraterarray bestimmen *****************
-        
-        
-        // **** Variablen vorbelegen ****
-        $beraterselected = $valArray['filterberater'] ?? '%';
-        
-        $arrjanein = array(0 => '', 1 => 'ja', 2 => 'nein', 3 => 'keine Angabe');
-        $arrerwerbsstatus = $this->settings['erwerbsstatus'];
-        $arrleistungsbezug = $this->settings['leistungsbezug'];
-        $arrleistungsbezug[0] = '';
-        $staaten = $this->staatenRepository->findByLangisocode('de');
-        foreach($staaten as $staat) {
-            $arrstaaten[$staat->getStaatid()] = $staat->getTitel();
-        }
-        
-        $brancheunterkat = $this->brancheRepository->findAllUnterkategorie('de');
-        foreach($brancheunterkat as $branche) {
-            $arrbranchen[$branche->getBrancheid()] = $branche->getTitel();
-        }
-                        
-        $orte = $this->ortRepository->findByBundesland($bundeslandselected);
-		$arrorte = array();        
-        foreach($orte as $ort) {
-            $arrorte[$ort->getPlz()] = $ort->getLandkreis();
-        }
-        
-        $arrlandkreise = array();
-        $arrlandkreise = $this->ortRepository->findLandkreiseByBundesland($bundeslandselected);
-               
-        $arraufenthaltsstatus = $this->settings['aufenthaltsstatus'];
-        $arrberatungsart = $this->settings['beratungsart'];
-        $arrberufserfahrung = $this->settings['berufserfahrung'];        
-        $arrberatungsformfolgeberatung = $this->settings['beratungsformfolgeberatung'];
-        $arranerkennungsberatung = $this->settings['anerkennungsberatung'];
-        $arrqualifizierungsberatung = $this->settings['qualifizierungsberatung'];
-        $arrberatungsstelle = $this->settings['beratungsstelle'];
-                
-        $arrzertifikatlevel = $this->settings['zertifikatlevel'];
-        $berufeliste = $this->berufeRepository->findAllOrdered('de');
-        foreach($berufeliste as $beruf) {
-            $arrberufe[$beruf->getBerufid()] = $beruf->getTitel();
-        }
-        $arrabschlussart = $this->settings['abschlussart'];  
-        $arrantragstellungerfolgt = $this->settings['antragstellungerfolgt'];
-        
-        $orderby = 'crdate';
-        $order = 'ASC';
-        
-        $fberatungsstatus = $valArray['filterberatungsstatus'] ?? 11;
-        $bezbstatus = $this->settings['filterberatungsstatus'][$fberatungsstatus];
-        
-        $del = 0;
-        if($fberatungsstatus == 11) {
-            $type = 1;
-        } elseif($fberatungsstatus == 12) {
-            $type = 2;
-        } elseif($fberatungsstatus == 13) {
-            $type = 3;
-        } elseif($fberatungsstatus == 14) {
-            $type = 0;
-            $del = 1;
-        } else {
-            $type = 1;
-        }
-                
-        $anzteilnehmers = 0;
-        
-        if($filtervon != '' && $filterbis != '') {
-            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer($type, $del, $filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected, $beraterselected, $landkreisselected, $berufselected, $brancheselected);            
-            $anzteilnehmers = count($teilnehmers);
-        }
-        
-        // ******************************************** EXPORT ********************************************
-        
-        // **** Starte Export und Download der Export-Datei für alle Status außer Folgeberatungen ****
-        if (isset($valArray['export']) && $fberatungsstatus != '' && $fberatungsstatus != '15') {
-            
-            if($anzteilnehmers == 0) {
-                $this->addFlashMessage("Keine Einträge, bitte Suchparameter anpassen.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
-                $this->view->assignMultiple(
-                    [
-                        'anzgesamt' => $anzteilnehmers,
-                        'calleraction' => 'export',
-                        'callercontroller' => 'Backend',
-                        'callerpage' => $currentPage,
-                        'filterberatungsstatus' => $fberatungsstatus,
-                        'filterbundesland' => $bundeslandselected,
-                        'filterstaat' => $staatselected,
-                        'filterberater' => $beraterselected,
-                        'filterlandkreis' => $landkreisselected,
-                        'filterreferenzberuf' => $berufselected,
-                        'filteron' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus')
-                    ]
-                    );
-            } else {
-                
-                $rows = array();
-                $rowsanonym = array();
-                // **** mit oder ohne Folgekontakte?
-                if($filterfolgekontakte  == '1') {
-                    $rowsfk = array();
-                    $fkcnt = 0;
-                    foreach ($teilnehmers as $akey => $atn) {
-                        $folgekontakte[$akey] = $this->folgekontaktRepository->findByTeilnehmer($atn['uid']);
-                        
-                        foreach($folgekontakte[$akey] as $fk) {
-                            $rowsfk[$fkcnt] = array();
-                            $beraterfk = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'berater');
-                            $teilnehmerfk = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'teilnehmer');
-                            
-                            $rowsfk[$fkcnt]['teilnehmeruid'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($teilnehmerfk, 'uid');
-                            $rowsfk[$fkcnt]['teilnehmernachname'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($teilnehmerfk, 'nachname');
-                            $rowsfk[$fkcnt]['teilnehmervorname'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($teilnehmerfk, 'vorname');
-                            $rowsfk[$fkcnt]['datum'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'datum');
-                            if($beraterfk != NULL) $rowsfk[$fkcnt]['Beraterin'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($beraterfk, 'username');
-                            else $rowsfk[$fkcnt]['beraterin'] = '-';
-                            $rowsfk[$fkcnt]['notizen'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'notizen');
-                            $bform = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'beratungsform');
-                            $rowsfk[$fkcnt]['beratungsform'] = $bform == '-1000' ? '-' : $arrberatungsformfolgeberatung[$bform];
-                            $rowsfk[$fkcnt]['beratungsdauer'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'beratungsdauer');
-                            $fkcnt++;
-                        }
-                    }
-                }
-                
-                foreach($teilnehmers as $x => $tn) {
-                    $rows[$x] = array();
-                    $rows[$x]['uid'] = $tn['uid'];
-                    $rows[$x]['verificationDate'] = date('d.m.Y H:i:s', $tn['verification_date']);
-                    $rowsanonym[$x]['verificationDate'] = $rows[$x]['verificationDate'];
-                    $rows[$x]['Nachname'] = $tn['nachname'];
-                    $rows[$x]['Vorname'] = $tn['vorname'];
-                    $rows[$x]['Strasse'] = $tn['strasse'];
-                    $rows[$x]['PLZ'] = $tn['plz'];
-                    $rowsanonym[$x]['PLZ'] = $rows[$x]['PLZ'];
-                    $rows[$x]['Ort'] = $tn['ort'];
-                    $rowsanonym[$x]['Ort'] = $rows[$x]['Ort'];
-                    $rows[$x]['Email'] = $tn['email'];
-                    $rows[$x]['Telefon'] = $tn['telefon'];
-                    $rows[$x]['Geburtsdatum'] = $tn['gebdat'];
-                    $rows[$x]['Lebensalter'] = $tn['lebensalter'];
-                    $rowsanonym[$x]['Lebensalter'] = $rows[$x]['Lebensalter'];
-                    
-                    $tn1staatsangehoerigkeit = $tn['erste_staatsangehoerigkeit'];
-                    $rows[$x]['ErsteStaatsangehoerigkeit'] = $tn1staatsangehoerigkeit == '' ? '-' : $arrstaaten[$tn1staatsangehoerigkeit];
-                    $rowsanonym[$x]['ErsteStaatsangehoerigkeit'] = $rows[$x]['ErsteStaatsangehoerigkeit'];
-                    
-                    $tn2staatsangehoerigkeit = $tn['zweite_staatsangehoerigkeit'];
-                    $rows[$x]['ZweiteStaatsangehoerigkeit'] = $tn2staatsangehoerigkeit == '' ? '-' : $arrstaaten[$tn2staatsangehoerigkeit];
-                    $rowsanonym[$x]['ZweiteStaatsangehoerigkeit'] = $rows[$x]['ZweiteStaatsangehoerigkeit'];
-                    
-                    $wohnsitzdeutschland = $tn['wohnsitz_deutschland'];
-                    if($wohnsitzdeutschland == 1) $wohnsitzdeutschland = 'ja';
-                    if($wohnsitzdeutschland == 2) $wohnsitzdeutschland = 'nein';
-                    if($wohnsitzdeutschland == -1) $wohnsitzdeutschland = 'k.a.';
-                    $rows[$x]['WohnsitzDeutschland'] = $wohnsitzdeutschland ?? '';
-                    
-                    $thisplz = trim($rows[$x]['PLZ']);
-                    $rows[$x]['Landkreis'] = (preg_match("/[0-9]{5}/", $thisplz) && array_key_exists($thisplz, $arrorte)) ? $arrorte[$thisplz] : '-';
-
-                    $rowsanonym[$x]['Landkreis'] = $rows[$x]['Landkreis'];
-                    
-                    $rows[$x]['Einreisejahr'] = $tn['einreisejahr'];
-                    $rowsanonym[$x]['Einreisejahr'] = $rows[$x]['Einreisejahr'];
-                    
-                    $wohnsitzneinin = $tn['wohnsitz_nein_in'];
-                    $rows[$x]['WohnsitzNeinIn'] = $wohnsitzneinin == '' ? '-' : $arrstaaten[$wohnsitzneinin];
-                    
-                    $deutschkenntnisse = $tn['deutschkenntnisse'];
-                    if($deutschkenntnisse == 1) $deutschkenntnisse = 'ja';
-                    if($deutschkenntnisse == 2) $deutschkenntnisse = 'nein';
-                    if($deutschkenntnisse == -1) $deutschkenntnisse = 'k.a.';
-                    $rows[$x]['Deutschkenntnisse'] = $deutschkenntnisse ?? '';
-                    $rowsanonym[$x]['Deutschkenntnisse'] = $rows[$x]['Deutschkenntnisse'];
-                    
-                    $zertifikatsprachniveau = $tn['zertifikat_sprachniveau'];
-                    $rows[$x]['ZertifikatSprachniveau'] = $zertifikatsprachniveau == '' ? '-' : $arrzertifikatlevel[$zertifikatsprachniveau];
-                    $rowsanonym[$x]['ZertifikatSprachniveau'] = $rows[$x]['ZertifikatSprachniveau'];
-                    
-                    // noch nicht implementiert: $rows[$x]['WeitereSprachkenntnisse'] = $tn['weiteresprachkenntnisse'];                    
-                    $rows[$x]['Sonstigerstatus'] = $tn['sonstigerstatus'];
-                    
-                    $tnerwerbsstatus = $tn['erwerbsstatus'];
-                    $rows[$x]['erwerbsstatus'] = $tnerwerbsstatus == 0 ? '-' : $arrerwerbsstatus[$tnerwerbsstatus];
-                    
-                    $tnleistungsbezugjanein = $tn['leistungsbezugjanein'];
-                    $rows[$x]['Leistungsbezugjanein'] = $tnleistungsbezugjanein == 0 ? '-' : $arrjanein[$tnleistungsbezugjanein];
-                    
-                    $tnleistungsbezug = $tn['leistungsbezug'];
-                    $rows[$x]['Leistungsbezug'] = ($tnleistungsbezug == '' || $tnleistungsbezug == 0) ? '-' : $arrleistungsbezug[$tnleistungsbezug];
-                    
-                    $tngeburtsland = $tn['geburtsland'];
-                    $rows[$x]['Geburtsland'] = $tngeburtsland == '' ? '-' : $arrstaaten[$tngeburtsland];
-                    $rowsanonym[$x]['Geburtsland'] = $rows[$x]['Geburtsland'];
-                    
-                    $tnaufenthaltsstatus = $tn['aufenthaltsstatus'];
-                    $rows[$x]['aufenthaltsstatus'] = $tnaufenthaltsstatus == 0 ? '-' : $arraufenthaltsstatus[$tnaufenthaltsstatus];
-                    
-                    $geschlecht = $tn['geschlecht'];
-                    if($geschlecht == 1) $geschlecht = 'w';
-                    if($geschlecht == 2) $geschlecht = 'm';
-                    if($geschlecht == 3) $geschlecht = 'd';
-                    $rows[$x]['Geschlecht'] = $geschlecht;
-                    $rowsanonym[$x]['Geschlecht'] = $rows[$x]['Geschlecht'];
-                    
-                    $rows[$x]['notizen'] = $tn['notizen'];
-                    
-                    $beraterid = $tn['berater'];
-                    $rows[$x]['Beraterin'] = $arrberater[$beraterid] ?? '-';
-                    
-                    $stringberatungsart = '';
-                    $arrtnberatungsart = explode(",", $tn['beratungsart']);
-                    foreach ($arrtnberatungsart as $atn) $stringberatungsart .= $atn == '' ? '-;' : $arrberatungsart[$atn].";";
-                    $rows[$x]['beratungsart'] = $stringberatungsart;
-                    
-                    $rows[$x]['beratungsort'] = $tn['beratungsort'];
-                    
-                    $stringanerkennungsberatung = '';
-                    $arrtnanerkennungsberatung = explode(",", $tn['anerkennungsberatung']);
-                    foreach ($arrtnanerkennungsberatung as $atn) $stringanerkennungsberatung .= $atn == '' ? '-;' : $arranerkennungsberatung[$atn].";";
-                    $rows[$x]['anerkennungsberatung'] = $stringanerkennungsberatung;
-                    
-                    $stringqualifizierungsberatung = '';
-                    $arrtnqualifizierungsberatung = explode(",", $tn['qualifizierungsberatung']);
-                    if(is_array($arrtnqualifizierungsberatung)) {
-                        foreach ($arrtnqualifizierungsberatung as $atn) $stringqualifizierungsberatung .= $atn == '' ? '-;' : $arrqualifizierungsberatung[$atn].";";                        
-                    } else {
-                        $stringqualifizierungsberatung = $tn['qualifizierungsberatung'];
-                    }
-                    $rows[$x]['qualifizierungsberatung'] = $stringqualifizierungsberatung;
-                    
-                    $tnnameberatungsstelle = $tn['name_beratungsstelle'];
-                    $rows[$x]['nameberatungsstelle'] = $tnnameberatungsstelle == '' ? '-' : $arrberatungsstelle[$tnnameberatungsstelle];
-                    
-                    $rows[$x]['beratungnotizen'] = $tn['beratungnotizen'];                    
-                    $rows[$x]['beratungzuschulabschluss'] = $tn['beratungzu'] == 1 ? 'ja' : 'nein';
-                    
-                    $rows[$x]['AnzFolgekontakte'] = $tn['anzahl_folgekontakte'];
-                    $rowsanonym[$x]['AnzFolgekontakte'] = $tn['anzahl_folgekontakte'];
-                    $rows[$x]['sumDauerFolgekontakte'] = $tn['gesamt_beratungsdauer'];
-                    
-                    $rows[$x]['kooperationgruppe'] = $tn['kooperationgruppe'];
-                    $rows[$x]['beratungsdauer'] = $tn['beratungsdauer'];
-                    $rows[$x]['beratungdatum'] = $tn['beratungdatum'];
-                    $rows[$x]['erstberatungabgeschlossen'] = $tn['erstberatungabgeschlossen'];
-                    $rowsanonym[$x]['erstberatungabgeschlossen'] = $rows[$x]['erstberatungabgeschlossen'];
-                    $einwilligunginfo = $tn['einwilligunginfo'];
-                    if($einwilligunginfo == 1) $rows[$x]['einwilligunginfo'] = 'ja';
-                    else $rows[$x]['einwilligunginfo'] = 'nein';
-                                        
-                    for($y = 1; $y <= 4; $y++) {
-                        $rows[$x]['Abschluss'.$y.' Referenzberufzugewiesen'] = $tn['abschluss'.$y.'_beruf'];
-                        $rowsanonym[$x]['Abschluss'.$y.' Referenzberufzugewiesen'] = $tn['abschluss'.$y.'_beruf'];
-                        $rows[$x]['Abschluss'.$y.' SonstigerBeruf'] = $tn['abschluss'.$y.'_sonstigerberuf'];
-                        $rows[$x]['Abschluss'.$y.' NichtreglementierterBeruf'] = $tn['abschluss'.$y.'_nregberuf'];
-                        
-                        $abschlussart = $tn['abschluss'.$y.'_art'];
-                        if(strstr($abschlussart, ',')) $abschlussart = '2';
-                        $rows[$x]['Abschluss'.$y.' Abschlussart'] = $abschlussart == '' ? '-' : $arrabschlussart[$abschlussart];
-                        $rowsanonym[$x]['Abschluss'.$y.' Abschlussart'] = $rows[$x]['Abschluss'.$y.' Abschlussart'];
-                        
-                        $rows[$x]['Abschluss'.$y.' Branche'] = $tn['abschluss'.$y.'_branche'];
-                        
-                        $rows[$x]['Abschluss'.$y.' Erwerbsland'] = $tn['abschluss'.$y.'_erwerbsland'];
-                        $rowsanonym[$x]['Abschluss'.$y.' Erwerbsland'] = $rows[$x]['Abschluss'.$y.' Erwerbsland'];
-                        
-                        $rows[$x]['Abschluss'.$y.' Abschlussjahr'] = $tn['abschluss'.$y.'_jahr'];
-                        $rows[$x]['Abschluss'.$y.' Ausbildungsort'] = $tn['abschluss'.$y.'_ausbildungsort'];
-                        $rows[$x]['Abschluss'.$y.' Abschluss'] = $tn['abschluss'.$y.'_abschluss'];
-                        
-                        $rows[$x]['Abschluss'.$y.' DauerBerufsausbildung'] = $tn['abschluss'.$y.'_dauer'];
-                        $rows[$x]['Abschluss'.$y.' Ausbildungsinstitution'] = $tn['abschluss'.$y.'_institution'];
-                        
-                        $tnabschlussberufserfahrung = $tn['abschluss'.$y.'_berufserfahrung'] ?? '';
-                        $rows[$x]['Abschluss'.$y.' Berufserfahrung'] = $tnabschlussberufserfahrung  == '' ? '' : $arrberufserfahrung[$tnabschlussberufserfahrung];
-                        
-                        $rows[$x]['Abschluss'.$y.' Wunschberuf'] = $tn['abschluss'.$y.'_wunschberuf'];
-                        $rows[$x]['Abschluss'.$y.' DeutscherReferenzberuf'] = $tn['abschluss'.$y.'_refberuf'];
-                        $rowsanonym[$x]['Abschluss'.$y.' DeutscherReferenzberuf'] = $rows[$x]['Abschluss'.$y.' DeutscherReferenzberuf'];
-                        
-                        $abantragstellungerfolgt = $tn['abschluss'.$y.'_antrag'] ?? '';
-                        $rows[$x]['Abschluss'.$y.' Antragstellungerfolgt'] = $abantragstellungerfolgt == '' ? '' : $arrantragstellungerfolgt[$abantragstellungerfolgt];
-                    }                    
-                }
-                
-                // XLSX                
-                $headerblatt1 = [
-                    'UID' => 'string',
-                    'Bestätigungsdatum' => 'string',
-                    'Nachname' => 'string',
-                    'Vorname' => 'string',
-                    'Strasse' => 'string',
-                    'PLZ' => 'string',
-                    'Ort' => 'string',
-                    'E-Mail' => 'string',
-                    'Telefon' => 'string',
-                    'Geburtsdatum' => 'string',
-                    'Lebensalter' => 'string',
-                    'Erste Staatsangehoerigkeit' => 'string',
-                    'Zweite Staatsangehoerigkeit' => 'string',
-                    'WohnsitzDeutschland' => 'string',
-                    'Landkreis' => 'string',
-                    'Einreisejahr' => 'string',
-                    'WohnsitzNeinIn' => 'string',
-                    'Deutschkenntnisse' => 'string',
-                    'ZertifikatSprachniveau' => 'string',
-                    'Sonstiger Status' => 'string',
-                    'Erwerbsstatus' => 'string',
-                    'Leistungsbezug ja/nein' => 'string',
-                    'Leistungsbezug' => 'string',
-                    'Geburtsland' => 'string',
-                    'Aufenthaltsstatus' => 'string',
-                    'Geschlecht' => 'string',
-                    'Notizen Ratsuchender' => 'string',
-                    'Berater:in' => 'string',
-                    'Beratungsart' => 'string',
-                    'Beratungsort' => 'string',
-                    'Anerkennungsberatung' => 'string',
-                    'Qualifizierungsberatung' => 'string',
-                    'Beratungsstelle' => 'string',
-                    'Beratung Notizen' => 'string',
-                    'Beratung zu Schulabschluss' => 'string',
-                    'Anz. Folgekontakte' => 'string',
-                    'Summe Dauer Folgekontakte' => 'string',
-                    'Kooperationgruppe' => 'string',
-                    'Beratungsdauer' => 'string',
-                    'Beratungdatum' => 'string',
-                    'Erstberatungabgeschlossen' => 'string',
-                    'Einwilligung Infos' => 'string',
-                    'Abschluss1 Referenzberuf zugewiesen' => 'string',
-                    'Abschluss1 Referenzberuf - sonstiger Beruf' => 'string',
-                    'Abschluss1 Referenzberuf - nicht reglementierter Beruf' => 'string',                    
-                    'Abschluss1 Abschlussart' => 'string',
-                    'Abschluss1 Branche' => 'string',
-                    'Abschluss1 Erwerbsland' => 'string',
-                    'Abschluss1 Abschlussjahr' => 'string',
-                    'Abschluss1 Ausbildungsort' => 'string',
-                    'Abschluss1 Abschluss' => 'string',
-                    'Abschluss1 DauerBerufsausbildung' => 'string',
-                    'Abschluss1 Ausbildungsinstitution' => 'string',
-                    'Abschluss1 Berufserfahrung' => 'string',
-                    'Abschluss1 Wunschberuf' => 'string',
-                    'Abschluss1 Deutscher Referenzberuf' => 'string',
-                    'Abschluss1 Antragstellung erfolgt' => 'string',
-                    'Abschluss2 Referenzberuf zugewiesen' => 'string',
-                    'Abschluss2 Referenzberuf - sonstiger Beruf' => 'string',
-                    'Abschluss2 Referenzberuf - nicht reglementierter Beruf' => 'string',
-                    'Abschluss2 Abschlussart' => 'string',
-                    'Abschluss2 Branche' => 'string',
-                    'Abschluss2 Erwerbsland' => 'string',
-                    'Abschluss2 Abschlussjahr' => 'string',
-                    'Abschluss2 Ausbildungsort' => 'string',
-                    'Abschluss2 Abschluss' => 'string',
-                    'Abschluss2 DauerBerufsausbildung' => 'string',
-                    'Abschluss2 Ausbildungsinstitution' => 'string',
-                    'Abschluss2 Berufserfahrung' => 'string',
-                    'Abschluss2 Wunschberuf' => 'string',
-                    'Abschluss2 Deutscher Referenzberuf' => 'string',
-                    'Abschluss2 Antragstellung erfolgt' => 'string',
-                    'Abschluss3 Referenzberuf zugewiesen' => 'string',
-                    'Abschluss3 Referenzberuf - sonstiger Beruf' => 'string',
-                    'Abschluss3 Referenzberuf - nicht reglementierter Beruf' => 'string',
-                    'Abschluss3 Abschlussart' => 'string',
-                    'Abschluss3 Branche' => 'string',
-                    'Abschluss3 Erwerbsland' => 'string',
-                    'Abschluss3 Abschlussjahr' => 'string',
-                    'Abschluss3 Ausbildungsort' => 'string',
-                    'Abschluss3 Abschluss' => 'string',
-                    'Abschluss3 DauerBerufsausbildung' => 'string',
-                    'Abschluss3 Ausbildungsinstitution' => 'string',
-                    'Abschluss3 Berufserfahrung' => 'string',
-                    'Abschluss3 Wunschberuf' => 'string',
-                    'Abschluss3 Deutscher Referenzberuf' => 'string',
-                    'Abschluss3 Antragstellung erfolgt' => 'string',
-                    'Abschluss4 Referenzberuf zugewiesen' => 'string',
-                    'Abschluss4 Referenzberuf - sonstiger Beruf' => 'string',
-                    'Abschluss4 Referenzberuf - nicht reglementierter Beruf' => 'string',
-                    'Abschluss4 Abschlussart' => 'string',
-                    'Abschluss4 Branche' => 'string',
-                    'Abschluss4 Erwerbsland' => 'string',
-                    'Abschluss4 Abschlussjahr' => 'string',
-                    'Abschluss4 Ausbildungsort' => 'string',
-                    'Abschluss4 Abschluss' => 'string',
-                    'Abschluss4 DauerBerufsausbildung' => 'string',
-                    'Abschluss4 Ausbildungsinstitution' => 'string',
-                    'Abschluss4 Berufserfahrung' => 'string',
-                    'Abschluss4 Wunschberuf' => 'string',
-                    'Abschluss4 Deutscher Referenzberuf' => 'string',
-                    'Abschluss4 Antragstellung erfolgt' => 'string'
-                ];
-               
-                $headerblatt2 = [
-                    'Teilnehmer UID' => 'string',
-                    'Nachname' => 'string',
-                    'Vorname' => 'string',
-                    'Datum' => 'string',
-                    'Berater' => 'string',
-                    'Notizen' => 'string',
-                    'Beratungsform' => 'string',
-                    'Beratungsdauer' => 'string',
-                ];
-                
-                $headerblattanonym = [
-                    'Bestätigungsdatum' => 'string',
-                    'PLZ' => 'string',
-                    'Ort' => 'string',
-                    'Lebensalter' => 'string',
-                    'Erste Staatsangehoerigkeit' => 'string',
-                    'Zweite Staatsangehoerigkeit' => 'string',
-                    'Landkreis' => 'string',
-                    'Einreisejahr' => 'string',
-                    'Deutschkenntnisse' => 'string',
-                    'ZertifikatSprachniveau' => 'string',
-                    'Geburtsland' => 'string',
-                    'Geschlecht' => 'string',
-                    'Anz. Folgekontakte' => 'string',
-                    'Erstberatungabgeschlossen' => 'string',
-                    'Abschluss1 Referenzberuf zugewiesen' => 'string',
-                    'Abschluss1 Abschlussart' => 'string',
-                    'Abschluss1 Erwerbsland' => 'string',
-                    'Abschluss1 Deutscher Referenzberuf' => 'string',
-                    'Abschluss2 Referenzberuf zugewiesen' => 'string',
-                    'Abschluss2 Abschlussart' => 'string',
-                    'Abschluss2 Erwerbsland' => 'string',
-                    'Abschluss2 Deutscher Referenzberuf' => 'string',
-                    'Abschluss3 Referenzberuf zugewiesen' => 'string',
-                    'Abschluss3 Abschlussart' => 'string',
-                    'Abschluss3 Erwerbsland' => 'string',
-                    'Abschluss3 Deutscher Referenzberuf' => 'string',
-                    'Abschluss4 Referenzberuf zugewiesen' => 'string',
-                    'Abschluss4 Abschlussart' => 'string',
-                    'Abschluss4 Erwerbsland' => 'string',
-                    'Abschluss4 Deutscher Referenzberuf' => 'string',
-                ];
-                
-                
-                $writer = new \XLSXWriter();
-                $writer->setAuthor('IQ Webapp');
-                
-                if($fanonym  == '1') {
-                    $filename = 'export_anonym_'.$bezbstatus.'_'.date('Y-m-d_H-i', time()).'.xlsx';
-                    $writer->writeSheet($rowsanonym, 'Ratsuchende', $headerblattanonym);
-                } else {
-                    $filename = 'export_'.$bezbstatus.'_'.date('Y-m-d_H-i', time()).'.xlsx';
-                    $writer->writeSheet($rows, 'Ratsuchende', $headerblatt1);
-                    if($filterfolgekontakte  == '1') {
-                        $writer->writeSheet($rowsfk, 'Zugehörige Folgekontakte', $headerblatt2);
-                    }
-                }
-                
-                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-                header('Content-Disposition: attachment;filename="'.$filename.'"');
-                header('Cache-Control: max-age=0');
-                $writer->writeToStdOut();
-                exit;
-            }
-        }elseif(isset($valArray['export']) && $fberatungsstatus == '15') {
-            // **** nur Folgekontakte exportieren ****
-            $folgekontakte = $this->folgekontaktRepository->fksearch4export($filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected, $beraterselected, $landkreisselected, $berufselected, $brancheselected);
-            $folgekontakteFK2025 = $this->folgekontaktRepository->fksearch4exportFK2025($filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected, $beraterselected, $landkreisselected, $berufselected, $brancheselected);            
-            $anzfolgekontakte = count($folgekontakte);
-            
-            if($anzfolgekontakte == 0) {
-                $this->addFlashMessage("Keine Einträge, bitte Suchparameter anpassen.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
-                $this->view->assignMultiple(
-                    [
-                        'anzgesamt' => $anzfolgekontakte,
-                        'calleraction' => 'export',
-                        'callercontroller' => 'Backend',
-                        'callerpage' => $currentPage,
-                        'filteranonym' => $fanonym,
-                        'filterfolgekontakte' => $filterfolgekontakte,
-                        'filterberatungsstatus' => $fberatungsstatus,
-                        'filterbundesland' => $bundeslandselected,
-                        'filterstaat' => $staatselected,
-                        'filterberater' => $beraterselected,
-                        'filterlandkreis' => $landkreisselected,
-                        'filterreferenzberuf' => $berufselected,
-						'filterbranche' => $brancheselected,
-                        'filteron' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus')
-                    ]
-                    );
-            } else {
-                $rowsfk = array();
-                foreach($folgekontakte as $x => $fk) {
-                    
-                    $beraterfk = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'berater');
-                    $teilnehmerfk = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'teilnehmer');
-                    
-                    $rowsfk[$x]['folgekontaktuid'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'uid');                   
-                    $rowsfk[$x]['teilnehmernachname'] = $teilnehmerfk == NULL ? '-nicht vorhanden-' : \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($teilnehmerfk, 'nachname');
-                    $rowsfk[$x]['teilnehmervorname'] = $teilnehmerfk == NULL ? '-nicht vorhanden-' : \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($teilnehmerfk, 'vorname');
-                    $rowsfk[$x]['datum'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'datum');
-                    if($beraterfk != NULL) $rowsfk[$x]['beraterin'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($beraterfk, 'username');
-                    else $rowsfk[$x]['beraterin'] = '-';
-                    $rowsfk[$x]['notizen'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'notizen');
-                    $bform = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'beratungsform');
-                    $rowsfk[$x]['beratungsform'] = $bform == '-1000' ? '-' : $arrberatungsformfolgeberatung[$bform];
-                    $rowsfk[$x]['beratungsdauer'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk, 'beratungsdauer');
-                }
-                
-                $rowsfkFK2025 = array();
-                foreach($folgekontakteFK2025 as $x25 => $fk25) {
-                    
-                    $beraterfk = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk25, 'berater');
-                    $teilnehmerfk = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk25, 'teilnehmer');
-                    
-                    $rowsfkFK2025[$x25]['folgekontaktuid'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk25, 'uid');
-                    $rowsfkFK2025[$x25]['teilnehmernachname'] = $teilnehmerfk == NULL ? '-nicht vorhanden-' : \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($teilnehmerfk, 'nachname');
-                    $rowsfkFK2025[$x25]['teilnehmervorname'] = $teilnehmerfk == NULL ? '-nicht vorhanden-' : \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($teilnehmerfk, 'vorname');
-                    $rowsfkFK2025[$x25]['datum'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk25, 'datum');
-                    if($beraterfk != NULL) $rowsfkFK2025[$x25]['beraterin'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($beraterfk, 'username');
-                    else $rowsfkFK2025[$x25]['beraterin'] = '-';
-                    $rowsfkFK2025[$x25]['notizen'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk25, 'notizen');
-                    $bform = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk25, 'beratungsform');
-                    $rowsfkFK2025[$x25]['beratungsform'] = $bform == '-1000' ? '-' : $arrberatungsformfolgeberatung[$bform];
-                    $rowsfkFK2025[$x25]['beratungsdauer'] = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getProperty($fk25, 'beratungsdauer');
-                }
-                
-                // XLSX
-                $filename = 'export_folgekontakte_'.date('Y-m-d_H-i', time()).'.xlsx';
-                
-                $headerblatt = [
-                    'FolgekontaktUID' => 'string',
-                    'Nachname' => 'string',
-                    'Vorname' => 'string',
-                    'Datum' => 'string',
-                    'BeraterIn' => 'string',
-                    'Notizen' => 'string',
-                    'Beratungsorm' => 'string',
-                    'Beratungsdauer' => 'string'
-                ];
-                
-                $headerblatt2 = [
-                    'FolgekontaktUID' => 'string',
-                    'Nachname' => 'string',
-                    'Vorname' => 'string',
-                    'Datum' => 'string',
-                    'BeraterIn' => 'string',
-                    'Notizen' => 'string',
-                    'Beratungsorm' => 'string',
-                    'Beratungsdauer' => 'string'
-                ];
-                
-                $writer = new \XLSXWriter();
-                $writer->setAuthor('IQ Webapp');
-                
-                $writer->writeSheet($rowsfk, 'Alle Folgekontakte', $headerblatt);
-                $writer->writeSheet($rowsfkFK2025, 'Davon Folgekontakte von Beratungen aus Förderphase 23-25', $headerblatt2);
-                
-                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-                header('Content-Disposition: attachment;filename="'.$filename.'"');
-                header('Cache-Control: max-age=0');
-                $writer->writeToStdOut();
-                exit;
-
-            }
-        }elseif(isset($valArray['export']) && $valArray['export'] && $fberatungsstatus == '') {
-            
-            $this->addFlashMessage("Bitte Status für Export auswählen.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
-            $this->view->assignMultiple(
-                [
-                    'anzgesamt' => count($teilnehmers),
-                    'calleraction' => 'export',
-                    'callercontroller' => 'Backend',
-                    'callerpage' => $currentPage,
-                    'filteranonym' => $fanonym,
-                    'filterfolgekontakte' => $filterfolgekontakte,
-                    'filterberatungsstatus' => $fberatungsstatus,
-                    'filterbundesland' => $bundeslandselected,
-                    'filterstaat' => $staatselected,
-                    'filterberater' => $beraterselected,
-                    'filterlandkreis' => $landkreisselected,
-                    'filterberuf' => $berufselected,
-					'filterbranche' => $brancheselected,
-                    'filteron' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus')                    
-                ]
-                );
-        } else {
-            foreach($staaten as $staat) {
-                $staatenarr[$staat->getStaatid()] = $staat->getTitel();
-            }
-             
-            if($fberatungsstatus == '15') {
-                // nur Folgekontakte exportieren
-                $folgekontakte = $this->folgekontaktRepository->fksearch4export($filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected, $beraterselected, $landkreisselected, $berufselected, $brancheselected);
-                $anzgesamt = count($folgekontakte);
-            } else {
-                $anzgesamt = $anzteilnehmers;
-            }            
-            
-            $this->view->assignMultiple(
-                [
-                    'anzgesamt' => $anzgesamt,
-                    'calleraction' => 'export',
-                    'callercontroller' => 'Backend',
-                    'callerpage' => $currentPage,
-                    'filteranonym' => $fanonym,
-                    'filterfolgekontakte' => $filterfolgekontakte,
-                    'filterberatungsstatus' => $fberatungsstatus,
-                    'filteron' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus'),
-                    'filtervon' => $filtervon,
-                    'filterbis' => $filterbis,
-                    'beratungsstelle' => $this->beratungsstellenname,
-                    'niqbid' => $this->niqbid,
-                    'allebundeslaender' => $allebundeslaender,
-                    'filterbundesland' => $bundeslandselected,
-                    'filterstaat' => $staatselected,
-                    'staatenarr' => $staatenarr,
-                    'alleberater' => $arrberater ?? '',
-                    'alleberufe' => $arrberufe,
-					'allebranchen' => $arrbranchen,
-                    'gewlandkreise' => $arrlandkreise,
-                    'filterberater' => $beraterselected,
-                    'filterlandkreis' => $landkreisselected,
-                    'filterberuf' => $berufselected,
-					'filterbranche' => $brancheselected,
-                    'anzbstellen' => $this->anzbstellen
-                ]
-             );
-        }
-        return $this->htmlResponse();
-    }
+    
     
      /**
      * action initshow
@@ -3104,6 +2583,199 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
     }
     
+    /**
+     * action export
+     *
+     * @param int $currentPage
+     * @return void
+     */
+    public function exportAction(int $currentPage = 1): ResponseInterface
+    {
+        $valArray = $this->request->getArguments();
+        
+        $beraterselected = $valArray['filterberater'] ?? '%';
+        $fanonym = isset($valArray['filteranonym']) ? $valArray['filteranonym'] : '';
+        $filterfolgekontakte = isset($valArray['filterfolgekontakte']) ? $valArray['filterfolgekontakte'] : '';
+        $bundeslandselected = $valArray['filterbundesland'] ?? $this->usergroup->getBundesland();
+        $allebundeslaender = $this->userGroupRepository->findAllBundeslaender();
+        $staatselected = $valArray['filterstaat'] ?? '%';
+        $landkreisselected = $valArray['filterlandkreis'] ?? '%';
+        $berufselected = $valArray['filterreferenzberuf'] ?? '%';
+        $brancheselected = $valArray['filterbranche'] ?? '%';
+        
+        $arrberater = $this->getberater4Bstelle();
+        $arrlandkreise = array();
+        $arrlandkreise = $this->ortRepository->findLandkreiseByBundesland($bundeslandselected);
+        $brancheunterkat = $this->brancheRepository->findAllUnterkategorie('de');
+        foreach($brancheunterkat as $branche) {
+            $arrbranchen[$branche->getBrancheid()] = $branche->getTitel();
+        }
+        $berufeliste = $this->berufeRepository->findAllOrdered('de');
+        foreach($berufeliste as $beruf) {
+            $arrberufe[$beruf->getBerufid()] = $beruf->getTitel();
+        }
+        $staaten = $this->staatenRepository->findByLangisocode('de');
+        foreach($staaten as $staat) {
+            $arrstaaten[$staat->getStaatid()] = $staat->getTitel();
+        }
+        
+        $fberatungsstatus = $valArray['filterberatungsstatus'] ?? 11;
+        $bezbstatus = $this->settings['filterberatungsstatus'][$fberatungsstatus];
+        
+        $del = 0;
+        if($fberatungsstatus == 11) {
+            $type = 1;
+        } elseif($fberatungsstatus == 12) {
+            $type = 2;
+        } elseif($fberatungsstatus == 13) {
+            $type = 3;
+        } elseif($fberatungsstatus == 14) {
+            $type = 0;
+            $del = 1;
+        } else {
+            $type = 1;
+        }
+        // **** Datumswerte berechnen ****
+        $current_quarter = ceil(date('n') / 3);
+        $first_day_of_this_quarter = date('d.m.Y', strtotime(date('Y').'-'.(($current_quarter*3)-2).'-01'));
+        $last_day_of_this_quarter = date('d.m.Y', strtotime(date('Y').'-'.($current_quarter*3).'-'.(date("t",strtotime(date('Y').'-'.($current_quarter*3).'-01')))));
+        $today = date("d.m.Y");
+        
+        if(isset($valArray['filtervon'])) {
+            $filtervon = $valArray['filtervon'];
+        } else {
+            $filtervon = $first_day_of_this_quarter;
+        }
+        
+        if(isset($valArray['filterbis'])) {
+            $filterbis = $valArray['filterbis'];
+        } else {
+            $filterbis = $today;
+        }
+        // *****
+        $orderby = 'crdate';
+        $order = 'ASC';
+        
+        
+        $anzteilnehmers = 0;
+        if($filtervon != '' && $filterbis != '') {
+            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer($type, $del, $filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected, $beraterselected, $landkreisselected, $berufselected, $brancheselected);
+            $anzteilnehmers = count($teilnehmers);
+        }
+        
+        // **** Starte Export und Download der Export-Datei für alle Status außer Folgeberatungen ****
+        if (isset($valArray['export']) && $fberatungsstatus != '' && $fberatungsstatus != '15') {
+            
+            if($anzteilnehmers == 0) {
+                $this->addFlashMessage("Keine Einträge, bitte Suchparameter anpassen.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+                $anzgesamt = $anzteilnehmers;
+            } else {
+                $rowstn = $this->getTeilnehmerdata4Export($teilnehmers, $bundeslandselected, $arrlandkreise, $arrbranchen, $arrberufe, $arrstaaten, 'TN');
+                $rowstnanonym = $this->getTeilnehmerdata4Export($teilnehmers, $bundeslandselected, $arrlandkreise, $arrbranchen, $arrberufe, $arrstaaten, 'TNANONYM');
+                $rowsfk = $this->getFolgekontaktdata4Export($teilnehmers);
+                
+                $writer = new \XLSXWriter();
+                $writer->setAuthor('IQ Webapp');
+                
+                if($fanonym  == '1') {
+                    $filename = 'export_anonym_'.$bezbstatus.'_'.date('Y-m-d_H-i', time()).'.xlsx';
+                    $writer->writeSheet($rowstnanonym, 'Ratsuchende', $this->headerblattanonym);
+                } else {
+                    $filename = 'export_'.$bezbstatus.'_'.date('Y-m-d_H-i', time()).'.xlsx';
+                    $writer->writeSheet($rowstn, 'Ratsuchende', $this->headerblattTN);
+                    if($filterfolgekontakte  == '1') {
+                        $writer->writeSheet($rowsfk, 'Zugehörige Folgekontakte', $this->headerblattFK);
+                    }
+                }
+                
+                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                header('Content-Disposition: attachment;filename="'.$filename.'"');
+                header('Cache-Control: max-age=0');
+                $writer->writeToStdOut();
+                exit;
+            }
+        } elseif(isset($valArray['export']) && $fberatungsstatus == '15') {
+            // **** nur Folgekontakte exportieren ****
+            $folgekontakte = $this->folgekontaktRepository->fksearch4export($filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected, $beraterselected, $landkreisselected, $berufselected, $brancheselected);
+            $folgekontakteFK2025 = $this->folgekontaktRepository->fksearch4exportFK2025($filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected, $beraterselected, $landkreisselected, $berufselected, $brancheselected);
+            $anzfolgekontakte = count($folgekontakte);
+            
+            if($anzfolgekontakte == 0) {
+                $this->addFlashMessage("Keine Einträge, bitte Suchparameter anpassen.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+                $anzgesamt = $anzfolgekontakte;
+            } else {
+                
+                $rowsfk = $this->getFolgekontaktdata4Export($folgekontakte);
+                $rowstnfk2025 = $this->getTeilnehmerdata4Export($folgekontakteFK2025, $bundeslandselected, $arrlandkreise, $arrbranchen, $arrberufe, $arrstaaten, 'FK25');
+             
+                // XLSX
+                $filename = 'export_folgekontakte_'.date('Y-m-d_H-i', time()).'.xlsx';
+                
+                $writer = new \XLSXWriter();
+                $writer->setAuthor('IQ Webapp');
+                
+                $writer->writeSheet($rowsfk, 'Alle Folgekontakte', $this->headerblattFK);
+                $writer->writeSheet($rowstnfk2025, 'Davon Folgekontakte von Beratungen aus Förderphase 23-25', array_merge($this->headerblattFK25, $this->headerblattTN));
+                
+                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                header('Content-Disposition: attachment;filename="'.$filename.'"');
+                header('Cache-Control: max-age=0');
+                $writer->writeToStdOut();
+                exit;
+            }
+        } elseif(isset($valArray['export']) && $valArray['export'] && $fberatungsstatus == '') {
+            $this->addFlashMessage("Bitte Status für Export auswählen.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+            $anzgesamt = count($teilnehmers);
+        } else {
+            
+            // nur Folgekontakte
+            if($fberatungsstatus == '15') {
+                $folgekontakte = $this->folgekontaktRepository->fksearch4export($filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected, $beraterselected, $landkreisselected, $berufselected, $brancheselected);
+                $anzgesamt = count($folgekontakte);
+            } else {
+                $anzgesamt = $anzteilnehmers;
+            }
+            
+            $this->view->assignMultiple(
+                [
+                    'anzgesamt' => $anzgesamt,
+                    'filtervon' => $filtervon,
+                    'filterbis' => $filterbis,
+                    'beratungsstelle' => $this->beratungsstellenname,
+                    'niqbid' => $this->niqbid,
+                    'allebundeslaender' => $allebundeslaender,
+                    'alleberufe' => $arrberufe,
+                    'allebranchen' => $arrbranchen,
+                    'gewlandkreise' => $arrlandkreise,
+                    'anzbstellen' => $this->anzbstellen
+                ]
+                );
+        }
+        
+        $this->view->assignMultiple(
+            [
+                'anzgesamt' => $anzgesamt,
+                'calleraction' => 'export',
+                'callercontroller' => 'Backend',
+                'callerpage' => $currentPage,
+                'alleberater' => $arrberater ?? '',
+                'staatenarr' => $arrstaaten,
+                'filteranonym' => $fanonym,
+                'filterfolgekontakte' => $filterfolgekontakte,
+                'filterberatungsstatus' => $fberatungsstatus,
+                'filterbundesland' => $bundeslandselected,
+                'filterstaat' => $staatselected,
+                'filterberater' => $beraterselected,
+                'filterlandkreis' => $landkreisselected,
+                'filterreferenzberuf' => $berufselected,
+                'filterberuf' => $berufselected,
+                'filterbranche' => $brancheselected,
+                'filteron' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus')
+            ]
+            );
+        return $this->htmlResponse();
+    }
+    
     /*************************************************************************/
     /********** NO ACTION FUNCTIONS - TODO: in Hilfsklasse auslagern **********/
     /*************************************************************************/
@@ -3350,6 +3022,232 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         return $arrberater;
         // ***************** Ende - Beraterarray bestimmen *****************
+    }
+    
+    protected function getFolgekontaktdata4Export($tnarrayfromrepo) {
+        $arrberatungsformfolgeberatung = $this->settings['beratungsformfolgeberatung'];
+        $arrberatungsart = $this->settings['beratungsart'];
+        
+        $rowsfk = array();
+        $fkcnt = 0;
+        $stringberatungsart = '';
+        foreach($tnarrayfromrepo as $fk) {
+            $rowsfk[$fkcnt] = array();
+            $rowsfk[$fkcnt]['fkuid']  = $fk['uid'];
+            $teilnehmer = $this->teilnehmerRepository->findByUid($fk['teilnehmer']);
+            $rowsfk[$fkcnt]['fknachname'] = $teilnehmer->getNachname();
+            $rowsfk[$fkcnt]['fkvorname'] = $teilnehmer->getVorname();
+            $rowsfk[$fkcnt]['fkdatum']  = $fk['datum'];
+            $berater = $this->beraterRepository->findByUid($fk['berater']);
+            if($berater != NULL) $rowsfk[$fkcnt]['fkberater'] = $berater->getUsername();
+            else $rowsfk[$fkcnt]['fkberater'] = '-';
+            $rowsfk[$fkcnt]['fknotizen'] = $fk['notizen'];
+            $arrtnberatungsart = explode(",", $fk['beratungsform']);
+            foreach ($arrtnberatungsart as $atn) $stringberatungsart .= $atn == '' ? '-;' : $arrberatungsart[$atn].";";
+            $rowsfk[$fkcnt]['fkberatungsform'] = $stringberatungsart;
+            $rowsfk[$fkcnt]['fkberatungsdauer'] = $fk['beratungsdauer'];
+            
+            $fkcnt++;
+        }
+        return $rowsfk;
+    }
+        
+    protected function getTeilnehmerdata4Export($tnarrayfromrepo, $bundeslandselected, $arrlandkreise, $arrbranchen, $arrberufe, $arrstaaten, $type) {
+         
+        // ************ Start - Beraterarray bestimmen *****************
+        $arrberater = $this->getberater4Bstelle();
+        
+        // **** Variablen vorbelegen ****
+        $arrjanein = array(0 => '', 1 => 'ja', 2 => 'nein', 3 => 'keine Angabe');
+        $arrerwerbsstatus = $this->settings['erwerbsstatus'];
+        $arrleistungsbezug = $this->settings['leistungsbezug'];
+        $arrleistungsbezug[0] = '';
+        
+        $orte = $this->ortRepository->findByBundesland($bundeslandselected);
+        $arrorte = array();
+        foreach($orte as $ort) {
+            $arrorte[$ort->getPlz()] = $ort->getLandkreis();
+        }
+        
+        $arraufenthaltsstatus = $this->settings['aufenthaltsstatus'];
+        $arrberatungsart = $this->settings['beratungsart'];
+        $arrberufserfahrung = $this->settings['berufserfahrung'];
+        
+        $arranerkennungsberatung = $this->settings['anerkennungsberatung'];
+        $arrqualifizierungsberatung = $this->settings['qualifizierungsberatung'];
+        $arrberatungsstelle = $this->settings['beratungsstelle'];
+        
+        $arrzertifikatlevel = $this->settings['zertifikatlevel'];
+        
+        $arrabschlussart = $this->settings['abschlussart'];
+        $arrantragstellungerfolgt = $this->settings['antragstellungerfolgt'];
+        
+        
+        $rows = array();
+        $rowsanonym = array();
+        $stringberatungsart = '';
+        foreach($tnarrayfromrepo as $x => $tn) {
+            $deutschkenntnisse = $tn['deutschkenntnisse'];
+            if($deutschkenntnisse == 1) $deutschkenntnisse = 'ja';
+            if($deutschkenntnisse == 2) $deutschkenntnisse = 'nein';
+            if($deutschkenntnisse == -1) $deutschkenntnisse = 'k.a.';
+            $geschlecht = $tn['geschlecht'];
+            if($geschlecht == 1) $geschlecht = 'w';
+            if($geschlecht == 2) $geschlecht = 'm';
+            if($geschlecht == 3) $geschlecht = 'd';
+            if($type == 'FK25') {
+                //$rows[$x]['fkuid'] = $tn['fkuid'];                
+                $rows[$x]['fkdatum'] = $tn['fkdatum'];
+                $berater = $this->beraterRepository->findByUid($tn['fkberater']);
+                if($berater != NULL) $rows[$x]['fkberater'] = $berater->getUsername();
+                else $rows[$x]['fkberater'] = '-';
+                $rows[$x]['fknotizen'] = $tn['fknotizen'];
+                $arrtnberatungsart = explode(",", $tn['fkberatungsform']);
+                foreach ($arrtnberatungsart as $atn) $stringberatungsart .= $atn == '' ? '-;' : $arrberatungsart[$atn].";";
+                $rows[$x]['fkberatungsform'] = $stringberatungsart;
+            }
+            if($type == 'TNANONYM') {
+                $rowsanonym[$x]['verificationDate'] = date('d.m.Y H:i:s', $tn['verification_date']);
+                $rowsanonym[$x]['PLZ'] = $tn['plz'];
+                $rowsanonym[$x]['Ort'] = $tn['ort'];
+                $rowsanonym[$x]['Lebensalter'] = $tn['lebensalter'];
+                $rowsanonym[$x]['ErsteStaatsangehoerigkeit'] = $tn['erste_staatsangehoerigkeit'] == '' ? '-' : $arrstaaten[$tn['erste_staatsangehoerigkeit']];
+                $rowsanonym[$x]['ZweiteStaatsangehoerigkeit'] = $tn['zweite_staatsangehoerigkeit'] == '' ? '-' : $arrstaaten[$tn['zweite_staatsangehoerigkeit']];
+                $rowsanonym[$x]['Landkreis'] = (preg_match("/[0-9]{5}/", trim($tn['plz'])) && array_key_exists(trim($tn['plz']), $arrorte)) ? $arrorte[trim($tn['plz'])] : '-';
+                $rowsanonym[$x]['Einreisejahr'] = $tn['einreisejahr'];
+                $rowsanonym[$x]['Deutschkenntnisse'] = $deutschkenntnisse ?? '';
+                $rowsanonym[$x]['ZertifikatSprachniveau'] = $tn['zertifikat_sprachniveau'] == '' ? '-' : $arrzertifikatlevel[$tn['zertifikat_sprachniveau']];
+                $rowsanonym[$x]['Geburtsland'] = $tn['geburtsland'] == '' ? '-' : $arrstaaten[$tn['geburtsland']];
+                $rowsanonym[$x]['Geschlecht'] = $geschlecht;
+                $rowsanonym[$x]['AnzFolgekontakte'] = $tn['anzahl_folgekontakte'];
+                $rowsanonym[$x]['erstberatungabgeschlossen'] = $tn['erstberatungabgeschlossen'];
+            } else {
+                $rows[$x]['uid'] = $tn['uid'];
+                $rows[$x]['verificationDate'] = date('d.m.Y H:i:s', $tn['verification_date']);
+                $rows[$x]['Nachname'] = $tn['nachname'];
+                $rows[$x]['Vorname'] = $tn['vorname'];
+                $rows[$x]['Strasse'] = $tn['strasse'];
+                $rows[$x]['PLZ'] = $tn['plz'];
+                $rows[$x]['Ort'] = $tn['ort'];
+                $rows[$x]['Email'] = $tn['email'];
+                $rows[$x]['Telefon'] = $tn['telefon'];
+                $rows[$x]['Geburtsdatum'] = $tn['gebdat'];
+                $rows[$x]['Lebensalter'] = $tn['lebensalter'];
+                $rows[$x]['ErsteStaatsangehoerigkeit'] = $tn['erste_staatsangehoerigkeit'] == '' ? '-' : $arrstaaten[$tn['erste_staatsangehoerigkeit']];
+                $rows[$x]['ZweiteStaatsangehoerigkeit'] = $tn['zweite_staatsangehoerigkeit'] == '' ? '-' : $arrstaaten[$tn['zweite_staatsangehoerigkeit']];
+                
+                $wohnsitzdeutschland = $tn['wohnsitz_deutschland'];
+                if($wohnsitzdeutschland == 1) $wohnsitzdeutschland = 'ja';
+                if($wohnsitzdeutschland == 2) $wohnsitzdeutschland = 'nein';
+                if($wohnsitzdeutschland == -1) $wohnsitzdeutschland = 'k.a.';
+                $rows[$x]['WohnsitzDeutschland'] = $wohnsitzdeutschland ?? '';
+                
+                $rows[$x]['Landkreis'] = (preg_match("/[0-9]{5}/", trim($tn['plz'])) && array_key_exists(trim($tn['plz']), $arrorte)) ? $arrorte[trim($tn['plz'])] : '-';
+                $rows[$x]['Einreisejahr'] = $tn['einreisejahr'];
+                $wohnsitzneinin = $tn['wohnsitz_nein_in'];
+                $rows[$x]['WohnsitzNeinIn'] = $wohnsitzneinin == '' ? '-' : $arrstaaten[$wohnsitzneinin];
+                $rows[$x]['Deutschkenntnisse'] = $deutschkenntnisse ?? '';
+                $rows[$x]['ZertifikatSprachniveau'] = $tn['zertifikat_sprachniveau'] == '' ? '-' : $arrzertifikatlevel[$tn['zertifikat_sprachniveau']];
+                
+                // noch nicht implementiert: $rows[$x]['WeitereSprachkenntnisse'] = $tn['weiteresprachkenntnisse'];
+                $rows[$x]['Sonstigerstatus'] = $tn['sonstigerstatus'];
+                
+                $tnerwerbsstatus = $tn['erwerbsstatus'];
+                $rows[$x]['erwerbsstatus'] = $tnerwerbsstatus == 0 ? '-' : $arrerwerbsstatus[$tnerwerbsstatus];
+                
+                $tnleistungsbezugjanein = $tn['leistungsbezugjanein'];
+                $rows[$x]['Leistungsbezugjanein'] = $tnleistungsbezugjanein == 0 ? '-' : $arrjanein[$tnleistungsbezugjanein];
+                
+                $tnleistungsbezug = $tn['leistungsbezug'];
+                $rows[$x]['Leistungsbezug'] = ($tnleistungsbezug == '' || $tnleistungsbezug == 0) ? '-' : $arrleistungsbezug[$tnleistungsbezug];
+                
+                $rows[$x]['Geburtsland'] = $tn['geburtsland'] == '' ? '-' : $arrstaaten[$tn['geburtsland']];
+                
+                $tnaufenthaltsstatus = $tn['aufenthaltsstatus'];
+                $rows[$x]['aufenthaltsstatus'] = $tnaufenthaltsstatus == 0 ? '-' : $arraufenthaltsstatus[$tnaufenthaltsstatus];
+                
+                $rows[$x]['Geschlecht'] = $geschlecht;
+                
+                $rows[$x]['notizen'] = $tn['notizen'];
+                
+                $beraterid = $tn['berater'];
+                $rows[$x]['Beraterin'] = $arrberater[$beraterid] ?? '-';
+                
+                $stringberatungsart = '';
+                $arrtnberatungsart = explode(",", $tn['beratungsart']);
+                foreach ($arrtnberatungsart as $atn) $stringberatungsart .= $atn == '' ? '-;' : $arrberatungsart[$atn].";";
+                $rows[$x]['beratungsart'] = $stringberatungsart;
+                
+                $rows[$x]['beratungsort'] = $tn['beratungsort'];
+                
+                $stringanerkennungsberatung = '';
+                $arrtnanerkennungsberatung = explode(",", $tn['anerkennungsberatung']);
+                foreach ($arrtnanerkennungsberatung as $atn) $stringanerkennungsberatung .= $atn == '' ? '-;' : $arranerkennungsberatung[$atn].";";
+                $rows[$x]['anerkennungsberatung'] = $stringanerkennungsberatung;
+                
+                $stringqualifizierungsberatung = '';
+                $arrtnqualifizierungsberatung = explode(",", $tn['qualifizierungsberatung']);
+                if(is_array($arrtnqualifizierungsberatung)) {
+                    foreach ($arrtnqualifizierungsberatung as $atn) $stringqualifizierungsberatung .= $atn == '' ? '-;' : $arrqualifizierungsberatung[$atn].";";
+                } else {
+                    $stringqualifizierungsberatung = $tn['qualifizierungsberatung'];
+                }
+                $rows[$x]['qualifizierungsberatung'] = $stringqualifizierungsberatung;
+                
+                $tnnameberatungsstelle = $tn['name_beratungsstelle'];
+                $rows[$x]['nameberatungsstelle'] = $tnnameberatungsstelle == '' ? '-' : $arrberatungsstelle[$tnnameberatungsstelle];
+                
+                $rows[$x]['beratungnotizen'] = $tn['beratungnotizen'];
+                $rows[$x]['beratungzuschulabschluss'] = $tn['beratungzu'] == 1 ? 'ja' : 'nein';
+                
+                $rows[$x]['AnzFolgekontakte'] = $tn['anzahl_folgekontakte'];
+                $rows[$x]['sumDauerFolgekontakte'] = $tn['gesamt_beratungsdauer'];
+                
+                $rows[$x]['kooperationgruppe'] = $tn['kooperationgruppe'];
+                $rows[$x]['beratungsdauer'] = $tn['beratungsdauer'];
+                $rows[$x]['beratungdatum'] = $tn['beratungdatum'];
+                $rows[$x]['erstberatungabgeschlossen'] = $tn['erstberatungabgeschlossen'];
+                $einwilligunginfo = $tn['einwilligunginfo'];
+                if($einwilligunginfo == 1) $rows[$x]['einwilligunginfo'] = 'ja';
+                else $rows[$x]['einwilligunginfo'] = 'nein';
+            }
+            
+            for($y = 1; $y <= 4; $y++) {
+                $abschlussart = $tn['abschluss'.$y.'_art'];
+                if(strstr($abschlussart, ',')) $abschlussart = '2';
+                
+                if($type == 'TNANONYM') {
+                    $rowsanonym[$x]['Abschluss'.$y.' Referenzberufzugewiesen'] = $tn['abschluss'.$y.'_beruf'];
+                    $rowsanonym[$x]['Abschluss'.$y.' Abschlussart'] = $abschlussart == '' ? '-' : $arrabschlussart[$abschlussart];
+                    $rowsanonym[$x]['Abschluss'.$y.' Erwerbsland'] = $tn['abschluss'.$y.'_erwerbsland'];
+                    $rowsanonym[$x]['Abschluss'.$y.' DeutscherReferenzberuf'] = $tn['abschluss'.$y.'_refberuf'];
+                } else {
+                    $rows[$x]['Abschluss'.$y.' Referenzberufzugewiesen'] = $tn['abschluss'.$y.'_beruf'];
+                    $rows[$x]['Abschluss'.$y.' SonstigerBeruf'] = $tn['abschluss'.$y.'_sonstigerberuf'];
+                    $rows[$x]['Abschluss'.$y.' NichtreglementierterBeruf'] = $tn['abschluss'.$y.'_nregberuf'];
+                    $rows[$x]['Abschluss'.$y.' Abschlussart'] = $abschlussart == '' ? '-' : $arrabschlussart[$abschlussart];
+                    $rows[$x]['Abschluss'.$y.' Branche'] = $tn['abschluss'.$y.'_branche'];
+                    $rows[$x]['Abschluss'.$y.' Erwerbsland'] = $tn['abschluss'.$y.'_erwerbsland'];
+                    $rows[$x]['Abschluss'.$y.' Abschlussjahr'] = $tn['abschluss'.$y.'_jahr'];
+                    $rows[$x]['Abschluss'.$y.' Ausbildungsort'] = $tn['abschluss'.$y.'_ausbildungsort'];
+                    $rows[$x]['Abschluss'.$y.' Abschluss'] = $tn['abschluss'.$y.'_abschluss'];
+                    $rows[$x]['Abschluss'.$y.' DauerBerufsausbildung'] = $tn['abschluss'.$y.'_dauer'];
+                    $rows[$x]['Abschluss'.$y.' Ausbildungsinstitution'] = $tn['abschluss'.$y.'_institution'];
+                    $tnabschlussberufserfahrung = $tn['abschluss'.$y.'_berufserfahrung'] ?? '';
+                    $rows[$x]['Abschluss'.$y.' Berufserfahrung'] = $tnabschlussberufserfahrung  == '' ? '' : $arrberufserfahrung[$tnabschlussberufserfahrung];
+                    $rows[$x]['Abschluss'.$y.' Wunschberuf'] = $tn['abschluss'.$y.'_wunschberuf'];
+                    $rows[$x]['Abschluss'.$y.' DeutscherReferenzberuf'] = $tn['abschluss'.$y.'_refberuf'];
+                    $abantragstellungerfolgt = $tn['abschluss'.$y.'_antrag'] ?? '';
+                    $rows[$x]['Abschluss'.$y.' Antragstellungerfolgt'] = $abantragstellungerfolgt == '' ? '' : $arrantragstellungerfolgt[$abantragstellungerfolgt];
+                }                
+            }
+        }
+        
+        if($type == 'TNANONYM') {
+            return $rowsanonym;            
+        } else {
+            return $rows;
+        }
     }
     
 }
