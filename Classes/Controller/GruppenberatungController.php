@@ -339,7 +339,7 @@ class GruppenberatungController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
      * action delete
      *
      * @param \Ud\Iqtp13db\Domain\Model\Gruppenberatung $gruppenberatung
-     * @param \Ud\Iqtp13db\Domain\Model\Gruppenberatung $teilnehmer
+     * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("gruppenberatung")
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("teilnehmer")
      * @return void

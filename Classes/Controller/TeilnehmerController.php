@@ -150,12 +150,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $datum = strtotime("now");
         
         if ($this->settings['modtyp'] == 'anmeldung' || $this->settings['modtyp'] == 'anmeldungplz') {
-            if($datum >= $wartungvon->getTimestamp() AND $datum <= $wartungbis->getTimestamp())
-            {
+            if($datum >= $wartungvon->getTimestamp() AND $datum <= $wartungbis->getTimestamp()) {
                 return (new ForwardResponse('wartung'))->withControllerName('Teilnehmer')->withExtensionName('Iqtp13db');
-            }
-            else
-            {
+            } else {
                 $valArray = $this->request->getArguments();
                 $beratungsstellenid = $valArray['beratung'] ?? '';
                 $direkt = $valArray['direkt'] ?? '';
@@ -192,6 +189,8 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         }  
         if ($this->settings['modtyp'] == 'bearbeiten') {
             return (new ForwardResponse('editextern'))->withControllerName('Teilnehmer')->withExtensionName('Iqtp13db');
+        } else {
+            return (new ForwardResponse('startseite'))->withControllerName('Teilnehmer')->withExtensionName('Iqtp13db');
         }
     }
     
@@ -460,9 +459,9 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 if($bstid == '' || $bstid == null) {
                     $this->addFlashMessage("ERROR: Session expired or data not found. Please restart registration.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
                     if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid') != NULL) {
-                        $this->cancelregistration($GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid'));
+                        return $this->redirect('cancelregistration', 'Teilnehmer', 'Iqtp13db', ['tnuid' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'tnuid')]);
                     } else {
-                        $this->cancelregistration(null);
+                        return $this->redirect('cancelregistration', 'Teilnehmer', 'Iqtp13db', ['tnuid' => 0]);
                     }
                 }
                 if($direkt == '1') $teilnehmer->setKooperationgruppe('Direktlink: '. $bstid);
@@ -1075,7 +1074,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 if($this->request->hasArgument('ohnepersdat')) $ohnepersdat = $this->request->getArgument('ohnepersdat');
                 
                 if ($validUntil < time() && $filedownload == 0) {
-                    $this->addFlashMessage('Link nicht mehr gültig, bitte neuen Link bei Beratungsstelle anfordern.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                    $this->addFlashMessage('Link nicht mehr gültig, bitte neuen Link bei Beratungsstelle anfordern.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
                     return $this->redirect('anmeldseite0');                    
                 } else {
                     $this->view->assign('teilnehmer', $teilnehmer);
@@ -1084,11 +1083,11 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     $this->view->assign('ohnepersdat', $ohnepersdat ?? 0);
                 }
             } else {
-                $this->addFlashMessage('Link ungültig, Datensatz nicht vorhanden.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                $this->addFlashMessage('Link ungültig, Datensatz nicht vorhanden.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
                 return $this->redirect('anmeldseite0');
             }
         } else {
-            $this->addFlashMessage('Aufruf dieser Seite nur über individuellen Link aus E-Mail.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->addFlashMessage('Aufruf dieser Seite nur über individuellen Link aus E-Mail.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
             return $this->redirect('anmeldseite0');
         }
         return $this->htmlResponse();
@@ -1103,7 +1102,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $valArray = $this->request->getArguments();
         
         if(!$this->request->hasArgument('authfrage')) {
-            $this->addFlashMessage('Link ungültig, bitte erst anmelden.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->addFlashMessage('Link ungültig, bitte erst anmelden.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
             return $this->redirect('validationFailed');
         }
         
@@ -1113,7 +1112,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $anzfailedlogins = $teilnehmer->getAnzloginfehlgeschlagen();
                       
             if(!$teilnehmer) {
-                $this->addFlashMessage('Teilnehmer unbekannt.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                $this->addFlashMessage('Teilnehmer unbekannt.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
                 return $this->redirect('editextern', 'Teilnehmer', null, array('code' => $valArray['code']));
             }
             
@@ -1121,7 +1120,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 $tngebdat = \DateTime::createFromFormat('Y-m-d', $teilnehmer->getGebdat());
                 $authfragegebdat = DateTime::createFromFormat('Y-m-d', $this->request->getArgument('authfrage'));                
             } else {
-                $this->addFlashMessage('Geburtsdatum für diesen Datensatz nicht eingetragen, Anmeldung nicht möglich.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                $this->addFlashMessage('Geburtsdatum für diesen Datensatz nicht eingetragen, Anmeldung nicht möglich.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
                 return $this->redirect('editextern', 'Teilnehmer', null, array('code' => $valArray['code']));
             }
             
@@ -1147,15 +1146,15 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 $this->teilnehmerRepository->update($teilnehmer);
                 
                 if($anzfailedlogins > 5) {
-                    $this->addFlashMessage('Zuviele fehlerhafte Login-Versuche. Bitte neuen Link von der Beratungsstelle zusenden lassen.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                    $this->addFlashMessage('Zuviele fehlerhafte Login-Versuche. Bitte neuen Link von der Beratungsstelle zusenden lassen.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
                     return $this->redirect('anmeldseite0');
                 } else {
-                    $this->addFlashMessage('Eingegebenes Geburtsdatum ist nicht korrekt oder falsches Format!', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);                
+                    $this->addFlashMessage('Eingegebenes Geburtsdatum ist nicht korrekt oder falsches Format!', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);                
                     return $this->redirect('editextern', 'Teilnehmer', null, array('code' => $valArray['code']));
                 }
             }
         } else {
-            $this->addFlashMessage('Link ungültig.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->addFlashMessage('Link ungültig.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
             return $this->redirect('editextern', 'Teilnehmer', null, array('code' => $valArray['code']));
         }
     }
@@ -1170,7 +1169,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $tnuid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'editextern') ?? 0;
          
         if($tnuid == 0) {
-            $this->addFlashMessage('Daten konnte nicht geladen werden, Session abgelaufen oder Cookie nicht gefunden.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->addFlashMessage('Daten konnte nicht geladen werden, Session abgelaufen oder Cookie nicht gefunden.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
             return $this->redirect('editextern', 'Teilnehmer', null, null);
         } else {
             $teilnehmer = $this->teilnehmerRepository->findByUid($tnuid);

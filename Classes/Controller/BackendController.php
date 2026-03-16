@@ -374,8 +374,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         if ($this->settings['modtyp'] == 'gruppenberatung') {
             return (new ForwardResponse('listgruppenberatung'))->withControllerName('Gruppenberatung')->withExtensionName('Iqtp13db');
-        }
-     
+        } else {
+            return (new ForwardResponse('status'))->withControllerName('Backend')->withExtensionName('Iqtp13db');
+        }     
     }
     
     /**
@@ -2163,6 +2164,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
     }   
        
+    
     /**
      * action mail4datenblatt
      * E-Mail mit Link und QR-Code zu Datenblatt RS senden
@@ -2171,6 +2173,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("teilnehmer")
      * @return void
      */
+    /*
     public function mail4datenblattAction(\Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
     {
         $valArray = $this->request->getArguments();
@@ -2199,7 +2202,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             if($datenberatungsstelle != '') $kontaktlabel = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('kontaktberatungsstelle', 'Iqtp13db');
             else $kontaktlabel = '';            
                         
-            $datenblattdokument =
+            //$datenblattdokument =
             
             $storage = $this->generalhelper->getTP13Storage($this->storageRepository->findAll());
             $beratenepath = $dokument->getPfad();
@@ -2245,9 +2248,10 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $this->addFlashMessage('E-Mail zum nachträglichen Bearbeiten an '.$recipient.' versendet.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
             
             return $this->redirect($valArray['calleraction'], 'Backend', 'Iqtp13db', array('teilnehmer' => $teilnehmer, 'callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $searchparams ?? ''));
-        }
+        }    
     }  
-    
+    */
+
     /**
      * action sendtoarchiv
      *
@@ -2963,9 +2967,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         return 999;
     }
     
-    private function generateDatenblatt() {
-        
-    }
     /**
      * Get selected IDs from session
      */

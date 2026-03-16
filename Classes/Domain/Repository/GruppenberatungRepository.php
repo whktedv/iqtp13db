@@ -33,16 +33,7 @@ class GruppenberatungRepository extends Repository
         if($order == 'DESC') $order = \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING;
         else $order = \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING;
         
-        if($beratungsstatus == 0) {
-            $query->setOrderings(
-                [
-                    $orderby => $order,
-                    'uid' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING
-                ]
-                );
-        } else {
-            $query->setOrderings([ $orderby => $order ]);
-        }
+        $query->setOrderings([ $orderby => $order ]);
         
         $query = $query->execute();
         return $query;
