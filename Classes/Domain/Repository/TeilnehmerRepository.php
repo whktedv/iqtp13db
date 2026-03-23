@@ -359,6 +359,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      * @return array
      */
     public function findDublettenBstellen($nachname, $vorname, $email) {
+        $email = filter_var($email, FILTER_SANITIZE_EMAIL);
         $query = $this->createQuery();
         $query->statement("SELECT niqidberatungsstelle
                             FROM tx_iqtp13db_domain_model_teilnehmer as t

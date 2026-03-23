@@ -28,14 +28,30 @@ class BeraterRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $querySettings = GeneralUtility::makeInstance(Typo3QuerySettings::class);
         $querySettings->setRespectStoragePage(TRUE);
         $querySettings->setIgnoreEnableFields(TRUE);
-        $querySettings->setEnableFieldsToBeIgnored(array('disabled', 'hidden', 'deleted'));
-        
-        $querySettings->setStoragePageIds(array($customStoragePid));
+        $querySettings->setEnableFieldsToBeIgnored(['disabled', 'hidden', 'deleted']);
+        $querySettings->setStoragePageIds([$customStoragePid]);
         $this->setDefaultQuerySettings($querySettings);
-
-        //Now get all (only Presets)
-        $queryResult = $this->findByUsergroup($usergroup);
-        return $queryResult;
+        
+        $usergroupIds = array_filter(array_map('trim', explode(',', $usergroup)));
+        
+        if (empty($usergroupIds)) {
+            return $this->createQuery()->execute();
+        }
+        
+        $query = $this->createQuery();
+        
+        if (count($usergroupIds) === 1) {
+            $constraints = $query->contains('usergroup', $usergroupIds[0]);
+        } else {
+            $orConstraints = [];
+            foreach ($usergroupIds as $groupId) {
+                $orConstraints[] = $query->contains('usergroup', $groupId);
+            }
+            $constraints = $query->logicalOr(...$orConstraints);
+        }
+        
+        $query->matching($constraints);
+        return $query->execute();
     }
     
     public function findBerater4Search($customStoragePid, $uid)

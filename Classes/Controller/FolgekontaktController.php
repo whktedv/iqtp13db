@@ -110,15 +110,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $valArray = $this->request->getArguments();
         
         $alleberater = array();        
-        $usergrouparray = explode(",", $this->user['usergroup']);
-        if(count($usergrouparray) > 1) {
-            foreach($usergrouparray as $ug) {
-                $ugberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $ug);
-                array_push($alleberater, $ugberater);
-            }             
-        } else {
-            $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
-        }
+        $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
         
         $this->view->assign('alleberater', $alleberater);
         $this->view->assign('berater', $this->user);
