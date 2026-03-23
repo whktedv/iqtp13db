@@ -10,6 +10,8 @@ use Ud\Iqtp13db\Domain\Repository\FolgekontaktRepository;
 use Ud\Iqtp13db\Domain\Repository\BeraterRepository;
 use Ud\Iqtp13db\Domain\Repository\AbschlussRepository;
 
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+
 /***
  *
  * This file is part of the "IQ Webapp Anerkennungserstberatung" Extension for TYPO3 CMS.
@@ -107,8 +109,17 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     {
         $valArray = $this->request->getArguments();
         
-        $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
-            
+        $alleberater = array();        
+        $usergrouparray = explode(",", $this->user['usergroup']);
+        if(count($usergrouparray) > 1) {
+            foreach($usergrouparray as $ug) {
+                $ugberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $ug);
+                array_push($alleberater, $ugberater);
+            }             
+        } else {
+            $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
+        }
+        
         $this->view->assign('alleberater', $alleberater);
         $this->view->assign('berater', $this->user);
         $this->view->assign('teilnehmer', $teilnehmer);
