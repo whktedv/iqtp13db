@@ -239,8 +239,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         StaatenRepository $staatenRepository, 
         OrtRepository $ortRepository, 
         BrancheRepository $brancheRepository,
-        GruppenberatungRepository $gruppenberatungRepository,
-        QRCodeGenerator $qrCodeGenerator
+        GruppenberatungRepository $gruppenberatungRepository
+        
     )
     {
         $this->userGroupRepository = $userGroupRepository;
@@ -255,8 +255,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $this->staatenRepository = $staatenRepository;
         $this->ortRepository = $ortRepository;
         $this->brancheRepository = $brancheRepository;
-        $this->gruppenberatungRepository = $gruppenberatungRepository;
-        $this->qrCodeGenerator = $qrCodeGenerator;
+        $this->gruppenberatungRepository = $gruppenberatungRepository
+        
     }
     
     /**
