@@ -129,7 +129,7 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 	    
 	    $query = $this->createQuery();
 	    
-	    $sql = "SELECT f.uid, f.teilnehmer, f.datum, f.berater, f.notizen, f.beratungsform, f.beratungsdauer FROM tx_iqtp13db_domain_model_folgekontakt as f
+	    $sql = "SELECT f.uid, f.teilnehmer, t.nachname, t.vorname, f.datum, f.berater, f.notizen, f.beratungsform, f.beratungsdauer FROM tx_iqtp13db_domain_model_folgekontakt as f
                 INNER JOIN tx_iqtp13db_domain_model_teilnehmer as t ON f.teilnehmer = t.uid
                 LEFT JOIN tx_iqtp13db_domain_model_abschluss as a ON f.teilnehmer = a.teilnehmer
                 LEFT JOIN fe_groups as b on t.niqidberatungsstelle = b.niqbid
@@ -147,6 +147,37 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 
         $query->statement($sql);
         return $query->execute(true);
+	}
+	
+	/**
+	 *
+	 */
+	public function fksearch4exportNew($tnuids, $filtervon, $filterbis)
+	{
+	    
+	    $uidstring = implode(",", $tnuids);
+
+	    $query = $this->createQuery();
+	    
+	    $sql = "
+            SELECT
+                fk.uid,
+                t.nachname,
+                t.vorname,
+                fk.datum,
+                fk.berater,
+                fk.notizen,
+                fk.beratungsform,
+                fk.beratungsdauer
+            FROM tx_iqtp13db_domain_model_folgekontakt fk
+            LEFT JOIN tx_iqtp13db_domain_model_teilnehmer t ON fk.teilnehmer = t.uid";
+	    
+	    $sql .= " WHERE             
+            STR_TO_DATE(fk.datum, '%Y-%m-%d') BETWEEN STR_TO_DATE('$filtervon', '%d.%m.%Y') AND STR_TO_DATE('$filterbis', '%d.%m.%Y')
+            AND t.uid IN (".$uidstring.")";
+               	    
+	    $query->statement($sql);
+	    return $query->execute(true);
 	}
 	
 	/**

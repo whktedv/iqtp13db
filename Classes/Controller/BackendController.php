@@ -690,28 +690,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $orderchar = $order == 'ASC' ? "↓" : "↑";        
         
-        // ************ Start - Beraterarray bestimmen *****************
-        $arrberater = array();    
-        $arrberater[0] = '- nicht zugeordnet -';
-        $usergroups4berater = explode(",", $this->user['usergroup']);
-        if($this->niqbid == '12345' || intval($this->niqbid) < 999) { // Admin
-            $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected ?? '%');
-            foreach($usergroups4bundesland as $ug) {
-                $ugberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $ug);
-                foreach($ugberater as $currber) {
-                    $arrberater[$currber->getUid()] = $currber->getUsername();
-                }
-            }
-        } else {
-            $thisug = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $this->niqbid);
-            $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $thisug[0]);
-            foreach($berater as $currber) {
-                $arrberater[$currber->getUid()] = $currber->getUsername();
-            }
-        }
-        asort($arrberater);
-        // ***************** Ende - Beraterarray bestimmen *****************
-                        
+        $arrberater  = $this->getberater4Bstelle('%', FALSE);
+       
         $mail4externstandardmailtext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtextedit', 'Iqtp13db');
         
         $gruppenberatungenarr = array();
@@ -847,27 +827,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $orderchar = $order == 'ASC' ? "↓" : "↑";
         
-        // ************ Start - Beraterarray bestimmen *****************
-        $arrberater = array();
-        $arrberater[0] = '- nicht zugeordnet -';
-        $usergroups4berater = explode(",", $this->user['usergroup']);
-        if($this->niqbid == '12345' || intval($this->niqbid) < 999) { // Admin
-            $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected ?? '%');
-            foreach($usergroups4bundesland as $ug) {
-                $ugberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $ug);
-                foreach($ugberater as $currber) {
-                    $arrberater[$currber->getUid()] = $currber->getUsername();
-                }
-            }
-        } else {
-            $thisug = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $this->niqbid);
-            $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $thisug[0]);
-            foreach($berater as $currber) {
-                $arrberater[$currber->getUid()] = $currber->getUsername();
-            }
-        }
-        asort($arrberater);
-        // ***************** Ende - Beraterarray bestimmen *****************
+        $arrberater  = $this->getberater4Bstelle('%', FALSE);
         
         $mail4externstandardmailtext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtextedit', 'Iqtp13db');
         
@@ -992,27 +952,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 
         $orderchar = $order == 'ASC' ? "↓" : "↑";
         
-        // ************ Start - Beraterarray bestimmen *****************
-        $arrberater = array();
-        $arrberater[0] = '- nicht zugeordnet -';
-        $usergroups4berater = explode(",", $this->user['usergroup']);
-        if($this->niqbid == '12345' || intval($this->niqbid) < 999) { // Admin
-            $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected ?? '%');
-            foreach($usergroups4bundesland as $ug) {
-                $ugberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $ug);
-                foreach($ugberater as $currber) {
-                    $arrberater[$currber->getUid()] = $currber->getUsername();
-                }
-            }
-        } else {
-            $thisug = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $this->niqbid);
-            $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $thisug[0]);
-            foreach($berater as $currber) {
-                $arrberater[$currber->getUid()] = $currber->getUsername();
-            }
-        }
-        asort($arrberater);
-        // ***************** Ende - Beraterarray bestimmen *****************
+        $arrberater  = $this->getberater4Bstelle('%', FALSE);
         
         $mail4externstandardmailtext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtextedit', 'Iqtp13db');
         
@@ -1103,27 +1043,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $orderchar = $order == 'ASC' ? "↓" : "↑";
         
-        // ************ Start - Beraterarray bestimmen *****************
-        $arrberater = array();
-        $arrberater[0] = '- nicht zugeordnet -';
-        $usergroups4berater = explode(",", $this->user['usergroup']);
-        if($this->niqbid == '12345' || intval($this->niqbid) < 999) { // Admin
-            $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected ?? '%');
-            foreach($usergroups4bundesland as $ug) {
-                $ugberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $ug);
-                foreach($ugberater as $currber) {
-                    $arrberater[$currber->getUid()] = $currber->getUsername();
-                }
-            }
-        } else {
-            $thisug = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $this->niqbid);
-            $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $thisug[0]);
-            foreach($berater as $currber) {
-                $arrberater[$currber->getUid()] = $currber->getUsername();
-            }
-        }
-        asort($arrberater);
-        // ***************** Ende - Beraterarray bestimmen *****************
+        $arrberater  = $this->getberater4Bstelle('%', FALSE);
         
         $this->view->assignMultiple(
             [
@@ -1351,9 +1271,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $this->addFlashMessage("Achtung: Diese/r Ratsuchende/r ist auch bei der Beratungsstelle <b>".$bstelle->getDescription()."</b> angemeldet.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
             }
         }
-        
-        $teilnehmer->setNeuedokumente(0);
-        $this->teilnehmerRepository->update($teilnehmer);        
+             
         // Daten sofort in die Datenbank schreiben
         $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
@@ -1591,7 +1509,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         foreach($abschluesse as $abschl) {
             if(strstr($abschl->getAbschlussart(), ',')) $abschl->setAbschlussart(2);
         }
-        $alleberater  = $this->getberater4Bstelle();
+        $alleberater  = $this->getberater4Bstelle('%', FALSE);
         
         $dokumente = $this->dokumentRepository->findByTeilnehmer($teilnehmer);
         $dokumentpfad = $this->generalhelper->sanitizeFileFolderName($teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid(). '/');
@@ -1673,8 +1591,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             }
         }
         
-        $teilnehmer->setNeuedokumente(0);
-        $this->teilnehmerRepository->update($teilnehmer);
         // Daten sofort in die Datenbank schreiben
         $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
@@ -2152,6 +2068,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $emailview->setRequest($this->request);
             
             $teilnehmer->setEditexternsent(new \DateTime);
+            $teilnehmer->setNeuedokumente(0);
             $teilnehmer->setAnzloginfehlgeschlagen(0);
             $this->teilnehmerRepository->update($teilnehmer);
             
@@ -2607,7 +2524,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $berufselected = $valArray['filterreferenzberuf'] ?? '%';
         $brancheselected = $valArray['filterbranche'] ?? '%';
         
-        $arrberater = $this->getberater4Bstelle();
+        $arrberater = $this->getberater4Bstelle('%', FALSE);
         $arrlandkreise = array();
         $arrlandkreise = $this->ortRepository->findLandkreiseByBundesland($bundeslandselected);
         $brancheunterkat = $this->brancheRepository->findAllUnterkategorie('de');
@@ -2676,8 +2593,12 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             } else {
                 $rowstn = $this->getTeilnehmerdata4Export($teilnehmers, $bundeslandselected, $arrlandkreise, $arrbranchen, $arrberufe, $arrstaaten, 'TN');
                 $rowstnanonym = $this->getTeilnehmerdata4Export($teilnehmers, $bundeslandselected, $arrlandkreise, $arrbranchen, $arrberufe, $arrstaaten, 'TNANONYM');
-                $rowsfk = $this->getFolgekontaktdata4Export($teilnehmers);
                 
+                
+                $tnuids = array();                
+                for ($i = 0; $i < count($rowstn); $i++) {
+                    $tnuids[$i] = $rowstn[$i]['uid'];
+                }
                 $writer = new \XLSXWriter();
                 $writer->setAuthor('IQ Webapp');
                 
@@ -2688,6 +2609,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     $filename = 'export_'.$bezbstatus.'_'.date('Y-m-d_H-i', time()).'.xlsx';
                     $writer->writeSheet($rowstn, 'Ratsuchende', $this->headerblattTN);
                     if($filterfolgekontakte  == '1') {
+                        $folgekontakte = $this->folgekontaktRepository->fksearch4exportNew($tnuids, $filtervon, $filterbis);
+                        $rowsfk = $this->getFolgekontaktdata4Export($folgekontakte);                        
                         $writer->writeSheet($rowsfk, 'Zugehörige Folgekontakte', $this->headerblattFK);
                     }
                 }
@@ -2755,6 +2678,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 ]
                 );
         }
+        
         
         $this->view->assignMultiple(
             [
@@ -2999,30 +2923,32 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         return FALSE;
     }
     
-    protected function getberater4Bstelle() {
+    protected function getberater4Bstelle($bundeslandselected, $is4export) {
+        
         // ************ Start - Beraterarray bestimmen *****************
         $arrberater = array();
+        if($is4export) $arrberater[0] = '- nicht zugeordnet -';
         $usergroups4berater = explode(",", $this->user['usergroup']);
         if($this->niqbid == '12345' || intval($this->niqbid) < 999) { // Admin
             $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected ?? '%');
             foreach($usergroups4bundesland as $ug) {
                 $ugberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $ug);
                 foreach($ugberater as $currber) {
-                    $arrberater[] = $currber;
+                    $arrberater[$currber->getUid()] = $currber->getUsername();
                 }
             }
         } else {
-            foreach ($usergroups4berater as $ug4b) {
-                
-                $thisug = $this->userGroupRepository->findBeratungsstellebyUid($this->settings['beraterstoragepid'], $ug4b);
-                $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $thisug[0]);
-                foreach($berater as $currber) {
-                    $arrberater[] = $currber;
-                }
+            $thisug = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $this->niqbid);
+            $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $thisug[0]);
+            foreach($berater as $currber) {
+                $arrberater[$currber->getUid()] = $currber->getUsername();
             }
         }
+        asort($arrberater);
+        
         return $arrberater;
         // ***************** Ende - Beraterarray bestimmen *****************
+        
     }
     
     protected function getFolgekontaktdata4Export($tnarrayfromrepo) {
@@ -3031,32 +2957,33 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $rowsfk = array();
         $fkcnt = 0;
-        $stringberatungsart = '';
-        foreach($tnarrayfromrepo as $fk) {
+        foreach($tnarrayfromrepo as $fk) {     
+
             $rowsfk[$fkcnt] = array();
-            $rowsfk[$fkcnt]['fkuid']  = $fk['uid'];
-            $teilnehmer = $this->teilnehmerRepository->findByUid($fk['teilnehmer']);
-            $rowsfk[$fkcnt]['fknachname'] = $teilnehmer->getNachname();
-            $rowsfk[$fkcnt]['fkvorname'] = $teilnehmer->getVorname();
+            $rowsfk[$fkcnt]['fkuid']  = $fk['uid'];            
+            $rowsfk[$fkcnt]['fknachname'] = $fk['nachname'];
+            $rowsfk[$fkcnt]['fkvorname'] =$fk['vorname'];
             $rowsfk[$fkcnt]['fkdatum']  = $fk['datum'];
             $berater = $this->beraterRepository->findByUid($fk['berater']);
             if($berater != NULL) $rowsfk[$fkcnt]['fkberater'] = $berater->getUsername();
             else $rowsfk[$fkcnt]['fkberater'] = '-';
             $rowsfk[$fkcnt]['fknotizen'] = $fk['notizen'];
             $arrtnberatungsart = explode(",", $fk['beratungsform']);
+            $stringberatungsart = '';
             foreach ($arrtnberatungsart as $atn) $stringberatungsart .= $atn == '' ? '-;' : $arrberatungsart[$atn].";";
             $rowsfk[$fkcnt]['fkberatungsform'] = $stringberatungsart;
             $rowsfk[$fkcnt]['fkberatungsdauer'] = $fk['beratungsdauer'];
             
             $fkcnt++;
         }
+        
         return $rowsfk;
     }
         
     protected function getTeilnehmerdata4Export($tnarrayfromrepo, $bundeslandselected, $arrlandkreise, $arrbranchen, $arrberufe, $arrstaaten, $type) {
          
         // ************ Start - Beraterarray bestimmen *****************
-        $arrberater = $this->getberater4Bstelle();
+        $arrberater = $this->getberater4Bstelle($bundeslandselected, TRUE);
         
         // **** Variablen vorbelegen ****
         $arrjanein = array(0 => '', 1 => 'ja', 2 => 'nein', 3 => 'keine Angabe');
