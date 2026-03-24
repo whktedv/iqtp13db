@@ -1510,7 +1510,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             if(strstr($abschl->getAbschlussart(), ',')) $abschl->setAbschlussart(2);
         }
         $alleberater  = $this->getberater4Bstelle('%', FALSE);
-        
+        DebuggerUtility::var_dump($alleberater);
+
         $dokumente = $this->dokumentRepository->findByTeilnehmer($teilnehmer);
         $dokumentpfad = $this->generalhelper->sanitizeFileFolderName($teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid(). '/');
         
@@ -2928,7 +2929,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         // ************ Start - Beraterarray bestimmen *****************
         $arrberater = array();
         if($is4export) $arrberater[0] = '- nicht zugeordnet -';
-        $usergroups4berater = explode(",", $this->user['usergroup']);
         if($this->niqbid == '12345' || intval($this->niqbid) < 999) { // Admin
             $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected ?? '%');
             foreach($usergroups4bundesland as $ug) {
@@ -2938,8 +2938,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 }
             }
         } else {
-            $thisug = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $this->niqbid);
-            $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $thisug[0]);
+            $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
             foreach($berater as $currber) {
                 $arrberater[$currber->getUid()] = $currber->getUsername();
             }
