@@ -3,12 +3,7 @@ namespace Ud\Iqtp13db\Controller;
 use \Datetime;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Database\Connection;
-use TYPO3\CMS\Extbase\Annotation\Validate;
-use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
-use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
 use Psr\Http\Message\ResponseInterface;
 
@@ -32,7 +27,6 @@ use Ud\Iqtp13db\Domain\Repository\GruppenberatungRepository;
 
 use Ud\Iqtp13db\Service\QRCodeGenerator;
 
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 require_once(Environment::getPublicPath() . '/' . 'typo3conf/ext/iqtp13db/Resources/Private/Libraries/xlsxwriter.class.php');
 
@@ -306,13 +300,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         
         if($this->user != NULL) {
-            $standardniqidberatungsstelle = $this->settings['standardniqidberatungsstelle'];
-            $standardbccmail = $this->settings['standardbccmail'];
-            
+            $standardniqidberatungsstelle = $this->settings['standardniqidberatungsstelle'];            
             $ugroupsarray = explode(",",$this->user['usergroup']);
-            
-            $this->anzbstellen = count($ugroupsarray);
-            
+            $this->anzbstellen = count($ugroupsarray);            
             $thisusrgrpid = array_pop($ugroupsarray);
             $this->usergroup = $this->userGroupRepository->findByIdentifier($thisusrgrpid);
             if($this->usergroup->getTitle() == "Gruppenberatungen") {
@@ -339,12 +329,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * @return void
      */
     public function startAction(): ResponseInterface
-    {        
-        $wartungvon = new DateTime($this->settings['wartungvon'] == '' ? '01.01.2020 01:00' : $this->settings['wartungvon']);
-        $wartungbis = new DateTime($this->settings['wartungbis'] == '' ? '01.01.2020 02:00' : $this->settings['wartungbis']);
-        
-        $datum = strtotime("now");
-        
+    {                
         if ($this->settings['modtyp'] == 'uebersicht') {
             return (new ForwardResponse('status'))->withControllerName('Backend')->withExtensionName('Iqtp13db');
         }
@@ -395,8 +380,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $backenduser = $this->beraterRepository->findByUid($this->user['uid']);
         $backendusergroups = array();
         $backendusergroups = $backenduser->getUsergroup();
-        
-        $niqbidaktuellegruppe = $this->usergroup->getNiqbid();        
+             
         if(isset($valArray['bstellen']) && $valArray['bstellen'] != '') {            
             $niqbidgruppeselected = $valArray['bstellen'];            
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'currentusergroup', $niqbidgruppeselected);
@@ -604,6 +588,13 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function listangemeldetAction(int $currentPage = 1): ResponseInterface
     {
         $valArray = $this->request->getArguments();
+        $arrberater  = $this->getberater4Bstelle('%', FALSE);
+        $plzarray = $this->userGroupRepository->getallplzarray();
+        $mail4externstandardmailtext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtextedit', 'Iqtp13db');
+
+        // Gespeicherte Auswahl aus Session laden
+        $selectedIds = $this->getSelectedIdsFromSession();
+        $auswahlmodus = $this->request->getAttribute('frontend.user')->getSessionData('auswahlmodus');
         
         if(($valArray['allemodule'] ?? '') == '1') {
             return $this->redirect('showsearchresult', 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $valArray));
@@ -660,8 +651,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         $abschluesserepo = $this->abschlussRepository->findByTnByUidarray($tnuidarray);
         
-        $plzarray = $this->userGroupRepository->getallplzarray();
-        
         $abschluesse = array();
         $plzberatungsstelle4tn = array();
         for($j=0; $j < count($teilnehmerpag); $j++) {
@@ -690,18 +679,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $orderchar = $order == 'ASC' ? "↓" : "↑";        
         
-        $arrberater  = $this->getberater4Bstelle('%', FALSE);
-       
-        $mail4externstandardmailtext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtextedit', 'Iqtp13db');
-        
         $gruppenberatungenarr = array();
         $gruppenberatungen = $this->gruppenberatungRepository->findAvailable($this->niqbid);
         foreach($gruppenberatungen as $gb) {
             $gruppenberatungenarr[$gb->getUid()] = $gb->getTitel();
         }
-        // Gespeicherte Auswahl aus Session laden
-        $selectedIds = $this->getSelectedIdsFromSession();
-        $auswahlmodus = $this->request->getAttribute('frontend.user')->getSessionData('auswahlmodus');
         
         $this->view->assignMultiple(
             [
@@ -794,15 +776,12 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $folgekontakte = $this->folgekontaktRepository->findAll4List($this->niqbid);
         $berufeliste = $this->berufeRepository->findAllOrdered('de');
-        
-        
+                
         $tnuidarray = array();
         foreach($teilnehmerpag as $tn) {
             $tnuidarray[] = $tn->getUid();
         }
         $abschluesserepo = $this->abschlussRepository->findByTnByUidarray($tnuidarray);
-        
-        $uploaddokmarkierung = array();
         
         $abschluesse = array();
         for($j=0; $j < count($teilnehmerpag); $j++) {
@@ -1155,8 +1134,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         
         $berufeliste = $this->berufeRepository->findAllOrdered('de');
-        $staaten = $this->staatenRepository->findByLangisocode('de');
-        
+        $staaten = $this->staatenRepository->findByLangisocode('de');        
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
         }
@@ -1255,8 +1233,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $staaten = $this->staatenRepository->findByLangisocode($isocode);
         $abschlussartarr = $this->settings['abschlussart'];
         
-        $backenduser = $this->beraterRepository->findByUid($this->user['uid']);
-        
         $brancheunterkat = $this->brancheRepository->findAllUnterkategorie($isocode);
         
         $fk4tn = $this->folgekontaktRepository->findByTeilnehmer($teilnehmer->getUid());
@@ -1330,8 +1306,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $abschluss = new \Ud\Iqtp13db\Domain\Model\Abschluss();
         
-        $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
-        
+        $alleberater  = $this->getberater4Bstelle('%', FALSE);
+
         $staaten = $this->staatenRepository->findByLangisocode('de');
         foreach($staaten as $staat) {
             $staatenarr[$staat->getStaatid()] = $staat->getTitel();
@@ -1456,7 +1432,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         if(array_key_exists('teilnehmer', $valArray)) {
             if(is_string($valArray['teilnehmer'])) {
                 $tnuid = $valArray['teilnehmer'];
-                //else $tnuid = $valArray['teilnehmer']['__identity'];
     
                 $thistn = $this->teilnehmerRepository->findByUid($tnuid);
                 if($tnuid != null) $tnanonym = $thistn->getAnonym();
@@ -1484,7 +1459,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $valArray = $this->request->getArguments();
         $language = $this->request->getAttribute('language');
         $isocode  = $language->getLocale()->getLanguageCode();
-        
+        $alleberater  = $this->getberater4Bstelle('%', FALSE);
+
         if(array_key_exists("searchparams", $valArray)) {
             $searchparams = $valArray['searchparams'];
         }
@@ -1509,7 +1485,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         foreach($abschluesse as $abschl) {
             if(strstr($abschl->getAbschlussart(), ',')) $abschl->setAbschlussart(2);
         }
-        $alleberater  = $this->getberater4Bstelle('%', FALSE);
         
         $dokumente = $this->dokumentRepository->findByTeilnehmer($teilnehmer);
         $dokumentpfad = $this->generalhelper->sanitizeFileFolderName($teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid(). '/');
@@ -1572,7 +1547,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         $abschlussartarr = $this->settings['abschlussart'];
         
-        $backenduser = $this->beraterRepository->findByUid($this->user['uid']);
         $brancheunterkat = $this->brancheRepository->findAllUnterkategorie($isocode);
         
         $gebjahrberechnetausalter = (intval(date('Y', $teilnehmer->getCrdate()))-intval($teilnehmer->getLebensalter()));
@@ -1644,9 +1618,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $valArray = $this->request->getArguments();
        
         if(array_key_exists('teilnehmer', $valArray)) {
-            $beratungdatum = $valArray['teilnehmer']['beratungdatum'] ?? '';
-            $erstberatungabgeschlossen = $valArray['teilnehmer']['erstberatungabgeschlossen'] ?? '';
-            
             $email = $valArray['teilnehmer']['email'] ?? '';
             $confirmemail = $valArray['teilnehmer']['confirmemail'] ?? '';
             
@@ -2049,7 +2020,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $baseUri = $normalizedParams->getSiteUrl();
             
             $mailtextedit = $emailBody;
-            //\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtextedit', 'Iqtp13db');
             $linktitleeditregistration = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('linktitleeditregistration', 'Iqtp13db');                        
             
             $variables = array(
@@ -2435,28 +2405,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * @return void
      */
     public function editsettingsAction(): ResponseInterface {
-        $valArray = $this->request->getArguments();
         
-        // ************ Start - Beraterarray bestimmen *****************
-        $arrberater = array();
-        $usergroups4berater = explode(",", $this->user['usergroup']);
-        if(intval($this->niqbid) < 999) { // Admin
-            $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected ?? '%');
-            foreach($usergroups4bundesland as $ug) {
-                $ugberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $ug);
-                foreach($ugberater as $currber) {
-                    $arrberater[] = $currber;
-                }
-            }
-        } else {
-            $thisug = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $this->niqbid);
-            $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $thisug[0]);
-            foreach($berater as $currber) {
-                $arrberater[] = $currber;
-            }
+        $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
+        foreach($berater as $currber) {
+            $arrberater[] = $currber;
         }
-        // ***************** Ende - Beraterarray bestimmen *****************
-        
         $currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : 1;        
         $paginator = new ArrayPaginator($arrberater, $currentPage, 25);
         $pagination = new SimplePagination($paginator);
@@ -2513,7 +2466,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function exportAction(int $currentPage = 1): ResponseInterface
     {
         $valArray = $this->request->getArguments();
-        
+
         $beraterselected = $valArray['filterberater'] ?? '%';
         $fanonym = isset($valArray['filteranonym']) ? $valArray['filteranonym'] : '';
         $filterfolgekontakte = isset($valArray['filterfolgekontakte']) ? $valArray['filterfolgekontakte'] : '';
@@ -2574,9 +2527,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $filterbis = $today;
         }
         // *****
-        $orderby = 'crdate';
-        $order = 'ASC';
-        
         
         $anzteilnehmers = 0;
         if($filtervon != '' && $filterbis != '') {
@@ -2677,8 +2627,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     'anzbstellen' => $this->anzbstellen
                 ]
                 );
-        }
-        
+        }        
         
         $this->view->assignMultiple(
             [
@@ -2712,8 +2661,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * Set Filter
      */
     function setfilter(int $type, array $searchparams, $orderby, $order, $deleted, $limit) {
-        // FILTER
-        $beraterdiesergruppe = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->usergroup);
         
         if (isset($searchparams['filteran'])) {
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'fuid', $searchparams['uid'] ?? '');
@@ -2796,7 +2743,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $this->view->assign('filterallemodule', $f['allemodule']);
         }
         
-        // FILTER bis hier
         return $teilnehmers;
     }
     
@@ -2896,8 +2842,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      */
     private function getSelectedIdsFromSession(): array
     {
-        $sessionData = $this->request->getAttribute('frontend.user')->getSessionData('selectedItemIds');
-        
+        $sessionData = $this->request->getAttribute('frontend.user')->getSessionData('selectedItemIds');        
         return is_array($sessionData) ? $sessionData : [];
     }
     
@@ -2950,9 +2895,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     }
     
     protected function getFolgekontaktdata4Export($tnarrayfromrepo) {
-        $arrberatungsformfolgeberatung = $this->settings['beratungsformfolgeberatung'];
         $arrberatungsart = $this->settings['beratungsart'];
-        
+
         $rowsfk = array();
         $fkcnt = 0;
         foreach($tnarrayfromrepo as $fk) {     
