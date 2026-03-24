@@ -2940,6 +2940,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $arraufenthaltsstatus = $this->settings['aufenthaltsstatus'];
         $arrberatungsart = $this->settings['beratungsart'];
+        $arrberatungsartfk = $this->settings['beratungsformfolgeberatung'];
         $arrberufserfahrung = $this->settings['berufserfahrung'];
         
         $arranerkennungsberatung = $this->settings['anerkennungsberatung'];
@@ -2972,7 +2973,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 else $rows[$x]['fkberater'] = '-';
                 $rows[$x]['fknotizen'] = $tn['fknotizen'];
                 $arrtnberatungsart = explode(",", $tn['fkberatungsform']);
-                foreach ($arrtnberatungsart as $atn) $stringberatungsart .= $atn == '' ? '-;' : $arrberatungsart[$atn].";";
+                foreach ($arrtnberatungsart as $atn) $stringberatungsart .= $atn == '' ? '-;' : $arrberatungsartfk[$atn].";";
                 $rows[$x]['fkberatungsform'] = $stringberatungsart;
             }
             if($type == 'TNANONYM') {
