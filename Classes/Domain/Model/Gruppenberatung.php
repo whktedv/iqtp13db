@@ -42,6 +42,13 @@ class Gruppenberatung extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected ObjectStorage $teilnehmer;
     
+    /**
+     * anerkennendestellen
+     *
+     * @var string
+     */
+    protected string $anerkennendestellen = '';
+
     /*
      * @var string
      * @TYPO3\CMS\Extbase\Annotation\Validate("\Ud\Iqtp13db\Domain\Validator\DatumValidator")
@@ -198,6 +205,14 @@ class Gruppenberatung extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         return $this->maxTeilnehmer > 0 && $this->getAnzahlTeilnehmer() >= $this->maxTeilnehmer;
     }
     
+    public function getAnerkennendestellen(): string
+    {
+        return $this->anerkennendestellen;
+    }    
+    public function setAnerkennendestellen(string $anerkennendestellen): void
+    {
+        $this->anerkennendestellen = $anerkennendestellen;
+    }
     
     public function getBeratungdatum(): string
     {

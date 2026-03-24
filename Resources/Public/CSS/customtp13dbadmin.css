@@ -529,6 +529,14 @@ td.tdcenter input[type="checkbox"] {
 	padding-top: 4.3rem;
 }
 
+.tx-iqtp13db table tr.trgruppenberaten, .trgruppenberaten {
+	background-color: #c9def0b8;
+}
+
+.gbid {
+	font-size: 0.7em;
+}
+
 .buttoneinwilligung {
 	font-size: 0.7rem !important;
 }

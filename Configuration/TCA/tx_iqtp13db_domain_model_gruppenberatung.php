@@ -20,7 +20,7 @@ return [
         'showRecordFieldList' => 'hidden, titel, beschreibung, datum, ort, max_teilnehmer, teilnehmer',
     ],
     'types' => [
-        '1' => ['showitem' => 'hidden, niqbid, titel, beschreibung, datum, ort, max_teilnehmer, teilnehmer, beratungdatum, beratungsarten, berater, beratungsdauer, beratungzu, anerkennungsberatung, anerkennungsberatungfreitext, qualifizierungsberatung, qualifizierungsberatungfreitext, erstberatungabgeschlossen
+        '1' => ['showitem' => 'hidden, niqbid, titel, beschreibung, datum, ort, max_teilnehmer, teilnehmer, anerkennendestellen, beratungdatum, beratungsarten, berater, beratungsdauer, beratungzu, anerkennungsberatung, anerkennungsberatungfreitext, qualifizierungsberatung, qualifizierungsberatungfreitext, erstberatungabgeschlossen
                                  --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
     'columns' => [
@@ -149,6 +149,16 @@ return [
                     ],
                 ],
             ],
+        ],
+        'anerkennendestellen' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_gruppenberatung.anerkennendestellen',
+            'config' => [
+                'type' => 'text',
+                'cols' => 40,
+                'rows' => 15,
+                'eval' => 'trim'
+            ]
         ],
         'beratungdatum' => [
             'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_gruppenberatung.beratungdatum',

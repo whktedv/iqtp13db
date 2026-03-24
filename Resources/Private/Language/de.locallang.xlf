@@ -192,7 +192,7 @@
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.anerkennungsberatung"><target>Anerkennungsberatung</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.anerkennungsberatungfreitext"><target>Freitext zu 'sonstige Themen bezogen auf das Anerkennungsverfahren'</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.qualifizierungsberatung"><target>Qualifizierungsberatung</target></trans-unit>
-			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.qualifizierungsberatungfreitext"><target>Freitext zu 'sonstige Themen bezogen auf Qualifizierung':</target></trans-unit>
+			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.qualifizierungsberatungfreitext"><target>Freitext zu 'sonstige Themen bezogen auf Qualifizierung'</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.beratungzu"><target>Beratung zu Schulabschluss</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.anerkennungszuschussbeantragt"><target>Anerkennungszuschuss beantragt?</target></trans-unit>
 			<trans-unit id="tx_iqtp13db_domain_model_teilnehmer.kooperationgruppe"><target>Gruppe</target></trans-unit>
@@ -246,7 +246,7 @@
 		<trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.teilnehmer"><target>Teilnehmer</target></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.beratungsarten"><target>Beratungsarten</target></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.anerkennungsberatung">    <target>Anerkennungsberatung</target></trans-unit>
-		<trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.qualifizierungsberatung">    <target>Qualifizierungsberatung</target></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.qualifizierungsberatung">    <target>Qualifizierungsberatung</target></trans-unit>		
 		</body>
 	</file>
 </xliff>

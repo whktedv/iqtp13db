@@ -220,12 +220,17 @@ class RequestController
             $gruppenberatung->addTeilnehmer($teilnehmer);
             $countadded++;
             
+            $gberatungsarten = $gruppenberatung->getBeratungsarten();
+
             $berater = $this->beraterRepository->findByUid($gruppenberatung->getBerater());
             
-            $teilnehmer->setBeratungdatum($gruppenberatung->getBeratungdatum());
-            $teilnehmer->setBeratungsort($gruppenberatung->getOrt());
+            $teilnehmer->setAnerkennendestellen($gruppenberatung->getAnerkennendestellen());
+            $teilnehmer->setBeratungdatum($gruppenberatung->getBeratungdatum());                        
             $teilnehmer->setBerater($berater);
-            $teilnehmer->setBeratungsart(explode(',', $gruppenberatung->getBeratungsarten()));            
+            $teilnehmer->setBeratungsart(explode(',', $gruppenberatung->getBeratungsarten()));
+            if(str_contains($gberatungsarten, "1") || str_contains($gberatungsarten, "6")) {
+                $teilnehmer->setBeratungsort($gruppenberatung->getOrt());
+            }
             $teilnehmer->setBeratungsdauer($gruppenberatung->getBeratungsdauer());
             $teilnehmer->setBeratungzu($gruppenberatung->getBeratungzu());
             $teilnehmer->setAnerkennungsberatung(explode(',', $gruppenberatung->getAnerkennungsberatung()));
@@ -237,7 +242,7 @@ class RequestController
                 $teilnehmer->setBeratungsstatus(3);
             } else {
                 $teilnehmer->setBeratungsstatus(2);
-            }   
+            }
             
             $this->teilnehmerRepository->update($teilnehmer);
         }

@@ -13,20 +13,26 @@ Pflichtfelder sind mit einem * markiert
 				<label for="beschreibung" class="tp13_options">
 					<f:translate key="tx_iqtp13db_domain_model_gruppenberatung.beschreibung" />
 				</label>
-					<f:form.textarea property="beschreibung" rows="5" cols="100" />
+					<f:form.textarea property="beschreibung" rows="5" cols="100" placeholder="Dieser Text wird nicht beim Ratsuchenden übernommen"/>
 			</div>
 	
 			
 			<div class="tp13_formdivwebapp">
 				<label for="ort" class="tp13_options">
-					<f:translate key="tx_iqtp13db_domain_model_gruppenberatung.ort" /> *
+					<f:translate key="tx_iqtp13db_domain_model_gruppenberatung.ort" />
 				</label>
-					<f:form.textfield property="ort" value="{ort}" size="15" />	
+					<f:form.textfield property="ort" value="{ort}" size="15" placeholder="Wird beim Ratsuchenden nur eingetragen, wenn Beratungsart 'Persönliche Beratung'" />	
 			</div>	
 	</div>
 </div>
 <div id="AnkerBeratung">
 	<div class="fframeadminonly"><h2>Beratungsdaten beim Ratsuchenden</h2>
+		<div class="tp13_formdivwebapp">
+			<label for="anerkennendestellen">
+				<f:translate key="tx_iqtp13db_domain_model_gruppenberatung.anerkennendestellen"/>
+			</label>
+			<f:form.textarea name="gruppenberatung[anerkennendestellen]" value="{gruppenberatung.anerkennendestellen}" rows="3" cols="100"  />
+		</div>	
 		<!-- Beratungdatum -->
 		<div class="tp13_formdivwebapp">
 			<label for="beratungdatum">
@@ -43,9 +49,9 @@ Pflichtfelder sind mit einem * markiert
 			<f:for each="{settings.beratungsart}" as="label" key="key">
 	            <div class="tp13_formdivwebappradio">
 	             <f:if condition="{thisaction} == 'new'"><f:then>
-	             		<f:form.checkbox name="beratungsarten[]" value="{key}" id="beratungsart_{key}" />{label}
+             			<f:form.checkbox name="beratungsarten[]" value="{key}" id="beratungsart_{key}" />{label}
 	            	</f:then><f:else>
-	                	<f:form.checkbox name="beratungsarten[]" value="{key}" id="beratungsart_{key}" checked="{iqtp13db:inArray(needle: key, haystack: gruppenberatung.beratungsartenArray)}" />{label}
+                		<f:form.checkbox name="beratungsarten[]" value="{key}" id="beratungsart_{key}" checked="{iqtp13db:inArray(needle: key, haystack: gruppenberatung.beratungsartenArray)}" />{label}
 	            	</f:else>
 	             </f:if>
 	            </div>

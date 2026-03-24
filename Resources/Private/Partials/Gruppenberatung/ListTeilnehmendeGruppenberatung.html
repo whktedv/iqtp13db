@@ -2,7 +2,8 @@
 <div id="AnkerTeilnehmende">
 	<div class="fframeadminonly"><h2>Teilnehmende</h2>
 		<div class="dok-control-panel">
-			<f:link.action class="linkbuttons" action="removeAllFromGroupConsultation" arguments="{gruppenberatung: gruppenberatung, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" onclick="return confirm('Wirklich ALLE Teilnehmenden aus dieser Gruppenberatung entfernen?');" title="Alle entfernen">Alle Teilnehmenden aus Gruppenberatung entfernen</f:link.action>
+			<f:link.action class="linkbuttons" action="removeAllFromGroupConsultation" arguments="{gruppenberatung: gruppenberatung, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" onclick="return confirm('Wirklich ALLE Ratsuchenden aus dieser Gruppenberatung entfernen?');" title="Alle entfernen">Alle Ratsuchenden aus Gruppenberatung entfernen</f:link.action>
+			<f:link.action class="linkbuttons" action="archiveAllFromGroupConsultation" arguments="{gruppenberatung: gruppenberatung, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" onclick="return confirm('Wirklich ALLE Ratsuchenden ins Archiv verschieben?');" title="Alle archivieren">Alle Ratsuchenden in dieser Gruppenberatung archivieren</f:link.action>			
 		</div>
 		<table class="tx_iqtp13db listgruppenberatungteilnehmende" >
 			<tr>

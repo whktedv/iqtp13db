@@ -19,6 +19,7 @@
 <div class="listgruppenberatungen">
 	<table class="tx_iqtp13db">
 		<tr>
+			<th>GBID</th>
 			<th>Titel</th>
 			<th>Datum</th>
 			<th>Ort</th>
@@ -28,6 +29,7 @@
 		</tr>
 		<f:for each="{gruppenberatungen}" as="gruppenberatung" iteration="it">
 			<tr>
+				<td>{gruppenberatung.uid}</td>
 				<td><f:link.action action="show" arguments="{gruppenberatung : gruppenberatung, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" title="Show">{gruppenberatung.titel}</f:link.action></td>
 				<td><f:format.date format="d.m.Y">{gruppenberatung.beratungdatum}</f:format.date></td>
 				<td>{gruppenberatung.ort}</td>

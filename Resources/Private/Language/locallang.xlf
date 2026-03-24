@@ -187,6 +187,9 @@
 		<trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.beratungsarten"><source>Beratungsarten</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.anerkennungsberatung"><source>Anerkennungsberatung</source></trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.qualifizierungsberatung"><source>Qualifizierungsberatung</source></trans-unit>
+		<trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.anerkennendestellen">
+          <source>Anerkennende Stellen</source>
+        </trans-unit>
 		<trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.beratungdatum">
           <source>Datum Erstberatung</source>
         </trans-unit>
@@ -206,13 +209,13 @@
           <source>Anerkennungsberatung</source>
         </trans-unit>
         <trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.anerkennungsberatungfreitext">
-          <source>Anerkennungsberatung (Freitext)</source>
+          <source>Freitext zu 'sonstige Themen bezogen auf das Anerkennungsverfahren'</source>
         </trans-unit>
         <trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.qualifizierungsberatung">
           <source>Qualifizierungsberatung</source>
         </trans-unit>
         <trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.qualifizierungsberatungfreitext">
-          <source>Qualifizierungsberatung (Freitext)</source>
+          <source>Freitext zu 'sonstige Themen bezogen auf Qualifizierung'</source>
         </trans-unit>
         <trans-unit id="tx_iqtp13db_domain_model_gruppenberatung.erstberatungabgeschlossen">
           <source>Erstberatung abgeschlossen</source>

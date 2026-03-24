@@ -335,6 +335,7 @@ CREATE TABLE tx_iqtp13db_domain_model_gruppenberatung (
     teilnehmer int(11) unsigned DEFAULT '0' NOT NULL,
     
     beratungdatum varchar(255) DEFAULT '' NOT NULL,
+	anerkennendestellen text NOT NULL,
     beratungsarten varchar(255) DEFAULT '' NOT NULL,
 	berater int(11) unsigned DEFAULT '0',	
 	beratungsdauer varchar(255) DEFAULT '' NOT NULL,	

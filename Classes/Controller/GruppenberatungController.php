@@ -82,7 +82,6 @@ class GruppenberatungController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
         
         if($this->user != NULL) {
             $standardniqidberatungsstelle = $this->settings['standardniqidberatungsstelle'];
-            $standardbccmail = $this->settings['standardbccmail'];
             
             $ugroupsarray = explode(",",$this->user['usergroup']);
             
@@ -304,8 +303,37 @@ class GruppenberatungController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
             $gruppenberatung->setQualifizierungsberatung('');
         }
         
+        // Initialisiere Objectstorage für teilnehmer
+        $teilnehmeros = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $teilnehmeros = $gruppenberatung->getTeilnehmer();
+        $gberatungsarten = $gruppenberatung->getBeratungsarten();
+        $berater = $this->beraterRepository->findByUid($gruppenberatung->getBerater());
+
+        foreach($teilnehmeros as $teilnehmer) {
+            $teilnehmer->setAnerkennendestellen($gruppenberatung->getAnerkennendestellen());
+            $teilnehmer->setBeratungdatum($gruppenberatung->getBeratungdatum());                        
+            $teilnehmer->setBerater($berater);
+            $teilnehmer->setBeratungsart(explode(',', $gberatungsarten));
+            if(str_contains($gberatungsarten, "1") || str_contains($gberatungsarten, "6")) {
+                $teilnehmer->setBeratungsort($gruppenberatung->getOrt());
+            }
+            $teilnehmer->setBeratungsdauer($gruppenberatung->getBeratungsdauer());
+            $teilnehmer->setBeratungzu($gruppenberatung->getBeratungzu());
+            $teilnehmer->setAnerkennungsberatung(explode(',', $gruppenberatung->getAnerkennungsberatung()));
+            $teilnehmer->setAnerkennungsberatungfreitext($gruppenberatung->getAnerkennungsberatungfreitext());
+            $teilnehmer->setQualifizierungsberatung(explode(',', $gruppenberatung->getQualifizierungsberatung()));
+            $teilnehmer->setQualifizierungsberatungfreitext($gruppenberatung->getQualifizierungsberatungfreitext());
+            $teilnehmer->setErstberatungabgeschlossen($gruppenberatung->getErstberatungabgeschlossen());
+            if($gruppenberatung->getErstberatungabgeschlossen() != '') {
+                if($teilnehmer->getBeratungsstatus() != 4) $teilnehmer->setBeratungsstatus(3);
+            } else {
+                if($teilnehmer->getBeratungsstatus() != 4) $teilnehmer->setBeratungsstatus(2);
+            }            
+            $this->teilnehmerRepository->update($teilnehmer);
+        }
+
         $this->gruppenberatungRepository->update($gruppenberatung);
-        
+
         // Daten sofort in die Datenbank schreiben
         $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
@@ -361,10 +389,9 @@ class GruppenberatungController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
     }
     
     /**
-     * action delete
+     * action deleteall
      *
-     * @param \Ud\Iqtp13db\Domain\Model\Gruppenberatung $gruppenberatung
-     * @param \Ud\Iqtp13db\Domain\Model\Gruppenberatung $teilnehmer
+     * @param \Ud\Iqtp13db\Domain\Model\Gruppenberatung $gruppenberatung     
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("gruppenberatung")
      * @return void
      */
@@ -383,6 +410,33 @@ class GruppenberatungController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
         $this->addFlashMessage('Alle Teilnehmenden aus Gruppenberatung entfernt, Beratungsdaten wurden NICHT gelöscht!', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
         return $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'] ?? '1', 'gruppenberatung' => $gruppenberatung));
         
+    }
+    
+        /**
+     * action archiveall
+     *
+     * @param \Ud\Iqtp13db\Domain\Model\Gruppenberatung $gruppenberatung
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("gruppenberatung")
+     * @return void
+     */
+    public function archiveAllFromGroupConsultationAction(\Ud\Iqtp13db\Domain\Model\Gruppenberatung $gruppenberatung): ResponseInterface
+    {
+        $valArray = $this->request->getArguments();
+        
+        // Initialisiere Objectstorage für teilnehmer
+        $teilnehmeros = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $teilnehmeros = $gruppenberatung->getTeilnehmer();
+        
+        foreach($teilnehmeros as $teilnehmer) {
+            $teilnehmer->setBeratungsstatus(4);
+            $this->teilnehmerRepository->update($teilnehmer);
+        }
+        
+        // Daten sofort in die Datenbank schreiben
+        $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+        $persistenceManager->persistAll();
+        $this->addFlashMessage('Alle Ratsuchenden ins Archiv verschoben, Beratungsdaten wurden NICHT geändert!', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
+        return $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'] ?? '1', 'gruppenberatung' => $gruppenberatung));        
     }
     
 }

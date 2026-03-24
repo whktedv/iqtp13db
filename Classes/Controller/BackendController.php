@@ -2896,6 +2896,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     
     protected function getFolgekontaktdata4Export($tnarrayfromrepo) {
         $arrberatungsartfk = $this->settings['beratungsformfolgeberatung'];
+        $arrberatungsartfk[0] = 'keine Angabe';
+        $arrberatungsartfk[-1000] = '-';
 
         $rowsfk = array();
         $fkcnt = 0;
@@ -2940,7 +2942,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $arraufenthaltsstatus = $this->settings['aufenthaltsstatus'];
         $arrberatungsart = $this->settings['beratungsart'];
+        $arrberatungsart[0] = 'keine Angabe';
+        $arrberatungsart[-1000] = '-';
         $arrberatungsartfk = $this->settings['beratungsformfolgeberatung'];
+        $arrberatungsartfk[0] = 'keine Angabe';
+        $arrberatungsartfk[-1000] = '-';
         $arrberufserfahrung = $this->settings['berufserfahrung'];
         
         $arranerkennungsberatung = $this->settings['anerkennungsberatung'];
@@ -2971,8 +2977,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $berater = $this->beraterRepository->findByUid($tn['fkberater']);
                 if($berater != NULL) $rows[$x]['fkberater'] = $berater->getUsername();
                 else $rows[$x]['fkberater'] = '-';
-                $rows[$x]['fknotizen'] = $tn['fknotizen'];
-                $arrtnberatungsart = explode(",", $tn['fkberatungsform']);
+                $rows[$x]['fknotizen'] = $tn['fknotizen'];                                
+                $arrtnberatungsart = explode(",", $$tn['fkberatungsform']);
                 foreach ($arrtnberatungsart as $atn) $stringberatungsart .= $atn == '' ? '-;' : $arrberatungsartfk[$atn].";";
                 $rows[$x]['fkberatungsform'] = $stringberatungsart;
             }
@@ -3043,8 +3049,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $beraterid = $tn['berater'];
                 $rows[$x]['Beraterin'] = $arrberater[$beraterid] ?? '-';
                 
-                $stringberatungsart = '';
-                $arrtnberatungsart = explode(",", $tn['beratungsart']);
+                $stringberatungsart = '';                
+                $arrtnberatungsart = explode(",", $tn['beratungsart']);                
                 foreach ($arrtnberatungsart as $atn) $stringberatungsart .= $atn == '' ? '-;' : $arrberatungsart[$atn].";";
                 $rows[$x]['beratungsart'] = $stringberatungsart;
                 
