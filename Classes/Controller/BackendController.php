@@ -2895,7 +2895,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     }
     
     protected function getFolgekontaktdata4Export($tnarrayfromrepo) {
-        $arrberatungsart = $this->settings['beratungsformfolgeberatung'];
+        $arrberatungsartfk = $this->settings['beratungsformfolgeberatung'];
 
         $rowsfk = array();
         $fkcnt = 0;
@@ -2911,7 +2911,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $rowsfk[$fkcnt]['fknotizen'] = $fk['notizen'];
             $arrtnberatungsart = explode(",", $fk['beratungsform']);
             $stringberatungsart = '';
-            foreach ($arrtnberatungsart as $atn) $stringberatungsart .= $atn == '' ? '-;' : $arrberatungsart[$atn].";";
+            foreach ($arrtnberatungsart as $atn) $stringberatungsart .= $atn == '' ? '-;' : $arrberatungsartfk[$atn].";";
             $rowsfk[$fkcnt]['fkberatungsform'] = $stringberatungsart;
             $rowsfk[$fkcnt]['fkberatungsdauer'] = $fk['beratungsdauer'];
             

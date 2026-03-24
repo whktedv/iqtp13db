@@ -170,6 +170,7 @@ plugin.tx_iqtp13db.settings {
    }
 	
    beratungsformfolgeberatung {
+	-1000 = keine Angabe
 	0 = keine Angabe
 	1 = Persönliche Beratung am Beratungsstandort
 	2 = Persönliche Beratung mobil
