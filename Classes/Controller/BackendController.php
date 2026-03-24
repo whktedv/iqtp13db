@@ -2895,12 +2895,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     }
     
     protected function getFolgekontaktdata4Export($tnarrayfromrepo) {
-        $arrberatungsart = $this->settings['beratungsart'];
+        $arrberatungsart = $this->settings['beratungsformfolgeberatung'];
 
         $rowsfk = array();
         $fkcnt = 0;
         foreach($tnarrayfromrepo as $fk) {     
-
             $rowsfk[$fkcnt] = array();
             $rowsfk[$fkcnt]['fkuid']  = $fk['uid'];            
             $rowsfk[$fkcnt]['fknachname'] = $fk['nachname'];

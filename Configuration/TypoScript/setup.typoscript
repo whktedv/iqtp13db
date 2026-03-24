@@ -167,7 +167,6 @@ plugin.tx_iqtp13db.settings {
    	2 = Telefonische Beratung
    	3 = Digitale Beratung (E-Mail, Messenger, Social Media, etc.)
    	5 = Videoberatung
-   	4 = n/a
    }
 	
    beratungsformfolgeberatung {
