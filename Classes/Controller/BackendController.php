@@ -1510,8 +1510,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             if(strstr($abschl->getAbschlussart(), ',')) $abschl->setAbschlussart(2);
         }
         $alleberater  = $this->getberater4Bstelle('%', FALSE);
-        DebuggerUtility::var_dump($alleberater);
-
+        
         $dokumente = $this->dokumentRepository->findByTeilnehmer($teilnehmer);
         $dokumentpfad = $this->generalhelper->sanitizeFileFolderName($teilnehmer->getNachname() . '_' . $teilnehmer->getVorname() . '_' . $teilnehmer->getUid(). '/');
         
