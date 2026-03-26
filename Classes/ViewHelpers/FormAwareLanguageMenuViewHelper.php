@@ -8,9 +8,10 @@ use TYPO3\CMS\Core\Imaging\IconFactory;
 // Ab Typo3 13: use TYPO3\CMS\Core\Imaging\IconSize;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Routing\PageArguments;
-use TYPO3\CMS\Core\Http\ServerRequestFactory;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+
+use TYPO3\CMS\Core\Information\Typo3Version;
 
 class FormAwareLanguageMenuViewHelper extends AbstractViewHelper
 {
@@ -53,9 +54,18 @@ class FormAwareLanguageMenuViewHelper extends AbstractViewHelper
                 continue;
             }
 
-            // TYPO3 13: getLanguageId() → getId()
-            $languageId = $language->getLanguageId();
-            $isActive   = $languageId === $currentLanguage->getLanguageId();
+            // Get version information object
+            $versionInformation = GeneralUtility::makeInstance(Typo3Version::class);
+            // Get major version (e.g., "11" from "11.5.0")
+            $majorVersion = $versionInformation->getMajorVersion();
+            if($majorVersion == "12") {
+                $languageId = $language->getLanguageId();
+                $isActive   = $languageId === $currentLanguage->getLanguageId();
+            } else {
+                // TYPO3 13: getLanguageId() → getId()            
+                $languageId = $language->getId();
+                $isActive   = $languageId === $currentLanguage->getId();
+            }
 
             // Parameter mit Formulardaten
             $params = [
@@ -104,7 +114,16 @@ class FormAwareLanguageMenuViewHelper extends AbstractViewHelper
 
     protected function buildLanguageUrl(SiteLanguage $language, string $actionName, ContentObjectRenderer $cObj, int $currentPageId): string
     {
-        $languageId = $language->getLanguageId();
+        // Get version information object
+        $versionInformation = GeneralUtility::makeInstance(Typo3Version::class);
+        // Get major version (e.g., "11" from "11.5.0")
+        $majorVersion = $versionInformation->getMajorVersion();
+        if($majorVersion == "12") {
+            $languageId = $language->getLanguageId();
+        } else {
+            // TYPO3 13: getLanguageId() → getId()            
+            $languageId = $language->getId();                
+        }
 
         $conf = [
             'parameter'        => $currentPageId,

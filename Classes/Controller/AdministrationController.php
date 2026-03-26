@@ -1,14 +1,7 @@
 <?php
 namespace Ud\Iqtp13db\Controller;
-use \Datetime;
+
 use TYPO3\CMS\Core\Core\Environment;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Database\Connection;
-
-use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
-use TYPO3\CMS\Core\Pagination\SimplePagination;
-
 use Psr\Http\Message\ResponseInterface;
 use Ud\Iqtp13db\Domain\Repository\UserGroupRepository;
 use Ud\Iqtp13db\Domain\Repository\TeilnehmerRepository;
@@ -119,9 +112,6 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         $filterbstelle = $valArray['filterbstelle'] ?? '%';
         
         $backenduser = $this->beraterRepository->findByUid($this->user['uid']);
-        $backendusergroups = array();
-        $backendusergroups = $backenduser->getUsergroup();
-        $niqbidaktuellegruppe = $this->usergroup->getNiqbid();
         if(isset($valArray['remove'])) {
             $thisberatungsstelle = $backenduser->getUsergroup()[0]->getTitle();
             $thisniqbid = $backenduser->getUsergroup()[0]->getNiqbid();
@@ -135,7 +125,6 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         }
         $thisgroup = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $this->niqbid);
         $thisberatungsstelle = $thisgroup[0]->getTitle();
-        
         
         $allebundeslaender = $this->userGroupRepository->findAllBundeslaender();
         
