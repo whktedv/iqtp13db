@@ -34,7 +34,7 @@ require_once(Environment::getPublicPath() . '/' . 'typo3conf/ext/iqtp13db/Resour
 class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
     
-    protected $generalhelper, $niqapiurl, $usergroup, $niqbid, $groupbccmail;
+    protected $user, $generalhelper, $niqapiurl, $usergroup, $niqbid, $groupbccmail;
     
     protected $userGroupRepository;
     protected $teilnehmerRepository;
@@ -62,9 +62,8 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
     /**
      * action init
      *
-     * @param void
      */
-    public function initializeAction()
+    public function initializeAction(): void
     {
         
         $this->generalhelper = new \Ud\Iqtp13db\Helper\Generalhelper();
@@ -72,7 +71,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         $this->user=null;
         $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
         if($context->getPropertyFromAspect('frontend.user', 'isLoggedIn')){
-            $this->user=$GLOBALS['TSFE']->fe_user->user;
+            $this->user = $this->request->getAttribute('frontend.user');
         } else {
             $this->user = NULL;
         }
@@ -81,14 +80,14 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
             $standardniqidberatungsstelle = $this->settings['standardniqidberatungsstelle'];
             $standardbccmail = $this->settings['standardbccmail'];
             
-            $this->usergroup = $this->userGroupRepository->findByIdentifier($this->user['usergroup']);
+            $this->usergroup = $this->userGroupRepository->findByIdentifier($this->user->user['usergroup']);
             
             if($this->usergroup != NULL) {
                 $userniqidbstelle = $this->usergroup->getNiqbid() ?? $standardniqidberatungsstelle;
                 $userbccmail = $this->usergroup->getGeneralmail();
             }
             
-            $sesniqbid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'currentusergroup') ?? '';
+            $sesniqbid = $this->user->getKey('ses', 'currentusergroup') ?? '';
             $this->niqbid = $sesniqbid != '' ? $sesniqbid : $userniqidbstelle;    
             
             $this->groupbccmail = $userbccmail == '' ? $standardbccmail : $userbccmail;
@@ -111,17 +110,17 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         $staatselected = $valArray['filterstaat'] ?? '%';
         $filterbstelle = $valArray['filterbstelle'] ?? '%';
         
-        $backenduser = $this->beraterRepository->findByUid($this->user['uid']);
+        $backenduser = $this->beraterRepository->findByUid($this->user->user['uid']);
         if(isset($valArray['remove'])) {
             $thisberatungsstelle = $backenduser->getUsergroup()[0]->getTitle();
             $thisniqbid = $backenduser->getUsergroup()[0]->getNiqbid();
             $niqbidgruppeselected = $thisniqbid;
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'currentusergroup', $niqbidgruppeselected);
-            $this->niqbid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'currentusergroup');
+            $this->user->setKey('ses', 'currentusergroup', $niqbidgruppeselected);
+            $this->niqbid = $this->user->getKey('ses', 'currentusergroup');
         }elseif(isset($valArray['bstellen']) && $valArray['bstellen'] != '') {
             $niqbidgruppeselected = $valArray['bstellen'];
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'currentusergroup', $niqbidgruppeselected);
-            $this->niqbid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'currentusergroup');
+            $this->user->setKey('ses', 'currentusergroup', $niqbidgruppeselected);
+            $this->niqbid = $this->user->getKey('ses', 'currentusergroup');
         }
         $thisgroup = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $this->niqbid);
         $thisberatungsstelle = $thisgroup[0]->getTitle();
@@ -134,7 +133,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
             if($jahrselected != 0 && $jahrselected != 99) {
                 $monatsnamen[$i] = $monatsnamen[$i]." ".$jahrselected;
             } elseif($jahrselected == 99) {
-                $monatsnamen[$i] = $monatsnamen[$i];
+                // nimm einfach monatsnamen
             } else {
                 if($i <= idate('m')) {
                     $monatsnamen[$i] = $monatsnamen[$i]." ".idate('Y');

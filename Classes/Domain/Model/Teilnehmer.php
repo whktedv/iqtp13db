@@ -1921,7 +1921,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         ->select('berater')
         ->from('tx_iqtp13db_domain_model_teilnehmer')
         ->where($queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($this->getUid())))
-        ->execute()
+        ->executeQuery()
         ->fetchAssociative();
         
         if ($result && $result['berater'] > 0) {
@@ -1938,7 +1938,7 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param \Ud\Iqtp13db\Domain\Model\Berater $berater
      * @return void
      */
-    public function setBerater(\Ud\Iqtp13db\Domain\Model\Berater $berater = NULL)
+    public function setBerater(?\Ud\Iqtp13db\Domain\Model\Berater $berater)
     {
         $this->berater = $berater;
     }
@@ -2315,6 +2315,8 @@ class Teilnehmer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     private function initVerificationCode() {
         if(!$this->verificationCode){
             $this->verificationCode = $this->getRandomString();
+        } else {
+            $this->verificationCode = '';
         }
     }
     

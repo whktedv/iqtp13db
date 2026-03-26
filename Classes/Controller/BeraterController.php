@@ -15,6 +15,7 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     protected $usergroup;
     protected $userGroupRepository;
     protected $beraterRepository;
+    protected $user;
     
     public function __construct(UserGroupRepository $userGroupRepository, BeraterRepository $beraterRepository)
     {
@@ -24,19 +25,17 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
       
     /**
      * action init
-     *
-     * @param void
      */
-    public function initializeAction()
+    public function initializeAction(): void
     {
         $this->user=null;
-        $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
+        $context = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
         if($context->getPropertyFromAspect('frontend.user', 'isLoggedIn')){
-            $this->user=$GLOBALS['TSFE']->fe_user->user;
+            $this->user = $this->request->getAttribute('frontend.user');
         }
         
         if($this->user != NULL) {
-            $this->usergroup = $this->userGroupRepository->findByUid($this->user['usergroup']);
+            $this->usergroup = $this->userGroupRepository->findByUid($this->user->user['usergroup']);
         }        
     }
     
@@ -48,7 +47,7 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      */
     public function listAction(int $currentPage = 1): ResponseInterface
     {
-        $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
+        $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user->user['usergroup']);
         
     	$currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : $currentPage;
     	$paginator = new QueryResultPaginator($berater, $currentPage, 25);
@@ -91,7 +90,7 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $this->view->assign('berater', $berater);
         $this->view->assign('usergroups', $usergroups);
         $this->view->assign('thisuser', $this->user);
-        $this->view->assign('userId', $this->user['uid']);
+        $this->view->assign('userId', $this->user->user['uid']);
         $this->view->assign('pageid2facode', $this->settings['pageid2facode']);
         $this->view->assign('betafeaturesaktiviert', $this->usergroup->getBetafeatures());
         $this->view->assign('gpaktiv', $gpaktiv);

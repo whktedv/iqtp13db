@@ -54,18 +54,8 @@ class FormAwareLanguageMenuViewHelper extends AbstractViewHelper
                 continue;
             }
 
-            // Get version information object
-            $versionInformation = GeneralUtility::makeInstance(Typo3Version::class);
-            // Get major version (e.g., "11" from "11.5.0")
-            $majorVersion = $versionInformation->getMajorVersion();
-            if($majorVersion == "12") {
-                $languageId = $language->getLanguageId();
-                $isActive   = $languageId === $currentLanguage->getLanguageId();
-            } else {
-                // TYPO3 13: getLanguageId() → getId()            
-                $languageId = $language->getId();
-                $isActive   = $languageId === $currentLanguage->getId();
-            }
+            $languageId = $language->getLanguageId();
+            $isActive   = $languageId === $currentLanguage->getLanguageId();
 
             // Parameter mit Formulardaten
             $params = [
@@ -114,17 +104,9 @@ class FormAwareLanguageMenuViewHelper extends AbstractViewHelper
 
     protected function buildLanguageUrl(SiteLanguage $language, string $actionName, ContentObjectRenderer $cObj, int $currentPageId): string
     {
-        // Get version information object
-        $versionInformation = GeneralUtility::makeInstance(Typo3Version::class);
-        // Get major version (e.g., "11" from "11.5.0")
-        $majorVersion = $versionInformation->getMajorVersion();
-        if($majorVersion == "12") {
-            $languageId = $language->getLanguageId();
-        } else {
-            // TYPO3 13: getLanguageId() → getId()            
-            $languageId = $language->getId();                
-        }
-
+        
+        $languageId = $language->getLanguageId();
+        
         $conf = [
             'parameter'        => $currentPageId,
             'language'         => $languageId,

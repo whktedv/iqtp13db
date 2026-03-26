@@ -6,7 +6,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
 
 use Psr\Http\Message\ResponseInterface;
-
+use \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3\CMS\Core\Pagination\ArrayPaginator;
 use TYPO3\CMS\Core\Pagination\SimplePagination;
@@ -19,6 +19,7 @@ use Ud\Iqtp13db\Domain\Repository\HistorieRepository;
 use Ud\Iqtp13db\Domain\Repository\BeraterRepository;
 use Ud\Iqtp13db\Domain\Repository\AbschlussRepository;
 use TYPO3\CMS\Core\Resource\StorageRepository;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use Ud\Iqtp13db\Domain\Repository\BerufeRepository;
 use Ud\Iqtp13db\Domain\Repository\StaatenRepository;
 use Ud\Iqtp13db\Domain\Repository\OrtRepository;
@@ -47,7 +48,7 @@ require_once(Environment::getPublicPath() . '/' . 'typo3conf/ext/iqtp13db/Resour
 class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
     
-    protected $generalhelper, $usergroup, $niqbid, $beratungsstellenname, $anzbstellen;
+    protected $user, $generalhelper, $usergroup, $niqbid, $beratungsstellenname, $anzbstellen;
     
     protected $userGroupRepository;
     protected $teilnehmerRepository;
@@ -234,7 +235,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         OrtRepository $ortRepository, 
         BrancheRepository $brancheRepository,
         GruppenberatungRepository $gruppenberatungRepository,
-        QRCodeGenerator $qrCodeGenerator
+        QRCodeGenerator $qrCodeGenerator,
+        FrontendUserAuthentication $frontendUser
     )
     {
         $this->userGroupRepository = $userGroupRepository;
@@ -251,14 +253,13 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $this->brancheRepository = $brancheRepository;
         $this->gruppenberatungRepository = $gruppenberatungRepository;
         $this->qrCodeGenerator = $qrCodeGenerator;
+        $this->user = $frontendUser;
     }
     
     /**
      * action init
-     *
-     * @param void
      */
-    public function initializeAction()
+    public function initializeAction(): void
     {
         /*
          * PropertyMapping für die multiple ankreuzbaren Checkboxen.
@@ -294,14 +295,14 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $this->user=null;
         $context = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
         if($context->getPropertyFromAspect('frontend.user', 'isLoggedIn')){
-            $this->user=$GLOBALS['TSFE']->fe_user->user;
+            $this->user = $this->request->getAttribute('frontend.user');
         } else {
             $this->user = NULL;
         }
         
         if($this->user != NULL) {
-            $standardniqidberatungsstelle = $this->settings['standardniqidberatungsstelle'];            
-            $ugroupsarray = explode(",",$this->user['usergroup']);
+            $standardniqidberatungsstelle = $this->settings['standardniqidberatungsstelle'];
+            $ugroupsarray = explode(",",$this->user->user['usergroup']);
             $this->anzbstellen = count($ugroupsarray);            
             $thisusrgrpid = array_pop($ugroupsarray);
             $this->usergroup = $this->userGroupRepository->findByIdentifier($thisusrgrpid);
@@ -314,7 +315,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $userniqidbstelle = $this->usergroup->getNiqbid() ?? $standardniqidberatungsstelle;
             }
             
-            $sesniqbid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'currentusergroup') ?? '';
+            $sesniqbid = $this->user->getKey('ses', 'currentusergroup') ?? '';
             $this->niqbid = $sesniqbid != '' ? $sesniqbid : $userniqidbstelle;
             $thisgroup = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $this->niqbid);            
             $this->beratungsstellenname = $thisgroup[0]->getTitle();
@@ -374,17 +375,17 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     {
         $valArray = $this->request->getArguments();
                
-        //if($this->user['username'] == 'udohmen') \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($valArray);
+        //if($this->user->user['username'] == 'udohmen') \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($valArray);
         
         // Gruppenwechsel Beratungsstelle, wenn ein User mehreren Beratungsstellen zugeordnet ist
-        $backenduser = $this->beraterRepository->findByUid($this->user['uid']);
+        $backenduser = $this->beraterRepository->findByUid($this->user->user['uid']);
         $backendusergroups = array();
         $backendusergroups = $backenduser->getUsergroup();
              
         if(isset($valArray['bstellen']) && $valArray['bstellen'] != '') {            
             $niqbidgruppeselected = $valArray['bstellen'];            
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'currentusergroup', $niqbidgruppeselected);
-            $this->niqbid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'currentusergroup');
+            $this->user->setKey('ses', 'currentusergroup', $niqbidgruppeselected);
+            $this->niqbid = $this->user->getKey('ses', 'currentusergroup');
         }
         // Gruppenwechsel bis hier 
         
@@ -399,7 +400,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             if($jahrselected != 0 && $jahrselected != 99) {
                 $monatsnamen[$i] = $monatsnamen[$i]." ".$jahrselected;
             } elseif($jahrselected == 99) {
-                $monatsnamen[$i] = $monatsnamen[$i];
+                // bleibt bei Monatsnamen
             } else {            
                 if($i <= idate('m')) {
                     $monatsnamen[$i] = $monatsnamen[$i]." ".idate('Y');
@@ -569,7 +570,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'historie' => $historie,
                 'beratungsstelle' => $this->beratungsstellenname,
                 'niqbid' => $this->niqbid,
-                'username' => $this->user['username'],
+                'username' => $this->user->user['username'],
                 'neuanmeldungen7tage' => $neuanmeldungen7tage,
                 'bstellevonplz' => $plzgroup ?? '',
                 'backendusergroups' => $backendusergroups,
@@ -603,7 +604,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         if(isset($valArray['tn'])) {
             $editedteilnehmer = $this->teilnehmerRepository->findByUid($valArray['tn']);
             $tnedituser = $editedteilnehmer->getEdituser();
-            if($this->user['uid'] == $tnedituser) {
+            if($this->user->user['uid'] == $tnedituser) {
                 $editedteilnehmer->setEdituser(0);
                 $editedteilnehmer->setEdittstamp(0);
                 $this->teilnehmerRepository->update($editedteilnehmer);
@@ -616,23 +617,23 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         if(!empty($valArray['callerpage'])) $currentPage = $valArray['callerpage'];
         
         if(empty($valArray['orderby'])) {            
-            $orderby = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listangemeldetorderby') ?? 'verificationDate';
-            $order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listangemeldetorder') ?? 'DESC';
+            $orderby = $this->user->getKey('ses', 'listangemeldetorderby') ?? 'verificationDate';
+            $order = $this->user->getKey('ses', 'listangemeldetorder') ?? 'DESC';
         } else {
             $orderby = $valArray['orderby'];
-            $order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listangemeldetorder') ?? 'DESC';
+            $order = $this->user->getKey('ses', 'listangemeldetorder') ?? 'DESC';
         }        
         if(isset($valArray['changeorder']) && $valArray['changeorder'] == 1) {
             $orderby = $valArray['orderby'];
             $order = $order == 'DESC' ? 'ASC' : 'DESC';
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'listangemeldetorderby', $orderby);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'listangemeldetorder', $order);
+            $this->user->setKey('ses', 'listangemeldetorderby', $orderby);
+            $this->user->setKey('ses', 'listangemeldetorder', $order);
         }
         
         $teilnehmer = $this->setfilter(0, $valArray, $orderby, $order, 0, 9999);
         
         // Wegen Bug in Paginator, der nicht mit Custom SQL Queryresults funktioniert, werden hier alle gefilterten Einträge auf einer Seite dargestellt. Queryresultpaginator hat dann keine Auswahl an Datensätzen, sondern alle.
-        $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 20 : 20;
+        $anzperpag = $this->user->getKey('ses', 'filtermodus') == '1' ? 20 : 20;
         $currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : $currentPage;
                 
         if(is_array($teilnehmer)) {
@@ -729,7 +730,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         if(isset($valArray['tn'])) {
             $editedteilnehmer = $this->teilnehmerRepository->findByUid($valArray['tn']);
             $tnedituser = $editedteilnehmer->getEdituser();
-            if($this->user['uid'] == $tnedituser) {
+            if($this->user->user['uid'] == $tnedituser) {
                 $editedteilnehmer->setEdituser(0);
                 $editedteilnehmer->setEdittstamp(0);
                 $this->teilnehmerRepository->update($editedteilnehmer);
@@ -742,23 +743,23 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         if(!empty($valArray['callerpage'])) $currentPage = $valArray['callerpage'];
         
         if(empty($valArray['orderby'])) {
-            $orderby = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listerstberatungorderby') ?? 'verificationDate';
-            $order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listerstberatungorder') ?? 'DESC';
+            $orderby = $this->user->getKey('ses', 'listerstberatungorderby') ?? 'verificationDate';
+            $order = $this->user->getKey('ses', 'listerstberatungorder') ?? 'DESC';
         } else {
             $orderby = $valArray['orderby'];
-            $order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listerstberatungorder');
+            $order = $this->user->getKey('ses', 'listerstberatungorder');
         }
         if(isset($valArray['changeorder']) && $valArray['changeorder'] == 1) {
             $orderby = $valArray['orderby'];
             $order = $order == 'DESC' ? 'ASC' : 'DESC';
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'listerstberatungorderby', $orderby);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'listerstberatungorder', $order);
+            $this->user->setKey('ses', 'listerstberatungorderby', $orderby);
+            $this->user->setKey('ses', 'listerstberatungorder', $order);
         }
         
         $teilnehmer = $this->setfilter(3, $valArray, $orderby, $order, 0, 9999);
         
         // Wegen Bug in Paginator, der nicht mit Custom SQL Queryresults funktioniert, werden hier alle gefilterten Einträge auf einer Seite dargestellt. Queryresultpaginator hat dann keine Auswahl an Datensätzen, sondern alle.
-        $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 20 : 20;
+        $anzperpag = $this->user->getKey('ses', 'filtermodus') == '1' ? 20 : 20;
         
         $currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : $currentPage;
         if(is_array($teilnehmer)) {
@@ -855,7 +856,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         if(isset($valArray['tn'])) {
             $editedteilnehmer = $this->teilnehmerRepository->findByUid($valArray['tn']);
             $tnedituser = $editedteilnehmer->getEdituser();
-            if($this->user['uid'] == $tnedituser) {
+            if($this->user->user['uid'] == $tnedituser) {
                 $editedteilnehmer->setEdituser(0);
                 $editedteilnehmer->setEdittstamp(0);
                 $this->teilnehmerRepository->update($editedteilnehmer);
@@ -868,23 +869,23 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         if(!empty($valArray['callerpage'])) $currentPage = $valArray['callerpage'];
         
         if(empty($valArray['orderby'])) {
-            $orderby = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listarchivorderby') ?? 'verificationDate';
-            $order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listarchivorder') ?? 'DESC';
+            $orderby = $this->user->getKey('ses', 'listarchivorderby') ?? 'verificationDate';
+            $order = $this->user->getKey('ses', 'listarchivorder') ?? 'DESC';
         } else {
             $orderby = $valArray['orderby'];
-            $order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listarchivorder');
+            $order = $this->user->getKey('ses', 'listarchivorder');
         }
         if(isset($valArray['changeorder']) && $valArray['changeorder'] == 1) {
             $orderby = $valArray['orderby'];
             $order = $order == 'DESC' ? 'ASC' : 'DESC';
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'listarchivorderby', $orderby);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'listarchivorder', $order);
+            $this->user->setKey('ses', 'listarchivorderby', $orderby);
+            $this->user->setKey('ses', 'listarchivorder', $order);
         }
         
         $teilnehmer = $this->setfilter(4, $valArray, $orderby, $order, 0, 9999);
         
         // Wegen Bug in Paginator, der nicht mit Custom SQL Queryresults funktioniert, werden hier alle gefilterten Einträge auf einer Seite dargestellt. Queryresultpaginator hat dann keine Auswahl an Datensätzen, sondern alle.
-        $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 25 : 25;
+        $anzperpag = $this->user->getKey('ses', 'filtermodus') == '1' ? 25 : 25;
         
         $currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : $currentPage;
         if(is_array($teilnehmer)) {
@@ -979,23 +980,23 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         if(!empty($valArray['callerpage'])) $currentPage = $valArray['callerpage'];
         
         if(empty($valArray['orderby'])) {
-            $orderby = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listdeletedorderby') ?? 'verificationDate';
-            $order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listdeletedorder') ?? 'DESC';
+            $orderby = $this->user->getKey('ses', 'listdeletedorderby') ?? 'verificationDate';
+            $order = $this->user->getKey('ses', 'listdeletedorder') ?? 'DESC';
         } else {
             $orderby = $valArray['orderby'];
-            $order = $GLOBALS['TSFE']->fe_user->getKey('ses', 'listdeletedorder');
+            $order = $this->user->getKey('ses', 'listdeletedorder');
         }
         if(isset($valArray['changeorder']) && $valArray['changeorder'] == 1) {
             $orderby = $valArray['orderby'];
             $order = $order == 'DESC' ? 'ASC' : 'DESC';
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'listdeletedorderby', $orderby);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'listdeletedorder', $order);
+            $this->user->setKey('ses', 'listdeletedorderby', $orderby);
+            $this->user->setKey('ses', 'listdeletedorder', $order);
         }
                
         $teilnehmer = $this->setfilter(999, $valArray, $orderby, $order, 1, 9999);
         
         // Wegen Bug in Paginator, der nicht mit Custom SQL Queryresults funktioniert, werden hier alle gefilterten Einträge auf einer Seite dargestellt. Queryresultpaginator hat dann keine Auswahl an Datensätzen, sondern alle.
-        $anzperpag = $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus') == '1' ? 25 : 25;
+        $anzperpag = $this->user->getKey('ses', 'filtermodus') == '1' ? 25 : 25;
         
         $currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : $currentPage;
         if(is_array($teilnehmer)) {
@@ -1345,7 +1346,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $alleberatungsstellen = $this->userGroupRepository->findAllBeratungsstellen($this->settings['beraterstoragepid']);
                 
-        $backenduser = $this->beraterRepository->findByUid($this->user['uid']);
+        $backenduser = $this->beraterRepository->findByUid($this->user->user['uid']);
         $this->view->assignMultiple(
             [
                 'alleberatungsstellen' => $alleberatungsstellen,
@@ -1410,7 +1411,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $teilnehmer->setVerificationIp($_SERVER['REMOTE_ADDR']);
         }        
         $teilnehmer->setNiqidberatungsstelle($this->niqbid);
-        if($teilnehmer->getBerater() == 0) $teilnehmer->setBerater($this->beraterRepository->findByUid($this->user['uid']));
+        if($teilnehmer->getBerater() == 0) $teilnehmer->setBerater($this->beraterRepository->findByUid($this->user->user['uid']));
         $teilnehmer->setCrdate(time());
         $this->teilnehmerRepository->add($teilnehmer);
         
@@ -1467,9 +1468,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $edituserfield = '';
         
-        if($teilnehmer->getEdittstamp() == 0 || $teilnehmer->getEdituser() == $this->user['uid'] || (time() - $teilnehmer->getEdittstamp()) > 10) {
+        if($teilnehmer->getEdittstamp() == 0 || $teilnehmer->getEdituser() == $this->user->user['uid'] || (time() - $teilnehmer->getEdittstamp()) > 10) {
             $teilnehmer->setEdittstamp(time());
-            $teilnehmer->setEdituser($this->user['uid']);
+            $teilnehmer->setEdituser($this->user->user['uid']);
             $this->teilnehmerRepository->update($teilnehmer);
             
             // Daten sofort in die Datenbank schreiben
@@ -1616,7 +1617,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function initializeUpdateAction() {
         
         $valArray = $this->request->getArguments();
-       
+
         if(array_key_exists('teilnehmer', $valArray)) {
             $email = $valArray['teilnehmer']['email'] ?? '';
             $confirmemail = $valArray['teilnehmer']['confirmemail'] ?? '';
@@ -1668,8 +1669,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
 
         if($teilnehmer->getGebdat() != '') {
-            $birthdate = \DateTime::createFromFormat('Y-m-d', $teilnehmer->getGebdat());
-            $today = new \DateTime();
+            $birthdate = DateTime::createFromFormat('Y-m-d', $teilnehmer->getGebdat());
+            $today = new DateTime();
             $age = $today->diff($birthdate)->y;
             $teilnehmer->setLebensalter($age);
         }
@@ -1747,7 +1748,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         if($bstatus == 999) {
             $this->addFlashMessage("Fehler in Update-Routine -> beratungsstatus = 999. Bitte Admin informieren.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
         }
-        
+       
         $teilnehmer->setBeratungsstatus($bstatus);
         
         if($teilnehmer->getNacherfassung() == 1) {
@@ -1858,7 +1859,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $searchparams = $valArray['searchparams'];
         }
         
-        $berater = $this->beraterRepository->findByUid($this->user['uid']);
+        $berater = $this->beraterRepository->findByUid($this->user->user['uid']);
         
         $teilnehmer->setBerater($berater);
         $this->teilnehmerRepository->update($teilnehmer);
@@ -1965,7 +1966,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'baseurl' => $baseUri
             );
             
-            $emailview = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
+            $emailview = GeneralUtility::makeInstance('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
             $emailview->setRequest($this->request);
             
             $extbaseFrameworkConfiguration = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
@@ -2034,7 +2035,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'baseurl' => $baseUri
             );
             
-            $emailview = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
+            $emailview = GeneralUtility::makeInstance('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
             $emailview->setRequest($this->request);
             
             $teilnehmer->setEditexternsent(new \DateTime);
@@ -2206,7 +2207,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         
         // MPDF per composer einbinden - wenn nicht vorhanden, dann s.u.
-        $mpdfComposer = \TYPO3\CMS\Core\Core\Environment::getConfigPath() . '/ext/vendor/autoload.php';
+        $mpdfComposer = Environment::getConfigPath() . '/ext/vendor/autoload.php';
         if (file_exists($mpdfComposer)) {
             require_once($mpdfComposer);
         } else {
@@ -2309,7 +2310,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $valArray = $this->request->getArguments();
         
         // MPDF per composer einbinden - wenn nicht vorhanden, dann s.u.
-        $mpdfComposer = \TYPO3\CMS\Core\Core\Environment::getConfigPath() . '/ext/vendor/autoload.php';
+        $mpdfComposer = Environment::getConfigPath() . '/ext/vendor/autoload.php';
         if (file_exists($mpdfComposer)) {
             //require_once __DIR__ . '/vendor/autoload.php';
             require_once($mpdfComposer);
@@ -2406,7 +2407,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      */
     public function editsettingsAction(): ResponseInterface {
         
-        $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
+        $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user->user['usergroup']);
         foreach($berater as $currber) {
             $arrberater[] = $currber;
         }
@@ -2647,7 +2648,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'filterreferenzberuf' => $berufselected,
                 'filterberuf' => $berufselected,
                 'filterbranche' => $brancheselected,
-                'filteron' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus')
+                'filteron' => $this->user->getKey('ses', 'filtermodus')
             ]
             );
         return $this->htmlResponse();
@@ -2663,48 +2664,48 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     function setfilter(int $type, array $searchparams, $orderby, $order, $deleted, $limit) {
         
         if (isset($searchparams['filteran'])) {
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fuid', $searchparams['uid'] ?? '');
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', $searchparams['name'] ?? '');
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', $searchparams['ort'] ?? '');
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'femail', $searchparams['email'] ?? '');
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', $searchparams['beruf'] ?? '');
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', $searchparams['land'] ?? '');
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fgebdat', $searchparams['gebdat'] ?? '');
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberater', $searchparams['berater'] ?? '');            
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberatername', $searchparams['berater'] ?? '');            
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fgruppe', $searchparams['gruppe'] ?? '');
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fbescheid', $searchparams['bescheid'] ?? ''); // antragstellungvorher            
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'filtermodus', '1');
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fallemodule', $searchparams['allemodule'] ?? ''); 
+            $this->user->setKey('ses', 'fuid', $searchparams['uid'] ?? '');
+            $this->user->setKey('ses', 'fname', $searchparams['name'] ?? '');
+            $this->user->setKey('ses', 'fort', $searchparams['ort'] ?? '');
+            $this->user->setKey('ses', 'femail', $searchparams['email'] ?? '');
+            $this->user->setKey('ses', 'fberuf', $searchparams['beruf'] ?? '');
+            $this->user->setKey('ses', 'fland', $searchparams['land'] ?? '');
+            $this->user->setKey('ses', 'fgebdat', $searchparams['gebdat'] ?? '');
+            $this->user->setKey('ses', 'fberater', $searchparams['berater'] ?? '');            
+            $this->user->setKey('ses', 'fberatername', $searchparams['berater'] ?? '');            
+            $this->user->setKey('ses', 'fgruppe', $searchparams['gruppe'] ?? '');
+            $this->user->setKey('ses', 'fbescheid', $searchparams['bescheid'] ?? ''); // antragstellungvorher            
+            $this->user->setKey('ses', 'filtermodus', '1');
+            $this->user->setKey('ses', 'fallemodule', $searchparams['allemodule'] ?? ''); 
         } 
         $filtermodus = $searchparams['filtermodus'] ?? '1';
         if($filtermodus == '0') 
         {
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fuid', NULL);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fname', NULL);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fort', NULL);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'femail', NULL);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberuf', NULL);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fland', NULL);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fgebdat', NULL);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fberater', NULL);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fgruppe', NULL);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'fbescheid', NULL); // antragstellungvorher
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'filtermodus', NULL);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'filterallemodule', NULL);
+            $this->user->setKey('ses', 'fuid', NULL);
+            $this->user->setKey('ses', 'fname', NULL);
+            $this->user->setKey('ses', 'fort', NULL);
+            $this->user->setKey('ses', 'femail', NULL);
+            $this->user->setKey('ses', 'fberuf', NULL);
+            $this->user->setKey('ses', 'fland', NULL);
+            $this->user->setKey('ses', 'fgebdat', NULL);
+            $this->user->setKey('ses', 'fberater', NULL);
+            $this->user->setKey('ses', 'fgruppe', NULL);
+            $this->user->setKey('ses', 'fbescheid', NULL); // antragstellungvorher
+            $this->user->setKey('ses', 'filtermodus', NULL);
+            $this->user->setKey('ses', 'filterallemodule', NULL);
         }
         
-        $f['uid'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fuid');
-        $f['name'] = preg_replace('/\s+/', ' ', trim($GLOBALS['TSFE']->fe_user->getKey('ses', 'fname')));
-        $f['ort'] = preg_replace('/\s+/', ' ', trim($GLOBALS['TSFE']->fe_user->getKey('ses', 'fort')));
-        $f['email'] = preg_replace('/\s+/', ' ', trim($GLOBALS['TSFE']->fe_user->getKey('ses', 'femail')));
-        $f['beruf'] = preg_replace('/\s+/', ' ', trim($GLOBALS['TSFE']->fe_user->getKey('ses', 'fberuf')));
-        $f['gebdat'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fgebdat');
-        $f['land'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fland');
-        $f['berater'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fberater');
-        $f['gruppe'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fgruppe');
-        $f['bescheid'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fbescheid'); // antragstellungvorher
-        $f['allemodule'] = $GLOBALS['TSFE']->fe_user->getKey('ses', 'fallemodule'); 
+        $f['uid'] = $this->user->getKey('ses', 'fuid');
+        $f['name'] = preg_replace('/\s+/', ' ', trim($this->user->getKey('ses', 'fname')));
+        $f['ort'] = preg_replace('/\s+/', ' ', trim($this->user->getKey('ses', 'fort')));
+        $f['email'] = preg_replace('/\s+/', ' ', trim($this->user->getKey('ses', 'femail')));
+        $f['beruf'] = preg_replace('/\s+/', ' ', trim($this->user->getKey('ses', 'fberuf')));
+        $f['gebdat'] = $this->user->getKey('ses', 'fgebdat');
+        $f['land'] = $this->user->getKey('ses', 'fland');
+        $f['berater'] = $this->user->getKey('ses', 'fberater');
+        $f['gruppe'] = $this->user->getKey('ses', 'fgruppe');
+        $f['bescheid'] = $this->user->getKey('ses', 'fbescheid'); // antragstellungvorher
+        $f['allemodule'] = $this->user->getKey('ses', 'fallemodule'); 
         
         if($f['land'] == '-1000' || $f['land'] == NULL) $f['land'] = '';
         if($f['berater'] == -1 || $f['berater'] == NULL) $f['berater'] = '';
@@ -2739,7 +2740,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             }
             $this->view->assign('filtergruppe', $f['gruppe']);
             $this->view->assign('filterbescheid', $f['bescheid']); // antragstellungvorher
-            $this->view->assign('filteron', $GLOBALS['TSFE']->fe_user->getKey('ses', 'filtermodus'));
+            $this->view->assign('filteron', $this->user->getKey('ses', 'filtermodus'));
             $this->view->assign('filterallemodule', $f['allemodule']);
         }
         
@@ -2759,7 +2760,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $history = new \Ud\Iqtp13db\Domain\Model\Historie();
             $berater = $this->beraterRepository->findAllBerater($this->settings['beraterstoragepid']);
             foreach($berater as $thisberater) {
-                if($this->user['username'] == $thisberater->getUsername()) $history->setBerater($thisberater);
+                if($this->user->user['username'] == $thisberater->getUsername()) $history->setBerater($thisberater);
             }
             
             $history->setTeilnehmer($teilnehmer);
@@ -2864,7 +2865,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      *
      * @return string boolean flash message or FALSE if no flash message should be set
      */
-    protected function getErrorFlashMessage() {
+    protected function getErrorFlashMessage(): string {
         return FALSE;
     }
     
@@ -2882,7 +2883,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 }
             }
         } else {
-            $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
+            $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user->user['usergroup']);
             foreach($berater as $currber) {
                 $arrberater[$currber->getUid()] = $currber->getUsername();
             }
@@ -2978,7 +2979,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 if($berater != NULL) $rows[$x]['fkberater'] = $berater->getUsername();
                 else $rows[$x]['fkberater'] = '-';
                 $rows[$x]['fknotizen'] = $tn['fknotizen'];                                
-                $arrtnberatungsart = explode(",", $$tn['fkberatungsform']);
+                $arrtnberatungsart = explode(",", $tn['fkberatungsform']);
                 foreach ($arrtnberatungsart as $atn) $stringberatungsart .= $atn == '' ? '-;' : $arrberatungsartfk[$atn].";";
                 $rows[$x]['fkberatungsform'] = $stringberatungsart;
             }

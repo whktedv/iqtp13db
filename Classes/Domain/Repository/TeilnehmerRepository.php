@@ -5,13 +5,10 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 
-use \TYPO3\CMS\Extbase\Persistence\QueryInterface;
-use \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
 use \TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 use \TYPO3\CMS\Core\Database\Query\Restriction\LimitToTablesRestrictionContainer;
 use \TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
 
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 /***
  *
  * This file is part of the "IQ Webapp Anerkennungserstberatung" Extension for TYPO3 CMS.
@@ -162,11 +159,6 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         
         $query = $this->createQuery();
         
-        //$query->getQuerySettings()->setRespectStoragePage(false);
-        //$query->getQuerySettings()->setRespectSysLanguage(false);
-        //$query->getQuerySettings()->setEnableFieldsToBeIgnored(array('disabled', 'hidden', 'deleted'));
-        //$query->getQuerySettings()->setStoragePageIds(array($customStoragePid));
-        
         $result = $queryBuilder
             ->select('tx_iqtp13db_domain_model_teilnehmer.*')
             ->from('tx_iqtp13db_domain_model_teilnehmer')
@@ -202,14 +194,9 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             ->addOrderBy('uid', 'DESC')
             ->setMaxResults($limit)
             ->executeQuery();
-            //DebuggerUtility::var_dump($queryBuilder->getSQL());
-            //die;
-            
-           //DebuggerUtility::var_dump($queryBuilder->getParameters());
-           //die;
         
         $dataMapper = GeneralUtility::makeInstance(DataMapper::class);
-        $teilnehmerresult = $dataMapper->map(\Ud\Iqtp13db\Domain\Model\Teilnehmer::class, $result->fetchAll());
+        $teilnehmerresult = $dataMapper->map(\Ud\Iqtp13db\Domain\Model\Teilnehmer::class, $result->fetchAllAssociative());
         return $teilnehmerresult;
             
     }

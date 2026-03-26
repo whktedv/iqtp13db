@@ -2,7 +2,6 @@
 namespace Ud\Iqtp13db\Domain\Repository;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Persistence\Repository;
 use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
 
 

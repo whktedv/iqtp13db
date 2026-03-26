@@ -1,12 +1,9 @@
 <?php
 namespace Ud\Iqtp13db\Controller;
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use Psr\Http\Message\ResponseInterface;
+use \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
 use Ud\Iqtp13db\Domain\Repository\TeilnehmerRepository;
 use Ud\Iqtp13db\Domain\Repository\AbschlussRepository;
@@ -37,16 +34,31 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     protected $berufeRepository;
     protected $staatenRepository;
     protected $brancheRepository;
-    
-    public function __construct(TeilnehmerRepository $teilnehmerRepository, AbschlussRepository $abschlussRepository, BerufeRepository $berufeRepository, StaatenRepository $staatenRepository, BrancheRepository $brancheRepository)
+    protected $frontendUser;
+
+    public function __construct(TeilnehmerRepository $teilnehmerRepository, 
+                                AbschlussRepository $abschlussRepository, 
+                                BerufeRepository $berufeRepository, 
+                                StaatenRepository $staatenRepository, 
+                                BrancheRepository $brancheRepository,
+                                FrontendUserAuthentication $frontendUser)
     {
         $this->teilnehmerRepository = $teilnehmerRepository;
         $this->abschlussRepository = $abschlussRepository;
         $this->berufeRepository = $berufeRepository;
         $this->staatenRepository = $staatenRepository;
         $this->brancheRepository = $brancheRepository;
+        $this->frontendUser = $frontendUser;
     }
     
+    /**
+     * action init
+     */
+    public function initializeAction(): void
+    {
+        $this->frontendUser = $this->request->getAttribute('frontend.user');
+    }
+
     /**
      * action show
      *
@@ -246,8 +258,6 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     {
         $valArray = $this->request->getArguments();
 
-        // TODO: ggf. hier Daten in History einfügen
-        
         $teilnehmer = $this->teilnehmerRepository->findByUid($valArray['teilnehmer']);
         
         $this->abschlussRepository->update($abschluss);
@@ -324,7 +334,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
                 'settings' => $this->settings,
                 'abschluesse' => $abschluesse,
                 'teilnehmer' => $teilnehmer,
-                'beratungsstelle' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid'),
+                'beratungsstelle' => $this->frontendUser->getKey('ses', 'beratungsstellenid'),
                 'abschlussjahre' => $abschlussjahre,
                 'staatenarr' => $staatenarr,
                 'abschlussartarr' => $abschlussartarr,
@@ -356,10 +366,10 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
      * @return void
      */
-    public function createWebappAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss = NULL, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
+    public function createWebappAction(?\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
     {
         $valArray = $this->request->getArguments();
-        $iseditextern = $GLOBALS['TSFE']->fe_user->getKey('ses', 'editextern') ?? 0;
+        $iseditextern = $this->frontendUser->getKey('ses', 'editextern') ?? 0;
         
         $tnarr = $this->teilnehmerRepository->findByUid($teilnehmer->getUid());
         if($tnarr == NULL) {
@@ -439,7 +449,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
                 'abschluesse' => $abschluesse,
                 'abschluss' => $abschluss,
                 'teilnehmer' => $teilnehmer,
-                'beratungsstelle' => $GLOBALS['TSFE']->fe_user->getKey('ses', 'beratungsstellenid'),
+                'beratungsstelle' => $this->frontendUser->getKey('ses', 'beratungsstellenid'),
                 'abschlussjahre' => $abschlussjahre,
                 'staatenarr' => $staatenarr,
                 'abschlussartarr' => $abschlussartarr,
@@ -459,7 +469,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $valArray = $this->request->getArguments();
         if(array_key_exists('abschluss', $valArray)) {
             if($valArray['abschluss']['branche'] == '') {
-                $this->addFlashMessage(\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('errornosector', 'iqtp13db'), '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
+                $this->addFlashMessage(LocalizationUtility::translate('errornosector', 'iqtp13db'), '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
                 return $this->redirect('editWebapp', 'Abschluss', null, array('teilnehmer' => $valArray['teilnehmer'], 'abschluss' => $valArray['abschluss']['__identity']));
             }
         }
@@ -477,7 +487,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     public function updateWebappAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
     {
         $valArray = $this->request->getArguments();
-        $iseditextern = $GLOBALS['TSFE']->fe_user->getKey('ses', 'editextern') ?? 0;
+        $iseditextern = $this->frontendUser->getKey('ses', 'editextern') ?? 0;
         
         if (!isset($valArray['btnzurueck'])) {
             $this->abschlussRepository->update($abschluss);
@@ -507,7 +517,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      */
     public function deleteWebappAction(\Ud\Iqtp13db\Domain\Model\Abschluss $abschluss, \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer): ResponseInterface
     {   
-        $iseditextern = $GLOBALS['TSFE']->fe_user->getKey('ses', 'editextern') ?? 0;
+        $iseditextern = $this->frontendUser->getKey('ses', 'editextern') ?? 0;
         
         $this->abschlussRepository->remove($abschluss);
         
@@ -533,9 +543,9 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         if($thistn == null) {
             // TN ist (nicht) mehr vorhanden (gelöscht z.B. durch Task)
             $this->addFlashMessage("ERROR: Session expired or data not found. Please restart registration.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
-            $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('teilnehmer', null);
-            $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnuid', null);
-            $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('ses', null);            
+            $this->frontendUser->setAndSaveSessionData('teilnehmer', null);
+            $this->frontendUser->setAndSaveSessionData('tnuid', null);
+            $this->frontendUser->setAndSaveSessionData('ses', null);            
             return $this->redirect('startseite', 'Teilnehmer', null, null);
         } 
     }
@@ -551,9 +561,9 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         if($valarrabschluss == '') {
             // TN ist (nicht) mehr vorhanden (gelöscht z.B. durch Task)
             $this->addFlashMessage("ERROR: Session expired or data not found. Please restart registration.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
-            $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('teilnehmer', null);
-            $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnuid', null);
-            $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('ses', null);
+            $this->frontendUser->setAndSaveSessionData('teilnehmer', null);
+            $this->frontendUser->setAndSaveSessionData('tnuid', null);
+            $this->frontendUser->setAndSaveSessionData('ses', null);
             return $this->redirect('startseite', 'Teilnehmer', null, null);
         }
     }
@@ -568,7 +578,7 @@ class AbschlussController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      *
      * @return string boolean flash message or FALSE if no flash message should be set
      */
-    protected function getErrorFlashMessage() {
+    protected function getErrorFlashMessage(): string {
         return FALSE;
     }
 }

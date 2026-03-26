@@ -6,7 +6,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 use Psr\Http\Message\ServerRequestInterface;
-use TYPO3\CMS\Core\Http\ServerRequestFactory;
 use TYPO3\CMS\Core\Http\JsonResponse;
 use TYPO3\CMS\Core\Log\LogManager;
 
@@ -40,7 +39,6 @@ class RequestController
 
     public function doksaveEidAction(ServerRequestInterface $request)
     {
-     
         $uid = GeneralUtility::trimExplode('=', $request->getParsedBody()['dokuid'], true)[0];
         $tnfreigabe = GeneralUtility::trimExplode('=', $request->getParsedBody()['dokfreigabe'], true)[0] ?? 0;
         $beschreibung = GeneralUtility::trimExplode('=', $request->getParsedBody()['dokdescr'], true)[0] ?? '';

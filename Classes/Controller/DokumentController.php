@@ -6,15 +6,12 @@ use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Core\Core\Environment;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
-use TYPO3\CMS\Core\Resource\ResourceFactory;
 
 use Ud\Iqtp13db\Domain\Repository\UserGroupRepository;
 use Ud\Iqtp13db\Domain\Repository\TeilnehmerRepository;
 use Ud\Iqtp13db\Domain\Repository\DokumentRepository;
 use Ud\Iqtp13db\Helper\DownloadTokenHelper;
 use TYPO3\CMS\Core\Resource\StorageRepository;
-use TYPO3\CMS\Core\Resource\Folder;
-use TYPO3\CMS\Core\Resource\InaccessibleFolder;
 use TYPO3\CMS\Core\Resource\Search\FileSearchDemand;
 
 /***
@@ -39,6 +36,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     protected $teilnehmerRepository;
     protected $dokumentRepository;
     protected $storageRepository;
+    protected $user;
     
     public function __construct(UserGroupRepository $userGroupRepository, TeilnehmerRepository $teilnehmerRepository, DokumentRepository $dokumentRepository, StorageRepository $storageRepository, DownloadTokenHelper $downloadTokenHelper)
     {
@@ -49,24 +47,22 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $this->downloadTokenHelper = $downloadTokenHelper;
     }
     
-    protected function errorAction()
+    protected function errorAction(): ResponseInterface
     {
         // Alle Validierungsfehler holen
         $result = $this->arguments->validate();
-        //\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($result->getFlattenedErrors());
         
         return parent::errorAction();
     }
     
     /**
      * action init
-     *
-     * @param void
      */
-    public function initializeAction()
+    public function initializeAction(): void
     {
         $this->generalhelper = new \Ud\Iqtp13db\Helper\Generalhelper();
         $this->allusergroups = $this->userGroupRepository->findAllGroups($this->settings['beraterstoragepid']);
+        $this->user = $this->request->getAttribute('frontend.user');
     }
     
     /**
@@ -139,7 +135,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
             
             $this->dokumentRepository->update($thisdok);
             //Daten sofort in die Datenbank schreiben
-            $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+            $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
             $persistenceManager->persistAll();
         }
          
@@ -236,15 +232,15 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
                 $this->addFlashMessage('Error in saveFileWebapp: File does not meet policy.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
             } else {
                 foreach ($files as $file) {
-                    $filesize = $file['size'] ?? 0;
-                    if ($file['tmp_name'] == '') {
+                    $filesize = $file->getSize() ?? 0;
+                    if ($file->getError() != 0) {
                         $this->addFlashMessage('Error: permission error or maximum filesize exceeded.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
                         break;
                     } elseif ($filesize > 10485760) {
                         $this->addFlashMessage('Error: Maximum filesize exceeded (10 MB). Please reduce filesize.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
                         break;
                     } else {
-                        $fileType = $file['type'];
+                        $fileType = $file->getClientMediaType();
                         // TODO: Dateityp überprüfen
                         
                         $dokument = new \Ud\Iqtp13db\Domain\Model\Dokument();
@@ -255,7 +251,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
                         $teilnehmer->setNeuedokumente(1);                        
                         $this->teilnehmerRepository->update($teilnehmer);                        
                         //Daten sofort in die Datenbank schreiben
-                        $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+                        $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
                         $persistenceManager->persistAll();
                         
                         $this->saveFileTeilnehmer($dokument, $teilnehmer, $file);
@@ -317,7 +313,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $pfad = $this->generalhelper->createFolder($teilnehmer, $this->storageRepository->findAll());
         $beratenepath = ltrim($pfad->getIdentifier(), '/');
         
-        $tmpName = $this->generalhelper->sanitizeFileFolderName($file['name']);
+        $tmpName = $this->generalhelper->sanitizeFileFolderName($file->getClientFilename());
         $fullpath = $storage->getConfiguration()['basePath'] . $beratenepath . $tmpName;
         
         if($this->generalhelper->getFolderSize($storage->getConfiguration()['basePath'] . $beratenepath) > 40000) {
@@ -336,7 +332,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     	            $this->teilnehmerRepository->update($teilnehmer);
     	            
     	            //Daten sofort in die Datenbank schreiben    	            
-    	            $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+    	            $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
     	            $persistenceManager->persistAll();
     	            
     	        }    	        
@@ -469,9 +465,9 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     {          
         $dokument = new \Ud\Iqtp13db\Domain\Model\Dokument();
         
-        $tmpName = $this->generalhelper->sanitizeFileFolderName($file['name']);
-        $tmpFile = $file['tmp_name'];
-                
+        $tmpName = $this->generalhelper->sanitizeFileFolderName($file->getClientFilename());
+        $tmpFile = $file->getTemporaryFileName();
+                        
         $storage = $this->generalhelper->getTP13Storage($this->storageRepository->findAll());
         
         if (!$storage->hasFolder($pfad)) {
@@ -504,7 +500,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
             $this->dokumentRepository->add($dokument);
             
             //Daten sofort in die Datenbank schreiben
-            $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+            $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
             $persistenceManager->persistAll();
             
             return $dokument;
@@ -522,7 +518,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $this->dokumentRepository->remove($dokument);
         
         // Daten sofort in die Datenbank schreiben
-        $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+        $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
         
         $storage = $this->generalhelper->getTP13Storage($this->storageRepository->findAll());
@@ -540,7 +536,7 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     {        
         $valArray = $this->request->getArguments();
         $dokuid = $valArray['filedownload'];        
-        $tnuid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'editextern') ?? 0;
+        $tnuid = $this->user->getKey('ses', 'editextern') ?? 0;
         
         if($tnuid == 0) {
             $this->addFlashMessage('Daten konnte nicht geladen werden, Session abgelaufen oder Cookie nicht gefunden.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
@@ -554,9 +550,9 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
             $filesize = $dokfs == 0 ? 0 : $this->generalhelper->human_filesize($dokfs, 1);
             
             if(isset($valArray['thisaction']) && $valArray['thisaction'] == "abmelden"){
-                $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('tnuid', null);
-                $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('teilnehmer', null);
-                $GLOBALS['TSFE']->fe_user->setAndSaveSessionData('ses', null);                
+                $this->user->setAndSaveSessionData('tnuid', null);
+                $this->user->setAndSaveSessionData('teilnehmer', null);
+                $this->user->setAndSaveSessionData('ses', null);                
                 return $this->redirect('startseite', 'Teilnehmer', null, null);
             }
                        
@@ -585,12 +581,12 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      **/    
     function reduce_filesize($file, $filename, $pfad) {
         
-        $filesize = $file['size'] ?? 0;
+        $filesize = $file->getSize() ?? 0;
         if (is_array($file) && $filesize > 800000 && file_exists($pfad.$filename)) // bei Dateigrößen über 800 kB 
         {
-            $fileName = $file['tmp_name'];
-            $fileExt = pathinfo($file['name'], PATHINFO_EXTENSION);
-            $fileNamewoExt = pathinfo($file['name'], PATHINFO_FILENAME); 
+            $fileName = $file->getTemporaryFileName();
+            $fileExt = pathinfo($file->getClientFilename(), PATHINFO_EXTENSION);
+            $fileNamewoExt = pathinfo($file->getClientFilename(), PATHINFO_FILENAME); 
             $percent = 35;
             
             $timestamp = time();
@@ -670,14 +666,5 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         }
         return FALSE;
     }
-    
-    /**
-     *
-     * Check if file was already uploaded to server
-     *
-     **/
-    function file_already_uploaded($pfad) {
-        
-    }   
     
 }

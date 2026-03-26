@@ -154,7 +154,7 @@
 				<span class="important-icon"></span> 
 			</label>
 				<f:form.textfield type="date" class="datumtextfieldberatung" name="teilnehmer[gebdat]" value="{teilnehmer.gebdat}" />&nbsp;
-				<span style="font-color: #cecece;"><f:if condition="{teilnehmer.gebdat} == ''"><f:then>berechnetes Geburtsjahr = {jahraltereintraglebensalter}</f:then></f:if></span>
+				<span><f:if condition="{teilnehmer.gebdat} == ''"><f:then>berechnetes Geburtsjahr = {jahraltereintraglebensalter}</f:then></f:if></span>
 		</div>		
 		<div class="tp13_formdivwebapp">
 			<label for="geburtsland">

@@ -220,7 +220,7 @@ plugin.tx_iqtp13db.settings {
 # ********************** SPRACHWAHL DEUTSCH ************************
 # ******************************************************************
 
-[siteLanguage("twoLetterIsoCode") == 'de']
+[siteLanguage("languageId") == 0]
 plugin.tx_iqtp13db.settings {
    
    aufenthaltsstatus {
@@ -348,13 +348,13 @@ plugin.tx_iqtp13db.settings {
    }
    
 }
-[global]
+[END]
 
 # ****************************
 # ********* ENGLISCH *********
 # ****************************
 
-[siteLanguage("twoLetterIsoCode") == 'en']
+[siteLanguage("languageId") == 1]
 plugin.tx_iqtp13db.settings {
    
    aufenthaltsstatus {
@@ -481,13 +481,13 @@ plugin.tx_iqtp13db.settings {
 	   	4 = face-to-face	   	
    }
 }   
-[global]
+[END]
 
 # ****************************
 # ********* ARABISCH *********
 # ****************************
 
-[siteLanguage("twoLetterIsoCode") == 'ar']
+[siteLanguage("languageId") == 2]
 config.htmlTag_dir = rtl
 config.htmlTag_setParams = lang="" dir="rtl" class="no-js"
 page.includeCSS.customtp13rtl = EXT:iqtp13db/Resources/Public/CSS/customtp13db_rtl.css
@@ -618,13 +618,13 @@ plugin.tx_iqtp13db.settings {
 	   	4 = face-to-face
 	}
 }
-[global]
+[END]
 
 # ****************************
 # ********* FARSI ************
 # ****************************
 
-[siteLanguage("twoLetterIsoCode") == 'fa']
+[siteLanguage("languageId") == 3]
 config.htmlTag_dir = rtl
 config.htmlTag_setParams = lang="" dir="rtl" class="no-js"
 page.includeCSS.customtp13rtl = EXT:iqtp13db/Resources/Public/CSS/customtp13db_rtl.css
@@ -756,13 +756,13 @@ plugin.tx_iqtp13db.settings {
 	   	4 = face-to-face
 	}
 }   
-[global]
+[END]
 
 # ****************************
 # ********* FRANZÖSISCH ******
 # ****************************
 
-[siteLanguage("twoLetterIsoCode") == 'fr']
+[siteLanguage("languageId") == 4]
 plugin.tx_iqtp13db.settings {
 	
 	aufenthaltsstatus {
@@ -889,13 +889,13 @@ plugin.tx_iqtp13db.settings {
 	   	4 = face-to-face
 	}
 }   
-[global]
+[END]
 
 # ****************************
 # ********* POLNISCH *********
 # ****************************
 
-[siteLanguage("twoLetterIsoCode") == 'pl']
+[siteLanguage("languageId") == 5]
 plugin.tx_iqtp13db.settings {
 	
 	aufenthaltsstatus {
@@ -1023,13 +1023,13 @@ plugin.tx_iqtp13db.settings {
 	}
 	
 }   
-[global]
+[END]
 
 # ****************************
 # ********* RUMÄNISCH ********
 # ****************************
 
-[siteLanguage("twoLetterIsoCode") == 'ro']
+[siteLanguage("languageId") == 6]
 plugin.tx_iqtp13db.settings {
 	
 	aufenthaltsstatus {
@@ -1157,13 +1157,13 @@ plugin.tx_iqtp13db.settings {
 	}
 
 }   
-[global]
+[END]
 
 # ****************************
 # ********* RUSSISCH *********
 # ****************************
 
-[siteLanguage("twoLetterIsoCode") == 'ru']
+[siteLanguage("languageId") == 7]
 plugin.tx_iqtp13db.settings {
 	
 	aufenthaltsstatus {
@@ -1291,13 +1291,13 @@ plugin.tx_iqtp13db.settings {
 	}
 	
 }   
-[global]
+[END]
 
 # ****************************
 # ********* SPANISCH *********
 # ****************************
 
-[siteLanguage("twoLetterIsoCode") == 'es']
+[siteLanguage("languageId") == 8]
 plugin.tx_iqtp13db.settings {
 	
 	aufenthaltsstatus {
@@ -1426,13 +1426,13 @@ plugin.tx_iqtp13db.settings {
 	}	  
 		
 }   
-[global]
+[END]
 
 # ****************************
 # ********* TÜRKISCH *********
 # ****************************
 
-[siteLanguage("twoLetterIsoCode") == 'tr']
+[siteLanguage("languageId") == 9]
 plugin.tx_iqtp13db.settings {
 	
 	aufenthaltsstatus {
@@ -1560,14 +1560,14 @@ plugin.tx_iqtp13db.settings {
 	}
 
 }   
-[global]
+[END]
 
 # ****************************
 # ********* UKRAINISCH *******
 # ****************************
 
 # ukrainisch
-[siteLanguage("twoLetterIsoCode") == 'uk']
+[siteLanguage("languageId") == 10]
 plugin.tx_iqtp13db.settings {
 	
 	aufenthaltsstatus { 
@@ -1695,4 +1695,4 @@ plugin.tx_iqtp13db.settings {
 	}
 
 }   
-[global]
+[END]

@@ -27,15 +27,10 @@ class InstringViewHelper extends AbstractConditionViewHelper
         $this->registerArgument('needle', 'string', 'View helper needle', TRUE);
     }
     
-    
-    /**
-     * @param array $arguments
-     * @return bool
-     */
-    protected static function evaluateCondition($arguments = null)
+    public function render()
     {
-        $haystack = (string)$arguments['haystack'];
-        $needle = (string)$arguments['needle'];
+        $haystack = (string)$this->arguments['haystack'];
+        $needle = (string)$this->arguments['needle'];
         
         if(str_contains($haystack, $needle)) {
             return true;

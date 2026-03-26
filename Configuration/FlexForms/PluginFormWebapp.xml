@@ -2,128 +2,108 @@
   <sheets>
     <sDEF>
       <ROOT>
-        <TCEforms>
           <sheetTitle>Optionen</sheetTitle>
-        </TCEforms>
         <type>array</type>
         <el>
           <settings.modtyp>
-            <TCEforms>
-              <label>Typ</label>
-				<config>
-  				<type>select</type>
-  				<renderType>selectSingle</renderType>
-  				<items type="array">
-	    			<numIndex index="0" type="array">
-	      				<numIndex index="0">Anmeldung</numIndex>
-	     				<numIndex index="1">anmeldung</numIndex>
-	   				</numIndex>	   				
-	   				<numIndex index="1" type="array">
-      					<numIndex index="0">Anmeldung nur PLZ</numIndex>
-     					<numIndex index="1">anmeldungplz</numIndex>
-   					</numIndex>
-   					<numIndex index="2" type="array">
-	      				<numIndex index="0">Bearbeiten von Extern</numIndex>
-	     				<numIndex index="1">bearbeiten</numIndex>
-	   				</numIndex>
-   				</items>
-				</config>
-            </TCEforms>
+           <label>Typ</label>
+            <config>
+            <type>select</type>
+            <renderType>selectSingle</renderType>
+            <items type="array">
+              <numIndex index="0" type="array">
+                  <label>Anmeldung</label>
+                <value>anmeldung</value>
+              </numIndex>	   				
+              <numIndex index="1" type="array">
+                  <label>Anmeldung nur PLZ</label>
+                <value>anmeldungplz</value>
+              </numIndex>
+              <numIndex index="2" type="array">
+                  <label>Bearbeiten von Extern</label>
+                <value>bearbeiten</value>
+              </numIndex>
+            </items>
+            </config>
           </settings.modtyp>
           <settings.anmeldendeseite>
-            <TCEforms>
               <label>Anmelden Ende-Seite</label>
-				<config>
-  				<type>group</type>
-  				<internal_type>db</internal_type>
-				<allowed>pages</allowed>
-				<size>1</size>
-				<maxitems>1</maxitems>
-				<minitems>0</minitems>
-				<show_thumbs>1</show_thumbs>
-				</config>
-            </TCEforms>
+              <config>
+                <type>group</type>
+                <internal_type>db</internal_type>
+              <allowed>pages</allowed>
+              <size>1</size>
+              <maxitems>1</maxitems>
+              <minitems>0</minitems>
+              <show_thumbs>1</show_thumbs>
+              </config>
           </settings.anmeldendeseite>
           <settings.anmeldendeseiteaskconsent>
-            <TCEforms>
               <label>Seite nach Bestätigung Anforderung Einwilligung im Backend</label>
-				<config>
-  				<type>group</type>
-  				<internal_type>db</internal_type>
-				<allowed>pages</allowed>
-				<size>1</size>
-				<maxitems>1</maxitems>
-				<minitems>0</minitems>
-				<show_thumbs>1</show_thumbs>
-				</config>
-            </TCEforms>
+              <config>
+                <type>group</type>
+                <internal_type>db</internal_type>
+              <allowed>pages</allowed>
+              <size>1</size>
+              <maxitems>1</maxitems>
+              <minitems>0</minitems>
+              <show_thumbs>1</show_thumbs>
+              </config>
           </settings.anmeldendeseiteaskconsent>   
           <settings.mailattacheinwilligung>
-                    <TCEforms>
                          <label>Pfad zum Dateianhang (optional)</label>
                          <config>
                              <type>input</type>
                              <size>60</size>
                          </config>
-                    </TCEforms>
           </settings.mailattacheinwilligung>
           <settings.redirectValidationInitiated>
-            <TCEforms>
               <label>Seite Bestätigungsmail angefordert</label>
-				<config>
-  				<type>group</type>
-  				<internal_type>db</internal_type>
-				<allowed>pages</allowed>
-				<size>1</size>
-				<maxitems>1</maxitems>
-				<minitems>0</minitems>
-				<show_thumbs>1</show_thumbs>
-				</config>
-            </TCEforms>
+              <config>
+                <type>group</type>
+                <internal_type>db</internal_type>
+              <allowed>pages</allowed>
+              <size>1</size>
+              <maxitems>1</maxitems>
+              <minitems>0</minitems>
+              <show_thumbs>1</show_thumbs>
+              </config>
           </settings.redirectValidationInitiated>
            <settings.redirectValidationFailed>
-            <TCEforms>
               <label>Seite Validierung fehlgeschlagen</label>
-				<config>
-  				<type>group</type>
-  				<internal_type>db</internal_type>
-				<allowed>pages</allowed>
-				<size>1</size>
-				<maxitems>1</maxitems>
-				<minitems>0</minitems>
-				<show_thumbs>1</show_thumbs>
-				</config>
-            </TCEforms>
+              <config>
+                <type>group</type>
+                <internal_type>db</internal_type>
+              <allowed>pages</allowed>
+              <size>1</size>
+              <maxitems>1</maxitems>
+              <minitems>0</minitems>
+              <show_thumbs>1</show_thumbs>
+              </config>
           </settings.redirectValidationFailed>
           <settings.wartungvon>
-                    <TCEforms>
                          <label>Wartung von (Format: 01.01.2020 08:00)</label>
                          <config>
                              <type>input</type>
                              <size>60</size>
                          </config>
-                    </TCEforms>
           </settings.wartungvon>
           <settings.wartungbis>
-                    <TCEforms>
                          <label>Wartung bis (Format: 01.01.2020 08:00)</label>
                          <config>
                              <type>input</type>
                              <size>60</size>
                          </config>
-                    </TCEforms>
           </settings.wartungbis>
           <settings.wartungtext>
-                        <TCEforms>
                 		    <label>Wartung Text</label>
-							<config>
-  								<type>text</type>
-  								<cols>20</cols>
-  								<rows>3</rows>
-	    						<eval>trim</eval>
-   	 							<enableRichtext>1</enableRichtext>
-							</config>							
-                        </TCEforms>
+                        <config>
+                            <type>text</type>
+                            <cols>20</cols>
+                            <rows>3</rows>
+                            <eval>trim</eval>
+                            <enableRichtext>1</enableRichtext>
+                        </config>							
           </settings.wartungtext>
         </el>
       </ROOT>

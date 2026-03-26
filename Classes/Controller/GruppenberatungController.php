@@ -3,16 +3,7 @@ namespace Ud\Iqtp13db\Controller;
 use \Datetime;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Database\Connection;
-use TYPO3\CMS\Extbase\Annotation\Validate;
-use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
-
-use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
-use TYPO3\CMS\Core\Pagination\ArrayPaginator;
-use TYPO3\CMS\Core\Pagination\SimplePagination;
 
 use Psr\Http\Message\ResponseInterface;
 use Ud\Iqtp13db\Domain\Repository\UserGroupRepository;
@@ -40,7 +31,7 @@ require_once(Environment::getPublicPath() . '/' . 'typo3conf/ext/iqtp13db/Resour
 class GruppenberatungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
     
-    protected $generalhelper, $usergroup, $niqbid, $beratungsstellenname, $anzbstellen;
+    protected $user, $generalhelper, $usergroup, $niqbid, $beratungsstellenname, $anzbstellen;
     
     protected $userGroupRepository;
     protected $teilnehmerRepository;    
@@ -65,17 +56,15 @@ class GruppenberatungController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
     
     /**
      * action init
-     *
-     * @param void
      */
-    public function initializeAction()
+    public function initializeAction(): void
     {
         $this->generalhelper = new \Ud\Iqtp13db\Helper\Generalhelper();
         
         $this->user=null;
         $context = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
-        if($context->getPropertyFromAspect('frontend.user', 'isLoggedIn')){
-            $this->user=$GLOBALS['TSFE']->fe_user->user;
+        if($context->getPropertyFromAspect('frontend.user', 'isLoggedIn')){            
+            $this->user = $this->request->getAttribute('frontend.user');
         } else {
             $this->user = NULL;
         }
@@ -83,7 +72,7 @@ class GruppenberatungController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
         if($this->user != NULL) {
             $standardniqidberatungsstelle = $this->settings['standardniqidberatungsstelle'];
             
-            $ugroupsarray = explode(",",$this->user['usergroup']);
+            $ugroupsarray = explode(",",$this->user->user['usergroup']);
             
             $this->anzbstellen = count($ugroupsarray);
             
@@ -97,7 +86,7 @@ class GruppenberatungController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
             if($this->usergroup != NULL) {
                 $userniqidbstelle = $this->usergroup->getNiqbid() ?? $standardniqidberatungsstelle;
             }
-            $sesniqbid = $GLOBALS['TSFE']->fe_user->getKey('ses', 'currentusergroup') ?? '';
+            $sesniqbid = $this->user->getKey('ses', 'currentusergroup') ?? '';
             $this->niqbid = $sesniqbid != '' ? $sesniqbid : $userniqidbstelle;
             $thisgroup = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $this->niqbid);            
             $this->beratungsstellenname = $thisgroup[0]->getTitle();
@@ -117,7 +106,7 @@ class GruppenberatungController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
         $valArray = $this->request->getArguments();
                 
         $gruppenberatungen = $this->gruppenberatungRepository->findAvailable($this->niqbid);
-        $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
+        $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user->user['usergroup']);
         
         $this->view->assignMultiple(
             [
@@ -144,7 +133,7 @@ class GruppenberatungController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
         $berater = $this->beraterRepository->findByUid($gruppenberatung->getBerater());
         
         // Initialisiere Objectstorage für teilnehmer
-        $teilnehmeros = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $teilnehmeros = new ObjectStorage();
         $teilnehmeros = $gruppenberatung->getTeilnehmer();
         
         $this->view->assign('gruppenberatung', $gruppenberatung);
@@ -166,7 +155,7 @@ class GruppenberatungController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
     {
         $valArray = $this->request->getArguments();
         
-        $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);      
+        $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user->user['usergroup']);      
         
         $this->view->assign('thisaction', 'new');
         $this->view->assign('calleraction', $valArray['calleraction']);
@@ -216,7 +205,7 @@ class GruppenberatungController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
         $this->gruppenberatungRepository->add($gruppenberatung);
         
         // Daten sofort in die Datenbank schreiben
-        $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+        $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
         $this->addFlashMessage('Gruppenberatung erstellt.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
         
@@ -235,10 +224,10 @@ class GruppenberatungController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
     {
         $valArray = $this->request->getArguments();
         
-        $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']); 
+        $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user->user['usergroup']); 
         
         // Initialisiere Objectstorage für teilnehmer
-        $teilnehmeros = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $teilnehmeros = new ObjectStorage();
         $teilnehmeros = $gruppenberatung->getTeilnehmer();
         
         $this->view->assign('gruppenberatung', $gruppenberatung);
@@ -304,7 +293,7 @@ class GruppenberatungController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
         }
         
         // Initialisiere Objectstorage für teilnehmer
-        $teilnehmeros = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $teilnehmeros = new ObjectStorage();
         $teilnehmeros = $gruppenberatung->getTeilnehmer();
         $gberatungsarten = $gruppenberatung->getBeratungsarten();
         $berater = $this->beraterRepository->findByUid($gruppenberatung->getBerater());
@@ -335,7 +324,7 @@ class GruppenberatungController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
         $this->gruppenberatungRepository->update($gruppenberatung);
 
         // Daten sofort in die Datenbank schreiben
-        $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+        $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
         
         $this->addFlashMessage('Gruppenberatung aktualisiert.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
@@ -356,7 +345,7 @@ class GruppenberatungController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
         $this->gruppenberatungRepository->remove($gruppenberatung);
         
         // Daten sofort in die Datenbank schreiben
-        $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+        $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
         $this->addFlashMessage('Gruppenberatung gelöscht.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
         return $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'] ?? '1'));
@@ -381,7 +370,7 @@ class GruppenberatungController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
         $this->gruppenberatungRepository->update($gruppenberatung);
         
         // Daten sofort in die Datenbank schreiben
-        $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+        $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
         $this->addFlashMessage('Teilnehmer aus Gruppenberatung entfernt, Beratungsdaten wurden NICHT gelöscht!', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
         return $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'] ?? '1', 'gruppenberatung' => $gruppenberatung, 'teilnehmer' => $teilnehmer));
@@ -405,7 +394,7 @@ class GruppenberatungController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
         $this->gruppenberatungRepository->update($gruppenberatung);
         
         // Daten sofort in die Datenbank schreiben
-        $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+        $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
         $this->addFlashMessage('Alle Teilnehmenden aus Gruppenberatung entfernt, Beratungsdaten wurden NICHT gelöscht!', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
         return $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'] ?? '1', 'gruppenberatung' => $gruppenberatung));
@@ -424,7 +413,7 @@ class GruppenberatungController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
         $valArray = $this->request->getArguments();
         
         // Initialisiere Objectstorage für teilnehmer
-        $teilnehmeros = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $teilnehmeros = new ObjectStorage();
         $teilnehmeros = $gruppenberatung->getTeilnehmer();
         
         foreach($teilnehmeros as $teilnehmer) {
@@ -433,7 +422,7 @@ class GruppenberatungController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
         }
         
         // Daten sofort in die Datenbank schreiben
-        $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+        $persistenceManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
         $persistenceManager->persistAll();
         $this->addFlashMessage('Alle Ratsuchenden ins Archiv verschoben, Beratungsdaten wurden NICHT geändert!', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
         return $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'] ?? '1', 'gruppenberatung' => $gruppenberatung));        

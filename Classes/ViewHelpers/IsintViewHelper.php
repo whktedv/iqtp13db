@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace Ud\Iqtp13db\ViewHelpers;
 
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
 
 /***
@@ -27,16 +26,11 @@ class IsintViewHelper extends AbstractConditionViewHelper
         $this->registerArgument('field', 'string', 'View helper field', TRUE);
     }
     
-    /**
-     * @param array $arguments
-     * @return bool
-     */
-    protected static function evaluateCondition($arguments = null)
+    
+    public function render()
     {
-        $field = (string)$arguments['field'];
-        
-        //DebuggerUtility::var_dump($field);
-        
+        $field = (string)$this->arguments['field'];
+         
         if(is_numeric($field)) {
             return true;
         } else {

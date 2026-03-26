@@ -2,61 +2,57 @@
   <sheets>
     <sDEF>
       <ROOT>
-        <TCEforms>
-          <sheetTitle>Optionen</sheetTitle>
-        </TCEforms>
+        <sheetTitle>Optionen</sheetTitle>
         <type>array</type>
         <el>
           <settings.modtyp>
-            <TCEforms>
               <label>Typ</label>
 				<config>
   				<type>select</type>
   				<renderType>selectSingle</renderType>
   				<items type="array">
 			  	<numIndex index="0" type="array">
-      				<numIndex index="0">Übersicht</numIndex>
-     				<numIndex index="1">uebersicht</numIndex>
+      				<label>Übersicht</label>
+     				<value>uebersicht</value>
    				</numIndex>
     			<numIndex index="1" type="array">
-      				<numIndex index="0">Angemeldet</numIndex>
-     				<numIndex index="1">angemeldet</numIndex>
+      				<label>Angemeldet</label>
+     				<value>angemeldet</value>
    				</numIndex>
    				<numIndex index="2" type="array">
-      				<numIndex index="0">Erstberatung</numIndex>
-     				<numIndex index="1">erstberatung</numIndex>
+      				<label>Erstberatung</label>
+     				<value>erstberatung</value>
    				</numIndex>
 				<numIndex index="4" type="array">
-      				<numIndex index="0">Archiv</numIndex>
-     				<numIndex index="1">archiv</numIndex>
+      				<label>Archiv</label>
+     				<value>archiv</value>
    				</numIndex>
    				<numIndex index="5" type="array">
-      				<numIndex index="0">Export</numIndex>
-     				<numIndex index="1">export</numIndex>
+      				<label>Export</label>
+     				<value>export</value>
    				</numIndex>		  
    				<numIndex index="6" type="array">
-      				<numIndex index="0">Berater</numIndex>
-     				<numIndex index="1">berater</numIndex>
+      				<label>Berater</label>
+     				<value>berater</value>
    				</numIndex>		  
    				<numIndex index="7" type="array">
-      				<numIndex index="0">Gelöscht</numIndex>
-     				<numIndex index="1">deleted</numIndex>
+      				<label>Gelöscht</label>
+     				<value>deleted</value>
    				</numIndex>
    				<numIndex index="8" type="array">
-      				<numIndex index="0">Admin-Übersicht</numIndex>
-     				<numIndex index="1">adminuebersicht</numIndex>
+      				<label>Admin-Übersicht</label>
+     				<value>adminuebersicht</value>
    				</numIndex>		  
    				<numIndex index="9" type="array">
-      				<numIndex index="0">Einstellungen</numIndex>
-     				<numIndex index="1">einstellungen</numIndex>
+      				<label>Einstellungen</label>
+     				<value>einstellungen</value>
    				</numIndex>
    				<numIndex index="10" type="array">
-      				<numIndex index="0">Gruppenberatung</numIndex>
-     				<numIndex index="1">gruppenberatung</numIndex>
+      				<label>Gruppenberatung</label>
+     				<value>gruppenberatung</value>
    				</numIndex>  	  
    				</items>
 				</config>
-            </TCEforms>
           </settings.modtyp>
         </el>
       </ROOT>

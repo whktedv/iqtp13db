@@ -1,7 +1,6 @@
 <?php
 namespace Ud\Iqtp13db\Task;
 
-use Doctrine\DBAL\DBALException;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Scheduler\Task\AbstractTask;

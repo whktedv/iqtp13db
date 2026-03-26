@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Ud\Iqtp13db\Domain\Repository;
 
 use TYPO3\CMS\Extbase\Persistence\Repository;
-use Ud\Iqtp13db\Domain\Model\Gruppenberatung;
 use Ud\Iqtp13db\Domain\Model\Teilnehmer;
 
 /**

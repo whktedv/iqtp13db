@@ -1,7 +1,7 @@
 <?php
 namespace Ud\Iqtp13db\Controller;
 use \Datetime;
-use TYPO3\CMS\Extbase\Http\ForwardResponse;
+
 use Psr\Http\Message\ResponseInterface;
 
 use Ud\Iqtp13db\Domain\Repository\UserGroupRepository;
@@ -9,8 +9,6 @@ use Ud\Iqtp13db\Domain\Repository\TeilnehmerRepository;
 use Ud\Iqtp13db\Domain\Repository\FolgekontaktRepository;
 use Ud\Iqtp13db\Domain\Repository\BeraterRepository;
 use Ud\Iqtp13db\Domain\Repository\AbschlussRepository;
-
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /***
  *
@@ -36,8 +34,13 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     protected $folgekontaktRepository;
     protected $beraterRepository;
     protected $abschlussRepository;
+    protected $user;
     
-    public function __construct(UserGroupRepository $userGroupRepository, TeilnehmerRepository $teilnehmerRepository, FolgekontaktRepository $folgekontaktRepository, BeraterRepository $beraterRepository, AbschlussRepository $abschlussRepository)
+    public function __construct(UserGroupRepository $userGroupRepository, 
+                                TeilnehmerRepository $teilnehmerRepository, 
+                                FolgekontaktRepository $folgekontaktRepository, 
+                                BeraterRepository $beraterRepository, 
+                                AbschlussRepository $abschlussRepository)
     {
         $this->userGroupRepository = $userGroupRepository;
         $this->teilnehmerRepository = $teilnehmerRepository;
@@ -48,19 +51,17 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     
     /**
      * action init
-     *
-     * @param void
      */
-    public function initializeAction()
+    public function initializeAction(): void
     {
         $this->user=null;
         $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
         if($context->getPropertyFromAspect('frontend.user', 'isLoggedIn')){
-            $this->user=$GLOBALS['TSFE']->fe_user->user;
+            $this->user = $this->request->getAttribute('frontend.user');            
         }
         
         if($this->user != NULL) {
-            $this->usergroup = $this->userGroupRepository->findByIdentifier($this->user['usergroup']);
+            $this->usergroup = $this->userGroupRepository->findByIdentifier($this->user->user['usergroup']);
         }
     }
     
@@ -110,7 +111,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $valArray = $this->request->getArguments();
         
         $alleberater = array();        
-        $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
+        $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user->user['usergroup']);
         
         $this->view->assign('alleberater', $alleberater);
         $this->view->assign('berater', $this->user);
@@ -191,7 +192,7 @@ class FolgekontaktController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $teilnehmer = $folgekontakt->getTeilnehmer();
         
         $this->view->assign('berater', $this->user);
-        $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user['usergroup']);
+        $alleberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user->user['usergroup']);
         
         $this->view->assign('alleberater', $alleberater);
         $this->view->assign('folgekontakt', $folgekontakt);
