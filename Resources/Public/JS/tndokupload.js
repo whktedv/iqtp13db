@@ -67,7 +67,7 @@ dropzone3.addEventListener('drop', (e) => {
     e.preventDefault();
     dropzone3.classList.remove('dragging');
     fileInput3.files = e.dataTransfer.files;	    
-    $("#overlay").show();	    
+    $("#overlay").show();
     document.getElementById('fileuploadform3').submit();
 });
 
@@ -86,7 +86,7 @@ dropzone4.addEventListener('drop', (e) => {
     document.getElementById('fileuploadform4').submit();
 });
 
-fileInput1.addEventListener('change', () => {			
+fileInput1.addEventListener('change', () => {			    
 	document.getElementById('fileuploadform1').submit();
 });
 fileInput2.addEventListener('change', () => {			

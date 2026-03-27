@@ -28,7 +28,7 @@
 					<td class="tdcenter">{f:if(condition: '{teilnehmer.geschlecht} == 2', then: '<span style="color: #84a0ff;">M</span>')}
 					{f:if(condition: '{teilnehmer.geschlecht} == 1', then: '<span style="color: #fe7a84;">W</span>')}
 					{f:if(condition: '{teilnehmer.geschlecht} == 3', then: '<span>D</span>')}</td>
-					<td>{iqtp13db:isint(field:'{teilnehmer.geburtsland}',then:'{staatenarr.{teilnehmer.geburtsland}}',else:'{teilnehmer.geburtsland}')}</td>
+					<td>{staatenarr.{teilnehmer.geburtsland}}</td>
 					<td>{teilnehmer.kooperationgruppe}</td>
 					<td class="actionbuttons">
 						<f:link.action action="removeFromGroupConsultation" arguments="{gruppenberatung: gruppenberatung, teilnehmer : teilnehmer, calleraction: calleraction, callercontroller : callercontroller, callerpage : callerpage}" onclick="return confirm('Wirklich aus dieser Gruppenberatung entfernen?');" title="Entfernen"><img src="/fileadmin/template/images/iq-webapp_loeschen.svg" width="30" height="30" alt="Entfernen" /></f:link.action>										

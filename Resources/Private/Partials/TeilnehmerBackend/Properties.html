@@ -117,7 +117,6 @@
 				<f:for each="{staaten}" as="staat">
 					{f:if(condition: '{teilnehmer.geburtsland} == {staat.staatid}', then: '<span class="propdat">{staat.titel}</span>')}					 
 				</f:for>
-				{iqtp13db:isint(field:'{teilnehmer.geburtsland}',then:'',else:'<span class="propdat">{teilnehmer.geburtsland}</span>')}
 				<div class="historie">
 				<f:for each="{historie}" as="hist" key="wert">
 					{f:if(condition: '{hist.property} == "geburtsland"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
@@ -159,7 +158,6 @@
 				<f:for each="{staaten}" as="staat">
 					{f:if(condition: '{teilnehmer.ersteStaatsangehoerigkeit} == {staat.staatid}', then: '<span class="propdat">{staat.titel}</span>')}					 
 				</f:for>
-				{iqtp13db:isint(field:'{teilnehmer.ersteStaatsangehoerigkeit}',then:'',else:'<span class="propdat">{teilnehmer.ersteStaatsangehoerigkeit}</span>')}
 				<div class="historie">
 				<f:for each="{historie}" as="hist" key="wert">
 						{f:if(condition: '{hist.property} == "ersteStaatsangehoerigkeit"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
@@ -173,7 +171,6 @@
 				<f:for each="{staaten}" as="staat">
 					{f:if(condition: '{teilnehmer.zweiteStaatsangehoerigkeit} == {staat.staatid}', then: '<span class="propdat">{staat.titel}</span>')}					 
 				</f:for>
-				{iqtp13db:isint(field:'{teilnehmer.zweiteStaatsangehoerigkeit}',then:'',else:'<span class="propdat">{teilnehmer.zweiteStaatsangehoerigkeit}</span>')}				
 				<div class="historie">
 				<f:for each="{historie}" as="hist" key="wert">
 					{f:if(condition: '{hist.property} == "zweiteStaatsangehoerigkeit"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
@@ -211,7 +208,7 @@
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.einreisejahr" />
 				<span class="important-icon"></span>
 			</label>
-				<span class="propdat">{teilnehmer.einreisejahr}</span>
+				<span class="propdat">{f:if(condition:'{teilnehmer.einreisejahr} == -1',then:'k.A.',else:'{teilnehmer.einreisejahr}')}</span>
 				<div class="historie">
 				<f:for each="{historie}" as="hist" key="wert">
 					{f:if(condition: '{hist.property} == "einreisejahr"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
@@ -226,8 +223,7 @@
 			</label>
 				<f:for each="{staaten}" as="staat">
 					{f:if(condition: '{teilnehmer.wohnsitzNeinIn} == {staat.staatid}', then: '<span class="propdat">{staat.titel}</span>')}					 
-				</f:for>
-				{iqtp13db:isint(field:'{teilnehmer.wohnsitzNeinIn}',then:'',else:'<span class="propdat">{teilnehmer.wohnsitzNeinIn}</span>')}
+				</f:for>				
 				<div class="historie">
 				<f:for each="{historie}" as="hist" key="wert">
 					{f:if(condition: '{hist.property} == "wohnsitzNeinIn"', then: '<span class="historieval">{hist.tstamp -> f:format.date(format: "d.m.Y H:i")}, {hist.berater.username}, <b>{hist.oldvalue} -> {hist.newvalue}</b></span>')}					 
