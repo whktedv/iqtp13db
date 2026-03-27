@@ -43,11 +43,12 @@ dropzone1.addEventListener('drop', (e) => {
     dropzone1.classList.remove('dragging');
 	
 	fileInput1.files = e.dataTransfer.files;	    
-    $("#overlay").show();	    
+    $("#overlay").show();
     document.getElementById('fileuploadform1').submit();	
 });
 
-fileInput1.addEventListener('change', () => {			
+fileInput1.addEventListener('change', () => {	
+    $("#overlay").show();		
 	document.getElementById('fileuploadform1').submit();
 });
 
