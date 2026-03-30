@@ -1686,7 +1686,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $this->createHistory($teilnehmer, "plz");
         $this->createHistory($teilnehmer, "ort");
         $this->createHistory($teilnehmer, "email");
-        $this->createHistory($teilnehmer, "confirmemail");
         $this->createHistory($teilnehmer, "telefon");
         $this->createHistory($teilnehmer, "gebdat");
         $this->createHistory($teilnehmer, "geburtsland");

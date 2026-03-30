@@ -18,7 +18,7 @@ return [
         'iconfile' => 'EXT:iqtp13db/Resources/Public/Icons/tx_iqtp13db_domain_model_teilnehmer.gif'
     ],
     'types' => [
-        '1' => ['showitem' => 'hidden, niqidberatungsstelle, beratungsstatus, nachname, vorname, strasse, plz, ort, email, confirmemail, telefon, gebdat, lebensalter, geschlecht, einwilligung, beratungdatum, erstberatungabgeschlossen, berater, gruppenberatungen, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+        '1' => ['showitem' => 'hidden, niqidberatungsstelle, beratungsstatus, nachname, vorname, strasse, plz, ort, email, telefon, gebdat, lebensalter, geschlecht, einwilligung, beratungdatum, erstberatungabgeschlossen, berater, gruppenberatungen, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
     'columns' => [
         't3ver_label' => [
@@ -197,16 +197,7 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'nospace,email'
-            ],
-        ],
-        'confirmemail' => [
-            'exclude' => true,
-            'label' => 'LLL:EXT:iqtp13db/Resources/Private/Language/locallang.xlf:tx_iqtp13db_domain_model_teilnehmer.confirmemail',
-            'config' => [
-                'type' => 'input',
-                'size' => 30,
-                'eval' => 'nospace,email'
+                'eval' => 'nospace'
             ],
         ],
         'telefon' => [

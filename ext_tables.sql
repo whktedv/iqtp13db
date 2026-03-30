@@ -20,7 +20,6 @@ CREATE TABLE tx_iqtp13db_domain_model_teilnehmer (
 	plz varchar(255) DEFAULT '' NOT NULL,
 	ort varchar(255) DEFAULT '' NOT NULL,
 	email varchar(255) DEFAULT '' NOT NULL,
-	confirmemail varchar(255) DEFAULT '' NOT NULL,
 	telefon varchar(255) DEFAULT '' NOT NULL,
 	gebdat varchar(255) DEFAULT '' NOT NULL,
 	lebensalter varchar(255) DEFAULT '' NOT NULL,
