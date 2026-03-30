@@ -13,7 +13,6 @@ CREATE TABLE tx_iqtp13db_domain_model_teilnehmer (
 	niqtstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	schonberaten int(11) DEFAULT '0' NOT NULL,
 	schonberatenvon varchar(255) DEFAULT '' NOT NULL,
-	
 	nachname varchar(255) DEFAULT '' NOT NULL,
 	vorname varchar(255) DEFAULT '' NOT NULL,
 	strasse varchar(255) DEFAULT '' NOT NULL,
