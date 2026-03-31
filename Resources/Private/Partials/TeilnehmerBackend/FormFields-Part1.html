@@ -116,7 +116,7 @@
 						<span class="plzprefilled">Anonym</span>
 					</f:then>
 					<f:else>
-						<f:form.textfield property="email" />
+						<f:form.textfield id="tnemail" property="email" />
 					</f:else>
 				</f:if>					
 		</div>	
@@ -130,7 +130,7 @@
 						<span class="plzprefilled">Anonym</span>
 					</f:then>
 					<f:else>
-						<f:form.textfield property="confirmemail" />
+						<f:form.textfield id="tnconfirmemail" name="teilnehmer[confirmemail]" value="{teilnehmer.email}" />
 					</f:else>
 				</f:if>			
 		</div>		

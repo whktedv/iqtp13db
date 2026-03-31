@@ -30,12 +30,12 @@ function prepareformelements(form) {
 	    for(var i = 0; i < formElements.length; i++) {
 	        formElements[i].addEventListener("change", markFormChanged);
 	    }
-		
+
 		if (document.getElementById("savebutton1")) {
 			var submitButton1 = document.getElementById("savebutton1");
 		    submitButton1.addEventListener("click", function() {
 				$("#overlay").hide();
-		        window.onbeforeunload = null;			
+		        window.onbeforeunload = null;	
 		    });	
 		}
 		if (document.getElementById("savebutton2")) {
@@ -70,10 +70,10 @@ document.querySelectorAll('form').forEach(form => {
 		if (form.classList.contains('is-submitting')) {
 			e.preventDefault();
 		}
-		
+		console.log(checkmails(e));
 		if(form.attributes.id) {
 			var formid = form.attributes.id.value;
-			if(formid != 'exportformdata' && formid != 'exportfilterform' && !document.getElementById('newabschlusszurueckbutton')) {
+			if(formid != 'exportformdata' && formid != 'exportfilterform' && !document.getElementById('newabschlusszurueckbutton') && checkmails(e) != 0) {
 				$("#overlay").show();
 			}
 		}
@@ -378,4 +378,27 @@ function asyncupdatedokdescription(inputField, chkboxValue, uidField) {
     };
 
     xhr.send('dokdescr=' + encodeURIComponent(inputValue) + '&dokfreigabe=' + encodeURIComponent(chkboxValue) + '&dokuid=' + encodeURIComponent(uidValue));
+}
+
+function checkmails(e) {
+	const email = document.getElementById('tnemail') ?? 1;
+	const confirmEmail = document.getElementById('tnconfirmemail') ?? 1;
+	var retval;
+
+	if (email.value !== confirmEmail.value) {
+		e.preventDefault();
+		confirmEmail.setCustomValidity('Die E-Mail-Adressen stimmen nicht überein.');
+		confirmEmail.reportValidity();
+		retval = 0;
+	} else {
+		retval = 1;
+	}
+
+	if(confirmEmail != 1) {
+		confirmEmail.addEventListener('input', () => {
+				confirmEmail.setCustomValidity('');
+			});
+	}
+	
+	return retval;
 }

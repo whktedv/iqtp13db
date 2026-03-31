@@ -1610,29 +1610,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     }
     
     /**
-     * action initupdate
-     *
-     * @return void
-     */
-    public function initializeUpdateAction() {
-        
-        $valArray = $this->request->getArguments();
-
-        if(array_key_exists('teilnehmer', $valArray)) {
-            $email = $valArray['teilnehmer']['email'] ?? '';
-            $confirmemail = $valArray['teilnehmer']['confirmemail'] ?? '';
-            
-            if($email == '' || $confirmemail == '' || $email != $confirmemail) {
-                $this->addFlashMessage("FEHLER: E-Mail-Adressen stimmen nicht überein!", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
-                return $this->redirect('edit', 'Backend', null, array('teilnehmer' => $valArray['teilnehmer']['__identity'], 'callerpage' => $valArray['callerpage'] ?? '1', 'newnacherfassung' => $valArray['newnacherfassung']));
-            }
-        } else {
-            $this->addFlashMessage("FEHLER in initializeUpdateAction.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
-            return $this->redirect($valArray['calleraction'], $valArray['callercontroller'], null, array('callerpage' => $valArray['callerpage'] ?? '1'));
-        }
-    }
-    
-    /**
      * action update
      *
      * @param \Ud\Iqtp13db\Domain\Model\Teilnehmer $teilnehmer
