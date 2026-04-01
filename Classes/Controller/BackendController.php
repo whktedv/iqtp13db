@@ -589,7 +589,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function listangemeldetAction(int $currentPage = 1): ResponseInterface
     {
         $valArray = $this->request->getArguments();
-        $arrberater  = $this->getberater4Bstelle('%', FALSE);
+        $arrberater  = $this->getberater4Bstelle('%', TRUE);
         $plzarray = $this->userGroupRepository->getallplzarray();
         $mail4externstandardmailtext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtextedit', 'Iqtp13db');
 
@@ -722,10 +722,13 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      */
     public function listerstberatungAction(int $currentPage = 1): ResponseInterface
     {
-        $valArray = $this->request->getArguments();
+        $valArray = $this->request->getArguments();                
+        $arrberater  = $this->getberater4Bstelle('%', TRUE);
+
         if(($valArray['allemodule'] ?? '') == '1') {
             return $this->redirect('showsearchresult', 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $valArray));
         }
+        
         // zuletzt bearbeiteten User zurücksetzen
         if(isset($valArray['tn'])) {
             $editedteilnehmer = $this->teilnehmerRepository->findByUid($valArray['tn']);
@@ -807,8 +810,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $orderchar = $order == 'ASC' ? "↓" : "↑";
         
-        $arrberater  = $this->getberater4Bstelle('%', FALSE);
-        
         $mail4externstandardmailtext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtextedit', 'Iqtp13db');
         
         $this->view->assignMultiple(
@@ -849,9 +850,12 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function listarchivAction(int $currentPage = 1): ResponseInterface
     {
         $valArray = $this->request->getArguments();
+        $arrberater  = $this->getberater4Bstelle('%', TRUE);
+
         if(($valArray['allemodule'] ?? '') == '1') {
             return $this->redirect('showsearchresult', 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $valArray));
         }
+        
         // zuletzt bearbeiteten User zurücksetzen
         if(isset($valArray['tn'])) {
             $editedteilnehmer = $this->teilnehmerRepository->findByUid($valArray['tn']);
@@ -932,8 +936,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 
         $orderchar = $order == 'ASC' ? "↓" : "↑";
         
-        $arrberater  = $this->getberater4Bstelle('%', FALSE);
-        
         $mail4externstandardmailtext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtextedit', 'Iqtp13db');
         
         $this->view->assignMultiple(
@@ -974,6 +976,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function listdeletedAction(int $currentPage = 1): ResponseInterface
     {
         $valArray = $this->request->getArguments();
+        $arrberater  = $this->getberater4Bstelle('%', TRUE);
+
         if(($valArray['allemodule'] ?? '') == '1') {
             return $this->redirect('showsearchresult', 'Backend', null, array('callerpage' => $valArray['callerpage'] ?? '1', 'searchparams' => $valArray));
         }
@@ -1022,8 +1026,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         
         $orderchar = $order == 'ASC' ? "↓" : "↑";
-        
-        $arrberater  = $this->getberater4Bstelle('%', FALSE);
         
         $this->view->assignMultiple(
             [
@@ -2454,7 +2456,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $berufselected = $valArray['filterreferenzberuf'] ?? '%';
         $brancheselected = $valArray['filterbranche'] ?? '%';
         
-        $arrberater = $this->getberater4Bstelle('%', FALSE);
+        $arrberater = $this->getberater4Bstelle('%', TRUE);
         $arrlandkreise = array();
         $arrlandkreise = $this->ortRepository->findLandkreiseByBundesland($bundeslandselected);
         $brancheunterkat = $this->brancheRepository->findAllUnterkategorie('de');
@@ -2713,6 +2715,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             if($f['berater'] != '' && $f['berater'] != 0) {
                 $berater = $this->beraterRepository->findBerater4Search($this->settings['beraterstoragepid'], $f['berater']);
                 $this->view->assign('filterberatername', $berater->getUsername());
+            } elseif($f['berater'] == 0) {
+                $this->view->assign('filterberatername', '- nicht zugeordnet -');
             }
             $this->view->assign('filtergruppe', $f['gruppe']);
             $this->view->assign('filterbescheid', $f['bescheid']); // antragstellungvorher
@@ -2845,11 +2849,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         return FALSE;
     }
     
-    protected function getberater4Bstelle($bundeslandselected, $is4export) {
+    protected function getberater4Bstelle($bundeslandselected, $mitnichtzugeordnet) {
         
         // ************ Start - Beraterarray bestimmen *****************
         $arrberater = array();
-        if($is4export) $arrberater[0] = '- nicht zugeordnet -';
+        if($mitnichtzugeordnet) $arrberater[0] = '- nicht zugeordnet -';
         if($this->niqbid == '12345' || intval($this->niqbid) < 999) { // Admin
             $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected ?? '%');
             foreach($usergroups4bundesland as $ug) {
