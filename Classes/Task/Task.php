@@ -1,6 +1,7 @@
 <?php
 namespace Ud\Iqtp13db\Task;
 
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Scheduler\Task\AbstractTask;
@@ -47,7 +48,7 @@ class Task extends AbstractTask {
          
          $queryBuilder->update('tx_iqtp13db_domain_model_teilnehmer')
          ->where($queryBuilder->expr()->eq('beratungsstatus', $queryBuilder->createNamedParameter('99')))
-         ->andWhere($queryBuilder->expr()->lt('tstamp',$queryBuilder->createNamedParameter($yesterday, \PDO::PARAM_INT)))
+         ->andWhere($queryBuilder->expr()->lt('tstamp',$queryBuilder->createNamedParameter($yesterday, Connection::PARAM_INT)))
          ->set('deleted', 1)
          ->executeStatement();
          
@@ -67,8 +68,8 @@ class Task extends AbstractTask {
          $date90 = strtotime('-90 day');
          
          $queryBuilder->update('tx_iqtp13db_domain_model_teilnehmer')
-         ->where($queryBuilder->expr()->eq('hidden',$queryBuilder->createNamedParameter(1, \PDO::PARAM_INT)))
-         ->andWhere($queryBuilder->expr()->lt('tstamp',$queryBuilder->createNamedParameter($date90, \PDO::PARAM_INT)))
+         ->where($queryBuilder->expr()->eq('hidden',$queryBuilder->createNamedParameter(1, Connection::PARAM_INT)))
+         ->andWhere($queryBuilder->expr()->lt('tstamp',$queryBuilder->createNamedParameter($date90, Connection::PARAM_INT)))
          ->set('deleted', 1)
          ->executeStatement();
           
@@ -88,7 +89,7 @@ class Task extends AbstractTask {
          $dateold = strtotime('-180 day');
          
          $queryBuilder->update('tx_iqtp13db_domain_model_historie')
-         ->where($queryBuilder->expr()->lt('tstamp',$queryBuilder->createNamedParameter($dateold, \PDO::PARAM_INT)))
+         ->where($queryBuilder->expr()->lt('tstamp',$queryBuilder->createNamedParameter($dateold, Connection::PARAM_INT)))
          ->set('deleted', 1)
          ->executeStatement();
          
@@ -133,12 +134,12 @@ class Task extends AbstractTask {
              't',
              $queryBuilder->expr()->eq('t.uid', $queryBuilder->quoteIdentifier('tx_iqtp13db_domain_model_abschluss.teilnehmer'))
              ) 
-         ->where($queryBuilder->expr()->eq('t.deleted',$queryBuilder->createNamedParameter(1, \PDO::PARAM_INT)))
+         ->where($queryBuilder->expr()->eq('t.deleted',$queryBuilder->createNamedParameter(1, Connection::PARAM_INT)))
          ->executeQuery();
          
          while ($row = $result->fetchAssociative()) {
              $queryBuilder->update('tx_iqtp13db_domain_model_abschluss')
-             ->where($queryBuilder->expr()->eq('uid',$queryBuilder->createNamedParameter($row['uid'], \PDO::PARAM_INT)))
+             ->where($queryBuilder->expr()->eq('uid',$queryBuilder->createNamedParameter($row['uid'], Connection::PARAM_INT)))
              ->set('deleted', 1)
              ->executeStatement();
          }
@@ -164,12 +165,12 @@ class Task extends AbstractTask {
              't',
              $queryBuilder->expr()->eq('t.uid', $queryBuilder->quoteIdentifier('tx_iqtp13db_domain_model_folgekontakt.teilnehmer'))
              )
-         ->where($queryBuilder->expr()->eq('t.deleted',$queryBuilder->createNamedParameter(1, \PDO::PARAM_INT)))
+         ->where($queryBuilder->expr()->eq('t.deleted',$queryBuilder->createNamedParameter(1, Connection::PARAM_INT)))
          ->executeQuery();
          
          while ($row = $result->fetchAssociative()) {
              $queryBuilder->update('tx_iqtp13db_domain_model_folgekontakt')
-             ->where($queryBuilder->expr()->eq('uid',$queryBuilder->createNamedParameter($row['uid'], \PDO::PARAM_INT)))
+             ->where($queryBuilder->expr()->eq('uid',$queryBuilder->createNamedParameter($row['uid'], Connection::PARAM_INT)))
              ->set('deleted', 1)
              ->executeStatement();                
          }
@@ -195,12 +196,12 @@ class Task extends AbstractTask {
              't',
              $queryBuilder->expr()->eq('t.uid', $queryBuilder->quoteIdentifier('tx_iqtp13db_domain_model_historie.teilnehmer'))
              )
-             ->where($queryBuilder->expr()->eq('t.deleted',$queryBuilder->createNamedParameter(1, \PDO::PARAM_INT)))
+             ->where($queryBuilder->expr()->eq('t.deleted',$queryBuilder->createNamedParameter(1, Connection::PARAM_INT)))
              ->executeQuery();
              
              while ($row = $result->fetchAssociative()) {
                  $queryBuilder->update('tx_iqtp13db_domain_model_historie')
-                 ->where($queryBuilder->expr()->eq('uid',$queryBuilder->createNamedParameter($row['uid'], \PDO::PARAM_INT)))
+                 ->where($queryBuilder->expr()->eq('uid',$queryBuilder->createNamedParameter($row['uid'], Connection::PARAM_INT)))
                  ->set('deleted', 1)
                  ->executeStatement();
              }
@@ -240,12 +241,12 @@ class Task extends AbstractTask {
              't',
              $queryBuilder->expr()->eq('t.uid', $queryBuilder->quoteIdentifier('tx_iqtp13db_domain_model_dokument.teilnehmer'))
          )
-         ->where($queryBuilder->expr()->eq('t.deleted',$queryBuilder->createNamedParameter(1, \PDO::PARAM_INT)))
+         ->where($queryBuilder->expr()->eq('t.deleted',$queryBuilder->createNamedParameter(1, Connection::PARAM_INT)))
          ->executeQuery();
          
          while ($row = $result->fetchAssociative()) {
              $queryBuilder->update('tx_iqtp13db_domain_model_dokument')
-             ->where($queryBuilder->expr()->eq('uid',$queryBuilder->createNamedParameter($row['uid'], \PDO::PARAM_INT)))
+             ->where($queryBuilder->expr()->eq('uid',$queryBuilder->createNamedParameter($row['uid'], Connection::PARAM_INT)))
              ->set('deleted', 1)
              ->executeStatement();
              
