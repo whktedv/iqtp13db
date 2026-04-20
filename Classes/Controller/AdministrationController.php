@@ -465,8 +465,29 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 $tndaten = array();
                 $tndaten['uid'] = $valArray['uideingabe'];
                 $tnbstellefromrepo = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $searchtn->getNiqidberatungsstelle());        
-                $tndaten['beratungsstelle'] = $tnbstellefromrepo[0]->getTitle();
-                $tndaten['beratungsstatus'] = $searchtn->getBeratungsstatus();
+                $tndaten['beratungsstelle'] = $tnbstellefromrepo[0]->getTitle();                
+                switch($searchtn->getBeratungsstatus()) {
+                    case 0:
+                        $tndaten['beratungsstatus'] = 'unbestätigt angemeldet';
+                        break;
+                    case 1:
+                        $tndaten['beratungsstatus'] = 'bestätigt angemeldet';
+                        break;
+                    case 2:
+                        $tndaten['beratungsstatus'] = 'Beratung begonnen';
+                        break;
+                    case 3:
+                        $tndaten['beratungsstatus'] = 'Beratung abgeschlossen';
+                        break;
+                    case 4:
+                        $tndaten['beratungsstatus'] = 'archiviert';
+                        break;
+                    case 99:
+                        $tndaten['beratungsstatus'] = 'Anmeldung nicht abgeschlossen!';
+                        break;
+                    default:
+                        $tndaten['beratungsstatus'] = '';
+                }
                 $tndaten['nachname'] = $searchtn->getNachname();
                 $tndaten['vorname'] = $searchtn->getVorname();
                 $tndaten['email'] = $searchtn->getEmail();
