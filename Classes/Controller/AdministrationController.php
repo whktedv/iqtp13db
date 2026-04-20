@@ -456,7 +456,11 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         
         // *********** find TN by UID ****************
         if(isset($valArray['zeigeTN'])) {
-            $searchtn = $this->teilnehmerRepository->findOneByUid($valArray['uideingabe']);
+            if (filter_var($valArray['uideingabe'], FILTER_VALIDATE_EMAIL)) {
+                $searchtn = $this->teilnehmerRepository->findOneByEmail($valArray['uideingabe']);
+            } else {
+                $searchtn = $this->teilnehmerRepository->findOneByUid($valArray['uideingabe']);
+            }
             if($searchtn != null){
                 $tndaten = array();
                 $tndaten['uid'] = $valArray['uideingabe'];
@@ -469,7 +473,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 $tndaten['anmeldedatum'] = date('m/d/Y', $searchtn->getVerificationDate());
                 $tndaten['erstberatungabgeschlossen'] = $searchtn->getErstberatungabgeschlossen();                         
             } else {                                
-                $this->addFlashMessage("UID unbekannt.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
+                $this->addFlashMessage("UID bzw. E-Mail-Adresse unbekannt.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
             }
         }
 
