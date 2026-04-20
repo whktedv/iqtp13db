@@ -63,7 +63,39 @@
 	</table>
 </details>
 
+<h2>UID Abfrage</h2>
+<div>
+<f:form method="post" controller="Administration" action="adminuebersicht" name="checkuid" enctype="multipart/form-data" >
+	<label>Eingabe UID</label>
+	<f:form.textfield name="uideingabe"/>
+	<f:form.button type="submit" class="linkbuttons" name="zeigeTN">Suche</f:form.button>
+</f:form>
+<f:if condition="{tndaten}">
+	<div style="background-color: #6060601c; margin-top: 1rem; width: 60rem; padding: 1rem">
+		<table>
+		<th>UID</th>
+		<th>Name Beratungsstelle</th>
+		<th>Beratungsstatus</th>
+		<th>Nachname</th>
+		<th>Vorname</th>
+		<th>E-Mail</th>
+		<th>Datum Anmeldung</th>
+		<th>Datum Beratung abgeschlossen</th>
+		<tr>
+			<td>{tndaten.uid}</td>
+		 	<td>{tndaten.beratungsstelle}</td>
+            <td>{tndaten.beratungsstatus}</td>
+            <td>{tndaten.nachname}</td>
+            <td>{tndaten.vorname}</td>
+            <td>{tndaten.email}</td>
+			<td><f:format.date format="d.m.Y">{tndaten.anmeldedatum}</f:format.date></td>
+			<td><f:format.date format="d.m.Y">{tndaten.erstberatungabgeschlossen}</f:format.date></td>
+		</tr>
+	</table>
 
+	</div>
+</f:if>
+</div>
 
 <h1>Übersicht Statistik</h1>
 <table>

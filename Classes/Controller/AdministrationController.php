@@ -65,7 +65,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
      */
     public function initializeAction(): void
     {
-        
+       
         $this->generalhelper = new \Ud\Iqtp13db\Helper\Generalhelper();
         
         $this->user=null;
@@ -454,6 +454,25 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         
         // ******************** EXPORT Statistik bis hier ****************************
         
+        // *********** find TN by UID ****************
+        if(isset($valArray['zeigeTN'])) {
+            $searchtn = $this->teilnehmerRepository->findOneByUid($valArray['uideingabe']);
+            if($searchtn != null){
+                $tndaten = array();
+                $tndaten['uid'] = $valArray['uideingabe'];
+                $tnbstellefromrepo = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $searchtn->getNiqidberatungsstelle());        
+                $tndaten['beratungsstelle'] = $tnbstellefromrepo[0]->getTitle();
+                $tndaten['beratungsstatus'] = $searchtn->getBeratungsstatus();
+                $tndaten['nachname'] = $searchtn->getNachname();
+                $tndaten['vorname'] = $searchtn->getVorname();
+                $tndaten['email'] = $searchtn->getEmail();
+                $tndaten['anmeldedatum'] = date('m/d/Y', $searchtn->getVerificationDate());
+                $tndaten['erstberatungabgeschlossen'] = $searchtn->getErstberatungabgeschlossen();                         
+            } else {                                
+                $this->addFlashMessage("UID unbekannt.", '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
+            }
+        }
+
         $this->view->assignMultiple(
             [
                 'monatsnamen'=> $monatsnamen,
@@ -522,12 +541,17 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 'geschlechtartanmeldungen' => $geschlechtartanmeldungen ?? '',
                 'geschlechtberatungabgeschl' => $geschlechtberatungabgeschl ?? '',
                 'lebensalteranmeldungen' => $lebensalteranmeldungen ?? '',
-                'lebensalterberatungabgeschl' => $lebensalterberatungabgeschl ?? ''
-                
+                'lebensalterberatungabgeschl' => $lebensalterberatungabgeschl ?? '',
+                'tndaten' => $tndaten ?? ''
             ]
             );
         return $this->htmlResponse();
     }
    
+    protected function getTNbyUID($uid) {
+        
+
+    }
+
 }
     
