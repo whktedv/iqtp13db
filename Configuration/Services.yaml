@@ -13,3 +13,11 @@ services:
 
   Ud\Iqtp13db\Service\QRCodeGenerator:
     public: true
+
+  IQT\Iqtp13db\Task\StatistikCacheTask:
+    public: true
+    tags:
+      - name: scheduler.task
+        label: 'IQT: Statistik-Cache neu berechnen'
+        description: 'Berechnet täglich aggregierte Statistiken pro Beratungsstelle und schreibt sie in tx_iqtp13db_domain_model_statistik_cache.'
+        additionalFieldProvider: 'IUd\Iqtp13db\Task\StatistikCacheTaskAdditionalFieldProvider'

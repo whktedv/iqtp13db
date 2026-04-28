@@ -149,7 +149,7 @@ plugin.tx_iqtp13db.settings {
    	2 = E-Mail
    	3 = Video-Chat
    	4 = Webapp (siehe ggf. Anmerkungen Ratsuchende:r)
-   	5 = face-to-face
+   	5 = Persönliche Beratung (face to face)
    }
    	
    einwilligungweiterepersonmedium {
@@ -157,7 +157,7 @@ plugin.tx_iqtp13db.settings {
    	2 = E-Mail
    	3 = Video-Chat
    	4 = Webapp
-   	5 = face-to-face
+   	5 = Persönliche Beratung (face to face)
    }  
    	
    beratungsart {
@@ -344,7 +344,7 @@ plugin.tx_iqtp13db.settings {
 	   	1 = Telefon
 	   	2 = E-Mail
 	   	3 = Video
-	   	4 = face-to-face
+	   	4 = Persönliche Beratung (face to face)
    }
    
 }
@@ -478,7 +478,7 @@ plugin.tx_iqtp13db.settings {
 	   	1 = Telephone
 	   	2 = E-Mail
 	   	3 = Video
-	   	4 = face-to-face	   	
+	   	4 = Personal consultation (face-to-face)
    }
 }   
 [END]
@@ -615,7 +615,7 @@ plugin.tx_iqtp13db.settings {
 	   	1 = الهاتف
 	   	2 = البريد الإلكتروني
 	   	3 = فيديو
-	   	4 = face-to-face
+	   	4 = Personal consultation (face-to-face)
 	}
 }
 [END]
@@ -753,7 +753,7 @@ plugin.tx_iqtp13db.settings {
 	   	1 = تلفن
 	   	2 = ایمیل
 	   	3 = ویدیو
-	   	4 = face-to-face
+	   	4 = Personal consultation (face-to-face)
 	}
 }   
 [END]
@@ -886,7 +886,7 @@ plugin.tx_iqtp13db.settings {
 	   	1 = téléphone   	
 	   	2 = e-mail
 	   	3 = vidéo
-	   	4 = face-to-face
+	   	4 = Personal consultation (face-to-face)
 	}
 }   
 [END]
@@ -1019,7 +1019,7 @@ plugin.tx_iqtp13db.settings {
 		1 = telefon
 		2 = e-mail
 		3 = video
-	   	4 = face-to-face
+	   	4 = Personal consultation (face-to-face)
 	}
 	
 }   
@@ -1153,7 +1153,7 @@ plugin.tx_iqtp13db.settings {
 	   	1 = Telefon
 	   	2 = E-mail
 	   	3 = Video
-	   	4 = face-to-face
+	   	4 = Personal consultation (face-to-face)
 	}
 
 }   
@@ -1287,7 +1287,7 @@ plugin.tx_iqtp13db.settings {
 		1 = по телефону
 	   	2 = по электронной почте
 	   	3 = по видео
-	   	4 = face-to-face
+	   	4 = Personal consultation (face-to-face)
 	}
 	
 }   
@@ -1419,10 +1419,10 @@ plugin.tx_iqtp13db.settings {
 	}
 	
 	wieberaten {
-		1 =  teléfono
-		2 =  correo electrónico
+		1 = teléfono
+		2 = correo electrónico
 		3 = vídeo
-	   	4 = face-to-face
+	   	4 = Personal consultation (face-to-face)
 	}	  
 		
 }   
@@ -1556,7 +1556,7 @@ plugin.tx_iqtp13db.settings {
 		1 = Telefon
 		2 = E-Mail
 		3 = Video
-	   	4 = face-to-face
+	   	4 = Personal consultation (face-to-face)
 	}
 
 }   
@@ -1691,7 +1691,7 @@ plugin.tx_iqtp13db.settings {
 	   	1 = телефоном
 	   	2 = електронною поштою
 	   	3 = відео
-	   	4 = face-to-face
+	   	4 = Personal consultation (face-to-face)
 	}
 
 }   

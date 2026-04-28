@@ -1073,7 +1073,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 if($this->request->hasArgument('filedownload')) $filedownload = $this->request->getArgument('filedownload');
                 if($this->request->hasArgument('ohnepersdat')) $ohnepersdat = $this->request->getArgument('ohnepersdat');
                 
-                if ($validUntil < time() && $filedownload == 0) {
+                if ($validUntil < time()) {
                     $this->addFlashMessage('Link nicht mehr gültig, bitte neuen Link bei Beratungsstelle anfordern.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
                     return $this->redirect('anmeldseite0');                    
                 } else {

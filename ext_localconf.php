@@ -85,6 +85,7 @@ call_user_func(
             'extension' => 'iqtp13db',
             'title' => 'Statistik-Cache neu berechnen für IQ Webapp',
             'description' => 'Berechnet täglich aggregierte Statistiken pro Beratungsstelle und schreibt sie in tx_iqtp13db_domain_model_statistik_cache.',
+            'additionalFields' => \Ud\Iqtp13db\Task\StatistikCacheTaskAdditionalFieldProvider::class,
         );        
 },
 'iqtp13db'

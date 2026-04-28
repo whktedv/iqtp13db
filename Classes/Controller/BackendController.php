@@ -380,14 +380,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function statusAction(int $currentPage = 1): ResponseInterface
     {
         $valArray = $this->request->getArguments();
-               
-        //if($this->user->user['username'] == 'udohmen') \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($valArray);
         
         // Gruppenwechsel Beratungsstelle, wenn ein User mehreren Beratungsstellen zugeordnet ist
         $backenduser = $this->beraterRepository->findByUid($this->user->user['uid']);
         $backendusergroups = array();
-        $backendusergroups = $backenduser->getUsergroup();
-             
+        $backendusergroups = $backenduser->getUsergroup();   
         if(isset($valArray['bstellen']) && $valArray['bstellen'] != '') {            
             $niqbidgruppeselected = $valArray['bstellen'];            
             $this->user->setKey('ses', 'currentusergroup', $niqbidgruppeselected);
@@ -398,10 +395,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $thisgroup = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $this->niqbid);
         $this->beratungsstellenname = $thisgroup[0]->getTitle();
         
-        $jahrselected = $valArray['jahrauswahl'] ?? 0;
-               
+        $jahrselected = $valArray['jahrauswahl'] ?? date('Y');               
         $monatsnamen = $this->generalhelper->getMonthNames($jahrselected);
-        
         $jahrarray = array();
         for($j=2023;$j<=date('Y');$j++){
             $jahrarray[$j] = $j;
@@ -413,88 +408,48 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $plzgroup = $plzbstelle[0];
         }
         
-        // FK/Beratungen aus Förderphase 2019-2022 in 2023
-        $tnberatungenfk22 = $this->folgekontaktRepository->fk4StatusFK2022("01.01.2023", "31.12.2023", $this->niqbid);
-        for($m = 1; $m < 13; $m++) $beratungfk22[$m] = 0;
-        foreach($tnberatungenfk22 as $fk22) {
-            $fkmonat = DateTime::createFromFormat('Y-m-d', $fk22->getDatum())->format('n');
-            $beratungfk22[$fkmonat]++;
-        }
-        //
-        // FK/Beratungen aus Förderphase 2023-2025 in 2026
-        $tnberatungenfk25 = $this->folgekontaktRepository->fk4StatusFK2025("01.01.2026", "31.12.2026", $this->niqbid);
-        for($m = 1; $m < 13; $m++) $beratungfk25[$m] = 0;
-        foreach($tnberatungenfk25 as $fk25) {
-            $fkmonat = DateTime::createFromFormat('Y-m-d', $fk25->getDatum())->format('n');
-            $beratungfk25[$fkmonat]++;
-        }
-        //
-        
-        // Vorbelegen der Arrays
-        $emptystatusarray = array(1 => 0,2 => 0,3 => 0,4 => 0,5 => 0,6 => 0,7 => 0,8 => 0,9 => 0,10 => 0,11 => 0, 12 => 0);
-        $angemeldeteTN = $emptystatusarray;
-        $erstberatung = $emptystatusarray;
-        $beratungfertig = $emptystatusarray;
-        $qfolgekontakte =  $emptystatusarray;
-        $days4beratung = $emptystatusarray;
-        $days4wartezeit = $emptystatusarray;
-        
         // (Bundesland-)Admin? Ja, dann Landes-Statistik anzeigen
         $thisniqbid = intval($this->niqbid) < 999 ? '%' : $this->niqbid;
-        $thisbundesland = intval($this->niqbid) < 999 ? $thisgroup[0]->getBundesland() : '%';
         
-        
-        $ergarrayangemeldete = $this->teilnehmerRepository->countTNby($thisniqbid, $thisbundesland, 1, $jahrselected, '%');
-        foreach($ergarrayangemeldete as $erg) $angemeldeteTN[$erg['monat']] = $erg['anzahl'];
-        
-        $ergarrayerstberatung = $this->teilnehmerRepository->countTNby($thisniqbid, $thisbundesland, 2, $jahrselected, '%');
-        foreach($ergarrayerstberatung as $erg) $erstberatung[$erg['monat']] = $erg['anzahl'];
-        
-        $ergarrayberatungfertig = $this->teilnehmerRepository->countTNby($thisniqbid, $thisbundesland, 3, $jahrselected, '%');
-        foreach($ergarrayberatungfertig as $erg) $beratungfertig[$erg['monat']] = $erg['anzahl'];
-        
-        $ergarrayfolgekontakte = $this->folgekontaktRepository->countFKby($thisniqbid, $thisbundesland, $jahrselected, '%');
-        foreach($ergarrayfolgekontakte as $erg) $qfolgekontakte[$erg['monat']] = $erg['anzahl'];
-        
-        $ergarraywartezeitanmeldung = $this->teilnehmerRepository->calcwaitingdays($thisniqbid, $thisbundesland, 'anmeldung', $jahrselected, '%');
-        foreach($ergarraywartezeitanmeldung as $erg) $days4wartezeit[$erg['monat']] = $erg['wert'];
-        
-        $ergarraywartezeitberatung = $this->teilnehmerRepository->calcwaitingdays($thisniqbid, $thisbundesland, 'beratung', $jahrselected, '%');
-        foreach($ergarraywartezeitberatung as $erg) $days4beratung[$erg['monat']] = $erg['wert'];
-        
-        ksort($angemeldeteTN);
-        ksort($qfolgekontakte);
-        ksort($erstberatung);
-        ksort($beratungfk22);
-        ksort($beratungfk25);
-        ksort($beratungfertig);
-        ksort($days4beratung);
-        ksort($days4wartezeit);
-            
-        // aus Cache auslesen:
-        /*
+        // Statistik-Daten aus Cache-Tabelle auslesen:
         $qb = $this->getConnectionPool()->getQueryBuilderForTable('tx_iqtp13db_domain_model_statistik_cache');
         $rows = $qb
             ->select('metric', 'wert_json', 'generated_at')
             ->from('tx_iqtp13db_domain_model_statistik_cache')
             ->where($qb->expr()->eq('niqbid', $qb->createNamedParameter($thisniqbid)))
+            ->andWhere($qb->expr()->eq('bezugsjahr', $qb->createNamedParameter($jahrselected)))
             ->executeQuery()
             ->fetchAllAssociative();
 
-        $stats = [];
         foreach ($rows as $row) {
-            $stats[$row['metric']] = [
-                'werte'    => json_decode($row['wert_json'], true),
-                'stand'     => date('d.m.Y H:i', (int)$row['generated_at']),
-            ];
+            $stand = date('d.m.Y H:i', (int)$row['generated_at']);
             if($row['metric'] == 'angemeldeteTN') $angemeldeteTN = json_decode($row['wert_json'], true);
+            if($row['metric'] == 'erstberatung') $erstberatung = json_decode($row['wert_json'], true);
+            if($row['metric'] == 'beratungfertig') $beratungfertig = json_decode($row['wert_json'], true);
+            if($row['metric'] == 'qfolgekontakte') $qfolgekontakte = json_decode($row['wert_json'], true);
+            if($row['metric'] == 'days4wartezeit') $days4wartezeit = json_decode($row['wert_json'], true);
+            if($row['metric'] == 'days4beratung') $days4beratung = json_decode($row['wert_json'], true);
+            if($row['metric'] == 'beratungfk22') $beratungfk22 = json_decode($row['wert_json'], true);
+            if($row['metric'] == 'beratungfk25') $beratungfk25 = json_decode($row['wert_json'], true);
+            if($row['metric'] == 'tnberatungenfk22') $tnberatungenfk22 = json_decode($row['wert_json'], true);
+            if($row['metric'] == 'tnberatungenfk25') $tnberatungenfk25 = json_decode($row['wert_json'], true);
         }
-        */
 
-        $aktuelleanmeldungen = $this->teilnehmerRepository->countAllOrder4Status(0, $thisniqbid, $thisbundesland)[0]['anzahl'] + $this->teilnehmerRepository->countAllOrder4Status(1, $thisniqbid, $thisbundesland)[0]['anzahl'];
-        $aktuellerstberatungen = $this->teilnehmerRepository->countAllOrder4Status(2, $thisniqbid, $thisbundesland)[0]['anzahl'];
-        $aktuellberatungenfertig = $this->teilnehmerRepository->countAllOrder4Status(3, $thisniqbid, $thisbundesland)[0]['anzahl'];
-        $archivierttotal = $this->teilnehmerRepository->countAllOrder4Status(4, $thisniqbid, $thisbundesland)[0]['anzahl'];
+        $qb2 = $this->getConnectionPool()->getQueryBuilderForTable('tx_iqtp13db_domain_model_statistik_cache');
+        $rows2 = $qb2
+            ->select('metric', 'wert_json', 'generated_at')
+            ->from('tx_iqtp13db_domain_model_statistik_cache')
+            ->where($qb2->expr()->eq('niqbid', $qb2->createNamedParameter($thisniqbid)))
+            ->andWhere($qb2->expr()->eq('bezugsjahr', $qb2->createNamedParameter(999)))
+            ->executeQuery()
+            ->fetchAllAssociative();
+        foreach ($rows2 as $row) {
+            if($row['metric'] == 'aktuelleanmeldungen') $aktuelleanmeldungen = json_decode($row['wert_json'], true);
+            if($row['metric'] == 'aktuellerstberatungen') $aktuellerstberatungen = json_decode($row['wert_json'], true);
+            if($row['metric'] == 'aktuellberatungenfertig') $aktuellberatungenfertig = json_decode($row['wert_json'], true);
+            if($row['metric'] == 'archivierttotal') $archivierttotal = json_decode($row['wert_json'], true);
+            if($row['metric'] == 'neuanmeldungen7tage') $neuanmeldungen7tage = json_decode($row['wert_json'], true);
+        }
         
         // keine Berater vorhanden?
         $alleberater = $this->beraterRepository->findAllBerater($this->settings['beraterstoragepid']);
@@ -506,13 +461,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : $currentPage;
         $paginator = new QueryResultPaginator($historie, $currentPage, 25);
         $pagination = new SimplePagination($paginator);
-                
-        $neuanmeldungen7tage = array();
-        for($i = 7; $i >= 0; $i--) {
-            $reftag = date("d.m.Y", strtotime( '-'.$i.' days' ));
-            $neuanmeldungen7tage[$i]["tag"] = date("l, d.m.Y", strtotime( '-'.$i.' days' ));
-            $neuanmeldungen7tage[$i]["wert"] = $this->teilnehmerRepository->count4Status($reftag, $reftag, $thisniqbid, 1, $thisbundesland)[0]['anzahl'];
-        }
         
         // ******************** EXPORT Statistik ****************************
         if (isset($valArray['statsexport'])) {
@@ -572,6 +520,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'SUMberatungfertig'=> array_sum($beratungfertig),
                 'totalavgmonthb'=> $days4beratung,
                 'totalavgmonthw'=> $days4wartezeit,
+                'stand' => $stand,
                 'aktuelleanmeldungen'=> $aktuelleanmeldungen,
                 'aktuellerstberatungen'=> $aktuellerstberatungen,
                 'aktuellberatungenfertig'=> $aktuellberatungenfertig,

@@ -45,9 +45,9 @@
 </f:if>
 </div>
 
-<h1>Status aktuell</h1>
-
 <f:flashMessages />
+
+<h1>Statistik (Stand: {stand})</h1>
 
 <table class="uebersicht-status">
 	<tr>
@@ -67,8 +67,8 @@
 		<td>{archivierttotal}</td>
 	</tr>
 </table>
-
-<h1>Anmeldungen (nur bestätigte) letzte 7 Tage</h1>
+<br>
+<h3>Bestätigte Anmeldungen letzte 7 Tage</h3>
 <table>
 	<tbody>
 	<tr>
@@ -84,7 +84,7 @@
 	</tbody>
 </table>
 <br>
-<h2>Statistik letzte 12 Monate</h2>
+
 <f:form method="post" controller="Backend" action="status" name="switchjahr" enctype="multipart/form-data" >
 	<label for="jahrauswahl">Auswahl Jahr</label>
 	<f:form.select name="jahrauswahl" id="selectjahr" options="{jahrauswahl}" prependOptionValue="0" prependOptionLabel="-letzte 12 Monate-" value="{jahrselected}"/>

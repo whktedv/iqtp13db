@@ -37,6 +37,9 @@
 .tx-iqtp13db table td.tdcenter {
 	text-align: center;
 }
+.tx-iqtp13db table td.fklistinhalt {
+	text-align: start;
+}
 
 .tx-iqtp13db input[type="submit"], .tx-iqtp13db .linkbuttons {
 	background-color: #99CACA;
