@@ -532,7 +532,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'beratungsstelle' => $this->beratungsstellenname,
                 'niqbid' => $this->niqbid,
                 'username' => $this->user->user['username'],
-                'neuanmeldungen7tage' => $neuanmeldungen7tage ?? 0,
+                'neuanmeldungen7tage' => $neuanmeldungen7tage ?? $emptystatusarray,
                 'bstellevonplz' => $plzgroup ?? '',
                 'backendusergroups' => $backendusergroups,
                 'anzbstellen' => $this->anzbstellen
