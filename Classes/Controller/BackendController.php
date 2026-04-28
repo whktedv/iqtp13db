@@ -420,7 +420,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             ->andWhere($qb->expr()->eq('bezugsjahr', $qb->createNamedParameter($jahrselected)))
             ->executeQuery()
             ->fetchAllAssociative();
-
+        
+        $beratungfk22 = array();
+        $beratungfk25 = array();
+        $tnberatungenfk22 = array();
+        $tnberatungenfk25 = array();
         foreach ($rows as $row) {
             $stand = date('d.m.Y H:i', (int)$row['generated_at']);
             if($row['metric'] == 'angemeldeteTN') $angemeldeteTN = json_decode($row['wert_json'], true);
