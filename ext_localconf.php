@@ -81,6 +81,11 @@ call_user_func(
             'title' => 'Recycler Task für IQ Webapp',
             'description' => 'Lösche gelöschte Datensätze nach 180 Tagen und lösche nicht abgeschlossen Anmeldungen nach 24 Stunden (beratungsstatus = 99)',
         );
+        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks']['Ud\Iqtp13db\Task\StatistikCacheTask'] = array(
+            'extension' => 'iqtp13db',
+            'title' => 'Statistik-Cache neu berechnen für IQ Webapp',
+            'description' => 'Berechnet täglich aggregierte Statistiken pro Beratungsstelle und schreibt sie in tx_iqtp13db_domain_model_statistik_cache.',
+        );        
 },
 'iqtp13db'
 );

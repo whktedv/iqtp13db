@@ -4,6 +4,7 @@ use \Datetime;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 
 use Psr\Http\Message\ResponseInterface;
 use \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
@@ -255,6 +256,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $this->qrCodeGenerator = $qrCodeGenerator;
         $this->user = $frontendUser;
     }
+
+    private function getConnectionPool(): ConnectionPool
+    {
+        return GeneralUtility::makeInstance(ConnectionPool::class);
+    }
     
     /**
      * action init
@@ -394,21 +400,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $jahrselected = $valArray['jahrauswahl'] ?? 0;
                
-        $monatsnamen = array();
-        for($i=1;$i<=12;$i++) {
-            $monatsnamen[$i] = date("M", mktime(0, 0, 0, $i, 1, date('Y')));
-            if($jahrselected != 0 && $jahrselected != 99) {
-                $monatsnamen[$i] = $monatsnamen[$i]." ".$jahrselected;
-            } elseif($jahrselected == 99) {
-                // bleibt bei Monatsnamen
-            } else {            
-                if($i <= idate('m')) {
-                    $monatsnamen[$i] = $monatsnamen[$i]." ".idate('Y');
-                } else {
-                    $monatsnamen[$i] = $monatsnamen[$i]." ".idate('Y') - 1;
-                }
-            }
-        }
+        $monatsnamen = $this->generalhelper->getMonthNames($jahrselected);
         
         $jahrarray = array();
         for($j=2023;$j<=date('Y');$j++){
@@ -478,7 +470,27 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         ksort($beratungfertig);
         ksort($days4beratung);
         ksort($days4wartezeit);
-                
+            
+        // aus Cache auslesen:
+        /*
+        $qb = $this->getConnectionPool()->getQueryBuilderForTable('tx_iqtp13db_domain_model_statistik_cache');
+        $rows = $qb
+            ->select('metric', 'wert_json', 'generated_at')
+            ->from('tx_iqtp13db_domain_model_statistik_cache')
+            ->where($qb->expr()->eq('niqbid', $qb->createNamedParameter($thisniqbid)))
+            ->executeQuery()
+            ->fetchAllAssociative();
+
+        $stats = [];
+        foreach ($rows as $row) {
+            $stats[$row['metric']] = [
+                'werte'    => json_decode($row['wert_json'], true),
+                'stand'     => date('d.m.Y H:i', (int)$row['generated_at']),
+            ];
+            if($row['metric'] == 'angemeldeteTN') $angemeldeteTN = json_decode($row['wert_json'], true);
+        }
+        */
+
         $aktuelleanmeldungen = $this->teilnehmerRepository->countAllOrder4Status(0, $thisniqbid, $thisbundesland)[0]['anzahl'] + $this->teilnehmerRepository->countAllOrder4Status(1, $thisniqbid, $thisbundesland)[0]['anzahl'];
         $aktuellerstberatungen = $this->teilnehmerRepository->countAllOrder4Status(2, $thisniqbid, $thisbundesland)[0]['anzahl'];
         $aktuellberatungenfertig = $this->teilnehmerRepository->countAllOrder4Status(3, $thisniqbid, $thisbundesland)[0]['anzahl'];
@@ -1241,7 +1253,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $fk4tn = $this->folgekontaktRepository->findByTeilnehmer($teilnehmer->getUid());
         
         $dublettenbstellen = $this->teilnehmerRepository->findDublettenBstellen($teilnehmer->getNachname(), $teilnehmer->getVorname(), $teilnehmer->getEmail());
-        if(count($dublettenbstellen) != 0){
+        if(count($dublettenbstellen) != 0 && $teilnehmer->getEmail() != "no-reply@iq-webapp.de"){
             $auch_bei_beratungsstelle = array();
             foreach($dublettenbstellen as $bid) {
                 if($bid['niqidberatungsstelle'] != intval($this->niqbid)) $auch_bei_beratungsstelle = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $bid);

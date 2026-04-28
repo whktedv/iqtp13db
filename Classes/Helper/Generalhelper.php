@@ -183,4 +183,22 @@ class Generalhelper
         if ($factor > 0) $sz = 'KMGT';
         return sprintf("%.{$decimals}f ", $bytes / pow(1024, $factor)) . @$sz[$factor - 1] . 'B';
     }
+
+    function getMonthNames($jahrselected) : array {
+        for($i=1;$i<=12;$i++) {
+            $monatsnamen[$i] = date("M", mktime(0, 0, 0, $i, 1, date('Y')));
+            if($jahrselected != 0 && $jahrselected != 99) {
+                $monatsnamen[$i] = $monatsnamen[$i]." ".$jahrselected;
+            } elseif($jahrselected == 99) {
+                // bleibt bei Monatsnamen
+            } else {            
+                if($i <= idate('m')) {
+                    $monatsnamen[$i] = $monatsnamen[$i]." ".idate('Y');
+                } else {
+                    $monatsnamen[$i] = $monatsnamen[$i]." ".idate('Y') - 1;
+                }
+            }
+        }
+        return $monatsnamen;
+    }
 }
