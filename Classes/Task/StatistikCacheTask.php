@@ -8,6 +8,8 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Scheduler\Task\AbstractTask;
+use TYPO3\CMS\Core\Log\Logger;
+use TYPO3\CMS\Core\Log\LogManager;
 
 use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
 
@@ -22,6 +24,7 @@ class StatistikCacheTask extends AbstractTask
 {
     private ?TeilnehmerRepository $teilnehmerRepository = null;
     private ?FolgekontaktRepository $folgekontaktRepository = null;
+    private ?Logger $mylogger = null;
 
     // -----------------------------------------------------------------------
     // Tabellennamen
@@ -39,18 +42,20 @@ class StatistikCacheTask extends AbstractTask
     // execute() – Einstiegspunkt des Scheduler-Tasks
     // -----------------------------------------------------------------------
     public function execute(): bool
-    {
+    {      
+
         try {
             $arrayniqbids = $this->getAllNiqbids();
-           
-            if (empty($niqbids)) {
-                $this->logInfo('Keine Beratungsstellen (niqbid) gefunden. Task beendet.');
+       
+            if (empty($arrayniqbids)) {
+                $this->getLogger()->error('Keine Beratungsstellen (niqbid) gefunden. Task beendet.');
                 return true;
             }
 
             $connection = $this->getConnectionPool()->getConnectionForTable(self::TABLE_CACHE);
 
             $generatedAt = time();
+             
             foreach ($arrayniqbids as $niqbid) {
                 // Alle bisherigen Einträge dieser Stelle löschen (kein Verlauf gewünscht)
                 $connection->delete(
@@ -73,7 +78,7 @@ class StatistikCacheTask extends AbstractTask
                 $this->replaceMetrics($niqbid['niqbid'], 999, $currmetrics, $generatedAt);
             }
 
-            $this->logInfo(sprintf(
+            $this->getLogger()->info(sprintf(
                 'Statistik-Cache erfolgreich aktualisiert. %d Beratungsstellen, Zeitstempel %s.',
                 count($arrayniqbids),
                 date('Y-m-d H:i:s', $generatedAt)
@@ -82,7 +87,7 @@ class StatistikCacheTask extends AbstractTask
             return true;
 
         } catch (\Throwable $e) {
-            $this->logError('Fehler im StatistikCacheTask: ' . $e->getMessage());
+            $this->getLogger()->error('Fehler im StatistikCacheTask: ' . $e->getMessage());
             return false;
         }
     }
@@ -286,19 +291,21 @@ class StatistikCacheTask extends AbstractTask
     // Hilfsmethoden
     // -----------------------------------------------------------------------
 
+    private function getLogger(): Logger
+    {
+        if ($this->mylogger === null) {
+            // Klassenname als Channel – so findest du die Einträge
+            // im Log gezielt unter Ud.Iqtp13db.Task.StatistikCacheTask
+            $this->mylogger = GeneralUtility::makeInstance(LogManager::class)
+                ->getLogger(__CLASS__);
+        }
+
+        return $this->mylogger;
+    }
+
     private function getConnectionPool(): ConnectionPool
     {
         return GeneralUtility::makeInstance(ConnectionPool::class);
-    }
-
-    private function logInfo(string $message): void
-    {
-        $this->logger?->info($message);
-    }
-
-    private function logError(string $message): void
-    {
-        $this->logger?->error($message);
     }
 
     // -----------------------------------------------------------------------
