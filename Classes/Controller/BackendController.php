@@ -421,10 +421,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             ->executeQuery()
             ->fetchAllAssociative();
         
-        $beratungfk22 = array();
-        $beratungfk25 = array();
-        $tnberatungenfk22 = array();
-        $tnberatungenfk25 = array();
         foreach ($rows as $row) {
             $stand = date('d.m.Y H:i', (int)$row['generated_at']);
             if($row['metric'] == 'angemeldeteTN') $angemeldeteTN = json_decode($row['wert_json'], true);
@@ -503,13 +499,13 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }        
         
         // ******************** EXPORT Statistik bis hier ****************************
-        
+        $emptystatusarray = array(1 => 0,2 => 0,3 => 0,4 => 0,5 => 0,6 => 0,7 => 0,8 => 0,9 => 0,10 => 0,11 => 0, 12 => 0);
         $this->view->assignMultiple(
             [
-                'beratungfk22'=> $beratungfk22,
-                'SUMberatungfk22'=> count($tnberatungenfk22),
-                'beratungfk25'=> $beratungfk25,
-                'SUMberatungfk25'=> count($tnberatungenfk25),
+                'beratungfk22'=> $beratungfk22 ?? $emptystatusarray,
+                'SUMberatungfk22'=> count($tnberatungenfk22 ?? $emptystatusarray),
+                'beratungfk25'=> $beratungfk25 ?? $emptystatusarray,
+                'SUMberatungfk25'=> count($tnberatungenfk25 ?? $emptystatusarray),
                 'monatsnamen'=> $monatsnamen,
                 'jahrauswahl' => $jahrarray,
                 'jahrselected' => $jahrselected,
