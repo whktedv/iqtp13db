@@ -435,7 +435,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $aktuellberatungenfertig = array_sum($aktuellberatungenfertig);
         $archivierttotal = array_sum($archivierttotal);
         if(count($neuanmeldungen7tage) == 1) {
-            $neuanmeldungen7tage = $neuanmeldungen7tage[0];
+            $neuanmeldungen7tage = array_reverse($neuanmeldungen7tage[0]);
         } else {
             $resultdaysarr = array();
             foreach($neuanmeldungen7tage as $arrwithdays) {   
@@ -446,7 +446,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     $i++;
                 }
             }
-            $neuanmeldungen7tage = $resultdaysarr;
+            $neuanmeldungen7tage = array_reverse($resultdaysarr);
         }        
         // ----------- Daten für Jahres-Statistik aus Cache-Tabelle auslesen ---------    
         $qb = $this->getConnectionPool()->getQueryBuilderForTable('tx_iqtp13db_domain_model_statistik_cache');

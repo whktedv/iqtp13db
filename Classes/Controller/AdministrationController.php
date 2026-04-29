@@ -193,7 +193,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         $aktuellberatungenfertig = array_sum($aktuellberatungenfertig);
         $archivierttotal = array_sum($archivierttotal);
         if(count($neuanmeldungen7tage) == 1) {
-            $neuanmeldungen7tage = $neuanmeldungen7tage[0];
+            $neuanmeldungen7tage = array_reverse($neuanmeldungen7tage[0]);
         } else {
             $resultdaysarr = array();
             foreach($neuanmeldungen7tage as $arrwithdays) {   
@@ -206,7 +206,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                     $i++;
                 }
             } 
-            $neuanmeldungen7tage = $resultdaysarr;
+            $neuanmeldungen7tage = array_reverse($resultdaysarr);
         } 
         // --------------------------------------------   
         $sumalleaktuell = $aktuelleanmeldungen + $aktuellerstberatungen + $aktuellberatungenfertig + $archivierttotal;
