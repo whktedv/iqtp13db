@@ -24,9 +24,8 @@
 	<div><span class="label-beratungsstelle">Anzahl Beratungsstellen gesamt:</span> <span class="value-beratungsstelle">{anzberatungsstellen}</span></div>
 	<div><span class="label-beratungsstelle">Anzahl Berater:innen gesamt:</span> <span class="value-beratungsstelle">{anzalleberater}</span></div>	
 </div>
-Stand Statistik-Daten: {stand}<br>
-<h1>Beratungsstellen-Ansicht wechseln</h1>
 
+<h1>Beratungsstellen-Ansicht wechseln</h1>
 <div class="beratungsstellenwechsel">
 	<f:form method="post" controller="Administration" action="adminuebersicht" name="switchberatungsstelle" enctype="multipart/form-data" >
 		<label for="beratungsstellenauswahl">
@@ -36,32 +35,6 @@ Stand Statistik-Daten: {stand}<br>
 		<f:if condition="{anzuserberatungsstellen} > 1"><f:form.button class="linkbuttons abbruchbtn" type="submit" name="remove" value="Wechselmodus aus" id="removebs" >Wechselmodus aus</f:form.button></f:if>	
 	</f:form>
 </div>
-
-<details>
-	<summary class="backend-summary">Alle Beratungsstellen</summary>
-	<table class="beratungsstellen">	
-		<th>Name Beratungsstelle</th>
-		<th>Bundesland</th>
-		<th>NIQBID</th>
-		<th>Anzahl Berater:innen</th>
-		<th>Anzahl Angemeldet (unbestätigt)</th>
-		<th>Anzahl Angemeldet (bestätigt)</th>
-		<th>Anzahl in Beratung</th>
-		<th>Anzahl im Archiv</th>
-		<f:for each="{alleberatungsstellen}" as="beratungsstelle" iteration="iter">
-			<tr>
-				<td>{beratungsstelle.title} {f:if(condition:'{beratungsstelle.nichtiq} == 1',then: '<b>(Nicht IQ)</b>')}</td>
-				<td>{beratungsstelle.bundesland}</td>
-				<td>{beratungsstelle.niqbid}</td>
-				<td>{anzberater.{beratungsstelle.niqbid}}</td>
-				<td>{anzratsuchendeanmeld0.{beratungsstelle.niqbid}}</td>
-				<td style="background-color: #7a970133;">{anzratsuchendeanmeld1.{beratungsstelle.niqbid}}</td>
-				<td>{anzratsuchendeerstb.{beratungsstelle.niqbid}}</td>
-				<td>{anzratsuchendearch.{beratungsstelle.niqbid}}</td>
-			</tr>
-		</f:for>
-	</table>
-</details>
 <br>
 <h2>UID Abfrage</h2>
 <div>
@@ -97,7 +70,33 @@ Stand Statistik-Daten: {stand}<br>
 </f:if>
 </div>
 
-<h1>Übersicht Statistik</h1>
+<h1>Statistik - Stand: {stand}</h1>
+<details>
+	<summary class="backend-summary">Alle Beratungsstellen</summary>
+	<table class="beratungsstellen">	
+		<th>Name Beratungsstelle</th>
+		<th>Bundesland</th>
+		<th>NIQBID</th>
+		<th>Anzahl Berater:innen</th>
+		<th>Anzahl Angemeldet (unbestätigt)</th>
+		<th>Anzahl Angemeldet (bestätigt)</th>
+		<th>Anzahl in Beratung</th>
+		<th>Anzahl im Archiv</th>
+		<f:for each="{alleberatungsstellen}" as="beratungsstelle" iteration="iter">
+			<tr>
+				<td>{beratungsstelle.title} {f:if(condition:'{beratungsstelle.nichtiq} == 1',then: '<b>(Nicht IQ)</b>')}</td>
+				<td>{beratungsstelle.bundesland}</td>
+				<td>{beratungsstelle.niqbid}</td>
+				<td>{anzberater.{beratungsstelle.niqbid}}</td>
+				<td>{anzratsuchendeanmeld0.{beratungsstelle.niqbid}}</td>
+				<td style="background-color: #7a970133;">{anzratsuchendeanmeld1.{beratungsstelle.niqbid}}</td>
+				<td>{anzratsuchendeerstb.{beratungsstelle.niqbid}}</td>
+				<td>{anzratsuchendearch.{beratungsstelle.niqbid}}</td>
+			</tr>
+		</f:for>
+	</table>
+</details>
+<br>
 <table>
 	<tbody>
 	<tr>
@@ -148,8 +147,7 @@ Stand Statistik-Daten: {stand}<br>
 	</tbody>
 </table>
 <br>
-<div class="filterframe">
-	<h2>Jahres-Statistik</h2>
+<div class="filterframe">	
 	<f:form class="filterform" method="post" controller="Administration" action="adminuebersicht" name="switchbundesland" enctype="multipart/form-data" >		
 			Bundesland:
 			<f:form.select name="bundeslandauswahl" options="{allebundeslaender}" optionValueField="bundesland" optionLabelField="bundesland" prependOptionValue="%" prependOptionLabel="-alle-" value="{bundeslandselected}"/>
@@ -208,14 +206,6 @@ Stand Statistik-Daten: {stand}<br>
 			<td {f:if(condition: '{iter.index} == {aktmonat}', then: 'style="background-color: #ffcaf2;"')}><f:format.number>{avgw}</f:format.number></td>
 		</f:for>
 		<td><f:format.number>{SUMtotalavgmonthw}</f:format.number></td>
-	</tr>
-	</tr>
-		<tr>
-		<th>&Oslash; Tage Beratungsdauer</th>
-		<f:for each="{totalavgmonthb}" as="avgb" iteration="iter">
-			<td {f:if(condition: '{iter.index} == {aktmonat}', then: 'style="background-color: #ffcaf2;"')}><f:format.number>{avgb}</f:format.number></td>
-		</f:for>
-		<td><f:format.number>{SUMtotalavgmonthb}</f:format.number></td>
 	</tr>
 </table>
 

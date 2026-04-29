@@ -223,7 +223,6 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 ->executeQuery()
                 ->fetchAllAssociative();
             $anzwartezeiten = 0;
-            $anzberatungszeiten = 0;
             foreach ($rows as $row) {
                 $stand = date('d.m.Y H:i', (int)$row['generated_at']);
                 if($row['metric'] == 'angemeldeteTN') $angemeldeteTN[] = json_decode($row['wert_json'], true);
@@ -233,10 +232,6 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 if($row['metric'] == 'days4wartezeit') {
                     $days4wartezeit[] = json_decode($row['wert_json'], true);
                     $anzwartezeiten++;
-                }
-                if($row['metric'] == 'days4beratung') {
-                    $days4beratung[] = json_decode($row['wert_json'], true);
-                    $anzberatungszeiten++;
                 }
             }        
             $angemeldeteTN = array_map(fn(...$values) => array_sum($values), ...$angemeldeteTN);
@@ -248,11 +243,6 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 $newvalue = $d4w/$anzwartezeiten;
                 $days4wartezeit[$key] = $newvalue;
             }
-            $days4beratung = array_map(fn(...$values) => array_sum($values), ...$days4beratung);
-            foreach($days4beratung as $key => $d4w) {
-                $newvalue = $d4w/$anzberatungszeiten;
-                $days4beratung[$key] = $newvalue;
-            }
             // --------------------------------------------
         } else {            
             $angemeldeteTN = $emptystatusarray;
@@ -261,7 +251,6 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
             $niqerfasst = $emptystatusarray;
             $qfolgekontakte =  $emptystatusarray;
             $days4wartezeit = $emptystatusarray;
-            $days4beratung = $emptystatusarray;
 
             $ergarrayangemeldete = $this->teilnehmerRepository->countTNby($filterbstelle, $bundeslandselected, 1, $jahrselected, $staatselected);
             foreach($ergarrayangemeldete as $erg) $angemeldeteTN[$erg['monat']] = $erg['anzahl'];
@@ -275,16 +264,13 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
             foreach($ergarrayfolgekontakte as $erg) $qfolgekontakte[$erg['monat']] = $erg['anzahl'];
             $ergarraywartezeitanmeldung = $this->teilnehmerRepository->calcwaitingdays($filterbstelle, $bundeslandselected,'anmeldung', $jahrselected, $staatselected);
             foreach($ergarraywartezeitanmeldung as $erg) $days4wartezeit[$erg['monat']] = $erg['wert'];
-            $ergarraywartezeitberatung = $this->teilnehmerRepository->calcwaitingdays($filterbstelle, $bundeslandselected,'beratung', $jahrselected, $staatselected);
-            foreach($ergarraywartezeitberatung as $erg) $days4beratung[$erg['monat']] = $erg['wert'];
-
+            
             ksort($angemeldeteTN);
             ksort($qfolgekontakte);
             ksort($erstberatung);
             ksort($beratungfertig);
             ksort($niqerfasst);
-            ksort($days4wartezeit);
-            ksort($days4beratung);
+            ksort($days4wartezeit);            
         }
                 
         $anzberater = array();
@@ -393,8 +379,6 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
             array_unshift($rows[4], "Beratungen fertig");
             $rows[5] = $days4wartezeit;
             array_unshift($rows[5], "durchschn. Tage Wartezeit");
-            $rows[6] = $days4beratung;
-            array_unshift($rows[6], "durchschn. Tage Beratungsdauer");
             
             $headerblatt1 = [
                 'Statistik '.($jahrselected != 0 ? $jahrselected : 'letzte 12 Monate') => 'string',
@@ -586,10 +570,8 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 'SUMerstberatung'=> array_sum($erstberatung ?? $emptystatusarray),
                 'beratungfertig'=> $beratungfertig ?? $emptystatusarray,
                 'SUMberatungfertig'=> array_sum($beratungfertig ?? $emptystatusarray),
-                'totalavgmonthb'=> $days4beratung ?? $emptystatusarray,
-                'SUMtotalavgmonthb'=> array_sum($days4beratung ?? $emptystatusarray)/count($days4beratung ?? $emptystatusarray),
                 'totalavgmonthw'=> $days4wartezeit ?? $emptystatusarray,
-                'SUMtotalavgmonthw'=> array_sum($days4wartezeit ?? $emptystatusarray)/count($days4beratung ?? $emptystatusarray),
+                'SUMtotalavgmonthw'=> array_sum($days4wartezeit ?? $emptystatusarray)/count($days4wartezeit ?? $emptystatusarray),
                 'aktuelleanmeldungen'=> $aktuelleanmeldungen,
                 'aktuelleanmeldungenunbestaetigt' => $aktuelleanmeldungenunbestaetigt,
                 'aktuelleanmeldungenbestaetigt' => $aktuelleanmeldungenbestaetigt,
