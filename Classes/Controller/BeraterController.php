@@ -6,6 +6,7 @@ use Ud\Iqtp13db\Domain\Repository\UserGroupRepository;
 use Ud\Iqtp13db\Domain\Repository\BeraterRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * BeraterController
@@ -47,7 +48,15 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      */
     public function listAction(int $currentPage = 1): ResponseInterface
     {
-        $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user->user['usergroup']);
+        $allbst = $this->userGroupRepository->findAllGroups($this->settings['beraterstoragepid']);
+        foreach($allbst as $bst) {
+            if($bst->getTitle() == 'Gruppenberatungen') $gruppenberatungsid = $bst->getUid();            
+        }
+        $array1 = explode(',', $this->user->user['usergroup']);
+        $array2 = array_diff($array1, [strval($gruppenberatungsid)]);
+        $thisusergroups = implode(',', $array2);
+
+        $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $thisusergroups);
         
     	$currentPage = $this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : $currentPage;
     	$paginator = new QueryResultPaginator($berater, $currentPage, 25);
@@ -146,9 +155,9 @@ class BeraterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         
         if($aktivieren) {
-            $berater->addUsergroup($bst);
+            $berater->addUsergroup($gruppenberatungenusergroup);
         } else {
-            $berater->removeUsergroup($bst);
+            $berater->removeUsergroup($gruppenberatungenusergroup);
         }
         
         $this->beraterRepository->update($berater);

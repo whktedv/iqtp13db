@@ -436,6 +436,7 @@ CREATE TABLE tx_iqtp13db_domain_model_statistik_cache (
 
     cache_key       VARCHAR(255) DEFAULT '' NOT NULL,
     niqbid          VARCHAR(255) DEFAULT '' NOT NULL,
+    bundesland      VARCHAR(255) DEFAULT '' NOT NULL,
     bezugsjahr      SMALLINT UNSIGNED DEFAULT 0 NOT NULL,
     metric          VARCHAR(128) DEFAULT '' NOT NULL,   
     wert_json       JSON NOT NULL,  

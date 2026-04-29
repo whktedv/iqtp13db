@@ -43,7 +43,6 @@ class StatistikCacheTask extends AbstractTask
     // -----------------------------------------------------------------------
     public function execute(): bool
     {      
-
         try {
             $arrayniqbids = $this->getAllNiqbids();
        
@@ -53,7 +52,6 @@ class StatistikCacheTask extends AbstractTask
             }
 
             $connection = $this->getConnectionPool()->getConnectionForTable(self::TABLE_CACHE);
-
             $generatedAt = time();
              
             foreach ($arrayniqbids as $niqbid) {
@@ -63,19 +61,20 @@ class StatistikCacheTask extends AbstractTask
                     ['niqbid' => $niqbid['niqbid']]
                 );
 
-                $bundesland = intval($niqbid['niqbid']) < 999 ? $niqbid['bundesland'] : '%';
+                //$bundesland = intval($niqbid['niqbid']) < 999 ? $niqbid['bundesland'] : '%';
+                $bundesland = $niqbid['bundesland'];
 
                 $metrics = $this->computeYearlyMetrics($niqbid['niqbid'], $bundesland, 0);
-                $this->replaceMetrics($niqbid['niqbid'], 0, $metrics, $generatedAt);
+                $this->replaceMetrics($niqbid['niqbid'], $bundesland, 0, $metrics, $generatedAt); // 0 = letzte 12 Monate
                 $metrics = $this->computeYearlyMetrics($niqbid['niqbid'], $bundesland, 99);
-                $this->replaceMetrics($niqbid['niqbid'], 99, $metrics, $generatedAt);
+                $this->replaceMetrics($niqbid['niqbid'], $bundesland, 99, $metrics, $generatedAt); // 99 = alle seit 2023
                 for($jahr=2023;$jahr<=date('Y');$jahr++){                    
                     $metrics = $this->computeYearlyMetrics($niqbid['niqbid'], $bundesland, $jahr);
-                    $this->replaceMetrics($niqbid['niqbid'], $jahr, $metrics, $generatedAt);
+                    $this->replaceMetrics($niqbid['niqbid'], $bundesland, $jahr, $metrics, $generatedAt);
                 }  
                 
                 $currmetrics = $this->computeCurrentMetrics($niqbid['niqbid'], $bundesland);
-                $this->replaceMetrics($niqbid['niqbid'], 999, $currmetrics, $generatedAt);
+                $this->replaceMetrics($niqbid['niqbid'], $bundesland, 999, $currmetrics, $generatedAt);
             }
 
             $this->getLogger()->info(sprintf(
@@ -158,6 +157,7 @@ class StatistikCacheTask extends AbstractTask
         ksort($beratungfk25);
         
         return [
+            'angemeldeteTNunbestaetigt' => $angemeldeteTNunbestaetigt ?? '',
             'angemeldeteTN' => $angemeldeteTN,
             'erstberatung' => $erstberatung,
             'beratungfertig' => $beratungfertig,
@@ -176,8 +176,9 @@ class StatistikCacheTask extends AbstractTask
     // -----------------------------------------------------------------------
     private function computeCurrentMetrics(string $niqbid, string $bundesland): array
     {        
-        $aktuelleanmeldungen = $this->getTeilnehmerRepository()->countAllOrder4Status(0, $niqbid, $bundesland)[0]['anzahl'] + 
-                                $this->getTeilnehmerRepository()->countAllOrder4Status(1, $niqbid, $bundesland)[0]['anzahl'];
+        $aktuelleanmeldungenunbestaetigt = $this->teilnehmerRepository->countAllOrder4Status(0, $niqbid, $bundesland)[0]['anzahl'];        
+        $aktuelleanmeldungenbestaetigt = $this->teilnehmerRepository->countAllOrder4Status(1, $niqbid, $bundesland)[0]['anzahl'];
+        $aktuelleanmeldungen = $aktuelleanmeldungenunbestaetigt + $aktuelleanmeldungenbestaetigt;                                
         $aktuellerstberatungen = $this->getTeilnehmerRepository()->countAllOrder4Status(2, $niqbid, $bundesland)[0]['anzahl'];
         $aktuellberatungenfertig = $this->getTeilnehmerRepository()->countAllOrder4Status(3, $niqbid, $bundesland)[0]['anzahl'];
         $archivierttotal = $this->getTeilnehmerRepository()->countAllOrder4Status(4, $niqbid, $bundesland)[0]['anzahl'];
@@ -189,6 +190,8 @@ class StatistikCacheTask extends AbstractTask
             $neuanmeldungen7tage[$i]["wert"] = $this->getTeilnehmerRepository()->count4Status($reftag, $reftag, $niqbid, 1, $bundesland)[0]['anzahl'];
         }
         return [
+            'aktuelleanmeldungenunbestaetigt' => $aktuelleanmeldungenunbestaetigt,
+            'aktuelleanmeldungenbestaetigt' => $aktuelleanmeldungenbestaetigt,
             'aktuelleanmeldungen' => $aktuelleanmeldungen,
             'aktuellerstberatungen' => $aktuellerstberatungen,
             'aktuellberatungenfertig' => $aktuellberatungenfertig,
@@ -202,6 +205,7 @@ class StatistikCacheTask extends AbstractTask
     // -----------------------------------------------------------------------
     private function replaceMetrics(
         string $niqbid,
+        string $bundesland,
         int    $year,
         array  $metrics,
         int    $generatedAt
@@ -216,6 +220,7 @@ class StatistikCacheTask extends AbstractTask
                 'pid'          => $this->storagePid,
                 'cache_key'    => $cacheKey,
                 'niqbid'       => $niqbid,
+                'bundesland'   => $bundesland,
                 'bezugsjahr'   => $year,
                 'metric'       => $metric,
                 'wert_json'    => $data,

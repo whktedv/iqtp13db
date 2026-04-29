@@ -20,13 +20,13 @@ use Ud\Iqtp13db\Domain\Repository\HistorieRepository;
 use Ud\Iqtp13db\Domain\Repository\BeraterRepository;
 use Ud\Iqtp13db\Domain\Repository\AbschlussRepository;
 use TYPO3\CMS\Core\Resource\StorageRepository;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use Ud\Iqtp13db\Domain\Repository\BerufeRepository;
 use Ud\Iqtp13db\Domain\Repository\StaatenRepository;
 use Ud\Iqtp13db\Domain\Repository\OrtRepository;
 use Ud\Iqtp13db\Domain\Repository\BrancheRepository;
 use Ud\Iqtp13db\Domain\Repository\GruppenberatungRepository;
 
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use Ud\Iqtp13db\Service\QRCodeGenerator;
 
 
@@ -308,15 +308,11 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         if($this->user != NULL) {
             $standardniqidberatungsstelle = $this->settings['standardniqidberatungsstelle'];
-            $ugroupsarray = explode(",",$this->user->user['usergroup']);
+            $ugroupsarray = explode(",",$this->getBeraterBeratungsstellenGruppen());
             $this->anzbstellen = count($ugroupsarray);            
             $thisusrgrpid = array_pop($ugroupsarray);
             $this->usergroup = $this->userGroupRepository->findByIdentifier($thisusrgrpid);
-            if($this->usergroup->getTitle() == "Gruppenberatungen") {
-                $thisusrgrpid = array_pop($ugroupsarray);
-                $this->usergroup = $this->userGroupRepository->findByIdentifier($thisusrgrpid);
-            }
-                
+                            
             if($this->usergroup != NULL) {
                 $userniqidbstelle = $this->usergroup->getNiqbid() ?? $standardniqidberatungsstelle;
             }
@@ -409,48 +405,85 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         
         // (Bundesland-)Admin? Ja, dann Landes-Statistik anzeigen
-        $thisniqbid = intval($this->niqbid) < 999 ? '%' : $this->niqbid;
+        if(intval($this->niqbid) < 999 ) {
+            $thisniqbid = '%';
+            $bundesland = $thisgroup[0]->getBundesland();
+        } else {
+            $thisniqbid = $this->niqbid;
+            $bundesland = '%';
+        }
         
-        // Statistik-Daten aus Cache-Tabelle auslesen:
+        // ----------- Statistik-Daten aus Cache-Tabelle auslesen: ---------
         $qb = $this->getConnectionPool()->getQueryBuilderForTable('tx_iqtp13db_domain_model_statistik_cache');
         $rows = $qb
             ->select('metric', 'wert_json', 'generated_at')
             ->from('tx_iqtp13db_domain_model_statistik_cache')
-            ->where($qb->expr()->eq('niqbid', $qb->createNamedParameter($thisniqbid)))
+            ->where($qb->expr()->like('niqbid', $qb->createNamedParameter($thisniqbid)))
+            ->andWhere($qb->expr()->like('bundesland', $qb->createNamedParameter($bundesland)))
             ->andWhere($qb->expr()->eq('bezugsjahr', $qb->createNamedParameter($jahrselected)))
             ->executeQuery()
             ->fetchAllAssociative();
         
         foreach ($rows as $row) {
-            $stand = date('d.m.Y H:i', (int)$row['generated_at']);
-            if($row['metric'] == 'angemeldeteTN') $angemeldeteTN = json_decode($row['wert_json'], true);
-            if($row['metric'] == 'erstberatung') $erstberatung = json_decode($row['wert_json'], true);
-            if($row['metric'] == 'beratungfertig') $beratungfertig = json_decode($row['wert_json'], true);
-            if($row['metric'] == 'qfolgekontakte') $qfolgekontakte = json_decode($row['wert_json'], true);
-            if($row['metric'] == 'days4wartezeit') $days4wartezeit = json_decode($row['wert_json'], true);
-            if($row['metric'] == 'days4beratung') $days4beratung = json_decode($row['wert_json'], true);
-            if($row['metric'] == 'beratungfk22') $beratungfk22 = json_decode($row['wert_json'], true);
-            if($row['metric'] == 'beratungfk25') $beratungfk25 = json_decode($row['wert_json'], true);
-            if($row['metric'] == 'tnberatungenfk22') $tnberatungenfk22 = json_decode($row['wert_json'], true);
-            if($row['metric'] == 'tnberatungenfk25') $tnberatungenfk25 = json_decode($row['wert_json'], true);
+            $stand = date('d.m.Y H:i', (int)$row['generated_at']);            
+            if($row['metric'] == 'angemeldeteTN') $angemeldeteTN[] = json_decode($row['wert_json'], true);
+            if($row['metric'] == 'erstberatung') $erstberatung[] = json_decode($row['wert_json'], true);
+            if($row['metric'] == 'beratungfertig') $beratungfertig[] = json_decode($row['wert_json'], true);
+            if($row['metric'] == 'qfolgekontakte') $qfolgekontakte[] = json_decode($row['wert_json'], true);
+            if($row['metric'] == 'days4wartezeit') $days4wartezeit[] = json_decode($row['wert_json'], true);
+            if($row['metric'] == 'days4beratung') $days4beratung[] = json_decode($row['wert_json'], true);
+            if($row['metric'] == 'beratungfk22') $beratungfk22[] = json_decode($row['wert_json'], true);
+            if($row['metric'] == 'beratungfk25') $beratungfk25[] = json_decode($row['wert_json'], true);
+            if($row['metric'] == 'tnberatungenfk22') $tnberatungenfk22[] = json_decode($row['wert_json'], true);
+            if($row['metric'] == 'tnberatungenfk25') $tnberatungenfk25[] = json_decode($row['wert_json'], true);
         }
+        $angemeldeteTN = array_map(fn(...$values) => array_sum($values), ...$angemeldeteTN);
+        $erstberatung = array_map(fn(...$values) => array_sum($values), ...$erstberatung);
+        $beratungfertig = array_map(fn(...$values) => array_sum($values), ...$beratungfertig);
+        $qfolgekontakte = array_map(fn(...$values) => array_sum($values), ...$qfolgekontakte);
+        $days4wartezeit = array_map(fn(...$values) => array_sum($values), ...$days4wartezeit);
+        $days4beratung = array_map(fn(...$values) => array_sum($values), ...$days4beratung);
+        $beratungfk22 = array_map(fn(...$values) => array_sum($values), ...$beratungfk22);
+        $beratungfk25 = array_map(fn(...$values) => array_sum($values), ...$beratungfk25);
+        $tnberatungenfk22 = array_map(fn(...$values) => array_sum($values), ...$tnberatungenfk22);
+        $tnberatungenfk25 = array_map(fn(...$values) => array_sum($values), ...$tnberatungenfk25);
 
         $qb2 = $this->getConnectionPool()->getQueryBuilderForTable('tx_iqtp13db_domain_model_statistik_cache');
         $rows2 = $qb2
             ->select('metric', 'wert_json', 'generated_at')
             ->from('tx_iqtp13db_domain_model_statistik_cache')
-            ->where($qb2->expr()->eq('niqbid', $qb2->createNamedParameter($thisniqbid)))
+            ->where($qb2->expr()->like('niqbid', $qb2->createNamedParameter($thisniqbid)))
+            ->andWhere($qb->expr()->like('bundesland', $qb2->createNamedParameter($bundesland)))
             ->andWhere($qb2->expr()->eq('bezugsjahr', $qb2->createNamedParameter(999)))
             ->executeQuery()
             ->fetchAllAssociative();
         foreach ($rows2 as $row) {
-            if($row['metric'] == 'aktuelleanmeldungen') $aktuelleanmeldungen = json_decode($row['wert_json'], true);
-            if($row['metric'] == 'aktuellerstberatungen') $aktuellerstberatungen = json_decode($row['wert_json'], true);
-            if($row['metric'] == 'aktuellberatungenfertig') $aktuellberatungenfertig = json_decode($row['wert_json'], true);
-            if($row['metric'] == 'archivierttotal') $archivierttotal = json_decode($row['wert_json'], true);
-            if($row['metric'] == 'neuanmeldungen7tage') $neuanmeldungen7tage = json_decode($row['wert_json'], true);
-        }
-        
+            if($row['metric'] == 'aktuelleanmeldungen') $aktuelleanmeldungen[] = json_decode($row['wert_json'], true);
+            if($row['metric'] == 'aktuellerstberatungen') $aktuellerstberatungen[] = json_decode($row['wert_json'], true);
+            if($row['metric'] == 'aktuellberatungenfertig') $aktuellberatungenfertig[] = json_decode($row['wert_json'], true);
+            if($row['metric'] == 'archivierttotal') $archivierttotal[] = json_decode($row['wert_json'], true);
+            if($row['metric'] == 'neuanmeldungen7tage') $neuanmeldungen7tage[] = json_decode($row['wert_json'], true);
+        }          
+        $aktuelleanmeldungen = array_sum($aktuelleanmeldungen);
+        $aktuellerstberatungen = array_sum($aktuellerstberatungen);
+        $aktuellberatungenfertig = array_sum($aktuellberatungenfertig);
+        $archivierttotal = array_sum($archivierttotal);
+        if(count($neuanmeldungen7tage) == 1) {
+            $neuanmeldungen7tage = $neuanmeldungen7tage[0];
+        } else {
+            $resultdaysarr = array();
+            foreach($neuanmeldungen7tage as $arrwithdays) {   
+                $i = 0;
+                foreach($arrwithdays as $singleday) {
+                    $resultdaysarr[$i]['tag'] = $singleday['tag'];
+                    $resultdaysarr[$i]['wert'] += $singleday['wert'];
+                    $i++;
+                }
+            }
+            $neuanmeldungen7tage = $resultdaysarr;
+        }        
+        // ----- Cache-Tabelle auslesen ------ bis hier ------------
+
         // keine Berater vorhanden?
         $alleberater = $this->beraterRepository->findAllBerater($this->settings['beraterstoragepid']);
         if(count($alleberater) == 0) {
@@ -2345,8 +2378,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * @return void
      */
     public function editsettingsAction(): ResponseInterface {
-        
-        $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user->user['usergroup']);
+        $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->getBeraterBeratungsstellenGruppen());
         foreach($berater as $currber) {
             $arrberater[] = $currber;
         }
@@ -3068,4 +3100,17 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
     }
     
+
+    // Hilfsfunktionen
+
+    private function getBeraterBeratungsstellenGruppen() : string {
+        $allbst = $this->userGroupRepository->findAllGroups($this->settings['beraterstoragepid']);
+        foreach($allbst as $bst) {
+            if($bst->getTitle() == 'Gruppenberatungen') $gruppenberatungsid = $bst->getUid();            
+        }
+        $array1 = explode(',', $this->user->user['usergroup']);
+        $array2 = array_diff($array1, [strval($gruppenberatungsid)]);
+        $thisusergroups = implode(',', $array2);
+        return $thisusergroups;
+    }
 }

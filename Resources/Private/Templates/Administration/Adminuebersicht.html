@@ -24,7 +24,7 @@
 	<div><span class="label-beratungsstelle">Anzahl Beratungsstellen gesamt:</span> <span class="value-beratungsstelle">{anzberatungsstellen}</span></div>
 	<div><span class="label-beratungsstelle">Anzahl Berater:innen gesamt:</span> <span class="value-beratungsstelle">{anzalleberater}</span></div>	
 </div>
-
+Stand Statistik-Daten: {stand}<br>
 <h1>Beratungsstellen-Ansicht wechseln</h1>
 
 <div class="beratungsstellenwechsel">
@@ -53,11 +53,11 @@
 				<td>{beratungsstelle.title} {f:if(condition:'{beratungsstelle.nichtiq} == 1',then: '<b>(Nicht IQ)</b>')}</td>
 				<td>{beratungsstelle.bundesland}</td>
 				<td>{beratungsstelle.niqbid}</td>
-				<td>{anzberater.{beratungsstelle.uid}}</td>
-				<td>{anzratsuchendeanmeld0.{beratungsstelle.uid}}</td>
-				<td style="background-color: #7a970133;">{anzratsuchendeanmeld1.{beratungsstelle.uid}}</td>
-				<td>{anzratsuchendeerstb.{beratungsstelle.uid}}</td>
-				<td>{anzratsuchendearch.{beratungsstelle.uid}}</td>
+				<td>{anzberater.{beratungsstelle.niqbid}}</td>
+				<td>{anzratsuchendeanmeld0.{beratungsstelle.niqbid}}</td>
+				<td style="background-color: #7a970133;">{anzratsuchendeanmeld1.{beratungsstelle.niqbid}}</td>
+				<td>{anzratsuchendeerstb.{beratungsstelle.niqbid}}</td>
+				<td>{anzratsuchendearch.{beratungsstelle.niqbid}}</td>
 			</tr>
 		</f:for>
 	</table>
