@@ -413,7 +413,42 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $bundesland = '%';
         }
         
-        // ----------- Statistik-Daten aus Cache-Tabelle auslesen: ---------
+        // ------------ Daten für Übersicht-Statistik aus Cache-Tabelle lesen ----------
+        $qb2 = $this->getConnectionPool()->getQueryBuilderForTable('tx_iqtp13db_domain_model_statistik_cache');
+        $rows2 = $qb2
+            ->select('metric', 'wert_json', 'generated_at')
+            ->from('tx_iqtp13db_domain_model_statistik_cache')
+            ->where($qb2->expr()->like('niqbid', $qb2->createNamedParameter($thisniqbid)))
+            ->andWhere($qb2->expr()->like('bundesland', $qb2->createNamedParameter($bundesland)))
+            ->andWhere($qb2->expr()->eq('bezugsjahr', $qb2->createNamedParameter(999)))
+            ->executeQuery()
+            ->fetchAllAssociative();
+        foreach ($rows2 as $row) {
+            if($row['metric'] == 'aktuelleanmeldungen') $aktuelleanmeldungen[] = json_decode($row['wert_json'], true);
+            if($row['metric'] == 'aktuellerstberatungen') $aktuellerstberatungen[] = json_decode($row['wert_json'], true);
+            if($row['metric'] == 'aktuellberatungenfertig') $aktuellberatungenfertig[] = json_decode($row['wert_json'], true);
+            if($row['metric'] == 'archivierttotal') $archivierttotal[] = json_decode($row['wert_json'], true);
+            if($row['metric'] == 'neuanmeldungen7tage') $neuanmeldungen7tage[] = json_decode($row['wert_json'], true);
+        }          
+        $aktuelleanmeldungen = array_sum($aktuelleanmeldungen);
+        $aktuellerstberatungen = array_sum($aktuellerstberatungen);
+        $aktuellberatungenfertig = array_sum($aktuellberatungenfertig);
+        $archivierttotal = array_sum($archivierttotal);
+        if(count($neuanmeldungen7tage) == 1) {
+            $neuanmeldungen7tage = $neuanmeldungen7tage[0];
+        } else {
+            $resultdaysarr = array();
+            foreach($neuanmeldungen7tage as $arrwithdays) {   
+                $i = 0;
+                foreach($arrwithdays as $singleday) {
+                    $resultdaysarr[$i]['tag'] = $singleday['tag'];
+                    $resultdaysarr[$i]['wert'] += $singleday['wert'];
+                    $i++;
+                }
+            }
+            $neuanmeldungen7tage = $resultdaysarr;
+        }        
+        // ----------- Daten für Jahres-Statistik aus Cache-Tabelle auslesen ---------    
         $qb = $this->getConnectionPool()->getQueryBuilderForTable('tx_iqtp13db_domain_model_statistik_cache');
         $rows = $qb
             ->select('metric', 'wert_json', 'generated_at')
@@ -448,40 +483,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $tnberatungenfk22 = array_map(fn(...$values) => array_sum($values), ...$tnberatungenfk22);
         $tnberatungenfk25 = array_map(fn(...$values) => array_sum($values), ...$tnberatungenfk25);
 
-        $qb2 = $this->getConnectionPool()->getQueryBuilderForTable('tx_iqtp13db_domain_model_statistik_cache');
-        $rows2 = $qb2
-            ->select('metric', 'wert_json', 'generated_at')
-            ->from('tx_iqtp13db_domain_model_statistik_cache')
-            ->where($qb2->expr()->like('niqbid', $qb2->createNamedParameter($thisniqbid)))
-            ->andWhere($qb->expr()->like('bundesland', $qb2->createNamedParameter($bundesland)))
-            ->andWhere($qb2->expr()->eq('bezugsjahr', $qb2->createNamedParameter(999)))
-            ->executeQuery()
-            ->fetchAllAssociative();
-        foreach ($rows2 as $row) {
-            if($row['metric'] == 'aktuelleanmeldungen') $aktuelleanmeldungen[] = json_decode($row['wert_json'], true);
-            if($row['metric'] == 'aktuellerstberatungen') $aktuellerstberatungen[] = json_decode($row['wert_json'], true);
-            if($row['metric'] == 'aktuellberatungenfertig') $aktuellberatungenfertig[] = json_decode($row['wert_json'], true);
-            if($row['metric'] == 'archivierttotal') $archivierttotal[] = json_decode($row['wert_json'], true);
-            if($row['metric'] == 'neuanmeldungen7tage') $neuanmeldungen7tage[] = json_decode($row['wert_json'], true);
-        }          
-        $aktuelleanmeldungen = array_sum($aktuelleanmeldungen);
-        $aktuellerstberatungen = array_sum($aktuellerstberatungen);
-        $aktuellberatungenfertig = array_sum($aktuellberatungenfertig);
-        $archivierttotal = array_sum($archivierttotal);
-        if(count($neuanmeldungen7tage) == 1) {
-            $neuanmeldungen7tage = $neuanmeldungen7tage[0];
-        } else {
-            $resultdaysarr = array();
-            foreach($neuanmeldungen7tage as $arrwithdays) {   
-                $i = 0;
-                foreach($arrwithdays as $singleday) {
-                    $resultdaysarr[$i]['tag'] = $singleday['tag'];
-                    $resultdaysarr[$i]['wert'] += $singleday['wert'];
-                    $i++;
-                }
-            }
-            $neuanmeldungen7tage = $resultdaysarr;
-        }        
         // ----- Cache-Tabelle auslesen ------ bis hier ------------
 
         // keine Berater vorhanden?

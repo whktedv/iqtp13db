@@ -126,14 +126,14 @@ class StatistikCacheTask extends AbstractTask
 
         // Tage Wartezeit
         $days4wartezeit = $emptystatusarray;
-        $ergarraywartezeitberatung = $this->getTeilnehmerRepository()->calcwaitingdays($niqbid, $bundesland, 'beratung', $jahr, '%');
-        foreach($ergarraywartezeitberatung as $erg) $days4beratung[$erg['monat']] = $erg['wert'];
+        $ergarraywartezeitanmeldung = $this->getTeilnehmerRepository()->calcwaitingdays($niqbid, $bundesland, 'anmeldung', $jahr, '%');
+        foreach($ergarraywartezeitanmeldung as $erg) $days4wartezeit[$erg['monat']] = $erg['wert'];
         ksort($days4wartezeit);
         
         // Tage für Beratung Start bis Beratung abgeschlossen
         $days4beratung = $emptystatusarray;
-        $ergarraywartezeitanmeldung = $this->getTeilnehmerRepository()->calcwaitingdays($niqbid, $bundesland, 'anmeldung', $jahr, '%');
-        foreach($ergarraywartezeitanmeldung as $erg) $days4wartezeit[$erg['monat']] = $erg['wert'];
+        $ergarraywartezeitberatung = $this->getTeilnehmerRepository()->calcwaitingdays($niqbid, $bundesland, 'beratung', $jahr, '%');
+        foreach($ergarraywartezeitberatung as $erg) $days4beratung[$erg['monat']] = $erg['wert'];
         ksort($days4beratung);
         
         // FK/Beratungen aus Förderphase 2019-2022 in 2023
