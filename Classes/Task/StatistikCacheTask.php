@@ -135,17 +135,7 @@ class StatistikCacheTask extends AbstractTask
         $ergarraywartezeitberatung = $this->getTeilnehmerRepository()->calcwaitingdays($niqbid, $bundesland, 'beratung', $jahr, '%');
         foreach($ergarraywartezeitberatung as $erg) $days4beratung[$erg['monat']] = $erg['wert'];
         ksort($days4beratung);
-        
-        // FK/Beratungen aus Förderphase 2019-2022 in 2023
-        $beratungfk22 = $emptystatusarray;
-        $tnberatungenfk22 = $this->getFolgekontaktRepository()->fk4StatusFK2022("01.01.2023", "31.12.2023", $niqbid);
-        for($m = 1; $m < 13; $m++) $beratungfk22[$m] = 0;
-        foreach($tnberatungenfk22 as $fk22) {
-            $fkmonat = DateTime::createFromFormat('Y-m-d', $fk22->getDatum())->format('n');
-            $beratungfk22[$fkmonat]++;
-        }
-        ksort($beratungfk22);
-        
+                
         $beratungfk25 = $emptystatusarray;
          // FK/Beratungen aus Förderphase 2023-2025 in 2026
         $tnberatungenfk25 = $this->getFolgekontaktRepository()->fk4StatusFK2025("01.01.2026", "31.12.2026", $niqbid);
@@ -164,10 +154,7 @@ class StatistikCacheTask extends AbstractTask
             'qfolgekontakte' => $qfolgekontakte,
             'days4wartezeit' => $days4wartezeit,
             'days4beratung' => $days4beratung,
-            'beratungfk22' => $beratungfk22,
-            'tnberatungenfk22' => $tnberatungenfk22,
             'beratungfk25' => $beratungfk25,
-            'tnberatungenfk25' => $tnberatungenfk25
         ];
     }
 

@@ -391,7 +391,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $thisgroup = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $this->niqbid);
         $this->beratungsstellenname = $thisgroup[0]->getTitle();
         
-        $jahrselected = $valArray['jahrauswahl'] ?? date('Y');               
+        $jahrselected = $valArray['jahrauswahl'] ?? 0;               
         $monatsnamen = $this->generalhelper->getMonthNames($jahrselected);
         $jahrarray = array();
         for($j=2023;$j<=date('Y');$j++){
@@ -467,10 +467,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             if($row['metric'] == 'qfolgekontakte') $qfolgekontakte[] = json_decode($row['wert_json'], true);
             if($row['metric'] == 'days4wartezeit') $days4wartezeit[] = json_decode($row['wert_json'], true);
             if($row['metric'] == 'days4beratung') $days4beratung[] = json_decode($row['wert_json'], true);
-            if($row['metric'] == 'beratungfk22') $beratungfk22[] = json_decode($row['wert_json'], true);
             if($row['metric'] == 'beratungfk25') $beratungfk25[] = json_decode($row['wert_json'], true);
-            if($row['metric'] == 'tnberatungenfk22') $tnberatungenfk22[] = json_decode($row['wert_json'], true);
-            if($row['metric'] == 'tnberatungenfk25') $tnberatungenfk25[] = json_decode($row['wert_json'], true);
         }
         $angemeldeteTN = array_map(fn(...$values) => array_sum($values), ...$angemeldeteTN);
         $erstberatung = array_map(fn(...$values) => array_sum($values), ...$erstberatung);
@@ -478,10 +475,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $qfolgekontakte = array_map(fn(...$values) => array_sum($values), ...$qfolgekontakte);
         $days4wartezeit = array_map(fn(...$values) => array_sum($values), ...$days4wartezeit);
         $days4beratung = array_map(fn(...$values) => array_sum($values), ...$days4beratung);
-        $beratungfk22 = array_map(fn(...$values) => array_sum($values), ...$beratungfk22);
         $beratungfk25 = array_map(fn(...$values) => array_sum($values), ...$beratungfk25);
-        $tnberatungenfk22 = array_map(fn(...$values) => array_sum($values), ...$tnberatungenfk22);
-        $tnberatungenfk25 = array_map(fn(...$values) => array_sum($values), ...$tnberatungenfk25);
 
         // ----- Cache-Tabelle auslesen ------ bis hier ------------
 
@@ -505,14 +499,16 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             array_unshift($rows[1], "Anmeldungen");
             $rows[2] = $erstberatung;
             array_unshift($rows[2], "Erstberatungen");
-            $rows[3] = $qfolgekontakte;
-            array_unshift($rows[3], "Folgekontakte");
-            $rows[4] = $beratungfertig;
-            array_unshift($rows[4], "Beratungen fertig");
-            $rows[5] = $days4wartezeit;
-            array_unshift($rows[5], "durchschn. Tage Wartezeit");
-            $rows[6] = $days4beratung;
-            array_unshift($rows[6], "durchschn. Tage Beratungsdauer");
+            $rows[3] = $beratungfk25;
+            array_unshift($rows[3], "FK von Beratungen aus Förderphase '23-'25");
+            $rows[4] = $qfolgekontakte;
+            array_unshift($rows[4], "Folgekontakte");
+            $rows[5] = $beratungfertig;
+            array_unshift($rows[5], "Beratungen fertig");
+            $rows[6] = $days4wartezeit;
+            array_unshift($rows[6], "durchschn. Tage Wartezeit");
+            $rows[7] = $days4beratung;
+            array_unshift($rows[7], "durchschn. Tage Beratungsdauer");
             
             // XLSX
             $filename = 'statistik_'.date('Y-m-d_H-i-s', time()).'.xlsx';
@@ -536,10 +532,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $emptystatusarray = array(1 => 0,2 => 0,3 => 0,4 => 0,5 => 0,6 => 0,7 => 0,8 => 0,9 => 0,10 => 0,11 => 0, 12 => 0);
         $this->view->assignMultiple(
             [
-                'beratungfk22'=> $beratungfk22 ?? $emptystatusarray,
-                'SUMberatungfk22'=> count($tnberatungenfk22 ?? $emptystatusarray),
                 'beratungfk25'=> $beratungfk25 ?? $emptystatusarray,
-                'SUMberatungfk25'=> count($tnberatungenfk25 ?? $emptystatusarray),
+                'SUMberatungfk25'=> array_sum($beratungfk25 ?? $emptystatusarray),
                 'monatsnamen'=> $monatsnamen,
                 'jahrauswahl' => $jahrarray,
                 'jahrselected' => $jahrselected,
