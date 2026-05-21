@@ -135,7 +135,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 $queryBuilder->expr()->eq('beratungsstatus', $queryBuilder->createNamedParameter(3, Connection::PARAM_INT))
             ];
         } elseif($type == 999) {
-            //
+            $whereExpressions[] = $queryBuilder->expr()->neq('beratungsstatus', $queryBuilder->createNamedParameter(99, Connection::PARAM_INT));
         } else {
             $whereExpressions[] = $queryBuilder->expr()->eq('beratungsstatus', $queryBuilder->createNamedParameter(4, Connection::PARAM_INT));
         }

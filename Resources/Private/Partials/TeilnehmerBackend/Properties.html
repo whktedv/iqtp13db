@@ -623,6 +623,16 @@
 </div>
 
 <div id="AnkerBeratung" class="fframe"><h2>Stammdaten Beratung</h2>
+		<f:security.ifHasRole role="Webapp Admin">
+		<f:then>
+			<div class="tp13_formdivwebapp">
+				<label for="beratungsstatus">
+					Beratungsstatus (nur sichtbar für Admins)
+				</label>
+				<span class="propdat">{teilnehmer.beratungsstatus}</span>
+			</div>		
+		</f:then>
+		</f:security.ifHasRole>
 		<div class="tp13_formdivwebapp">
 			<label for="datum">
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.beratungdatum" />
