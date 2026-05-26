@@ -1221,7 +1221,12 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 $arrbranche[$branche->getBrancheid()] = $branche->getTitel();
             }
             $zugewieseneberatungsstelle = $this->userGroupRepository->findBeratungsstellebyNiqbid($this->settings['beraterstoragepid'], $teilnehmer->getNiqidberatungsstelle());
-            $datenberatungsstelle = $zugewieseneberatungsstelle != NULL ? $zugewieseneberatungsstelle[0]->getDescription() : '';
+            
+            if($zugewieseneberatungsstelle != NULL && $zugewieseneberatungsstelle[0]->getCustominfotexteditextern() != '') {
+                $datenberatungsstelle = $zugewieseneberatungsstelle[0]->getCustominfotexteditextern();
+            } else {
+                $datenberatungsstelle = $zugewieseneberatungsstelle != NULL ? $zugewieseneberatungsstelle[0]->getDescription() : '';
+            }
             
             $maxtime = time() - 600; // Aktuelle Zeit + 10 Minuten = maximales Alter von Dateien, damit diese noch vom RS gelöscht werden können 
             

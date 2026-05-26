@@ -105,6 +105,13 @@ class UserGroup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $custominfotextstart = '';
     
     /**
+     * custominfotexteditextern
+     *
+     * @var string
+     */
+    protected $custominfotexteditextern = '';
+    
+    /**
      * customlogourl
      *
      * @var string
@@ -419,6 +426,27 @@ class UserGroup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->custominfotextstart = $custominfotextstart;
     }
     
+        /**
+     * Returns the custominfotexteditextern
+     *
+     * @return string $custominfotexteditextern
+     */
+    public function getCustominfotexteditextern()
+    {
+        return $this->custominfotexteditextern;
+    }
+    
+    /**
+     * Sets the custominfotexteditextern
+     *
+     * @param string $custominfotexteditextern
+     * @return void
+     */
+    public function setCustominfotexteditextern($custominfotexteditextern)
+    {
+        $this->custominfotexteditextern = $custominfotexteditextern;
+    }
+
     /**
      * Returns the customlogourl
      *

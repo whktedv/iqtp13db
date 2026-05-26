@@ -207,3 +207,9 @@ Update 28.04.2026
 - Strukturelle Anpassungen zur Performance-Optimierung
 - Performance-Anpassungen Übersicht/Statistik-Seite
 - kleinere Anpassungen bei Texten und Darstellungen
+
+Update 26.05.2026
+- Bugfix globale Suche (Status 99 wird nicht mehr angezeigt)
+- Admin: Beratungsstatus wird in Datensatz ausgegeben
+- Backend: In Einstellungen kann ein Text für die Bearbeiten-Seite nach Link-Versendung eingetragen werden. Dieser wird den Ratsuchenden angezeigt, nachdem sie sich mit ihrem Geburtsdatum authentifiziert haben
+ 

@@ -146,6 +146,16 @@ $fields = array(
             'eval' => 'trim'
         ),
     ),
+    'custominfotexteditextern' => array(
+        'exclude' => 1,
+        'label' => 'Eigener Infotext für die Bearbeiten-Seite nach Link-Versendung',
+        'config' => array(
+            'type' => 'text',
+            'cols' => 30,
+            'rows' => 10,
+            'eval' => 'trim'
+        ),
+    ),
     'customlogourl' => array(
         'exclude' => 1,
         'label' => 'Eigenes Logo (URL) für die Startseite der Anmeldung',

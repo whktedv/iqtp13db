@@ -299,6 +299,7 @@ CREATE TABLE fe_groups (
     avadresse                   TEXT NOT NULL,
     custominfotextmail          TEXT NOT NULL,
     custominfotextstart         TEXT NOT NULL,
+    custominfotexteditextern    TEXT NOT NULL,
     customlogourl               VARCHAR(255) DEFAULT '' NOT NULL
 );
 

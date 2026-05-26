@@ -2393,6 +2393,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'niqbid' => $this->niqbid,
                 'custominfotextstart' => $this->usergroup->getCustominfotextstart() ?? '',
                 'custominfotextmail'=> $this->usergroup->getCustominfotextmail() ?? '',
+                'custominfotexteditextern'=> $this->usergroup->getCustominfotexteditextern() ?? '',
                 'beschreibunggrauerkasten' => $this->usergroup->getDescription() ?? '',
                 'anzbstellen' => $this->anzbstellen
             ]
@@ -2410,6 +2411,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 
         $this->usergroup->setCustominfotextstart($valArray['custominfotextstart']);
         $this->usergroup->setCustominfotextmail($valArray['custominfotextmail']);
+        $this->usergroup->setCustominfotexteditextern($valArray['custominfotexteditextern']);
         $this->usergroup->setDescription($valArray['beschreibunggrauerkasten']);
         
         $this->userGroupRepository->update($this->usergroup);
