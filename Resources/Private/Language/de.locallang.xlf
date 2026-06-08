@@ -149,8 +149,8 @@
 			<trans-unit id="infoNotizen"><target>Bitte nutzen Sie dieses Feld, um uns wichtige Informationen zu geben, die für Ihre Beratung wichtig sind. Zum Beispiel: Termine, die dringend sind, besondere Wünsche oder Dinge, die der Berater oder die Beraterin wissen sollte.</target></trans-unit>
 	
 			<trans-unit id="anredemail"><target>Guten Tag </target></trans-unit>
-			<trans-unit id="mailtext"><target> <![CDATA[ vielen Dank für Ihre Informationen.</p><p>Sie sind jetzt mit der UID-Nummer UIDNUMMER zur Beratung angemeldet. ]]></target></trans-unit>
-			<trans-unit id="mailtextcustom"><target> <![CDATA[ Wir setzen uns mit Ihnen in Verbindung, sobald Sie an der Reihe sind. Wir bitten um Ihr Verständnis und Ihre Geduld. <p>Mit freundlichen Grüßen</p>Ihre IQ Anerkennungs- und Qualifizierungsberatung ]]></target></trans-unit>
+			<trans-unit id="mailtext"><target> <![CDATA[ <p>vielen Dank für Ihre Informationen.</p><p>Sie sind jetzt mit der UID-Nummer UIDNUMMER zur Beratung angemeldet. </p>]]></target></trans-unit>
+			<trans-unit id="mailtextcustom"><target> <![CDATA[ <p>Wir setzen uns mit Ihnen in Verbindung, sobald Sie an der Reihe sind. Wir bitten um Ihr Verständnis und Ihre Geduld.</p><p>Mit freundlichen Grüßen</p>Ihre IQ Anerkennungs- und Qualifizierungsberatung ]]></target></trans-unit>
 			<trans-unit id="grcinfotext"><target><![CDATA[ <p>Wir weisen Sie darauf hin, dass das Beratungsangebot gemäß der Charta der Grundrechte der Europäischen Union umgesetzt wird. Wir setzen das gegenseitige Einverständnis der Einhaltung der Charta für die Anerkennungs- und Qualifizierungsberatung voraus.</p><p>Charta der Grundrechte der europäischen Union: <a href="https://www.europarl.europa.eu/charter/pdf/text_de.pdf" target="_blank">https://www.europarl.europa.eu/charter/pdf/text_de.pdf</a></p> ]]></target></trans-unit>
 			<trans-unit id="subject"><target>Ihre Anmeldung zur Anerkennungsberatung beim IQ Netzwerk</target></trans-unit>
 			<trans-unit id="subjecteditextern"><target>Ihre Daten zur Anerkennungsberatung beim IQ Netzwerk</target></trans-unit>

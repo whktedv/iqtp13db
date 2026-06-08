@@ -1017,18 +1017,25 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         
         $sender = $this->settings['sender'];
         $subject = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('subject', 'Iqtp13db');
-        $templateName = 'Mail';
-        $anrede = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('anredemail', 'Iqtp13db');
-        $mailtext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtext', 'Iqtp13db');
-        $mailtext = str_replace("WARTEZEITWOCHEN", $this->settings['wartezeitwochen'], $mailtext);
-        $mailtext = str_replace("UIDNUMMER", $teilnehmer->getUid(), $mailtext);
-        $mailtextcustom = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtextcustom', 'Iqtp13db');
+        $templateName = 'Mail';                
         $grcinfotext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('grcinfotext', 'Iqtp13db');
         
-        if($custommailtext == '') {
-            $custommailtext = $mailtextcustom;
+        if($custommailtext == '') {            
+            $mailtext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('anredemail', 'Iqtp13db', NULL, 'de') . $teilnehmer->getVorname(). ' ' . $teilnehmer->getNachname() . ','
+                    . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtext', 'Iqtp13db', NULL, 'de') 
+                    . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtextcustom', 'Iqtp13db', NULL, 'de')
+                    . '<hr>' 
+                    . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('anredemail', 'Iqtp13db', NULL, 'en') . $teilnehmer->getVorname(). ' ' . $teilnehmer->getNachname() . ','
+                    . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtext', 'Iqtp13db', NULL, 'en') 
+                    . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtextcustom', 'Iqtp13db', NULL, 'en');
+            $mailtext = str_replace("UIDNUMMER", $teilnehmer->getUid(), $mailtext);
+        } else {
+            $mailtext = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('anredemail', 'Iqtp13db', NULL, 'de') . $teilnehmer->getVorname(). ' ' . $teilnehmer->getNachname() . ','
+                    . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mailtext', 'Iqtp13db', NULL, 'de') 
+                    . '<br>' 
+                    . $custommailtext;
         }
-        
+
         $datenberatungsstelle = $zugewieseneberatungsstelle != NULL ? $zugewieseneberatungsstelle[0]->getDescription() : '';
         if($datenberatungsstelle != '') $kontaktlabel = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('kontaktberatungsstelle', 'Iqtp13db');
         else $kontaktlabel = '';
@@ -1038,12 +1045,10 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $baseUri = $normalizedParams->getSiteUrl();
         
         $variables = array(
-            'anrede' => $anrede . $teilnehmer->getVorname(). ' ' . $teilnehmer->getNachname() . ',',
             'mailtext' => $mailtext,
-            'custommailtext' => $custommailtext,            
             'datenberatungsstelle' => $datenberatungsstelle,
             'kontaktlabel' => $kontaktlabel,
-            'startseitelink' => $this->settings['startseitelink'],            
+            'startseitelink' => $this->settings['startseitelink'],      
             'logolink' => $this->settings['logolink'],
             'baseurl' => $baseUri,
             'grcinfotext' => $grcinfotext,

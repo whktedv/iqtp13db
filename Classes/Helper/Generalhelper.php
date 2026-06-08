@@ -72,7 +72,7 @@ class Generalhelper
         }
         // Mail nach Bestätigung
         if($templateName == 'Mail') {
-            $mailtext = $variables['anrede'] ."\r\n".
+            $mailtext = 
                 $variables['mailtext'] .
                 "\r\n------------------------------\r\n\r\n".
                 $variables['kontaktlabel'] ."\r\n\r\n".
