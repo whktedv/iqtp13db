@@ -884,9 +884,10 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         if($this->request->hasArgument('askconsent')) {
             $askconsent = $this->request->getArgument('askconsent');
         }
+        $verificationdate = 1;        
+        if($teilnehmer) $verificationdate = $teilnehmer->getVerificationDate();
         
-        if($teilnehmer) {
-            
+        if($teilnehmer && $verificationdate == 0) {            
             if($teilnehmer->getBeratungdatum() != '' && $teilnehmer->getErstberatungabgeschlossen() != ''){
                 $teilnehmer->setBeratungsstatus(3);
             } elseif($teilnehmer->getBeratungdatum() != ''){
