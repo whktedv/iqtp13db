@@ -149,8 +149,8 @@
 		<trans-unit id="infoNotizen"><source>Please use this field to provide us with important information relevant to your consultation. For example, urgent appointments, special requests, or things the counselor should know.</source></trans-unit>
 
 		<trans-unit id="anredemail"><source>Hello </source></trans-unit>		
-		<trans-unit id="mailtext"><source> <![CDATA[ <p>Thank you for your information.</p> <p>You are now registered for counselling with UID number UIDNUMMER. </p> ]]></source></trans-unit>
-		<trans-unit id="mailtextcustom"><source> <![CDATA[ <p>We will contact you as soon as it is your turn. We ask for your understanding and patience.</p><p>Regards</p>Your recognition counselling ]]></source></trans-unit>
+		<trans-unit id="mailtext"><source> <![CDATA[ <p>Thank you for the information you provided.</p> <p>You have now been registered for counselling and assigned the UID number UIDNUMMER.</p> ]]></source></trans-unit>
+		<trans-unit id="mailtextcustom"><source> <![CDATA[ <p>We will contact you as soon as it is your turn. Thank you for your patience and understanding.</p><p>Kind regards</p>Your Counselling Service for Recognition of Qualifications ]]></source></trans-unit>
 		<trans-unit id="grcinfotext"><source><![CDATA[ <p>We would like to point out that the counselling service is implemented in accordance with the Charter of Fundamental Rights of the European Union. We require mutual agreement to comply with the Charter for recognition and qualification counselling.</p><p>Charter of Fundamental Rights of the European Union: <a href="https://www.europarl.europa.eu/charter/pdf/text_en.pdf" target="_blank">https://www.europarl.europa.eu/charter/pdf/text_en.pdf</a></p> ]]></source></trans-unit>
 		<trans-unit id="subject"><source>Your registration for the initial recognition counselling</source></trans-unit>
 		<trans-unit id="subjecteditextern"><source>Your data for the initial recognition counselling</source></trans-unit>
