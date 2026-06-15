@@ -400,8 +400,13 @@ table tr.dokcattr td {
 	display: flex;
 }
 
-#dialog-confirm {
+#dialog-confirm, #dialog-nodocs {
 	display: none;
+}
+
+#dialog-nodocs .nodocbuttons {
+	display: flex; 
+	justify-content: space-around;
 }
 
 .iq-standardcontainer-weiss {

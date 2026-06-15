@@ -99,8 +99,6 @@ class DokumentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     {
         $valArray = $this->request->getArguments();
         
-        $dateienbisher = $this->dokumentRepository->findByTeilnehmer($teilnehmer->getUid());
-        $anzdateienbisher = count($dateienbisher);
         $files = $this->request->getArgument('file') ?? null;
         
         if($files == NULL) {

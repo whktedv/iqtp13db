@@ -212,4 +212,7 @@ Update 26.05.2026
 - Bugfix globale Suche (Status 99 wird nicht mehr angezeigt)
 - Admin: Beratungsstatus wird in Datensatz ausgegeben
 - Backend: In Einstellungen kann ein Text für die Bearbeiten-Seite nach Link-Versendung eingetragen werden. Dieser wird den Ratsuchenden angezeigt, nachdem sie sich mit ihrem Geburtsdatum authentifiziert haben
- 
+
+Update
+- RS erhalten beim Versenden des Anmeldeformulars eine Warnung, wenn sie noch keine Dokumente hochgeladen haben. Das Absenden ist weiterhin ohne Dokumente möglich.
+- Export: Die Auswahl des Geschlechts ist nun möglich

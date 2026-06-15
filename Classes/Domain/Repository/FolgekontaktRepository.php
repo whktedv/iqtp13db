@@ -122,7 +122,7 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 	/**
 	 *
 	 */
-	public function fksearch4export($filtervon, $filterbis, $niqbid, $bundesland, $staat, $berater, $landkreis, $beruf, $branche)
+	public function fksearch4export($filtervon, $filterbis, $niqbid, $bundesland, $staat, $berater, $landkreis, $beruf, $branche, $geschlecht)
 	{
 	    
 	    $niqbid = $niqbid == '12345' ? '%' : $niqbid; // Admin? dann Beratungsstelle ignorieren
@@ -143,6 +143,7 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 if($landkreis != '%') $sql .= " AND o.landkreis LIKE '$landkreis'";
                 if($beruf != '%') $sql .= " AND a.referenzberufzugewiesen LIKE '$beruf'";
                 if($branche != '%') $sql .= " AND a.branche LIKE '$branche'";
+                if($geschlecht != '%') $sql .= " AND t.geschlecht LIKE 'geschlecht'";
         $sql .= " GROUP BY f.uid ORDER BY f.datum ASC";
 
         $query->statement($sql);
@@ -183,7 +184,7 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 	/**
 	 *
 	 */
-	public function fksearch4exportFK2025($filtervon, $filterbis, $niqbid, $bundesland, $staat, $berater, $landkreis, $beruf, $branche)
+	public function fksearch4exportFK2025($filtervon, $filterbis, $niqbid, $bundesland, $staat, $berater, $landkreis, $beruf, $branche, $geschlecht)
 	{
 	    $niqbid = $niqbid == '12345' ? '%' : $niqbid; // Admin? dann Beratungsstelle ignorieren
 	    
@@ -363,6 +364,7 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 	    if($landkreis != '%') $sql .= " AND o.landkreis LIKE '$landkreis'";
 	    if($beruf != '%') $sql .= " AND b.referenzberufzugewiesen LIKE '$beruf'";
 	    if($branche != '%') $sql .= " AND b.branche LIKE '$branche'";
+        if($geschlecht != '%') $sql .= " AND a.geschlecht LIKE '$geschlecht'";
 	    $sql .= " GROUP BY a.uid ORDER BY fk.fkdatum ASC";
 
 	    $query->statement($sql);

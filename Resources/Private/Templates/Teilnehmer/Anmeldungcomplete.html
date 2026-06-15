@@ -10,6 +10,15 @@
   <p><span class="ui-icon ui-icon-alert"></span><f:translate key="dialoganmeldungabbrechen" /></p>
 </div>
 
+<div id="dialog-nodocs" title="Webapp - IQ Anerkennungsberatung">
+  <p><span class="ui-icon ui-icon-alert"></span><f:translate key="dialoganmeldungohnedocs" /></p>
+  <div class="nodocbuttons">
+  	<button id="nodocsproceed"><f:translate key="dialoganmeldungohnedocsproceed" /></button>
+  	<button id="nodocswait"><f:translate key="dialoganmeldungohnedocswait" /></button>
+  </div>
+</div>
+
+
 <f:flashMessages />
  
 <f:form.validationResults for="{object}">
@@ -32,21 +41,58 @@
 	<f:form.button type="submit" id="zurueckbutton" name="btnzurueck"><f:translate key="zurueck" /></f:form.button>
 	
 	<f:form.button type="submit" id="abbruchbutton" name="btncancel" class="abbruchbtn frontend" onclick="return btncancel_Click(0);"><f:translate key="abbruch" /></f:form.button>
-	<f:form.button type="submit" id="savebutton1" name="btnAbsenden"><f:translate key="absenden" /></f:form.button>
+	<f:form.button type="submit" id="savebutton1" name="btnAbsenden" onclick="return checkdocs({anzdokumente});"><f:translate key="absenden" /></f:form.button>
 
 	<f:translate key="hinweisdatenueberpruefen" /> 
 	<f:render partial="Teilnehmer/PropertiesAnmeldung" arguments="{teilnehmer:teilnehmer, staaten:staaten}" />
 	
 	<f:for each="{abschluesse}" as="abschluss" iteration="iter">
 		<f:render partial="Abschluss/PropertiesAnmeldung" arguments="{abschluss:abschluss, iter: iter, staaten:staaten, abschlussartarr : abschlussartarr, brancheunterkat : brancheunterkat}" />
-	</f:for>
-	
+	</f:for>	
 	<f:form.button type="submit" id="zurueckbutton" name="btnzurueck"><f:translate key="zurueck" /></f:form.button>
 	<f:form.button type="submit" id="abbruchbutton" name="btncancel" class="abbruchbtn frontend" onclick="return btncancel_Click(0);"><f:translate key="abbruch" /></f:form.button>
-	<f:form.button type="submit" id="savebutton1" name="btnAbsenden"><f:translate key="absenden" /></f:form.button>
+	<f:form.button type="submit" id="savebutton1" name="btnAbsenden" onclick="return checkdocs({anzdokumente});"><f:translate key="absenden" /></f:form.button>
 </f:form>
 
 
 <f:asset.script identifier="tndokupload" src="EXT:iqtp13db/Resources/Public/JS/tndokupload.js" />
 
+<script>
+		
+	function checkdocs(anz) {
+		if(anz == 0) {
+			dialog = $("#dialog-nodocs").dialog({
+				autoOpen: false,
+				resizable: false,
+				height: "auto",
+				width: 500,
+				modal: true			
+			});
+		
+			const hiddenField = document.createElement('input');
+			hiddenField.type = 'hidden';
+			hiddenField.name = 'tx_iqtp13db_iqtp13dbwebapp[btnAbsenden]';    	
+			document.getElementById("teilnehmerform").appendChild(hiddenField);
+			dialog.dialog( "open" );
+			return false;
+		} else {			
+			return true;
+		}
+	}
+
+	$("#nodocsproceed").on("click", function() {
+		$("#dialog-nodocs").dialog("close");
+		
+		$("#overlay").hide();
+		window.onbeforeunload = null;	
+		document.getElementById("teilnehmerform").submit();
+		return true;
+	});
+
+	$("#nodocswait").on("click", function() {
+		$("html, body").animate({ scrollTop: 0 }, "fast");
+		$("#dialog-nodocs").dialog("close");
+	});
+
+</script>
 </f:section>

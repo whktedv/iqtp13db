@@ -7,6 +7,7 @@ use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Core\Resource\StorageRepository;
 use TYPO3\CMS\Extbase\Annotation\IgnoreValidation;
 use TYPO3\CMS\Extbase\Annotation\Validate;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
 use Ud\Iqtp13db\Domain\Validator\TeilnehmerValidator;
@@ -700,7 +701,6 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function anmeldungcompleteAction(Teilnehmer $teilnehmer): ResponseInterface
     {
-        $valArray = $this->request->getArguments();
         $language = $this->request->getAttribute('language');
         $isocode  = $language->getLocale()->getLanguageCode();        
         
@@ -713,6 +713,7 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $foldersize = $this->generalhelper->getFolderSize($storage->getConfiguration()['basePath'].$newFilePath);
             if(!is_numeric($foldersize)) $foldersize = 0;
             $dokumente = $this->dokumentRepository->findByTeilnehmer($teilnehmer);
+            $anzdokumente = count($dokumente);
             $abschluesse = new \Ud\Iqtp13db\Domain\Model\Abschluss();
             $abschluesse = $this->abschlussRepository->findByTeilnehmer($teilnehmer);
             
@@ -732,12 +733,13 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                     'heute' => time(),
                     'teilnehmer' => $teilnehmer,
                     'dokumente' => $dokumente,
+                    'anzdokumente' => $anzdokumente,
                     'foldersize' =>  100-(intval(($foldersize/30000)*100)),
                     'staaten' => $staaten,
                     'abschlussartarr' => $abschlussartarr,
                     'brancheunterkat' => $brancheunterkat,
                 ]
-                );
+            );
         } else {                        
             return $this->redirect('startseite', 'Teilnehmer', null, null);
         }
@@ -762,7 +764,6 @@ class TeilnehmerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             return $this->redirect('anmeldungcomplete', 'Teilnehmer', null, array('teilnehmer' => $teilnehmer));
         } else {
             $valArray = $this->request->getArguments();
-            
             if (isset($valArray['btnzurueck'])) {
                 return $this->redirect('anmeldseite3', 'Teilnehmer', 'Iqtp13db', array('teilnehmer' => $teilnehmer));
             } elseif(isset($valArray['btnAbsenden'])) {

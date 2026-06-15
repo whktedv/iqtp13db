@@ -88,6 +88,9 @@
 			<trans-unit id="absenden"><target>Jetzt absenden</target></trans-unit>			
 			<trans-unit id="dialoganmeldungabbrechen"><target>Anmeldung abbrechen?</target></trans-unit>			
 			<trans-unit id="dialogabschlussloeschen"><target>Abschluss löschen?</target></trans-unit>
+			<trans-unit id="dialoganmeldungohnedocs"><target>Haben Sie Ihre Zeugnisse und Ihren Lebenslauf hochgeladen? Ohne diese Informationen können wir Sie nicht umfassend beraten.</target></trans-unit>
+			<trans-unit id="dialoganmeldungohnedocsproceed"><target>Ohne Unterlagen fortfahren</target></trans-unit>
+			<trans-unit id="dialoganmeldungohnedocswait"><target>Unterlagen jetzt hochladen</target></trans-unit>		
 			<trans-unit id="fragebogen"><target>Fragebogen Seite</target></trans-unit>
 			<trans-unit id="persdaten"><target>Persönliche Daten</target></trans-unit>
 			<trans-unit id="deutschkenntnisse"><target>Deutschkenntnisse</target></trans-unit>

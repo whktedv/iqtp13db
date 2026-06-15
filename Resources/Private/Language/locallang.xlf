@@ -87,6 +87,9 @@
 		<trans-unit id="absenden"><source>Send now</source></trans-unit>
 		<trans-unit id="dialoganmeldungabbrechen"><source>Cancel registration</source></trans-unit>
 		<trans-unit id="dialogabschlussloeschen"><source>Delete this qualification?</source></trans-unit>		
+		<trans-unit id="dialoganmeldungohnedocs"><source>Have you uploaded your certificates and your CV? Without this information, we cannot provide you with comprehensive advice.</source></trans-unit>
+		<trans-unit id="dialoganmeldungohnedocsproceed"><source>Proceed without documents</source></trans-unit>
+		<trans-unit id="dialoganmeldungohnedocswait"><source>Upload the documents now</source></trans-unit>
 		<trans-unit id="fragebogen"><source>Questionnaire page</source></trans-unit>
 		<trans-unit id="persdaten"><source>Personal data</source></trans-unit>
 		<trans-unit id="deutschkenntnisse"><source>German as a native language?</source></trans-unit>

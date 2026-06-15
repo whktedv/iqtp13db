@@ -2445,7 +2445,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $landkreisselected = $valArray['filterlandkreis'] ?? '%';
         $berufselected = $valArray['filterreferenzberuf'] ?? '%';
         $brancheselected = $valArray['filterbranche'] ?? '%';
-        
+        $geschlechtselected = $valArray['filtergeschlecht'] ?? '%';
+
         $arrberater = $this->getberater4Bstelle('%', TRUE);
         $arrlandkreise = array();
         $arrlandkreise = $this->ortRepository->findLandkreiseByBundesland($bundeslandselected);
@@ -2499,7 +2500,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         $anzteilnehmers = 0;
         if($filtervon != '' && $filterbis != '') {
-            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer($type, $del, $filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected, $beraterselected, $landkreisselected, $berufselected, $brancheselected);
+            $teilnehmers = $this->teilnehmerRepository->search4exportTeilnehmer($type, $del, $filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected, $beraterselected, $landkreisselected, $berufselected, $brancheselected, $geschlechtselected);
             $anzteilnehmers = count($teilnehmers);
         }
         
@@ -2542,8 +2543,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             }
         } elseif(isset($valArray['export']) && $fberatungsstatus == '15') {
             // **** nur Folgekontakte exportieren ****
-            $folgekontakte = $this->folgekontaktRepository->fksearch4export($filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected, $beraterselected, $landkreisselected, $berufselected, $brancheselected);
-            $folgekontakteFK2025 = $this->folgekontaktRepository->fksearch4exportFK2025($filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected, $beraterselected, $landkreisselected, $berufselected, $brancheselected);
+            $folgekontakte = $this->folgekontaktRepository->fksearch4export($filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected, $beraterselected, $landkreisselected, $berufselected, $brancheselected, $geschlechtselected);
+            $folgekontakteFK2025 = $this->folgekontaktRepository->fksearch4exportFK2025($filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected, $beraterselected, $landkreisselected, $berufselected, $brancheselected, $geschlechtselected);
             $anzfolgekontakte = count($folgekontakte);
             
             if($anzfolgekontakte == 0) {
@@ -2576,7 +2577,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             
             // nur Folgekontakte
             if($fberatungsstatus == '15') {
-                $folgekontakte = $this->folgekontaktRepository->fksearch4export($filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected, $beraterselected, $landkreisselected, $berufselected, $brancheselected);
+                $folgekontakte = $this->folgekontaktRepository->fksearch4export($filtervon, $filterbis, $this->niqbid, $bundeslandselected, $staatselected, $beraterselected, $landkreisselected, $berufselected, $brancheselected, $geschlechtselected);
                 $anzgesamt = count($folgekontakte);
             } else {
                 $anzgesamt = $anzteilnehmers;
@@ -2597,7 +2598,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 ]
                 );
         }        
-        
+        $filtergeschlechtarray = [ '2' => 'männlich', '1' => 'weiblich', '3' => 'divers', '-1' => 'keine Angabe' ];
+
         $this->view->assignMultiple(
             [
                 'anzgesamt' => $anzgesamt,
@@ -2609,6 +2611,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'filteranonym' => $fanonym,
                 'filterfolgekontakte' => $filterfolgekontakte,
                 'filterberatungsstatus' => $fberatungsstatus,
+                'filtergeschlecht' => $geschlechtselected,
+                'filtergeschlechtarray' => $filtergeschlechtarray,
                 'filterbundesland' => $bundeslandselected,
                 'filterstaat' => $staatselected,
                 'filterberater' => $beraterselected,

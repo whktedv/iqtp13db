@@ -155,6 +155,7 @@ $(document).ready(function() {
 		$("#overlay").show();
 	  $("#exportfilterform").submit(); 
 	});
+	
 	$('#exportfilterreferenzberuf').change(function() {
 		$("#overlay").show();
 	  $("#exportfilterform").submit(); 
@@ -163,6 +164,10 @@ $(document).ready(function() {
 			$("#overlay").show();
 		  $("#exportfilterform").submit(); 
 		});
+	$('#exportfilterselectgeschlecht').change(function() {
+		$("#overlay").show();
+	  $("#exportfilterform").submit(); 
+	});
 	$('#exportfiltercheckanonym').change(function() {
 			$("#overlay").show();
 		  $("#exportfilterform").submit(); 
