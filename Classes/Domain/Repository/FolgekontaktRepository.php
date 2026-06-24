@@ -105,7 +105,7 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 	
 	public function fk4StatusFK2025($datum1, $datum2, $niqbid)
 	{
-	    $query = $this->createQuery();
+	    $query = $this->createQuery();        
 	    $query->statement("SELECT * FROM tx_iqtp13db_domain_model_folgekontakt as a
                 LEFT JOIN tx_iqtp13db_domain_model_teilnehmer as b ON a.teilnehmer = b.uid
                 WHERE
@@ -115,10 +115,84 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 				DATEDIFF(STR_TO_DATE('".$datum2."', '%d.%m.%Y'),STR_TO_DATE(datum, '%Y-%m-%d')) >= 0 AND
         		b.deleted = 0 AND b.hidden = 0 AND a.deleted = 0 AND niqidberatungsstelle LIKE '$niqbid' GROUP BY teilnehmer");
 	    
+        
 	    $query = $query->execute();
 	    return $query;
 	}
 	
+    public function fkStatusFK2025neu($jahr, $niqbid) {
+         
+        $sql = "SELECT
+                m.monat_nr,                
+                COUNT(DISTINCT sub.teilnehmer) AS anzahl_monat
+            FROM (
+                SELECT  1 AS monat_nr,
+                        DATE(CONCAT('$jahr', '-01-01')) AS von_datum,
+                        DATE(CONCAT('$jahr', '-01-31')) AS bis_datum UNION ALL
+                SELECT  2, 
+                        DATE(CONCAT('$jahr', '-02-01')),
+                        LAST_DAY(DATE(CONCAT('$jahr', '-02-01'))) UNION ALL
+                SELECT  3, 
+                        DATE(CONCAT('$jahr', '-03-01')),
+                        DATE(CONCAT('$jahr', '-03-31')) UNION ALL
+                SELECT  4, 
+                        DATE(CONCAT('$jahr', '-04-01')),
+                        DATE(CONCAT('$jahr', '-04-30')) UNION ALL
+                SELECT  5, 
+                        DATE(CONCAT('$jahr', '-05-01')),
+                        DATE(CONCAT('$jahr', '-05-31')) UNION ALL
+                SELECT  6, 
+                        DATE(CONCAT('$jahr', '-06-01')),
+                        DATE(CONCAT('$jahr', '-06-30')) UNION ALL
+                SELECT  7, 
+                        DATE(CONCAT('$jahr', '-07-01')),
+                        DATE(CONCAT('$jahr', '-07-31')) UNION ALL
+                SELECT  8, 
+                        DATE(CONCAT('$jahr', '-08-01')),
+                        DATE(CONCAT('$jahr', '-08-31')) UNION ALL
+                SELECT  9, 
+                        DATE(CONCAT('$jahr', '-09-01')),
+                        DATE(CONCAT('$jahr', '-09-30')) UNION ALL
+                SELECT 10, 
+                        DATE(CONCAT('$jahr', '-10-01')),
+                        DATE(CONCAT('$jahr', '-10-31')) UNION ALL
+                SELECT 11, 
+                        DATE(CONCAT('$jahr', '-11-01')),
+                        DATE(CONCAT('$jahr', '-11-30')) UNION ALL
+                SELECT 12, 
+                        DATE(CONCAT('$jahr', '-12-01')),
+                        DATE(CONCAT('$jahr', '-12-31'))
+            ) AS m
+            LEFT JOIN (
+                -- Nur den frühesten Folgekontakt je Teilnehmer im gewählten Jahr
+                SELECT a.teilnehmer, MIN(STR_TO_DATE(a.datum, '%Y-%m-%d')) AS erstes_datum
+                FROM tx_iqtp13db_domain_model_folgekontakt AS a
+                LEFT JOIN tx_iqtp13db_domain_model_teilnehmer AS b ON a.teilnehmer = b.uid
+                WHERE
+                    -- Folgeberatung liegt nach dem 31.12. des Vorjahres
+                    STR_TO_DATE(a.datum, '%Y-%m-%d') > DATE('2025-12-31')
+                    -- Erstberatung wurde bis spätestens 31.12. des Vorjahres abgeschlossen
+                    AND STR_TO_DATE(b.erstberatungabgeschlossen, '%Y-%m-%d') <= DATE('2025-12-31')
+                    AND b.erstberatungabgeschlossen != ''
+                    -- Folgeberatung liegt innerhalb des gewählten Jahres
+                    AND STR_TO_DATE(a.datum, '%Y-%m-%d') <= DATE(CONCAT('$jahr', '-12-31'))
+                    AND b.deleted = 0
+                    AND b.hidden = 0
+                    AND a.deleted = 0
+                    AND b.niqidberatungsstelle LIKE '$niqbid'
+                GROUP BY a.teilnehmer
+            ) AS sub
+                ON sub.erstes_datum >= m.von_datum
+                AND sub.erstes_datum <= m.bis_datum
+            GROUP BY m.monat_nr 
+            ORDER BY m.monat_nr";
+
+        $query = $this->createQuery();   
+        $query->statement($sql);
+            	    
+	    $query = $query->execute(true);
+	    return $query;
+    }
 	/**
 	 *
 	 */
@@ -188,17 +262,15 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 	{
 	    $niqbid = $niqbid == '12345' ? '%' : $niqbid; // Admin? dann Beratungsstelle ignorieren
 	    
-	    $query = $this->createQuery();
-	    //fk.uid AS fkuid, fk.datum, fk.berater AS fkberater, fk.notizen AS fknotizen, fk.beratungsform as fkberatungsform, fk.beratungsdauer AS fkberatungsdauer,
-	    $sql = "
-            SELECT
+	    $query = $this->createQuery();	    
+        $sql = "SELECT
             fk.fkdatum,
             fk.fkberater,
             fk.fknotizen,
             fk.fkberatungsform,
             a.uid,
             a.verification_date,
-            a.nachname, 
+            a.nachname,
             a.vorname,
             a.strasse,
             a.plz,
@@ -238,91 +310,97 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             a.beratungdatum,
             a.erstberatungabgeschlossen,
             a.einwilligunginfo,
-            MAX(CASE WHEN b.rn = 1 THEN b.titel END)            AS abschluss1_beruf,
-            MAX(CASE WHEN b.rn = 1 THEN b.sonstigerberuf END)   AS abschluss1_sonstigerberuf,
-            MAX(CASE WHEN b.rn = 1 THEN b.nregberuf END)        AS abschluss1_nregberuf,
-            MAX(CASE WHEN b.rn = 1 THEN b.abschlussart END)     AS abschluss1_art,
-            MAX(CASE WHEN b.rn = 1 THEN b.branche END)          AS abschluss1_branche,
-            MAX(CASE WHEN b.rn = 1 THEN b.erwerbsland END)      AS abschluss1_erwerbsland,
-            MAX(CASE WHEN b.rn = 1 THEN b.abschlussjahr END)    AS abschluss1_jahr,
-            MAX(CASE WHEN b.rn = 1 THEN b.ausbildungsort END)   AS abschluss1_ausbildungsort,
-            MAX(CASE WHEN b.rn = 1 THEN b.abschluss END)        AS abschluss1_abschluss,
-            MAX(CASE WHEN b.rn = 1 THEN b.dauer_berufsausbildung END) AS abschluss1_dauer,
-            MAX(CASE WHEN b.rn = 1 THEN b.ausbildungsinstitution END) AS abschluss1_institution,
-            MAX(CASE WHEN b.rn = 1 THEN b.berufserfahrung END)  AS abschluss1_berufserfahrung,
-            MAX(CASE WHEN b.rn = 1 THEN b.wunschberuf END)      AS abschluss1_wunschberuf,
+            MAX(CASE WHEN b.rn = 1 THEN b.titel END)                   AS abschluss1_beruf,
+            MAX(CASE WHEN b.rn = 1 THEN b.sonstigerberuf END)          AS abschluss1_sonstigerberuf,
+            MAX(CASE WHEN b.rn = 1 THEN b.nregberuf END)               AS abschluss1_nregberuf,
+            MAX(CASE WHEN b.rn = 1 THEN b.abschlussart END)            AS abschluss1_art,
+            MAX(CASE WHEN b.rn = 1 THEN b.branche END)                 AS abschluss1_branche,
+            MAX(CASE WHEN b.rn = 1 THEN b.erwerbsland END)             AS abschluss1_erwerbsland,
+            MAX(CASE WHEN b.rn = 1 THEN b.abschlussjahr END)           AS abschluss1_jahr,
+            MAX(CASE WHEN b.rn = 1 THEN b.ausbildungsort END)          AS abschluss1_ausbildungsort,
+            MAX(CASE WHEN b.rn = 1 THEN b.abschluss END)               AS abschluss1_abschluss,
+            MAX(CASE WHEN b.rn = 1 THEN b.dauer_berufsausbildung END)  AS abschluss1_dauer,
+            MAX(CASE WHEN b.rn = 1 THEN b.ausbildungsinstitution END)  AS abschluss1_institution,
+            MAX(CASE WHEN b.rn = 1 THEN b.berufserfahrung END)         AS abschluss1_berufserfahrung,
+            MAX(CASE WHEN b.rn = 1 THEN b.wunschberuf END)             AS abschluss1_wunschberuf,
             MAX(CASE WHEN b.rn = 1 THEN b.deutscher_referenzberuf END) AS abschluss1_refberuf,
             MAX(CASE WHEN b.rn = 1 THEN b.antragstellungerfolgt END)   AS abschluss1_antrag,
-            MAX(CASE WHEN b.rn = 2 THEN b.titel END)            AS abschluss2_beruf,
-            MAX(CASE WHEN b.rn = 2 THEN b.sonstigerberuf END)   AS abschluss2_sonstigerberuf,
-            MAX(CASE WHEN b.rn = 2 THEN b.nregberuf END)        AS abschluss2_nregberuf,
-            MAX(CASE WHEN b.rn = 2 THEN b.abschlussart END)     AS abschluss2_art,
-            MAX(CASE WHEN b.rn = 2 THEN b.branche END)          AS abschluss2_branche,
-            MAX(CASE WHEN b.rn = 2 THEN b.erwerbsland END)      AS abschluss2_erwerbsland,
-            MAX(CASE WHEN b.rn = 2 THEN b.abschlussjahr END)    AS abschluss2_jahr,
-            MAX(CASE WHEN b.rn = 2 THEN b.ausbildungsort END)   AS abschluss2_ausbildungsort,
-            MAX(CASE WHEN b.rn = 2 THEN b.abschluss END)        AS abschluss2_abschluss,
-            MAX(CASE WHEN b.rn = 2 THEN b.dauer_berufsausbildung END) AS abschluss2_dauer,
-            MAX(CASE WHEN b.rn = 2 THEN b.ausbildungsinstitution END) AS abschluss2_institution,
-            MAX(CASE WHEN b.rn = 2 THEN b.berufserfahrung END)  AS abschluss2_berufserfahrung,
-            MAX(CASE WHEN b.rn = 2 THEN b.wunschberuf END)      AS abschluss2_wunschberuf,
+            MAX(CASE WHEN b.rn = 2 THEN b.titel END)                   AS abschluss2_beruf,
+            MAX(CASE WHEN b.rn = 2 THEN b.sonstigerberuf END)          AS abschluss2_sonstigerberuf,
+            MAX(CASE WHEN b.rn = 2 THEN b.nregberuf END)               AS abschluss2_nregberuf,
+            MAX(CASE WHEN b.rn = 2 THEN b.abschlussart END)            AS abschluss2_art,
+            MAX(CASE WHEN b.rn = 2 THEN b.branche END)                 AS abschluss2_branche,
+            MAX(CASE WHEN b.rn = 2 THEN b.erwerbsland END)             AS abschluss2_erwerbsland,
+            MAX(CASE WHEN b.rn = 2 THEN b.abschlussjahr END)           AS abschluss2_jahr,
+            MAX(CASE WHEN b.rn = 2 THEN b.ausbildungsort END)          AS abschluss2_ausbildungsort,
+            MAX(CASE WHEN b.rn = 2 THEN b.abschluss END)               AS abschluss2_abschluss,
+            MAX(CASE WHEN b.rn = 2 THEN b.dauer_berufsausbildung END)  AS abschluss2_dauer,
+            MAX(CASE WHEN b.rn = 2 THEN b.ausbildungsinstitution END)  AS abschluss2_institution,
+            MAX(CASE WHEN b.rn = 2 THEN b.berufserfahrung END)         AS abschluss2_berufserfahrung,
+            MAX(CASE WHEN b.rn = 2 THEN b.wunschberuf END)             AS abschluss2_wunschberuf,
             MAX(CASE WHEN b.rn = 2 THEN b.deutscher_referenzberuf END) AS abschluss2_refberuf,
             MAX(CASE WHEN b.rn = 2 THEN b.antragstellungerfolgt END)   AS abschluss2_antrag,
-            MAX(CASE WHEN b.rn = 3 THEN b.titel END)            AS abschluss3_beruf,
-            MAX(CASE WHEN b.rn = 3 THEN b.sonstigerberuf END)   AS abschluss3_sonstigerberuf,
-            MAX(CASE WHEN b.rn = 3 THEN b.nregberuf END)        AS abschluss3_nregberuf,
-            MAX(CASE WHEN b.rn = 3 THEN b.abschlussart END)     AS abschluss3_art,
-            MAX(CASE WHEN b.rn = 3 THEN b.branche END)          AS abschluss3_branche,
-            MAX(CASE WHEN b.rn = 3 THEN b.erwerbsland END)      AS abschluss3_erwerbsland,
-            MAX(CASE WHEN b.rn = 3 THEN b.abschlussjahr END)    AS abschluss3_jahr,
-            MAX(CASE WHEN b.rn = 3 THEN b.ausbildungsort END)   AS abschluss3_ausbildungsort,
-            MAX(CASE WHEN b.rn = 3 THEN b.abschluss END)        AS abschluss3_abschluss,
-            MAX(CASE WHEN b.rn = 3 THEN b.dauer_berufsausbildung END) AS abschluss3_dauer,
-            MAX(CASE WHEN b.rn = 3 THEN b.ausbildungsinstitution END) AS abschluss3_institution,
-            MAX(CASE WHEN b.rn = 3 THEN b.berufserfahrung END)  AS abschluss3_berufserfahrung,
-            MAX(CASE WHEN b.rn = 3 THEN b.wunschberuf END)      AS abschluss3_wunschberuf,
+            MAX(CASE WHEN b.rn = 3 THEN b.titel END)                   AS abschluss3_beruf,
+            MAX(CASE WHEN b.rn = 3 THEN b.sonstigerberuf END)          AS abschluss3_sonstigerberuf,
+            MAX(CASE WHEN b.rn = 3 THEN b.nregberuf END)               AS abschluss3_nregberuf,
+            MAX(CASE WHEN b.rn = 3 THEN b.abschlussart END)            AS abschluss3_art,
+            MAX(CASE WHEN b.rn = 3 THEN b.branche END)                 AS abschluss3_branche,
+            MAX(CASE WHEN b.rn = 3 THEN b.erwerbsland END)             AS abschluss3_erwerbsland,
+            MAX(CASE WHEN b.rn = 3 THEN b.abschlussjahr END)           AS abschluss3_jahr,
+            MAX(CASE WHEN b.rn = 3 THEN b.ausbildungsort END)          AS abschluss3_ausbildungsort,
+            MAX(CASE WHEN b.rn = 3 THEN b.abschluss END)               AS abschluss3_abschluss,
+            MAX(CASE WHEN b.rn = 3 THEN b.dauer_berufsausbildung END)  AS abschluss3_dauer,
+            MAX(CASE WHEN b.rn = 3 THEN b.ausbildungsinstitution END)  AS abschluss3_institution,
+            MAX(CASE WHEN b.rn = 3 THEN b.berufserfahrung END)         AS abschluss3_berufserfahrung,
+            MAX(CASE WHEN b.rn = 3 THEN b.wunschberuf END)             AS abschluss3_wunschberuf,
             MAX(CASE WHEN b.rn = 3 THEN b.deutscher_referenzberuf END) AS abschluss3_refberuf,
             MAX(CASE WHEN b.rn = 3 THEN b.antragstellungerfolgt END)   AS abschluss3_antrag,
-            MAX(CASE WHEN b.rn = 4 THEN b.titel END)            AS abschluss4_beruf,
-            MAX(CASE WHEN b.rn = 4 THEN b.sonstigerberuf END)   AS abschluss4_sonstigerberuf,
-            MAX(CASE WHEN b.rn = 4 THEN b.nregberuf END)        AS abschluss4_nregberuf,
-            MAX(CASE WHEN b.rn = 4 THEN b.abschlussart END)     AS abschluss4_art,
-            MAX(CASE WHEN b.rn = 4 THEN b.branche END)          AS abschluss4_branche,
-            MAX(CASE WHEN b.rn = 4 THEN b.erwerbsland END)      AS abschluss4_erwerbsland,
-            MAX(CASE WHEN b.rn = 4 THEN b.abschlussjahr END)    AS abschluss4_jahr,
-            MAX(CASE WHEN b.rn = 4 THEN b.ausbildungsort END)   AS abschluss4_ausbildungsort,
-            MAX(CASE WHEN b.rn = 4 THEN b.abschluss END)        AS abschluss4_abschluss,
-            MAX(CASE WHEN b.rn = 4 THEN b.dauer_berufsausbildung END) AS abschluss4_dauer,
-            MAX(CASE WHEN b.rn = 4 THEN b.ausbildungsinstitution END) AS abschluss4_institution,
-            MAX(CASE WHEN b.rn = 4 THEN b.berufserfahrung END)  AS abschluss4_berufserfahrung,
-            MAX(CASE WHEN b.rn = 4 THEN b.wunschberuf END)      AS abschluss4_wunschberuf,
+            MAX(CASE WHEN b.rn = 4 THEN b.titel END)                   AS abschluss4_beruf,
+            MAX(CASE WHEN b.rn = 4 THEN b.sonstigerberuf END)          AS abschluss4_sonstigerberuf,
+            MAX(CASE WHEN b.rn = 4 THEN b.nregberuf END)               AS abschluss4_nregberuf,
+            MAX(CASE WHEN b.rn = 4 THEN b.abschlussart END)            AS abschluss4_art,
+            MAX(CASE WHEN b.rn = 4 THEN b.branche END)                 AS abschluss4_branche,
+            MAX(CASE WHEN b.rn = 4 THEN b.erwerbsland END)             AS abschluss4_erwerbsland,
+            MAX(CASE WHEN b.rn = 4 THEN b.abschlussjahr END)           AS abschluss4_jahr,
+            MAX(CASE WHEN b.rn = 4 THEN b.ausbildungsort END)          AS abschluss4_ausbildungsort,
+            MAX(CASE WHEN b.rn = 4 THEN b.abschluss END)               AS abschluss4_abschluss,
+            MAX(CASE WHEN b.rn = 4 THEN b.dauer_berufsausbildung END)  AS abschluss4_dauer,
+            MAX(CASE WHEN b.rn = 4 THEN b.ausbildungsinstitution END)  AS abschluss4_institution,
+            MAX(CASE WHEN b.rn = 4 THEN b.berufserfahrung END)         AS abschluss4_berufserfahrung,
+            MAX(CASE WHEN b.rn = 4 THEN b.wunschberuf END)             AS abschluss4_wunschberuf,
             MAX(CASE WHEN b.rn = 4 THEN b.deutscher_referenzberuf END) AS abschluss4_refberuf,
             MAX(CASE WHEN b.rn = 4 THEN b.antragstellungerfolgt END)   AS abschluss4_antrag
-            FROM tx_iqtp13db_domain_model_teilnehmer a
-            LEFT JOIN fe_groups g ON a.niqidberatungsstelle = g.niqbid
-            LEFT JOIN (
-                SELECT
-                fk.uid AS fkuid,
+
+        FROM tx_iqtp13db_domain_model_teilnehmer a
+        LEFT JOIN fe_groups g ON a.niqidberatungsstelle = g.niqbid
+        LEFT JOIN (
+            -- Frühesten Folgekontakt je Teilnehmer im gewählten Zeitraum ermitteln
+            SELECT
                 fk.teilnehmer,
-                fk.berater AS fkberater,
-                fk.notizen AS fknotizen,
-                fk.beratungsform AS fkberatungsform,
-                fk.beratungsdauer AS fkberatungsdauer,
-                MAX(fk.datum) AS fkdatum,
-                COUNT(*) AS anzahl_folgekontakte,
+                fk.berater                                                      AS fkberater,
+                fk.notizen                                                      AS fknotizen,
+                fk.beratungsform                                                AS fkberatungsform,
+                MIN(STR_TO_DATE(fk.datum, '%Y-%m-%d'))                         AS fkdatum,
+                COUNT(*)                                                        AS anzahl_folgekontakte,
                 SUM(CAST(REPLACE(fk.beratungsdauer, ',', '.') AS DECIMAL(10,2))) AS gesamt_beratungsdauer
-                FROM tx_iqtp13db_domain_model_folgekontakt fk 
-                GROUP BY fk.teilnehmer 
-                ) fk ON fk.teilnehmer = a.uid                 
-            LEFT JOIN (
-                SELECT
+            FROM tx_iqtp13db_domain_model_folgekontakt fk
+            WHERE
+                -- Folgeberatung liegt nach dem 31.12. des Vorjahres
+                STR_TO_DATE(fk.datum, '%Y-%m-%d') > DATE(CONCAT('2025-12-31'))
+                -- Folgeberatung liegt innerhalb des gewählten Zeitraums
+                AND STR_TO_DATE(fk.datum, '%Y-%m-%d') BETWEEN STR_TO_DATE('$filtervon', '%d.%m.%Y') AND STR_TO_DATE('$filterbis', '%d.%m.%Y') 
+                AND fk.deleted = 0
+            GROUP BY fk.teilnehmer
+        ) fk ON fk.teilnehmer = a.uid
+        LEFT JOIN (
+            SELECT
                 ab.teilnehmer,
                 ab.sonstigerberuf,
                 ab.nregberuf,
                 ab.abschlussart,
-                br.titel AS branche,
-                br.brancheid AS brancheid,
-                st.titel AS erwerbsland,
+                br.titel                                                        AS branche,
+                br.brancheid                                                    AS brancheid,
+                st.titel                                                        AS erwerbsland,
                 ab.abschlussjahr,
                 ab.ausbildungsort,
                 ab.abschluss,
@@ -335,39 +413,48 @@ class FolgekontaktRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 ab.referenzberufzugewiesen,
                 c.titel,
                 ROW_NUMBER() OVER (PARTITION BY ab.teilnehmer ORDER BY ab.uid) AS rn
-                FROM tx_iqtp13db_domain_model_abschluss ab
-                LEFT JOIN (
-                    SELECT berufid, titel
-                    FROM tx_iqtp13db_domain_model_berufe
-                    WHERE langisocode = 'de'
-                    ) c ON c.berufid = ab.referenzberufzugewiesen
-                LEFT JOIN (
-                    SELECT brancheid, titel
-                    FROM tx_iqtp13db_domain_model_branche
-                    WHERE langisocode = 'de'
-                    ) br ON br.brancheid = ab.branche
-                LEFT JOIN (
-                    SELECT staatid, titel
-                    FROM tx_iqtp13db_domain_model_staaten
-                    WHERE langisocode = 'de'
-                    ) st ON ab.erwerbsland = st.staatid
-                ) b ON b.teilnehmer = a.uid
-            LEFT JOIN tx_iqtp13db_domain_model_ort o ON a.plz = o.plz ";
-	    $sql .= " WHERE 
-                DATEDIFF(STR_TO_DATE(fk.fkdatum, '%Y-%m-%d'), '2025-12-31') > 0 AND 
-                DATEDIFF(STR_TO_DATE('31.12.2025', '%d.%m.%Y'),a.erstberatungabgeschlossen) >= 0 AND 
-                STR_TO_DATE(fk.fkdatum, '%Y-%m-%d') BETWEEN STR_TO_DATE('$filtervon', '%d.%m.%Y') AND STR_TO_DATE('$filterbis', '%d.%m.%Y') 
-                AND niqidberatungsstelle LIKE '$niqbid' AND a.hidden = 0 AND a.deleted = 0 ";
-	    if($bundesland != '%') $sql .= " AND g.bundesland LIKE '$bundesland'";
+            FROM tx_iqtp13db_domain_model_abschluss ab
+            LEFT JOIN (
+                SELECT berufid, titel
+                FROM tx_iqtp13db_domain_model_berufe
+                WHERE langisocode = 'de'
+            ) c ON c.berufid = ab.referenzberufzugewiesen
+            LEFT JOIN (
+                SELECT brancheid, titel
+                FROM tx_iqtp13db_domain_model_branche
+                WHERE langisocode = 'de'
+            ) br ON br.brancheid = ab.branche
+            LEFT JOIN (
+                SELECT staatid, titel
+                FROM tx_iqtp13db_domain_model_staaten
+                WHERE langisocode = 'de'
+            ) st ON ab.erwerbsland = st.staatid
+        ) b ON b.teilnehmer = a.uid
+        LEFT JOIN tx_iqtp13db_domain_model_ort o ON a.plz = o.plz
+        WHERE
+            -- Frühester Folgekontakt liegt nach dem 31.12. des Vorjahres
+            fk.fkdatum > DATE(CONCAT('2025-12-31'))
+            -- Erstberatung wurde bis spätestens 31.12. des Vorjahres abgeschlossen
+            AND STR_TO_DATE(a.erstberatungabgeschlossen, '%Y-%m-%d') <= DATE(CONCAT('2025-12-31'))
+            AND a.erstberatungabgeschlossen != ''
+            -- Frühester Folgekontakt liegt innerhalb des gewählten Zeitraums    
+            AND STR_TO_DATE(fk.fkdatum, '%Y-%m-%d') BETWEEN STR_TO_DATE('$filtervon', '%d.%m.%Y') AND STR_TO_DATE('$filterbis', '%d.%m.%Y') 
+            AND a.niqidberatungsstelle LIKE '$niqbid'
+            AND a.hidden = 0
+            AND a.deleted = 0";
+        
+        if($bundesland != '%') $sql .= " AND g.bundesland LIKE '$bundesland'";
 	    if($staat != '%') $sql .= " AND a.erste_staatsangehoerigkeit LIKE '$staat'";
 	    if($berater != '%') $sql .= " AND fk.berater LIKE '$berater'";
 	    if($landkreis != '%') $sql .= " AND o.landkreis LIKE '$landkreis'";
 	    if($beruf != '%') $sql .= " AND b.referenzberufzugewiesen LIKE '$beruf'";
 	    if($branche != '%') $sql .= " AND b.branche LIKE '$branche'";
         if($geschlecht != '%') $sql .= " AND a.geschlecht LIKE '$geschlecht'";
-	    $sql .= " GROUP BY a.uid ORDER BY fk.fkdatum ASC";
+        
+        $sql .= " GROUP BY a.uid ORDER BY fk.fkdatum ASC";
 
 	    $query->statement($sql);
 	    return $query->execute(true);
 	}
 }
+

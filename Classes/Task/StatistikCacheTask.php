@@ -138,14 +138,11 @@ class StatistikCacheTask extends AbstractTask
                 
         $beratungfk25 = $emptystatusarray;
          // FK/Beratungen aus Förderphase 2023-2025 in 2026
-        $tnberatungenfk25 = $this->getFolgekontaktRepository()->fk4StatusFK2025("01.01.2026", "31.12.2026", $niqbid);
-        for($m = 1; $m < 13; $m++) $beratungfk25[$m] = 0;
-        foreach($tnberatungenfk25 as $fk25) {
-            $fkmonat = DateTime::createFromFormat('Y-m-d', $fk25->getDatum())->format('n');
-            $beratungfk25[$fkmonat]++;
+        $tnberatungfk25 = $this->getFolgekontaktRepository()->fkStatusFK2025neu("2026", $niqbid);
+        foreach($tnberatungfk25 as $fk25) {
+            $beratungfk25[$fk25['monat_nr']] = $fk25['anzahl_monat'];
         }
-        ksort($beratungfk25);
-        
+
         return [
             'angemeldeteTNunbestaetigt' => $angemeldeteTNunbestaetigt ?? '',
             'angemeldeteTN' => $angemeldeteTN,
