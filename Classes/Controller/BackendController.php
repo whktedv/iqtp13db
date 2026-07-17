@@ -86,7 +86,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         'WohnsitzNeinIn' => 'string',
         'Deutschkenntnisse' => 'string',
         'ZertifikatSprachniveau' => 'string',
-        'Sonstiger Status' => 'string',
         'Erwerbsstatus' => 'string',
         'Leistungsbezug ja/nein' => 'string',
         'Leistungsbezug' => 'string',
@@ -271,10 +270,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
          * PropertyMapping für die multiple ankreuzbaren Checkboxen.
          * Annehmen eines String-Arrays, das im Setter und Getter des Models je per implode/explode wieder in Strings bzw. Array (of Strings) konvertiert wird
          */        
-        if ($this->arguments->hasArgument('teilnehmer')) {
-            $this->arguments->getArgument('teilnehmer')->getPropertyMappingConfiguration()->allowProperties('sonstigerstatus');
-            $this->arguments->getArgument('teilnehmer')->getPropertyMappingConfiguration()->setTargetTypeForSubProperty('sonstigerstatus', 'array');
-            
+        if ($this->arguments->hasArgument('teilnehmer')) {           
             $this->arguments->getArgument('teilnehmer')->getPropertyMappingConfiguration()->allowProperties('einwAnerkstellemedium');
             $this->arguments->getArgument('teilnehmer')->getPropertyMappingConfiguration()->setTargetTypeForSubProperty('einwAnerkstellemedium', 'array');
             
@@ -1665,7 +1661,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $this->createHistory($teilnehmer, "wohnsitzNeinIn");
         $this->createHistory($teilnehmer, "aufenthaltsstatus");
         $this->createHistory($teilnehmer, "aufenthaltsstatusfreitext");
-        $this->createHistory($teilnehmer, "sonstigerstatus");
         $this->createHistory($teilnehmer, "deutschkenntnisse");
         $this->createHistory($teilnehmer, "zertifikatSprachniveau");
         $this->createHistory($teilnehmer, "weiteresprachkenntnisse");
@@ -2847,6 +2842,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         // ************ Start - Beraterarray bestimmen *****************
         $arrberater = array();
+
         if($mitnichtzugeordnet) $arrberater[0] = '- nicht zugeordnet -';
         if($this->niqbid == '12345' || intval($this->niqbid) < 999) { // Admin
             $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected ?? '%');
@@ -2857,7 +2853,13 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 }
             }
         } else {
-            $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $this->user->user['usergroup']);
+            // Gruppenberatungs-UID aus den Gruppen des Users entfernen
+            $gruppenberatungsgruppeuid = $this->userGroupRepository->findByTitle('Gruppenberatungen')[0]->getUid();
+            $guidarray = array_map('trim', explode(',', trim($this->user->user['usergroup'])));
+            $guidarray = array_filter($guidarray, fn($value) => $value !== strval($gruppenberatungsgruppeuid));
+            $guidarrstring = implode(',', $guidarray);
+            //
+            $berater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $guidarrstring);
             foreach($berater as $currber) {
                 $arrberater[$currber->getUid()] = $currber->getUsername();
             }
@@ -3001,7 +3003,6 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $rows[$x]['ZertifikatSprachniveau'] = $tn['zertifikat_sprachniveau'] == '' ? '-' : $arrzertifikatlevel[$tn['zertifikat_sprachniveau']];
                 
                 // noch nicht implementiert: $rows[$x]['WeitereSprachkenntnisse'] = $tn['weiteresprachkenntnisse'];
-                $rows[$x]['Sonstigerstatus'] = $tn['sonstigerstatus'];
                 
                 $tnerwerbsstatus = $tn['erwerbsstatus'];
                 $rows[$x]['erwerbsstatus'] = $tnerwerbsstatus == 0 ? '-' : $arrerwerbsstatus[$tnerwerbsstatus];

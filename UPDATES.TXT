@@ -213,6 +213,8 @@ Update 26.05.2026
 - Admin: Beratungsstatus wird in Datensatz ausgegeben
 - Backend: In Einstellungen kann ein Text für die Bearbeiten-Seite nach Link-Versendung eingetragen werden. Dieser wird den Ratsuchenden angezeigt, nachdem sie sich mit ihrem Geburtsdatum authentifiziert haben
 
-Update
+Update 24.06.2026
 - RS erhalten beim Versenden des Anmeldeformulars eine Warnung, wenn sie noch keine Dokumente hochgeladen haben. Das Absenden ist weiterhin ohne Dokumente möglich.
+- Versand Link an RS zwecks Upload: Es wurde ein Fehler behoben, der dazu führte, dass die Markierung am Datensatz (blauer Haken) direkt nach Erstellen des Links ausgelöst wurde, wenn der/die Ratsuchende bereits bei der Registrierung Dokumente hochgeladen hatte
 - Export: Die Auswahl des Geschlechts ist nun möglich
+- Export: Es wurde ein Fehler behoben, der dazu führte, dass bei Folgeberatungen aus der alten Förderphase die Zählung als Erstberatung in diesem Jahr für einen späteren Monat angerechnet wurde, wenn eine weitere Folgeberatung eines RS stattgefunden hatte

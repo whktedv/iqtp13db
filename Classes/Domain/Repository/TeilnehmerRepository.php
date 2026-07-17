@@ -929,7 +929,6 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             a.deutschkenntnisse,
             a.zertifikat_sprachniveau,
             a.weiteresprachkenntnisse,
-            a.sonstigerstatus,
             a.erwerbsstatus,
             a.leistungsbezugjanein,
             a.leistungsbezug,
