@@ -201,6 +201,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         'ZertifikatSprachniveau' => 'string',
         'Geburtsland' => 'string',
         'Geschlecht' => 'string',
+        'Berater:in' => 'string',
         'Anz. Folgekontakte' => 'string',
         'Erstberatungabgeschlossen' => 'string',
         'Abschluss1 Referenzberuf zugewiesen' => 'string',
@@ -2972,6 +2973,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $rowsanonym[$x]['ZertifikatSprachniveau'] = $tn['zertifikat_sprachniveau'] == '' ? '-' : $arrzertifikatlevel[$tn['zertifikat_sprachniveau']];
                 $rowsanonym[$x]['Geburtsland'] = $tn['geburtsland'] == '' ? '-' : $arrstaaten[$tn['geburtsland']];
                 $rowsanonym[$x]['Geschlecht'] = $geschlecht;
+                $beraterid = $tn['berater'];
+                $rowsanonym[$x]['Beraterin'] = $arrberater[$beraterid] ?? '-';
                 $rowsanonym[$x]['AnzFolgekontakte'] = $tn['anzahl_folgekontakte'];
                 $rowsanonym[$x]['erstberatungabgeschlossen'] = $tn['erstberatungabgeschlossen'];
             } else {
