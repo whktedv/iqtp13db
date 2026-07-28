@@ -2443,7 +2443,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $brancheselected = $valArray['filterbranche'] ?? '%';
         $geschlechtselected = $valArray['filtergeschlecht'] ?? '%';
 
-        $arrberater = $this->getberater4Bstelle('%', TRUE);
+        $arrberater = $this->getberater4Bstelle($bundeslandselected ?? '%', TRUE);
+        
         $arrlandkreise = array();
         $arrlandkreise = $this->ortRepository->findLandkreiseByBundesland($bundeslandselected);
         $brancheunterkat = $this->brancheRepository->findAllUnterkategorie('de');
@@ -2845,10 +2846,10 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $arrberater = array();
 
         if($mitnichtzugeordnet) $arrberater[0] = '- nicht zugeordnet -';
-        if($this->niqbid == '12345' || intval($this->niqbid) < 999) { // Admin
-            $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected ?? '%');
-            foreach($usergroups4bundesland as $ug) {
-                $ugberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $ug);
+        if($this->niqbid == '12345' || intval($this->niqbid) < 999) { // Admin            
+            $usergroups4bundesland = $this->userGroupRepository->findByBundesland($bundeslandselected ?? '%');            
+            foreach($usergroups4bundesland as $ug) {                
+                $ugberater = $this->beraterRepository->findBerater4Group($this->settings['beraterstoragepid'], $ug->getUid());
                 foreach($ugberater as $currber) {
                     $arrberater[$currber->getUid()] = $currber->getUsername();
                 }
