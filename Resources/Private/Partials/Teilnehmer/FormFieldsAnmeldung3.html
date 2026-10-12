@@ -5,9 +5,9 @@
 				<f:translate key="tx_iqtp13db_domain_model_teilnehmer.erwerbsstatus" /></span>
 			</label>
 			<div class="tp13_formdivwebappmultiradio">
-				<f:for each="{settings.erwerbsstatus}" as="text" key="wert">
+				<f:for each="{settings.erwerbsstatustn}" as="text" key="wert">
 					<div class="tp13_formdivwebappradio"><f:form.radio property="erwerbsstatus" value="{wert}" checked="{teilnehmer.erwerbsstatus} == {wert}" /><span class="abschlussradiotext">{text}</span>
-					<f:if condition="{wert} > 0 && {wert} < 8">&nbsp;<span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoErwerbsstatus.{wert}' />" class="infolabel" /></f:if></div>
+					<f:if condition="{wert} > 0 && {wert} < 10">&nbsp;<span id="infolab" onclick="return showModal(this)" title="<f:translate key='infoErwerbsstatus.{wert}' />" class="infolabel" /></f:if></div>
 				</f:for>
 			</div>				
 		</div>

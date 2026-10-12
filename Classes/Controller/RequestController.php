@@ -66,6 +66,7 @@ class RequestController
         // Daten speichern
         $teilnehmer = $this->teilnehmerRepository->findByUid($uid);
         $teilnehmer->setEditexternsent(new \DateTime);
+        $teilnehmer->setNeuedokumente(0);  
         $this->teilnehmerRepository->update($teilnehmer);
         
         // Persistierung erzwingen

@@ -936,6 +936,7 @@ class TeilnehmerRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             a.aufenthaltsstatus,
             a.geschlecht,
             a.notizen,
+            a.niqidberatungsstelle,
             a.berater,
             a.beratungsart,
             a.beratungsort,

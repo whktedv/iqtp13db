@@ -305,6 +305,21 @@ plugin.tx_iqtp13db.settings {
    erwerbsstatus {
 	    -1 = keine Angabe
 	     1 = beitragspflichtig beschäftigt
+		 9 = Teilzeit
+		 10 = Vollzeit
+	     2 = geringfügig beschäftigt
+	     3 = selbständig
+	     4 = in Aus-/Weiterbildung/Qualifizierung
+	     5 = nicht erwerbstätig
+	     6 = im Ausland erwerbstätig
+	     7 = im Ausland nicht erwerbstätig
+	     8 = sonstiges
+   }
+
+    erwerbsstatustn {
+	    -1 = keine Angabe
+		 9 = Teilzeit
+		 10 = Vollzeit
 	     2 = geringfügig beschäftigt
 	     3 = selbständig
 	     4 = in Aus-/Weiterbildung/Qualifizierung
@@ -439,6 +454,21 @@ plugin.tx_iqtp13db.settings {
    erwerbsstatus {
 	   	-1 = no specification
 	     1 = employed subject to tax
+		 9 = part-time
+		 10 = full-time
+	     2 = marginally employed
+	     3 = selfemployment
+	     4 = in education/further training/qualification
+	     5 = not employed
+	     6 = working abroad
+	     7 = not working abroad
+	     8 = others
+   } 
+
+    erwerbsstatustn {
+	   	-1 = no specification
+		 9 = part-time
+		 10 = full-time
 	     2 = marginally employed
 	     3 = selfemployment
 	     4 = in education/further training/qualification

@@ -195,12 +195,16 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         'Lebensalter' => 'string',
         'Erste Staatsangehoerigkeit' => 'string',
         'Zweite Staatsangehoerigkeit' => 'string',
+        'Erwerbsstatus' => 'string',
+        'Aufenthaltsstatus' => 'string',
         'Landkreis' => 'string',
         'Einreisejahr' => 'string',
         'Deutschkenntnisse' => 'string',
         'ZertifikatSprachniveau' => 'string',
         'Geburtsland' => 'string',
         'Geschlecht' => 'string',
+        'Beratungsart' => 'string',
+        'ID Beratungsstelle' => 'string',
         'Berater:in' => 'string',
         'Anz. Folgekontakte' => 'string',
         'Erstberatungabgeschlossen' => 'string',
@@ -2965,16 +2969,26 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $rowsanonym[$x]['verificationDate'] = date('d.m.Y H:i:s', $tn['verification_date']);
                 $rowsanonym[$x]['PLZ'] = $tn['plz'];
                 $rowsanonym[$x]['Ort'] = $tn['ort'];
+                //$rowsanonym[$x]['uid'] = $tn['uid'];
                 $rowsanonym[$x]['Lebensalter'] = $tn['lebensalter'];
                 $rowsanonym[$x]['ErsteStaatsangehoerigkeit'] = $tn['erste_staatsangehoerigkeit'] == '' ? '-' : $arrstaaten[$tn['erste_staatsangehoerigkeit']];
                 $rowsanonym[$x]['ZweiteStaatsangehoerigkeit'] = $tn['zweite_staatsangehoerigkeit'] == '' ? '-' : $arrstaaten[$tn['zweite_staatsangehoerigkeit']];
+                $tnerwerbsstatus = $tn['erwerbsstatus'];
+                $rowsanonym[$x]['erwerbsstatus'] = $tnerwerbsstatus == 0 ? '-' : $arrerwerbsstatus[$tnerwerbsstatus];
+                $tnaufenthaltsstatus = $tn['aufenthaltsstatus'];
+                $rowsanonym[$x]['aufenthaltsstatus'] = $tnaufenthaltsstatus == 0 ? '-' : $arraufenthaltsstatus[$tnaufenthaltsstatus];                
                 $rowsanonym[$x]['Landkreis'] = (preg_match("/[0-9]{5}/", trim($tn['plz'])) && array_key_exists(trim($tn['plz']), $arrorte)) ? $arrorte[trim($tn['plz'])] : '-';
                 $rowsanonym[$x]['Einreisejahr'] = $tn['einreisejahr'];
                 $rowsanonym[$x]['Deutschkenntnisse'] = $deutschkenntnisse ?? '';
                 $rowsanonym[$x]['ZertifikatSprachniveau'] = $tn['zertifikat_sprachniveau'] == '' ? '-' : $arrzertifikatlevel[$tn['zertifikat_sprachniveau']];
                 $rowsanonym[$x]['Geburtsland'] = $tn['geburtsland'] == '' ? '-' : $arrstaaten[$tn['geburtsland']];
                 $rowsanonym[$x]['Geschlecht'] = $geschlecht;
+                $stringberatungsart = '';                
+                $arrtnberatungsart = explode(",", $tn['beratungsart']);                
+                foreach ($arrtnberatungsart as $atn) $stringberatungsart .= $atn == '' ? '-;' : $arrberatungsart[$atn].";";
+                $rowsanonym[$x]['beratungsart'] = $stringberatungsart;                
                 $beraterid = $tn['berater'];
+                $rowsanonym[$x]['Beratungsstelle'] = $tn['niqidberatungsstelle'];
                 $rowsanonym[$x]['Beraterin'] = $arrberater[$beraterid] ?? '-';
                 $rowsanonym[$x]['AnzFolgekontakte'] = $tn['anzahl_folgekontakte'];
                 $rowsanonym[$x]['erstberatungabgeschlossen'] = $tn['erstberatungabgeschlossen'];
